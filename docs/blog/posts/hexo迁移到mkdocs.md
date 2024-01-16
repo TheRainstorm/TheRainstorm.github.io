@@ -23,6 +23,8 @@ TODO
 - [jiegec/blog-source: The source of my blog. (github.com)](https://github.com/jiegec/blog-source/tree/master)
 - [ヾ(^▽^*)))欢迎回来~ (shaojiemike.top)](https://shaojiemike.top/)
 
+*p.s. 由于我使用的markdown编辑器的原因，才发现标准MD中list前面需要有一个空行。也就是迄今写的博客均踩了这个坑。。。而mkdocs不支持这个非标准行为，以后慢慢更正吧*
+
 <!-- more -->
 ## mkdocs教程
 
@@ -168,12 +170,14 @@ mkdocs-rss-plugin
   - private仓库创建public page需要github pro以上
 
 参考文档
+
 - 关于gh page类型，限制：[About GitHub Pages - GitHub Docs](https://docs.github.com/en/pages/getting-started-with-github-pages/about-github-pages#types-of-github-pages-sites)
 - 配置publishing source：[Configuring a publishing source for your GitHub Pages site - GitHub Docs](https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site)
 - mkdocs关于deploy文档（github和gitlab）：[Publishing your site - Material for MkDocs (squidfunk.github.io)](https://squidfunk.github.io/mkdocs-material/publishing-your-site/?h=deploy)
 #### 配置publishing source
 
 有两种配置page source方法
+
 - deploy from a branch：通常对应一个gh-page分支，只包含静态html文件
   - 可以是本地使用类似`hexo deploy`, `mkdocs gh-deploy`命令生成，然后push到github分支
   - 也可以是自定义gh workflow，生成然后push到gh-page分支。Most external CI workflows "deploy" to GitHub Pages by committing the build output to the `gh-pages` branch of the repository, and typically include a `.nojekyll` file.
@@ -259,3 +263,12 @@ mkdocs使用相对路径，指向引用的md文件，并且也支持使用`#`定
 - **Syntax Support**: MathJax supports a wider array of LaTeX commands and can process a variety of mathematical markup languages (like AsciiMath and MathML). If you need advanced LaTeX features, MathJax may be more suitable.
 
 但是使用两种方案，据无法正确显示我的[具体数学](2023-04-20-具体数学.md)那篇文章的所有数学公式，并且MathJax正确识别的更少。因此最后选用了KaTeX
+
+### 列表前空行
+
+别人关于是否需要支持这个常见“错误”的讨论
+[Blank lines before lists, revisited - Spec - CommonMark Discussion](https://talk.commonmark.org/t/blank-lines-before-lists-revisited/1990/35)
+
+## mkdocs格式
+
+[Admonitions - Material for MkDocs (squidfunk.github.io)](https://squidfunk.github.io/mkdocs-material/reference/admonitions/)
