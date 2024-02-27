@@ -50,7 +50,7 @@ categories:
 
 ### 方法1：编译安装
 
-python官网下载python3源码，这里下载了python3.6.10
+ipython官网下载python3源码，这里下载了python3.6.10
 
 然后解压到/usr/local/src
 

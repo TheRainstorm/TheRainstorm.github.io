@@ -370,9 +370,11 @@ GRETAP
 ```
 ## openwrt gre配置
 
-[[OpenWrt Wiki] Tunneling interface protocols](https://openwrt.org/docs/guide-user/network/tunneling_interface_protocols#protocol_gretap_ethernet_gre_tunnel_over_ipv4)
-[[OpenWrt Wiki] Routing example: GRE](https://openwrt.org/docs/guide-user/network/routing/examples/routing_in_gre)
+参考资料：
 
+- openwrt gre配置：[[OpenWrt Wiki] Tunneling interface protocols](https://openwrt.org/docs/guide-user/network/tunneling_interface_protocols#protocol_gretap_ethernet_gre_tunnel_over_ipv4)
+- [[OpenWrt Wiki] Routing example: GRE](https://openwrt.org/docs/guide-user/network/routing/examples/routing_in_gre)
+- GRE ip包中protocol number为47：[List of IP protocol numbers - Wikipedia](https://en.wikipedia.org/wiki/List_of_IP_protocol_numbers)
 ### 背景
 
 背景：学校宿舍楼没有分配PD，而实验楼分配了/64的PD。因此想通过L2隧道，将宿舍楼的接口桥接到实验楼路由器的wan口上，从而获得一个PD地址。之后利用该PD在lan上开启ipv6 ra server，给lan分配ipv6地址。
@@ -380,6 +382,7 @@ GRETAP
 思路：两台路由器op1, op2通过wg连接，基于wg接口ip建立gretap隧道。op1将该tap桥接到br-wan上。op2在该tap上开启dhcpv6 client，申请一个PD。
 ### 安装
 
+确保安装了以下依赖
 ```
 root@op1 ➜  ~ opkg list-installed |grep gre
 gre - 13
@@ -388,35 +391,55 @@ kmod-gre6 - 5.10.146-1
 luci-proto-gre - git-21.158.43143-b4c394f
 ```
 
-安装了gre后，luci中创建接口时可能还是无法选择gre，此时可以：
-- 尝试重启network: /etc/init.d/network restart
-- 检查是否加载了gre模块，没有的话，可以ip link add type gretap手动创建接口，这样就会自动加载内核模块了
+确保以下内核模块已加载
 ```
 root@op1 ➜  ~ lsmod |grep gre
 gre                    16384  1 ip_gre
 ip_gre                 36864  0
 ip_tunnel              32768  1 ip_gre
 ```
+
+如果是pve的话，通常没有加载。需要手动modprobe，并添加到`/etc/module`中
+```
+modprobe ip_gre
+```
+
+```
+gre
+ip_gre
+ip_tunnel
+ip6_gre
+ip6_tunnel
+```
+
+安装了gre后，luci中创建接口时可能还是无法选择gre，此时需要重启network: `/etc/init.d/network restart`
+
 ### 配置
 
-op1和op2上都创建gre1接口
+#### op1和op2上都创建gre1接口
 - protocal选择gretap over ipv4
 - local和remote地址填wg接口地址
 - 创建成功后，ip a可以看到多出一个gre4t-gre1的接口
 ![](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/20230915185240.png)
 
-op1将gre device添加到bridge
+如果使用wan口ipv6创建gre tap，两端都需要添加allow gre input的防火墙规则。默认是没有gre类型的，在custom中输入47或则gre回车便会出现该类型。
+![](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/20240227171647.png)
+
+#### op1将gre device添加到bridge
+
 - 名字填@gre1（也可以直接写gre4t-gre1）
 ![](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/20230915185229.png)
 
-op1设置防火墙
+#### op1设置防火墙 wan forward
+
 - 将gre1设置为wan
 - 防火墙中，设置**wan zone forward为accept**（默认为reject）。**否则gre1设备上的包无法转发给wan下面的其他设备**
 ![](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/20230915190627.png)
 
 ![](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/20230915190345.png)
 
-op2设置dhcpv6
+#### op2设置dhcpv6
+
 在gre1 tap上启用dhcpv6 client，openwrt上该操作为创建一个interface，协议选择dhcpv6 client
 - 该接口高级设置中可以勾选source route，这样对于有多个uplink，就能自动处理路由
     - 源地址为该pd的地址，走tap接口

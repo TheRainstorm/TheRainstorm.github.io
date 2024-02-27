@@ -79,11 +79,14 @@ docker save --output busybox.tar busybox  # 输出到tar文件
 docker save -o ubuntu.tar ubuntu:lucid ubuntu:saucy  # 选择多个tag
 
 docker save myimage:latest | gzip > myimage_latest.tar.gz # 输出到标准输出并使用gzip压缩
+docker save myimage:latest | zstd > myimage_latest.tar.gz # 输出到标准输出并使用gzip压缩
 ```
 
 导入
 ```bash
 docker load --input=file.tar
+
+zstd -d -c myimage_latest.tar.zst | docker load  # -c 输出到标准输出
 ```
 
 **export/import**
@@ -114,6 +117,14 @@ docker commit --author amit.sharma@sentinelone.com --message 'this is a basic ng
 - WORKDIR
 ```
 docker commit --change='CMD ["nginx", "-T"]' nginx_base conf_dump
+```
+
+#### rename
+
+```
+docker tag old_image_name:old_tag new_image_name:new_tag
+
+docker rmi old_image_name:old_tag
 ```
 ## dockerfile
 

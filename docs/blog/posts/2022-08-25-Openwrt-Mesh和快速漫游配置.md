@@ -181,7 +181,152 @@ r3g x 3
 daemon.debug hostapd: wlan0: STA e0:...:30 WPA: FT authentication already completed - do not start 4-way handshake
 ```
 
+## 遇到问题
 
+### mesh 设备未激活
+rm2100开启mesh，radio0设备显示设备未激活
+```
+Sat Feb  3 21:55:53 2024 daemon.notice hostapd: phy0-ap0: AP-DISABLED
+Sat Feb  3 21:55:53 2024 daemon.err hostapd: hostapd_free_hapd_data: Interface phy0-ap0 wasn't started
+Sat Feb  3 21:55:53 2024 daemon.notice hostapd: nl80211: deinit ifname=phy0-ap0 disabled_11b_rates=0
+Sat Feb  3 21:55:53 2024 kern.info kernel: [  970.826050] device phy0-ap0 left promiscuous mode
+Sat Feb  3 21:55:53 2024 kern.info kernel: [  970.831019] br-lan: port 5(phy0-ap0) entered disabled state
+Sat Feb  3 21:55:54 2024 daemon.notice hostapd: phy0-ap0: interface state ACS->DISABLED
+Sat Feb  3 21:55:54 2024 daemon.notice netifd: lan (2365): udhcpc: sending renew to server 192.168.33.1
+Sat Feb  3 21:55:54 2024 daemon.notice netifd: lan (2365): udhcpc: lease of 192.168.33.212 obtained from 192.168.33.1, lease time 43200
+Sat Feb  3 21:55:55 2024 daemon.notice wpa_supplicant[1248]: phy0-mesh0: interface state UNINITIALIZED->ENABLED
+Sat Feb  3 21:55:55 2024 daemon.notice wpa_supplicant[1248]: phy0-mesh0: AP-ENABLED
+Sat Feb  3 21:55:55 2024 daemon.notice wpa_supplicant[1248]: phy0-mesh0: joining mesh my_mesh
+Sat Feb  3 21:55:55 2024 daemon.err wpa_supplicant[1248]: phy0-mesh0: mesh join error=-1
+```
+
+手动设置使用channel 1, 设置40MHz频宽后突然可以了
+```
+Sat Feb  3 22:05:21 2024 daemon.notice wpa_supplicant[1248]: Set new config for phy phy0
+Sat Feb  3 22:05:21 2024 daemon.notice hostapd: Set new config for phy phy0: /var/run/hostapd-phy0.conf
+Sat Feb  3 22:05:21 2024 daemon.notice hostapd: Restart interface for phy phy0
+Sat Feb  3 22:05:21 2024 daemon.notice hostapd: Remove interface 'phy0'
+Sat Feb  3 22:05:21 2024 daemon.notice hostapd: phy0-ap0: interface state DISABLED->DISABLED
+Sat Feb  3 22:05:21 2024 daemon.notice hostapd: phy0-ap0: AP-DISABLED
+Sat Feb  3 22:05:21 2024 daemon.notice hostapd: phy0-ap0: CTRL-EVENT-TERMINATING
+Sat Feb  3 22:05:21 2024 daemon.err hostapd: rmdir[ctrl_interface=/var/run/hostapd]: Permission denied
+Sat Feb  3 22:05:21 2024 daemon.err hostapd: hostapd_free_hapd_data: Interface phy0-ap0 wasn't started
+Sat Feb  3 22:05:21 2024 daemon.notice hostapd: nl80211: deinit ifname=phy0-ap0 disabled_11b_rates=0
+Sat Feb  3 22:05:21 2024 kern.info kernel: [ 1538.873046] device phy0-ap0 left promiscuous mode
+Sat Feb  3 22:05:21 2024 kern.info kernel: [ 1538.878005] br-lan: port 4(phy0-ap0) entered disabled state
+Sat Feb  3 22:05:22 2024 daemon.notice netifd: Network device 'phy0-ap0' link is down
+Sat Feb  3 22:05:22 2024 daemon.notice netifd: lan (2365): udhcpc: sending renew to server 192.168.33.1
+Sat Feb  3 22:05:22 2024 daemon.notice netifd: lan (2365): udhcpc: lease of 192.168.33.212 obtained from 192.168.33.1, lease time 43200
+Sat Feb  3 22:05:22 2024 daemon.notice hostapd: Configuration file: data: driver=nl80211 logger_syslog=127 logger_syslog_level=2 logger_stdout=127 logger_stdout_level=2 country_code=CN ieee80211d=1 hw_mode=g supported_rates=60 90 120 180 240 360 480 540 basic_rates=60 120 240 beacon_int=100 chanlist=1 #num_global_macaddr=1 ieee80211n=1 ht_coex=0 ht_capab=[HT40+][SHORT-GI-20][SHORT-GI-40][TX-STBC][RX-STBC1] channel=1  interface=phy0-ap0 bssid=9c:9d:7e:c6:de:32 ctrl_interface=/var/run/hostapd ap_isolate=1 bss_load_update_period=60 chan_util_avg_period=600 disassoc_low_ack=1 skip_inactivity_poll=0 preamble=1 wmm_enabled=1 ignore_broadcast_ssid=0 uapsd_advertisement_enabled=1 utf8_ssid=1 multi_ap=0 wpa_passphrase=15797678348 wpa_psk_file=/var/run/hostapd-phy0-ap0.psk auth_algs=1 wpa=2 wpa_pairwise=CCMP ssid=爱琴 bridge=br-lan wds_bridge= snoop_iface=br-lan ft_iface=br-lan mobility_domain=123d ft_psk_generate_local=1 ft_over_ds=0 reassociation_deadline=1000 wpa_disable_eapol_key_retries=0 wpa_key_mgmt=WPA-PSK FT-PSK okc=0 disable
+Sat Feb  3 22:05:22 2024 kern.info kernel: [ 1539.839661] br-lan: port 4(phy0-ap0) entered blocking state
+Sat Feb  3 22:05:22 2024 kern.info kernel: [ 1539.845252] br-lan: port 4(phy0-ap0) entered disabled state
+Sat Feb  3 22:05:22 2024 kern.info kernel: [ 1539.851406] device phy0-ap0 entered promiscuous mode
+Sat Feb  3 22:05:22 2024 kern.info kernel: [ 1539.856659] br-lan: port 4(phy0-ap0) entered blocking state
+Sat Feb  3 22:05:22 2024 kern.info kernel: [ 1539.862310] br-lan: port 4(phy0-ap0) entered forwarding state
+Sat Feb  3 22:05:22 2024 daemon.notice hostapd: phy0-ap0: interface state UNINITIALIZED->COUNTRY_UPDATE
+Sat Feb  3 22:05:22 2024 daemon.notice hostapd: phy0-ap0: interface state COUNTRY_UPDATE->HT_SCAN
+Sat Feb  3 22:05:22 2024 kern.info kernel: [ 1539.873538] device phy0-ap0 left promiscuous mode
+Sat Feb  3 22:05:22 2024 kern.info kernel: [ 1539.878707] br-lan: port 4(phy0-ap0) entered disabled state
+Sat Feb  3 22:05:23 2024 kern.info kernel: [ 1539.980798] br-lan: port 4(phy0-ap0) entered blocking state
+Sat Feb  3 22:05:23 2024 kern.info kernel: [ 1539.986408] br-lan: port 4(phy0-ap0) entered disabled state
+Sat Feb  3 22:05:23 2024 kern.info kernel: [ 1539.992532] device phy0-ap0 entered promiscuous mode
+Sat Feb  3 22:05:23 2024 kern.info kernel: [ 1539.997983] br-lan: port 4(phy0-ap0) entered blocking state
+Sat Feb  3 22:05:23 2024 kern.info kernel: [ 1540.003617] br-lan: port 4(phy0-ap0) entered forwarding state
+Sat Feb  3 22:05:23 2024 kern.info kernel: [ 1540.010314] br-lan: port 4(phy0-ap0) entered disabled state
+Sat Feb  3 22:05:23 2024 daemon.notice netifd: lan (2365): udhcpc: sending renew to server 192.168.33.1
+Sat Feb  3 22:05:23 2024 daemon.notice netifd: lan (2365): udhcpc: lease of 192.168.33.212 obtained from 192.168.33.1, lease time 43200
+Sat Feb  3 22:05:23 2024 daemon.notice netifd: Wireless device 'radio0' is now up
+Sat Feb  3 22:05:23 2024 daemon.notice netifd: lan (2365): udhcpc: sending renew to server 192.168.33.1
+Sat Feb  3 22:05:23 2024 daemon.notice netifd: lan (2365): udhcpc: lease of 192.168.33.212 obtained from 192.168.33.1, lease time 43200
+Sat Feb  3 22:05:26 2024 daemon.notice hostapd: 20/40 MHz operation not permitted on channel pri=1 sec=5 based on overlapping BSSes
+Sat Feb  3 22:05:26 2024 daemon.notice hostapd: Fallback to 20 MHz
+Sat Feb  3 22:05:27 2024 kern.info kernel: [ 1544.109128] IPv6: ADDRCONF(NETDEV_CHANGE): phy0-ap0: link becomes ready
+Sat Feb  3 22:05:27 2024 kern.info kernel: [ 1544.116051] br-lan: port 4(phy0-ap0) entered blocking state
+Sat Feb  3 22:05:27 2024 kern.info kernel: [ 1544.121714] br-lan: port 4(phy0-ap0) entered forwarding state
+Sat Feb  3 22:05:27 2024 daemon.notice netifd: Network device 'phy0-ap0' link is up
+Sat Feb  3 22:05:27 2024 daemon.notice hostapd: phy0-ap0: interface state HT_SCAN->ENABLED
+Sat Feb  3 22:05:27 2024 daemon.notice hostapd: phy0-ap0: AP-ENABLED
+Sat Feb  3 22:05:31 2024 kern.info kernel: [ 1548.239427] device phy0-ap0 left promiscuous mode
+Sat Feb  3 22:05:31 2024 kern.info kernel: [ 1548.244375] br-lan: port 4(phy0-ap0) entered disabled state
+Sat Feb  3 22:05:31 2024 daemon.notice netifd: lan (2365): udhcpc: sending renew to server 192.168.33.1
+Sat Feb  3 22:05:31 2024 daemon.notice netifd: lan (2365): udhcpc: lease of 192.168.33.212 obtained from 192.168.33.1, lease time 43200
+Sat Feb  3 22:05:32 2024 daemon.notice wpa_supplicant[1248]: Set new config for phy phy0
+Sat Feb  3 22:05:32 2024 daemon.notice hostapd: Set new config for phy phy0: /var/run/hostapd-phy0.conf
+Sat Feb  3 22:05:32 2024 daemon.notice hostapd: Restart interface for phy phy0
+Sat Feb  3 22:05:32 2024 daemon.notice hostapd: Remove interface 'phy0'
+Sat Feb  3 22:05:32 2024 daemon.notice hostapd: phy0-ap0: interface state ENABLED->DISABLED
+Sat Feb  3 22:05:32 2024 daemon.notice hostapd: phy0-ap0: AP-DISABLED
+Sat Feb  3 22:05:32 2024 daemon.notice hostapd: phy0-ap0: CTRL-EVENT-TERMINATING
+Sat Feb  3 22:05:32 2024 daemon.err hostapd: rmdir[ctrl_interface=/var/run/hostapd]: Permission denied
+Sat Feb  3 22:05:32 2024 daemon.notice hostapd: nl80211: deinit ifname=phy0-ap0 disabled_11b_rates=0
+Sat Feb  3 22:05:32 2024 daemon.notice hostapd: nl80211: Failed to remove interface phy0-ap0 from bridge br-lan: Invalid argument
+Sat Feb  3 22:05:33 2024 daemon.notice hostapd: Configuration file: data: driver=nl80211 logger_syslog=127 logger_syslog_level=2 logger_stdout=127 logger_stdout_level=2 country_code=CN ieee80211d=1 hw_mode=g supported_rates=60 90 120 180 240 360 480 540 basic_rates=60 120 240 beacon_int=100 chanlist=1 noscan=1 #num_global_macaddr=1 ieee80211n=1 ht_coex=0 ht_capab=[HT40+][SHORT-GI-20][SHORT-GI-40][TX-STBC][RX-STBC1] channel=1  interface=phy0-ap0 bssid=9c:9d:7e:c6:de:32 ctrl_interface=/var/run/hostapd ap_isolate=1 bss_load_update_period=60 chan_util_avg_period=600 disassoc_low_ack=1 skip_inactivity_poll=0 preamble=1 wmm_enabled=1 ignore_broadcast_ssid=0 uapsd_advertisement_enabled=1 utf8_ssid=1 multi_ap=0 wpa_passphrase=15797678348 wpa_psk_file=/var/run/hostapd-phy0-ap0.psk auth_algs=1 wpa=2 wpa_pairwise=CCMP ssid=爱琴 bridge=br-lan wds_bridge= snoop_iface=br-lan ft_iface=br-lan mobility_domain=123d ft_psk_generate_local=1 ft_over_ds=0 reassociation_deadline=1000 wpa_disable_eapol_key_retries=0 wpa_key_mgmt=WPA-PSK FT-PSK okc=
+Sat Feb  3 22:05:33 2024 kern.info kernel: [ 1550.139564] br-lan: port 4(phy0-ap0) entered blocking state
+Sat Feb  3 22:05:33 2024 kern.info kernel: [ 1550.145154] br-lan: port 4(phy0-ap0) entered disabled state
+Sat Feb  3 22:05:33 2024 kern.info kernel: [ 1550.151284] device phy0-ap0 entered promiscuous mode
+Sat Feb  3 22:05:33 2024 kern.info kernel: [ 1550.156508] br-lan: port 4(phy0-ap0) entered blocking state
+Sat Feb  3 22:05:33 2024 kern.info kernel: [ 1550.162130] br-lan: port 4(phy0-ap0) entered forwarding state
+Sat Feb  3 22:05:33 2024 daemon.notice hostapd: phy0-ap0: interface state UNINITIALIZED->COUNTRY_UPDATE
+Sat Feb  3 22:05:33 2024 kern.info kernel: [ 1550.172408] device phy0-ap0 left promiscuous mode
+Sat Feb  3 22:05:33 2024 kern.info kernel: [ 1550.177434] br-lan: port 4(phy0-ap0) entered disabled state
+Sat Feb  3 22:05:33 2024 kern.info kernel: [ 1550.240954] br-lan: port 4(phy0-ap0) entered blocking state
+Sat Feb  3 22:05:33 2024 kern.info kernel: [ 1550.246577] br-lan: port 4(phy0-ap0) entered disabled state
+Sat Feb  3 22:05:33 2024 kern.info kernel: [ 1550.252919] device phy0-ap0 entered promiscuous mode
+Sat Feb  3 22:05:33 2024 kern.info kernel: [ 1550.258413] br-lan: port 4(phy0-ap0) entered blocking state
+Sat Feb  3 22:05:33 2024 kern.info kernel: [ 1550.264021] br-lan: port 4(phy0-ap0) entered forwarding state
+Sat Feb  3 22:05:33 2024 daemon.notice netifd: lan (2365): udhcpc: sending renew to server 192.168.33.1
+Sat Feb  3 22:05:33 2024 daemon.notice netifd: lan (2365): udhcpc: lease of 192.168.33.212 obtained from 192.168.33.1, lease time 43200
+Sat Feb  3 22:05:33 2024 daemon.notice netifd: lan (2365): udhcpc: sending renew to server 192.168.33.1
+Sat Feb  3 22:05:33 2024 daemon.notice netifd: lan (2365): udhcpc: lease of 192.168.33.212 obtained from 192.168.33.1, lease time 43200
+Sat Feb  3 22:05:33 2024 daemon.notice netifd: Network device 'phy0-ap0' link is up
+Sat Feb  3 22:05:33 2024 kern.info kernel: [ 1550.479613] IPv6: ADDRCONF(NETDEV_CHANGE): phy0-ap0: link becomes ready
+Sat Feb  3 22:05:33 2024 daemon.notice hostapd: phy0-ap0: interface state COUNTRY_UPDATE->ENABLED
+Sat Feb  3 22:05:33 2024 daemon.notice hostapd: phy0-ap0: AP-ENABLED
+Sat Feb  3 22:05:33 2024 kern.info kernel: [ 1550.608140] br-lan: port 6(phy0-mesh0) entered blocking state
+Sat Feb  3 22:05:33 2024 kern.info kernel: [ 1550.613930] br-lan: port 6(phy0-mesh0) entered disabled state
+Sat Feb  3 22:05:33 2024 kern.info kernel: [ 1550.620473] device phy0-mesh0 entered promiscuous mode
+Sat Feb  3 22:05:33 2024 daemon.notice netifd: lan (2365): udhcpc: sending renew to server 192.168.33.1
+Sat Feb  3 22:05:33 2024 daemon.notice netifd: lan (2365): udhcpc: lease of 192.168.33.212 obtained from 192.168.33.1, lease time 43200
+Sat Feb  3 22:05:33 2024 daemon.notice wpa_supplicant[1248]: Set new config for phy phy0
+Sat Feb  3 22:05:33 2024 daemon.notice netifd: Wireless device 'radio0' is now up
+Sat Feb  3 22:05:35 2024 daemon.notice netifd: Network device 'phy0-ap0' link is down
+Sat Feb  3 22:05:35 2024 kern.info kernel: [ 1552.740076] br-lan: port 4(phy0-ap0) entered disabled state
+```
+
+### AP模式无法联网
+
+AP模式通常只保留了一个lan interface，如果设置为静态ip，那么要保证以下设置才能正常上网
+- 设置gateway
+- 设置custom dns
+- 禁用dnsmasq
+
+检查
+- ip ro查看是否有默认路由
+- vim /etc/resolve.conf是否是自定义的dns
+
+### 有线回程 + mesh导致延迟400ms
+
+op3
+- --- ax6s - - mesh
+- --- r3g-mesh1 - - mesh -- r3g-mesh2
+
+是不是造成循环了
+- 开启mesh节点，连接的其它mesh节点不能连接有线？
+
+ax6s
+- 2.4G AP: 1, 40MHz, AU, 20(27) dbm
+- 5G AP: 149, 80MHz, **AU, 27dbm**
+rm2100
+- 2.4G AP: disabled
+- 5G AP: 36, 80MHz, AU, 23dbm
+
+r3g-mesh1
+- 2.4G mesh + AP: 1, 40MHz, AU, 26dbm
+- 5G AP: 149, 80MHz, AU, 23dbm
+
+r3g-mesh2
+- 2.4G mesh + AP: 1, 40MHz, default, 20dbm
+- 5G AP: 52, 80MHz, CN, 23dbm
 ## 理论
 
 [CCIE Wireless: 802.11r (wirelessccie.blogspot.com)](http://wirelessccie.blogspot.com/2016/01/80211r.html?m=1)
