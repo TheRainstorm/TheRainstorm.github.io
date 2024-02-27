@@ -433,7 +433,7 @@ ip6_tunnel
 #### op1设置防火墙 wan forward
 
 - 将gre1设置为wan
-- 防火墙中，设置**wan zone forward为accept**（默认为reject）。**否则gre1设备上的包无法转发给wan下面的其他设备**
+- 防火墙中，设置**wan zone forward为accept**（默认为reject）。**否则gre1设备上来包无法从wan转发出去**，从而无法访问互联网。
 ![](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/20230915190627.png)
 
 ![](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/20230915190345.png)
