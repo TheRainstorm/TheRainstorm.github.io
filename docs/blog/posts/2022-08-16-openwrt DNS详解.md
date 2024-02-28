@@ -13,6 +13,7 @@ categories:
 ### openwrt DNS 说明
 
 参考：
+
 - [[OpenWrt Wiki\] DNS and DHCP configuration /etc/config/dhcp](https://openwrt.org/docs/guide-user/base-system/dhcp)
 - [[OpenWrt Wiki\] DNS and DHCP examples](https://openwrt.org/docs/guide-user/base-system/dhcp_configuration)
 
@@ -51,6 +52,7 @@ nameserver 2409:8a38:1610:9a80::1
 #### Luci 界面设置
 
 **LuCI → Network → Interfaces → WAN & WAN6 → Edit**
+
 - Use DNS servers advertised by peer
 - Use custom DNS servers
 
@@ -101,6 +103,7 @@ uci commit network
 可以在 windows 中自己设置 dns
 
 #### 使用 dhcp 选项设置客户端 dns
+
 - 可以不使用路由器的 DNS，让手机等设备直接使用公共 DNS 如 8.8.8.8
 - 手动修改每个客户端太麻烦，可以使用 DHCP 选项自动设置
 
@@ -118,7 +121,6 @@ uci add_list dhcp.lan.dns="2001:4860:4860::8844"
 uci commit dhcp
 /etc/init.d/odhcpd restart
 ```
-
 
 ### 调试
 
@@ -176,12 +178,15 @@ uci commit dhcp
 
 - A, AAAA 记录用于将域名解析到 IP
   - 下面表示 home 被解析为 10.10.10.1
+
   ```
   uci add_list dhcp.@dnsmasq[0].address="/home/10.10.10.1"
   uci commit dhcp
   /etc/init.d/dnsmasq restart
   ```
+
 - CNAME 用于将一个域名解析到另一个域名
+
   ```
   uci add dhcp cname
   uci set dhcp.@cname[-1].cname="ftp.example.com"
@@ -192,11 +197,11 @@ uci commit dhcp
 
 #### PXE 网络启动
 
-https://openwrt.org/docs/guide-user/base-system/dhcp_configuration#multi-arch_tftp_boot
+<https://openwrt.org/docs/guide-user/base-system/dhcp_configuration#multi-arch_tftp_boot>
 
 #### DHCP relay
 
-https://openwrt.org/docs/guide-user/base-system/dhcp#dhcp_relay
+<https://openwrt.org/docs/guide-user/base-system/dhcp#dhcp_relay>
 
 ### 常用网络命令
 
@@ -253,6 +258,7 @@ netstat -ntlp
 
 但是实现后，发现两个 search domain 间不是隔离的，guest 下明明没有一些 host，但是仍然能够解析。
 折腾了一圈貌似没有解决，因此**还是使用单个 search domain 算了**。
+
 ```
 64 bytes from ubuntu22.op1 (192.168.35.192): icmp_seq=31 ttl=64 time=0.060 ms
 64 bytes from ubuntu22.guest.op1 (192.168.35.192): icmp_seq=32 ttl=64 time=0.240 ms
@@ -266,16 +272,20 @@ netstat -ntlp
 64 bytes from ubuntu22.op1 (192.168.35.192): icmp_seq=40 ttl=64 time=0.045 ms
 64 bytes from ubuntu22.op1 (192.168.35.192): icmp_seq=41 ttl=64 time=0.060 ms
 ```
+
 ### 遇到的问题
 
 #### ipv6 图片显示不出来
+
 qq、咸鱼等 app 图片加载不出来，关掉再开启 wifi 就恢复正常。
 怀疑：
+
 - ipv6 dns 的问题
 - linux 下需要不断 flush neighbor，否则 ipv6 就会无法连接。是否和该问题有关？
 - 有时需要 ping 一下路由器，否则 ipv6 无法连接网络。
 
 ipv6 覆盖：
+
 - [IPv6 Measurement Maps (apnic.net)](https://stats.labs.apnic.net/ipv6/)
 
 参考：

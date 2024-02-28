@@ -10,7 +10,6 @@ categories:
 ---
 <!-- more -->
 
-
 ## 参考
 
 github action 基本教程：[GitHub Actions 入门教程 - 阮一峰的网络日志 (ruanyifeng.com)](https://www.ruanyifeng.com/blog/2019/09/getting-started-with-github-actions.html)
@@ -21,12 +20,14 @@ github action 基本教程：[GitHub Actions 入门教程 - 阮一峰的网络�
 - 可以有多个 workflow：For example, you can have one workflow to build and test pull requests, another workflow to deploy your application every time a release is created, and still another workflow that adds a label every time someone opens a new issue.
 
 ### 运行时机（触发一条 workflow）
-  -   Events that occur in your workflow's repository
-  -   Events that occur outside of GitHub and trigger a `repository_dispatch` event on GitHub
-  -   Scheduled times
-  -   Manual
+
+- Events that occur in your workflow's repository
+- Events that occur outside of GitHub and trigger a `repository_dispatch` event on GitHub
+- Scheduled times
+- Manual
 
 ### 例子
+
 ```yaml
 name: learn-github-actions
 run-name: ${{ github.actor }} is learning GitHub Actions
@@ -66,6 +67,7 @@ jobs:
 ### 重复执行 job(matrix)
 
 重复执行 3 次，每次使用不同 nodejs 版本
+
 ```yaml
 jobs:
   build:
@@ -78,7 +80,6 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
 ```
-
 
 ### steps.run
 
@@ -109,6 +110,7 @@ cache: [Caching dependencies to speed up workflows - GitHub Docs](https://docs.g
 artifacts: [Storing workflow data as artifacts - GitHub Docs](https://docs.github.com/en/actions/using-workflows/storing-workflow-data-as-artifacts)
 
 > For example, you can create a `key` using an expression that calculates the hash of an npm `package-lock.json` file. So, when the dependencies that make up the `package-lock.json` file change, the cache key changes and a new cache is automatically created.
+
 ```yaml
 npm-${{ hashFiles('package-lock.json') }}
 ```
@@ -149,6 +151,7 @@ jobs:
 json 数据结构的对象。包含多种类型 Context：`github, env, jobs, steps, runner, secrets, inputs`
 
 #### github
+
 ```json
 {
   "token": "***",
@@ -188,6 +191,7 @@ json 数据结构的对象。包含多种类型 Context：`github, env, jobs, st
 ```
 
 #### env
+
 ```yaml
 name: Hi Mascot
 on: push

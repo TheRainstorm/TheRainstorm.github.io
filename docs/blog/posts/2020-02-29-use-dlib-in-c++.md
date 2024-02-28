@@ -64,16 +64,16 @@ cmake --build . --config Release
 g++ -std=c++11 -O3 -I.. ../dlib/all/source.cpp -lpthread -lX11 example_program_name.cpp
 ```
 
-windows 下还需`gdi32, comctl32, user32, winmm, ws2_32, or imm32 `库
+windows 下还需`gdi32, comctl32, user32, winmm, ws2_32, or imm32`库
 
 ### with VisualStudio
 
 - 把 dlib 的**父目录**添加到 include search path
 
-  >  You should *NOT* add the dlib folder itself to your compiler's include path. 
-  >   Doing so will cause the build to fail because of name collisions (such as 
-  >   dlib/string.h and string.h from the standard library). Instead you should 
-  >   add the folder that contains the dlib folder to your include search path 
+  >  You should *NOT* add the dlib folder itself to your compiler's include path.
+  >   Doing so will cause the build to fail because of name collisions (such as
+  >   dlib/string.h and string.h from the standard library). Instead you should
+  >   add the folder that contains the dlib folder to your include search path
   >   and then use include statements of the form #include <dlib/queue.h> or
   >   #include "dlib/queue.h".  This will ensure that everything builds correctly.
 
@@ -83,7 +83,7 @@ windows 下还需`gdi32, comctl32, user32, winmm, ws2_32, or imm32 `库
   >   the solution explorer window.  Specifically, right click on Source Files,
   >   then select Add -> Existing Item and select the .cpp files you want to add.
 
-- 如果需要 libjpeg 等，把 dlib/external 文件夹下的源文件添加到 project，并 define the DLIB_PNG_SUPPORT and DLIB_JPEG_SUPPORT preprocessor directives. 
+- 如果需要 libjpeg 等，把 dlib/external 文件夹下的源文件添加到 project，并 define the DLIB_PNG_SUPPORT and DLIB_JPEG_SUPPORT preprocessor directives.
 
 ### Installing dlib as a precompiled library
 
@@ -93,10 +93,11 @@ dlib 的 CMake 脚本包含 INSTALL target，因此可以像其它 C++ 库一样
 
   说明：[Mixing Multiple Visual Studio Versions in a Program is Evil]( http://siomsystems.com/mixing-visual-studio-versions/)
 
-- 调用 dlib 时出现 USER_ERROR __inconsistent_build_configuration__ see_dlib_faq_2 错误。
+- 调用 dlib 时出现 USER_ERROR **inconsistent_build_configuration** see_dlib_faq_2 错误。
   需要将 build/dlib/config.h 文件拷贝到源码目录 dlib-19.17/dlib 进行覆盖。config.h 文件内有其说明。
 
 ## 配置 3d_face_reconstruction 总结
+
 ### 1. OpenCV
 
 1. windows 下载预编译版 (只含有 msvc 编译的版本)
@@ -127,8 +128,6 @@ dlib 的 CMake 脚本包含 INSTALL target，因此可以像其它 C++ 库一样
 ### 5. Qt
 
 1. 官方介绍了如何使用 CMake find_packages，自动 tic, moc 等。
-
-
 
 ### TODO
 

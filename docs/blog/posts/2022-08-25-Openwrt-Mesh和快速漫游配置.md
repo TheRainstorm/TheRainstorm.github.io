@@ -13,6 +13,7 @@ categories:
 家里原本有两个路由器，一个负责楼上，一个负责楼下。但是仍然有许多覆盖不到的地方，比如厨房。并且更影响体验的是楼上楼下的 WIFI 使用不同的 SSID，手机无法很好地自动切换。经常是楼上连接到楼下的网络导致信号很差。因此决定对家里的网络改造一番。
 
 以前听过 mesh 这个技术，可以将很多台路由器通过无线连接起来，共同提供一个网络。于是去搜索了 openwrt 是否支持 mesh，发现是可以的。并且经过进一步的了解，纠正了自己之前对无线网络的一些错误认知。
+
 - 首先，mesh 解决的并不是如何让设备自动切换网络，而是如何进行**无线组网**，可以避免布线的困难。mesh 节点通过同一个信道的的无线相互连接，而通过另一个无线提供 WIFI。
 - **快速漫游**(fast roaming) 协议，准确来说叫做 802.11r 协议，可以减少设备切换无线网络的耗时。
 
@@ -30,7 +31,6 @@ categories:
 - SSID、BSSID
   SSID 是无线网络的名称，不同的 AP 可以提供相同的 SSID。BSSID 是无线网络的 MAC 地址，是唯一的。
 
-
 802.11k:无线局域网频谱资源测量协议，由 AP 扫描周围邻居 AP 信息，配合终端扫描潜在漫游目标信息，解决何时漫游问题。  
 802.11v:无线网络管理协议，终端请求漫游目标（非必要），AP 建议终端漫游目标，解决漫游到何处问题。  
 802.11r:快速 BSS 转换协议，消除无线重关联过程中的握手开销，极大减少漫游时间，解决如何关重关联问题。
@@ -43,6 +43,7 @@ categories:
 ### 无线漫游的过程
 
 需要明白两件事
+
 - 第一，设备倾向于赖在同一个网络上。当 WIFI 的信号强度弱于 -70dB，且新 WIFI 的信号强度比原信号高 8-12dB 时才会选择切换网络。
 - 第二，连接一个网络需要经过一些耗时过程。
   1. 需要进行密钥交换、协商加密算法
@@ -50,6 +51,7 @@ categories:
 
 第一个问题，理论上路由器可以给设备发送信号使其选择切换无线网络，不过不知道目前有没有这么做。
 第二个问题
+
 - 对于密钥交换和协商的过程很明显是可以避免的，802.11s 协议应该就是节约了这部分的时间。只要配置成同一个域，那么在不同 BSSID 间切换就可以利用原有的连接。
 - 而对于获得 IP，只要路由器是 AP 模式，那么便可以直接使用原本的 IP 地址，因此也可以使用原本的 IP 地址。
 
@@ -57,6 +59,7 @@ categories:
 
 理论上不需要，但是有些硬件的 wifi 驱动可能会有问题（开源驱动基本不会有问题）
 可以通过 iw 查看驱动是否有 mesh 选项。
+
 ```
 iw list | grep "Supported interface modes" -A 9
 ```
@@ -71,10 +74,12 @@ iw list | grep "Supported interface modes" -A 9
 #### 安装 wpad
 
 openwrt wifi 功能由 wpad 包提供。openwrt 提供了多种 wpad 包，针对不同功能进行了剪裁，大小不同。不同包会冲突，只能使用一个。使用 wpad-mesh-openssl 即可。
+
 - wpad：最完整
 - wpad-openssl
 - **wpad-mesh-openssl**
 - wpad-basic-openssl：精简
+
 > Install either `wpad-mesh-openssl` (for devices with a lot of storage/memory) or `wpad-mesh-wolfssl` (for devices with low storage/memory)
 
 #### dummy AP 配置
@@ -94,6 +99,7 @@ ipv6 需要将 ra, dhcpv6, ndp 均设置为 disabled
 ##### LAN 接口 ip 地址
 
 LAN 接口需要设置 ip 地址，有两种方式（推荐第二种方法）
+
 - 设置静态地址，需要同时设置网关、DNS 为主路由
 
   ![image-20220825185519836](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/picgo/image-20220825185519836.png)
@@ -118,6 +124,7 @@ system->starup 中关闭一些不必要的服务，如 firewall, dnsmasq, odhcpd
 #### mesh 配置 (802.11s)
 
 mesh 需要占掉一个无线频段，这里我选择使用 2.4GHz。因为家里的宽带是 100MHz，因此 2.4GHz 的 144Mbps 带宽足够，然后就是 2.4GHz 的穿墙性能要好得多。
+
 - 选择一个 radio 新建一个网络，比如 2.4GHz radio
 
   ![image-20220825200934634](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/picgo/image-20220825200934634.png)
@@ -158,15 +165,16 @@ FT 协议的区别，个人感觉不太明显。
 
 在主路由上开启 iperf3 服务，手机上安装 iperf3 客户端测速，并在一楼和二楼走动。经验证确实可以自动实现网络漫游，走到某些位置时网速在降速后马上可以恢复。
 
-
 ## 例子
 
-rm2100: 
+rm2100:
+
 - 2.4G mesh + 2.4 Wifi (disabled)
 - 5G wifi
 r3g x 3
 - 2.4G mesh
 - 5G wifi
+
 ### 参考
 
 - 设置 AP 和快速漫游：[CHEAP WI-FI MESH ALTERNATIVE with fast roaming OpenWrt Wi-Fi Access points - YouTube](https://www.youtube.com/watch?v=kMgs2XFClaM)
@@ -174,7 +182,7 @@ r3g x 3
 - 802.11k, v, r 的介绍：[Fast Roaming with 802.11k, 802.11v, and 802.11r - Windows drivers | Microsoft Docs](https://docs.microsoft.com/en-us/windows-hardware/drivers/network/fast-roaming-with-802-11k--802-11v--and-802-11r)
 - FT over DS 还是 FT over Air[When does 802.11r "FT over DS" make sense to use? - Installing and Using OpenWrt / Network and Wireless Configuration - OpenWrt Forum](https://forum.openwrt.org/t/when-does-802-11r-ft-over-ds-make-sense-to-use/88893/2)
   - [802.11r Fast Roaming configuration (channels and FT) - Installing and Using OpenWrt - OpenWrt Forum](https://forum.openwrt.org/t/802-11r-fast-roaming-configuration-channels-and-ft/118917/8)
-    - Over-the-Air—The client communicates directly with the target AP using IEEE 802.11 authentication with the FT authentication algorithm. 
+    - Over-the-Air—The client communicates directly with the target AP using IEEE 802.11 authentication with the FT authentication algorithm.
     - Over-the-DS—The client communicates with the target AP through the current AP.
 
 ```
@@ -184,7 +192,9 @@ daemon.debug hostapd: wlan0: STA e0:...:30 WPA: FT authentication already comple
 ## 遇到问题
 
 ### mesh 设备未激活
+
 rm2100 开启 mesh，radio0 设备显示设备未激活
+
 ```
 Sat Feb  3 21:55:53 2024 daemon.notice hostapd: phy0-ap0: AP-DISABLED
 Sat Feb  3 21:55:53 2024 daemon.err hostapd: hostapd_free_hapd_data: Interface phy0-ap0 wasn't started
@@ -201,6 +211,7 @@ Sat Feb  3 21:55:55 2024 daemon.err wpa_supplicant[1248]: phy0-mesh0: mesh join 
 ```
 
 手动设置使用 channel 1, 设置 40MHz 频宽后突然可以了
+
 ```
 Sat Feb  3 22:05:21 2024 daemon.notice wpa_supplicant[1248]: Set new config for phy phy0
 Sat Feb  3 22:05:21 2024 daemon.notice hostapd: Set new config for phy phy0: /var/run/hostapd-phy0.conf
@@ -296,24 +307,29 @@ Sat Feb  3 22:05:35 2024 kern.info kernel: [ 1552.740076] br-lan: port 4(phy0-ap
 ### AP 模式无法联网
 
 AP 模式通常只保留了一个 lan interface，如果设置为静态 ip，那么要保证以下设置才能正常上网
+
 - 设置 gateway
 - 设置 custom dns
 - 禁用 dnsmasq
 
 检查
+
 - ip ro 查看是否有默认路由
 - vim /etc/resolve.conf是否是自定义的dns
 
 ### 有线回程 + mesh 导致延迟 400ms
 
 op3
+
 - --- ax6s - - mesh
 - --- r3g-mesh1 - - mesh -- r3g-mesh2
 
 是不是造成循环了
+
 - 开启 mesh 节点，连接的其它 mesh 节点不能连接有线？
 
 ax6s
+
 - 2.4G AP: 1, 40MHz, AU, 20(27) dbm
 - 5G AP: 149, 80MHz, **AU, 27dbm**
 rm2100
@@ -321,12 +337,15 @@ rm2100
 - 5G AP: 36, 80MHz, AU, 23dbm
 
 r3g-mesh1
+
 - 2.4G mesh + AP: 1, 40MHz, AU, 26dbm
 - 5G AP: 149, 80MHz, AU, 23dbm
 
 r3g-mesh2
+
 - 2.4G mesh + AP: 1, 40MHz, default, 20dbm
 - 5G AP: 52, 80MHz, CN, 23dbm
+
 ## 理论
 
 [CCIE Wireless: 802.11r (wirelessccie.blogspot.com)](http://wirelessccie.blogspot.com/2016/01/80211r.html?m=1)
@@ -334,8 +353,10 @@ r3g-mesh2
 - The **reassociation timeout** determines the duration for which the newly negotiated key is valid. By default, if the client does not make the jump within 20 seconds, the next AP cancels the PMK-R1, considering that the client went elsewhere.
 
 无线抓包很难办到
+
 - 需要专门的网卡和驱动
 - [在 Windows 电脑上通过 wireshark 直接无线抓包的方式 - 知了社区 (h3c.com)](https://zhiliao.h3c.com/theme/details/183006)
+
 ## 测试
 
 ```
@@ -343,6 +364,7 @@ r3g-mesh2
 ```
 
 正常无线连接 op3
+
 ```
 Thu Aug 17 22:58:44 2023 daemon.debug hostapd: wlan1: STA 2a:85:8f:ff:be:e3 IEEE 802.11: authentication OK (open system)
 Thu Aug 17 22:58:44 2023 daemon.debug hostapd: wlan1: STA 2a:85:8f:ff:be:e3 WPA: event 0 notification
@@ -372,6 +394,7 @@ Thu Aug 17 22:58:45 2023 daemon.info dnsmasq-dhcp[1]: DHCPACK(br-lan) 192.168.33
 ```
 
 FT 漫游到 r3g
+
 ```
 Thu Aug 17 23:01:41 2023 daemon.notice hostapd: wlan1: AP-STA-DISCONNECTED 2a:85:8f:ff:be:e3
 Thu Aug 17 23:01:41 2023 daemon.err hostapd: nl80211: kernel reports: key addition failed
@@ -388,6 +411,7 @@ Thu Aug 17 23:01:41 2023 daemon.debug hostapd: wlan1: STA 2a:85:8f:ff:be:e3 WPA:
 ```
 
 在 op3 上还能看到 dhcp
+
 ```
 Thu Aug 17 23:01:42 2023 daemon.info dnsmasq-dhcp[1]: DHCPDISCOVER(br-lan) 2a:85:8f:ff:be:e3
 Thu Aug 17 23:01:42 2023 daemon.info dnsmasq-dhcp[1]: DHCPOFFER(br-lan) 192.168.33.218 2a:85:8f:ff:be:e3

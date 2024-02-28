@@ -260,7 +260,7 @@ ucore 实现了二级页表
 
 ```c
 pte_t *get_pte(pde_t *pgdir, uintptr_t la, bool create);
-struct Page *get_page(pde_t *pgdir, uintptr_t la, pte_t **ptep_store);	//根据 pte 的值获得对应的 page
+struct Page *get_page(pde_t *pgdir, uintptr_t la, pte_t **ptep_store); //根据 pte 的值获得对应的 page
 void page_remove(pde_t *pgdir, uintptr_t la);
 int page_insert(pde_t *pgdir, struct Page *page, uintptr_t la, uint32_t perm);
 struct Page * pgdir_alloc_page(pde_t *pgdir, uintptr_t la, uint32_t perm);
@@ -273,7 +273,7 @@ pte_t *get_pte(pde_t * pgdir, uintptr_t la, bool create)
 ```
 
 函数作用：给定页目录表的虚拟地址，查找虚拟地址 la 对应的页表项 pte。（只要 la 在一个页内，返回的 pte 是相同的）
-	注：获得的是 pte 项的**虚拟地址**
+ 注：获得的是 pte 项的**虚拟地址**
 过程：
 
 1. 先计算页目录表中对应 pde 表项的虚拟地址
@@ -468,7 +468,7 @@ struct Page * pgdir_alloc_page(pde_t *pgdir, uintptr_t la, uint32_t perm)
          return !(tf->tf_status & KSU_USER);
        }
        ```
-       
+
    2. 然后获得 pte
 
        ```c
@@ -518,7 +518,7 @@ vma 用于描述进程对虚拟内存的需求
 ```c
 struct vma_struct {
     struct mm_struct *vm_mm; // the set of vma using the same PDT 
-    uintptr_t vm_start;      //	start addr of vma	
+    uintptr_t vm_start;      // start addr of vma 
     uintptr_t vm_end;        // end addr of vma
     uint32_t vm_flags;       // flags of vma
     list_entry_t list_link;  // linear list link which sorted by start addr of vma
@@ -535,10 +535,10 @@ struct mm_struct {
     struct vma_struct *mmap_cache; // current accessed vma, used for speed purpose
     pde_t *pgdir;                  // the PDT of these vma
     int map_count;                 // the count of these vma
-	void *sm_priv;				   // the private data for swap manager
-	atomic_t mm_count;
-	semaphore_t mm_sem;
-	int locked_by;
+ void *sm_priv;       // the private data for swap manager
+ atomic_t mm_count;
+ semaphore_t mm_sem;
+ int locked_by;
 };
 ```
 
@@ -561,9 +561,9 @@ void insert_vma_struct(struct mm_struct *mm, struct vma_struct *vma);
     ```c
     check_mm_struct = mm_create();
     ```
-    
+
     这里的`check_mm_struct`为全局变量
-    
+
 2. 分配[0, PTSIZE]的虚拟内存
 
     ```c
@@ -614,7 +614,7 @@ check_pgfault() succeeded!
 static inline int get_error_code(int write, pte_t *pte)
 {
   int r = 0;
-  if(pte!=NULL && ptep_present(pte))	//因为 pagefault 的条件 (pte==NULL || ptep_invalid(pte))，这里根本不可能为真
+  if(pte!=NULL && ptep_present(pte)) //因为 pagefault 的条件 (pte==NULL || ptep_invalid(pte))，这里根本不可能为真
     r |= 0x01;
   if(write)
     r |= 0x02;
@@ -725,7 +725,7 @@ failed:
 
 3. fp 寄存器（也是 s8）用于指向栈帧的第一个元素。因为 x86 中提供了 push 和 pop 指令，sp 的位置是变化的，要引用不同变量的值是用 fp 更方便。而 MIPS 中则是在函数的开头手动将 sp 设置，sp 之后的值不会变化，因此 fp 貌似作用不大。
 
-4.  gp 寄存器，用于程序访问全局变量（比如函数的地址）。
+4. gp 寄存器，用于程序访问全局变量（比如函数的地址）。
 
    > ps. 使用 mipsel-linux-gnu-gcc -S 编译一个简单的函数调用测试代码。不知为什么和上面讲的 caller-save，callee-save 对不上。比如函数开头`addiu $sp,$sp,-40`，但结果却根本没用上这么大的空间。然后，为什么还会出现`sw $a0,40($fp)`，即将参数`a0`写入父函数栈帧的情况。（这个然后 fp 和 sp 始终相等，不知道为什么要去存储 fp
 
@@ -763,14 +763,14 @@ struct proc_struct {
 
 ```c
 struct trapframe {
-	uint32_t tf_vaddr;	/* coprocessor 0 vaddr register */
-	uint32_t tf_status;	/* coprocessor 0 status register */
-	uint32_t tf_cause;	/* coprocessor 0 cause register */
-	uint32_t tf_lo;
-	uint32_t tf_hi;
-	uint32_t tf_ra;	/* Saved register 31 */
+ uint32_t tf_vaddr; /* coprocessor 0 vaddr register */
+ uint32_t tf_status; /* coprocessor 0 status register */
+ uint32_t tf_cause; /* coprocessor 0 cause register */
+ uint32_t tf_lo;
+ uint32_t tf_hi;
+ uint32_t tf_ra; /* Saved register 31 */
   struct pushregs tf_regs;
-	uint32_t tf_epc;	/* coprocessor 0 epc register */
+ uint32_t tf_epc; /* coprocessor 0 epc register */
 };
 ```
 
@@ -794,10 +794,10 @@ uCore 内核允许嵌套中断。因此为了了保证嵌套中断发⽣生时 t
 > ```assembly
 > mfc0 k0, CP0_STATUS /* Get status register */
 > andi k0, k0, KSU_USER/* Check the we-were-in-user-mode bit */
-> beq	k0, $0, 1f		/* If clear, from kernel, already have stack */
+> beq k0, $0, 1f  /* If clear, from kernel, already have stack */
 > ```
 >
-> 
+>
 
 ###### kstack
 
@@ -815,22 +815,20 @@ uCore 内核允许嵌套中断。因此为了了保证嵌套中断发⽣生时 t
 
 ##### 创建内核线程
 
-
-
 ###### idle
 
 proc_init 函数启动了创建内核线程的步骤。首先当前的执行上下文（从 kern_init 启动至今）就可以看成是 uCore 内核中的一个内线程的上下文。为此，uCore 调用 alloc_proc 函数给当前执行的上下文分配一个进程控制块并在 proc_init 中对它进行相应初始化，将其打造成第 0 个内核线程 --idleproc。
 
 ```c
    //alloc_proc
-   proc->mm = NULL;				//不需要，所有内核进程公用一个页表
-   proc->cr3 = boot_cr3;		//在 pmm_init 中分配为 PADDR(boot_pgdir)
+   proc->mm = NULL;    //不需要，所有内核进程公用一个页表
+   proc->cr3 = boot_cr3;  //在 pmm_init 中分配为 PADDR(boot_pgdir)
    
    //proc_init
    idleproc->pid = 0;
    idleproc->state = PROC_RUNNABLE;
-   idleproc->kstack = (uintptr_t)bootstack;	//在 entry.S 中设置的
-   idleproc->need_resched = 1;	//表明在 kern_init 后会切换
+   idleproc->kstack = (uintptr_t)bootstack; //在 entry.S 中设置的
+   idleproc->need_resched = 1; //表明在 kern_init 后会切换
 ```
 
 ###### init(kernel_thread & do_fork)
@@ -840,8 +838,8 @@ idle 内核线程主要工作是完成内核中各个子系统的初始化，idl
 kernel_thread 简单来说为新进程分配了 PCB 空间，和 kstack 空间。
 
 ```c
- 	//proc_init
-	int pid = kernel_thread(init_main, NULL, 0);
+  //proc_init
+ int pid = kernel_thread(init_main, NULL, 0);
     if (pid <= 0) {
         panic("create init_main failed.\n");
     }
@@ -985,7 +983,7 @@ bad_fork_cleanup_proc:
 // init_main - the second kernel thread used to create user_main kernel threads
 static int
 init_main(void *arg) {
-	...
+ ...
     int pid = kernel_thread(user_main, NULL, 0);
     if (pid <= 0) {
         panic("create user_main failed.\n");
@@ -1080,7 +1078,7 @@ kernel_execve -> SYSCALL -> sys_exec -> do_execve
    3. 清空原本的 mm。vma，分配的 Page，页表等等都会被清除。(user 此时是内核进程，因此没有 mm)
 
       ```c
-      	if (mm != NULL) {
+       if (mm != NULL) {
               lcr3(boot_cr3);
               if (mm_count_dec(mm) == 0) {
                   exit_mmap(mm);
@@ -1107,7 +1105,7 @@ kernel_execve -> SYSCALL -> sys_exec -> do_execve
    // 2. create a new PDT, and mm->pgdir= kernel virtual addr of PDT
    // 3. copy TEXT/DATA/BSS parts in binary to memory space of process
    // 4. call mm_map to setup user stack, and put parameters into user stack
-   // 5. setup trapframe for user environment	
+   // 5. setup trapframe for user environment 
    static int
    load_icode(int fd, int argc, char **kargv)
    ```
@@ -1115,7 +1113,7 @@ kernel_execve -> SYSCALL -> sys_exec -> do_execve
    1. 创建新的 mm
 
       ```c
-      	struct mm_struct *mm;
+       struct mm_struct *mm;
           if ((mm = mm_create()) == NULL) {
               goto bad_mm;
           }
@@ -1131,7 +1129,7 @@ kernel_execve -> SYSCALL -> sys_exec -> do_execve
           off_t phoff = elf->e_phoff + sizeof(struct proghdr) * phnum;
           if ((ret = load_icode_read(fd, ph, sizeof(struct proghdr), phoff)) != 0) {
               goto bad_cleanup_mmap;
-      	}
+       }
           ...
       ```
 
@@ -1156,7 +1154,7 @@ kernel_execve -> SYSCALL -> sys_exec -> do_execve
    3. 根据每个 ph 的信息，添加 vma。这里用的是 ph->p_memsz。
 
       ```c
-      	vm_flags = 0;
+       vm_flags = 0;
             //ptep_set_u_read(&perm);
           perm |= PTE_U;
           if (ph->p_flags & ELF_PF_X) vm_flags |= VM_EXEC;
@@ -1197,7 +1195,7 @@ kernel_execve -> SYSCALL -> sys_exec -> do_execve
    5. 设置 bss 段（猜测）
 
       ```c
-      	end = ph->p_va + ph->p_memsz;
+       end = ph->p_va + ph->p_memsz;
       
           if (start < la) {
               if (start >= end) {
@@ -1229,7 +1227,7 @@ kernel_execve -> SYSCALL -> sys_exec -> do_execve
    6. 映射用户栈空间（添加 vma，当发生 pagefault 时，异常处理程序会自动分配物理页）
 
       ```c
-      	vm_flags = VM_READ | VM_WRITE | VM_STACK;
+       vm_flags = VM_READ | VM_WRITE | VM_STACK;
           if ((ret = mm_map(mm, USTACKTOP - USTACKSIZE, USTACKSIZE, vm_flags, NULL)) != 0) {
               goto bad_cleanup_mmap;
           }
@@ -1238,7 +1236,7 @@ kernel_execve -> SYSCALL -> sys_exec -> do_execve
    7. 将函数调用参数压入用户栈中
 
       ```c
-        	uintptr_t stacktop = USTACKTOP - argc * PGSIZE;
+         uintptr_t stacktop = USTACKTOP - argc * PGSIZE;
           char **uargv = (char **)(stacktop - argc * sizeof(char *));
           int i;
           for (i = 0; i < argc; i ++) {
@@ -1255,7 +1253,7 @@ kernel_execve -> SYSCALL -> sys_exec -> do_execve
       3. 在 tf->tf_status 中设置了 KSU_USER，因此从 SYSCALL 返回后，CPU 会转变为用户态。
 
       ```c
-      	struct trapframe *tf = current->tf;
+       struct trapframe *tf = current->tf;
           memset(tf, 0, sizeof(struct trapframe));
       
           tf->tf_epc = elf->e_entry;
@@ -1388,7 +1386,7 @@ proc_run 会调用 switch_to，switch_to 会：
    // init_main - the second kernel thread used to create user_main kernel threads
    static int
    init_main(void *arg) {
-   	...
+    ...
        int pid = kernel_thread(user_main, NULL, 0);
        if (pid <= 0) {
            panic("create user_main failed.\n");
@@ -1447,7 +1445,5 @@ proc_run 会调用 switch_to，switch_to 会：
        exit(ret);
    }
    ```
-
-
 
 #### ide_init & fs_init

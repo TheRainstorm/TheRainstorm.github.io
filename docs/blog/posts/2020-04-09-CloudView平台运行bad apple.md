@@ -31,8 +31,6 @@ categories:
 
 于是便想知道 32 个核时，能提升多少，便想在服务器上跑跑看。以下是配置运行过程。
 
-
-
 出人意料的结果：
 
 |          | 1 进程 | 4 线程 | 8 进程 | 16 进程 | 32 进程 |
@@ -44,7 +42,6 @@ categories:
 <!-- more -->
 
 ## 安装 python3
-
 
 首先发现没有 python3，于是想办法去安装 python3。
 
@@ -70,15 +67,11 @@ sudo make install
 
 试错后知道需要 zlib, openssl 库（去官网下载源码，编译安装）
 
-
-
 事实上搜索 centos 编译安装 python3 会告诉你需要以下这么多库，由于这里是内网环境，因此只能一个一个去下载编译。（但事实上可以使用方法 2 中的方法，搭好 yum 的本地源，从而可以使用 yum，虽然这样的话可以直接用 yum 安装 python，但是本地源中的 python 为固定版本，而编译安装可以从官网上下载不同的版本。并且推广来说，对于一些必须编译安装的软件，通过 yum 安装必要的库，然后编译安装是一种比较好的方式）
 
 ```
 yum install zlib-devel bzip2-devel openssl-devel ncurses-devel sqlite-devel readline-devel tk-devel libffi-devel gcc make
 ```
-
-
 
 上面的默认安装路径为/usr/loacl/bin，库文件则安装到/usr/local/lib。（也有可能/usr/local/lib64）
 
@@ -88,9 +81,7 @@ yum install zlib-devel bzip2-devel openssl-devel ncurses-devel sqlite-devel read
 
 还是默认路径比较好，不过自定义安装路径可以不需要 root 权限。（只要把程序安装到非 root 用户可以读写的目录下就可，上面的示例其实也需要 root 权限，但用户的 home 路径下应该可以随便装。还有非 root 安装时，最后需要里添加环境变量 LD_LIBTARY_PATH，而不是修改 ld.so.conf(需要 root 权限)）
 
-
-
-### 方法 2：
+### 方法 2
 
 配置本地 yum 源
 
@@ -132,8 +123,6 @@ yum install zlib-devel bzip2-devel openssl-devel ncurses-devel sqlite-devel read
 4. 可以使用 yum 安装一些常见的软件了。
 
 我先采用了方式 1，虽然可以运行 python 了，但编译时的各种缺库的报错总让我觉得它有一些问题。后面又采用了方式 2 来安装 python
-
-
 
 ## 离线安装 opencv
 
@@ -181,8 +170,6 @@ conda install pip #默认没有安装pip
 pip install opencv-python #采用pip，因为我们就是想知道opencv-python的pip包需要哪些依赖。正常使用最好使用conda代替pip
 ```
 
-
-
 最后下载的便是以下的包了，可以发现 cp37 变成了 cp36
 
 ```
@@ -202,8 +189,6 @@ pip is configured with locations that require TLS/SSL, however the ssl module in
 Could not fetch URL https://pypi.org/simple/pip/: There was a problem confirming the ssl certificate: HTTPSConnectionPool(host='pypi.org', port=443): Max retries exceeded with url: /simple/pip/ (Caused by SSLError("Can't connect to HTTPS URL because the SSL module is not available.",)) - skipping
 ```
 
-
-
 python 运行时又报出一些动态链接库找不到（因该还是编译 python 时，没安装全那些库导致的），解决后便可以运行 bad apple 了。
 
 ```
@@ -216,4 +201,3 @@ Traceback (most recent call last):
 ImportError: libSM.so.6: cannot open shared object file: No such file or directory
 还有libXrender等
 ```
-

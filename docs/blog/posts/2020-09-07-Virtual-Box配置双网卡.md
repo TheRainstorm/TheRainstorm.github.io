@@ -9,6 +9,7 @@ categories:
 ---
 
 由于目前在电脑上运行一个虚拟机已经比较流畅，而虚拟机又有着真机无法比拟的优势，如：
+
 - 可以快速地进行备份与还原，且备份的虚拟机镜像可以复制到其它电脑上
 - 可以保存虚拟机当前的运行状态（快速休眠），而下次启动时恢复运行（且速度很快）
 
@@ -27,6 +28,7 @@ categories:
 ### 基本知识
 
 虚拟机配置网络有三种方式：
+
 1. NAT
 2. 桥接模式
 3. Host-Only
@@ -74,7 +76,7 @@ ssh user@127.0.0.1 -p 2333
     ```bash
     ssh-keygen
     ```
-    
+
     会在~/.ssh 下生成公钥和私钥`id_rsa.pub, id_rsa`
 
 2. 将公钥复制到虚拟机的`~/.ssh/authorized_keys`中，或使用`ssh-copy-id`命令
@@ -82,9 +84,9 @@ ssh user@127.0.0.1 -p 2333
     ```bash
     ➜  ~ ssh-copy-id -h              
     Usage: /usr/bin/ssh-copy-id [-h|-?|-f|-n] [-i [identity_file]] [-p port] [[-o <ssh -o options>] ...] [user@]hostname
-    	-f: force mode -- copy keys without trying to check if they are already installed
-    	-n: dry run    -- no keys are actually copied
-    	-h|-?: print this help
+     -f: force mode -- copy keys without trying to check if they are already installed
+     -n: dry run    -- no keys are actually copied
+     -h|-?: print this help
     ```
 
     此时再 ssh 已经不用输入密码了
@@ -124,4 +126,3 @@ network:
       nameservers:
               addresses: [223.5.5.5, 223.6.6.6]
 ```
-

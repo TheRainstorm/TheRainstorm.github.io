@@ -57,7 +57,7 @@ categories:
 
 ### 摄像头
 
-- 笔记本摄像头效果：1280x720 
+- 笔记本摄像头效果：1280x720
 
   ![image-20220814120138521](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/picgo/image-20220814120138521.png)
 
@@ -73,9 +73,9 @@ categories:
 
 - 罗技 C270i: 100。日常视频。720p
 
-- elgato: https://www.bilibili.com/video/BV1gY411s7zH
+- elgato: <https://www.bilibili.com/video/BV1gY411s7zH>
 
-- https://www.bilibili.com/video/BV1WN4y157hA
+- <https://www.bilibili.com/video/BV1WN4y157hA>
 
 ### 基本方案
 

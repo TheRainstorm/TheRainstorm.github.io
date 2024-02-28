@@ -47,13 +47,14 @@ categories:
 
 ### 通过 virt-manger 创建虚拟机
 
-**libvirt**是一个开源的虚拟机管理 API，可以管理 KVM, Xen, VMvare, QEMU 等虚拟化工具的虚拟机。包含库 (libvirt)、命令行工具 (virsh)、和 virt-manger 等 GUI 工具。参考：https://wiki.libvirt.org/page/FAQ
+**libvirt**是一个开源的虚拟机管理 API，可以管理 KVM, Xen, VMvare, QEMU 等虚拟化工具的虚拟机。包含库 (libvirt)、命令行工具 (virsh)、和 virt-manger 等 GUI 工具。参考：<https://wiki.libvirt.org/page/FAQ>
 
 使用 virt-manger 创建 win10 虚拟机，详细步骤参考：[How To Install Windows 10 on Ubuntu KVM? – Getlabsdone.com](https://getlabsdone.com/install-windows-10-on-ubuntu-kvm/)。这里就不再详细介绍了，只提一些注意点。
 
 #### 添加磁盘不同方式
 
 添加磁盘有多种方式，不同方式的性能对比：[(89) Adding VirtIO and passthrough storage in Virtual Machine Manager - YouTube](https://www.youtube.com/watch?v=oSpGggczD2Y)
+
 - 创建 qcow2 文件
   - 可以选择 virtio, SATA 等总线协议。virtio 性能最好，但是安装 windows 时需要额外安装驱动。
 - 利用已有磁盘分区，同样可以选择 virtio, SATA 等总线协议。
@@ -63,7 +64,6 @@ categories:
 
 - 在安装好 windows 虚拟机后，运行 virtio drivers iso 中的`virtio-win-guest-tools.exe`，该程序会安装其余驱动程序。比较重要的是 QXL 显示适配器驱动，该驱动会使得显示更加流畅
 
-
 此时 windows 虚拟机已经可以使用了。但是创建虚拟机时，默认会使用默认的网桥`virbr0`，而它是 NAT 的，有自己的地址段。因此 host 可以访问虚拟机，但是从 host 外无法访问虚拟机。
 
 为了让其它设备也能自由访问虚拟机，需要设置下面要介绍的虚拟网桥
@@ -71,6 +71,7 @@ categories:
 ### 修改为桥接网络
 
 使用 docker、lxc、libvirt 时，都会创建默认的 bridge 设备，如 virbr0 便是 libvirt 创建的。
+
 ```bash
 ➜  ~ brctl show
 bridge name     bridge id               STP enabled     interfaces
@@ -84,17 +85,19 @@ virbr0          8000.525400bf6a2c       yes             vnet0
 ```
 
 libvirt 创建不同类型网络参考：[Networking - Libvirt Wiki](https://wiki.libvirt.org/page/Networking)
+
 - nat：虚拟机位于一个虚拟的网段，通过 nat 到宿主机上网。libvirt 默认提供一个叫做`default`的网络
 - bridge：虚拟机和物理机共享网络。
 
-
 虚拟机想要使用 bridge 模式来说，分为两步
+
 - 在 linux 中创建 bridge 设备
 - virt-manger 中创建网络，使用该 bridge 设备
 
 #### netplan/networkd创建bridge
 
 ubuntu20.04 起使用 netplan 管理网络，桌面版的 render 使用 NetworkManger，服务器版则使用 networkd。
+
 - NetworkManger 用于图形化界面管理网络
 - networkd 使用配置文件管理
 对于复杂的网络来说，还是 networkd 更合适。
@@ -102,6 +105,7 @@ ubuntu20.04 起使用 netplan 管理网络，桌面版的 render 使用 NetworkM
 *ps. 还有其它方式，如使用 iproute2/ip, bridge-utils/brctl创建bridge，参考：[Network bridge - ArchWiki (archlinux.org)](https://wiki.archlinux.org/title/network_bridge)*
 
 - 关闭 NetworkManger，启动 networkd
+
 ```
 sudo systemctl stop NetworkManager
 sudo systemctl disable NetworkManager
@@ -109,9 +113,11 @@ sudo systemctl disable NetworkManager
 sudo systemctl enable systemd-networkd
 sudo systemctl start systemd-networkd
 ```
+
 - 编辑配置文件
   - eth0 改为实际网卡名字，pcie 网卡前缀一般为 enp
   - 其中 eth0 dchp4 false 表示该接口上不会尝试去 dhcp 请求 ip 地址。要想访问 host，需要通过 br0 的 ip 地址
+
 ```
 cd /etc/netplan/
 # 备份原本的配置
@@ -134,7 +140,8 @@ network:
       interfaces:
         - eth0
 ```
-- 应用`netplan apply 
+
+- 应用`netplan apply
 
 #### NetworkManger(不推荐)
 
@@ -148,19 +155,23 @@ nmcli con add type bridge-slave ifname enp7s0 master br0
 ```
 
 **注意点**
+
 - 启用了 bridge 设备时，需要关闭原有以太网设备。之后访问机器得通过 br0。
+
   ```bash
   sudo nmcli con down "Wired connection 1"
   sudo nmcli con up br0
   ```
+
   - ssh 连接时会导致连接断开，因此需要用脚本执行上面两条命令。
-  - 新启用的 br0 会拥有 LAN 的 ip 地址，但是地址相较于原本地址会发生改变。可以在路由器中看到新的 ip 地址，然后 ssh 连接 
+  - 新启用的 br0 会拥有 LAN 的 ip 地址，但是地址相较于原本地址会发生改变。可以在路由器中看到新的 ip 地址，然后 ssh 连接
     - 或者使用 wifi 维持另一个网络连接
 - 无法在 wifi 设备上创建 bridge，只能是有线以太网。
 
 #### virt-manger 添加网络
 
 virt-manger 中，在编辑->连接详情->虚拟网络添加一个网络
+
 ```xml
 <network>
   <name>br0</name>
@@ -172,25 +183,29 @@ virt-manger 中，在编辑->连接详情->虚拟网络添加一个网络
 ## 显卡直通
 
 ### 参考资料
+
 - 最完整的 Arch wiki：[PCI passthrough via OVMF - ArchWiki (archlinux.org)](https://wiki.archlinux.org/title/PCI_passthrough_via_OVMF)
 - KVM 创建虚拟机并显卡直通详细博客：[Creating a Windows 10 kvm VM on the AMD Ryzen 9 3900X using VGA Passthrough - Heiko's Blog % Virtualization (heiko-sieger.info)](https://www.heiko-sieger.info/creating-a-windows-10-vm-on-the-amd-ryzen-9-3900x-using-qemu-4-0-and-vga-passthrough/)
 - 帮助我解决了 windows 蓝屏问题的博客：[GPU passthrough - my switch to Linux - twenska is writing…](https://blog.twenska.de/blog/GPU_passthrough/)
 - 比较好的 github page：[GPU Passthrough on GNU/Linux | gpu-passthrough (clayfreeman.github.io)](https://clayfreeman.github.io/gpu-passthrough/)
 
 PVE 资料
-- https://pve.proxmox.com/wiki/PCI_Passthrough
+
+- <https://pve.proxmox.com/wiki/PCI_Passthrough>
 - [Download (spice-space.org)](https://www.spice-space.org/download.html#windows-binaries)
 - AMD 5000XT, 6000XT, reset bug: [gnif/vendor-reset: Linux kernel vendor specific hardware reset module for sequences that are too complex/complicated to land in pci_quirks.c (github.com)](https://github.com/gnif/vendor-reset)
 
 ### 步骤总结
 
 对于可热插拔的设备，在 virt-manger 中添加需要直通的 host pci 设备即可（可热插拔的设备，虚拟机启动时 vfio_pci 接管设备驱动，关闭虚拟机时，host 可重新访问），但是对于显卡这种无法热插拔的设备，则较为复杂：
+
 - 需要通过 lspci 命令，查看 pci 设备的总线地址，设备 id，以及所处的 IOMMU group
 - 如果显卡单独位于一个 IOMMU group，则可以直通，可以进行之后步骤
   - 否则，尝试移动显卡位置（另一个 pciex16 的槽），看是否为单独 group
   - 不行的话需要尝试 ACS patch（见后），可能导致不稳定
 
 确定可以直通后步骤：
+
 - bios 开启**虚拟化**(intel: vt-x, AMD: SVM) 和**iommu**(intel: vt-d, AMD: AMD-Vi) 支持
   - 以我的 AMD 平台为例，需要开启 SVM，IOMMU，ACS（位于 AMD CBS 中，BIOS 中搜索关键词即可）
 - virt-manger 中添加 pci 设备，选择显卡 group 下的所有设备（通常另一个为声卡）
@@ -198,13 +213,15 @@ PVE 资料
   - 开启 iommu
   - 在启动时将显卡绑定到 vifo_pci 驱动上（还有相同 group 下的声卡）
   - 最终我的启动参数示例
+
   ```bash
   GRUB_CMDLINE_LINUX_DEFAULT="quiet splash amd_iommu=on vfio_pci.ids=10de:1d01,10de:0fb8 kvm.ignore_msrs=1"
   ```
 
 - 显卡处于虚拟化环境中会拒绝工作，需要在 virt-manger XML 中添加额外参数。参考[archiwiki](https://wiki.archlinux.org/title/PCI_passthrough_via_OVMF#Video_card_driver_virtualisation_detection)
-  -  vendor_id：对于 Nvidia 的显卡，会报 43 错误。在早期的驱动需要下面的 vendor_id，*但是最新的显卡驱动已经不需要了*。在 windows 内更新显卡驱动便会正常工作。
+  - vendor_id：对于 Nvidia 的显卡，会报 43 错误。在早期的驱动需要下面的 vendor_id，*但是最新的显卡驱动已经不需要了*。在 windows 内更新显卡驱动便会正常工作。
   - hidden：让显卡不知道位于虚拟机中（windows 还是知道的）
+
   ```
   <features>
     ...
@@ -221,6 +238,7 @@ PVE 资料
   ```
 
 ### 什么是 IOMMU
+
 关于 IOMMU 和 ACS：[](https://vfio.blogspot.com/2014/08/iommu-groups-inside-and-out.html)
 
 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/MMU_and_IOMMU.svg/564px-MMU_and_IOMMU.svg.png" alt="img" style="zoom:50%;" />
@@ -239,6 +257,7 @@ PCIe 连接的通道由 CPU 或者主板芯片组（以前的南北桥）提供�
 ### 查看主板 iommu 组分布
 
 使用下面脚本，得到主板上 iommu 组的信息
+
 ```bash
 #!/bin/bash
 shopt -s nullglob
@@ -252,6 +271,7 @@ done;
 
 **我的 IOMMU 分布**
 可知：
+
 - 靠近 CPU 一侧的 nvme 插槽（PCIE 4.0 x 4）位于单独的 14 号组（CPU 通道）
 - 位于靠近 CPU 的一侧的显卡插槽（PCIE 4.0 x16）位于单独的 16 号组（CPU 通道）
 - 其余：显卡插槽 2（PCIE 3.0 x4）、nvme 插槽（PCIE 3.0 x 4）、以太网卡、wifi6 无线网卡和 SATA 控制器、USB 控制器均位于 15 号组（主板通道）
@@ -307,15 +327,17 @@ Group:  21  0000:0a:00.4 Audio device [0403]: Advanced Micro Devices, Inc. [AMD]
 主板上的不同 PCIe slot 可以连接到 CPU 上或者 PCH(主板芯片组) 上。我的主板貌似将所有设备都放入了一个 group。因此我的显卡 2 和 nvme 固态盘等设备都无法直通。
 
 对于一个组里有很多设备有一些解决方法：[IOMMU Groups - What You Need to Consider - Heiko's Blog - VFIO (heiko-sieger.info)](https://www.heiko-sieger.info/iommu-groups-what-you-need-to-consider/)
+
 - 更新内核版本，新的内核版本可能对主板支持的更好，IOMMU group 会改变
 - 移动设备位置
-- 安装 kernel patch：https://wiki.archlinux.org/title/PCI_passthrough_via_OVMF#Bypassing_the_IOMMU_groups_(ACS_override_patch)
+- 安装 kernel patch：<https://wiki.archlinux.org/title/PCI_passthrough_via_OVMF#Bypassing_the_IOMMU_groups_(ACS_override_patch)>
 
 但是我目前就选择直通 slot 1 显卡算了。
 
 ### 直通 slot1 或 slot2 的权衡
 
 直通 slot1
+
 - slot1 显卡的风扇会被 slot2 显卡的 PCB 版挡住，散热不太好
   - 解决方法：使用 PCIE 显卡延长线（但是 x16 的太贵了，90RMB）
 - boot gpu 默认为 slot 1 的问题。BIOS 无法设置 primary display，导致 windows 虚拟机会蓝屏 ([PCI passthrough via OVMF - Passing_the_boot_GPU_to_the_guest](https://wiki.archlinux.org/title/PCI_passthrough_via_OVMF#Passing_the_boot_GPU_to_the_guest)
@@ -331,22 +353,27 @@ Group:  21  0000:0a:00.4 Audio device [0403]: Advanced Micro Devices, Inc. [AMD]
 如直通 AMD 6500xt 时遇到的问题所描述的。直通 boot gpu 存在一些问题。这里是对该问题的进一步总结
 
 #### 参考资料
+
 - 问题相关讨论：[GPU Assistance - Select boot GPU - Software & Operating Systems / VFIO - Level1Techs Forums](https://forum.level1techs.com/t/gpu-assistance-select-boot-gpu/151745/6)
   - 要么 bios 支持选择 primary gpu
   - 要么 swap gpu slot
 - 解释问题原理，以及解决：[Explaining CSM, efifb=off, and Setting the Boot GPU Manually - The Passthrough POST](https://passthroughpo.st/explaining-csm-efifboff-setting-boot-gpu-manually/)
 
 是否需要 dump vbios：[(8) When is a GPU ROM required and how does it get used? : VFIO (reddit.com)](https://www.reddit.com/r/VFIO/comments/uyyb15/when_is_a_gpu_rom_required_and_how_does_it_get/)
+
 - 最详细解释： [(8) Do you need or not need a vbios file? : VFIO (reddit.com)](https://www.reddit.com/r/VFIO/comments/t35oji/comment/hyqus40/)
+
 > For some graphics cards or other PCI-e devices, this step may be unnecessary. Some GPUs can operate just fine without mapping a static ROM file; the virtual machine can just directly access the device ROM. Your results may vary, though. The primary purpose of this step is to ensure that successive virtual machine reboots won’t require the hypervisor to be rebooted to reset the GPU’s ROM to an uninitialized state.
 
 问题原因
+
 - uefi 是电脑启动后 cpu 最早运行的代码
 - uefi 需要初始化 primary gpu，因为需要设置菜单。This is because UEFI setup menus, along with boot splash screens, must work in a generic way, as UEFI cannot possibly include a driver for every possible GPU.
 - UEFI 初始化后，暴露给 linux 的是修改后的 vBIOS (shadow copy)。If the host UEFI already initialized the device, the host UEFI makes a“shadow”copy of the GPU’s vBIOS on startup, and that is what Linux exposes as the device’s vBIOS.
 - guest 也有自己的 UEFI（开源的 OVMF），也需要初始化设备。而 host 暴露给 guest 的是 shadow copy，故冲突。OVMF usually hangs at this stage.
 
 解决办法
+
 #### 方法 0：关闭显示器启动 (成功)
 
 关闭 primary gpu 的显示器，second gpu 插上 hdmi 欺骗器（不插的话相当于没有显示器，启动时自检，显卡亮白灯？）
@@ -369,6 +396,7 @@ UEFI 开启 CSM。让 UEFI 初始化另一个 GPU。[关于 CSM 和 UEFI 你要�
 #### 方法二：efifb:off(成功)
 
 保证 boot 时，不使用 primary GPU。
+
 - linux 启动时会显示启动日志和 tty login 到终端中 (console)。在 linux 桌面发行版中，console 被输出到 framebuffer 中。
 - 显卡驱动和 EFI/BIOS 能够提供这个 framebuffer
 - 在 linux 启动的早期（还没有加载显卡驱动之前），使用 EFI/VESA 提供的 framebuffer。而这便会使用 firmware 指定的 primary gpu。
@@ -376,10 +404,12 @@ UEFI 开启 CSM。让 UEFI 初始化另一个 GPU。[关于 CSM 和 UEFI 你要�
 ```
 video=efifb:off
 ```
+
 相当于禁用了 tty？
 
 重新测试
 两张显卡都连接显示器，主显卡直通。
+
 - 默认情况下，boot logo 显示在 primary 上，画面没有问题。启动完成后主显示器显示 login shell。启动 vm，黑屏，远程连接显示 43 错误。
 - 主显卡不连接显示器，boot logo 显示在 second 上，画面颜色不对，ubuntu logo 缺少东西。启动 vm 没问题
 - 开启 efifb:off，刚开始主显示器上显示选择是否进 bios 画面，接着主显示器熄灭。副显示器只显示了 logo，F2 黑屏（没有 log 输出）。最后进入了系统（没有 login shell）。启动 vm 没有问题。
@@ -388,8 +418,10 @@ video=efifb:off
 
 QEMU can expose the vBIOS from a ROM file supplied to it by libvirt.
 获得 vBIOS 方法
+
 - dump，见结尾 dump bios
 - 从网络上下载（TechPowerup）
+
 ```
 <hostdev mode='subsystem' type='pci' managed='yes'>
  <source>
@@ -401,6 +433,7 @@ QEMU can expose the vBIOS from a ROM file supplied to it by libvirt.
 ```
 
 试过后报错
+
 ```
 ➜  ~ sudo virsh start win10
 error: Failed to start domain 'win10'
@@ -412,14 +445,17 @@ Please configure -smp options properly or try enabling topoext feature.
 ```
 
 发现
+
 - 只有开启 vm 后，才可以 dump bios，否者会报 output error
 - 关闭屏幕下开机 t，vm 显卡正常。但是 dump 的 vbios 通不过检验。反而是打开屏幕下开机，vm 显卡不正常的可以通过检验。
+
 ```
 Valid ROM signature found @0h, PCIR offset 370h
         PCIR: type 0 (x86 PC-AT), vendor: 1002, device: 743f, class: 030000
         PCIR: revision 0, vendor revision: 1404
 Error, ran off the end
 ```
+
 ```
 Valid ROM signature found @0h, PCIR offset 370h
         PCIR: type 0 (x86 PC-AT), vendor: 1002, device: 743f, class: 030000
@@ -448,7 +484,7 @@ Furthermore, it seems only NVIDIA cards have this problem and even then only som
 什么使用需要指定 bios
 This means that if your motherboard draws to the GPU on boot with system information, a logo and what not on the GPU you want to pass through then you're already too late and would need a vbios file if you cannot stop this behavior in your host's bios settings.
 
-If your motherboard doesn't have an option to strictly pick which GPU to use (integrated vs dedicated, or an option of _which_ of multiple dedicated to use) it may initialize it too and you will need a vbios file for a guest all the same.
+If your motherboard doesn't have an option to strictly pick which GPU to use (integrated vs dedicated, or an option of *which* of multiple dedicated to use) it may initialize it too and you will need a vbios file for a guest all the same.
 
 Single GPU hosts don't get any choice and have to draw their POST information ...somewhere... So you will almost always need a vbios file outside very special motherboard configurations (Usually Server boards handle this nicely, even if they only have a shitty onboard 8MB vga plug for basic terminal display only)
 
@@ -464,6 +500,7 @@ This makes me imagine that putting a PC to sleep then waking it as you start you
 
 [Dump_GPU_vBIOS/dump_vbios.sh at master · SpaceinvaderOne/Dump_GPU_vBIOS (github.com)](https://github.com/SpaceinvaderOne/Dump_GPU_vBIOS/blob/master/dump_vbios.sh)
 [(8) How to dump GPU VBIOS on linux? : VFIO (reddit.com)](https://www.reddit.com/r/VFIO/comments/ma0s7j/how_to_dump_gpu_vbios_on_linux/)
+
 ```
 cd /sys/bus/pci/devices/0000:0a:00.0
 echo 1 > rom
@@ -513,25 +550,28 @@ echo 0 > rom
 
 由于 host gpu 处于第二个槽，导致 X 启动失败
 
-https://wiki.archlinux.org/title/PCI_passthrough_via_OVMF#X_does_not_start_after_enabling_vfio_pci
+<https://wiki.archlinux.org/title/PCI_passthrough_via_OVMF#X_does_not_start_after_enabling_vfio_pci>
 
 这里也提到了
 
-https://wiki.archlinux.org/title/PCI_passthrough_via_OVMF#Host_unable_to_boot_and_stuck_in_black_screen_after_enabling_vfio
+<https://wiki.archlinux.org/title/PCI_passthrough_via_OVMF#Host_unable_to_boot_and_stuck_in_black_screen_after_enabling_vfio>
 
 解决
 
 - kernel cmd
+
   ```
   video_vifib=off
   ```
+
 - xorg
+
   ```
   /etc/X11/xorg.conf.d/second_gpu.conf
   Section "Device"
           Identifier "AMD GPU"
-          Driver "amdgpu"		#填lspci看到的驱动
-          BusID  "PCI:4:0:0"	#bus id, device id, function id
+          Driver "amdgpu"  #填lspci看到的驱动
+          BusID  "PCI:4:0:0" #bus id, device id, function id
   EndSection
   ```
 
@@ -555,11 +595,10 @@ windows 启动时蓝屏，蓝屏两次后进入恢复界面，选择关机后再
 发现问题可能是由于将 boot GPU 直通导致的[PCI passthrough via OVMF - ArchWiki (archlinux.org)](https://wiki.archlinux.org/title/PCI_passthrough_via_OVMF#Passing_the_boot_GPU_to_the_guest)
 > The GPU marked as `boot_vga` is a special case when it comes to doing PCI passthroughs, since the BIOS needs to use it in order to display things like boot messages or the BIOS configuration menu. To do that, it makes [a copy of the VGA boot ROM which can then be freely modified](https://www.redhat.com/archives/vfio-users/2016-May/msg00224.html).
 
-
 但是我的主板没办法调节使用哪个 GPU 作为启动 GPU
-在 https://blog.twenska.de/blog/GPU_passthrough/中看到类似问题，并提到解决方法
+在 <https://blog.twenska.de/blog/GPU_passthrough/中看到类似问题，并提到解决方法>
 
-查看` /var/log/libvirt/qemu/win10.log.0`会发现大量的以下错误：
+查看`/var/log/libvirt/qemu/win10.log.0`会发现大量的以下错误：
 
 ```bash
 2022-07-21T06:50:56.222055Z qemu-system-x86_64: vfio_region_write(0000:08:00.0:region1+0x345990, 0x13801,8) failed: Device or resource busy
@@ -579,21 +618,21 @@ virsh start win10
 
 [Error Codes - 14003 (Failed to Capture the Host Display) – Parsec](https://support.parsec.app/hc/en-us/articles/360002165172)
 导致这个错误的好多
+
 - 少数游戏全屏会使得分辨率信息错误
 - 关闭了显示器
 - 同时使用 windows rdp 和 parsec
 
 - If running a headless system, or attempting to run Parsec from a virtual machine that has a GPU passed through to it, you will need to simulate a display being plugged into the GPU.
   - You can make use of [Parsec's virtual displays](https://support.parsec.app/hc/en-us/articles/360054478211), available in the host settings. The free version of Parsec has a "Fallback To Virtual Display" which adds a single virtual display if no other displays are present. [Learn how to set it up at the bottom of the virtual displays page](https://support.parsec.app/hc/en-us/articles/360054478211)
-  -   Alternatively, you can purchase a HDMI dongle to generate a monitor, ([we recommend this one](https://www.amazon.com/dp/B01EK05WTY/)). Using an HDMI Dongle can be problematic if you also plan to physically use this host machine, as while the headless hdmi dongle is plugged in, you will have an invisible monitor at all times
-  -   On QUADRO or TESLA graphics you might be able to [simulate an EDID via NVIDIA Control Panel](https://nvidia.custhelp.com/app/answers/detail/a_id/3569/)
-
+  - Alternatively, you can purchase a HDMI dongle to generate a monitor, ([we recommend this one](https://www.amazon.com/dp/B01EK05WTY/)). Using an HDMI Dongle can be problematic if you also plan to physically use this host machine, as while the headless hdmi dongle is plugged in, you will have an invisible monitor at all times
+  - On QUADRO or TESLA graphics you might be able to [simulate an EDID via NVIDIA Control Panel](https://nvidia.custhelp.com/app/answers/detail/a_id/3569/)
 
 For the best performance, you should close all RDP sessions before connecting with Parsec. Parsec is generally able to stay connected at the same time as RDP, but performance will be significantly worse. Since Windows 10 Build 1903, WDDM graphics mode causes bugs while Parsec and RDP are used together. If you get error -14003, turn off WDDM graphics in favor of XDDM:
 
--   Run "Edit group policy"
--   Navigate to Local Computer Policy > Computer Configuration > Administrative Templates > Windows Components > Remote Desktop Services > Remote Desktop Session Host > Remote Session Environment
--   Set "Use WDDM graphics display driver..." to "Disabled"
+- Run "Edit group policy"
+- Navigate to Local Computer Policy > Computer Configuration > Administrative Templates > Windows Components > Remote Desktop Services > Remote Desktop Session Host > Remote Session Environment
+- Set "Use WDDM graphics display driver..." to "Disabled"
 
 ### SeaBIOS or OVMF
 
@@ -604,7 +643,9 @@ OVMF is an open-source UEFI firmware for QEMU virtual machines. While it is poss
 从原本的 1060 3g 换成了 5600xt。
 刚开始进入系统，显卡显示显示适配器，code 31。过了一会儿之后，自己安装驱动，识别出是 5600xt 了。
 但是显示器仍然是黑屏，显示 code 43。按照 arch wiki 上写的
+
 - AMD 或者老版 Nvidia 驱动（新版 nv 驱动不会）会识别是虚拟机从而拒绝工作。xml 需要添加配置。
+
 ```xml
 $ virsh edit vmname
 
@@ -649,9 +690,9 @@ module_blacklist=nvidia
 
 > I have a setup with two nVidia cards (GTX 970 for passthrough and GT 1030 for Linux host) and I'm not blacklisting anything.
 
-
 [(8) After loading vfio-pci instead of nvidia, my dmesg has dozens of errors : VFIO (reddit.com)](https://www.reddit.com/r/VFIO/comments/90tg4h/after_loading_vfiopci_instead_of_nvidia_my_dmesg/)
 /etc/modprobe.d/nvidia.conf: (You probably will have to create this file.)
+
 ```
 softdep nvidia pre: vfio-pci
 ```
@@ -660,29 +701,34 @@ softdep nvidia pre: vfio-pci
 
 安装了 nvidia-driver-535-server-open
 结果启动时报
+
 ```
 NVRM cpuidInfoAMD: unrecognized amd processor in cpuidinfoamd
 ```
+
 然后进入紧急模式。
+
 - 远程 kvm 看不到画面，回到实验室后，插上物理显示器也看不到输出。
 - 强制重启后可以看到输出，然后就进入了紧急模式
 
 通过 moudle_blacklist=nvidia，可以进入系统。（结果系统的网络出了问题，ping 等都没有问题，但是一旦 curl 就卡住，不清楚为什么）
 
-
 binding vfio
+
 - 为了防止 host 访问 gpu，设置的一个 placeholder 驱动
 - 有两种方式 bind：linux kernel cmdline，modprobe.d（需要修改 initramfs）
 
 early bind
+
 - modprobe
 - 直接加载到 initramfs，可能会导致 initramfs 变大，加载变慢
   - mkinitcpio, booster 等方式
 
 > If you are modesetting the `nvidia` driver, the `vfio-pci.ids` must be embedded in the initramfs image. If given via kernel arguments, they will be read too late to take effect. Follow the instructions in [#Binding vfio-pci via device ID](https://wiki.archlinux.org/title/PCI_passthrough_via_OVMF#Binding_vfio-pci_via_device_ID) for adding the ids to a modprobe conf file.
+>
 ## 性能优化
 
-https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html-single/virtualization_tuning_and_optimization_guide/index
+<https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html-single/virtualization_tuning_and_optimization_guide/index>
 
 ## 其它
 
@@ -702,15 +748,12 @@ https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html-si
 
 acs_patch id 用法：[Help with PCI Express passthrough (ACS - IOMMU issue) + kernel bugfix | Proxmox Support Forum](https://forum.proxmox.com/threads/help-with-pci-express-passthrough-acs-iommu-issue-kernel-bugfix.37151/)
 
-
 其它：
 这个 vendor-reset 是干嘛用的：
 [gnif/vendor-reset: Linux kernel vendor specific hardware reset module for sequences that are too complex/complicated to land in pci_quirks.c (github.com)](https://github.com/gnif/vendor-reset)
 提到安全：[(4) Is ACS override really that unsafe? : VFIO (reddit.com)](https://www.reddit.com/r/VFIO/comments/ybda5c/is_acs_override_really_that_unsafe/)
 
-
 ## 附录
-
 
 ```
 ➜  ~ lspci -tv
@@ -749,8 +792,6 @@ acs_patch id 用法：[Help with PCI Express passthrough (ACS - IOMMU issue) + k
            +-18.6  Advanced Micro Devices, Inc. [AMD] Matisse/Vermeer Data Fabric: Device 18h; Function 6
            \-18.7  Advanced Micro Devices, Inc. [AMD] Matisse/Vermeer Data Fabric: Device 18h; Function 7
 ```
-
-
 
 ```
 ➜  ~ sudo dmesg | grep -i acs

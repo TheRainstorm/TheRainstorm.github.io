@@ -18,6 +18,7 @@ wireguard 是一种基于 UDP 的隧道协议，可以在不同设备间建立�
 ## 异地组网
 
 异地组网就是通过隧道技术，将两个独立的网络打通，让其中的设备能够通过内网地址直接相互访问。
+
 ### wg 三层隧道
 
 由于工作在三层，所以关键在于路由表的设置。
@@ -26,6 +27,7 @@ wireguard 是一种基于 UDP 的隧道协议，可以在不同设备间建立�
 [云企业网和 VPN 网关连接不同 VPC 的优势和方法_专有网络 VPC-阿里云帮助中心 (aliyun.com)](https://help.aliyun.com/zh/vpc/user-guide/cross-vpc-interconnection-overview?spm=a2c4g.11186623.0.0.5e973905ohCbG9#b010e75036zhl)
 
 这里列出两种通用网络结构
+
 - 点对点连接。多个 VPC 间两两连接，保证延迟最低
 - 星型结构，每个节点只需要配置和中心节点的连接
 ![image.png](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/20231119113553.png)
@@ -35,6 +37,7 @@ wireguard 是一种基于 UDP 的隧道协议，可以在不同设备间建立�
 ### wg+gretap 二层隧道
 
 TODO
+
 ## openwrt 异地组网实例
 
 ### 我的网络结构例子
@@ -42,11 +45,13 @@ TODO
 三个路由器通过 wg 两两连接（其实不一定需要这个结构，也可以配置成 op2-op1-op3 这种链状结构，这种结构主要降低了一次转发，延迟一般更短）
 
 ![](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/picgo/20230218185024.png)
+
 ### wg site to site 配置
 
 #### 接口
 
 在路由器上新建 wg_s2s 接口
+
 - 协议选择 Wireguard VPN
 - 分配私有地址
 - 配置好监听端口（之后在防火墙中设置 allow input）
@@ -62,6 +67,7 @@ op2
 ![image.png](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/20231119200800.png)
 
 op1 上 op2 peer 设置例子
+
 - allowed ip 填写 op2 wg_s2s 接口设置的私有地址，并填写 op2 所在的子网网段
 - route allow ip 需要勾选，作用是让 openwrt 根据 allowed ip 生成路由
 ![image.png](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/20231119201040.png)
@@ -82,6 +88,7 @@ wg_s2s 接口可以配置成 lan zone，在接口中勾选 lan 即可，如下�
 为 wg_s2s 单独设置一个防火墙 zone，可以使以后的配置更灵活。
 
 op1 和 op2 lan,wan, wg_s2s zone 的设置如下图：
+
 - `lan -> wan, wg_s2s`：表示一个局域网的流量可以（1）访问互联网 (wan) （2）通过 wg_s2s 接口访问对面子网 (wg_s2s)
 - `wg_s2s -> lan`：表示允许从 wg_s2s 进入的流量（对面子网通过 wg_s2s）可以访问本子网
   - 这里还允许了 wg_s2s -> wan 是为了另一个子网通过本子网访问互联网的情况
@@ -97,6 +104,7 @@ op1 和 op2 lan,wan, wg_s2s zone 的设置如下图：
 ![image.png](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/20231119205004.png)
 
 wg_s2s peer 设置好 allowed ip 的情况下，openwrt 已经正确生成了路由规则，如下所示
+
 ```
 root@op1 ➜  ~ ip ro
 10.0.32.2 dev wg_s2s proto static scope link
@@ -111,6 +119,7 @@ default dev wg_s2s proto static scope link
 ```
 
 以上异地组网已经完成了，可以尝试一个从子网访问另一个子网。
+
 ### 问题
 
 #### 问题 1：原路返回
@@ -119,6 +128,7 @@ default dev wg_s2s proto static scope link
 从外面访问 op2 wan 口的 ipv4 地址时，返回的包却从 wg_s2s 出去了（默认路由），这导致无法通过 wan 访问 op2 了。
 
 解决办法：添加一条源地址的策略路由，表示只要 src 地址是 wan 口地址，均从 wan 口出去。
+
 ```
 echo "10 wan" >> /etc/iproute2/rt_tables
 
@@ -127,6 +137,7 @@ ip ro add default via <gateway> dev <wan_dev> proto static table wan
 ```
 
 结果
+
 ```
 root@op2 ➜  ~ ip ru
 0:      from all lookup local
@@ -140,6 +151,7 @@ default via yyy dev eth0 proto static
 
 p.s: 不过该原路返回也会导致无法从 lan 访问 wan（不过应该也没人会这么用吧）
 从 lan 访问 wan 时，会由于策略路由（src 地址为 wan 地址时全部从 wan 出去）将响应从 wan 发出去，从而无法访问
+
 ```
 root@op1 ➜  opkg tcpdump -ni any tcp and port 8000
 tcpdump: data link type LINUX_SLL2
@@ -150,6 +162,7 @@ listening on any, link-type LINUX_SLL2 (Linux cooked v2), snapshot length 262144
 19:07:00.982180 br-wan Out IP 114.214.236.72.8000 > 192.168.35.2.50214: Flags [S.], seq 256274565, ack 1381384155, win 65160, options [mss 1460,sackOK,TS val 2164672905 ecr 2655701923,nop,wscale 7], length 0
 19:07:00.982181 eth0  Out IP 114.214.236.72.8000 > 192.168.35.2.50214: Flags [S.], seq 256274565, ack 1381384155, win 65160, options [mss 1460,sackOK,TS val 2164672905 ecr 2655701923,nop,wscale 7], length 0
 ```
+
 #### 问题 2：其它接口跨网络访问
 
 之前提到，如果 wg_s2s 不设置**masquerading**，那么一个路由器下除了 lan 外的其它接口，均无法访问对面路由器的子网。
@@ -161,9 +174,11 @@ listening on any, link-type LINUX_SLL2 (Linux cooked v2), snapshot length 262144
 ![image.png](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/20231119212900.png)
 
 解决该问题的方法和上图是一样的，就是通过 iptable，只针对 wg1 流量通过 wg_s2s 时进行 SNAT
+
 ```
 iptables -t nat -A POSTROUTING -s 172.16.0.0/24 -o wg_s2s -j MASQUERADE
 ```
+
 该命令重启后失效，可以把它写入`/etc/rc.local`，在 openwrt 重启后自动运行。
 
 更方便的是直接使用 openwrt 提供的 NAT 设置，设置会保存在`/etc/config/firewall`的`nat` section 中。
@@ -173,11 +188,12 @@ iptables -t nat -A POSTROUTING -s 172.16.0.0/24 -o wg_s2s -j MASQUERADE
 
 - wg allowip 可以看作防火墙 input 规则。
 - wg allowip 默认情况下又会作为路由规则，表示哪些地址需要通过 wg 接口路由出去
-    - openwrt 支持一个选项，是否开启通过 allow ip 自动添加路由表
+  - openwrt 支持一个选项，是否开启通过 allow ip 自动添加路由表
 
 - **wg 的 allow ip 同时设置了防火墙**
-    - 对于发包来说，allow ip 是路由。对于收包来说，allow ip 是防火墙。而有时候我们希望这两个功能是分开的。
+  - 对于发包来说，allow ip 是路由。对于收包来说，allow ip 是防火墙。而有时候我们希望这两个功能是分开的。
 wg0 allowed ip 如果设置为 10.0.31.102/32，则表示其它 src addr 的包都会被丢弃。想要匀速任意包，需要设置为 0.0.0.0/0。如下显示了一个 wg0 接口接受其它流量的效果。
+
 ```
 root@op1 ➜  ~ tcpdump -ni any icmp and host 222.195.90.107
 tcpdump: data link type LINUX_SLL2
@@ -187,10 +203,13 @@ listening on any, link-type LINUX_SLL2 (Linux cooked v2), snapshot length 262144
 15:52:12.410918 wg0   In  IP 222.195.90.107 > 114.214.173.252: ICMP echo reply, id 26710, seq 562, length 64
 15:52:13.411181 wg0   In  IP 222.195.90.107 > 114.214.173.252: ICMP echo reply, id 26710, seq 563, length 64
 ```
+
 #### 无法动态设置路由
 
 推荐的功能，peer 建立了连接时，才设置路由，而不是目前的提前设置好路由。这样能简化以下问题的解决。
+
 ##### 问题 1
+
 问题：两个 op 上均有 wg0，用于手机等设备从外网连回。为了简化配置文件，分配了相同地址段，因此两个 op 的 peer 配置可以复用。然而这导致 client 通过 wg0 连入 op1 时，无法访问 op2 的网络。因为 op2 上收到包返回时，会从本地的 wg0 出去。
 
 如果 wg 支持动态路由，那么目的地址是 wg0 client 的包就不会从本地 wg0 发出。而是走默认路由，通过 op1-op2 间的隧道发给 op1。
@@ -198,13 +217,16 @@ listening on any, link-type LINUX_SLL2 (Linux cooked v2), snapshot length 262144
 **通过 SNAT 解决**
 
 针对这个问题的一种可接受的解决办法是：针对源地址是 wg0 的包，对 wg_s2s 出去的流量进行 SNAT
+
 - 缺点是，这样一个 lan 访问另一个 lan 时，是看不到细节的，只能看到一个路由器访问另一个 lan。不过由于 wg0 只是在外临时使用，因此也能接受。
 
 ```
 iptables -t nat -A POSTROUTING -s 10.0.31.0/24 -o wg_s2s -j MASQUERADE
 iptables -t nat -A POSTROUTING -s 10.0.33.0/24 -o wg_s2s -j MASQUERADE
 ```
+
 ##### 问题 2
+
 问题 2：想要把 wg 地址作为某个设备绑定的地址。只要设备通过 wg 接入内网，那么在自己的网络中任何地方都能够访问该设备。然而现实是，**只有设备连接的那个子网可以访问**。
 因为在两个 op 上只要设置了 peer，那么无论是否和 peer 连接，都会设置到 peer 的路由。这使得 op 上访问 wg0 时，会从自己的 wg0 发出。
 
@@ -212,6 +234,7 @@ iptables -t nat -A POSTROUTING -s 10.0.33.0/24 -o wg_s2s -j MASQUERADE
 
 **妥协的方法**
 wg0 client 同时和连接两个 op
+
 - 这种对于树莓派这种还好，如果是手机可能就不行了。
 
 ## OSPF？
@@ -225,11 +248,13 @@ wg0 client 同时和连接两个 op
 ## wg 使用场景
 
 按照用途，列举几种使用场景
+
 ### 内网穿透
 
 即需要从外网访问 NAT 后设备。
 
 可以在路由器（有公网地址）上装 wg，设置允许 wg 转发到 wan 和 lan。其它设备（如手机）通过 wg 连接到路由器，从而可以访问路由器下局域网和通过路由器上网。
+
 ### 网络转发
 
 #### 一级网络转发
@@ -269,6 +294,7 @@ wg0 client 同时和连接两个 op
   - A 接收到响应
 
 上面二级网络转发的解决方法是，为从 wg 出去的流量设置 NAT。
+
 ```bash
  iptables -t nat -A POSTROUTING -s 10.0.0.2 -o wg0 -j MASQUERADE
 ```
@@ -328,17 +354,19 @@ ip rule add from 58.56.0.2 table T2
 In most scenarios, you want to avoid L2 tunnels to reduce complexity and/or performance issues.
 The chain of thought typically goes like this:
 
-* Remote networks are connected via L2 tunnel.
-* **ARP requests are broadcasted over L2 tunnel to all connected networks, introducing scalability issues**
-* Proxy ARP is introduced to cache ARP responses
-* Proxy ARP may become out of date or not scale as the L2 domain grows.
-* BGP is introduced to keep track of and broadcast all topology changes
-* How do you mitigate issues caused if Proxy ARP fails?
+- Remote networks are connected via L2 tunnel.
+- **ARP requests are broadcasted over L2 tunnel to all connected networks, introducing scalability issues**
+- Proxy ARP is introduced to cache ARP responses
+- Proxy ARP may become out of date or not scale as the L2 domain grows.
+- BGP is introduced to keep track of and broadcast all topology changes
+- How do you mitigate issues caused if Proxy ARP fails?
 
 **Most of these issues go away if you use IP tunnels instead of Ethernet because IP was designed to be routable.**
+
 ### 各种隧道对比
 
 各种隧道对比：[An introduction to Linux virtual interfaces: Tunnels | Red Hat Developer](https://developers.redhat.com/blog/2019/05/17/an-introduction-to-linux-virtual-interfaces-tunnels#gue)
+
 - ipip
 - gre, gretap
 
@@ -348,8 +376,8 @@ GRE tunnels
 GRETAP
 ![](https://developers.redhat.com/blog/wp-content/uploads/2019/03/gretap.png)
 
-
 一种协同使用多种隧道例子
+
 - udp2raw：wg 基于 udp，可能被运营商 qos。使用 udp2raw 实现 udp in tcp
 - wg：L3 隧道
 - gre: 图中的是 tun，仍是三层隧道
@@ -368,6 +396,7 @@ GRETAP
  wg0: 12.12.12.2/24                                         wg0: 12.12.12.1/24
  gretun: 12.12.12.2->12.12.12.1                             gretun: 12.12.12.1->12.12.12.2
 ```
+
 ## openwrt gre 配置
 
 参考资料：
@@ -375,14 +404,17 @@ GRETAP
 - openwrt gre 配置：[[OpenWrt Wiki] Tunneling interface protocols](https://openwrt.org/docs/guide-user/network/tunneling_interface_protocols#protocol_gretap_ethernet_gre_tunnel_over_ipv4)
 - [[OpenWrt Wiki] Routing example: GRE](https://openwrt.org/docs/guide-user/network/routing/examples/routing_in_gre)
 - GRE ip 包中 protocol number 为 47：[List of IP protocol numbers - Wikipedia](https://en.wikipedia.org/wiki/List_of_IP_protocol_numbers)
+
 ### 背景
 
 背景：学校宿舍楼没有分配 PD，而实验楼分配了/64 的 PD。因此想通过 L2 隧道，将宿舍楼的接口桥接到实验楼路由器的 wan 口上，从而获得一个 PD 地址。之后利用该 PD 在 lan 上开启 ipv6 ra server，给 lan 分配 ipv6 地址。
 
 思路：两台路由器 op1, op2 通过 wg 连接，基于 wg 接口 ip 建立 gretap 隧道。op1 将该 tap 桥接到 br-wan 上。op2 在该 tap 上开启 dhcpv6 client，申请一个 PD。
+
 ### 安装
 
 确保安装了以下依赖
+
 ```
 root@op1 ➜  ~ opkg list-installed |grep gre
 gre - 13
@@ -392,6 +424,7 @@ luci-proto-gre - git-21.158.43143-b4c394f
 ```
 
 确保以下内核模块已加载
+
 ```
 root@op1 ➜  ~ lsmod |grep gre
 gre                    16384  1 ip_gre
@@ -400,6 +433,7 @@ ip_tunnel              32768  1 ip_gre
 ```
 
 如果是 pve 的话，通常没有加载。需要手动 modprobe，并添加到`/etc/module`中
+
 ```
 modprobe ip_gre
 ```
@@ -417,6 +451,7 @@ ip6_tunnel
 ### 配置
 
 #### op1 和 op2 上都创建 gre1 接口
+
 - protocal 选择 gretap over ipv4
 - local 和 remote 地址填 wg 接口地址
 - 创建成功后，ip a 可以看到多出一个 gre4t-gre1 的接口
@@ -441,9 +476,10 @@ ip6_tunnel
 #### op2 设置 dhcpv6
 
 在 gre1 tap 上启用 dhcpv6 client，openwrt 上该操作为创建一个 interface，协议选择 dhcpv6 client
+
 - 该接口高级设置中可以勾选 source route，这样对于有多个 uplink，就能自动处理路由
-    - 源地址为该 pd 的地址，走 tap 接口
-    - 源地址为 wan 口 slaac 的地址，走原来的 wan 口
+  - 源地址为该 pd 的地址，走 tap 接口
+  - 源地址为 wan 口 slaac 的地址，走原来的 wan 口
 ![](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/20230915185518.png)
 
 ## ubuntu gre 配置
@@ -470,24 +506,25 @@ sudo ip link set op2-gre1 master br0
 ChatGPT
 
 您的网络拓扑中包含了多层虚拟化网络（PVE 容器内的 GRETAP 设备、LXC 容器和 PVE 宿主机）。为了确保 GRETAP 设备的 IPv6 RS 报文能够正确传递到 PVE 宿主机的 vmbr0 以外的网络，您需要进行一些网络配置。以下是可能的解决方法：
+
 1. **检查 IPv6 Forwarding 设置**：首先，确保 PVE 宿主机上启用了 IPv6 转发功能。可以使用以下命令检查：
     `sysctl net.ipv6.conf.all.forwarding`
     如果返回值为1，表示已启用IPv6转发。如果返回值为0，可以使用以下命令启用它：
     `sysctl -w net.ipv6.conf.all.forwarding=1`
     为了使此更改持久化，您可以将它添加到 `/etc/sysctl.conf` 文件中。
-    
+
 1. **LXC 容器网络配置**：确保 LXC 容器内的 GRETAP 设备和 br-wan 接口正确配置。检查 GRETAP 设备的 IPv6 地址、子网和路由是否正确设置。确保 GRETAP 设备能够正确路由 IPv6 流量。
-    
+
 3. **容器内防火墙规则**：如果 LXC 容器内有防火墙规则，确保它们不会阻止 IPv6 流量从 GRETAP 设备传递到 br-wan 接口。您可能需要在容器内的防火墙规则中添加允许 IPv6 流量通过的规则。
-    
+
 4. **PVE 宿主机网络桥配置**：确保 PVE 宿主机上的网络桥（vmbr0 和 br-wan）正确配置，以允许 IPv6 流量正确传递。检查它们的 IPv6 地址、子网和路由设置。
-    
+
 5. **LXC 容器间隔离设置**：请确保在 PVE 宿主机的网络配置中，LXC 容器之间的网络隔离设置不会阻止 IPv6 流量的传递。这可能需要调整安全组或网络隔离规则。
-    
+
 6. **MTU 设置**：在多层虚拟化网络中，MTU（最大传输单元）问题可能会导致通信问题。确保各个网络设备的 MTU 设置正确，并且不会导致分段或丢失数据包。
-    
+
 7. **网络抓包**：如果问题仍然存在，您可以在不同的网络设备上使用抓包工具（如 Wireshark 或 tcpdump）来捕获 IPv6 流量，以便更详细地分析问题并找出故障的位置。
-    
+
 请根据上述建议逐步检查和调整您的网络配置，以解决 IPv6 RS 报文无法正确传递的问题。确保在更改网络配置之前备份重要数据，以防意外发生。
 
 上面提到的：
@@ -495,37 +532,40 @@ ChatGPT
 
 真的让我找到了问题！
 
-
-
 ## 相关小实验
 
 ### 绕路返回：wan 口进入，wg 接口返回
 
 网络情况
+
 - op2（发起 ping）
-    - eth0: 114.214.173.252
+  - eth0: 114.214.173.252
 - king3399（响应 ping）
-    - eth0: 222.195.90.107
-    - wg0: endpoint op1, default route
+  - eth0: 222.195.90.107
+  - wg0: endpoint op1, default route
 - op1（路由中转）
-    - br-wan: 114.214.236.72
+  - br-wan: 114.214.236.72
 
 icmp request
 op2(eth0) -> king(eth0)
+
 - route 走学校
 
 icmp reply
 king(eth0) -> op2(eth0)
+
 - route 通过 wg0，发送给 op1
 - op1 再转发，从 br-wan 出去，到达 op2
 
 op1 收到 king 的 icmp reply 再转发，实际有两个障碍
+
 1. op1 将 wg0 收到的 src 地址为 op2(eth0) 的包丢弃，因为不在 allow ip 中。解决办法：allow ip 设置为 0.0.0.0，关闭自动添加路由
 2. op1 wg0 收到包后，却发现并没有从 wan 口发送出去
 
 以下是对问题 2 的探究
 
 首先 king 上符合预期，从 eth0 收到 icmp request，从 wg0 返回 icmp reply
+
 ```
 tcpdump -ni any icmp and host 222.195.90.107
 
@@ -534,6 +574,7 @@ tcpdump -ni any icmp and host 222.195.90.107
 ```
 
 问题出现在 op1，可以看到 wg0 收到了包，但是却没有任何 output
+
 ```
 root@op1 ➜  ~ tcpdump -ni any icmp and host 114.214.173.252
 
@@ -542,14 +583,16 @@ root@op1 ➜  ~ tcpdump -ni any icmp and host 114.214.173.252
 ```
 
 研究后发现使用 nft trace 可以追踪包在防火墙中的处理顺序
+
 - trace id 标识一个包
 - 可以看到依次经过以下 chain 处理，结尾的 verdict（判决）表示处理结果
-    - raw_prerouting
-    - mangle_prerouting
-    - prerouting
-    - mangle_forward
-    - forward
-        - 在这里匹配`meta nfproto ipv4 oifname { "br-wan", "gre4t-gre1" } ct state invalid counter drop`规则，然后被 drop 了
+  - raw_prerouting
+  - mangle_prerouting
+  - prerouting
+  - mangle_forward
+  - forward
+    - 在这里匹配`meta nfproto ipv4 oifname { "br-wan", "gre4t-gre1" } ct state invalid counter drop`规则，然后被 drop 了
+
 ```c++
 trace id 146d2af5 inet fw4 debug packet: iif "wg0" ip saddr 222.195.90.107 ip daddr 114.214.173.252 ip dscp cs0 ip ecn not-ect ip ttl 64 ip id 19723 ip protocol icmp ip length 84 icmp type echo-reply icmp code net-unreachable icmp id 14312 icmp sequence 881 @th,64,96 0x8cdff2c20000000000000000
 trace id 146d2af5 inet fw4 debug rule iifname "wg0" ip saddr 222.195.90.107 meta nftrace set 1 counter packets 4 bytes 336 (verdict continue)
@@ -577,18 +620,22 @@ trace id 146d2af5 inet fw4 accept_to_wan rule meta nfproto ipv4 oifname { "br-wa
 
 通过 nft 修改掉该 drop，发现就能 ping 通了
 op1 上 tcpdump 可以看到正确从 br-wan 转发
+
 ```
 23:38:13.018068 wg0   In  IP 222.195.90.107 > 114.214.173.252: ICMP echo reply, id 14312, seq 2631, length 64
 23:38:13.018089 br-wan Out IP 222.195.90.107 > 114.214.173.252: ICMP echo reply, id 14312, seq 2631, length 64
 ```
 
 op2 和 king 上都能看到 conntrack 信息
+
 ```
 root@op2 ➜  ~ conntrack -L -p icmp -d 222.195.90.107
 icmp     1 29 src=114.214.173.252 dst=222.195.90.107 type=8 code=0 id=31588 packets=112 bytes=9408 src=222.195.90.107 dst=114.214.173.252 type=0 code=0 id=31588 packets=104 bytes=8736 mark=0 use=1
 conntrack v1.4.8 (conntrack-tools): 1 flow entries have been shown.
 ```
+
 不过 op1 上没有（难道转发不算？）
+
 ```
 root@op1 ➜  ~ conntrack -L -p icmp |grep 222.195.90.107
 conntrack v1.4.8 (conntrack-tools): 151 flow entries have been shown.
@@ -597,6 +644,7 @@ conntrack v1.4.8 (conntrack-tools): 151 flow entries have been shown.
 但是该规则到底是什么意思呢？ct invalid 为什么会匹配？
 
 连接跟踪是 Linux 内核中的一项功能，用于跟踪网络连接的状态。以下是一些常见的连接跟踪状态：
+
 1. **`new`（新连接）**：表示这是一个新的、尚未建立的连接。
 2. **`established`（已建立）**：表示连接已经成功建立，数据可以在源和目标之间传输。
 3. **`related`（相关连接）**：表示这是与现有连接相关的新连接，例如 FTP 数据连接与 FTP 控制连接的关系。
@@ -625,7 +673,8 @@ fw4 规则注释中提到的 Prevent NAT leakage，搜索
 |`masq_allow_invalid`|boolean|no|`0`|Do not add `DROP INVALID` rules, if masquerading is used. The `DROP` rules are supposed to prevent NAT leakage (see [commit in firewall3](https://git.lede-project.org/?p=project/firewall3.git;a=commit;h=e751cde8954a09ea32f67a8bf7974b4dc1395f2e "https://git.lede-project.org/?p=project/firewall3.git;a=commit;h=e751cde8954a09ea32f67a8bf7974b4dc1395f2e")).|
 
 GUI 中解释：
-> Do not install extra rules to reject forwarded traffic with conntrack state _invalid_. This may be required for complex asymmetric route setups.
+> Do not install extra rules to reject forwarded traffic with conntrack state *invalid*. This may be required for complex asymmetric route setups.
 
 [NAT: Masquerade can leak private IP, why&how? - MikroTik](https://forum.mikrotik.com/viewtopic.php?t=177210)
+
 - 大概就是接口 down 再 up，有一些包没有正确的 ct 状态，不会经过 masq。

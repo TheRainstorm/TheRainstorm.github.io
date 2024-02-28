@@ -63,10 +63,10 @@ categories:
       愉快地安装 vim, git, python 吧。
 
       不知道如何安装 netstat，ifconfig？直接 yum search xxx 会告诉你答案。
-   
+
 4. 设置镜像源
 
-   阿里云镜像比较齐全，且有帮助文档。https://developer.aliyun.com/mirror/ 
+   阿里云镜像比较齐全，且有帮助文档。<https://developer.aliyun.com/mirror/>
 
 ## 4 配置 gameboy.live
 
@@ -99,9 +99,7 @@ go env -w GO111MODULE=on
 go env -w GOPROXY=https://goproxy.cn,direct
 ```
 
-   可以查看 https://goproxy.cn 官网介绍
-
-   
+   可以查看 <https://goproxy.cn> 官网介绍
 
 ### 3. 安装 x11
 
@@ -121,8 +119,6 @@ yum install libX11-devel libXcursor-devel libXrandr-devel libXinerama-devel mesa
 yum install alsa-lib-devel (ubuntu下的安装libasound2就好了，yum下好不容易才找到可以安装这个代替libasound2。)
 ```
 
-
-
 #### 4. 运行
 
 - 发现由于 mobaxterm 自带 x11server，因此在阿里云上运行，便会自动打开图形窗口。
@@ -133,5 +129,4 @@ yum install alsa-lib-devel (ubuntu下的安装libasound2就好了，yum下好不
 
 #### 5. 结束 ssh 后不停止运行
 
- https://blog.csdn.net/v1v1wang/article/details/6855552 
-
+ <https://blog.csdn.net/v1v1wang/article/details/6855552>

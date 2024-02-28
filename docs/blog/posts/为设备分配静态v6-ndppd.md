@@ -91,7 +91,6 @@ ip -6 ro add 2001:da8:d800:336::beef:aaaa dev br-lan
 
     如果上述命令失败，可以添加onlink选项。上述命令会检查目的地址是否位于br-lan的子网，而onlink用于避免该检查。
 
-
 路由表对比
 
 ```bash

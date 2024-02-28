@@ -17,12 +17,11 @@ retroarch 是一个模拟器前端，不同的模拟器以 core 的形式嵌入 
 
 <!-- more -->
 
-## 参考 
+## 参考
+
 [RetroArch 街机模拟教程【亲测有效】 - 简书 (jianshu.com)](https://www.jianshu.com/p/60cc555e9289)
 [EmuELEC 中文网 - EmuELEC 使用指南五之街机模拟器使用简介](https://www.emuelec.cn/85.html)
 [EmuELEC 中文网 - EmuELEC 使用指南一之新手快速上手指南](https://www.emuelec.cn/35.html)
-
-
 
 ## 平台列表
 
@@ -56,8 +55,6 @@ name_list = [\
 ]
 ```
 
-
-
 世嘉[List of Sega video game consoles - Wikipedia](https://en.wikipedia.org/wiki/List_of_Sega_video_game_consoles)
 主机
 
@@ -67,6 +64,7 @@ name_list = [\
 
 索尼[PlayStation - Wikipedia](https://en.wikipedia.org/wiki/PlayStation)
 掌机
+
 - PSP: 2004, 7
 - PSV: 2011
 主机
@@ -95,53 +93,52 @@ Switch
   NEC 1989
   Japan in 1987 and in North America in 1989.
 
-
 街机
+
 - neogeo: snk, 拳皇，合金弹头
 - cps1,2,3
 - mame
 
-
 - oldman
 
   ```
-  SFC		201M	x
-  GBA_499	3.6G
+  SFC  201M x
+  GBA_499 3.6G
   
-  NGC		15G
-  Wii		120G
+  NGC  15G
+  Wii  120G
   
-  SS		7.9G
-  DC		17.3G	x
+  SS  7.9G
+  DC  17.3G x
   
-  PS1		37.1G
-  PS2		302G/20G
-  PSP		319G/10.4G
+  PS1  37.1G
+  PS2  302G/20G
+  PSP  319G/10.4G
   ```
 
 - retroarch 整合包
   
   ```
-  FC		66M	
-  SFC		619M
-  GB[C]	100M
-  GBA		2.26G	
-  NDS		3.91G
-  3DS		25.6G
-  N64		637M
-  NGC		4.53G
-  Wii		53.4G
+  FC  66M 
+  SFC  619M
+  GB[C] 100M
+  GBA  2.26G 
+  NDS  3.91G
+  3DS  25.6G
+  N64  637M
+  NGC  4.53G
+  Wii  53.4G
   WiiU
   
-  MD		417M
-  SS		4.73G
-  DC		22G
+  MD  417M
+  SS  4.73G
+  DC  22G
   
-  PS1		18.8G
-  PS2		59.5G
-  PSP		21.5G
+  PS1  18.8G
+  PS2  59.5G
+  PSP  21.5G
   
-  PCE*	1.49G
-  3DO		3.56G
-  Aracade	4.36G
+  PCE* 1.49G
+  3DO  3.56G
+  Aracade 4.36G
   ```

@@ -9,7 +9,7 @@ categories:
   - 学习
 ---
 
-#  运行 HPL
+# 运行 HPL
 
 ## 编译 BLAS/CBLAS
 
@@ -105,4 +105,3 @@ HPL.out      output file name (if any)
 1            Equilibration (0=no,1=yes)
 8            memory alignment in double (> 0)
 ```
-

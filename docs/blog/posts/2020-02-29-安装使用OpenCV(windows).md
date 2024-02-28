@@ -58,7 +58,7 @@ categories:
 
    *p.s.* 貌似`opencv_world420.lib`表面上是一个静态链接库，但实际上是一个动态链接库，因而运行时需要`opencv_world420.dll`。而第 3 步如若改成添加`opencv_world420.dll`，则编译失败。
 
-   > LNK1107 could also occur if you attempt to pass a module (.dll or .netmodule extension created with [/clr:noAssembly](https://docs.microsoft.com/en-us/cpp/build/reference/clr-common-language-runtime-compilation?view=vs-2019) or [/NOASSEMBLY](https://docs.microsoft.com/en-us/cpp/build/reference/noassembly-create-a-msil-module?view=vs-2019)) to the linker; pass the .obj file instead. 
+   > LNK1107 could also occur if you attempt to pass a module (.dll or .netmodule extension created with [/clr:noAssembly](https://docs.microsoft.com/en-us/cpp/build/reference/clr-common-language-runtime-compilation?view=vs-2019) or [/NOASSEMBLY](https://docs.microsoft.com/en-us/cpp/build/reference/noassembly-create-a-msil-module?view=vs-2019)) to the linker; pass the .obj file instead.
 
 ### 通过 CMake 编译 OpenCV 程序
 
