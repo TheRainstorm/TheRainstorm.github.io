@@ -3,3 +3,4 @@ mkdocs-material-extensions
 mkdocs-git-revision-date-localized-plugin
 mkdocs-wavedrom-plugin
 mkdocs-rss-plugin
+mdx_truly_sane_lists
