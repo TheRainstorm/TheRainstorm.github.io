@@ -4,16 +4,16 @@ date: 2020-02-16 00:07:30
 tags:
   - hpl
 mathjax: true
-description: 关于编译BLAS/CBLAS，编译HPL以及HPL的优化。
+description: 关于编译 BLAS/CBLAS，编译 HPL 以及 HPL 的优化。
 categories:
   - 学习
 ---
 
-#  运行HPL
+#  运行 HPL
 
-## 编译BLAS/CBLAS
+## 编译 BLAS/CBLAS
 
-BLAS为fortran接口的库，CBLAS为C语言接口的库
+BLAS 为 fortran 接口的库，CBLAS 为 C 语言接口的库
 
 ```bash
  tar zxf blas-3.8.0.tgz 
@@ -28,7 +28,7 @@ BLAS为fortran接口的库，CBLAS为C语言接口的库
  make #在lib/下生成cblas_LINUX.a
 ```
 
-## 编译HPL
+## 编译 HPL
 
 ```bash
 tar zxf hpl-2.3.tar.gz 
@@ -62,7 +62,7 @@ CC           = mpicc
 LINKER       = mpif77
 ```
 
-## HPL优化
+## HPL 优化
 
 ### 配置参数
 

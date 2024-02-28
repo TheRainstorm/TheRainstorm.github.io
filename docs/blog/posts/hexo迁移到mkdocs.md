@@ -1,5 +1,5 @@
 ---
-title: hexo迁移到mkdoc
+title: hexo 迁移到 mkdoc
 date: 2024-01-07 21:47:39
 tags:
   - hexo
@@ -9,28 +9,28 @@ tags:
 categories:
   - 折腾
 ---
-我比较喜欢hexo的tags字云的效果，不过由于以下原因，我打算迁移到新的静态博客框架mkdocs material theme
-- hexo nodejs的依赖实在是太麻烦了
-- hexo展示的信息量太少了（也可能是我使用的模板的问题）
-  - 我感觉这一点上mkdoc效果就很好，在大显示器上能够显示更多信息，查阅博客的效率更高
+我比较喜欢 hexo 的 tags 字云的效果，不过由于以下原因，我打算迁移到新的静态博客框架 mkdocs material theme
+- hexo nodejs 的依赖实在是太麻烦了
+- hexo 展示的信息量太少了（也可能是我使用的模板的问题）
+  - 我感觉这一点上 mkdoc 效果就很好，在大显示器上能够显示更多信息，查阅博客的效率更高
 
 TODO
-- [ ] 集成评论区:[Adding a comment system - Material for MkDocs (squidfunk.github.io)](https://squidfunk.github.io/mkdocs-material/setup/adding-a-comment-system/)
+- [ ] 集成评论区：[Adding a comment system - Material for MkDocs (squidfunk.github.io)](https://squidfunk.github.io/mkdocs-material/setup/adding-a-comment-system/)
 - [ ] 看板娘
 
 参考方案
 - [杰哥的{运维，编程，调板子}小笔记 (jia.je)](https://jia.je/)
 - [jiegec/blog-source: The source of my blog. (github.com)](https://github.com/jiegec/blog-source/tree/master)
-- [ヾ(^▽^*)))欢迎回来~ (shaojiemike.top)](https://shaojiemike.top/)
+- [ヾ (^▽^*))) 欢迎回来~ (shaojiemike.top)](https://shaojiemike.top/)
 
-*p.s. 由于我使用的markdown编辑器的原因，才发现标准MD中list前面需要有一个空行。也就是迄今写的博客均踩了这个坑。。。而mkdocs不支持这个非标准行为，以后慢慢更正吧*
+*p.s. 由于我使用的 markdown 编辑器的原因，才发现标准 MD 中 list 前面需要有一个空行。也就是迄今写的博客均踩了这个坑。。。而 mkdocs 不支持这个非标准行为，以后慢慢更正吧*
 
 <!-- more -->
-## mkdocs教程
+## mkdocs 教程
 
 ### install & run
 
-安装mkdocs非常简单
+安装 mkdocs 非常简单
 ```
 pip install mkdocs-material
 ```
@@ -46,7 +46,7 @@ mkdocs build
 ```
 ### 配置
 
-只有一个配置文件mkdocs.yml
+只有一个配置文件 mkdocs.yml
 ```
 mkdocs new .
 ```
@@ -57,22 +57,22 @@ mkdocs new .
 │  └─ index.md
 └─ mkdocs.yml
 ```
-## mkdocs blog支持
+## mkdocs blog 支持
 
 [Setting up a blog - Material for MkDocs (squidfunk.github.io)](https://squidfunk.github.io/mkdocs-material/setup/setting-up-a-blog/)
-### tags索引页面
+### tags 索引页面
 
-category和archive页面是自动生成的，tags页面需要手动配置
+category 和 archive 页面是自动生成的，tags 页面需要手动配置
 > mkdocs automatically generating [archive](https://squidfunk.github.io/mkdocs-material/plugins/blog/#archive) and [category](https://squidfunk.github.io/mkdocs-material/plugins/blog/#categories) indexes, [post slugs](https://squidfunk.github.io/mkdocs-material/plugins/blog/#config.post_url_format), configurable [pagination](https://squidfunk.github.io/mkdocs-material/plugins/blog/#pagination) and more.
 
-想要创建一个页面包含所有tag索引，需要创建`docs/tags.md`，内容如下
+想要创建一个页面包含所有 tag 索引，需要创建`docs/tags.md`，内容如下
 ```
 # 标签
 
 [TAGS]
 ```
 
-mkdocs启用tags plugin
+mkdocs 启用 tags plugin
 ```yml
 plugins:
   - tags:
@@ -97,7 +97,7 @@ authors:
     avatar: https://github.com/squidfunk.png
 ```
 
-然后就可以在文档的元数据中添加author列表
+然后就可以在文档的元数据中添加 author 列表
 #### linking
 
 > While [post URLs](https://squidfunk.github.io/mkdocs-material/plugins/blog/#config.post_url_format) are dynamically computed, the [built-in blog plugin](https://squidfunk.github.io/mkdocs-material/plugins/blog/) ensures that all links from and to posts and a post's assets are correct.
@@ -107,7 +107,7 @@ authors:
 [Hello World!](blog/posts/hello-world.md)
 ```
 
-链接到一个页面，只需要指向该页面的索引md文件
+链接到一个页面，只需要指向该页面的索引 md 文件
 ```
 [Blog](../index.md)
 ```
@@ -123,15 +123,15 @@ readtime: 15
 ```
 ### 问题
 
-#### 没有category页面
+#### 没有 category 页面
 
-build后才会生成，直接serve是看不到的
+build 后才会生成，直接 serve 是看不到的
 
-### 有用的Plugin
+### 有用的 Plugin
 
 #### meta
 
-可以为一个目录的所有文件设置基础meta信息，在分门别类存储博客时比较有用。但是目前是需要付费才能使用
+可以为一个目录的所有文件设置基础 meta 信息，在分门别类存储博客时比较有用。但是目前是需要付费才能使用
 **Sponsors only** – this plugin is currently reserved to [our awesome sponsors](https://squidfunk.github.io/mkdocs-material/insiders/).
 
 [Built-in meta plugin - Material for MkDocs (squidfunk.github.io)](https://squidfunk.github.io/mkdocs-material/plugins/meta/)
@@ -142,17 +142,17 @@ The meta plugin solves the problem of setting metadata (front matter) for all pa
 ### cloudfare page
 
 参考资料：
-- mkdocs+cf page资料：[Deploy MkDocs with Material or Material Insiders theme to Cloudflare Pages - Starfall Projects](https://www.starfallprojects.co.uk/projects/deploy-host-docs/deploy-mkdocs-material-cloudflare/#site-setup)
-- cf page文档：[Get started guide · Cloudflare Pages docs](https://developers.cloudflare.com/pages/get-started/guide/)
-- cloudflare build platform介绍: [Modernizing the toolbox for Cloudflare Pages builds](https://blog.cloudflare.com/moderizing-cloudflare-pages-builds-toolbox/)
+- mkdocs+cf page 资料：[Deploy MkDocs with Material or Material Insiders theme to Cloudflare Pages - Starfall Projects](https://www.starfallprojects.co.uk/projects/deploy-host-docs/deploy-mkdocs-material-cloudflare/#site-setup)
+- cf page 文档：[Get started guide · Cloudflare Pages docs](https://developers.cloudflare.com/pages/get-started/guide/)
+- cloudflare build platform 介绍：[Modernizing the toolbox for Cloudflare Pages builds](https://blog.cloudflare.com/moderizing-cloudflare-pages-builds-toolbox/)
 
-cf page优势
-- cf page支持很多preset（各种静态网站框架），mkdocs是其中之一，因此配置非常简单。
-  - gh page只支持Jekyll，其它需要自定义workflow来生成html页面
-- 支持设置**Production branch**和**Preview branch**，监听不同git分支
-- 支持选择不同的build platform，目前有ubuntu22.04和ubuntu20.04
+cf page 优势
+- cf page 支持很多 preset（各种静态网站框架），mkdocs 是其中之一，因此配置非常简单。
+  - gh page 只支持 Jekyll，其它需要自定义 workflow 来生成 html 页面
+- 支持设置**Production branch**和**Preview branch**，监听不同 git 分支
+- 支持选择不同的 build platform，目前有 ubuntu22.04 和 ubuntu20.04
 
-*注意：需要配置`requirements.txt`文件告诉cf安装依赖，否则cf build时会报错`mkdocs not found`*
+*注意：需要配置`requirements.txt`文件告诉 cf 安装依赖，否则 cf build 时会报错`mkdocs not found`*
 ```
 mkdocs-material
 mkdocs-material-extensions
@@ -161,48 +161,48 @@ mkdocs-wavedrom-plugin
 mkdocs-rss-plugin
 ```
 
-配置custom domain时直接添加域名即可
+配置 custom domain 时直接添加域名即可
 ### github page
 
-由于原本已经创建过github page了，本以为无法再创建新的github page，然后发现github支持多种page！
-- user, organization page是账户性质的page，对应`<username>.github.io`或`<organization>.github.io`的仓库
-- project page则没有限制，可以创建任意多个，通过`http(s)://<username>.github.io/<repository>`访问。
-  - private仓库创建public page需要github pro以上
+由于原本已经创建过 github page 了，本以为无法再创建新的 github page，然后发现 github 支持多种 page！
+- user, organization page 是账户性质的 page，对应`<username>.github.io`或`<organization>.github.io`的仓库
+- project page 则没有限制，可以创建任意多个，通过`http(s)://<username>.github.io/<repository>`访问。
+  - private 仓库创建 public page 需要 github pro 以上
 
 参考文档
 
-- 关于gh page类型，限制：[About GitHub Pages - GitHub Docs](https://docs.github.com/en/pages/getting-started-with-github-pages/about-github-pages#types-of-github-pages-sites)
-- 配置publishing source：[Configuring a publishing source for your GitHub Pages site - GitHub Docs](https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site)
-- mkdocs关于deploy文档（github和gitlab）：[Publishing your site - Material for MkDocs (squidfunk.github.io)](https://squidfunk.github.io/mkdocs-material/publishing-your-site/?h=deploy)
-#### 配置publishing source
+- 关于 gh page 类型，限制：[About GitHub Pages - GitHub Docs](https://docs.github.com/en/pages/getting-started-with-github-pages/about-github-pages#types-of-github-pages-sites)
+- 配置 publishing source：[Configuring a publishing source for your GitHub Pages site - GitHub Docs](https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site)
+- mkdocs 关于 deploy 文档（github 和 gitlab）：[Publishing your site - Material for MkDocs (squidfunk.github.io)](https://squidfunk.github.io/mkdocs-material/publishing-your-site/?h=deploy)
+#### 配置 publishing source
 
-有两种配置page source方法
+有两种配置 page source 方法
 
-- deploy from a branch：通常对应一个gh-page分支，只包含静态html文件
-  - 可以是本地使用类似`hexo deploy`, `mkdocs gh-deploy`命令生成，然后push到github分支
-  - 也可以是自定义gh workflow，生成然后push到gh-page分支。Most external CI workflows "deploy" to GitHub Pages by committing the build output to the `gh-pages` branch of the repository, and typically include a `.nojekyll` file.
+- deploy from a branch：通常对应一个 gh-page 分支，只包含静态 html 文件
+  - 可以是本地使用类似`hexo deploy`, `mkdocs gh-deploy`命令生成，然后 push 到 github 分支
+  - 也可以是自定义 gh workflow，生成然后 push 到 gh-page 分支。Most external CI workflows "deploy" to GitHub Pages by committing the build output to the `gh-pages` branch of the repository, and typically include a `.nojekyll` file.
 - github action
-  - 也是先通过action生成静态网站文件，最后通过 [`actions/upload-pages-artifact`](https://github.com/actions/upload-pages-artifact) 和 [`actions/deploy-pages`](https://github.com/actions/deploy-pages)发布到gh page。
+  - 也是先通过 action 生成静态网站文件，最后通过 [`actions/upload-pages-artifact`](https://github.com/actions/upload-pages-artifact) 和 [`actions/deploy-pages`](https://github.com/actions/deploy-pages)发布到 gh page。
 
-mkdocs官方提供的方式是方式1，使用它的workflow脚本，会自动生成静态网站文件并push到gh-page分支。
-*p.s 需要修改其中pip install命令，补充完依赖*
-#### 配置custom domain
+mkdocs 官方提供的方式是方式 1，使用它的 workflow 脚本，会自动生成静态网站文件并 push 到 gh-page 分支。
+*p.s 需要修改其中 pip install 命令，补充完依赖*
+#### 配置 custom domain
 
 > Under "Custom domain", type your custom domain, then click **Save**. If you are publishing your site from a branch, this will create a commit that adds a `CNAME` file directly to the root of your source branch. If you are publishing your site with a custom GitHub Actions workflow, no `CNAME` file is created.
 
 
-配置custom domain
-- 域名解析服务提供商：添加一条CNAME record，指向user.github.io
+配置 custom domain
+- 域名解析服务提供商：添加一条 CNAME record，指向 user.github.io
 - github
-  - 对于source为deploy from a branch，在`/`路径添加CNAME文件，包含CNAME名（通过setting中设置，也会自动创建该CNAME文件）
-  - 对于source为github action，通过setting设置即可，不会创建CNAME文件
-如果已经创建过user或organization site，则创建project site时会自动使用之前的域名
-## markdown格式修复
+  - 对于 source 为 deploy from a branch，在`/`路径添加 CNAME 文件，包含 CNAME 名（通过 setting 中设置，也会自动创建该 CNAME 文件）
+  - 对于 source 为 github action，通过 setting 设置即可，不会创建 CNAME 文件
+如果已经创建过 user 或 organization site，则创建 project site 时会自动使用之前的域名
+## markdown 格式修复
 
-原本写的markdown文件有一些格式不太规范，切换成mkdocs后，有许多报错信息。以下列出其中一些问题，并且提供一个自动修复脚本[fix_markdown.py](../../code/fix_markdown.py)，避免一些枯燥的手动修改。
+原本写的 markdown 文件有一些格式不太规范，切换成 mkdocs 后，有许多报错信息。以下列出其中一些问题，并且提供一个自动修复脚本[fix_markdown.py](../../code/fix_markdown.py)，避免一些枯燥的手动修改。
 ### metadata
 
-markdown开头部分可以定义一些元数据，如作者，日期等，这部分叫做frontmatter。通常采用yaml格式。
+markdown 开头部分可以定义一些元数据，如作者，日期等，这部分叫做 frontmatter。通常采用 yaml 格式。
 
 日期只能使用`YY-mm-dd`或者`YY-mm-dd HH:MM:SS`，像`2023-04-20 16:22`这样的格式是无法识别的
 ```
@@ -211,7 +211,7 @@ ERROR   -  Error reading metadata 'date' of post 'blog/posts/2023-04-20-具体�
 ```
 脚本支持修复该问题。
 
-我使用obsidian的Template功能来自动生成metadata，其默认生成的时间格式是不带秒的时间格式，因而导致了以上问题。
+我使用 obsidian 的 Template 功能来自动生成 metadata，其默认生成的时间格式是不带秒的时间格式，因而导致了以上问题。
 可以自定义其模板时间格式：[Templates - Obsidian Help](https://help.obsidian.md/Plugins/Templates)
 修正后模板如下：
 ```
@@ -234,8 +234,8 @@ Doc file 'blog/posts/2023-04-20-具体数学.md' contains a relative link 'image
            'blog/posts/images/具体数学/image-20220607171500766.png' is not found among documentation files
 ```
 
-mkdocs所有链接均使用相对路径，改为相对于md文件的路径即可。
-*p.s 这里不得不提下obsidian的方便之处了。obsidian采用了尽可能匹配的原则，因此只要文件名相同，无论位于哪个目录下，均能正确匹配*
+mkdocs 所有链接均使用相对路径，改为相对于 md 文件的路径即可。
+*p.s 这里不得不提下 obsidian 的方便之处了。obsidian 采用了尽可能匹配的原则，因此只要文件名相同，无论位于哪个目录下，均能正确匹配*
 
 使用正则修改关键代码如下
 ```python
@@ -248,27 +248,27 @@ if m1:
 
 [Setting up a blog - Material for MkDocs (squidfunk.github.io)](https://squidfunk.github.io/mkdocs-material/setup/setting-up-a-blog/?h=relative+link#linking-from-and-to-posts)
 
-mkdocs使用相对路径，指向引用的md文件，并且也支持使用`#`定位到特定section。原本hexo的链接格式则复杂多了。
+mkdocs 使用相对路径，指向引用的 md 文件，并且也支持使用`#`定位到特定 section。原本 hexo 的链接格式则复杂多了。
 由于数目不多，手动修改即可。
 ```
 [openwrt配置#ipv6](2022-02-13-openwrt配置.md#ipv6)
 ```
 
-*p.s obsidan同样支持定位到另一个markdown文档，并且不用太在意路径*
+*p.s obsidan 同样支持定位到另一个 markdown 文档，并且不用太在意路径*
 ### 数学公式
 
 [Math - Material for MkDocs (squidfunk.github.io)](https://squidfunk.github.io/mkdocs-material/reference/math/)
-有MathJax和KaTex两个选择
+有 MathJax 和 KaTex 两个选择
 - **Speed**: KaTeX is generally faster than MathJax. If your site requires rendering large quantities of complex equations quickly, KaTeX may be the better choice.
 - **Syntax Support**: MathJax supports a wider array of LaTeX commands and can process a variety of mathematical markup languages (like AsciiMath and MathML). If you need advanced LaTeX features, MathJax may be more suitable.
 
-但是使用两种方案，据无法正确显示我的[具体数学](2023-04-20-具体数学.md)那篇文章的所有数学公式，并且MathJax正确识别的更少。因此最后选用了KaTeX
+但是使用两种方案，据无法正确显示我的[具体数学](2023-04-20-具体数学.md)那篇文章的所有数学公式，并且 MathJax 正确识别的更少。因此最后选用了 KaTeX
 
 ### 列表前空行
 
 别人关于是否需要支持这个常见“错误”的讨论
 [Blank lines before lists, revisited - Spec - CommonMark Discussion](https://talk.commonmark.org/t/blank-lines-before-lists-revisited/1990/35)
 
-## mkdocs格式
+## mkdocs 格式
 
 [Admonitions - Material for MkDocs (squidfunk.github.io)](https://squidfunk.github.io/mkdocs-material/reference/admonitions/)

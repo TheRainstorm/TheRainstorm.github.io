@@ -6,7 +6,7 @@ tags:
   - hexo
 categories:
   - 折腾
-description: 尝试利用termux在手机上搭建了hexo环境。然后在PC上ssh连接到手机，编辑markdown，产生了这篇文章。
+description: 尝试利用 termux 在手机上搭建了 hexo 环境。然后在 PC 上 ssh 连接到手机，编辑 markdown，产生了这篇文章。
 ---
 
 这是一篇文章。

@@ -1,5 +1,5 @@
 ---
-title: github action编译openwrt
+title: github action 编译 openwrt
 date: 2023-01-27 10:53:00
 tags:
   - openwrt
@@ -13,14 +13,14 @@ categories:
 
 ## 参考
 
-github action基本教程：[GitHub Actions 入门教程 - 阮一峰的网络日志 (ruanyifeng.com)](https://www.ruanyifeng.com/blog/2019/09/getting-started-with-github-actions.html)
-从workflow概念到高级用法：[About workflows - GitHub Docs](https://docs.github.com/en/actions/using-workflows/about-workflows)
+github action 基本教程：[GitHub Actions 入门教程 - 阮一峰的网络日志 (ruanyifeng.com)](https://www.ruanyifeng.com/blog/2019/09/getting-started-with-github-actions.html)
+从 workflow 概念到高级用法：[About workflows - GitHub Docs](https://docs.github.com/en/actions/using-workflows/about-workflows)
 
-## workflow基础
+## workflow 基础
 
-- 可以有多个workflow：For example, you can have one workflow to build and test pull requests, another workflow to deploy your application every time a release is created, and still another workflow that adds a label every time someone opens a new issue.
+- 可以有多个 workflow：For example, you can have one workflow to build and test pull requests, another workflow to deploy your application every time a release is created, and still another workflow that adds a label every time someone opens a new issue.
 
-### 运行时机（触发一条workflow）
+### 运行时机（触发一条 workflow）
   -   Events that occur in your workflow's repository
   -   Events that occur outside of GitHub and trigger a `repository_dispatch` event on GitHub
   -   Scheduled times
@@ -43,7 +43,7 @@ jobs:
       - run: bats -v
 ```
 
-### job依赖(need)
+### job 依赖 (need)
 
 ```yaml
 jobs:
@@ -63,9 +63,9 @@ jobs:
       - run: ./test_server.sh
 ```
 
-### 重复执行job(matrix)
+### 重复执行 job(matrix)
 
-重复执行3次，每次使用不同nodejs版本
+重复执行 3 次，每次使用不同 nodejs 版本
 ```yaml
 jobs:
   build:
@@ -82,7 +82,7 @@ jobs:
 
 ### steps.run
 
-每个run都在单独的进程中
+每个 run 都在单独的进程中
 
 ```yaml
 - name: Install Dependencies
@@ -102,8 +102,8 @@ jobs:
 
 ## storage(cache, )
 
-- 使用cache存储不经常改变的内容，如npm的依赖
-- 使用artifacts存储生成的文件以便其它workflow访问，如编译的二进制或log。
+- 使用 cache 存储不经常改变的内容，如 npm 的依赖
+- 使用 artifacts 存储生成的文件以便其它 workflow 访问，如编译的二进制或 log。
 
 cache: [Caching dependencies to speed up workflows - GitHub Docs](https://docs.github.com/en/actions/using-workflows/caching-dependencies-to-speed-up-workflows)
 artifacts: [Storing workflow data as artifacts - GitHub Docs](https://docs.github.com/en/actions/using-workflows/storing-workflow-data-as-artifacts)
@@ -113,15 +113,15 @@ artifacts: [Storing workflow data as artifacts - GitHub Docs](https://docs.githu
 npm-${{ hashFiles('package-lock.json') }}
 ```
 
-## Context和默认环境变量
+## Context 和默认环境变量
 
 **Default environment variables:** These environment variables exist only on the runner that is executing your job.
 
 **Contexts:** You can use most contexts at any point in your workflow, including when _default variables_ would be unavailable. For example, you can use contexts with expressions to perform initial processing before the job is routed to a runner for execution; this allows you to use a context with the conditional `if` keyword to determine whether a step should run
 
-使用env定义的变量既可以在run中使用，也可以在workflow文件中使用。在run中使用可以使用操作系统对应的shell的格式读取，也可以使用context的格式读取。
+使用 env 定义的变量既可以在 run 中使用，也可以在 workflow 文件中使用。在 run 中使用可以使用操作系统对应的 shell 的格式读取，也可以使用 context 的格式读取。
 
-### 定义environment variable
+### 定义 environment variable
 
 ```yaml
 name: Greeting on variable day
@@ -144,9 +144,9 @@ jobs:
           First_Name: Mona
 ```
 
-### 使用Context
+### 使用 Context
 
-json数据结构的对象。包含多种类型Context：`github, env, jobs, steps, runner, secrets, inputs`
+json 数据结构的对象。包含多种类型 Context：`github, env, jobs, steps, runner, secrets, inputs`
 
 #### github
 ```json
@@ -213,7 +213,7 @@ jobs:
 
 #### steps
 
-通过id设置step每步名字，之后可以获得每步的output等信息
+通过 id 设置 step 每步名字，之后可以获得每步的 output 等信息
 > This example `steps` context shows two previous steps that had an [`id`](https://docs.github.com/en/actions/learn-github-actions/workflow-syntax-for-github-actions#jobsjob_idstepsid) specified. The first step had the `id` named `checkout`, the second `generate_number`. The `generate_number` step had an output named `random_number`.
 
 ```json

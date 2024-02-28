@@ -1,5 +1,5 @@
 ---
-title: openwrt DNS详解
+title: openwrt DNS 详解
 date: 2022-08-16 23:23:52
 tags:
 - openwrt
@@ -10,34 +10,34 @@ categories:
 - 如何实现网络自由
 ---
 
-### openwrt DNS说明
+### openwrt DNS 说明
 
 参考：
 - [[OpenWrt Wiki\] DNS and DHCP configuration /etc/config/dhcp](https://openwrt.org/docs/guide-user/base-system/dhcp)
 - [[OpenWrt Wiki\] DNS and DHCP examples](https://openwrt.org/docs/guide-user/base-system/dhcp_configuration)
 
-- openwrt DNS和DHCP配置均位于/etc/config/dhcp
-- openwrt使用dnsmasq和odhcpd。它们功能如下：
+- openwrt DNS 和 DHCP 配置均位于/etc/config/dhcp
+- openwrt 使用 dnsmasq 和 odhcpd。它们功能如下：
 
   ![image-20220816220011245](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/picgo/image-20220816220011245.png)
 
 - 总结来说：
-  - dnsmasq将自己设置为DHCP客户端的DNS
-  - dnsmasq使用缓存来提升性能。到达的dns请求如果没有命中则转发给**上游DNS**
+  - dnsmasq 将自己设置为 DHCP 客户端的 DNS
+  - dnsmasq 使用缓存来提升性能。到达的 dns 请求如果没有命中则转发给**上游 DNS**
   > Dnsmasq serves as a downstream caching DNS server advertising itself to DHCP clients. This allows better performance and management of DNS functionality on your local network. Every received DNS query not currently in cache is forwarded to the upstream DNS servers.
 
 <!-- more -->
 
-### 设置dnsmasq上游DNS
+### 设置 dnsmasq 上游 DNS
 
-- openwrt默认使用peer dns作为上游的dns，通常由ISP上游DHCP服务器提供
-- dnsmasq定期查询所有的dns(resolver)，并使用最快的一个
-- 多dns provider
-  - 更能容忍DoS攻击
-  - 不同的DNS由于缓存、同步、负载均衡可能返回不同的结果。为了区分正确结果，需要使用DNSSEC，可能会对性能造成损害。
+- openwrt 默认使用 peer dns 作为上游的 dns，通常由 ISP 上游 DHCP 服务器提供
+- dnsmasq 定期查询所有的 dns(resolver)，并使用最快的一个
+- 多 dns provider
+  - 更能容忍 DoS 攻击
+  - 不同的 DNS 由于缓存、同步、负载均衡可能返回不同的结果。为了区分正确结果，需要使用 DNSSEC，可能会对性能造成损害。
     > To distinguish between correct and incorrect answers such as false-negatives, you need to utilize DNSSEC which may negatively impact fault tolerance and performance.
 
-#### 查看上游dns
+#### 查看上游 dns
 
 ```
 $ cat /tmp/resolv.conf.d/resolv.conf.auto
@@ -48,15 +48,15 @@ search lan
 nameserver 2409:8a38:1610:9a80::1
 ```
 
-#### Luci界面设置
+#### Luci 界面设置
 
 **LuCI → Network → Interfaces → WAN & WAN6 → Edit**
 - Use DNS servers advertised by peer
 - Use custom DNS servers
 
-#### Uci命令行设置
+#### Uci 命令行设置
 
-位于network配置文件中
+位于 network 配置文件中
 
 ```
 # Configure DNS provider
@@ -80,7 +80,7 @@ uci commit network
 /etc/init.d/network restart
 ```
 
-#### 常用dns
+#### 常用 dns
 
 ```
 谷歌
@@ -96,13 +96,13 @@ uci commit network
 2400:3200:baba::1
 ```
 
-### 设置客户端DNS
+### 设置客户端 DNS
 
-可以在windows中自己设置dns
+可以在 windows 中自己设置 dns
 
-#### 使用dhcp选项设置客户端dns
-- 可以不使用路由器的DNS，让手机等设备直接使用公共DNS如8.8.8.8
-- 手动修改每个客户端太麻烦，可以使用DHCP选项自动设置
+#### 使用 dhcp 选项设置客户端 dns
+- 可以不使用路由器的 DNS，让手机等设备直接使用公共 DNS 如 8.8.8.8
+- 手动修改每个客户端太麻烦，可以使用 DHCP 选项自动设置
 
 ```
 # Configure dnsmasq
@@ -124,9 +124,9 @@ uci commit dhcp
 
 #### logread
 
-很多时候dns出现问题，都是dnsmasq没有正确启动导致的。可以通过`logread -e dnsmasq`查看日志。
+很多时候 dns 出现问题，都是 dnsmasq 没有正确启动导致的。可以通过`logread -e dnsmasq`查看日志。
 
-#### 开启dns log
+#### 开启 dns log
 
 ```
 uci set dhcp.@dnsmasq[0].logqueries="1"
@@ -134,9 +134,9 @@ uci commit dhcp
 /etc/init.d/dnsmasq restart
 ```
 
-### 其它DNS/DHCP功能
+### 其它 DNS/DHCP 功能
 
-#### DNS过滤(除广告)
+#### DNS 过滤 (除广告)
 
 ```
 # Blacklist
@@ -170,18 +170,18 @@ uci commit dhcp
 /etc/init.d/dnsmasq restart
 ```
 
-#### A, AAAA, CNAME记录
+#### A, AAAA, CNAME 记录
 
-相当于DNS基本功能
+相当于 DNS 基本功能
 
-- A, AAAA记录用于将域名解析到IP
-  - 下面表示home被解析为10.10.10.1
+- A, AAAA 记录用于将域名解析到 IP
+  - 下面表示 home 被解析为 10.10.10.1
   ```
   uci add_list dhcp.@dnsmasq[0].address="/home/10.10.10.1"
   uci commit dhcp
   /etc/init.d/dnsmasq restart
   ```
-- CNAME用于将一个域名解析到另一个域名
+- CNAME 用于将一个域名解析到另一个域名
   ```
   uci add dhcp cname
   uci set dhcp.@cname[-1].cname="ftp.example.com"
@@ -190,7 +190,7 @@ uci commit dhcp
   /etc/init.d/dnsmasq restart
   ```
 
-#### PXE网络启动
+#### PXE 网络启动
 
 https://openwrt.org/docs/guide-user/base-system/dhcp_configuration#multi-arch_tftp_boot
 
@@ -202,7 +202,7 @@ https://openwrt.org/docs/guide-user/base-system/dhcp#dhcp_relay
 
 #### ifconfig
 
-windows `ipconfig /all`，可以看到DNS
+windows `ipconfig /all`，可以看到 DNS
 
 ```
 DHCP 服务器 . . . . . . . . . . . : 192.168.37.1
@@ -235,24 +235,24 @@ netstat -ntlp
 ```
 
 - n：使用数值端口
-- t：TCP流
+- t：TCP 流
 - l：显示正在监听的，否则为已经建立连接的
 - p：显示对应程序
 
 ### 高级
 
-#### 多dnsmasq实例
+#### 多 dnsmasq 实例
 
-由于我区分了lan和guest接口。
+由于我区分了 lan 和 guest 接口。
 
-想要不同的接口绑定不同的search domain。
+想要不同的接口绑定不同的 search domain。
 
-经过查找，貌似只能通过启用多个dnsmasq实例来实现，然后通过instance参数，在不同接口上绑定到不同实例。
+经过查找，貌似只能通过启用多个 dnsmasq 实例来实现，然后通过 instance 参数，在不同接口上绑定到不同实例。
 [Different domain for each interface - Installing and Using OpenWrt / Network and Wireless Configuration - OpenWrt Forum](https://forum.openwrt.org/t/different-domain-for-each-interface/142046)
 [[OpenWrt Wiki] DNS and DHCP examples --- [OpenWrt Wiki]DNS 和 DHCP 示例](https://openwrt.org/docs/guide-user/base-system/dhcp_configuration#multiple_dhcpdns_serverforwarder_instances)
 
-但是实现后，发现两个search domain间不是隔离的，guest下明明没有一些host，但是仍然能够解析。
-折腾了一圈貌似没有解决，因此**还是使用单个search domain算了**。
+但是实现后，发现两个 search domain 间不是隔离的，guest 下明明没有一些 host，但是仍然能够解析。
+折腾了一圈貌似没有解决，因此**还是使用单个 search domain 算了**。
 ```
 64 bytes from ubuntu22.op1 (192.168.35.192): icmp_seq=31 ttl=64 time=0.060 ms
 64 bytes from ubuntu22.guest.op1 (192.168.35.192): icmp_seq=32 ttl=64 time=0.240 ms
@@ -268,15 +268,15 @@ netstat -ntlp
 ```
 ### 遇到的问题
 
-#### ipv6图片显示不出来
-qq、咸鱼等app图片加载不出来，关掉再开启wifi就恢复正常。
+#### ipv6 图片显示不出来
+qq、咸鱼等 app 图片加载不出来，关掉再开启 wifi 就恢复正常。
 怀疑：
-- ipv6 dns的问题
-- linux下需要不断flush neighbor，否则ipv6就会无法连接。是否和该问题有关？
-- 有时需要ping一下路由器，否则ipv6无法连接网络。
+- ipv6 dns 的问题
+- linux 下需要不断 flush neighbor，否则 ipv6 就会无法连接。是否和该问题有关？
+- 有时需要 ping 一下路由器，否则 ipv6 无法连接网络。
 
-ipv6覆盖：
+ipv6 覆盖：
 - [IPv6 Measurement Maps (apnic.net)](https://stats.labs.apnic.net/ipv6/)
 
 参考：
-[ipv6的一些毛病 - 电脑讨论(新) - Chiphell - 分享与交流用户体验](https://chiphell.com/forum.php?mod=viewthread&tid=2442506&extra=&mobile=1)
+[ipv6 的一些毛病 - 电脑讨论 (新) - Chiphell - 分享与交流用户体验](https://chiphell.com/forum.php?mod=viewthread&tid=2442506&extra=&mobile=1)

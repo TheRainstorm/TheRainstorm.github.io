@@ -1,5 +1,5 @@
 ---
-title: retroarch配置
+title: retroarch 配置
 date: 2022-09-29 00:56:52
 tags:
 - retroarch
@@ -9,18 +9,18 @@ categories:
 
 [RetroArch Starter Guide – Retro Game Corps](https://retrogamecorps.com/2022/02/28/retroarch-starter-guide/)
 
-retroarch是一个模拟器前端，不同的模拟器以core的形式嵌入retro。retroarch相对于单独的模拟器来说好处如下
+retroarch 是一个模拟器前端，不同的模拟器以 core 的形式嵌入 retro。retroarch 相对于单独的模拟器来说好处如下
 
-- 跨平台。retroarch支持非常多的平台。由于core是动态链接库的形式嵌入retroarch的，相当于解决了不同core的跨平台问题。
+- 跨平台。retroarch 支持非常多的平台。由于 core 是动态链接库的形式嵌入 retroarch 的，相当于解决了不同 core 的跨平台问题。
 - 支持全局的按键映射。不用为每个模拟器设置手柄，快捷键等等配置。
 - shader and filters。可以实现一些特别的视觉效果，比如
 
 <!-- more -->
 
 ## 参考 
-[RetroArch街机模拟教程【亲测有效】 - 简书 (jianshu.com)](https://www.jianshu.com/p/60cc555e9289)
-[EmuELEC中文网 - EmuELEC使用指南五之街机模拟器使用简介](https://www.emuelec.cn/85.html)
-[EmuELEC中文网 - EmuELEC使用指南一之新手快速上手指南](https://www.emuelec.cn/35.html)
+[RetroArch 街机模拟教程【亲测有效】 - 简书 (jianshu.com)](https://www.jianshu.com/p/60cc555e9289)
+[EmuELEC 中文网 - EmuELEC 使用指南五之街机模拟器使用简介](https://www.emuelec.cn/85.html)
+[EmuELEC 中文网 - EmuELEC 使用指南一之新手快速上手指南](https://www.emuelec.cn/35.html)
 
 
 
@@ -119,7 +119,7 @@ Switch
   PSP		319G/10.4G
   ```
 
-- retroarch整合包
+- retroarch 整合包
   
   ```
   FC		66M	
