@@ -1,0 +1,1421 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="记录一些关于数学、计算机的知识，以及一些日常。">
+      
+      
+      
+        <link rel="canonical" href="https://yfy.cqu.ai/%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/2023/10/30/2023-10-30-openwrt-x86%E5%8D%87%E7%BA%A7/">
+      
+      
+        <link rel="prev" href="../../../../../%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%85%B7/2023/09/15/2023-09-15-PVE/">
+      
+      
+        <link rel="next" href="../../../../../%E5%8D%9A%E5%AE%A2--%E7%BD%91%E7%BB%9C/2023/11/21/2023-11-21-NAS%E6%97%A0%E6%B3%95%E6%89%AB%E6%8F%8F%E5%88%B0%E6%B6%89%E5%8F%8A%E7%9A%84%E7%BD%91%E7%BB%9C%E7%9F%A5%E8%AF%86/">
+      
+      
+      <link rel="icon" href="../../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.13">
+    
+    
+      
+        <title>openwrt x86 升级 - Rain 的随笔</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../../assets/stylesheets/main.7e359304.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#openwrt-x86-的不同之处" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../../../../.." title="Rain 的随笔" class="md-header__button md-logo" aria-label="Rain 的随笔" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Rain 的随笔
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              openwrt x86 升级
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+    
+  
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="../../../../.." class="md-tabs__link">
+        
+  
+    
+  
+  博客
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../about/" class="md-tabs__link">
+        
+  
+    
+  
+  关于
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../tags/" class="md-tabs__link">
+        
+  
+    
+  
+  标签
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../series/" class="md-tabs__link">
+        
+  
+    
+  
+  系列
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../tools/" class="md-tabs__link">
+        
+  
+    
+  
+  工具
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../archive/2024/" class="md-tabs__link">
+          
+  
+  归档
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../category/%E4%B8%AA%E4%BA%BA/" class="md-tabs__link">
+          
+  
+  分类
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" hidden>
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../../.." title="Rain 的随笔" class="md-nav__button md-logo" aria-label="Rain 的随笔" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Rain 的随笔
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+    
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      <a href="../../../../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    博客
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../about/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    关于
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../tags/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    标签
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../series/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    系列
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../tools/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    工具
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    归档
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            归档
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2024/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2024
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2023/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2023
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2022/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2022
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2021/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2021
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2020/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2020
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2019/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2019
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    分类
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            分类
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E4%B8%AA%E4%BA%BA/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    个人
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E5%8D%9A%E5%AE%A2/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    博客
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E5%8D%9A%E5%AE%A2--%E7%BD%91%E7%BB%9C/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    博客 & 网络
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    学习笔记
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    折腾记录
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    课程笔记
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%85%B7/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    软件工具
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E9%98%85%E8%AF%BB/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    阅读
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+  <div class="md-content md-content--post" data-md-component="content">
+    <div class="md-sidebar md-sidebar--post" data-md-component="sidebar" data-md-type="navigation">
+      <div class="md-sidebar__scrollwrap">
+        <div class="md-sidebar__inner md-post">
+          <nav class="md-nav md-nav--primary">
+            <div class="md-post__back">
+              <div class="md-nav__title md-nav__container">
+                <a href="../../../../.." class="md-nav__link">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+                  <span class="md-ellipsis">
+                    回到主页
+                  </span>
+                </a>
+              </div>
+            </div>
+            
+            <ul class="md-post__meta md-nav__list">
+              <li class="md-nav__item md-nav__item--section">
+                <div class="md-post__title">
+                  <span class="md-ellipsis">
+                    元数据
+                  </span>
+                </div>
+                <nav class="md-nav">
+                  <ul class="md-nav__list">
+                    <li class="md-nav__item">
+                      <div class="md-nav__link">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 19H5V8h14m-3-7v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1V1m-1 11h-5v5h5v-5Z"/></svg>
+                        <time datetime="2023-10-30 15:18:00" class="md-ellipsis">2023年10月30日</time>
+                      </div>
+                    </li>
+                    
+                    
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 3v15h3V3H9m3 2 4 13 3-1-4-13-3 1M5 5v13h3V5H5M3 19v2h18v-2H3Z"/></svg>
+                          <span class="md-ellipsis">
+                            分类于
+                            
+                              <a href="../../../../../category/%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/">折腾记录</a></span>
+                        </div>
+                      </li>
+                    
+                    
+                      
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20a8 8 0 0 0 8-8 8 8 0 0 0-8-8 8 8 0 0 0-8 8 8 8 0 0 0 8 8m0-18a10 10 0 0 1 10 10 10 10 0 0 1-10 10C6.47 22 2 17.5 2 12A10 10 0 0 1 12 2m.5 5v5.25l4.5 2.67-.75 1.23L11 13V7h1.5Z"/></svg>
+                          <span class="md-ellipsis">
+                            
+                              需要 5 分钟阅读时间
+                            
+                          </span>
+                        </div>
+                      </li>
+                    
+                  </ul>
+                </nav>
+              </li>
+            </ul>
+          </nav>
+          
+            
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#openwrt-x86-的不同之处" class="md-nav__link">
+    <span class="md-ellipsis">
+      openwrt x86 的不同之处
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="openwrt x86 的不同之处">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#x86-不同-target" class="md-nav__link">
+    <span class="md-ellipsis">
+      x86 不同 target
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#镜像文件与分区布局" class="md-nav__link">
+    <span class="md-ellipsis">
+      镜像文件与分区布局
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#升级方法" class="md-nav__link">
+    <span class="md-ellipsis">
+      升级方法
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#imagebuilder-自定义镜像" class="md-nav__link">
+    <span class="md-ellipsis">
+      ImageBuilder 自定义镜像
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="ImageBuilder 自定义镜像">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#安装" class="md-nav__link">
+    <span class="md-ellipsis">
+      安装
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#使用" class="md-nav__link">
+    <span class="md-ellipsis">
+      使用
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="使用">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#修改仓库" class="md-nav__link">
+    <span class="md-ellipsis">
+      修改仓库
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#增加-root-分区大小" class="md-nav__link">
+    <span class="md-ellipsis">
+      增加 root 分区大小
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lxcimagebuilder-升级" class="md-nav__link">
+    <span class="md-ellipsis">
+      LXC+ImageBuilder 升级
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="LXC+ImageBuilder 升级">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#遇到问题" class="md-nav__link">
+    <span class="md-ellipsis">
+      遇到问题
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="遇到问题">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ssh-permission-denied-publickey" class="md-nav__link">
+    <span class="md-ellipsis">
+      ssh Permission denied (publickey)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#参考" class="md-nav__link">
+    <span class="md-ellipsis">
+      参考
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+          
+        </div>
+      </div>
+    </div>
+    <article class="md-content__inner md-typeset">
+      
+        
+  
+  
+
+<nav class="md-tags" >
+  
+    
+    
+    
+      <a href="../../../../../tags/#openwrt" class="md-tag">openwrt</a>
+    
+  
+    
+    
+    
+      <a href="../../../../../tags/#镜像" class="md-tag">镜像</a>
+    
+  
+</nav>
+
+
+
+  <h1>openwrt x86 升级</h1>
+
+<p>我的台式机 pve 充当软路由功能，包含一个 openwrt LXC 容器。该容器使用了很长时间，配置了 wiregurad，以及复杂的防火墙和路由规则。但是在一开始创建 lxc 容器时，rootfs 选择了 x86/generic 版本。该版本实质上是 32 位的系统</p>
+<blockquote>
+<p><strong>Generic</strong> is for 32-bit-only hardware (either old hardware or some Atom processors), should be <strong>i686</strong> Linux architecture, will work on Pentium 4 and later. Use this only if your hardware can't run the 64-bit version.</p>
+</blockquote>
+<p>虽然不知道会对性能等有多大影响，但是对于有点完美主义的人来说还是无法接受。因此研究如何将其升级到 64 位版本。</p>
+<p>本来以为应该是一件很简单的事情，但是阅读 openwrt wiki 后，发现并没有想象中的简单。并且也学习到了一些关于镜像、分区、文件系统的知识。特此记录。</p>
+<!-- more -->
+
+<h2 id="openwrt-x86-的不同之处">openwrt x86 的不同之处<a class="headerlink" href="#openwrt-x86-的不同之处" title="Permanent link">&para;</a></h2>
+<h3 id="x86-不同-target">x86 不同 target<a class="headerlink" href="#x86-不同-target" title="Permanent link">&para;</a></h3>
+<p>openwrt 提供了不同的 target，用于适应不同老的或新的硬件</p>
+<ul>
+<li><strong>64</strong> is for modern PC hardware (anything from around 2007 onward), it is built for 64-bit capable computers and has support for modern CPU features. Choose this unless you have good reasons not to.</li>
+<li><strong>Generic</strong> is for 32-bit-only hardware (either old hardware or some Atom processors), should be <strong>i686</strong> Linux architecture, will work on Pentium 4 and later. Use this only if your hardware can't run the 64-bit version.</li>
+<li><strong>Legacy</strong> is for very old PC hardware, Pentium MMX, what is called <strong>i586</strong> in Linux architecture support. It will miss a lot of features you want/need on modern hardware like multi-core support and support for more than 4GB of RAM, but will actually run on ancient hardware while other versions will not.</li>
+<li><strong>Geode</strong> is a custom Legacy target customized for Geode SoCs, which are still in use in many (aging) networking devices, like the older Alix boards from PCEngines.</li>
+</ul>
+<h3 id="镜像文件与分区布局">镜像文件与分区布局<a class="headerlink" href="#镜像文件与分区布局" title="Permanent link">&para;</a></h3>
+<p><img alt="" src="https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/20231030152329.png" /></p>
+<p>按照 root 分区文件系统格式的不同，主要提供了 ext4 和 squshfs 两种类型的镜像文件。ext4 可以利用全部的磁盘空间，而提供的 squshfs 镜像 root 分区默认只有 100MB。因此 x86 平台用的比较广泛的是 ext4 格式的镜像。
+<em>p.s 猜测是 ext4 支持配置成动态的大小，而 squshfs 文件系统的大小需要静态指定</em></p>
+<ul>
+<li><strong>squashfs-combined-efi.img.gz</strong><ul>
+<li>16MB 的/boot 分区，ext4 文件系统，用于存储 grub2 和 linux kernel</li>
+<li>104MB 的 root 分区，包含只读的 squashfs 文件系统和可读写的 f2fs 文件系统（overlay）</li>
+<li>任何额外的空间是未分配的</li>
+</ul>
+</li>
+<li><strong>ext4-combined-efi.img.gz</strong><ul>
+<li>16MB 的/boot 分区，ext4 文件系统，用于存储 grub2 和 linux kernel</li>
+<li>root 分区，ext4 文件系统</li>
+<li>可以利用整块磁盘</li>
+<li>无法使用<strong>Failsafe Mode</strong>和<strong>恢复出厂设置</strong></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>另外还提供了<strong>xx-rootfs.img.gz</strong>，用于仅更新 root 分区，不像<strong>combined</strong>镜像会覆盖整个磁盘</li>
+<li>镜像文件名称有无 efi，表示采用 EFI 启动还是 PC BIOS 启动</li>
+<li>另外还提供了 rootfs 的压缩文件<strong>rootfs.tar.gz</strong>。rootfs 可以直接用于创建 lxc 容器。</li>
+</ul>
+<p>其它</p>
+<ul>
+<li>扩展 root 分区</li>
+<li>添加额外分区</li>
+</ul>
+<h2 id="升级方法">升级方法<a class="headerlink" href="#升级方法" title="Permanent link">&para;</a></h2>
+<p>If your installation used the <code>ext4-combined.img.gz</code> image to install, there are several options for upgrading:</p>
+<ol>
+<li>Write a new <code>ext4-combined.img.gz</code> image: this is the simplest option and is identical to first installation: all data, configs, packages and extra partitions will be erased and you'll have a brand new OpenWrt system with default packages and configs. You will need to reinstall all packages, copy config files back, and create any additional partitions you require.</li>
+<li>Use <code>sysupgrade</code>: this is default upgrading procedure but the least recommended option for x86 machines. Proceed to <a href="https://openwrt.org/docs/guide-user/installation/installation_methods/sysupgrade" title="docs:guide-user:installation:installation_methods:sysupgrade">Sysupgrade</a> for details.</li>
+<li>Extract the boot partition image from <code>ext4-combined.img.gz</code> and write it and the <code>ext4-rootfs.img.gz</code>, leaving the Master Boot Record and partition table intact.</li>
+<li>Extract the boot partition image from <code>ext4-combined.img.gz</code> and write it and then uncompress the <code>rootfs.tar.gz</code> to the existing root filesystem.</li>
+</ol>
+<p>不像传统 target，没有<strong>sysupgrade.bin</strong>文件。另外官方 wiki 也不推荐使用 sysupgrade 升级（命令行或者 luci）：<a href="https://openwrt.org/docs/guide-user/installation/sysupgrade.cli">[OpenWrt Wiki] Upgrading OpenWrt firmware using CLI</a></p>
+<blockquote>
+<p>Download and use only OpenWrt firmware images ending in <strong>“-sysupgrade.bin”</strong> for command line upgrades.
+For x86 systems there is no “sysupgrade” image, just be sure the new firmware image has the same family of filesystem as your old one.</p>
+</blockquote>
+<p>基本上需要覆盖整个 rootfs，并且不建议直接覆盖，而是将 old 覆盖到 clean 的新版本上。</p>
+<p>至于如何获得 rootfs，可以从 image 文件中提取</p>
+<ul>
+<li>loseup</li>
+<li>dd</li>
+</ul>
+<h2 id="imagebuilder-自定义镜像">ImageBuilder 自定义镜像<a class="headerlink" href="#imagebuilder-自定义镜像" title="Permanent link">&para;</a></h2>
+<p>Image Builder 用于自定义镜像，而不用从源码编译。它从 openwrt 官方仓库下载 packages 并将其打包到一个镜像文件。</p>
+<p>openwrt 有一个 Attendedsysupgrade Server，可以在线构建自定义的镜像</p>
+<ul>
+<li>配合 luci 客户端，可以实现保持原本的软件并且升级系统，详情：<a href="https://github.com/openwrt/asu">openwrt/asu: An image on demand server for OpenWrt based distributions (github.com)</a>
+并且还提供了一个 grafana 图表，用于观察各 cpu，路由器占比：<a href="https://sysupgrade.openwrt.org/stats/public-dashboards/5f0750ebb59c4666a957dc4261f7b90e?orgId=1&amp;refresh=1m">Attended Sysupgrade Server - Grafana (openwrt.org)</a></li>
+</ul>
+<h3 id="安装">安装<a class="headerlink" href="#安装" title="Permanent link">&para;</a></h3>
+<p>从 openwrt 下载镜像页面下载</p>
+<p><img alt="" src="https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/20231030162658.png" /></p>
+<p>使用需要一些依赖</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>build-essential<span class="w"> </span>libncurses-dev<span class="w"> </span>libncursesw-dev<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>zlib1g-dev<span class="w"> </span>gawk<span class="w"> </span>git<span class="w"> </span>gettext<span class="w"> </span>libssl-dev<span class="w"> </span>xsltproc<span class="w"> </span>rsync<span class="w"> </span>wget<span class="w"> </span>unzip<span class="w"> </span>python3
+</span></code></pre></div>
+<h3 id="使用">使用<a class="headerlink" href="#使用" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>PROFILE</code></td>
+<td>Specifies the target image to build</td>
+</tr>
+<tr>
+<td><code>PACKAGES</code></td>
+<td>A list of packages to embed into the image</td>
+</tr>
+<tr>
+<td><code>FILES</code></td>
+<td>Directory with custom files to include</td>
+</tr>
+<tr>
+<td><code>BIN_DIR</code></td>
+<td>Alternative output directory for the images</td>
+</tr>
+<tr>
+<td><code>EXTRA_IMAGE_NAME</code></td>
+<td>Add this to the output image filename (sanitized)</td>
+</tr>
+<tr>
+<td><code>DISABLED_SERVICES</code></td>
+<td>A list of services to disable</td>
+</tr>
+</tbody>
+</table>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>make help
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>make info
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>make image \
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>PACKAGES=&quot;luci -dnsmasq dnsmasq-full bash zsh vim-full tmux python3 git git-http htop tcpdump mtr-json curl ip-full iperf3 ss bind-dig conntrack file qrencode luci-app-wireguard wireguard-tools kmod-wireguard gre kmod-gre kmod-gre6 luci-app-ddns luci-app-upnp luci-app-shadowsocks-libev shadowsocks-libev-config shadowsocks-libev-ss-server adguardhome zerotier&quot; \
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>FILES=&quot;files&quot;
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>make clean
+</span></code></pre></div>
+<ul>
+<li>指定的包会自动安装依赖</li>
+<li>x86 不需要指定 profile，或者指定为 generic</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>➜  openwrt-imagebuilder-23.05.0-x86-64.Linux-x86_64 make info
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>Current Target: &quot;x86/64&quot;
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>Current Architecture: &quot;x86_64&quot;
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>...
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>Available Profiles:
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>generic:
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>    Generic x86/64
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>    ...
+</span></code></pre></div>
+<p>生成的输出
+bin/targets/x86/64</p>
+<h4 id="修改仓库">修改仓库<a class="headerlink" href="#修改仓库" title="Permanent link">&para;</a></h4>
+<p>repositories.conf</p>
+<p>如果自己有编译 openwrt，那么可以编译时指定生成 image builder。这样还能避免从 openwrt 下载 package。</p>
+<h4 id="增加-root-分区大小">增加 root 分区大小<a class="headerlink" href="#增加-root-分区大小" title="Permanent link">&para;</a></h4>
+<p>修改.config，单位 MB</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>CONFIG_TARGET_KERNEL_PARTSIZE=128
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>CONFIG_TARGET_ROOTFS_PARTSIZE=512
+</span></code></pre></div>
+<h2 id="lxcimagebuilder-升级">LXC+ImageBuilder 升级<a class="headerlink" href="#lxcimagebuilder-升级" title="Permanent link">&para;</a></h2>
+<p>LXC 优点</p>
+<ul>
+<li>由于不涉及到 boot，因此实际上只需要更新 rootfs 即可。</li>
+<li>但是缺点就是无法使用 squash 格式的镜像了。但是由于我可以利用 zfs，自己对 lxc 容器快照，因此实际上是更灵活的。</li>
+</ul>
+<ol>
+<li>创建镜像
+    - 指定需要安装的 package。注意别忘了 luci
+        - 由于安装了很多包，因此需要增大 root 分区大小
+    - 添加备份配置文件
+        - 不包含/etc/init.d/，因此 lxc dnsmasq jail 的问题还在
+        - 不包含/root，因此需要添加</li>
+<li>pve 使用 rootfs 镜像创建一个临时的 lxc 容器</li>
+<li>（适用于 ZFS）将原本容器的 disk rename（备份），用新容器的 disk 替代</li>
+</ol>
+<h3 id="遇到问题">遇到问题<a class="headerlink" href="#遇到问题" title="Permanent link">&para;</a></h3>
+<h4 id="ssh-permission-denied-publickey">ssh Permission denied (publickey)<a class="headerlink" href="#ssh-permission-denied-publickey" title="Permanent link">&para;</a></h4>
+<p>无法 ssh 连接</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>debug1: Next authentication method: publickey
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>debug1: Offering public key: /home/yfy/.ssh/id_rsa RSA SHA256:z9yheNzateaIikTVkTXN1lmMPRIsp+H0ssbhU4Q8Kfg
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>debug1: Authentications that can continue: publickey
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>debug1: No more authentication methods to try.
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>root@192.168.35.1: Permission denied (publickey).
+</span></code></pre></div>
+<p>dropbear 日志</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>Mon Oct 30 19:11:11 2023 authpriv.info dropbear[34648]: Child connection from 192.168.35.5:15786
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>Mon Oct 30 19:11:11 2023 authpriv.info dropbear[34648]: /etc/dropbear must be owned by user or root, and not writable by others
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>Mon Oct 30 19:11:11 2023 authpriv.info dropbear[34648]: Exit before auth from &lt;192.168.35.5:15786&gt;: (user &#39;root&#39;, 0 fails): Exited normally
+</span></code></pre></div>
+<p>解决</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>chmod 750 /etc/dropbear
+</span></code></pre></div>
+<h2 id="参考">参考<a class="headerlink" href="#参考" title="Permanent link">&para;</a></h2>
+<ul>
+<li>官方 wiki：<a href="https://openwrt.org/docs/guide-user/installation/openwrt_x86">[OpenWrt Wiki] OpenWrt on x86 hardware (PC / VM / server)</a></li>
+<li><a href="https://forum.openwrt.org/t/upgrade-version-x86/124663/4">Upgrade version (x86) - Installing and Using OpenWrt - OpenWrt Forum</a></li>
+</ul>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+  
+
+
+
+      
+    </article>
+  </div>
+
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+        
+      
+      <nav class="md-footer__inner md-grid" aria-label="页脚" >
+        
+          
+          <a href="../../../../../%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%85%B7/2023/09/15/2023-09-15-PVE/" class="md-footer__link md-footer__link--prev" aria-label="上一页: PVE">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                上一页
+              </span>
+              <div class="md-ellipsis">
+                PVE
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../../../../../%E5%8D%9A%E5%AE%A2--%E7%BD%91%E7%BB%9C/2023/11/21/2023-11-21-NAS%E6%97%A0%E6%B3%95%E6%89%AB%E6%8F%8F%E5%88%B0%E6%B6%89%E5%8F%8A%E7%9A%84%E7%BD%91%E7%BB%9C%E7%9F%A5%E8%AF%86/" class="md-footer__link md-footer__link--next" aria-label="下一页: NAS 无法扫描到涉及的网络知识">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                下一页
+              </span>
+              <div class="md-ellipsis">
+                NAS 无法扫描到涉及的网络知识
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/TheRainstorm" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../../../..", "features": ["navigation.instant", "navigation.instant.progress", "navigation.tracking", "navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.footer", "content.code.copy", "toc.follow", "toc.integrate"], "search": "../../../../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
+    
+    
+      <script src="../../../../../assets/javascripts/bundle.c8d2eff1.min.js"></script>
+      
+        <script src="../../../../../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
