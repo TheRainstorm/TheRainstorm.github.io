@@ -15,24 +15,25 @@ categories:
 达到一台机器同时运行两个系统，充分利用硬件。
 <!-- more -->
 
-## 系统信息
+## 硬件信息
 
 - CPU: AMD Ryzen™ 7 5800X
-- RAM: Gloway DDR4 2666MHz 32GB
+- 主板：ASUS TUF GAMING B550M-PLUS (WI-FI)
+- RAM: Gloway DDR4 2666MHz 16GBx2
 - GPU slot1: Zotac GTX 1060 3g
 - GPU slot2: Yeston RX550 2g
-- 主板：ASUS TUF GAMING B550M-PLUS (WI-FI)
 - M.2 slot1: Samsung PM9A1 1TB
 - M.2 slot2: KIOXIA RC10 500GB
 - SATA: 西数紫盘 2TB
-
 ### 华硕 B550m 主板
 
 官方参数：[TUF GAMING B550M-PLUS (WI-FI) - Tech Specs｜Motherboards｜ASUS Global](https://www.asus.com/Motherboards-Components/Motherboards/TUF-Gaming/TUF-GAMING-B550M-PLUS-WI-FI/techspec/)
+manual: [C16520_TUF_GAMING_B550M-PLUS_WI-FI_UM_12P_WEB.pdf (asus.com.cn)](https://dlcdnets.asus.com.cn/pub/ASUS/mb/SocketAM4/TUF_GAMING_B550M-PLUS_(WI-FI)/C16520_TUF_GAMING_B550M-PLUS_WI-FI_UM_12P_WEB.pdf?model=TUF%20GAMING%20B550M-PLUS%20(WI-FI))
 
 - PCIe slots
   - 来自 ryzen 5000 CPU（非 G，否则为 PCIE 3.0）
-    - 1 x PCIe x16 (4.0x16 mode)
+    - 1 x PCIe x16 slot (4.0 x 16 mode)
+      PCIEX16_1支持pcie拆分，用于安装m.2扩展卡，可以拆分成4个4.0x4。需要在BIOS中将PCIEx16_1设置成 PCIe RAID Mode。
   - 来自 B550 chipset
     - 1 x PCIe x16 (3.0x4 mode)
     - 1 x PCIe x1
@@ -89,7 +90,7 @@ libvirt 创建不同类型网络参考：[Networking - Libvirt Wiki](https://wik
 - nat：虚拟机位于一个虚拟的网段，通过 nat 到宿主机上网。libvirt 默认提供一个叫做`default`的网络
 - bridge：虚拟机和物理机共享网络。
 
-虚拟机想要使用 bridge 模式来说，分为两步
+虚拟机想要使用 bridge 模式，分为两步
 
 - 在 linux 中创建 bridge 设备
 - virt-manger 中创建网络，使用该 bridge 设备
@@ -118,14 +119,17 @@ sudo systemctl start systemd-networkd
   - eth0 改为实际网卡名字，pcie 网卡前缀一般为 enp
   - 其中 eth0 dchp4 false 表示该接口上不会尝试去 dhcp 请求 ip 地址。要想访问 host，需要通过 br0 的 ip 地址
 
-```
+```shell
 cd /etc/netplan/
 # 备份原本的配置
 mv 01-xxx.yaml 01-xxx.yaml.bak
 
 # 新建配置
 vim 10-yyy.yaml
+```
 
+```yaml
+# 10-yyy.yaml
 network:
   version: 2
   renderer: networkd
@@ -186,7 +190,7 @@ virt-manger 中，在编辑->连接详情->虚拟网络添加一个网络
 
 - 最完整的 Arch wiki：[PCI passthrough via OVMF - ArchWiki (archlinux.org)](https://wiki.archlinux.org/title/PCI_passthrough_via_OVMF)
 - KVM 创建虚拟机并显卡直通详细博客：[Creating a Windows 10 kvm VM on the AMD Ryzen 9 3900X using VGA Passthrough - Heiko's Blog % Virtualization (heiko-sieger.info)](https://www.heiko-sieger.info/creating-a-windows-10-vm-on-the-amd-ryzen-9-3900x-using-qemu-4-0-and-vga-passthrough/)
-- 帮助我解决了 windows 蓝屏问题的博客：[GPU passthrough - my switch to Linux - twenska is writing…](https://blog.twenska.de/blog/GPU_passthrough/)
+- 帮助我解决了 windows 蓝屏问题的博客：[GPU passthrough - my switch to Linux](https://blog.twenska.de/blog/GPU_passthrough/)
 - 比较好的 github page：[GPU Passthrough on GNU/Linux | gpu-passthrough (clayfreeman.github.io)](https://clayfreeman.github.io/gpu-passthrough/)
 
 PVE 资料
@@ -342,15 +346,17 @@ Group:  21  0000:0a:00.4 Audio device [0403]: Advanced Micro Devices, Inc. [AMD]
   - 解决方法：使用 PCIE 显卡延长线（但是 x16 的太贵了，90RMB）
 - boot gpu 默认为 slot 1 的问题。BIOS 无法设置 primary display，导致 windows 虚拟机会蓝屏 ([PCI passthrough via OVMF - Passing_the_boot_GPU_to_the_guest](https://wiki.archlinux.org/title/PCI_passthrough_via_OVMF#Passing_the_boot_GPU_to_the_guest)
   - 该问题已解决
+
 直通 slot2
+
 - slot2 和主板上的其它设备位于一组，无法直通 slot2
   - 使用 ACS patch
 - 我 B550 的主板，slot2 的虽然是 x16 长度的，但是只有 x4 PCIE 3.0 的带宽，显卡一般最少需要 x8 PCIE 3.0，否则会对性能有影响，甚至无法工作
-  - 一般来说双显卡时，两个槽应该都是工作在 x8 的模式下的吧。为何我的主板不支持将 slot1 的 lane 分给 slot2 呢？
+  - 一般来说双显卡时，两个槽应该都是工作在 x8 的模式下的吧。为何我的主板不支持将 slot1 的 lane 分给 slot2 呢？(因为slot1 pcie通道来自CPU，slot2来自主板)
 
-### 直通 boot gpu
+### 直通 boot gpu的问题
 
-如直通 AMD 6500xt 时遇到的问题所描述的。直通 boot gpu 存在一些问题。这里是对该问题的进一步总结
+直通 boot gpu 存在一些问题，这里是对该问题的进一步总结
 
 #### 参考资料
 
@@ -358,28 +364,23 @@ Group:  21  0000:0a:00.4 Audio device [0403]: Advanced Micro Devices, Inc. [AMD]
   - 要么 bios 支持选择 primary gpu
   - 要么 swap gpu slot
 - 解释问题原理，以及解决：[Explaining CSM, efifb=off, and Setting the Boot GPU Manually - The Passthrough POST](https://passthroughpo.st/explaining-csm-efifboff-setting-boot-gpu-manually/)
+- 是否需要 dump vbios：[(8) When is a GPU ROM required and how does it get used? : VFIO (reddit.com)](https://www.reddit.com/r/VFIO/comments/uyyb15/when_is_a_gpu_rom_required_and_how_does_it_get/)
+#### 问题可能导致的现象
 
-是否需要 dump vbios：[(8) When is a GPU ROM required and how does it get used? : VFIO (reddit.com)](https://www.reddit.com/r/VFIO/comments/uyyb15/when_is_a_gpu_rom_required_and_how_does_it_get/)
-
-- 最详细解释： [(8) Do you need or not need a vbios file? : VFIO (reddit.com)](https://www.reddit.com/r/VFIO/comments/t35oji/comment/hyqus40/)
-
-> For some graphics cards or other PCI-e devices, this step may be unnecessary. Some GPUs can operate just fine without mapping a static ROM file; the virtual machine can just directly access the device ROM. Your results may vary, though. The primary purpose of this step is to ensure that successive virtual machine reboots won’t require the hypervisor to be rebooted to reset the GPU’s ROM to an uninitialized state.
-
-问题原因
+- windows循环蓝屏。自己直通1063遇到的，解决办法可以不插显示器启动，或者使用命令reset显卡
+- 报43错误，驱动安装不上。1060换成AMD 6500xt时遇到的，解决办法就是不插显示器启动。（后面给czw在PVE里直通amd 6500xt时又遇到一样问题，但是解决办法不一样。
+#### 问题原因
 
 - uefi 是电脑启动后 cpu 最早运行的代码
 - uefi 需要初始化 primary gpu，因为需要设置菜单。This is because UEFI setup menus, along with boot splash screens, must work in a generic way, as UEFI cannot possibly include a driver for every possible GPU.
 - UEFI 初始化后，暴露给 linux 的是修改后的 vBIOS (shadow copy)。If the host UEFI already initialized the device, the host UEFI makes a“shadow”copy of the GPU’s vBIOS on startup, and that is what Linux exposes as the device’s vBIOS.
 - guest 也有自己的 UEFI（开源的 OVMF），也需要初始化设备。而 host 暴露给 guest 的是 shadow copy，故冲突。OVMF usually hangs at this stage.
 
-解决办法
+#### 方法 0：关闭显示器启动
 
-#### 方法 0：关闭显示器启动 (成功)
+关闭 primary gpu 的显示器，second gpu 插上 hdmi 欺骗器（不插的话相当于没有显示器，启动时自检，显卡亮白灯，但是对于linux还是可以进入系统）
 
-关闭 primary gpu 的显示器，second gpu 插上 hdmi 欺骗器（不插的话相当于没有显示器，启动时自检，显卡亮白灯？）
-
-但是发现 dell 的显示器关闭开关后，仍然能识别到？需要彻底拔下来才行
-
+**可以使用脚本避免重启电脑**，参考遇到的问题里的[Windows 启动时循环蓝屏]。
 #### 方法一：CSM
 
 UEFI 开启 CSM。让 UEFI 初始化另一个 GPU。[关于 CSM 和 UEFI 你要知道的一些事 - 知乎 (zhihu.com)](https://zhuanlan.zhihu.com/p/36530184)
@@ -419,9 +420,17 @@ video=efifb:off
 QEMU can expose the vBIOS from a ROM file supplied to it by libvirt.
 获得 vBIOS 方法
 
-- dump，见结尾 dump bios
+- dump：[Dump_GPU_vBIOS/dump_vbios.sh at master · SpaceinvaderOne/Dump_GPU_vBIOS (github.com)](https://github.com/SpaceinvaderOne/Dump_GPU_vBIOS/blob/master/dump_vbios.sh)
+  [(8) How to dump GPU VBIOS on linux? : VFIO (reddit.com)](https://www.reddit.com/r/VFIO/comments/ma0s7j/how_to_dump_gpu_vbios_on_linux/)
+  ```
+  cd /sys/bus/pci/devices/0000:0a:00.0
+  echo 1 > rom
+  cat rom > /tmp/vbios
+  echo 0 > rom
+  ```
 - 从网络上下载（TechPowerup）
 
+使用vbios
 ```
 <hostdev mode='subsystem' type='pci' managed='yes'>
  <source>
@@ -447,7 +456,7 @@ Please configure -smp options properly or try enabling topoext feature.
 发现
 
 - 只有开启 vm 后，才可以 dump bios，否者会报 output error
-- 关闭屏幕下开机 t，vm 显卡正常。但是 dump 的 vbios 通不过检验。反而是打开屏幕下开机，vm 显卡不正常的可以通过检验。
+- 关闭屏幕下开机，vm 显卡正常。但是 dump 的 vbios 通不过检验。反而是打开屏幕下开机，vm 显卡不正常的可以通过检验。
 
 ```
 Valid ROM signature found @0h, PCIR offset 370h
@@ -481,9 +490,10 @@ I personally wouldn't advise actually flashing your GPU's bios unless required. 
 nv 的有 rom 只能运行一次的问题，amd 没有
 Furthermore, it seems only NVIDIA cards have this problem and even then only some. They can be initialized once per boot. That's it. AMD cards don't seem to have this problem AFAIK and present their rom the same all the time, so the VM has no trouble initializing them again and again and again once given one.
 
-什么使用需要指定 bios
+什么时候需要指定 bios
 This means that if your motherboard draws to the GPU on boot with system information, a logo and what not on the GPU you want to pass through then you're already too late and would need a vbios file if you cannot stop this behavior in your host's bios settings.
 
+主板不支持指定核显独显，或者多显卡下不支持指定某一块显卡
 If your motherboard doesn't have an option to strictly pick which GPU to use (integrated vs dedicated, or an option of *which* of multiple dedicated to use) it may initialize it too and you will need a vbios file for a guest all the same.
 
 Single GPU hosts don't get any choice and have to draw their POST information ...somewhere... So you will almost always need a vbios file outside very special motherboard configurations (Usually Server boards handle this nicely, even if they only have a shitty onboard 8MB vga plug for basic terminal display only)
@@ -495,18 +505,6 @@ I personally don't think about it too much. I've written my [own vfio script](h
 
 不关机重置 gpu？
 This makes me imagine that putting a PC to sleep then waking it as you start your qemu VM may be another way to 'reboot' the GPU and restore its vbios rom ready for the guest without a true host reboot (With a low enough sleep state), but who wants to do that. Maybe something for me to experiment with though. It could also help make the GPU more stable when returning to a host in some circumstances.
-
-##### dump vbios
-
-[Dump_GPU_vBIOS/dump_vbios.sh at master · SpaceinvaderOne/Dump_GPU_vBIOS (github.com)](https://github.com/SpaceinvaderOne/Dump_GPU_vBIOS/blob/master/dump_vbios.sh)
-[(8) How to dump GPU VBIOS on linux? : VFIO (reddit.com)](https://www.reddit.com/r/VFIO/comments/ma0s7j/how_to_dump_gpu_vbios_on_linux/)
-
-```
-cd /sys/bus/pci/devices/0000:0a:00.0
-echo 1 > rom
-cat rom > /tmp/vbios
-echo 0 > rom
-```
 
 ### 单 gpu 直通？
 
@@ -542,7 +540,7 @@ echo 0 > rom
 
 ### Windows 虚拟机内 OBS 录屏
 
-通过 rdp 远程连接 windows 时使用 OBS 录屏，会发现断开 rdp 连接后，录到的是黑屏。原因是 rdp 连接时，使用的是虚拟的显示适配器（因此无法调节分辨率），虚拟的声卡。当断开连接时，这些都会消失，故无法录屏。
+通过 rdp 远程连接 windows 时使用 OBS 录屏，会发现断开 rdp 连接后，录到的是黑屏。原因是 rdp 连接时，使用的是虚拟的显示适配器（无法调节分辨率），虚拟的声卡。当断开连接时，这些都会消失，故无法录屏。
 
 解决办法为使用 vnc，vnc 连接后开启录屏，断开连接后，仍然在录屏。
 
@@ -559,22 +557,19 @@ echo 0 > rom
 解决
 
 - kernel cmd
-
   ```
   video_vifib=off
   ```
 
 - xorg
-
   ```
-  /etc/X11/xorg.conf.d/second_gpu.conf
+  #/etc/X11/xorg.conf.d/second_gpu.conf
   Section "Device"
-          Identifier "AMD GPU"
-          Driver "amdgpu"  #填lspci看到的驱动
-          BusID  "PCI:4:0:0" #bus id, device id, function id
+        Identifier "AMD GPU"
+        Driver "amdgpu"  #填lspci看到的驱动
+        BusID  "PCI:4:0:0" #bus id, device id, function id
   EndSection
   ```
-
 ### Windows 启动时循环蓝屏
 
 windows 启动时蓝屏，蓝屏两次后进入恢复界面，选择关机后再次启动依然蓝屏。
@@ -589,7 +584,6 @@ windows 启动时蓝屏，蓝屏两次后进入恢复界面，选择关机后再
 终止代码: VIDEO TDR FAILURE
 失败的操作：nvlddmkm.sys
 ```
-
 #### 解决
 
 发现问题可能是由于将 boot GPU 直通导致的[PCI passthrough via OVMF - ArchWiki (archlinux.org)](https://wiki.archlinux.org/title/PCI_passthrough_via_OVMF#Passing_the_boot_GPU_to_the_guest)
@@ -613,70 +607,15 @@ virsh start win10
 ```
 
 发现 Arch wiki 提到相同的解决方法[BAR_3:_cannot_reserve[mem]](https://wiki.archlinux.org/title/PCI_passthrough_via_OVMF#%22BAR_3:_cannot_reserve_[mem]%22_error_in_dmesg_after_starting_virtual_machine)
-
-### parsec 报错
-
-[Error Codes - 14003 (Failed to Capture the Host Display) – Parsec](https://support.parsec.app/hc/en-us/articles/360002165172)
-导致这个错误的好多
-
-- 少数游戏全屏会使得分辨率信息错误
-- 关闭了显示器
-- 同时使用 windows rdp 和 parsec
-
-- If running a headless system, or attempting to run Parsec from a virtual machine that has a GPU passed through to it, you will need to simulate a display being plugged into the GPU.
-  - You can make use of [Parsec's virtual displays](https://support.parsec.app/hc/en-us/articles/360054478211), available in the host settings. The free version of Parsec has a "Fallback To Virtual Display" which adds a single virtual display if no other displays are present. [Learn how to set it up at the bottom of the virtual displays page](https://support.parsec.app/hc/en-us/articles/360054478211)
-  - Alternatively, you can purchase a HDMI dongle to generate a monitor, ([we recommend this one](https://www.amazon.com/dp/B01EK05WTY/)). Using an HDMI Dongle can be problematic if you also plan to physically use this host machine, as while the headless hdmi dongle is plugged in, you will have an invisible monitor at all times
-  - On QUADRO or TESLA graphics you might be able to [simulate an EDID via NVIDIA Control Panel](https://nvidia.custhelp.com/app/answers/detail/a_id/3569/)
-
-For the best performance, you should close all RDP sessions before connecting with Parsec. Parsec is generally able to stay connected at the same time as RDP, but performance will be significantly worse. Since Windows 10 Build 1903, WDDM graphics mode causes bugs while Parsec and RDP are used together. If you get error -14003, turn off WDDM graphics in favor of XDDM:
-
-- Run "Edit group policy"
-- Navigate to Local Computer Policy > Computer Configuration > Administrative Templates > Windows Components > Remote Desktop Services > Remote Desktop Session Host > Remote Session Environment
-- Set "Use WDDM graphics display driver..." to "Disabled"
-
-### SeaBIOS or OVMF
-
-OVMF is an open-source UEFI firmware for QEMU virtual machines. While it is possible to use SeaBIOS to get similar results to an actual PCI passthrough, the setup process is different and it is generally preferable to use the EFI method if your hardware supports it.
-
-### AMD 5600XT 直通后 code43
-
-从原本的 1060 3g 换成了 5600xt。
-刚开始进入系统，显卡显示显示适配器，code 31。过了一会儿之后，自己安装驱动，识别出是 5600xt 了。
-但是显示器仍然是黑屏，显示 code 43。按照 arch wiki 上写的
-
-- AMD 或者老版 Nvidia 驱动（新版 nv 驱动不会）会识别是虚拟机从而拒绝工作。xml 需要添加配置。
-
-```xml
-$ virsh edit vmname
-
-<features>
-  <hyperv>
-    ...
-    <vendor_id state='on' value='randomid'/>
-  </hyperv>
-  # nv需要额外添加以下配置
-  <kvm>
-    <hidden state='on'/>
-  </kvm>
-</features>
-```
-
-但是我试了之后还是不行，randomid 我试了改为"012345678ab"也不行（来自其它博客）
-
-注意到我启动 host 时，ubuntu 启动界面是显示在插在 AMD gpu 上的显示器，而非不显卡直通的显示器。因此怀疑是不是因为直通的显卡为 boot 显卡，导致传入虚拟机的显卡 bios 被修改过了。导致驱动报错。
-> The GPU marked as `boot_vga` is a special case when it comes to doing PCI passthroughs, since the BIOS needs to use it in order to display things like boot messages or the BIOS configuration menu. To do that, it makes [a copy of the VGA boot ROM which can then be freely modified](https://www.redhat.com/archives/vfio-users/2016-May/msg00224.html). This modified copy is the version the system gets to see, which the passthrough driver may reject as invalid. As such, it is generally recommended to change the boot GPU in the BIOS configuration so the host GPU is used instead or, if that is not possible, to swap the host and guest cards in the machine itself.
-
-于是尝试直通的显卡不插显示器启动 host，**虽然不知为 bios 自检显示显卡没通过，亮白灯**，但是最终还是进了系统。期间，启动界面的 logo 颜色有点异常（显示器插在非直通的显卡上，后面发现貌似更新为 nvidia 驱动后（原本为 nveau）没有该问题）
-
-进入系统后，启动虚拟器，一切正常。
-
-### 安装 nvidia 驱动后启动会反复 load nvidia 驱动
+### host 安装 nvidia 驱动后启动会反复 load nvidia 驱动
 
 相当于 bind vifo 不起作用？
 
 ```
 NVRM: The NVIDIA probe routine was not called for 1 device(s)
 ```
+
+解决办法为blacklist掉nvidia驱动
 
 [grub2 - How to temporarily blacklist nvidia driver at boot time - Ask Ubuntu](https://askubuntu.com/questions/1298461/how-to-temporarily-blacklist-nvidia-driver-at-boot-time)
 
@@ -696,36 +635,6 @@ module_blacklist=nvidia
 ```
 softdep nvidia pre: vfio-pci
 ```
-
-### 1070 + 1060
-
-安装了 nvidia-driver-535-server-open
-结果启动时报
-
-```
-NVRM cpuidInfoAMD: unrecognized amd processor in cpuidinfoamd
-```
-
-然后进入紧急模式。
-
-- 远程 kvm 看不到画面，回到实验室后，插上物理显示器也看不到输出。
-- 强制重启后可以看到输出，然后就进入了紧急模式
-
-通过 moudle_blacklist=nvidia，可以进入系统。（结果系统的网络出了问题，ping 等都没有问题，但是一旦 curl 就卡住，不清楚为什么）
-
-binding vfio
-
-- 为了防止 host 访问 gpu，设置的一个 placeholder 驱动
-- 有两种方式 bind：linux kernel cmdline，modprobe.d（需要修改 initramfs）
-
-early bind
-
-- modprobe
-- 直接加载到 initramfs，可能会导致 initramfs 变大，加载变慢
-  - mkinitcpio, booster 等方式
-
-> If you are modesetting the `nvidia` driver, the `vfio-pci.ids` must be embedded in the initramfs image. If given via kernel arguments, they will be read too late to take effect. Follow the instructions in [#Binding vfio-pci via device ID](https://wiki.archlinux.org/title/PCI_passthrough_via_OVMF#Binding_vfio-pci_via_device_ID) for adding the ids to a modprobe conf file.
->
 ## 性能优化
 
 <https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html-single/virtualization_tuning_and_optimization_guide/index>
@@ -752,99 +661,3 @@ acs_patch id 用法：[Help with PCI Express passthrough (ACS - IOMMU issue) + k
 这个 vendor-reset 是干嘛用的：
 [gnif/vendor-reset: Linux kernel vendor specific hardware reset module for sequences that are too complex/complicated to land in pci_quirks.c (github.com)](https://github.com/gnif/vendor-reset)
 提到安全：[(4) Is ACS override really that unsafe? : VFIO (reddit.com)](https://www.reddit.com/r/VFIO/comments/ybda5c/is_acs_override_really_that_unsafe/)
-
-## 附录
-
-```
-➜  ~ lspci -tv
--[0000:00]-+-00.0  Advanced Micro Devices, Inc. [AMD] Starship/Matisse Root Complex
-           +-00.2  Advanced Micro Devices, Inc. [AMD] Starship/Matisse IOMMU
-           +-01.0  Advanced Micro Devices, Inc. [AMD] Starship/Matisse PCIe Dummy Host Bridge
-           +-01.1-[01]----00.0  Samsung Electronics Co Ltd NVMe SSD Controller PM9A1/PM9A3/980PRO
-           +-01.2-[02-07]--+-00.0  Advanced Micro Devices, Inc. [AMD] 500 Series Chipset USB 3.1 XHCI Controller
-           |               +-00.1  Advanced Micro Devices, Inc. [AMD] 500 Series Chipset SATA Controller
-           |               \-00.2-[03-07]--+-00.0-[04]--+-00.0  Advanced Micro Devices, Inc. [AMD/ATI] Baffin [Radeon RX 550 640SP / RX 560/560X]
-           |                               |            \-00.1  Advanced Micro Devices, Inc. [AMD/ATI] Baffin HDMI/DP Audio [Radeon RX 550 640SP / RX 560/560X]
-           |                               +-04.0-[05]----00.0  KIOXIA Corporation NVMe SSD
-           |                               +-08.0-[06]----00.0  Intel Corporation Wi-Fi 6 AX200
-           |                               \-09.0-[07]----00.0  Realtek Semiconductor Co., Ltd. RTL8125 2.5GbE Controller
-           +-02.0  Advanced Micro Devices, Inc. [AMD] Starship/Matisse PCIe Dummy Host Bridge
-           +-03.0  Advanced Micro Devices, Inc. [AMD] Starship/Matisse PCIe Dummy Host Bridge
-           +-03.1-[08]--+-00.0  NVIDIA Corporation GP106 [GeForce GTX 1060 3GB]
-           |            \-00.1  NVIDIA Corporation GP106 High Definition Audio Controller
-           +-04.0  Advanced Micro Devices, Inc. [AMD] Starship/Matisse PCIe Dummy Host Bridge
-           +-05.0  Advanced Micro Devices, Inc. [AMD] Starship/Matisse PCIe Dummy Host Bridge
-           +-07.0  Advanced Micro Devices, Inc. [AMD] Starship/Matisse PCIe Dummy Host Bridge
-           +-07.1-[09]----00.0  Advanced Micro Devices, Inc. [AMD] Starship/Matisse PCIe Dummy Function
-           +-08.0  Advanced Micro Devices, Inc. [AMD] Starship/Matisse PCIe Dummy Host Bridge
-           +-08.1-[0a]--+-00.0  Advanced Micro Devices, Inc. [AMD] Starship/Matisse Reserved SPP
-           |            +-00.1  Advanced Micro Devices, Inc. [AMD] Starship/Matisse Cryptographic Coprocessor PSPCPP
-           |            +-00.3  Advanced Micro Devices, Inc. [AMD] Matisse USB 3.0 Host Controller
-           |            \-00.4  Advanced Micro Devices, Inc. [AMD] Starship/Matisse HD Audio Controller
-           +-14.0  Advanced Micro Devices, Inc. [AMD] FCH SMBus Controller
-           +-14.3  Advanced Micro Devices, Inc. [AMD] FCH LPC Bridge
-           +-18.0  Advanced Micro Devices, Inc. [AMD] Matisse/Vermeer Data Fabric: Device 18h; Function 0
-           +-18.1  Advanced Micro Devices, Inc. [AMD] Matisse/Vermeer Data Fabric: Device 18h; Function 1
-           +-18.2  Advanced Micro Devices, Inc. [AMD] Matisse/Vermeer Data Fabric: Device 18h; Function 2
-           +-18.3  Advanced Micro Devices, Inc. [AMD] Matisse/Vermeer Data Fabric: Device 18h; Function 3
-           +-18.4  Advanced Micro Devices, Inc. [AMD] Matisse/Vermeer Data Fabric: Device 18h; Function 4
-           +-18.5  Advanced Micro Devices, Inc. [AMD] Matisse/Vermeer Data Fabric: Device 18h; Function 5
-           +-18.6  Advanced Micro Devices, Inc. [AMD] Matisse/Vermeer Data Fabric: Device 18h; Function 6
-           \-18.7  Advanced Micro Devices, Inc. [AMD] Matisse/Vermeer Data Fabric: Device 18h; Function 7
-```
-
-```
-➜  ~ sudo dmesg | grep -i acs
-[    0.000000] Command line: BOOT_IMAGE=/boot/vmlinuz-5.19.17 root=UUID=5d812412-e8a8-47c5-9dc0-505a28fc0eb9 ro quiet splash amd_iommu=on kvm.ignore_msrs=1 vfio_pci.ids=10de:1c02,10de:10f1 pcie_acs_override=multifunction vt.handoff=7
-[    0.000000] Warning: PCIe ACS overrides enabled; This may allow non-IOMMU protected peer-to-peer DMA
-[    0.004417] ACPI: FACS 0x00000000AAEDA000 000040
-[    0.004452] ACPI: Reserving FACS table memory at [mem 0xaaeda000-0xaaeda03f]
-[    0.074290] Kernel command line: BOOT_IMAGE=/boot/vmlinuz-5.19.17 root=UUID=5d812412-e8a8-47c5-9dc0-505a28fc0eb9 ro quiet splash amd_iommu=on kvm.ignore_msrs=1 vfio_pci.ids=10de:1c02,10de:10f1 pcie_acs_override=multifunction vt.handoff=7
-```
-
-```
-➜  scripts ./iommu-viewer.sh
-Please be patient. This may take a couple seconds.
-Group:  0   0000:00:01.0 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Starship/Matisse PCIe Dummy Host Bridge [1022:1482]
-Group:  1   0000:00:01.1 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] Starship/Matisse GPP Bridge [1022:1483]   Driver: pcieport
-Group:  2   0000:00:01.2 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] Starship/Matisse GPP Bridge [1022:1483]   Driver: pcieport
-Group:  3   0000:00:02.0 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Starship/Matisse PCIe Dummy Host Bridge [1022:1482]
-Group:  4   0000:00:03.0 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Starship/Matisse PCIe Dummy Host Bridge [1022:1482]
-Group:  5   0000:00:03.1 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] Starship/Matisse GPP Bridge [1022:1483]   Driver: pcieport
-Group:  6   0000:00:04.0 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Starship/Matisse PCIe Dummy Host Bridge [1022:1482]
-Group:  7   0000:00:05.0 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Starship/Matisse PCIe Dummy Host Bridge [1022:1482]
-Group:  8   0000:00:07.0 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Starship/Matisse PCIe Dummy Host Bridge [1022:1482]
-Group:  9   0000:00:07.1 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] Starship/Matisse Internal PCIe GPP Bridge 0 to bus[E:B] [1022:1484]   Driver: pcieport
-Group:  10  0000:00:08.0 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Starship/Matisse PCIe Dummy Host Bridge [1022:1482]
-Group:  11  0000:00:08.1 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] Starship/Matisse Internal PCIe GPP Bridge 0 to bus[E:B] [1022:1484]   Driver: pcieport
-Group:  12  0000:00:14.0 SMBus [0c05]: Advanced Micro Devices, Inc. [AMD] FCH SMBus Controller [1022:790b] (rev 61)   Driver: piix4_smbus
-Group:  12  0000:00:14.3 ISA bridge [0601]: Advanced Micro Devices, Inc. [AMD] FCH LPC Bridge [1022:790e] (rev 51)
-Group:  13  0000:00:18.0 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Matisse/Vermeer Data Fabric: Device 18h; Function 0 [1022:1440]
-Group:  13  0000:00:18.1 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Matisse/Vermeer Data Fabric: Device 18h; Function 1 [1022:1441]
-Group:  13  0000:00:18.2 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Matisse/Vermeer Data Fabric: Device 18h; Function 2 [1022:1442]
-Group:  13  0000:00:18.3 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Matisse/Vermeer Data Fabric: Device 18h; Function 3 [1022:1443]   Driver: k10temp
-Group:  13  0000:00:18.4 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Matisse/Vermeer Data Fabric: Device 18h; Function 4 [1022:1444]
-Group:  13  0000:00:18.5 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Matisse/Vermeer Data Fabric: Device 18h; Function 5 [1022:1445]
-Group:  13  0000:00:18.6 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Matisse/Vermeer Data Fabric: Device 18h; Function 6 [1022:1446]
-Group:  13  0000:00:18.7 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Matisse/Vermeer Data Fabric: Device 18h; Function 7 [1022:1447]
-Group:  14  0000:01:00.0 Non-Volatile memory controller [0108]: Samsung Electronics Co Ltd NVMe SSD Controller PM9A1/PM9A3/980PRO [144d:a80a]   Driver: nvme
-Group:  15  0000:02:00.0 USB controller [0c03]: Advanced Micro Devices, Inc. [AMD] 500 Series Chipset USB 3.1 XHCI Controller [1022:43ee]   Driver: xhci_hcd
-Group:  16  0000:02:00.1 SATA controller [0106]: Advanced Micro Devices, Inc. [AMD] 500 Series Chipset SATA Controller [1022:43eb]   Driver: ahci
-Group:  17  0000:02:00.2 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] 500 Series Chipset Switch Upstream Port [1022:43e9]   Driver: pcieport
-Group:  18  0000:03:00.0 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] Device [1022:43ea]   Driver: pcieport
-Group:  18  0000:04:00.0 VGA compatible controller [0300]: Advanced Micro Devices, Inc. [AMD/ATI] Baffin [Radeon RX 550 640SP / RX 560/560X] [1002:67ff] (rev ff)   Driver: amdgpu
-Group:  18  0000:04:00.1 Audio device [0403]: Advanced Micro Devices, Inc. [AMD/ATI] Baffin HDMI/DP Audio [Radeon RX 550 640SP / RX 560/560X] [1002:aae0]   Driver: snd_hda_intel
-Group:  19  0000:03:04.0 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] Device [1022:43ea]   Driver: pcieport
-Group:  19  0000:05:00.0 Non-Volatile memory controller [0108]: KIOXIA Corporation NVMe SSD [1e0f:0009] (rev 01)   Driver: nvme
-Group:  20  0000:03:08.0 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] Device [1022:43ea]   Driver: pcieport
-Group:  20  0000:06:00.0 Network controller [0280]: Intel Corporation Wi-Fi 6 AX200 [8086:2723] (rev 1a)   Driver: iwlwifi
-Group:  21  0000:03:09.0 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] Device [1022:43ea]   Driver: pcieport
-Group:  21  0000:07:00.0 Ethernet controller [0200]: Realtek Semiconductor Co., Ltd. RTL8125 2.5GbE Controller [10ec:8125] (rev 05)   Driver: r8169
-Group:  22  0000:08:00.0 VGA compatible controller [0300]: NVIDIA Corporation GP106 [GeForce GTX 1060 3GB] [10de:1c02] (rev a1)   Driver: vfio-pci
-Group:  23  0000:08:00.1 Audio device [0403]: NVIDIA Corporation GP106 High Definition Audio Controller [10de:10f1] (rev a1)   Driver: vfio-pci
-Group:  24  0000:09:00.0 Non-Essential Instrumentation [1300]: Advanced Micro Devices, Inc. [AMD] Starship/Matisse PCIe Dummy Function [1022:148a]
-Group:  25  0000:0a:00.0 Non-Essential Instrumentation [1300]: Advanced Micro Devices, Inc. [AMD] Starship/Matisse Reserved SPP [1022:1485]
-Group:  26  0000:0a:00.1 Encryption controller [1080]: Advanced Micro Devices, Inc. [AMD] Starship/Matisse Cryptographic Coprocessor PSPCPP [1022:1486]   Driver: ccp
-Group:  27  0000:0a:00.3 USB controller [0c03]: Advanced Micro Devices, Inc. [AMD] Matisse USB 3.0 Host Controller [1022:149c]   Driver: xhci_hcd
-Group:  28  0000:0a:00.4 Audio device [0403]: Advanced Micro Devices, Inc. [AMD] Starship/Matisse HD Audio Controller [1022:1487]   Driver: snd_hda_intel
-```

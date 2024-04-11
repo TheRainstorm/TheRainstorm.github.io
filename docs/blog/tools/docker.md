@@ -145,6 +145,13 @@ docker tag old_image_name:old_tag new_image_name:new_tag
 docker rmi old_image_name:old_tag
 ```
 
+## docker compose
+
+### 升级镜像
+
+```
+docker compose pull && docker compose up -d
+```
 ## dockerfile
 
 创建 Dockerfile，经常遇到因为某一步错误，导致反复 docker build。其实可以先创建一个基础环境，然后进入环境配置一遍，成功后再写 dockerfile。
