@@ -303,3 +303,19 @@ ubuntu@dfc03804864c ➜  tree -L 4
 ➜  ls -i outfile-hl
 1091603 -rw-rw-r-- 2 yfy yfy 0 12月  9 16:57 outfile-hl
 ```
+
+### gpu
+
+
+```
+Error response from daemon: failed to create task for container: failed to create shim task: OCI runtime create failed: runc create failed: unable to start container process: error during container init: error running hook #0: error running hook: exit status 1, stdout: , stderr: Auto-detected mode as 'legacy'
+nvidia-container-cli: initialization error: nvml error: driver/library version mismatch: unknown
+Error: failed to start containers: jellyfin
+```
+
+```
+[Sat Apr 13 23:38:47 2024] NVRM: API mismatch: the client has the version 535.171.04, but
+                           NVRM: this kernel module has the version 535.161.07.  Please
+                           NVRM: make sure that this kernel module and all NVIDIA driver
+                           NVRM: components have the same version.
+```

@@ -18,6 +18,9 @@ categories:
 
     之前还研究过这类软件一般是怎么发现server的。发现确实有一些方法可以实现跨网络的发现。比如常见的“发现”协议（不知道术语是什么）有mDNS和upnp。是通过ipv4 multicast实现的，所以只要能proxy多播包，就可以实现在两个网络互相发现。
 
+
+2024/4/17 update: 今天在搜索 vxlan 时发现了一篇博客也遇到了这个问题。他的解决方案是通过设置 bridge-nf-call-iptables 使得桥接的数据包也通过 iptable，然后再通过 iptable 修正 MSS。因此其方案对于 UDP 仍然存在问题。不过将 bridge 的包进行三层的处理的思路是一样的。[在 OpenWrt 设备间使用 VXLAN 创建隧道 – t123yh's Blog](https://blog.t123yh.xyz:3/index.php/archives/941)
+看来这个问题并不是 gre 才会有的。那有没有更加现代的二层隧道协议，能够自动解决这个问题呢？
 ### 二层隧道方案
 
 隧道方案如下图所示：
@@ -379,13 +382,21 @@ add rule bridge gre_tap_fix_mtu c1 meta iifname eth1 ip daddr 192.168.35.0/24 me
 
 mtr 测试，可以发现两边 ping 时，路由多了一跳。原本是直接发送，现在变成路由器转发一次
 
+op1 lan 内设备访问两个设备，分别过 gre 隧道和不过
 ```shell
 ➜  ~ tracepath -n 192.168.35.126
- 1?: [LOCALHOST]                      pmtu 1420
- 1:  192.168.35.1                                          0.082ms
- 1:  192.168.35.1                                          0.055ms
- 2:  192.168.35.126                                       44.728ms reached
-     Resume: pmtu 1420 hops 2 back 2
+ 1?: [LOCALHOST]                      pmtu 1500
+ 1:  192.168.35.1                                          0.111ms
+ 1:  192.168.35.1                                          0.066ms
+ 2:  192.168.35.1                                          0.076ms pmtu 1370
+ 2:  192.168.35.126                                      116.700ms reached
+     Resume: pmtu 1370 hops 2 back 2
+➜  ~ tracepath -n 192.168.35.5
+ 1?: [LOCALHOST]                      pmtu 1500
+ 1:  192.168.35.5                                          0.185ms reached
+ 1:  192.168.35.5                                          0.230ms reached
+     Resume: pmtu 1500 hops 1 back 1
+➜  ~
 ```
 
 但是发现，通信端点发来的包如果已经经过分片（之前学习了 PMTU），到达路由器时却会将其合并。然后路由器转发时再根据 bridge(br-lan, br-lan2) 的 MTU 进行分片，这导致仍然无法通过 GRE 隧道。
@@ -503,6 +514,34 @@ trace id 3786311f inet fw4 mangle_forward policy accept
 ...
 ```
 
+### 补充：访问 op2 lan1 优化
+
+虽然 MTU 问题解决了，但是连接 op2 wifi 后访问 op2 自身时会发生绕路的情况（**即 op2 上想要从 lan2 访问 lan**）。
+
+例子：直接 ping op2，会发现包从 eth2 进入后，会从 vxlan 出去，再wg_s2s 回，而不会直接 eth2 -> eth1。这可能是因为包已经被 bridge 拿走了，所以不会 eth2 -> eth1。这导致实际上延迟从 1ms 变为 2ms。
+
+p.s 如果 op1 上原本是无法访问 op2 的话，这样还会导致连接 lan2 wifi 无法访问 lan 的情况。
+```
+root@op2 ➜  ~ tcpdump -ni any icmp and host 192.168.36.1
+tcpdump: data link type LINUX_SLL2
+tcpdump: verbose output suppressed, use -v[v]... for full protocol decode
+listening on any, link-type LINUX_SLL2 (Linux cooked v2), snapshot length 262144 bytes
+20:36:40.191286 eth2  P   IP 192.168.35.180 > 192.168.36.1: ICMP echo request, id 1, seq 2028, length 40
+20:36:40.191305 vxlan0 Out IP 192.168.35.180 > 192.168.36.1: ICMP echo request, id 1, seq 2028, length 40
+20:36:40.192829 wg_s2s In  IP 192.168.35.180 > 192.168.36.1: ICMP echo request, id 1, seq 2028, length 40
+20:36:40.192862 br-lan2 Out IP 192.168.36.1 > 192.168.35.180: ICMP echo reply, id 1, seq 2028, length 40
+20:36:40.192867 eth2  Out IP 192.168.36.1 > 192.168.35.180: ICMP echo reply, id 1, seq 2028, length 40
+```
+
+解决办法：针对 lan1 的地址，也将 bridge 转成 route 即可。
+
+改完后再抓包，可以发现包从 br-lan2 就 Input 了，不像之前得绕路从 wg_s2s input 的情况。
+```
+20:45:55.192422 eth2  P   IP 192.168.35.180.31195 > 192.168.36.1.2202: Flags [.], ack 5648, win 8193, length 0
+20:45:55.192422 br-lan2 In  IP 192.168.35.180.31195 > 192.168.36.1.2202: Flags [.], ack 5648, win 8193, length 0
+20:45:55.294526 br-lan2 Out IP 192.168.36.1.2202 > 192.168.35.180.31195: Flags [P.], seq 5648:5852, ack 1, win 502, length 204
+20:45:55.294528 eth2  Out IP 192.168.36.1.2202 > 192.168.35.180.31195: Flags [P.], seq 5648:5852, ack 1, win 502, length 204
+```
 ## 再次总结与思考
 
 虽然成功解决了，现在 moonlight UDP 串流没有问题了。但是可能的问题还有：
