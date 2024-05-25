@@ -53,7 +53,9 @@ docker update --restart unless-stopped redis
 docker run --user <username_or_UID> <image_name>
 ```
 
-覆盖 Entrypoint
+#### 覆盖 Entrypoint
+
+对于那些指定了 entrypoint 为特定程序，如 python 的容易非常有用，可以用于上去维修。
 
 ```bash
 docker run -it --rm --name test --entrypoint bash image
@@ -137,6 +139,13 @@ docker commit --author amit.sharma@sentinelone.com --message 'this is a basic ng
 docker commit --change='CMD ["nginx", "-T"]' nginx_base conf_dump
 ```
 
+example
+
+```
+docker run --entrypoint bash --name test --gpus '"device=0"' -u 0:0 -it ghcr.io/k4yt3x/video2x:5.0.0-beta6
+
+docker commit --author yuanfuya@qq.com --message 'fix interpolate parameter' --change='Entrypoint ["/usr/bin/python3.8", "-m", "video2x"]' test video2x:5.0.0-beta6.2
+```
 #### rename
 
 ```

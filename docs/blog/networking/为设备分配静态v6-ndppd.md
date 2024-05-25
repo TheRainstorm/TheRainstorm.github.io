@@ -130,7 +130,66 @@ tcpdump 抓到的 NS，NA
 
 ndppd 不生效，restart 后才生效
 需要研究。
+### ndppd 不响应 NS（配置文件错误） 
+
+king6 上 ndppd 是可以看到 write_advert 对应发出 NA 的
+```
+(debug) iface::read() len=86
+(debug) iface::read_solicit() saddr=2001:da8:d800:336::1, daddr=ff02::1:ffef:aa01, len=86
+(debug) proxy::handle_solicit() saddr=2001:da8:d800:336::1, taddr=2001:da8:d800:336::beef:aa01
+(debug) checking 2001:da8:d800:336::beef:aa00/120 against 2001:da8:d800:336::beef:aa01
+(debug) session::create() pr=a5bba600, saddr=2001:da8:d800:336::1, daddr=ff02::1:ffef:aa01, taddr=2001:da8:d800:336::beef:aa01 =a5bbbec0
+(debug) iface::write_advert() daddr=2001:da8:d800:336::1, taddr=2001:da8:d800:336::beef:aa01
+(debug) iface::write() daddr=2001:da8:d800:336::1, len=32
+(debug) session::~session() this=a5bbbec0
+```
+
+我的 op1
+```
+(debug) checking 2001:da8:d800:336::ae86:0/120 against fe80::ee8e:b5ff:febc:304f
+(debug) iface::read() len=86
+(debug) iface::read_solicit() saddr=2001:da8:d800:336::1, daddr=ff02::1:ffef:aa01, len=86
+(debug) proxy::handle_solicit() saddr=2001:da8:d800:336::1, taddr=2001:da8:d800:336::beef:aa01
+(debug) checking 2001:da8:d800:336::ae86:0/120 against 2001:da8:d800:336::beef:aa01
+(debug) iface::read() len=86
+(debug) iface::read_solicit() saddr=fe80::ea63:ab11:ef7c:419, daddr=ff02::1:ff61:321d, len=86
+(debug) proxy::handle_solicit() saddr=fe80::ea63:ab11:ef7c:419, taddr=fe80::1262:e5ff:fe61:321d
+```
+
+发现问题在于一个配置文件中一个接口只能写一个，多个地址重复多个 rule 即可。
+
+### 需要 ping 一下触发 NS 才能通网
+
+尝试给 br-lan 添加一个新地址 `2001:da8:d800:336::beef:aa03`
+```
+root@op1 ➜  ~ ping -I 2001:da8:d800:336::beef:aa03 2408:4002:102f:7600::1
+
+```
+
+可以发现从 wan 口发出去了，但是学校没有对其转发
+```
+22:58:52.387671 br-wan Out IP6 2001:da8:d800:336::beef:aa03 > 2408:4002:102f:7600::1: ICMP6, echo request, id 19045, seq 33, length 64
+22:58:52.387674 eth0  Out IP6 2001:da8:d800:336::beef:aa03 > 2408:4002:102f:7600::1: ICMP6, echo request, id 19045, seq 33, length 64
+```
+
+想办法触发一次 ns
+
+- 可以 ping 学校网关
+- 可以从外网 ping 该 ipv6
+```
+2024-04-26 23:01:58.974842 IP6 2001:da8:d800:336::1 > ff02::1:ffef:aa03: ICMP6, neighbor solicitation, who has 2001:da8:d800:336::beef:aa03, length 32
+2024-04-26 23:01:58.974947 IP6 2001:da8:d800:336::1c > 2001:da8:d800:336::1: ICMP6, neighbor advertisement, tgt is 2001:da8:d800:336::beef:aa03, length 32
+```
+
+然后就可以通了
+```
+23:03:12.080272 br-wan Out IP6 2001:da8:d800:336::beef:aa03 > 2408:4002:102f:7600::1: ICMP6, echo request, id 20919, seq 4, length 64
+23:03:12.080274 eth0  Out IP6 2001:da8:d800:336::beef:aa03 > 2408:4002:102f:7600::1: ICMP6, echo request, id 20919, seq 4, length 64
+23:03:12.096017 eth0  In  IP6 2408:4002:102f:7600::1 > 2001:da8:d800:336::beef:aa03: ICMP6, echo reply, id 20919, seq 4, length 64
+23:03:12.096017 br-wan In  IP6 2408:4002:102f:7600::1 > 2001:da8:d800:336::beef:aa03: ICMP6, echo reply, id 20919, seq 4, length 64
+```
 
 ## 参考资料
 
 - [ndppd/README at 0.2.5 · DanielAdolfsson/ndppd (github.com)](https://github.com/DanielAdolfsson/ndppd/blob/0.2.5/README)
+
