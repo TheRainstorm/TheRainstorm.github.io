@@ -1,0 +1,1791 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="记录一些关于数学、计算机的知识，以及一些日常。">
+      
+      
+      
+        <link rel="canonical" href="https://yfy.cqu.ai/%E5%8D%9A%E5%AE%A2--%E7%BD%91%E7%BB%9C/2024/04/21/%E4%BE%BF%E6%90%BA%E8%B7%AF%E7%94%B1%E5%99%A8/">
+      
+      
+        <link rel="prev" href="../../../../../%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/2024/04/05/%E5%8F%B0%E5%BC%8F%E6%9C%BA%E5%8D%87%E7%BA%A7-%E7%A1%AC%E4%BB%B6%E7%AF%87/">
+      
+      
+        <link rel="next" href="../../../../../%E5%8D%9A%E5%AE%A2/2024/05/25/VR%20%E5%A4%9A%E4%BA%BA%E8%A7%82%E5%BD%B1%E6%96%B9%E6%A1%88%E6%8E%A2%E7%A9%B6/">
+      
+      
+      <link rel="icon" href="../../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.25">
+    
+    
+      
+        <title>便携路由器 - Rain 的随笔</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../../assets/stylesheets/main.6543a935.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#背景" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../../../../.." title="Rain 的随笔" class="md-header__button md-logo" aria-label="Rain 的随笔" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Rain 的随笔
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              便携路由器
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+    
+  
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="../../../../.." class="md-tabs__link">
+        
+  
+    
+  
+  博客
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../about/" class="md-tabs__link">
+        
+  
+    
+  
+  关于
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../tags/" class="md-tabs__link">
+        
+  
+    
+  
+  标签
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../series/" class="md-tabs__link">
+        
+  
+    
+  
+  系列
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../tools/" class="md-tabs__link">
+        
+  
+    
+  
+  工具
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../archive/2024/" class="md-tabs__link">
+          
+  
+  归档
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../category/%E4%B8%AA%E4%BA%BA/" class="md-tabs__link">
+          
+  
+  分类
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" hidden>
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../../.." title="Rain 的随笔" class="md-nav__button md-logo" aria-label="Rain 的随笔" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Rain 的随笔
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+    
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      <a href="../../../../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    博客
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../about/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    关于
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../tags/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    标签
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../series/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    系列
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../tools/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    工具
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    归档
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            归档
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2024/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2024
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2023/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2023
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2022/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2022
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2021/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2021
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2020/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2020
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2019/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2019
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    分类
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            分类
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E4%B8%AA%E4%BA%BA/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    个人
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E5%8D%9A%E5%AE%A2/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    博客
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E5%8D%9A%E5%AE%A2--%E7%BD%91%E7%BB%9C/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    博客 &amp; 网络
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    学习笔记
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    折腾记录
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    课程笔记
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%85%B7/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    软件工具
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E9%98%85%E8%AF%BB/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    阅读
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+  <div class="md-content md-content--post" data-md-component="content">
+    <div class="md-sidebar md-sidebar--post" data-md-component="sidebar" data-md-type="navigation">
+      <div class="md-sidebar__scrollwrap">
+        <div class="md-sidebar__inner md-post">
+          <nav class="md-nav md-nav--primary">
+            <div class="md-post__back">
+              <div class="md-nav__title md-nav__container">
+                <a href="../../../../.." class="md-nav__link">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+                  <span class="md-ellipsis">
+                    回到主页
+                  </span>
+                </a>
+              </div>
+            </div>
+            
+            <ul class="md-post__meta md-nav__list">
+              <li class="md-nav__item md-nav__item--section">
+                <div class="md-post__title">
+                  <span class="md-ellipsis">
+                    元数据
+                  </span>
+                </div>
+                <nav class="md-nav">
+                  <ul class="md-nav__list">
+                    <li class="md-nav__item">
+                      <div class="md-nav__link">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 19H5V8h14m-3-7v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1V1m-1 11h-5v5h5v-5Z"/></svg>
+                        <time datetime="2024-04-21 17:14:38" class="md-ellipsis">2024年4月21日</time>
+                      </div>
+                    </li>
+                    
+                    
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 3v15h3V3H9m3 2 4 13 3-1-4-13-3 1M5 5v13h3V5H5M3 19v2h18v-2H3Z"/></svg>
+                          <span class="md-ellipsis">
+                            分类于
+                            
+                              <a href="../../../../../category/%E5%8D%9A%E5%AE%A2--%E7%BD%91%E7%BB%9C/">博客 &amp; 网络</a></span>
+                        </div>
+                      </li>
+                    
+                    
+                      
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20a8 8 0 0 0 8-8 8 8 0 0 0-8-8 8 8 0 0 0-8 8 8 8 0 0 0 8 8m0-18a10 10 0 0 1 10 10 10 10 0 0 1-10 10C6.47 22 2 17.5 2 12A10 10 0 0 1 12 2m.5 5v5.25l4.5 2.67-.75 1.23L11 13V7h1.5Z"/></svg>
+                          <span class="md-ellipsis">
+                            
+                              需要 12 分钟阅读时间
+                            
+                          </span>
+                        </div>
+                      </li>
+                    
+                  </ul>
+                </nav>
+              </li>
+            </ul>
+          </nav>
+          
+            
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#背景" class="md-nav__link">
+    <span class="md-ellipsis">
+      背景
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#设备选择" class="md-nav__link">
+    <span class="md-ellipsis">
+      设备选择
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#wg-设置" class="md-nav__link">
+    <span class="md-ellipsis">
+      wg 设置
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="wg 设置">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#接口配置" class="md-nav__link">
+    <span class="md-ellipsis">
+      接口配置
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#防火墙" class="md-nav__link">
+    <span class="md-ellipsis">
+      防火墙
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#vxlan-设置" class="md-nav__link">
+    <span class="md-ellipsis">
+      vxlan 设置
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="vxlan 设置">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#安装" class="md-nav__link">
+    <span class="md-ellipsis">
+      安装
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#配置" class="md-nav__link">
+    <span class="md-ellipsis">
+      配置
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="配置">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#配置-vxlan-接口" class="md-nav__link">
+    <span class="md-ellipsis">
+      配置 vxlan 接口
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#配置-bridge" class="md-nav__link">
+    <span class="md-ellipsis">
+      配置 bridge
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#配置-lan2-接口" class="md-nav__link">
+    <span class="md-ellipsis">
+      配置 lan2 接口
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#openwrt-配置文件" class="md-nav__link">
+    <span class="md-ellipsis">
+      openwrt 配置文件
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#创建多个无线-ssid" class="md-nav__link">
+    <span class="md-ellipsis">
+      创建多个无线 SSID
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#踩的坑" class="md-nav__link">
+    <span class="md-ellipsis">
+      踩的坑
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="踩的坑">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#和-bridge-桥接失败" class="md-nav__link">
+    <span class="md-ellipsis">
+      和 bridge 桥接失败
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#和无线桥接后不转发广播" class="md-nav__link">
+    <span class="md-ellipsis">
+      和无线桥接后不转发广播
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vxlan-互联探究" class="md-nav__link">
+    <span class="md-ellipsis">
+      vxlan 互联探究
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mtu-问题消失二层套三层" class="md-nav__link">
+    <span class="md-ellipsis">
+      MTU 问题消失？（二层套三层）
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="MTU 问题消失？（二层套三层）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#额外分片测速" class="md-nav__link">
+    <span class="md-ellipsis">
+      额外分片测速
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="额外分片测速">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#nft-命令报错" class="md-nav__link">
+    <span class="md-ellipsis">
+      nft 命令报错
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#其它问题" class="md-nav__link">
+    <span class="md-ellipsis">
+      其它问题
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="其它问题">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#其它子网无法-ping-通-jcg_q30p-vxlan" class="md-nav__link">
+    <span class="md-ellipsis">
+      其它子网无法 ping 通 jcg_q30p vxlan
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#使用-dhcp-option-缓解-mtu-问题" class="md-nav__link">
+    <span class="md-ellipsis">
+      使用 dhcp option 缓解 MTU 问题
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#实测速度很弱" class="md-nav__link">
+    <span class="md-ellipsis">
+      实测速度很弱
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="实测速度很弱">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#朋友处测试结果" class="md-nav__link">
+    <span class="md-ellipsis">
+      朋友处测试结果
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#重新测试" class="md-nav__link">
+    <span class="md-ellipsis">
+      重新测试
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+          
+        </div>
+      </div>
+    </div>
+    <article class="md-content__inner md-typeset">
+      
+        
+  
+  
+
+<nav class="md-tags" >
+  
+    
+    
+    
+      <a href="../../../../../tags/#vxlan" class="md-tag">vxlan</a>
+    
+  
+    
+    
+    
+      <a href="../../../../../tags/#openwrt" class="md-tag">openwrt</a>
+    
+  
+    
+    
+    
+      <a href="../../../../../tags/#glinet" class="md-tag">glinet</a>
+    
+  
+    
+    
+    
+      <a href="../../../../../tags/#jcg_q30" class="md-tag">jcg_q30</a>
+    
+  
+</nav>
+
+
+
+  <h1>便携路由器</h1>
+
+<h2 id="背景">背景<a class="headerlink" href="#背景" title="Permanent link">&para;</a></h2>
+<p>很多时候，我们想要出门在外也能方便地连入我们的内网。我最近就遇到了到朋友那玩 VR 结果串流不成功的问题。虽然理论上我可以在那慢慢配置 wireguard 啥的，但是通常一下午并没有这么多时间让我折腾。所以就在想是否可以随身携带一个便携路由器，只需要插上网线，连上 wifi 就能快速接入我的内网呢？这便对路由器提出了一些需求：</p>
+<ol>
+<li>最重要的，需要便携性，能放入书包里</li>
+<li>能刷 openwrt 跑 wireguard</li>
+<li>有 <strong>wifi 6</strong></li>
+<li>最好是主线 openwrt</li>
+<li>性能联发科 <strong>mt7981</strong> 以上</li>
+</ol>
+<p>2）和4）主要是我设想的组网方案会用到 wireguard，而一些硬件主线还没有支持（比如 360t7 和 wr30u 都是 23 下半年才支持的，我买的时候还没有）。虽然有一些第三方的 openwrt 魔改版固件，比如 QWRT，XWRT 等等。但这些系统有一些我无法接受的点，比如使用闭源 wifi 驱动，这导致无法和主线的 openwrt 组 mesh 和 fast roaming 等。另外 wireguard 需要内核模块，如果第三方固件没有的话，也没法自己安装。</p>
+<p>3）和 5）主要是因为 VR 串流对于带宽要求是比较高的，在一些高端硬件情况下，码率设置成 500 mbps 都是可行的。我的硬件一般 60 - 100 Mbps 就够了。由于 wg 需要加解密是需要吃较多 CPU 资源的，mt7981 能够跑到 350-400 Mbps 左右（见<a href="https://github.com/cyyself/wg-bench">cyyself/wg-bench: WireGuard Benchmark using netns and iperf3 (github.com)</a>）。而经典的 mt7261 MIPS SoC 则只能跑到 100 Mbps 左右就明显不够用了。因此为了保障有较好体验，wifi 6 和 mt7981 我觉得是个基准线了。</p>
+<p>最终实现的效果</p>
+<ul>
+<li>设备通过 wg0 接口连接入我的内网</li>
+<li>（三层接入）连接 5G wifi SSID1，被分配一个本地局域网地址 192.168.1.x，然后通过 wg0 NAT 后上网</li>
+<li>（二层接入）连接 5G 160MHz wifi SSID2，通过 vxlan 二层接入我的 op1 内网，获得 op1 的内网地址</li>
+</ul>
+<p>最后的接口示例：
+<img alt="" src="https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/20240531174013.png" /></p>
+<!-- more -->
+<h2 id="设备选择">设备选择<a class="headerlink" href="#设备选择" title="Permanent link">&para;</a></h2>
+<p>在 tuna tg 群里提问，有人推荐了 GL.iNet 3000 AT 的方案。看了下确实是我的梦中情机，体积只有一个充电宝那么大，硬件参数却非常充足，也是 mt7981 的方案，支持 wifi6，甚至还有 2.5 G 网口和 USB 3.0。最文明的还是它的 typec 供电，充电器也可以省去了，甚至可以用充电宝供电。但是看了看价格，jd 上卖 550 左右的价格。咸鱼二手价格也维持在 380 以上。感觉和 70 块的其它 mt7981 方案性价比还是低了一截。希望以后咸鱼价格能降下来吧，我觉得目前比较合理的价格应该在 200 左右。</p>
+<p><img alt="" src="https://static.gl-inet.com/www/images/products/gl-mt3000/mt3000_storage.webp" /></p>
+<p>最后我购入了 捷稀 JCG Q30 Pro，主要看重了它天线可折叠的设计（类似的设计还有 CMCC rax3000 定制版和小米 3000AT）。刚开始本来想买 cmcc rax3000（110元），但是让卖家比对了下大小后（图中是 A4 纸），发现和我的 AX6S 差不多大（感觉不太容易放进背包），因此就没买。</p>
+<p><img alt="cmcc rax3000" src="https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/cmcc_rax3000.png" /></p>
+<p>jcg q30 pro 与 A4 纸对比</p>
+<p><img alt="" src="https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/20240531171706.png" /></p>
+<h2 id="wg-设置">wg 设置<a class="headerlink" href="#wg-设置" title="Permanent link">&para;</a></h2>
+<p>由于设备只用于临时接入内网，故不打算使用 wg_s2s 接口，而是使用 wg0 接口，就像我的其它手机、笔记本设备一样。</p>
+<p>由于 wg 的配置网上很多了，这里就不具体将如何配置了，只提几个重点。</p>
+<ul>
+<li>本地监听端口不用设置，随机即可，因为是主动连接到对面。这样防火墙 input 规则也省了（conntrack 会自动允许主动向外流量的 input）</li>
+<li><strong>wg0 开启 NAT</strong>，这样设备上任意地址都可以通过 wg0 接口上网，并且两侧 allowed_ips 仅需设置 wg0 接口地址即可</li>
+</ul>
+<h3 id="接口配置">接口配置<a class="headerlink" href="#接口配置" title="Permanent link">&para;</a></h3>
+<p>jcg_q30p
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>config interface &#39;wg0&#39;
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>        option proto &#39;wireguard&#39;
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>        option private_key &#39;xxx&#39;
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>        list addresses &#39;10.0.31.103/32&#39;
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>config wireguard_wg0
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>        option description &#39;op1&#39;
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>        option public_key &#39;eVL0uj6T5wEMTs039QF9t+JtXOchHJWROCoq/4kEKlE=&#39;
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>        list allowed_ips &#39;10.0.31.1/32&#39;
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>        list allowed_ips &#39;0.0.0.0/0&#39;
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>        option route_allowed_ips &#39;1&#39;
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>        option endpoint_host &#39;op1.yfycloud.site&#39;
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>        option endpoint_port &#39;51820&#39;
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>        option persistent_keepalive &#39;25&#39;
+</span></code></pre></div></p>
+<p>op1
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>config wireguard_wg0
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>        option public_key &#39;vXU/50/NA4tAG8fou1or1N22sZz3suCoYu/q4MkiBhE=&#39;
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>        option description &#39;jcg_q30&#39;
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>        list allowed_ips &#39;10.0.31.103/32&#39;
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>        option route_allowed_ips &#39;1&#39;
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>        option persistent_keepalive &#39;25&#39;
+</span></code></pre></div></p>
+<h3 id="防火墙">防火墙<a class="headerlink" href="#防火墙" title="Permanent link">&para;</a></h3>
+<p>后面 vxlan 的防火墙也在这一起说明</p>
+<ul>
+<li>lan 允许 forward 到 wan 和 wg0<ul>
+<li>forward wan：虽然现在默认路由走 wg0，但是说不定之后有走 wan 的分流需求</li>
+<li>不需要 forward 到 lan2，因为<strong>通过 wg0 已经可以访问 lan2 了</strong></li>
+</ul>
+</li>
+<li>wg0 允许 input，因为后面 vxlan 还需要用到 input udp 4798，这样该规则也省了</li>
+<li>lan2 不需要 forward 到其它 zone</li>
+</ul>
+<p><img alt="" src="https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/20240531165130.png" /></p>
+<h2 id="vxlan-设置">vxlan 设置<a class="headerlink" href="#vxlan-设置" title="Permanent link">&para;</a></h2>
+<p>vxlan 的一篇好文章<a href="https://vincent.bernat.ch/en/blog/2017-vxlan-linux">VXLAN &amp; Linux (bernat.ch)</a></p>
+<p>之所以选择 vxlan 而不是 gre，是因为 vxlan 支持多对多的连接，这样如果以后更换其它便携路由器，不用每次都在 op1 上增加 gre 接口。</p>
+<h3 id="安装">安装<a class="headerlink" href="#安装" title="Permanent link">&para;</a></h3>
+<p>安装必要的包
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>opkg install kmod-vxlan luci-proto-vxlan vxlan tcpdump ip-bridge
+</span></code></pre></div></p>
+<p>安装后需要<code>/etc/init.d/network restart</code> 重启网络，luci 界面中才可以添加 vxlan 协议接口。</p>
+<div class="admonition note">
+<p class="admonition-title">pve modprobe 需要的 kernel mod</p>
+<p>如果你的 openwrt 是在 pve 里的 lxc 容器。那么可能需要让以下 mod 开机时自动加载
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1">#/etc/module</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">  </span>vxlan
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">  </span>ip6_udp_tunnel
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">  </span>udp_tunnel
+</span></code></pre></div></p>
+</div>
+<h3 id="配置">配置<a class="headerlink" href="#配置" title="Permanent link">&para;</a></h3>
+<h4 id="配置-vxlan-接口">配置 vxlan 接口<a class="headerlink" href="#配置-vxlan-接口" title="Permanent link">&para;</a></h4>
+<p>vxlan 的配置也非常简单。查看 openwrt 关于具体选项的解释 <a href="https://openwrt.org/docs/guide-user/network/tunneling_interface_protocols#protocol_vxlan_vxlan_layer_2_virtualization_over_layer_3_network">[OpenWrt Wiki] Tunneling interface protocols</a></p>
+<ul>
+<li>最好绑定一个 mac 地址，不然会每次重启会发生变化</li>
+<li>设置下 mtu，因为底层 wg0 是 1420，减 50 为 1370</li>
+</ul>
+<h4 id="配置-bridge">配置 bridge<a class="headerlink" href="#配置-bridge" title="Permanent link">&para;</a></h4>
+<p>设置好 vxlan0 接口后，需要将其和 bridge 绑定起来，这样才能和其它正常接口连接起来。</p>
+<h4 id="配置-lan2-接口">配置 lan2 接口<a class="headerlink" href="#配置-lan2-接口" title="Permanent link">&para;</a></h4>
+<p>br-lan2 是物理设备的概念，配置 dhcp server 等还需要创建 interface。这里我们在 br-lan2 设备上创建一个 lan2 接口。</p>
+<p><img alt="" src="https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/20240531175932.png" /></p>
+<p><del>这里创建了一个 br-lan2 的设备，并在此之上创建了一个 lan2 的interface，作为 dhcp client，从 op1 那获得 ip 地址。</del></p>
+<p><del>这里需要开启<code>option defaultroute '0'</code>，否则 lan2 接口就会替换掉原本的默认路由。这样 lan 就无法通过 wg0 上网了。</del></p>
+<p>UPDATE：lan2 接口推荐设置成 Unmanaged，这样 lan2 接口不会获得地址，因此不会生成额外的路由干扰原本的网络。</p>
+<p>lan2 接口本质上是一条连接到 op1 的虚拟链路，因此和本系统交互越少越好。虽然这样会导致连接 lan2 会无法访问 lan。但是换来了更简单清晰的网络。</p>
+<h4 id="openwrt-配置文件">openwrt 配置文件<a class="headerlink" href="#openwrt-配置文件" title="Permanent link">&para;</a></h4>
+<p>jcg_q30p
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>config interface &#39;vxlan0&#39;
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>        option proto &#39;vxlan&#39;
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>        option peeraddr &#39;10.0.31.1&#39;
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>        option port &#39;4789&#39;
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>        option vid &#39;8&#39;
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>        option mtu &#39;1370&#39;
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>        option macaddr &#39;12:0A:F7:78:24:B0&#39;
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>        option force_link &#39;1&#39;
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>
+</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>config device
+</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>        option type &#39;bridge&#39;
+</span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>        option name &#39;br-lan2&#39;
+</span><span id="__span-4-13"><a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>        list ports &#39;lan3&#39;
+</span><span id="__span-4-14"><a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a>        list ports &#39;vxlan0&#39;
+</span><span id="__span-4-15"><a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a>        option mtu &#39;1370&#39;
+</span><span id="__span-4-16"><a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a>        option bridge_empty &#39;1&#39;
+</span><span id="__span-4-17"><a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a>
+</span><span id="__span-4-18"><a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a>config interface &#39;lan2&#39;
+</span><span id="__span-4-19"><a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a>        option proto &#39;none&#39;
+</span><span id="__span-4-20"><a id="__codelineno-4-20" name="__codelineno-4-20" href="#__codelineno-4-20"></a>        option device &#39;br-lan2&#39;
+</span></code></pre></div></p>
+<p>op1。由于要连接多个 peer，因此使用了 vxlan_peer 的格式
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>config interface &#39;vxlan0&#39;
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>        option proto &#39;vxlan&#39;
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>        option port &#39;4789&#39;
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>        option vid &#39;8&#39;
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>        option tunlink &#39;wg0&#39;
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>config vxlan_peer
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>        option vxlan &#39;vxlan0&#39;
+</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>        option dst &#39;10.0.31.103&#39;
+</span></code></pre></div></p>
+<h4 id="创建多个无线-ssid">创建多个无线 SSID<a class="headerlink" href="#创建多个无线-ssid" title="Permanent link">&para;</a></h4>
+<p>如图在 5G 设备上创建两个 SSID: <strong>JCG Q30 Pro 5G (L3)</strong> 和 <strong>JCG Q30 Pro 5G (L2)</strong> 分别绑定到 lan 和 lan2。这样就可以通过切换 wifi 的方式切换网络了。</p>
+<p><img alt="image.png" src="https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/20240422114149.png" /></p>
+<h3 id="踩的坑">踩的坑<a class="headerlink" href="#踩的坑" title="Permanent link">&para;</a></h3>
+<h4 id="和-bridge-桥接失败">和 bridge 桥接失败<a class="headerlink" href="#和-bridge-桥接失败" title="Permanent link">&para;</a></h4>
+<p>刚开始在 jcg_q30 上死活无法将 vxlan0 和新创建的 br-vxlan 桥接起来。只要一桥接，vxlan0 设备就会消失，重启 vxlan 后恢复，但是 br-vxlan 又消失。</p>
+<p>不确定是哪些原因修复了问题，记录下做的一些改动</p>
+<ul>
+<li>vxlan 原本绑定了接口 wg0，现在将其设置为 unspecific （op1 上也一样）</li>
+<li>删除了原本的 br-vxlan，改名为 br-lan2，勾选了 bring up empty bridge。</li>
+</ul>
+<h4 id="和无线桥接后不转发广播">和无线桥接后不转发广播<a class="headerlink" href="#和无线桥接后不转发广播" title="Permanent link">&para;</a></h4>
+<p>将无线绑定到 lan2 网络后，发现设备没法获得 ip 地址。tcpdump 抓包，发现 phy1-ap0 上收到 dhcp request，但是没有将其从 vxlan0 口发出去。</p>
+<p>phy-ap0 为 5G 无线对应接口
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>34: phy0-ap0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc noqueue master br-lan state UP group default qlen 1000
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>    link/ether 50:33:f0:e2:fe:9e brd ff:ff:ff:ff:ff:ff
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>    inet6 fe80::5233:f0ff:fee2:fe9e/64 scope link
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>       valid_lft forever preferred_lft forever
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>35: phy1-ap0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc noqueue master br-lan2 state UP group default qlen 1000
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>    link/ether 52:33:f0:e2:fe:9e brd ff:ff:ff:ff:ff:ff
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>    inet6 fe80::5033:f0ff:fee2:fe9e/64 scope link
+</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>       valid_lft forever preferred_lft forever
+</span></code></pre></div></p>
+<p>后面发现不知为何，无线接口 phy1-ap0 的 master 是空的。于是删除了原本的 vxlan 接口，重新创建了 lan2，然后设置无线绑定到 lan2 就好了。</p>
+<h3 id="vxlan-互联探究">vxlan 互联探究<a class="headerlink" href="#vxlan-互联探究" title="Permanent link">&para;</a></h3>
+<p>目前 jcg_q30 连接 了 op1，op1 连接了 op2 和  jcg_q30。好奇 jcg_q30 能否直接 ping 通 op2，<strong>即 vxlan 两个间接节点是否能相互访问</strong>，发现是不行的。</p>
+<p>jcg_q30 上的 fdb 数据</p>
+<ul>
+<li>24:b0 是自己 vxlan0 接口</li>
+<li>43:27 是 ryzen，没有 op2 下设备
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>root@JCG_Q30P ➜  ~ bridge fdb show dev vxlan0
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>a8:5e:45:e1:f8:77 offload master br-lan2
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>ba:c5:64:4b:43:27 offload master br-lan2
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>6a:18:12:c3:7f:7f offload master br-lan2
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>e0:ef:02:ec:6d:27 offload master br-lan2
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>00:16:3e:4b:67:80 offload master br-lan2
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>52:54:00:3d:73:e7 offload master br-lan2
+</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>12:0a:f7:78:24:b0 vlan 1 offload master br-lan2 permanent
+</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>12:0a:f7:78:24:b0 offload master br-lan2 permanent
+</span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a>00:00:00:00:00:00 dst 10.0.31.1 self permanent
+</span><span id="__span-7-11"><a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a>a8:5e:45:e1:f8:77 dst 10.0.31.1 self
+</span><span id="__span-7-12"><a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a>6a:18:12:c3:7f:7f dst 10.0.31.1 self
+</span><span id="__span-7-13"><a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a>ba:c5:64:4b:43:27 dst 10.0.31.1 self
+</span><span id="__span-7-14"><a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a>e0:ef:02:ec:6d:27 dst 10.0.31.1 self
+</span><span id="__span-7-15"><a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a>52:54:00:3d:73:e7 dst 10.0.31.1 self
+</span><span id="__span-7-16"><a id="__codelineno-7-16" name="__codelineno-7-16" href="#__codelineno-7-16"></a>00:16:3e:4b:67:80 dst 10.0.31.1 self
+</span></code></pre></div></li>
+</ul>
+<p>其中全 0 项 mac 地址含义</p>
+<blockquote>
+<p>all the remote VTEPs are associated with the all-zero address: a BUM frame will be duplicated to all these destinations.</p>
+</blockquote>
+<p>jcg_q30 ping op2 时，<strong>vxlan 上一直在发 arp，但是 op1 和 op2 上都收不到该 arp 请求</strong>。</p>
+<p>试过了，即使 ip neigh 手动添加 arp 项也不行。q30p 上能抓到 icmp 包发出去了，但是 op1 上抓不到任何包。
+<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>root@JCG_Q30P ➜  ~ ip n replace 192.168.35.169 lladdr ca:84:4a:ec:90:53 dev br-lan2
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>00:09:24.223084 br-lan2 Out IP 192.168.35.217 &gt; 192.168.35.169: ICMP echo request, id 10018, seq 210, length 64
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>00:09:24.223104 phy1-ap0 Out IP 192.168.35.217 &gt; 192.168.35.169: ICMP echo request, id 10018, seq 210, length 64
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>00:09:24.223120 vxlan0 Out IP 192.168.35.217 &gt; 192.168.35.169: ICMP echo request, id 10018, seq 210, length 64
+</span></code></pre></div></p>
+<h2 id="mtu-问题消失二层套三层">MTU 问题消失？（二层套三层）<a class="headerlink" href="#mtu-问题消失二层套三层" title="Permanent link">&para;</a></h2>
+<p><a href="../../../03/15/MTU%E7%9A%84%E9%82%A3%E4%BA%9B%E5%9D%91/">之前博客</a>已经探讨过，如果同一个二层存在 MTU 不一致，那么会存在包因为无法分片而丢失的情况。</p>
+<p>然后由于使用的 ARM openwrt 系统编译时可能没有开启一些 flag，导致之前让 bridge 变为 route 的 nft 命令无法运行。但是神奇的是，这次 ping 大包时居然没有出现不通的情况。经过研究，<strong>发现原因在于二层隧道套三层隧道后，底层的三层隧道会对上层的包再次分片</strong>，因而不会存在之前的问题。以下是具体抓包细节。</p>
+<p>kvm-win10 连接了 jcg_q30p 的 wifi，获取到了 ip。使用该 ip ping op1
+<div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>yfy@kvm-win10 UCRT64 ~
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>$ ping -S 192.168.35.135 192.168.35.1 -l 2000 -t
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>正在 Ping 192.168.35.1 从 192.168.35.135 具有 2000 字节的数据:
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>请求超时。
+</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>来自 192.168.35.1 的回复: 字节=2000 时间=1ms TTL=64
+</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>来自 192.168.35.1 的回复: 字节=2000 时间=1ms TTL=64
+</span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>来自 192.168.35.1 的回复: 字节=2000 时间=1ms TTL=64
+</span><span id="__span-9-9"><a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a>来自 192.168.35.1 的回复: 字节=2000 时间=1ms TTL=64
+</span></code></pre></div></p>
+<p>在 jcg_q30p 上抓包，可以发现包确实是通过 vxlan 传递到了 op1。并且设备是按照 MTU=1500 进行分片的，所以理论上 1500 的包是无法通过 MTU = 1370 的 vxlan0 的。但是结果是正确收到了 icmp reply。
+<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>14:45:02.547067 phy1-ap0 P   IP 192.168.35.135 &gt; 192.168.35.1: ICMP echo request, id 1, seq 506, length 1480
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>14:45:02.547089 vxlan0 Out IP 192.168.35.135 &gt; 192.168.35.1: ICMP echo request, id 1, seq 506, length 1480
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>14:45:02.547067 phy1-ap0 P   IP 192.168.35.135 &gt; 192.168.35.1: ip-proto-1
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>14:45:02.547181 vxlan0 Out IP 192.168.35.135 &gt; 192.168.35.1: ip-proto-1
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>14:45:02.547984 vxlan0 P   IP 192.168.35.1 &gt; 192.168.35.135: ICMP echo reply, id 1, seq 506, length 1344
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>14:45:02.548031 phy1-ap0 Out IP 192.168.35.1 &gt; 192.168.35.135: ICMP echo reply, id 1, seq 506, length 1344
+</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a>14:45:02.547984 vxlan0 P   IP 192.168.35.1 &gt; 192.168.35.135: ip-proto-1
+</span><span id="__span-10-8"><a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a>14:45:02.548054 phy1-ap0 Out IP 192.168.35.1 &gt; 192.168.35.135: ip-proto-1
+</span></code></pre></div></p>
+<p>通过在 jcg_q30p 对 wg0 接口进行抓包（vxlan 底层基于的接口），可以发现 icmp request 对应 3 个包，reply 对应 2 个包。</p>
+<p><img alt="" src="https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/20240421163238.png" /></p>
+<p>仔细研究后，终于理清了它们的对应关系，以下是结果。</p>
+<p>层层封装的包的格式如下：
+<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>20         8     8       14    20          8      20
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>ip(wg0)  | udp | vxlan | eth | ip(vxlan) | icmp | data=2000
+</span></code></pre></div></p>
+<p>首先在 kvm-win10 的视角，由于假设了 MTU = 1500，因此对于 ip 负载为 2008B 的 icmp 包（2000 data + 8 header），需要按照 1480 + 528 分片成两个包。各添加 20B ip header 后交给 vxlan 接口。</p>
+<p>在 vxlan 的视角，有两个 ip 层长度分别为 1500, 548 的包要发送出去。添加了 udp + vxlan + eth 后就是 1530, 578（没有包含 ip 头部），需要交给 wg0 发出去。</p>
+<p>在 wg0 视角，1530+20 明显超过了自己 1420 的 MTU，因此又需要分成两个包。按照 1400 分片，分为 1400 + 130 两个包。添加 wg ip header 后就是 1420 和 150。这刚好对应 wireshark 中前两个包的大小。对于另一个 578 的包则不用分片，添加 ip header 后就是 598。</p>
+<p>可以看到 wireshark 做了很多处理。由于 vxlan 没有加密，因此 wireshark 直接展示了 vxlan 内的内容。对于第一个包，只显示了是 ip fragment，源地址后目的地址也都是 10.0.31。而收到第二个包后，由于已经可以和第一个重组成一个完整的 ip 包了（应该说是经过 vxlan 包装后的 ip 包），因此显示了 内部的地址 192.168.35。等收到第三个包时，内部的 ip 包也能够重组了，因此显示了最终的 icmp 信息。</p>
+<p>以下显示了这种层层嵌套的关系
+<img alt="" src="https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/20240421170503.png" /></p>
+<p>为什么 reply 只有两个包呢。因此 op1 上 vxlan 对应的接口 MTU 已经被设置成了 1370，因此返回时对于 2008B 的包会按照 1370 进行分片，分成两个包。这两个包加上 vxlan 开销后对于 wg0 都不会超过 MTU 大小，因此不会产生更多分片，因此只有两个包。</p>
+<p>可能会发现 reply 包的 ip 层大小并不是 1420，而是 1414。这是因为上层按照 MTU=1370 分片时，ip 负载部分需要是 8 的倍数，因此不是 1350 而是 1344，如图中红框圈起部分。这导致加上 vxlan 开销后就是 1344 + 20 + 50 = 1414 了</p>
+<p><img alt="" src="https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/20240421171121.png" /></p>
+<h3 id="额外分片测速">额外分片测速<a class="headerlink" href="#额外分片测速" title="Permanent link">&para;</a></h3>
+<p>看看 L2 额外分片导致的性能影响，使用 iperf3 进行测速。测试 jcg_q30p 和 op1 间通过 wg 和 vxlan 时的速度。</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>vxlan</th>
+<th>wg</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>up</td>
+<td>350</td>
+<td>500</td>
+</tr>
+<tr>
+<td>down</td>
+<td>400</td>
+<td>470</td>
+</tr>
+<tr>
+<td>可以看到额外的分片确实造成了一定的性能影响。主要在于 jcg_q30p 上传时（jcg_q30p 负责分片）。下载影响较小。</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>### 遇到的问题</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h4 id="nft-命令报错">nft 命令报错<a class="headerlink" href="#nft-命令报错" title="Permanent link">&para;</a></h4>
+<p>报错，但是同样的命令 x86 上的 openwrt 又没有问题。
+<div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>root@JCG_Q30P ➜  ~ nft list table bridge fix_mtu
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>table bridge fix_mtu {
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>        chain c1 {
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>                type filter hook prerouting priority dstnat - 1; policy accept;
+</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>        }
+</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>}
+</span><span id="__span-12-7"><a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a>root@JCG_Q30P ➜  ~ nft add rule bridge fix_mtu c1 meta iifname vxlan0 ip daddr 192.168.35.0/24 meta pkttype set host ether daddr set 9e:65:fa:e5:bb:c0 counter
+</span><span id="__span-12-8"><a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a>Error: Could not process rule: No such file or directory
+</span><span id="__span-12-9"><a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a>add rule bridge fix_mtu c1 meta iifname vxlan0 ip daddr 192.168.35.0/24 meta pkttype set host ether daddr set 9e:65:fa:e5:bb:c0 counter
+</span><span id="__span-12-10"><a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a>                           ^^^^^^^^^^^^
+</span><span id="__span-12-11"><a id="__codelineno-12-11" name="__codelineno-12-11" href="#__codelineno-12-11"></a>root@JCG_Q30P ➜  ~ nft add rule bridge fix_mtu c1 ip daddr 192.168.35.0/24 meta pkttype set host ether daddr set 9e:65:fa:e5:bb:c0 counter
+</span><span id="__span-12-12"><a id="__codelineno-12-12" name="__codelineno-12-12" href="#__codelineno-12-12"></a>Error: Could not process rule: No such file or directory
+</span><span id="__span-12-13"><a id="__codelineno-12-13" name="__codelineno-12-13" href="#__codelineno-12-13"></a>add rule bridge fix_mtu c1 ip daddr 192.168.35.0/24 meta pkttype set host ether daddr set 9e:65:fa:e5:bb:c0 counter
+</span><span id="__span-12-14"><a id="__codelineno-12-14" name="__codelineno-12-14" href="#__codelineno-12-14"></a>                           ^^^^^^^^
+</span><span id="__span-12-15"><a id="__codelineno-12-15" name="__codelineno-12-15" href="#__codelineno-12-15"></a>root@JCG_Q30P ➜  ~ nft add rule bridge fix_mtu c1 meta pkttype set host ether daddr set 9e:65:fa:e5:bb:c0 counter
+</span><span id="__span-12-16"><a id="__codelineno-12-16" name="__codelineno-12-16" href="#__codelineno-12-16"></a>Error: Could not process rule: No such file or directory
+</span><span id="__span-12-17"><a id="__codelineno-12-17" name="__codelineno-12-17" href="#__codelineno-12-17"></a>add rule bridge fix_mtu c1 meta pkttype set host ether daddr set 9e:65:fa:e5:bb:c0 counter
+</span></code></pre></div></p>
+<p>可能是没有开启相关内核选项：<a href="https://unix.stackexchange.com/questions/537912/nftables-rule-no-such-file-or-directory-error">linux - nftables rule: No such file or directory error - Unix &amp; Linux Stack Exchange</a></p>
+<p>也不知道如何查看开了哪些内核选项：<a href="https://forum.openwrt.org/t/obtain-kernel-config-from-currently-running-openwrt-system/151339">Obtain kernel config from currently running OpenWrt system - Installing and Using OpenWrt - OpenWrt Forum</a></p>
+<p>待解决</p>
+<h2 id="其它问题">其它问题<a class="headerlink" href="#其它问题" title="Permanent link">&para;</a></h2>
+<h3 id="其它子网无法-ping-通-jcg_q30p-vxlan">其它子网无法 ping 通 jcg_q30p vxlan<a class="headerlink" href="#其它子网无法-ping-通-jcg_q30p-vxlan" title="Permanent link">&para;</a></h3>
+<p>jcg_q30p 上现在的路由如下。访问目的地址 192.168.35.0/24 的 lan（之后简称 lan35） 会走 vxlan，其余默认路由走 wg0。</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>root@JCG_Q30P ➜  ~ ip ro
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>default dev wg0 proto static scope link
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>10.0.31.1 dev wg0 proto static scope link
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>114.214.236.72 via 222.195.90.254 dev wan proto static
+</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>192.168.1.0/24 dev br-lan proto kernel scope link src 192.168.1.1
+</span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>192.168.35.0/24 dev br-lan2 proto kernel scope link src 192.168.35.137
+</span><span id="__span-13-7"><a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a>222.195.90.0/24 dev wan proto kernel scope link src 222.195.90.219
+</span></code></pre></div>
+<p>如果 lan36（op2 子网，op2 和 op1 通过 wg 连接）想要访问 jcg_q30p 下的 lan35。由于 lan35本质位于 op1 下，所以 op2 下的设备 icmp request 是可以送到 jcg_q30p 的，通过 vxlan 接口。但是由于 op2 位于 lan36，jcg reply 的包，路由会走 wg0。而 op1 和 jcg 间 wg0 是只允许互相发送 10.0.31.x/32 的包的。因此 reply 无法通过 wg0 接口。</p>
+<p>解决问题的方法是添加<strong>源进源出</strong>规则，这个方式可以认为是网络中的<strong>光路可逆原理</strong>了。包既然可以从一个接口送达，那么也可以从该接口返回。</p>
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;11 vxlan&quot;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>/etc/iproute2/rt_tables
+</span></code></pre></div>
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>config<span class="w"> </span>rule
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="w">        </span>option<span class="w"> </span>priority<span class="w"> </span><span class="s1">&#39;10&#39;</span>
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="w">        </span>option<span class="w"> </span>src<span class="w"> </span><span class="s1">&#39;192.168.35.0/24&#39;</span>
+</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="w">        </span>option<span class="w"> </span>lookup<span class="w"> </span><span class="s1">&#39;vxlan&#39;</span><span class="w">                                                                         </span>config<span class="w"> </span>route
+</span><span id="__span-15-5"><a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a><span class="w">        </span>option<span class="w"> </span>interface<span class="w"> </span><span class="s1">&#39;lan&#39;</span>
+</span><span id="__span-15-6"><a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a><span class="w">        </span>option<span class="w"> </span>target<span class="w"> </span><span class="s1">&#39;0.0.0.0/0&#39;</span>
+</span><span id="__span-15-7"><a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a><span class="w">        </span>option<span class="w"> </span>gateway<span class="w"> </span><span class="s1">&#39;192.168.35.1&#39;</span>
+</span><span id="__span-15-8"><a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a><span class="w">        </span>option<span class="w"> </span>table<span class="w"> </span><span class="s1">&#39;vxlan&#39;</span>
+</span></code></pre></div>
+<p>感觉以上问题的原因都是 jcg_q30p br-lan2 dhcp client 获得了 lan35 的 ip 导致的。如果把 br-lan2 接口设置为 unmanged 会不会更好点？连接在 br-lan2 下的设备都不知道自己是连在 op1 下还是 jcg_q30p 下。应该就没有任何问题了。</p>
+<h3 id="使用-dhcp-option-缓解-mtu-问题">使用 dhcp option 缓解 MTU 问题<a class="headerlink" href="#使用-dhcp-option-缓解-mtu-问题" title="Permanent link">&para;</a></h3>
+<p>虽然 wg 能解决 MTU 问题，但是会带来不小的损耗。（wg 层和 vxlan 层都要分片），比较好的情况是避免 wg 层的分片，前提是 vxlan 层所有设备正确设置了 MTU。</p>
+<p>不过有些设备不会请求 dhcp mtu 选项，因此该方案对其无效。不过对于支持的设备，确实能起到优化的效果。</p>
+<h3 id="实测速度很弱">实测速度很弱<a class="headerlink" href="#实测速度很弱" title="Permanent link">&para;</a></h3>
+<p>实际去朋友家测试了下，发现效果很差。iperf3 L3 只有 110 Mbps，L2 只有 30Mbps。VR 串流时协商的码率已经低到了 11 Mbps，玩 vrc 非常模糊并且卡顿。</p>
+<p>现在发现 jcg_q30p 断了一根天线，对性能影响很大。</p>
+<ul>
+<li>放在 3m 距离，iperf3 速度就从 700-800 掉到 300 Mbps 了（使用手机 iperf 测试）</li>
+<li>将天线用剪刀剥出金属，旁边竖立一根金属。发现速度从 300 上升到到 470Mbs</li>
+</ul>
+<p>是否还有可能是需要开启 bbr 之类的，在丢包率高的情况抛出更高带宽？</p>
+<ul>
+<li>发现 immortalwrt 23.5 确实默认没有安装 kmod-tcp-bbr</li>
+</ul>
+<h4 id="朋友处测试结果">朋友处测试结果<a class="headerlink" href="#朋友处测试结果" title="Permanent link">&para;</a></h4>
+<p>wifi 信号不强
+<div class="language-text highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>$ iperf3.exe -c 192.168.1.1 -R
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>- - - - - - - - - - - - - - - - - - - - - - - - -
+</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>[ ID] Interval           Transfer     Bitrate         Retr
+</span><span id="__span-16-4"><a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a>[  5]   0.00-10.01  sec   534 MBytes   448 Mbits/sec  880             sender
+</span><span id="__span-16-5"><a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a>[  5]   0.00-10.00  sec   531 MBytes   445 Mbits/sec                  receiver
+</span></code></pre></div></p>
+<p>有时候只能到200
+<div class="language-text highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>$ iperf3.exe -c 192.168.1.1 -R
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>[ ID] Interval           Transfer     Bitrate         Retr
+</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>[  5]   0.00-10.01  sec   264 MBytes   221 Mbits/sec  538             sender
+</span><span id="__span-17-4"><a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a>[  5]   0.00-10.00  sec   262 MBytes   220 Mbits/sec                  receiver
+</span><span id="__span-17-5"><a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a>
+</span><span id="__span-17-6"><a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a>iperf Done.
+</span></code></pre></div></p>
+<p>测得最好情况 L3 速度
+<div class="language-text highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>$ iperf3.exe -c 192.168.35.1 -R
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>- - - - - - - - - - - - - - - - - - - - - - - - -
+</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>[ ID] Interval           Transfer     Bitrate         Retr
+</span><span id="__span-18-4"><a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a>[  5]   0.00-10.26  sec   136 MBytes   111 Mbits/sec  3210             sender
+</span><span id="__span-18-5"><a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a>[  5]   0.00-10.00  sec   132 MBytes   111 Mbits/sec                  receiver
+</span></code></pre></div></p>
+<p>L2 同样距离只有 30Mbps</p>
+<p>ipv6 原生速度
+<div class="language-text highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>-----------------------------------------------------------
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>Accepted connection from 2408:8244:520:110b:5233:f0ff:fee2:fe9d, port 39466
+</span><span id="__span-19-3"><a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>[  5] local 2001:da8:d800:336::1c port 5201 connected to 2408:8244:520:110b:5233:f0ff:fee2:fe9d port 39476
+</span><span id="__span-19-4"><a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a>[  8] local 2001:da8:d800:336::1c port 5201 connected to 2408:8244:520:110b:5233:f0ff:fee2:fe9d port 39484
+</span><span id="__span-19-5"><a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a>- - - - - - - - - - - - - - - - - - - - - - - - -
+</span><span id="__span-19-6"><a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a>[ ID] Interval           Transfer     Bitrate         Retr
+</span><span id="__span-19-7"><a id="__codelineno-19-7" name="__codelineno-19-7" href="#__codelineno-19-7"></a>[  5]   0.00-10.03  sec   344 MBytes   288 Mbits/sec    0             sender
+</span><span id="__span-19-8"><a id="__codelineno-19-8" name="__codelineno-19-8" href="#__codelineno-19-8"></a>[  8]   0.00-10.03  sec   328 MBytes   274 Mbits/sec    0             sender
+</span><span id="__span-19-9"><a id="__codelineno-19-9" name="__codelineno-19-9" href="#__codelineno-19-9"></a>[SUM]   0.00-10.03  sec   672 MBytes   561 Mbits/sec    0             sender
+</span></code></pre></div></p>
+<h4 id="重新测试">重新测试<a class="headerlink" href="#重新测试" title="Permanent link">&para;</a></h4>
+<p>隔了一堵墙，信号只有 -65 dBm 的情况下，kvm-win11 测试</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>$ iperf3.exe -B 192.168.1.135 -c 192.168.1.1
+</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>- - - - - - - - - - - - - - - - - - - - - - - - -
+</span><span id="__span-20-3"><a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a>[ ID] Interval           Transfer     Bitrate
+</span><span id="__span-20-4"><a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a>[  5]   0.00-10.01  sec  71.4 MBytes  59.8 Mbits/sec                  sender
+</span><span id="__span-20-5"><a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a>[  5]   0.00-10.06  sec  71.2 MBytes  59.4 Mbits/sec                  receiver
+</span><span id="__span-20-6"><a id="__codelineno-20-6" name="__codelineno-20-6" href="#__codelineno-20-6"></a>
+</span><span id="__span-20-7"><a id="__codelineno-20-7" name="__codelineno-20-7" href="#__codelineno-20-7"></a>$ iperf3.exe -B 192.168.1.135 -c 192.168.1.1 -R
+</span><span id="__span-20-8"><a id="__codelineno-20-8" name="__codelineno-20-8" href="#__codelineno-20-8"></a>- - - - - - - - - - - - - - - - - - - - - - - - -
+</span><span id="__span-20-9"><a id="__codelineno-20-9" name="__codelineno-20-9" href="#__codelineno-20-9"></a>[ ID] Interval           Transfer     Bitrate         Retr
+</span><span id="__span-20-10"><a id="__codelineno-20-10" name="__codelineno-20-10" href="#__codelineno-20-10"></a>[  5]   0.00-10.03  sec   200 MBytes   167 Mbits/sec    0             sender
+</span><span id="__span-20-11"><a id="__codelineno-20-11" name="__codelineno-20-11" href="#__codelineno-20-11"></a>[  5]   0.00-10.00  sec   197 MBytes   165 Mbits/sec                  receiver
+</span><span id="__span-20-12"><a id="__codelineno-20-12" name="__codelineno-20-12" href="#__codelineno-20-12"></a>
+</span><span id="__span-20-13"><a id="__codelineno-20-13" name="__codelineno-20-13" href="#__codelineno-20-13"></a>$ iperf3.exe -B 192.168.1.135 -c 192.168.35.2
+</span><span id="__span-20-14"><a id="__codelineno-20-14" name="__codelineno-20-14" href="#__codelineno-20-14"></a>- - - - - - - - - - - - - - - - - - - - - - - - -
+</span><span id="__span-20-15"><a id="__codelineno-20-15" name="__codelineno-20-15" href="#__codelineno-20-15"></a>[ ID] Interval           Transfer     Bitrate
+</span><span id="__span-20-16"><a id="__codelineno-20-16" name="__codelineno-20-16" href="#__codelineno-20-16"></a>[  5]   0.00-10.01  sec  69.0 MBytes  57.8 Mbits/sec                  sender
+</span><span id="__span-20-17"><a id="__codelineno-20-17" name="__codelineno-20-17" href="#__codelineno-20-17"></a>[  5]   0.00-10.39  sec  67.2 MBytes  54.2 Mbits/sec                  receiver
+</span><span id="__span-20-18"><a id="__codelineno-20-18" name="__codelineno-20-18" href="#__codelineno-20-18"></a>
+</span><span id="__span-20-19"><a id="__codelineno-20-19" name="__codelineno-20-19" href="#__codelineno-20-19"></a>$ iperf3.exe -B 192.168.1.135 -c 192.168.35.2 -R
+</span><span id="__span-20-20"><a id="__codelineno-20-20" name="__codelineno-20-20" href="#__codelineno-20-20"></a>- - - - - - - - - - - - - - - - - - - - - - - - -
+</span><span id="__span-20-21"><a id="__codelineno-20-21" name="__codelineno-20-21" href="#__codelineno-20-21"></a>[ ID] Interval           Transfer     Bitrate         Retr
+</span><span id="__span-20-22"><a id="__codelineno-20-22" name="__codelineno-20-22" href="#__codelineno-20-22"></a>[  5]   0.00-10.05  sec   202 MBytes   168 Mbits/sec    0             sender
+</span><span id="__span-20-23"><a id="__codelineno-20-23" name="__codelineno-20-23" href="#__codelineno-20-23"></a>[  5]   0.00-10.00  sec   198 MBytes   166 Mbits/sec                  receiver
+</span></code></pre></div>
+<p>L2
+<div class="language-text highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>$ iperf3.exe -B 192.168.35.135 -c 192.168.35.2 -R
+</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>- - - - - - - - - - - - - - - - - - - - - - - - -
+</span><span id="__span-21-3"><a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>[ ID] Interval           Transfer     Bitrate         Retr
+</span><span id="__span-21-4"><a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a>[  5]   0.00-10.05  sec   194 MBytes   162 Mbits/sec   10             sender
+</span><span id="__span-21-5"><a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a>[  5]   0.00-10.00  sec   191 MBytes   160 Mbits/sec                  receiver
+</span><span id="__span-21-6"><a id="__codelineno-21-6" name="__codelineno-21-6" href="#__codelineno-21-6"></a>
+</span><span id="__span-21-7"><a id="__codelineno-21-7" name="__codelineno-21-7" href="#__codelineno-21-7"></a>$ iperf3.exe -B 192.168.35.135 -c 192.168.35.2
+</span><span id="__span-21-8"><a id="__codelineno-21-8" name="__codelineno-21-8" href="#__codelineno-21-8"></a>- - - - - - - - - - - - - - - - - - - - - - - - -
+</span><span id="__span-21-9"><a id="__codelineno-21-9" name="__codelineno-21-9" href="#__codelineno-21-9"></a>[ ID] Interval           Transfer     Bitrate
+</span><span id="__span-21-10"><a id="__codelineno-21-10" name="__codelineno-21-10" href="#__codelineno-21-10"></a>[  5]   0.00-10.00  sec  71.2 MBytes  59.8 Mbits/sec                  sender
+</span><span id="__span-21-11"><a id="__codelineno-21-11" name="__codelineno-21-11" href="#__codelineno-21-11"></a>[  5]   0.00-10.08  sec  71.1 MBytes  59.2 Mbits/sec                  receiver
+</span></code></pre></div></p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+  
+
+
+
+      
+    </article>
+  </div>
+
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+        
+      
+      <nav class="md-footer__inner md-grid" aria-label="页脚" >
+        
+          
+          <a href="../../../../../%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/2024/04/05/%E5%8F%B0%E5%BC%8F%E6%9C%BA%E5%8D%87%E7%BA%A7-%E7%A1%AC%E4%BB%B6%E7%AF%87/" class="md-footer__link md-footer__link--prev" aria-label="上一页: 台式机升级-硬件篇">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                上一页
+              </span>
+              <div class="md-ellipsis">
+                台式机升级-硬件篇
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../../../../../%E5%8D%9A%E5%AE%A2/2024/05/25/VR%20%E5%A4%9A%E4%BA%BA%E8%A7%82%E5%BD%B1%E6%96%B9%E6%A1%88%E6%8E%A2%E7%A9%B6/" class="md-footer__link md-footer__link--next" aria-label="下一页: VR 多人观影">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                下一页
+              </span>
+              <div class="md-ellipsis">
+                VR 多人观影
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/TheRainstorm" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../../../..", "features": ["navigation.instant", "navigation.instant.progress", "navigation.tracking", "navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.footer", "content.code.copy", "toc.follow", "toc.integrate"], "search": "../../../../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
+    
+    
+      <script src="../../../../../assets/javascripts/bundle.081f42fc.min.js"></script>
+      
+        <script src="../../../../../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

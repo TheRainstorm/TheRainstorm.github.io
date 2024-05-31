@@ -1,0 +1,1882 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="记录一些关于数学、计算机的知识，以及一些日常。">
+      
+      
+      
+        <link rel="canonical" href="https://yfy.cqu.ai/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%85%B7/2022/11/29/2022-11-29-jellyfin%E7%9B%B8%E5%85%B3/">
+      
+      
+        <link rel="prev" href="../2022-11-29-latex/">
+      
+      
+        <link rel="next" href="../../../../../%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/2022/12/04/2022-12-04-%E5%AE%89%E5%8D%93%E5%88%B7%E6%9C%BA%E5%B9%B6%E5%AE%89%E8%A3%85linux/">
+      
+      
+      <link rel="icon" href="../../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.25">
+    
+    
+      
+        <title>jellyfin 相关 - Rain 的随笔</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../../assets/stylesheets/main.6543a935.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#安装" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../../../../.." title="Rain 的随笔" class="md-header__button md-logo" aria-label="Rain 的随笔" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Rain 的随笔
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              jellyfin 相关
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+    
+  
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="../../../../.." class="md-tabs__link">
+        
+  
+    
+  
+  博客
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../about/" class="md-tabs__link">
+        
+  
+    
+  
+  关于
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../tags/" class="md-tabs__link">
+        
+  
+    
+  
+  标签
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../series/" class="md-tabs__link">
+        
+  
+    
+  
+  系列
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../tools/" class="md-tabs__link">
+        
+  
+    
+  
+  工具
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../archive/2024/" class="md-tabs__link">
+          
+  
+  归档
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../category/%E4%B8%AA%E4%BA%BA/" class="md-tabs__link">
+          
+  
+  分类
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" hidden>
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../../.." title="Rain 的随笔" class="md-nav__button md-logo" aria-label="Rain 的随笔" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Rain 的随笔
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+    
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      <a href="../../../../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    博客
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../about/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    关于
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../tags/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    标签
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../series/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    系列
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../tools/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    工具
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    归档
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            归档
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2024/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2024
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2023/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2023
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2022/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2022
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2021/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2021
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2020/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2020
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2019/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2019
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    分类
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            分类
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E4%B8%AA%E4%BA%BA/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    个人
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E5%8D%9A%E5%AE%A2/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    博客
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E5%8D%9A%E5%AE%A2--%E7%BD%91%E7%BB%9C/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    博客 &amp; 网络
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    学习笔记
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    折腾记录
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    课程笔记
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%85%B7/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    软件工具
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E9%98%85%E8%AF%BB/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    阅读
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+  <div class="md-content md-content--post" data-md-component="content">
+    <div class="md-sidebar md-sidebar--post" data-md-component="sidebar" data-md-type="navigation">
+      <div class="md-sidebar__scrollwrap">
+        <div class="md-sidebar__inner md-post">
+          <nav class="md-nav md-nav--primary">
+            <div class="md-post__back">
+              <div class="md-nav__title md-nav__container">
+                <a href="../../../../.." class="md-nav__link">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+                  <span class="md-ellipsis">
+                    回到主页
+                  </span>
+                </a>
+              </div>
+            </div>
+            
+            <ul class="md-post__meta md-nav__list">
+              <li class="md-nav__item md-nav__item--section">
+                <div class="md-post__title">
+                  <span class="md-ellipsis">
+                    元数据
+                  </span>
+                </div>
+                <nav class="md-nav">
+                  <ul class="md-nav__list">
+                    <li class="md-nav__item">
+                      <div class="md-nav__link">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 19H5V8h14m-3-7v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1V1m-1 11h-5v5h5v-5Z"/></svg>
+                        <time datetime="2022-11-29 19:08:52" class="md-ellipsis">2022年11月29日</time>
+                      </div>
+                    </li>
+                    
+                    
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 3v15h3V3H9m3 2 4 13 3-1-4-13-3 1M5 5v13h3V5H5M3 19v2h18v-2H3Z"/></svg>
+                          <span class="md-ellipsis">
+                            分类于
+                            
+                              <a href="../../../../../category/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%85%B7/">软件工具</a></span>
+                        </div>
+                      </li>
+                    
+                    
+                      
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20a8 8 0 0 0 8-8 8 8 0 0 0-8-8 8 8 0 0 0-8 8 8 8 0 0 0 8 8m0-18a10 10 0 0 1 10 10 10 10 0 0 1-10 10C6.47 22 2 17.5 2 12A10 10 0 0 1 12 2m.5 5v5.25l4.5 2.67-.75 1.23L11 13V7h1.5Z"/></svg>
+                          <span class="md-ellipsis">
+                            
+                              需要 12 分钟阅读时间
+                            
+                          </span>
+                        </div>
+                      </li>
+                    
+                  </ul>
+                </nav>
+              </li>
+            </ul>
+          </nav>
+          
+            
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#docker-安装-jellyfin" class="md-nav__link">
+    <span class="md-ellipsis">
+      docker 安装 jellyfin
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="docker 安装 jellyfin">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#gpu-转码硬件加速" class="md-nav__link">
+    <span class="md-ellipsis">
+      gpu 转码硬件加速
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="gpu 转码硬件加速">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#devdri" class="md-nav__link">
+    <span class="md-ellipsis">
+      dev/dri
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nvidia-gpu" class="md-nav__link">
+    <span class="md-ellipsis">
+      nvidia gpu
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lxc-安装-jellyfin" class="md-nav__link">
+    <span class="md-ellipsis">
+      LXC 安装 jellyfin
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="LXC 安装 jellyfin">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#端口映射" class="md-nav__link">
+    <span class="md-ellipsis">
+      端口映射
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#目录映射" class="md-nav__link">
+    <span class="md-ellipsis">
+      目录映射
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="目录映射">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#subordinate-uidgid-映射" class="md-nav__link">
+    <span class="md-ellipsis">
+      subordinate uid,gid 映射
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#用户映射实验" class="md-nav__link">
+    <span class="md-ellipsis">
+      用户映射实验
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#添加-gpu" class="md-nav__link">
+    <span class="md-ellipsis">
+      添加 GPU
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#各种硬件加速" class="md-nav__link">
+    <span class="md-ellipsis">
+      各种硬件加速
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#amdgpu-驱动" class="md-nav__link">
+    <span class="md-ellipsis">
+      amdgpu 驱动
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="amdgpu 驱动">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#opencl-tone-mapping" class="md-nav__link">
+    <span class="md-ellipsis">
+      OpenCL tone-mapping
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#amd-amf" class="md-nav__link">
+    <span class="md-ellipsis">
+      AMD AMF
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nvidia-gpu_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      nvidia gpu
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#linux-迁移到-docker" class="md-nav__link">
+    <span class="md-ellipsis">
+      linux 迁移到 docker
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+          
+        </div>
+      </div>
+    </div>
+    <article class="md-content__inner md-typeset">
+      
+        
+  
+  
+
+<nav class="md-tags" >
+  
+    
+    
+    
+      <a href="../../../../../tags/#jellyfin" class="md-tag">jellyfin</a>
+    
+  
+</nav>
+
+
+
+<p>记录 jellyfin 相关使用</p>
+<!-- more -->
+
+<h1 id="安装">安装<a class="headerlink" href="#安装" title="Permanent link">&para;</a></h1>
+<h2 id="docker-安装-jellyfin">docker 安装 jellyfin<a class="headerlink" href="#docker-安装-jellyfin" title="Permanent link">&para;</a></h2>
+<p>参考：<a href="https://jellyfin.org/docs/general/installation/container">Container | Jellyfin</a>
+三个不同镜像源：</p>
+<ul>
+<li>Official container image: <code>jellyfin/jellyfin</code> <a href="https://hub.docker.com/r/jellyfin/jellyfin"><img alt="Docker Pull Count" src="https://img.shields.io/docker/pulls/jellyfin/jellyfin.svg" /></a>.</li>
+<li>LinuxServer.io image: <code>linuxserver/jellyfin</code> <a href="https://hub.docker.com/r/linuxserver/jellyfin"><img alt="Docker Pull Count" src="https://img.shields.io/docker/pulls/linuxserver/jellyfin.svg" /></a>.</li>
+<li>hotio image: <code>hotio/jellyfin</code> <a href="https://hub.docker.com/r/hotio/jellyfin"><img alt="Docker Pull Count" src="https://img.shields.io/docker/pulls/hotio/jellyfin.svg" /></a>.</li>
+</ul>
+<p>查看它们的 Dockerfile，可以看到安装了不同显卡的驱动，包含 va-api，opencl。</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>nvidia-opencl-icd-340 \
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>i965-va-driver \
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>mesa-va-drivers &amp;&amp; \
+</span></code></pre></div>
+<h3 id="gpu-转码硬件加速">gpu 转码硬件加速<a class="headerlink" href="#gpu-转码硬件加速" title="Permanent link">&para;</a></h3>
+<p><a href="https://jellyfin.org/docs/general/administration/hardware-acceleration/intel#configure-with-linux-virtualization">Intel GPU | Jellyfin</a></p>
+<h4 id="devdri">dev/dri<a class="headerlink" href="#devdri" title="Permanent link">&para;</a></h4>
+<p>默认已经设置好用户权限了</p>
+<p>docker-compose 中设置</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>devices:
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>      - /dev/dri/:/dev/dri/
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>root@689728fac458:/# l -alh /dev/dri
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>total 0
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>drwxr-xr-x 2 root root                80 Sep 29 19:41 ./
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>drwxr-xr-x 6 root root               360 Sep 29 19:41 ../
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>crw-rw---- 1 root video         226,   0 Sep 29 19:41 card0
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>crw-rw---- 1 root videoGaFCwCBc 226, 128 Sep 29 19:41 renderD128
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>root@689728fac458:/# id 1000
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>uid=1000(abc) gid=1000(abc) groups=1000(abc),44(video),100(users),104(videoGaFCwCBc)
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>root@689728fac458:/#
+</span></code></pre></div>
+<h4 id="nvidia-gpu">nvidia gpu<a class="headerlink" href="#nvidia-gpu" title="Permanent link">&para;</a></h4>
+<p><a href="https://jellyfin.org/docs/general/administration/hardware-acceleration/nvidia/#configure-with-linux-virtualization">NVIDIA GPU | Jellyfin</a></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>version: &#39;3&#39;
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>services:
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>  jellyfin:
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>    image: jellyfin/jellyfin
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>    user: 1000:1000
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>    network_mode: &#39;host&#39;
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>    volumes:
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>      - /path/to/config:/config
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>      - /path/to/cache:/cache
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>      - /path/to/media:/media
+</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>    runtime: nvidia
+</span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>    deploy:
+</span><span id="__span-3-13"><a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a>      resources:
+</span><span id="__span-3-14"><a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a>        reservations:
+</span><span id="__span-3-15"><a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a>          devices:
+</span><span id="__span-3-16"><a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a>            - capabilities: [gpu]
+</span></code></pre></div>
+<p><a href="https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html#configuration">Installing the NVIDIA Container Toolkit — container-toolkit 1.14.1 documentation</a></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>sudo nvidia-ctk runtime configure --runtime=docker
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>sudo systemctl restart docker
+</span></code></pre></div>
+<h2 id="lxc-安装-jellyfin">LXC 安装 jellyfin<a class="headerlink" href="#lxc-安装-jellyfin" title="Permanent link">&para;</a></h2>
+<p>相对于 docker 好处：docker 我没有解决 amd gpu 无法调用 opencl 进行 HDR 色调映射问题。而在 lxc 中通过 amd 官方驱动安装程序，可以手动安装 opencl 驱动，可以解决该问题。</p>
+<ol>
+<li>安装 lxd（lxc 的前端）。ubuntu 下默认使用 snap 安装</li>
+<li>创建 lxc 容器。使用默认配置。容器使用默认的 lxdbr0 网络，通过 NAT 到宿主机上网。</li>
+</ol>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>lxc launch -p default images:ubuntu/focal ubuntu20
+</span></code></pre></div>
+<ol>
+<li>安装<a href="https://jellyfin.org/docs/general/installation/linux#ubuntu">Jellyfin</a></li>
+</ol>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a># 安装依赖
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>sudo apt install curl gnupg
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a># 添加jellyfin源
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>sudo mkdir -p /etc/apt/keyrings
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>curl -fsSL https://repo.jellyfin.org/jellyfin_team.gpg.key | sudo gpg --dearmor -o /etc/apt/keyrings/jellyfin.gpg
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>
+</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>cat &lt;&lt;EOF | sudo tee /etc/apt/sources.list.d/jellyfin.sources
+</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>Types: deb
+</span><span id="__span-6-10"><a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a>URIs: https://repo.jellyfin.org/$( awk -F&#39;=&#39; &#39;/^ID=/{ print $NF }&#39; /etc/os-release )
+</span><span id="__span-6-11"><a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a>Suites: $( awk -F&#39;=&#39; &#39;/^VERSION_CODENAME=/{ print $NF }&#39; /etc/os-release )
+</span><span id="__span-6-12"><a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a>Components: main
+</span><span id="__span-6-13"><a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a>Architectures: $( dpkg --print-architecture )
+</span><span id="__span-6-14"><a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a>Signed-By: /etc/apt/keyrings/jellyfin.gpg
+</span><span id="__span-6-15"><a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a>EOF
+</span><span id="__span-6-16"><a id="__codelineno-6-16" name="__codelineno-6-16" href="#__codelineno-6-16"></a>
+</span><span id="__span-6-17"><a id="__codelineno-6-17" name="__codelineno-6-17" href="#__codelineno-6-17"></a># 安装
+</span><span id="__span-6-18"><a id="__codelineno-6-18" name="__codelineno-6-18" href="#__codelineno-6-18"></a>sudo apt update
+</span><span id="__span-6-19"><a id="__codelineno-6-19" name="__codelineno-6-19" href="#__codelineno-6-19"></a>sudo apt install jellyfin
+</span><span id="__span-6-20"><a id="__codelineno-6-20" name="__codelineno-6-20" href="#__codelineno-6-20"></a>
+</span><span id="__span-6-21"><a id="__codelineno-6-21" name="__codelineno-6-21" href="#__codelineno-6-21"></a># 启动jellyfin服务
+</span><span id="__span-6-22"><a id="__codelineno-6-22" name="__codelineno-6-22" href="#__codelineno-6-22"></a>systemctl enable jellyfin
+</span><span id="__span-6-23"><a id="__codelineno-6-23" name="__codelineno-6-23" href="#__codelineno-6-23"></a>systemctl start jellyfin
+</span></code></pre></div>
+<h3 id="端口映射">端口映射<a class="headerlink" href="#端口映射" title="Permanent link">&para;</a></h3>
+<p>lxc 的端口映射没有那么直观，是通过在容器配置中添加 device 实现的。有两种方式给设备：1）通过<code>lxc config</code>给容器添加设备（也可以<code>lxc config edit</code>直接修改容器配置文件）2）创建 profile，并给容器添加 profile。
+为了以后知道设置了哪些端口映射，推荐使用 profile 方式。</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>lxc profile device add &lt;profile&gt; &lt;device name&gt; &lt;device type&gt; &lt;key=value&gt;*
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>lxc profile add &lt;container&gt; &lt;profile&gt;
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>lxc config device add &lt;container&gt; &lt;device name&gt; &lt;device type&gt; &lt;key=value&gt;*
+</span></code></pre></div>
+<p>例子：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>lxc profile create proxy-jellyfin
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>lxc profile device add proxy-jellyfin proxy8096 proxy connect=&quot;tcp:127.0.0.1:8096&quot; listen=&quot;tcp:0.0.0.0:8096&quot;
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>lxc profile add ubuntu20 proxy-jellyfin
+</span></code></pre></div>
+<p>查看容器配置文件</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>lxc config show ubuntu20 --expanded
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>devices:
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>  proxy8096:
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>    connect: tcp:127.0.0.1:8096
+</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>    listen: tcp:0.0.0.0:8097
+</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>    type: proxy
+</span></code></pre></div>
+<h3 id="目录映射">目录映射<a class="headerlink" href="#目录映射" title="Permanent link">&para;</a></h3>
+<p>参考：<a href="https://www.cyberciti.biz/faq/how-to-add-or-mount-directory-in-lxd-linux-container/">How to add or mount directory in LXD (Linux container) - nixCraft (cyberciti.biz)</a></p>
+<p>目录映射同样需要给容器添加 device。</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>lxc config device add ubuntu20 media disk source=/path/to/media_lib path=/media
+</span></code></pre></div>
+<p>对应配置文件</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>devices:
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>  media:
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>    path: /media
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>    source: /path/to/media_lib
+</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>    type: disk
+</span></code></pre></div>
+<h4 id="subordinate-uidgid-映射">subordinate uid,gid 映射<a class="headerlink" href="#subordinate-uidgid-映射" title="Permanent link">&para;</a></h4>
+<p>不过此时，容器内用户创建的文件在 host 上的权限会存在问题。查看映射目录的权限会发现全是 nobody（nobody uid 和 gid 都可以表示为 -1，即 65534）</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>drwxrwxr-x  1 nobody nogroup 1.9K Feb 16 12:34 Movie
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>drwxrwxr-x  1 nobody nogroup  368 Mar  2 23:21 TV
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>drwxrwxr-x  1 nobody nogroup 1.5K Feb 25 17:41 TV_anime
+</span></code></pre></div>
+<p>因此需要将 host 用户的 uid,gid 映射到容器内对应用户的 uid,gid。</p>
+<ul>
+<li>lxc 容器内有许多用户，默认有 ubuntu(uid=1000,gid=1000)。如果我们需要映射给该用户，使用第一行命令即可。both 表示同时映射 uid 和 gid，第一个 1000 表示 host 用户 id，第二个 1000 表示容器内用户 id。</li>
+<li>但是由于我们运行 jellyfin 程序使用的是 jellyfin 进程，该进程创建的文件也是以 jellyfin 用户创建的。因此要映射 jellyfin 用户。而该用户 uid 和 gid 不相等 (uid=106,gid=112)。因此需要使用第二条命令。参考：<a href="https://stgraber.org/2017/06/15/custom-user-mappings-in-lxd-containers/">Custom user mappings in LXD containers | Stéphane Graber's website</a></li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>lxc config set ubuntu20 raw.idmap &quot;both 1000 1000&quot;
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>printf &quot;uid $(id -u) 106\ngid $(id -g) 112&quot; | lxc config set ubuntu20 raw.idmap -
+</span></code></pre></div>
+<p>host 上还需要设置<code>/etc/subuid,subgid</code>，一般来说其中默认添加了创建的用户，并且不会重叠。没有的话，手动添加：</p>
+<ul>
+<li>下面设置表示 yfy 创建的 namespace，容器内用户 0-65536 被映射到 host 上的 100000-165536（格式<code>user:first_id:count</code>）</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>yfy:100000:65536
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>root:1000:1
+</span></code></pre></div>
+<h4 id="用户映射实验">用户映射实验<a class="headerlink" href="#用户映射实验" title="Permanent link">&para;</a></h4>
+<p>容器中创建不同权限文件</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>-rw-r--r--  1 nobody   nogroup     4 Mar  4 09:09 host-root.txt
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>-rw-r--r--  1 jellyfin jellyfin    2 Mar  4 09:02 jellyfin.txt
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>-rw-r--r--  1 root     root        6 Mar  4 08:16 root.txt
+</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a>-rw-r--r--  1 ubuntu   ubuntu      6 Mar  4 08:17 ubuntu.txt
+</span><span id="__span-15-5"><a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a>-rw-r--r--  1 yfy      yfy         2 Mar  4 09:04 yfy.txt
+</span><span id="__span-15-6"><a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a>
+</span><span id="__span-15-7"><a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a>root:x:0:0:root:/root:/bin/bash
+</span><span id="__span-15-8"><a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a>jellyfin:x:106:112:
+</span><span id="__span-15-9"><a id="__codelineno-15-9" name="__codelineno-15-9" href="#__codelineno-15-9"></a>ubuntu:x:1000:1000::/home/ubuntu:/bin/bash
+</span><span id="__span-15-10"><a id="__codelineno-15-10" name="__codelineno-15-10" href="#__codelineno-15-10"></a>yfy:x:1001:1001:,,,:/home/yfy:/bin/bash
+</span></code></pre></div>
+<p>在 host 中读取到的文件权限</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>-rw-r--r-- 1 root    root       4  3月  4 17:09 host-root.txt
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>-rw-r--r-- 1 yfy     yfy        2  3月  4 17:02 jellyfin.txt
+</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>-rw-r--r-- 1 1000000 1000000    6  3月  4 16:16 root.txt
+</span><span id="__span-16-4"><a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a>-rw-r--r-- 1 1001000 1001000    6  3月  4 16:17 ubuntu.txt
+</span><span id="__span-16-5"><a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a>-rw-r--r-- 1 1001001 1001001    2  3月  4 17:04 yfy.txt
+</span></code></pre></div>
+<h3 id="添加-gpu">添加 GPU<a class="headerlink" href="#添加-gpu" title="Permanent link">&para;</a></h3>
+<p>给容器添加 gpu 类型设备：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>devices:
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>  rx550:
+</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>    gid: &quot;109&quot;
+</span><span id="__span-17-4"><a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a>    type: gpu
+</span></code></pre></div>
+<p>添加 gpu 后，容器内会出现<code>/dev/dri/card0,renderD128</code>。如果不指定 gid，则默认权限所有者和组被设置成 root，jellyfin 进程会无法调用显卡进行加速。</p>
+<p>因此需要进容器查看 render 组的 gid，并将 jellyfin 用户添加到该组。然后在添加 gpu 设备时指定 gid。</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a># 容器内查看render组gid
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>cat /etc/group
+</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>#render:x:109:jellyfin
+</span></code></pre></div>
+<h3 id="各种硬件加速">各种硬件加速<a class="headerlink" href="#各种硬件加速" title="Permanent link">&para;</a></h3>
+<p>看 readme 文档介绍：<a href="https://github.com/linuxserver/docker-jellyfin">linuxserver/docker-jellyfin (github.com)</a></p>
+<h3 id="amdgpu-驱动">amdgpu 驱动<a class="headerlink" href="#amdgpu-驱动" title="Permanent link">&para;</a></h3>
+<h4 id="opencl-tone-mapping">OpenCL tone-mapping<a class="headerlink" href="#opencl-tone-mapping" title="Permanent link">&para;</a></h4>
+<p>amd gpu 需要使用 opencl 加速色调映射，因此需要安装 opencl 运行时。</p>
+<p><a href="https://amdgpu-install.readthedocs.io/en/latest/">amdgpu-install</a></p>
+<ol>
+<li>官网下载”驱动“（deb 文件，只包含一个 amdgpu-install 脚本，通过该脚本进行驱动安装）</li>
+<li>安装 AMDGPU 软件栈：有完全开源版本，有些组件也有 Proprietary 版本。一些组件（opencl, vulkan）是可选的</li>
+</ol>
+<ul>
+<li>opencl 有两个实现，其中 rx550 需要安装 legacy 版本（非开源）<ul>
+<li>ROCr OpenCL stack, supports Vega 10 and later products</li>
+<li>Legacy OpenCL stack (<strong>Proprietary</strong>), supports legacy products older than Vega 10</li>
+</ul>
+</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>amdgpu-install -y --accept-eula --usecase=workstation --opencl=legacy --no-32
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>amdgpu-install -y --accept-eula --usecase=graphics   # install the All-Open components
+</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>
+</span><span id="__span-20-3"><a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a>amdgpu-install -y --accept-eula --usecase=workstation --vulkan=pro --opencl=legacy
+</span></code></pre></div>
+<ul>
+<li><strong>ROCr</strong>: Provides support for <em>Vega 10</em> and newer hardware.</li>
+<li><strong>Legacy</strong>: Provides support for hardware older than <em>Vega 10</em>.
+    (<strong>Proprietary</strong>, requires EULA acceptance)</li>
+</ul>
+<p>opengl: default
+opencl</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Option</strong></td>
+<td><strong>Description</strong></td>
+</tr>
+<tr>
+<td><code>--opencl=rocr</code></td>
+<td>Installs ROCr OpenCL.</td>
+</tr>
+<tr>
+<td><code>--opencl=legacy</code></td>
+<td>Installs legacy OpenCL. (<strong>Proprietary</strong>)</td>
+</tr>
+<tr>
+<td><code>--opencl=rocr,legacy</code></td>
+<td>Installs both ROCr and legacy OpenCL.</td>
+</tr>
+</tbody>
+</table>
+<p>vulkan</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Option</strong></td>
+<td><strong>Description</strong></td>
+</tr>
+<tr>
+<td><code>--vulkan=amdvlk</code></td>
+<td>Installs open source Vulkan</td>
+</tr>
+<tr>
+<td><code>--vulkan=pro</code></td>
+<td>Installs PRO Vulkan (<strong>Proprietary</strong>)</td>
+</tr>
+<tr>
+<td><code>--vulkan=amdvlk,pro</code></td>
+<td>Installs both open and PRO Vulkan.</td>
+</tr>
+</tbody>
+</table>
+<h4 id="amd-amf">AMD AMF<a class="headerlink" href="#amd-amf" title="Permanent link">&para;</a></h4>
+<blockquote>
+<p>As of <strong>Jellyfin 10.8</strong> full OpenCL based hardware filtering in AMF is supported on Windows 10 and newer.
+AMD has not implemented the Vulkan based HW decoder and scaler in ffmpeg, the decoding speed may not be as expected on Linux.
+The closed source driver <code>amdgpu-pro</code> is required when using AMF on Linux.</p>
+</blockquote>
+<p>（待解决）没有实现在 linux 下使用 amd amf 进行硬件加速。</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>[h264_amf @ 0x562d7fd98040] DLL libamfrt64.so.1 failed to open
+</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>Error initializing output stream 0:0 -- Error while opening encoder for output stream #0:0 - maybe incorrect parameters such as bit_rate, rate, width or height
+</span><span id="__span-21-3"><a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>malloc_consolidate(): invalid chunk size
+</span></code></pre></div>
+<p>参考：<a href="https://github.com/jellyfin/jellyfin/issues/3580">Jellyfin 10.5.5 Docker VAAPI hardware transcoding issues · Issue #3580 · jellyfin/jellyfin (github.com)</a></p>
+<blockquote>
+<p>[Parsed_scale_vaapi_2 @ 0x563e3af4e980] Failed to render parameter buffer: 6 (invalid VASurfaceID).<code>Mesa 20.1 or higher is required to enable VAAPI to transcode HEVC videos on AMD GPU.</code>[h264_amf @ 0x5590871d0280] DLL libamfrt64.so.1 failed to open<code>AMD AMF hasn't support any native hw decoder. To use AMF encoding on Ubuntu, you need to manually install</code>amdgpu-pro<code>and</code>amf-amdgpu-pro`.</p>
+</blockquote>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>Stream mapping:
+</span><span id="__span-22-2"><a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>  Stream #0:0 -&gt; #0:0 (hevc (native) -&gt; h264 (h264_amf))
+</span><span id="__span-22-3"><a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a>  Stream #0:1 -&gt; #0:1 (dts (dca) -&gt; aac (libfdk_aac))
+</span><span id="__span-22-4"><a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a>Press [q] to stop, [?] for help
+</span><span id="__span-22-5"><a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a>[h264_amf @ 0x55dbac31ad40] encoder-&gt;Init() failed with error 7
+</span><span id="__span-22-6"><a id="__codelineno-22-6" name="__codelineno-22-6" href="#__codelineno-22-6"></a>Error initializing output stream 0:0 -- Error while opening encoder for output stream #0:0 - maybe incorrect parameters such as bit_rate, rate, width or height
+</span><span id="__span-22-7"><a id="__codelineno-22-7" name="__codelineno-22-7" href="#__codelineno-22-7"></a>[libfdk_aac @ 0x55dbac304c80] 2 frames left in the queue on closing
+</span><span id="__span-22-8"><a id="__codelineno-22-8" name="__codelineno-22-8" href="#__codelineno-22-8"></a>Conversion failed!
+</span></code></pre></div>
+<h3 id="nvidia-gpu_1">nvidia gpu<a class="headerlink" href="#nvidia-gpu_1" title="Permanent link">&para;</a></h3>
+<p>要求</p>
+<ul>
+<li>host 安装 nvidia 驱动（不能使用开源驱动）</li>
+<li>lxc 可以设置使用 nvidia.runtime。</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>lxc config set ubuntu20 nvidia.runtime true
+</span></code></pre></div>
+<ul>
+<li>jellyfin 中设置使用 Nvidia NVENC</li>
+</ul>
+<p>刚开始报错，发现是缺少 libnvidia-encode, libnvidia-decode 两个库。在 host 中安装，但是显示已经安装了。
+于是尝试在 lxc 容器中安装，但是发现貌似已经安装了。之后重启 lxc 容器不知为何就没有问题了。</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>Stream mapping:
+</span><span id="__span-24-2"><a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>  Stream #0:0 (hevc) -&gt; setparams:default (graph 0)
+</span><span id="__span-24-3"><a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a>  Stream #0:7 (pgssub) -&gt; scale:default (graph 0)
+</span><span id="__span-24-4"><a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a>  overlay:default (graph 0) -&gt; Stream #0:0 (h264_nvenc)
+</span><span id="__span-24-5"><a id="__codelineno-24-5" name="__codelineno-24-5" href="#__codelineno-24-5"></a>  Stream #0:1 -&gt; #0:1 (truehd (native) -&gt; aac (libfdk_aac))
+</span><span id="__span-24-6"><a id="__codelineno-24-6" name="__codelineno-24-6" href="#__codelineno-24-6"></a>Press [q] to stop, [?] for help
+</span><span id="__span-24-7"><a id="__codelineno-24-7" name="__codelineno-24-7" href="#__codelineno-24-7"></a>[matroska,webm @ 0x563cc2ae6200] sub2video: using 1920x1791 canvas
+</span><span id="__span-24-8"><a id="__codelineno-24-8" name="__codelineno-24-8" href="#__codelineno-24-8"></a>[h264_nvenc @ 0x563cc2c89880] Cannot load libnvidia-encode.so.1
+</span><span id="__span-24-9"><a id="__codelineno-24-9" name="__codelineno-24-9" href="#__codelineno-24-9"></a>[h264_nvenc @ 0x563cc2c89880] The minimum required Nvidia driver for nvenc is 470.57.02 or newer
+</span><span id="__span-24-10"><a id="__codelineno-24-10" name="__codelineno-24-10" href="#__codelineno-24-10"></a>Error initializing output stream 0:0 -- Error while opening encoder for output stream #0:0 - maybe incorrect parameters such as bit_rate, rate, width or height
+</span><span id="__span-24-11"><a id="__codelineno-24-11" name="__codelineno-24-11" href="#__codelineno-24-11"></a>[libfdk_aac @ 0x563cc2c89140] 2 frames left in the queue on closing
+</span><span id="__span-24-12"><a id="__codelineno-24-12" name="__codelineno-24-12" href="#__codelineno-24-12"></a>Conversion failed!
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>/usr/lib/jellyfin-ffmpeg/ffmpeg -analyzeduration 200M -init_hw_device cuda=cu:0 -filter_hw_device cu -hwaccel cuda -hwaccel_output_format cuda -c:v h264_cuvid -autorotate 0 -i file:&quot;/media/Movie/绿皮书 (2018)/绿皮书 (2018) - 1080p.mkv&quot; -autoscale 0 -map_metadata -1 -map_chapters -1 -threads 0 -map 0:0 -map 0:1 -map -0:s -codec:v:0 h264_nvenc -preset p1 -b:v 14360000 -maxrate 14360000 -bufsize 28720000 -profile:v:0 high -g:v:0 72 -keyint_min:v:0 72 -vf
+</span><span id="__span-25-2"><a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a>
+</span><span id="__span-25-3"><a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a>[h264_cuvid @ 0x5561f7fa97c0] Cannot load libnvcuvid.so.1
+</span><span id="__span-25-4"><a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a>[h264_cuvid @ 0x5561f7fa97c0] Failed loading nvcuvid.
+</span><span id="__span-25-5"><a id="__codelineno-25-5" name="__codelineno-25-5" href="#__codelineno-25-5"></a>Stream mapping:
+</span><span id="__span-25-6"><a id="__codelineno-25-6" name="__codelineno-25-6" href="#__codelineno-25-6"></a>  Stream #0:0 -&gt; #0:0 (h264 (h264_cuvid) -&gt; h264 (h264_nvenc))
+</span><span id="__span-25-7"><a id="__codelineno-25-7" name="__codelineno-25-7" href="#__codelineno-25-7"></a>  Stream #0:1 -&gt; #0:1 (ac3 (native) -&gt; aac (libfdk_aac))
+</span><span id="__span-25-8"><a id="__codelineno-25-8" name="__codelineno-25-8" href="#__codelineno-25-8"></a>Error while opening decoder for input stream #0:0 : Operation not permitted
+</span></code></pre></div>
+<p>发现转码性能强的一批，看到的都是 400，200 帧的转码速率。</p>
+<h2 id="linux-迁移到-docker">linux 迁移到 docker<a class="headerlink" href="#linux-迁移到-docker" title="Permanent link">&para;</a></h2>
+<p><a href="https://jellyfin.org/docs/general/administration/migrate/">Migrating | Jellyfin</a></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>version: &#39;3&#39;
+</span><span id="__span-26-2"><a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a>services:
+</span><span id="__span-26-3"><a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a>  jellyfin:
+</span><span id="__span-26-4"><a id="__codelineno-26-4" name="__codelineno-26-4" href="#__codelineno-26-4"></a>    image: jellyfin/jellyfin
+</span><span id="__span-26-5"><a id="__codelineno-26-5" name="__codelineno-26-5" href="#__codelineno-26-5"></a>    user: &lt;uid&gt;:&lt;gid&gt;
+</span><span id="__span-26-6"><a id="__codelineno-26-6" name="__codelineno-26-6" href="#__codelineno-26-6"></a>    network_mode: &#39;host&#39;
+</span><span id="__span-26-7"><a id="__codelineno-26-7" name="__codelineno-26-7" href="#__codelineno-26-7"></a>    restart: &#39;unless-stopped&#39;
+</span><span id="__span-26-8"><a id="__codelineno-26-8" name="__codelineno-26-8" href="#__codelineno-26-8"></a>    environment:
+</span><span id="__span-26-9"><a id="__codelineno-26-9" name="__codelineno-26-9" href="#__codelineno-26-9"></a>      - JELLYFIN_CACHE_DIR=/var/cache/jellyfin
+</span><span id="__span-26-10"><a id="__codelineno-26-10" name="__codelineno-26-10" href="#__codelineno-26-10"></a>      - JELLYFIN_CONFIG_DIR=/etc/jellyfin
+</span><span id="__span-26-11"><a id="__codelineno-26-11" name="__codelineno-26-11" href="#__codelineno-26-11"></a>      - JELLYFIN_DATA_DIR=/var/lib/jellyfin
+</span><span id="__span-26-12"><a id="__codelineno-26-12" name="__codelineno-26-12" href="#__codelineno-26-12"></a>      - JELLYFIN_LOG_DIR=/var/log/jellyfin
+</span><span id="__span-26-13"><a id="__codelineno-26-13" name="__codelineno-26-13" href="#__codelineno-26-13"></a>    volumes:
+</span><span id="__span-26-14"><a id="__codelineno-26-14" name="__codelineno-26-14" href="#__codelineno-26-14"></a>      - /etc/jellyfin:/etc/jellyfin
+</span><span id="__span-26-15"><a id="__codelineno-26-15" name="__codelineno-26-15" href="#__codelineno-26-15"></a>      - /var/cache/jellyfin:/var/cache/jellyfin
+</span><span id="__span-26-16"><a id="__codelineno-26-16" name="__codelineno-26-16" href="#__codelineno-26-16"></a>      - /var/lib/jellyfin:/var/lib/jellyfin
+</span><span id="__span-26-17"><a id="__codelineno-26-17" name="__codelineno-26-17" href="#__codelineno-26-17"></a>      - /var/log/jellyfin:/var/log/jellyfin
+</span><span id="__span-26-18"><a id="__codelineno-26-18" name="__codelineno-26-18" href="#__codelineno-26-18"></a>      - &lt;path-to-media&gt;:&lt;path-to-media&gt;
+</span></code></pre></div>
+<p>需要备份数据包含 4 部分</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>      - /var/lib/docker/docker_data/jellyfin/cache:/var/cache/jellyfin
+</span><span id="__span-27-2"><a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a>      - /var/lib/docker/docker_data/jellyfin/log:/var/log/jellyfin
+</span><span id="__span-27-3"><a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a>      - /var/lib/docker/docker_data/jellyfin/data:/var/lib/jellyfin
+</span><span id="__span-27-4"><a id="__codelineno-27-4" name="__codelineno-27-4" href="#__codelineno-27-4"></a>      - /var/lib/docker/docker_data/jellyfin/etc:/etc/jellyfin
+</span></code></pre></div>
+<h1 id="配置">配置<a class="headerlink" href="#配置" title="Permanent link">&para;</a></h1>
+<h2 id="jellyfin-设置">jellyfin 设置<a class="headerlink" href="#jellyfin-设置" title="Permanent link">&para;</a></h2>
+<p>一些经验</p>
+<ul>
+<li>改变 jellyfin 转码设置，是立即生效的，无需重启 docker</li>
+<li>实测 RX550 的薄弱 GPU 性能，勾选 HEVC 10bit 解码，反而会拖累编码过程，帧数更低。</li>
+</ul>
+<p>Settings =&gt;
+首页</p>
+<ul>
+<li>可以调整媒体库显示顺序</li>
+<li>可以将不同媒体库组合成一个显示
+播放</li>
+<li>音频选择：播放默认音频</li>
+<li>家庭网络质量：设置默认的串流码率，如 20Mbps</li>
+<li>优先使用 fMP4-HLS 媒体容器：不知道如何生效</li>
+</ul>
+<blockquote>
+<p>优先使用 fMP4 作为 HLS 播放的默认容器，从而可以在支持的设备上直接串流 HEVC 格式的内容</p>
+</blockquote>
+<p>字幕</p>
+<ul>
+<li>字幕偏好：偏好字幕，下面字幕模式需要使用</li>
+<li><strong>字幕模式</strong>：推荐设置为总是显示<ul>
+<li>智能：音频为外语时，加载偏好字幕，否则无字幕。不太适用，因为：1 多音频时无效，2 即使是中文视频，最好也有字幕</li>
+<li><strong>总是显示</strong>：显示偏好字幕。适用性最好，当有偏好字幕时会选择偏好，没有时选择默认。</li>
+<li>默认：根据元数据中“默认”，“强制”来显示字幕。可以看作总是显示的子集</li>
+<li>强制：根据元数据中“强制”来显示字幕</li>
+<li>无字幕</li>
+</ul>
+</li>
+<li>是否烧录字幕<ul>
+<li>自动：图片格式或复杂 ass/ssa 字幕（客户端可能不支持显示）
+<em>p.s 建议以后支持一种更灵活的设置方法：无字幕，音频匹配偏好则无字幕，偏好字幕，默认，强制。通过调节这几个选项的顺序来实现不同策略</em></li>
+</ul>
+</li>
+</ul>
+<h2 id="硬件加速">硬件加速<a class="headerlink" href="#硬件加速" title="Permanent link">&para;</a></h2>
+<p>参考：<a href="https://jellyfin.org/docs/general/administration/hardware-acceleration">Hardware Acceleration | Jellyfin</a></p>
+<blockquote>
+<p>Jellyfin supports <a href="https://trac.ffmpeg.org/wiki/HWAccelIntro">hardware acceleration (HWA) of video encoding/decoding using FFMpeg</a>. FFMpeg and Jellyfin can support multiple hardware acceleration implementations such as Intel Quicksync (QSV), AMD AMF and NVIDIA NVENC/NVDEC through Video Acceleration APIs.</p>
+</blockquote>
+<h3 id="基础知识">基础知识<a class="headerlink" href="#基础知识" title="Permanent link">&para;</a></h3>
+<h4 id="常见视频编码">常见视频编码<a class="headerlink" href="#常见视频编码" title="Permanent link">&para;</a></h4>
+<ul>
+<li>H.264/h264/AVC<ul>
+<li>Profile: High 10 = H.264 10bit：目前没有硬件支持 h264 10bit 解码</li>
+</ul>
+</li>
+<li>H.265/HEVC<ul>
+<li>Profile: Main, Main 10</li>
+</ul>
+</li>
+</ul>
+<h4 id="浏览器支持的编码">浏览器支持的编码<a class="headerlink" href="#浏览器支持的编码" title="Permanent link">&para;</a></h4>
+<p><a href="https://jellyfin.org/docs/general/clients/codec-support/">Codec Support | Jellyfin</a></p>
+<h4 id="不同硬件支持">不同硬件支持<a class="headerlink" href="#不同硬件支持" title="Permanent link">&para;</a></h4>
+<p>不同显卡对应支持的硬件编解码 API：</p>
+<ul>
+<li>NVIDIA: NVENC</li>
+<li>AMD: AMF, VA-API</li>
+<li>Intel: QSV, VA-API</li>
+<li>Apple: VideoToolbox</li>
+<li>RPi: V4L2</li>
+</ul>
+<p>不同方案参考：
+CPU 编解码：h265 -&gt; h264
+GPU 编解码：h265 -&gt; GPU -&gt; 中间帧 -&gt; GPU -&gt; h254
+CPU 解码，GPU 编码：h265 10bit -&gt; CPU -&gt; 中间帧 -&gt; GPU -&gt; h254</p>
+<h3 id="测试方法">测试方法<a class="headerlink" href="#测试方法" title="Permanent link">&para;</a></h3>
+<p>调试时，可以从 jellyfin 日志中把命令复制下来，来快速判断是否可以工作正常。</p>
+<ul>
+<li>vaapi 测试</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>ffmpeg -init_hw_device vaapi=va:/dev/dri/renderD128
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a># Check the QSV and VA-API codecs
+</span><span id="__span-29-2"><a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a>docker exec -it jellyfin /usr/lib/jellyfin-ffmpeg/vainfo
+</span><span id="__span-29-3"><a id="__codelineno-29-3" name="__codelineno-29-3" href="#__codelineno-29-3"></a>
+</span><span id="__span-29-4"><a id="__codelineno-29-4" name="__codelineno-29-4" href="#__codelineno-29-4"></a># Check the OpenCL runtime status
+</span><span id="__span-29-5"><a id="__codelineno-29-5" name="__codelineno-29-5" href="#__codelineno-29-5"></a>docker exec -it jellyfin /usr/lib/jellyfin-ffmpeg/ffmpeg -v verbose -init_hw_device vaapi=va -init_hw_device opencl@va
+</span></code></pre></div>
+<p>调用 VA-API 失败（/dev/dri/renderD128 权限错误导致）</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>[AVHWDeviceContext @ 0x557d76500880] No VA display found for device /dev/dri/renderD128.
+</span><span id="__span-30-2"><a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a>Device creation failed: -22.
+</span><span id="__span-30-3"><a id="__codelineno-30-3" name="__codelineno-30-3" href="#__codelineno-30-3"></a>Failed to set value &#39;vaapi=va:/dev/dri/renderD128&#39; for option &#39;init_hw_device&#39;: Invalid argument
+</span><span id="__span-30-4"><a id="__codelineno-30-4" name="__codelineno-30-4" href="#__codelineno-30-4"></a>Error parsing global options: Invalid argument
+</span></code></pre></div>
+<p>OpenCL 设备没找到（开启 tone-mapping 后，amd gpu 需要安装 opencl 驱动）</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>[AVHWDeviceContext @ 0x56158f868900] No matching devices found.
+</span><span id="__span-31-2"><a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a>Device creation failed: -19.
+</span><span id="__span-31-3"><a id="__codelineno-31-3" name="__codelineno-31-3" href="#__codelineno-31-3"></a>Failed to set value &#39;opencl=ocl:0.0&#39; for option &#39;init_hw_device&#39;: No such device
+</span><span id="__span-31-4"><a id="__codelineno-31-4" name="__codelineno-31-4" href="#__codelineno-31-4"></a>Error parsing global options: No such device
+</span></code></pre></div>
+<h3 id="intel-核显">intel 核显<a class="headerlink" href="#intel-核显" title="Permanent link">&para;</a></h3>
+<p><a href="https://jellyfin.org/docs/general/administration/hardware-acceleration/intel">Intel GPU | Jellyfin</a></p>
+<ul>
+<li>转码：QSV, VA-API</li>
+<li>HDR tonne mapping：QSV, OpenCL</li>
+</ul>
+<p>vainfo 查看 QSV 和 VA-API 支持情况</p>
+<ul>
+<li><code>iHD driver</code> indicates support for the QSV and VA-API interfaces.</li>
+<li><code>i965 driver</code> indicates only support for the VA-API interface, which should only be used on pre-Broadwell platforms.</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a>root@689728fac458:/# /usr/lib/jellyfin-ffmpeg/vainfo --display drm --device /dev/dri/renderD128
+</span><span id="__span-32-2"><a id="__codelineno-32-2" name="__codelineno-32-2" href="#__codelineno-32-2"></a>Trying display: drm
+</span><span id="__span-32-3"><a id="__codelineno-32-3" name="__codelineno-32-3" href="#__codelineno-32-3"></a>libva info: VA-API version 1.19.0
+</span><span id="__span-32-4"><a id="__codelineno-32-4" name="__codelineno-32-4" href="#__codelineno-32-4"></a>libva info: Trying to open /usr/lib/jellyfin-ffmpeg/lib/dri/iHD_drv_video.so
+</span><span id="__span-32-5"><a id="__codelineno-32-5" name="__codelineno-32-5" href="#__codelineno-32-5"></a>libva info: Found init function __vaDriverInit_1_19
+</span><span id="__span-32-6"><a id="__codelineno-32-6" name="__codelineno-32-6" href="#__codelineno-32-6"></a>libva info: va_openDriver() returns 0
+</span><span id="__span-32-7"><a id="__codelineno-32-7" name="__codelineno-32-7" href="#__codelineno-32-7"></a>vainfo: VA-API version: 1.19 (libva 2.19.0)
+</span><span id="__span-32-8"><a id="__codelineno-32-8" name="__codelineno-32-8" href="#__codelineno-32-8"></a>vainfo: Driver version: Intel iHD driver for Intel(R) Gen Graphics - 23.3.2 (95dc859)
+</span><span id="__span-32-9"><a id="__codelineno-32-9" name="__codelineno-32-9" href="#__codelineno-32-9"></a>vainfo: Supported profile and entrypoints
+</span><span id="__span-32-10"><a id="__codelineno-32-10" name="__codelineno-32-10" href="#__codelineno-32-10"></a>      VAProfileNone                   : VAEntrypointVideoProc
+</span><span id="__span-32-11"><a id="__codelineno-32-11" name="__codelineno-32-11" href="#__codelineno-32-11"></a>      VAProfileNone                   : VAEntrypointStats
+</span><span id="__span-32-12"><a id="__codelineno-32-12" name="__codelineno-32-12" href="#__codelineno-32-12"></a>      VAProfileMPEG2Simple            : VAEntrypointVLD
+</span><span id="__span-32-13"><a id="__codelineno-32-13" name="__codelineno-32-13" href="#__codelineno-32-13"></a>      VAProfileMPEG2Main              : VAEntrypointVLD
+</span><span id="__span-32-14"><a id="__codelineno-32-14" name="__codelineno-32-14" href="#__codelineno-32-14"></a>      VAProfileH264Main               : VAEntrypointVLD
+</span><span id="__span-32-15"><a id="__codelineno-32-15" name="__codelineno-32-15" href="#__codelineno-32-15"></a>      VAProfileH264Main               : VAEntrypointEncSliceLP
+</span><span id="__span-32-16"><a id="__codelineno-32-16" name="__codelineno-32-16" href="#__codelineno-32-16"></a>      VAProfileH264High               : VAEntrypointVLD
+</span><span id="__span-32-17"><a id="__codelineno-32-17" name="__codelineno-32-17" href="#__codelineno-32-17"></a>      VAProfileH264High               : VAEntrypointEncSliceLP
+</span><span id="__span-32-18"><a id="__codelineno-32-18" name="__codelineno-32-18" href="#__codelineno-32-18"></a>      VAProfileVC1Simple              : VAEntrypointVLD
+</span><span id="__span-32-19"><a id="__codelineno-32-19" name="__codelineno-32-19" href="#__codelineno-32-19"></a>      VAProfileVC1Main                : VAEntrypointVLD
+</span><span id="__span-32-20"><a id="__codelineno-32-20" name="__codelineno-32-20" href="#__codelineno-32-20"></a>      VAProfileVC1Advanced            : VAEntrypointVLD
+</span><span id="__span-32-21"><a id="__codelineno-32-21" name="__codelineno-32-21" href="#__codelineno-32-21"></a>      VAProfileJPEGBaseline           : VAEntrypointVLD
+</span><span id="__span-32-22"><a id="__codelineno-32-22" name="__codelineno-32-22" href="#__codelineno-32-22"></a>      VAProfileJPEGBaseline           : VAEntrypointEncPicture
+</span><span id="__span-32-23"><a id="__codelineno-32-23" name="__codelineno-32-23" href="#__codelineno-32-23"></a>      VAProfileH264ConstrainedBaseline: VAEntrypointVLD
+</span><span id="__span-32-24"><a id="__codelineno-32-24" name="__codelineno-32-24" href="#__codelineno-32-24"></a>      VAProfileH264ConstrainedBaseline: VAEntrypointEncSliceLP
+</span><span id="__span-32-25"><a id="__codelineno-32-25" name="__codelineno-32-25" href="#__codelineno-32-25"></a>      VAProfileVP8Version0_3          : VAEntrypointVLD
+</span><span id="__span-32-26"><a id="__codelineno-32-26" name="__codelineno-32-26" href="#__codelineno-32-26"></a>      VAProfileHEVCMain               : VAEntrypointVLD
+</span><span id="__span-32-27"><a id="__codelineno-32-27" name="__codelineno-32-27" href="#__codelineno-32-27"></a>      VAProfileHEVCMain               : VAEntrypointEncSliceLP
+</span><span id="__span-32-28"><a id="__codelineno-32-28" name="__codelineno-32-28" href="#__codelineno-32-28"></a>      VAProfileHEVCMain10             : VAEntrypointVLD
+</span><span id="__span-32-29"><a id="__codelineno-32-29" name="__codelineno-32-29" href="#__codelineno-32-29"></a>      VAProfileHEVCMain10             : VAEntrypointEncSliceLP
+</span><span id="__span-32-30"><a id="__codelineno-32-30" name="__codelineno-32-30" href="#__codelineno-32-30"></a>      VAProfileVP9Profile0            : VAEntrypointVLD
+</span><span id="__span-32-31"><a id="__codelineno-32-31" name="__codelineno-32-31" href="#__codelineno-32-31"></a>      VAProfileVP9Profile0            : VAEntrypointEncSliceLP
+</span><span id="__span-32-32"><a id="__codelineno-32-32" name="__codelineno-32-32" href="#__codelineno-32-32"></a>      VAProfileVP9Profile1            : VAEntrypointVLD
+</span><span id="__span-32-33"><a id="__codelineno-32-33" name="__codelineno-32-33" href="#__codelineno-32-33"></a>      VAProfileVP9Profile1            : VAEntrypointEncSliceLP
+</span><span id="__span-32-34"><a id="__codelineno-32-34" name="__codelineno-32-34" href="#__codelineno-32-34"></a>      VAProfileVP9Profile2            : VAEntrypointVLD
+</span><span id="__span-32-35"><a id="__codelineno-32-35" name="__codelineno-32-35" href="#__codelineno-32-35"></a>      VAProfileVP9Profile2            : VAEntrypointEncSliceLP
+</span><span id="__span-32-36"><a id="__codelineno-32-36" name="__codelineno-32-36" href="#__codelineno-32-36"></a>      VAProfileVP9Profile3            : VAEntrypointVLD
+</span><span id="__span-32-37"><a id="__codelineno-32-37" name="__codelineno-32-37" href="#__codelineno-32-37"></a>      VAProfileVP9Profile3            : VAEntrypointEncSliceLP
+</span><span id="__span-32-38"><a id="__codelineno-32-38" name="__codelineno-32-38" href="#__codelineno-32-38"></a>      VAProfileHEVCMain422_10         : VAEntrypointVLD
+</span><span id="__span-32-39"><a id="__codelineno-32-39" name="__codelineno-32-39" href="#__codelineno-32-39"></a>      VAProfileHEVCMain444            : VAEntrypointVLD
+</span><span id="__span-32-40"><a id="__codelineno-32-40" name="__codelineno-32-40" href="#__codelineno-32-40"></a>      VAProfileHEVCMain444            : VAEntrypointEncSliceLP
+</span><span id="__span-32-41"><a id="__codelineno-32-41" name="__codelineno-32-41" href="#__codelineno-32-41"></a>      VAProfileHEVCMain444_10         : VAEntrypointVLD
+</span><span id="__span-32-42"><a id="__codelineno-32-42" name="__codelineno-32-42" href="#__codelineno-32-42"></a>      VAProfileHEVCMain444_10         : VAEntrypointEncSliceLP
+</span></code></pre></div>
+<h4 id="其它选项">其它选项<a class="headerlink" href="#其它选项" title="Permanent link">&para;</a></h4>
+<p><strong>反交错时使帧率翻倍</strong></p>
+<blockquote>
+<p>此设置使用去隔行时的场频，通常称为 Bob 去隔行，它将视频的帧频加倍，以提供完整的运动效果，就像在电视上观看隔行视频时看到的那样。</p>
+</blockquote>
+<p><strong>允许实时提取字幕</strong>：建议关闭</p>
+<blockquote>
+<p>为避免视频转码，可以从视频中提取内置的字幕，并以纯文本的形式发送给客户端。在某些系统中这个提取的进程可能会花费较长时间并导致视频播放出现卡顿。如果禁用这个选项，当内置字幕不能被客户端设备原生支持时，字幕将通过视频转码被烧录进视频中。</p>
+</blockquote>
+<ul>
+<li>不明白其中内置字幕不能被客户端支持是什么意思。但是如果开启改选项，阿里云的视频播放过程无法显示字幕（提取速度太慢），一直显示提取元数据</li>
+<li>据说还可能导致：播放 nas 视频且视频很大时，需要把视频读取一遍，导致会卡很长一段时间才能开始播放</li>
+</ul>
+<p><strong>限制转码速度</strong>：建议开启</p>
+<blockquote>
+<p>当转码或者再封装的进度距离当前播放进度足够远时，暂停这个过程以减少资源消耗。当观看视频时不经常调整播放进度的情况下，这个功能将非常有用。如果你遇到了播放问题，请关闭这个选项。</p>
+</blockquote>
+<p><strong>启用备用字体</strong>：解决中文字幕显示方框问题</p>
+<blockquote>
+<p>使用自定义的备用字体。这可以避免一些字幕渲染不正确的问题。</p>
+</blockquote>
+<h2 id="遇到的问题">遇到的问题<a class="headerlink" href="#遇到的问题" title="Permanent link">&para;</a></h2>
+<h3 id="开启-va-api-加速后播放报错">开启 va-api 加速后，播放报错<a class="headerlink" href="#开启-va-api-加速后播放报错" title="Permanent link">&para;</a></h3>
+<p>设置硬件加速 vaapi，但是播放显式不兼容的格式弹窗，通过查看 ffmpeg log，可以看到</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-33-1"><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a>[AVHWDeviceContext @ 0x562f58a85d40] No VA display found for device /dev/dri/renderD128.
+</span><span id="__span-33-2"><a id="__codelineno-33-2" name="__codelineno-33-2" href="#__codelineno-33-2"></a>Device creation failed: -22.
+</span><span id="__span-33-3"><a id="__codelineno-33-3" name="__codelineno-33-3" href="#__codelineno-33-3"></a>Failed to set value &#39;/dev/dri/renderD128&#39; for option &#39;vaapi_device&#39;: Invalid argument
+</span><span id="__span-33-4"><a id="__codelineno-33-4" name="__codelineno-33-4" href="#__codelineno-33-4"></a>Error parsing global options: Invalid argument
+</span></code></pre></div>
+<p><strong>均是由于/dev/dri 权限设置问题导致的</strong>，可以通过 group-add 参数解决。</p>
+<blockquote>
+<p>With the newer releases, you can the <a href="https://docs.docker.com/engine/reference/run/#additional-groups">group-add</a> docker parameter to get around the issue of /dev/dri/renderD128 needing "render" group membership in Ubuntu.
+If you use docker run, you can use the group name instead of the number(<code>--group-add=render</code>). In my /etc/group file, the group number for the render group is 122.</p>
+</blockquote>
+<ul>
+<li>docker<ul>
+<li>docker run: <code>--group-add="122"</code></li>
+<li>docker-compose: <code>group_add: "122"</code></li>
+</ul>
+</li>
+<li>lxc 需要设置 gpu 设备 gid</li>
+</ul>
+<p>参考：</p>
+<ul>
+<li>相同问题：<a href="https://github.com/linuxserver/docker-plex/issues/207">Incorrect permissions for /dev/dri · Issue #207</a></li>
+<li>相同问题：<a href="https://github.com/linuxserver/docker-jellyfin/issues/26">Hardware acceleration isn't working properly · Issue #26</a></li>
+<li>linuxserver docker 中的解决方法：<a href="https://github.com/linuxserver/docker-plex/issues/207">Incorrect permissions for /dev/dri · Issue #207</a></li>
+<li><a href="https://github.com/jellyfin/jellyfin/issues/2281">docker user permission for transcoding · Issue #2281 · jellyfin/jellyfin · GitHub</a></li>
+</ul>
+<h3 id="字幕乱码">字幕乱码<a class="headerlink" href="#字幕乱码" title="Permanent link">&para;</a></h3>
+<p>中文字幕显示方框，需要设置备用字体。
+在备用字体目录下放置字体 ttf 文件，框框消失。</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-34-1"><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a>root@ubuntu20 ➜  conf.d l /fonts
+</span><span id="__span-34-2"><a id="__codelineno-34-2" name="__codelineno-34-2" href="#__codelineno-34-2"></a>total 24M
+</span><span id="__span-34-3"><a id="__codelineno-34-3" name="__codelineno-34-3" href="#__codelineno-34-3"></a>-rw-rw-rw- 1 jellyfin jellyfin  12M Oct  8  2021 FZFSK.TTF
+</span><span id="__span-34-4"><a id="__codelineno-34-4" name="__codelineno-34-4" href="#__codelineno-34-4"></a>-rw-rw-rw- 1 jellyfin jellyfin 9.5M Nov 28  2017 FZHTK.TTF
+</span><span id="__span-34-5"><a id="__codelineno-34-5" name="__codelineno-34-5" href="#__codelineno-34-5"></a>-rw-rw-rw- 1 jellyfin jellyfin  14M Dec 21  2017 FZKTK.TTF
+</span><span id="__span-34-6"><a id="__codelineno-34-6" name="__codelineno-34-6" href="#__codelineno-34-6"></a>-rw-rw-rw- 1 jellyfin jellyfin 9.5M Nov 28  2017 FZSSK.TTF
+</span></code></pre></div>
+<p>控制台 -&gt; 播放 -&gt; 备用字体
+<img alt="" src="https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/picgo/20230304182031.png" /></p>
+<h3 id="播放-4k-120mbps-卡顿花屏">播放 4K 120Mbps 卡顿，花屏<a class="headerlink" href="#播放-4k-120mbps-卡顿花屏" title="Permanent link">&para;</a></h3>
+<p>上述视频通常都是 HEVC 编码，而一般浏览器均不支持 HEVC 编码（常见浏览器支持的编码：<a href="https://jellyfin.org/docs/general/clients/codec-support/">Codec Support | Jellyfin</a>），因此需要转码。</p>
+<p>而 4K -&gt; 4K 转码太费 gpu 性能。测试 rx550，选择 1080p 20Mbps 可以流畅播放（42fps）不花屏。而 1080p 60 和 40 都不行，并且都是 17fps。</p>
+<p>参考：
+<a href="https://github.com/jellyfin/jellyfin/issues/4338">Jellyfin web client can't play 4k HEVC 120Mbps movies by direct playing and can't play 1080p 60Mbps through transcoding this kind of movies in local storage that in the LAN Jellyfin docker server · Issue #4338 · jellyfin/jellyfin (github.com)</a></p>
+<h3 id="开启-hdr-色调映射后播放视频报错">开启 HDR 色调映射后播放视频报错<a class="headerlink" href="#开启-hdr-色调映射后播放视频报错" title="Permanent link">&para;</a></h3>
+<p>不同显卡对于色调映射的支持是不同的</p>
+<ul>
+<li>intel：VPP 色调映射，和基于 Opencl 和 Cuda 的色调映射</li>
+<li>nvidia：Cuda</li>
+<li>amd：opencl</li>
+</ul>
+<p>测试视频</p>
+<ul>
+<li>刀剑神域无夜星的咏叹调：4K HEVC SDR</li>
+<li>你的名字 2160p：4K HEVC HDR</li>
+<li>小黄人：4K HEVC HDR</li>
+</ul>
+<h3 id="媒体库中文框框">媒体库中文框框<a class="headerlink" href="#媒体库中文框框" title="Permanent link">&para;</a></h3>
+<p>虽然字幕已经解决了，但是 system 的 font 并不会使用
+<a href="https://github.com/jellyfin/jellyfin/issues/5636">Chinese library names are displayed as square · Issue #5636 · jellyfin/jellyfin (github.com)</a></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-35-1"><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a>jellyfin:
+</span><span id="__span-35-2"><a id="__codelineno-35-2" name="__codelineno-35-2" href="#__codelineno-35-2"></a>    volumes:
+</span><span id="__span-35-3"><a id="__codelineno-35-3" name="__codelineno-35-3" href="#__codelineno-35-3"></a>      - /usr/share/fonts:/usr/share/fonts
+</span><span id="__span-35-4"><a id="__codelineno-35-4" name="__codelineno-35-4" href="#__codelineno-35-4"></a>      - /usr/share/fontconfig:/usr/share/fontconfig
+</span></code></pre></div>
+<h3 id="syncplay">syncplay<a class="headerlink" href="#syncplay" title="Permanent link">&para;</a></h3>
+<p>nginx 反向代理导致 syncplay 不工作（添加到 group 后没有任何反映）<a href="https://www.reddit.com/r/jellyfin/comments/huj0i0/syncplay_how_to/?rdt=42140">Syncplay: how to? : r/jellyfin (reddit.com)</a></p>
+<p>问题出在 nginx 没有代理 websocket，使用官方提供的 nginx 配置文件即可。
+<a href="https://jellyfin.org/docs/general/networking/nginx/">Nginx | Jellyfin</a></p>
+<h3 id="failed-to-initialize-nvml-unknown-error">Failed to initialize NVML: Unknown Error<a class="headerlink" href="#failed-to-initialize-nvml-unknown-error" title="Permanent link">&para;</a></h3>
+<p><a href="https://github.com/NVIDIA/nvidia-docker/issues/1730">NOTICE: Containers losing access to GPUs with error: "Failed to initialize NVML: Unknown Error" · Issue #1730 · NVIDIA/nvidia-docker (github.com)</a></p>
+<p>后面发现问题还在
+记录一下正常时的 dev</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-36-1"><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a>I have no name!@ryzen:/$ ls /dev/
+</span><span id="__span-36-2"><a id="__codelineno-36-2" name="__codelineno-36-2" href="#__codelineno-36-2"></a>core  fd  full  mqueue  null  nvidia0  nvidiactl  nvidia-uvm  nvidia-uvm-tools  ptmx  pts  random  shm  stderr  stdin  stdout  tty  urandom  zero
+</span></code></pre></div>
+<h1 id="插件待续">插件（待续）<a class="headerlink" href="#插件待续" title="Permanent link">&para;</a></h1>
+<h1 id="其它">其它<a class="headerlink" href="#其它" title="Permanent link">&para;</a></h1>
+<h2 id="copy-stream-url">copy stream url<a class="headerlink" href="#copy-stream-url" title="Permanent link">&para;</a></h2>
+<p>可以用于 vrchat 等 video player。
+但是有泄露 session 的风险，有人提出是否要修复
+- logout 后就失效了
+<a href="https://github.com/jellyfin/jellyfin/issues/10808">Refactor "Copy Stream URL" to not leak the user's session API key · Issue #10808 · jellyfin/jellyfin (github.com)</a></p>
+<h2 id="遇到的问题_1">遇到的问题<a class="headerlink" href="#遇到的问题_1" title="Permanent link">&para;</a></h2>
+<h3 id="直接播放-h265-的方法">直接播放 h265 的方法<a class="headerlink" href="#直接播放-h265-的方法" title="Permanent link">&para;</a></h3>
+<p>windows、linux、mac 客户端：<a href="https://pypi.org/project/jellyfin-mpv-shim/">jellyfin-mpv-shim · PyPI</a></p>
+<ul>
+<li>利用 jellyfin 的投屏功能，将浏览器的播放转移到客户端上，任意格式不用转码</li>
+</ul>
+<h3 id="tmm-中文乱码">tmm 中文乱码<a class="headerlink" href="#tmm-中文乱码" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-37-1"><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a>wget https://mirrors.aliyun.com/alpine/edge/testing/x86_64/font-wqy-zenhei-0.9.45-r2.apk
+</span><span id="__span-37-2"><a id="__codelineno-37-2" name="__codelineno-37-2" href="#__codelineno-37-2"></a>apk add --allow-untrusted font-wqy-zenhei-0.9.45-r2.apk
+</span></code></pre></div>
+<p>但是修改了 compose，会删除原本容器，因此需要重新设置。
+永久办法，修改为第三方 docker 镜像<a href="https://github.com/dzhuang/tinymediamanager-docker">dzhuang/tinymediamanager-docker: A repository for creating a docker container including TinyMediaManager with GUI interface. (github.com)</a></p>
+<h3 id="显卡硬件转码-datasheet">显卡硬件转码 datasheet<a class="headerlink" href="#显卡硬件转码-datasheet" title="Permanent link">&para;</a></h3>
+<p><a href="https://developer.nvidia.com/video-encode-and-decode-gpu-support-matrix-new">Video Encode and Decode GPU Support Matrix | NVIDIA Developer</a>
+<a href="https://www.elpamsoft.com/?p=Plex-Hardware-Transcoding">nVidia Hardware Transcoding Calculator for Plex Estimates (elpamsoft.com)</a></p>
+<h3 id="无法扫描出视频">无法扫描出视频<a class="headerlink" href="#无法扫描出视频" title="Permanent link">&para;</a></h3>
+<p>原来 movie 格式内容</p>
+<p>添加的根路径（如 <code>/MediaLib/Disk1/WebDL/Jellyfin</code> ）下面可以有若干级子目录</p>
+<p>但是每个子目录同级不能有其它视频文件，否则就不会扫描子目录，日志也看不出东西。</p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+  
+
+
+
+      
+    </article>
+  </div>
+
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+        
+      
+      <nav class="md-footer__inner md-grid" aria-label="页脚" >
+        
+          
+          <a href="../2022-11-29-latex/" class="md-footer__link md-footer__link--prev" aria-label="上一页: latex">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                上一页
+              </span>
+              <div class="md-ellipsis">
+                latex
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../../../../../%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/2022/12/04/2022-12-04-%E5%AE%89%E5%8D%93%E5%88%B7%E6%9C%BA%E5%B9%B6%E5%AE%89%E8%A3%85linux/" class="md-footer__link md-footer__link--next" aria-label="下一页: 安卓刷机并安装 linux">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                下一页
+              </span>
+              <div class="md-ellipsis">
+                安卓刷机并安装 linux
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/TheRainstorm" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../../../..", "features": ["navigation.instant", "navigation.instant.progress", "navigation.tracking", "navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.footer", "content.code.copy", "toc.follow", "toc.integrate"], "search": "../../../../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
+    
+    
+      <script src="../../../../../assets/javascripts/bundle.081f42fc.min.js"></script>
+      
+        <script src="../../../../../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

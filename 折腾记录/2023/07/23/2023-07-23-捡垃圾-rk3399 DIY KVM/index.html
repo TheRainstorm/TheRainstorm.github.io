@@ -1,0 +1,2556 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="记录一些关于数学、计算机的知识，以及一些日常。">
+      
+      
+      
+        <link rel="canonical" href="https://yfy.cqu.ai/%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/2023/07/23/2023-07-23-%E6%8D%A1%E5%9E%83%E5%9C%BE-rk3399%20DIY%20KVM/">
+      
+      
+        <link rel="prev" href="../../../../../%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/2023/04/20/2023-04-20-%E5%85%B7%E4%BD%93%E6%95%B0%E5%AD%A6/">
+      
+      
+        <link rel="next" href="../../../../../%E5%8D%9A%E5%AE%A2/2023/09/01/2023-09-01-%E5%86%8D%E6%AC%A1%E7%90%86%E8%A7%A3Cache%E8%AE%BE%E8%AE%A1/">
+      
+      
+      <link rel="icon" href="../../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.25">
+    
+    
+      
+        <title>捡垃圾-rk3399 DIY KVM - Rain 的随笔</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../../assets/stylesheets/main.6543a935.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#开发板" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../../../../.." title="Rain 的随笔" class="md-header__button md-logo" aria-label="Rain 的随笔" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Rain 的随笔
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              捡垃圾-rk3399 DIY KVM
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+    
+  
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="../../../../.." class="md-tabs__link">
+        
+  
+    
+  
+  博客
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../about/" class="md-tabs__link">
+        
+  
+    
+  
+  关于
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../tags/" class="md-tabs__link">
+        
+  
+    
+  
+  标签
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../series/" class="md-tabs__link">
+        
+  
+    
+  
+  系列
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../tools/" class="md-tabs__link">
+        
+  
+    
+  
+  工具
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../archive/2024/" class="md-tabs__link">
+          
+  
+  归档
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../category/%E4%B8%AA%E4%BA%BA/" class="md-tabs__link">
+          
+  
+  分类
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" hidden>
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../../.." title="Rain 的随笔" class="md-nav__button md-logo" aria-label="Rain 的随笔" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Rain 的随笔
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+    
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      <a href="../../../../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    博客
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../about/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    关于
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../tags/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    标签
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../series/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    系列
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../tools/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    工具
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    归档
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            归档
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2024/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2024
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2023/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2023
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2022/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2022
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2021/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2021
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2020/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2020
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2019/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2019
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    分类
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            分类
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E4%B8%AA%E4%BA%BA/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    个人
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E5%8D%9A%E5%AE%A2/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    博客
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E5%8D%9A%E5%AE%A2--%E7%BD%91%E7%BB%9C/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    博客 &amp; 网络
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    学习笔记
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    折腾记录
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    课程笔记
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%85%B7/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    软件工具
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E9%98%85%E8%AF%BB/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    阅读
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+  <div class="md-content md-content--post" data-md-component="content">
+    <div class="md-sidebar md-sidebar--post" data-md-component="sidebar" data-md-type="navigation">
+      <div class="md-sidebar__scrollwrap">
+        <div class="md-sidebar__inner md-post">
+          <nav class="md-nav md-nav--primary">
+            <div class="md-post__back">
+              <div class="md-nav__title md-nav__container">
+                <a href="../../../../.." class="md-nav__link">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+                  <span class="md-ellipsis">
+                    回到主页
+                  </span>
+                </a>
+              </div>
+            </div>
+            
+            <ul class="md-post__meta md-nav__list">
+              <li class="md-nav__item md-nav__item--section">
+                <div class="md-post__title">
+                  <span class="md-ellipsis">
+                    元数据
+                  </span>
+                </div>
+                <nav class="md-nav">
+                  <ul class="md-nav__list">
+                    <li class="md-nav__item">
+                      <div class="md-nav__link">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 19H5V8h14m-3-7v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1V1m-1 11h-5v5h5v-5Z"/></svg>
+                        <time datetime="2023-07-23 10:49:00" class="md-ellipsis">2023年7月23日</time>
+                      </div>
+                    </li>
+                    
+                    
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 3v15h3V3H9m3 2 4 13 3-1-4-13-3 1M5 5v13h3V5H5M3 19v2h18v-2H3Z"/></svg>
+                          <span class="md-ellipsis">
+                            分类于
+                            
+                              <a href="../../../../../category/%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/">折腾记录</a></span>
+                        </div>
+                      </li>
+                    
+                    
+                      
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20a8 8 0 0 0 8-8 8 8 0 0 0-8-8 8 8 0 0 0-8 8 8 8 0 0 0 8 8m0-18a10 10 0 0 1 10 10 10 10 0 0 1-10 10C6.47 22 2 17.5 2 12A10 10 0 0 1 12 2m.5 5v5.25l4.5 2.67-.75 1.23L11 13V7h1.5Z"/></svg>
+                          <span class="md-ellipsis">
+                            
+                              需要 30 分钟阅读时间
+                            
+                          </span>
+                        </div>
+                      </li>
+                    
+                  </ul>
+                </nav>
+              </li>
+            </ul>
+          </nav>
+          
+            
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#开发板" class="md-nav__link">
+    <span class="md-ellipsis">
+      开发板
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="开发板">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rk3399-硬件资源" class="md-nav__link">
+    <span class="md-ellipsis">
+      rk3399 硬件资源
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#已知的开发板及资料" class="md-nav__link">
+    <span class="md-ellipsis">
+      已知的开发板及资料
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="已知的开发板及资料">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#firefly" class="md-nav__link">
+    <span class="md-ellipsis">
+      Firefly
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#king3399" class="md-nav__link">
+    <span class="md-ellipsis">
+      king3399
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tn3399_v3" class="md-nav__link">
+    <span class="md-ellipsis">
+      tn3399_v3
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#其它" class="md-nav__link">
+    <span class="md-ellipsis">
+      其它
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#方案讨论" class="md-nav__link">
+    <span class="md-ellipsis">
+      方案讨论
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="方案讨论">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#基本方案" class="md-nav__link">
+    <span class="md-ellipsis">
+      基本方案
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#arm-kvm" class="md-nav__link">
+    <span class="md-ellipsis">
+      ARM-KVM
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#基于-armbian-的-pi-kvm" class="md-nav__link">
+    <span class="md-ellipsis">
+      基于 Armbian 的 PI-KVM
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#king3399-刷机" class="md-nav__link">
+    <span class="md-ellipsis">
+      king3399 刷机
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="king3399 刷机">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#教程链接" class="md-nav__link">
+    <span class="md-ellipsis">
+      教程链接
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#刷原厂镜像-vs-第三方" class="md-nav__link">
+    <span class="md-ellipsis">
+      刷原厂镜像 vs 第三方
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#刷机方法" class="md-nav__link">
+    <span class="md-ellipsis">
+      刷机方法
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="刷机方法">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#基本知识" class="md-nav__link">
+    <span class="md-ellipsis">
+      基本知识
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="基本知识">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#镜像文件" class="md-nav__link">
+    <span class="md-ellipsis">
+      镜像文件
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#boot-rom" class="md-nav__link">
+    <span class="md-ellipsis">
+      boot ROM
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#刷入介质" class="md-nav__link">
+    <span class="md-ellipsis">
+      刷入介质
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rkdevtool-使用" class="md-nav__link">
+    <span class="md-ellipsis">
+      RKDevTool 使用
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rk3399-启动过程探明" class="md-nav__link">
+    <span class="md-ellipsis">
+      RK3399 启动过程探明
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="RK3399 启动过程探明">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bootflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      bootflow
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#armbian" class="md-nav__link">
+    <span class="md-ellipsis">
+      Armbian
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Armbian">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#介绍" class="md-nav__link">
+    <span class="md-ellipsis">
+      介绍
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#amlogic-s9xxx-armbian-项目" class="md-nav__link">
+    <span class="md-ellipsis">
+      amlogic-s9xxx-armbian 项目
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#使用" class="md-nav__link">
+    <span class="md-ellipsis">
+      使用
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#armbian-pi-kvm-安装" class="md-nav__link">
+    <span class="md-ellipsis">
+      Armbian PI-KVM 安装
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Armbian PI-KVM 安装">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#遇到的问题" class="md-nav__link">
+    <span class="md-ellipsis">
+      遇到的问题
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="遇到的问题">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#kvm-没有画面" class="md-nav__link">
+    <span class="md-ellipsis">
+      KVM 没有画面
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#键盘不工作" class="md-nav__link">
+    <span class="md-ellipsis">
+      键盘不工作
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#usb" class="md-nav__link">
+    <span class="md-ellipsis">
+      USB
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#采集卡" class="md-nav__link">
+    <span class="md-ellipsis">
+      采集卡
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="采集卡">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ms2109" class="md-nav__link">
+    <span class="md-ellipsis">
+      ms2109
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ms2130" class="md-nav__link">
+    <span class="md-ellipsis">
+      ms2130
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#使用-ustream-测试是否能够使用" class="md-nav__link">
+    <span class="md-ellipsis">
+      使用 ustream 测试是否能够使用
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#键盘问题" class="md-nav__link">
+    <span class="md-ellipsis">
+      键盘问题
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="键盘问题">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#usb30-ok" class="md-nav__link">
+    <span class="md-ellipsis">
+      usb3.0 ok
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bios-问题" class="md-nav__link">
+    <span class="md-ellipsis">
+      bios 问题
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pi-kvm-文档" class="md-nav__link">
+    <span class="md-ellipsis">
+      PI-KVM 文档
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="PI-KVM 文档">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mouse" class="md-nav__link">
+    <span class="md-ellipsis">
+      mouse
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#faq" class="md-nav__link">
+    <span class="md-ellipsis">
+      FAQ
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="FAQ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#can-i-use-pikvm-for-gaming" class="md-nav__link">
+    <span class="md-ellipsis">
+      Can I use PiKVM for gaming?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#can-i-use-pikvm-with-non-raspberry-pi-boards-orange-nano-etc" class="md-nav__link">
+    <span class="md-ellipsis">
+      Can I use PiKVM with non-Raspberry Pi boards (Orange, Nano, etc)?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#video-problem" class="md-nav__link">
+    <span class="md-ellipsis">
+      video problem
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#csi-bridge-vs-usb-dongle" class="md-nav__link">
+    <span class="md-ellipsis">
+      CSI bridge vs USB dongle
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#如何实现-atx-电源控制" class="md-nav__link">
+    <span class="md-ellipsis">
+      如何实现 ATX 电源控制
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#网络相关" class="md-nav__link">
+    <span class="md-ellipsis">
+      网络相关
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="网络相关">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#wg-quick-无法自启动" class="md-nav__link">
+    <span class="md-ellipsis">
+      wg-quick 无法自启动
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pi-kvm-x86" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pi-KVM x86
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+          
+        </div>
+      </div>
+    </div>
+    <article class="md-content__inner md-typeset">
+      
+        
+  
+  
+
+<nav class="md-tags" >
+  
+    
+    
+    
+      <a href="../../../../../tags/#kvm" class="md-tag">KVM</a>
+    
+  
+    
+    
+    
+      <a href="../../../../../tags/#rk3399" class="md-tag">rk3399</a>
+    
+  
+    
+    
+    
+      <a href="../../../../../tags/#armbian" class="md-tag">armbian</a>
+    
+  
+    
+    
+    
+      <a href="../../../../../tags/#设备" class="md-tag">设备</a>
+    
+  
+</nav>
+
+
+
+  <h1>捡垃圾-rk3399 DIY KVM</h1>
+
+<p>由于我的台式机承载了 NAS，做种，Jellyfin，博客，文件同步等功能，已然成为一台服务器，因此其可靠性非常重要。但是我还是经历过几次由于网络故障导致其无法访问的情形，此时则只能去实验室维护比较麻烦，因此需要一个 IPMI 的管理功能，使得网络出故障情况下也能远程访问。</p>
+<p>而家用 PC 主板很少有支持 IPMI 功能的，支持的板子一般都要 2000 元以上。因此需要一个成本低廉的方案，在网上搜索一阵后发现确实有基于树莓派 DIY 的方案，并且有一个比较大的开源项目 PI-KVM。</p>
+<p>然而由于树莓派 400-500 昂贵的价格，使得 DIY 的成本仍然很高。直到我看到使用普通 arm 板子的方案。甚至可以使用 40 元的电视盒子。因此价格完全可以保证在 200 元以内，我觉的是一个可以接受的方案。</p>
+<p>最后成本</p>
+<ul>
+<li>king3399 开发板：咸鱼 120</li>
+<li>ms2130 USB 采集卡，支持 1080p 60 帧：淘宝 60</li>
+</ul>
+<p><img alt="KVM-bios.jpg" src="https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/KVM-bios.jpg" /></p>
+<!-- more -->
+
+<h2 id="开发板">开发板<a class="headerlink" href="#开发板" title="Permanent link">&para;</a></h2>
+<p>RK3399 是 Rockchip（瑞芯微）出的一款 SoC，在此基础上，许多开发板厂商设计了自己的开发板。</p>
+<h3 id="rk3399-硬件资源">rk3399 硬件资源<a class="headerlink" href="#rk3399-硬件资源" title="Permanent link">&para;</a></h3>
+<p>主要特点</p>
+<ul>
+<li>网络：<ul>
+<li>千兆以太网</li>
+<li>支持 wifi+ 蓝牙</li>
+</ul>
+</li>
+<li>内部存储<ul>
+<li>BootROM(32KB)：支持从 SPI、eMMC、SD/MMC 接口启动</li>
+<li>Internal SRAM(200KB)：Support security and non-security access</li>
+</ul>
+</li>
+<li>片外存储<ul>
+<li>板载 eMMC(16G)</li>
+<li>支持 SD/MMC</li>
+</ul>
+</li>
+<li>两个 OTG usb 接口</li>
+<li>PCIe1.0 M.2 (Bkey)<ul>
+<li>Mini PCIe 为 LTE 模块专用接口，板载 SIM 卡座，实现 IOT 应用</li>
+</ul>
+</li>
+</ul>
+<p><img alt="" src="https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/picgo/20230125170545.png" /></p>
+<h3 id="已知的开发板及资料">已知的开发板及资料<a class="headerlink" href="#已知的开发板及资料" title="Permanent link">&para;</a></h3>
+<h4 id="firefly">Firefly<a class="headerlink" href="#firefly" title="Permanent link">&para;</a></h4>
+<p>Firefly：中山市天启智能科技有限公司于 2014 年创立的开源团队，致力于人工智能、智能硬件、嵌入式开发、系统开发、应用程序开发等研发，拥有开源系列产品、开源社区与网上商城。Firefly 开源产品包括核心板、行业主板、行业整机、集群服务器、开发套件、Station 等产品。</p>
+<p>资料最全的开发板，厂家有自己的网站，提供详细教程。
+<a href="https://wiki.t-firefly.com/zh_CN/Firefly-RK3399/01-bootmode.html">1. 介绍 — Firefly Wiki (t-firefly.com)</a></p>
+<h4 id="king3399">king3399<a class="headerlink" href="#king3399" title="Permanent link">&para;</a></h4>
+<p>容品深圳电子科技
+从咸鱼购买，卖家提供了原厂的详细文档，包含：SDK（适配的 buildroot, ubuntu, debian, Android 源码，以及编译方法），编译好的镜像，硬件 datasheet 等</p>
+<p><a href="http://www.rpdzkj.com/1703937-1703937_2520299.html">瑞芯微 King3399 扩展板 - 深圳荣品电子科技有限公司 (rpdzkj.com)</a></p>
+<h4 id="tn3399_v3">tn3399_v3<a class="headerlink" href="#tn3399_v3" title="Permanent link">&para;</a></h4>
+<p>深圳市天诺</p>
+<p>github 上有人折腾出的资料，也支持刷许多系统了：<a href="https://github.com/lanseyujie/tn3399_v3/">lanseyujie/tn3399_v3: TN3399_V3 开发板折腾记录 (github.com)</a></p>
+<h4 id="其它">其它<a class="headerlink" href="#其它" title="Permanent link">&para;</a></h4>
+<ul>
+<li>RK 平台资料收集：<a href="http://wiki.lightembedded.com/#!library/rk3399/common.md">Xianlee's Log (lightembedded.com)</a></li>
+</ul>
+<h2 id="方案讨论">方案讨论<a class="headerlink" href="#方案讨论" title="Permanent link">&para;</a></h2>
+<h3 id="基本方案">基本方案<a class="headerlink" href="#基本方案" title="Permanent link">&para;</a></h3>
+<p><a href="https://zhuanlan.zhihu.com/p/578602475">DIY 一个运维神器 Open IP-KVM - 知乎 (zhihu.com)</a>
+这种方案如何呢：<br />
+1.使用 CH9329+CH340 模拟鼠标键盘<br />
+2.HDMI-USB 视频采集卡获取图像<br />
+3.ARM 开发板安装 Linux 系统<br />
+4.GPIO 扩展板控制目标电脑的开关机引脚实现开关机<br />
+5.采用远程光驱镜像共享技术。客户端选择安装的光盘镜像，通过 IP-KVM 网络发送到开发板。开发板接收到后，通过 iSCSI 等网络协议，将该光盘镜像挂载为目标电脑的一块虚拟光盘。目标电脑可以对该虚拟光盘进行引导和安装操作</p>
+<h3 id="arm-kvm">ARM-KVM<a class="headerlink" href="#arm-kvm" title="Permanent link">&para;</a></h3>
+<p><a href="https://www.v2ex.com/t/932953">b 站看到 IPKVM 的一个方案，请教下怎么实现 - V2EX</a></p>
+<ul>
+<li><a href="https://www.bilibili.com/video/BV19V4y1t7zU/?vd_source=b01257db06b1514b2fb50663dd339833">「教程」廉价的运维神器 ArmKVM 安装与使用_哔哩哔哩_bilibili</a></li>
+<li><a href="https://armkvm.moeneko.xyz/docs/#/">ArmKVM 官方文档 (moeneko.xyz)</a></li>
+<li>B 站作者已经把它商业量产了，但是售价 330 起<ul>
+<li>CPU 是全志 H610，感觉什么都缩水了，除了板子是新的外，相比于自己买二手开发板 DIY 没有性价比。</li>
+<li>而且系统也不知道是什么，感觉可玩性比较差</li>
+</ul>
+</li>
+</ul>
+<h3 id="基于-armbian-的-pi-kvm">基于 Armbian 的 PI-KVM<a class="headerlink" href="#基于-armbian-的-pi-kvm" title="Permanent link">&para;</a></h3>
+<ul>
+<li>将 PI-KVM 移植到了 Armbian 系统上</li>
+<li><a href="https://www.bilibili.com/video/BV1pM4y1x7ce/?spm_id_from=333.1007.top_right_bar_window_history.content.click&amp;vd_source=b01257db06b1514b2fb50663dd339833">打造普通 PC 拥有服务器 IPMI 硬件级别的远程运维方案 PI KVM 硬件级远程控制_哔哩哔哩_bilibili</a><ul>
+<li>教程 <a href="https://github.com/toss-a/pikvm-armbian/blob/master/README-zh-CN.MD">https://github.com/toss-a/pikvm-armbian/blob/master/README-zh-CN.MD</a></li>
+</ul>
+</li>
+<li>作者的仓库：<a href="https://github.com/srepac/kvmd-armbian">srepac/kvmd-armbian: KVMD For Armbian Install Script (github.com)</a></li>
+</ul>
+<p>只需要开发板可以刷 Armbian 的镜像，硬件有支持 OTG 的 USB 接口即可。非常适合自己 DIY 的方案</p>
+<h2 id="king3399-刷机">king3399 刷机<a class="headerlink" href="#king3399-刷机" title="Permanent link">&para;</a></h2>
+<h3 id="教程链接">教程链接<a class="headerlink" href="#教程链接" title="Permanent link">&para;</a></h3>
+<p><a href="https://www.youtube.com/watch?v=8Z2DG-r6AzM">2022 年新鲜矿渣，荣品 king3399 Linux 刷机教程与性能测试 - YouTube</a>
+<a href="https://vpset.com/9.html">King3399/荣品3399刷机教程 - 心语博客 (vpset.com)</a></p>
+<h3 id="刷原厂镜像-vs-第三方">刷原厂镜像 vs 第三方<a class="headerlink" href="#刷原厂镜像-vs-第三方" title="Permanent link">&para;</a></h3>
+<p>开发板厂家提供的 SDK 包中会包含原厂镜像，像 Firefly 则可以从官网下载。
+刷原厂镜像：</p>
+<ul>
+<li>优点<ul>
+<li>经过厂家测试，比较稳定</li>
+<li>刷机比较容易</li>
+</ul>
+</li>
+<li>缺点<ul>
+<li>可能支持的内核版本比较低</li>
+<li>镜像选择性比较少。可能厂家只适配了 debian,ubuntu 镜像。</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>要支持 Armbian，openwrt 等其它操作系统需要自己移植编译，一般需要板子的 dtb，可以从原厂系统中提取。通常网上有大佬移植过了</li>
+<li>king3399 厂家提供了以下系统镜像<ul>
+<li>linux<ul>
+<li>ubuntu(18.04)</li>
+<li>debian(buster 10)</li>
+</ul>
+</li>
+<li>android: 7, 8, 10</li>
+</ul>
+</li>
+</ul>
+<h3 id="刷机方法">刷机方法<a class="headerlink" href="#刷机方法" title="Permanent link">&para;</a></h3>
+<p>Rockchip 平台刷机方法汇总：<a href="http://wiki.lightembedded.com/#!library/rkcommon/flash.md">Xianlee's Log (lightembedded.com)</a></p>
+<h4 id="基本知识">基本知识<a class="headerlink" href="#基本知识" title="Permanent link">&para;</a></h4>
+<h5 id="镜像文件"><strong>镜像文件</strong><a class="headerlink" href="#镜像文件" title="Permanent link">&para;</a></h5>
+<ul>
+<li>通常包含以下几部分<ul>
+<li><strong>bootloader</strong>（如 uboot）</li>
+<li>kernel（linux kernel）</li>
+<li>rootfs（ubuntu, debian 等不同发行版都是该部分不同）</li>
+</ul>
+</li>
+<li>并且各部分所处<strong>地址空间</strong>分区是 SoC 厂商分配好的。<ul>
+<li>对于开发板这种设备，CPU 启动时会从片上的一小块 boot ROM 启动，作为第 0 级引导。之后再从 eMMC, SD 卡等设备加载引导程序启动。因此镜像文件包含以上全部部分，只需要将镜像完整写入外部存储。计算机启动时便会从正确位置开始引导启动</li>
+<li>对于路由器刷 openwrt，CPU 通常从 flash 启动。因此刷系统时一般只会刷 flash 中 kernel + rootfs 分区。因为保留原厂 bootloader 可以保证之后可以通过原厂工具恢复原厂系统。同时 flash 中一些分区还包含网卡 MAC 地址等信息，因此不能修改。</li>
+</ul>
+</li>
+<li>buildroot 项目可以很方便的定制 bootloader, kernel, rootfs 这三部分，生成定制化的系统镜像</li>
+</ul>
+<h5 id="boot-rom">boot ROM<a class="headerlink" href="#boot-rom" title="Permanent link">&para;</a></h5>
+<ul>
+<li>开发板这种设备有片上 boot ROM 的好处就是，不用担心变砖。</li>
+</ul>
+<blockquote>
+<p>Firefly-RK3399 有灵活的启动方式。一般情况下，除非硬件损坏，Firefly-RK3399 开发板是不会变砖的。如果在升级过程中出现意外，bootloader 损坏，导致无法重新升级，此时仍可以进入 <code>MaskRom</code> 模式来修复。</p>
+</blockquote>
+<h5 id="刷入介质">刷入介质<a class="headerlink" href="#刷入介质" title="Permanent link">&para;</a></h5>
+<p>要看 SoC 支持直接从哪些位置启动，一般支持 SD/tf, eMMC。从其余存储介质启动可能需要先将 bootloader 写入板载存储，然后再将剩余镜像写入其它存储</p>
+<blockquote>
+<p>ROCK-5B 在主板上有一个 SPI 闪存，将引导加载程序安装到 SPI 闪存可以支持 SoC maskrom 模式不直接支持的其他启动介质（如 SATA、USB3 或 NVMe）
+<a href="https://github.com/ophub/amlogic-s9xxx-armbian/blob/main/build-armbian/documents/README.cn.md#8213-%E5%AE%89%E8%A3%85%E7%B3%BB%E7%BB%9F%E8%87%B3-nvme">https://github.com/ophub/amlogic-s9xxx-armbian/blob/main/build-armbian/documents/README.cn.md#8213-%E5%AE%89%E8%A3%85%E7%B3%BB%E7%BB%9F%E8%87%B3-nvme</a></p>
+</blockquote>
+<p>将镜像写入 SD 卡这种外部存储比较容易</p>
+<ul>
+<li><a href="https://rufus.ie/en/">Rufus - Create bootable USB drives the easy way</a></li>
+<li><a href="https://etcher.balena.io/">balenaEtcher - Flash OS images to SD cards &amp; USB drives</a></li>
+</ul>
+<p>但是要将镜像写入板载的 eMMC 存储则需要专门的工具</p>
+<ul>
+<li>一般这种板载存储都有官方开发工具可以直接写。比如 Rochchip 提供了 RKDevTool，通过 USB 连接上位机和开发板，开发板启动时，boot ROM 可以接受从 USB 获得 loader 启动，之后再从 USB 获得数据，最后写入 eMMC</li>
+<li>也可以买一个 USB-eMMC 的转接器，直接写<ul>
+<li>刷路由器时，我就买了一个写 flash 的工具。</li>
+</ul>
+</li>
+</ul>
+<h4 id="rkdevtool-使用">RKDevTool 使用<a class="headerlink" href="#rkdevtool-使用" title="Permanent link">&para;</a></h4>
+<p>几种启动模式</p>
+<ul>
+<li>Normal：Normal 模式就是正常的启动过程，各个组件依次加载，正常进入系统。</li>
+<li>Loader：在 Loader 模式下，bootloader 会进入升级状态，等待主机命令，用于固件升级等。</li>
+<li>MaskRom：MaskRom 模式用于 bootloader 损坏时的系统修复。<ul>
+<li>一般情况下是不用进入 <code>MaskRom 模式</code>的，只有在 bootloader 校验失败（读取不了 IDB 块，或 bootloader 损坏）的情况下，BootRom 代码 就会进入此模式。此时 BootRom 代码等待主机通过 USB 接口传送 bootloader 代码，加载并运行之。当板子变砖无法正常启动或升级程序时，也可以手动进入<code>MaskRom 模式</code>.</li>
+</ul>
+</li>
+</ul>
+<p>简单来说，如果 eMMC 上有好的 bootloader，则启动后按住板子上的 update 按键就会进入 loader 模式，等待从 USB 获得镜像升级
+没有的话，就会进入 Maskrom 模式，可以通过工具直接写整个 eMMC。不过此时上位机要提供两个文件</p>
+<ul>
+<li>loader 文件，boot rom 加载后引导</li>
+<li>要刷入 eMMC 的系统镜像</li>
+</ul>
+<p>板载 16G eMMC，写应该有 40MB/s，所以刷机速度还是很快的。</p>
+<p>踩坑经历</p>
+<ul>
+<li>想直接从原厂镜像升级为 armbian 镜像，发现选择镜像直接就报错误。<ul>
+<li>现在觉得是二者 bootloader 不一样，导致无法直接升级。</li>
+</ul>
+</li>
+<li>然后想通过 maskrom 模式，按地址 0 写入 armbian 镜像即可，结果不行。<ul>
+<li>原来是需要额外一个 loader 文件，该文件在 armbian 的 github 仓库中有</li>
+<li>我的 gihtub issue<a href="https://github.com/ophub/amlogic-s9xxx-armbian/issues/1562">瑞芯微开发工具加载固件失败 · Issue #1562 · ophub/amlogic-s9xxx-armbian (github.com)</a></li>
+</ul>
+</li>
+</ul>
+<h3 id="rk3399-启动过程探明">RK3399 启动过程探明<a class="headerlink" href="#rk3399-启动过程探明" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Rockchip 官方文档：<a href="https://opensource.rock-chips.com/wiki_Boot_option">Boot option - Rockchip open source Document (rock-chips.com)</a></li>
+</ul>
+<p>ATF：<a href="https://www.cnblogs.com/arnoldlu/p/14175126.html">ARM Trusted Firmware 分析——启动、PSCI、OP-TEE 接口 - ArnoldLu - 博客园 (cnblogs.com)</a>)</p>
+<ul>
+<li>arm 处理器有这个功能，涉及 ARM 特权级如 ELF0（普通应用）, ELF1（kernel）,ELF2(hypervisor)</li>
+<li>主要涉及到 BL1(bootrom) -&gt; BL2(pre-loader) -&gt; BL3x -&gt; uboot -&gt; kernel</li>
+<li>BL1 - AP Trusted ROM，一般为 BootRom。</li>
+<li>BL2 - <strong>Trusted Boot Firmware</strong>，一般为 Trusted Bootloader。</li>
+<li>BL31 - EL3 Runtime Firmware，一般为 SML，管理 SMC 执行处理和中断，运行在 secure monitor 中。</li>
+<li>BL32 - Secure-EL1 Payload，一般为 TEE OS Image。</li>
+<li>BL33 - <strong>Non-Trusted Firmware</strong>，一般为 uboot、linux kernel。</li>
+</ul>
+<p><img alt="" src="https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/20230822222531.png" /></p>
+<h4 id="bootflow">bootflow<a class="headerlink" href="#bootflow" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>+--------+----------------+----------+-------------+---------+
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>| Boot   | Terminology #1 | Actual   | Rockchip    | Image   |
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>| stage  |                | program  |  Image      | Location|
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>| number |                | name     |   Name      | (sector)|
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>+--------+----------------+----------+-------------+---------+
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>| 1      |  Primary       | ROM code | BootRom     |         |
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>|        |  Program       |          |             |         |
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>|        |  Loader        |          |             |         |
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>|        |                |          |             |         |
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>| 2      |  Secondary     | U-Boot   |idbloader.img| 0x40    | pre-loader
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>|        |  Program       | TPL/SPL  |             |         |
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>|        |  Loader (SPL)  |          |             |         |
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>|        |                |          |             |         |
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>| 3      |  -             | U-Boot   | u-boot.itb  | 0x4000  | including u-boot and atf
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>|        |                |          | uboot.img   |         | only used with miniloader
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>|        |                |          |             |         |
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>|        |                | ATF/TEE  | trust.img   | 0x6000  | only used with miniloader
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>|        |                |          |             |         |
+</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>| 4      |  -             | kernel   | boot.img    | 0x8000  |
+</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>|        |                |          |             |         |
+</span><span id="__span-0-21"><a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>| 5      |  -             | rootfs   | rootfs.img  | 0x40000 |
+</span><span id="__span-0-22"><a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>+--------+----------------+----------+-------------+---------+
+</span></code></pre></div>
+<p>Then when we talking about boot from eMMC/SD/U-Disk/net, they are in different concept:</p>
+<ul>
+<li>Stage 1 is always in boot rom, it loads stage 2 and may load stage 3(when SPL_BACK_TO_BROM option enabled).</li>
+<li>Boot from SPI flash means firmware for stage 2 and 3(SPL and U-Boot only) in SPI flash and stage 4/5 in other place;</li>
+<li>Boot from eMMC means all the firmware(including stage 2, 3, 4, 5) in eMMC;</li>
+<li>Boot from SD card means all the firmware(including stage 2, 3, 4, 5) in SD card;</li>
+<li>Boot from U-Disk means firmware for stage 4 and 5(not including SPL and U-Boot) in Disk, optionally only including stage 5;</li>
+<li>Boot from net/tftp means firmeware for stage 4 and 5(not including SPL and U-Boot) on the network;</li>
+</ul>
+<p>Boot Flow 1 is typical Rockchip boot flow with Rockchip miniloader;<br />
+Boot Flow 2 is used for most SoCs with U-Boot TPL for ddr init and SPL for trust(ATF/OP-TEE) load and run into next stage;</p>
+<p><img alt="rockchip boot" src="https://opensource.rock-chips.com/images/thumb/c/cd/Rockchip_bootflow20181122.jpg/1342px-Rockchip_bootflow20181122.jpg" /></p>
+<h2 id="armbian">Armbian<a class="headerlink" href="#armbian" title="Permanent link">&para;</a></h2>
+<h3 id="介绍">介绍<a class="headerlink" href="#介绍" title="Permanent link">&para;</a></h3>
+<p><a href="https://www.armbian.com/">Armbian</a>是兼容 debian 的专门针对各种 arm 开发板进行优化维护的发行版。由于更新比较即时，因此甚至可能比原厂镜像更加稳定。</p>
+<p>和 Raspberry Pi OS, debian/arm对比：</p>
+<ul>
+<li><a href="https://linuxhint.com/raspberry-pi-os-vs-armbian-vs-debian-gnu-linux/">Compared: Raspberry Pi OS vs. Armbian vs. Debian GNU/Linux (linuxhint.com)</a></li>
+<li><a href="https://docs.armbian.com/#what-is-the-difference-between-armbian-and-debianubuntu">Armbian doc faq: what-is-the-difference-between-armbian-and-debianubuntu</a></li>
+</ul>
+<h3 id="amlogic-s9xxx-armbian-项目">amlogic-s9xxx-armbian 项目<a class="headerlink" href="#amlogic-s9xxx-armbian-项目" title="Permanent link">&para;</a></h3>
+<p>Armbian 官方并没有直接支持 king3399（是支持 Firefly 的）</p>
+<p><a href="https://github.com/ophub/amlogic-s9xxx-armbian">ophub/amlogic-s9xxx-armbian: Support for Armbian in Amlogic, Rockchip and Allwinner boxes. Support a311d, s922x, s905x3, s905x2, s912, s905d, s905x, s905w, s905, s905l, rk3588, rk3568, rk3399, rk3328, h6, etc. (github.com)</a></p>
+<ul>
+<li>适配 king3399 的提交：<a href="https://github.com/ophub/amlogic-s9xxx-armbian/pull/1080">Add support for king3399 by 13584452567 · Pull Request #1080 · ophub/amlogic-s9xxx-armbian (github.com)</a></li>
+</ul>
+<p>armbian 官方文档关于 rk3399 的一些注释，比如显卡只在 4.4 内核上正常工作<a href="https://docs.armbian.com/Hardware_Rockchip/">Rockchip - Armbian Documentation</a></p>
+<h3 id="使用">使用<a class="headerlink" href="#使用" title="Permanent link">&para;</a></h3>
+<ul>
+<li>官方文档很全了：<a href="https://docs.armbian.com/">Armbian Documentation</a></li>
+<li>network：<a href="https://www.xmodulo.com/switch-from-networkmanager-to-systemd-networkd.html">How to switch from Network Manager to systemd-networkd on Linux (xmodulo.com)</a></li>
+</ul>
+<p>连接 wifi 的简单方法</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>armbian-config   # 配置整个系统，甚至可以编辑dts
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>nmtui
+</span></code></pre></div>
+<h2 id="armbian-pi-kvm-安装">Armbian PI-KVM 安装<a class="headerlink" href="#armbian-pi-kvm-安装" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="https://www.bilibili.com/video/BV1pM4y1x7ce/?spm_id_from=333.1007.top_right_bar_window_history.content.click&amp;vd_source=b01257db06b1514b2fb50663dd339833">打造普通 PC 拥有服务器 IPMI 硬件级别的远程运维方案 PI KVM 硬件级远程控制_哔哩哔哩_bilibili</a><ul>
+<li>教程 <a href="https://github.com/toss-a/pikvm-armbian/blob/master/README-zh-CN.MD">https://github.com/toss-a/pikvm-armbian/blob/master/README-zh-CN.MD</a></li>
+</ul>
+</li>
+<li>作者的仓库：<a href="https://github.com/srepac/kvmd-armbian">srepac/kvmd-armbian: KVMD For Armbian Install Script (github.com)</a></li>
+</ul>
+<h3 id="遇到的问题">遇到的问题<a class="headerlink" href="#遇到的问题" title="Permanent link">&para;</a></h3>
+<h4 id="kvm-没有画面">KVM 没有画面<a class="headerlink" href="#kvm-没有画面" title="Permanent link">&para;</a></h4>
+<p>发现买的 ms2130 在 linux 下，usb3.0 无法工作。只能 usb 接口插入一半，使其成为 2.0 时，linux 下才能正常工作。</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>/usr/bin/ustreamer --device=/dev/kvmd-video --persistent --format=mjpeg --resolution=1280x720 --desired-fps=40 --drop-same-frames=30 --last-as-blank=0 --unix=/run/kvmd/ustreamer.sock --unix-rm --unix-mode=0660 --exit-on-parent-death --process-name-prefix=kvmd/streamer --notify-parent --no-log-colors --sink=kvmd::ustreamer::jpeg --sink-mode=0660 --slowdown
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>Jul 23 09:18:17 king3399 kvmd[382354]: kvmd.apps.kvmd.streamer           INFO --- =&gt; -- INFO  [36009.992    stream] -- Device fd=9 opened
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>Jul 23 09:18:17 king3399 kvmd[382354]: kvmd.apps.kvmd.streamer           INFO --- =&gt; -- ERROR [36009.992    stream] -- Video capture is not supported by device
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>Jul 23 09:18:17 king3399 kvmd[382354]: kvmd.apps.kvmd.streamer           INFO --- =&gt; -- INFO  [36009.992    stream] -- Device fd=9 closed
+</span></code></pre></div>
+<p>dmesg</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>[Sat Jul 22 23:18:09 2023] ehci-platform fe380000.usb: EHCI Host Controller
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>[Sat Jul 22 23:18:09 2023] ehci-platform fe380000.usb: new USB bus registered, assigned bus number 1
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>[Sat Jul 22 23:18:09 2023] ehci-platform fe380000.usb: irq 70, io mem 0xfe380000
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>[Sat Jul 22 23:18:09 2023] ehci-platform fe3c0000.usb: EHCI Host Controller
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>[Sat Jul 22 23:18:09 2023] ehci-platform fe3c0000.usb: new USB bus registered, assigned bus number 2
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>[Sat Jul 22 23:18:09 2023] ehci-platform fe3c0000.usb: irq 71, io mem 0xfe3c0000
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>[Sat Jul 22 23:18:09 2023] ehci-platform fe380000.usb: USB 2.0 started, EHCI 1.00
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>[Sat Jul 22 23:18:09 2023] usb usb1: New USB device found, idVendor=1d6b, idProduct=0002, bcdDevice= 6.01
+</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>[Sat Jul 22 23:18:09 2023] usb usb1: New USB device strings: Mfr=3, Product=2, SerialNumber=1
+</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>[Sat Jul 22 23:18:09 2023] usb usb1: Product: EHCI Host Controller
+</span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>[Sat Jul 22 23:18:09 2023] usb usb1: Manufacturer: Linux 6.1.39-ophub ehci_hcd
+</span><span id="__span-4-13"><a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>[Sat Jul 22 23:18:09 2023] usb usb1: SerialNumber: fe380000.usb
+</span><span id="__span-4-14"><a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a>[Sat Jul 22 23:18:09 2023] hub 1-0:1.0: USB hub found
+</span><span id="__span-4-15"><a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a>[Sat Jul 22 23:18:09 2023] hub 1-0:1.0: 1 port detected
+</span><span id="__span-4-16"><a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a>[Sat Jul 22 23:18:09 2023] usb usb2: New USB device found, idVendor=1d6b, idProduct=0002, bcdDevice= 6.01
+</span><span id="__span-4-17"><a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a>[Sat Jul 22 23:18:09 2023] usb usb2: New USB device strings: Mfr=3, Product=2, SerialNumber=1
+</span><span id="__span-4-18"><a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a>[Sat Jul 22 23:18:09 2023] usb usb2: Product: EHCI Host Controller
+</span><span id="__span-4-19"><a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a>[Sat Jul 22 23:18:09 2023] usb usb2: Manufacturer: Linux 6.1.39-ophub ehci_hcd
+</span><span id="__span-4-20"><a id="__codelineno-4-20" name="__codelineno-4-20" href="#__codelineno-4-20"></a>[Sat Jul 22 23:18:09 2023] usb usb2: SerialNumber: fe3c0000.usb
+</span><span id="__span-4-21"><a id="__codelineno-4-21" name="__codelineno-4-21" href="#__codelineno-4-21"></a>[Sat Jul 22 23:18:09 2023] hub 2-0:1.0: USB hub found
+</span><span id="__span-4-22"><a id="__codelineno-4-22" name="__codelineno-4-22" href="#__codelineno-4-22"></a>[Sat Jul 22 23:18:09 2023] hub 2-0:1.0: 1 port detected
+</span><span id="__span-4-23"><a id="__codelineno-4-23" name="__codelineno-4-23" href="#__codelineno-4-23"></a>
+</span><span id="__span-4-24"><a id="__codelineno-4-24" name="__codelineno-4-24" href="#__codelineno-4-24"></a>[Sat Jul 22 23:18:10 2023] ohci-platform fe3a0000.usb: Generic Platform OHCI controller
+</span><span id="__span-4-25"><a id="__codelineno-4-25" name="__codelineno-4-25" href="#__codelineno-4-25"></a>[Sat Jul 22 23:18:10 2023] ohci-platform fe3e0000.usb: Generic Platform OHCI controller
+</span><span id="__span-4-26"><a id="__codelineno-4-26" name="__codelineno-4-26" href="#__codelineno-4-26"></a>[Sat Jul 22 23:18:10 2023] ohci-platform fe3a0000.usb: new USB bus registered, assigned bus number 3
+</span><span id="__span-4-27"><a id="__codelineno-4-27" name="__codelineno-4-27" href="#__codelineno-4-27"></a>[Sat Jul 22 23:18:10 2023] ohci-platform fe3a0000.usb: irq 78, io mem 0xfe3a0000
+</span><span id="__span-4-28"><a id="__codelineno-4-28" name="__codelineno-4-28" href="#__codelineno-4-28"></a>[Sat Jul 22 23:18:10 2023] ohci-platform fe3e0000.usb: new USB bus registered, assigned bus number 4
+</span><span id="__span-4-29"><a id="__codelineno-4-29" name="__codelineno-4-29" href="#__codelineno-4-29"></a>[Sat Jul 22 23:18:10 2023] ohci-platform fe3e0000.usb: irq 79, io mem 0xfe3e0000
+</span><span id="__span-4-30"><a id="__codelineno-4-30" name="__codelineno-4-30" href="#__codelineno-4-30"></a>[Sat Jul 22 23:18:10 2023] OF: graph: no port node found in /i2c@ff3d0000/fusb302@22
+</span><span id="__span-4-31"><a id="__codelineno-4-31" name="__codelineno-4-31" href="#__codelineno-4-31"></a>
+</span><span id="__span-4-32"><a id="__codelineno-4-32" name="__codelineno-4-32" href="#__codelineno-4-32"></a>[Sat Jul 22 23:18:10 2023] usb usb3: New USB device found, idVendor=1d6b, idProduct=0001, bcdDevice= 6.01
+</span><span id="__span-4-33"><a id="__codelineno-4-33" name="__codelineno-4-33" href="#__codelineno-4-33"></a>[Sat Jul 22 23:18:10 2023] usb usb3: New USB device strings: Mfr=3, Product=2, SerialNumber=1
+</span><span id="__span-4-34"><a id="__codelineno-4-34" name="__codelineno-4-34" href="#__codelineno-4-34"></a>[Sat Jul 22 23:18:10 2023] usb usb3: Product: Generic Platform OHCI controller
+</span><span id="__span-4-35"><a id="__codelineno-4-35" name="__codelineno-4-35" href="#__codelineno-4-35"></a>[Sat Jul 22 23:18:10 2023] usb usb3: Manufacturer: Linux 6.1.39-ophub ohci_hcd
+</span><span id="__span-4-36"><a id="__codelineno-4-36" name="__codelineno-4-36" href="#__codelineno-4-36"></a>[Sat Jul 22 23:18:10 2023] usb usb3: SerialNumber: fe3a0000.usb
+</span><span id="__span-4-37"><a id="__codelineno-4-37" name="__codelineno-4-37" href="#__codelineno-4-37"></a>[Sat Jul 22 23:18:10 2023] hub 3-0:1.0: USB hub found
+</span><span id="__span-4-38"><a id="__codelineno-4-38" name="__codelineno-4-38" href="#__codelineno-4-38"></a>[Sat Jul 22 23:18:10 2023] hub 3-0:1.0: 1 port detected
+</span><span id="__span-4-39"><a id="__codelineno-4-39" name="__codelineno-4-39" href="#__codelineno-4-39"></a>[Sat Jul 22 23:18:10 2023] usb usb4: New USB device found, idVendor=1d6b, idProduct=0001, bcdDevice= 6.01
+</span><span id="__span-4-40"><a id="__codelineno-4-40" name="__codelineno-4-40" href="#__codelineno-4-40"></a>[Sat Jul 22 23:18:10 2023] usb usb4: New USB device strings: Mfr=3, Product=2, SerialNumber=1
+</span><span id="__span-4-41"><a id="__codelineno-4-41" name="__codelineno-4-41" href="#__codelineno-4-41"></a>[Sat Jul 22 23:18:10 2023] usb usb4: Product: Generic Platform OHCI controller
+</span><span id="__span-4-42"><a id="__codelineno-4-42" name="__codelineno-4-42" href="#__codelineno-4-42"></a>[Sat Jul 22 23:18:10 2023] usb usb4: Manufacturer: Linux 6.1.39-ophub ohci_hcd
+</span><span id="__span-4-43"><a id="__codelineno-4-43" name="__codelineno-4-43" href="#__codelineno-4-43"></a>[Sat Jul 22 23:18:10 2023] usb usb4: SerialNumber: fe3e0000.usb
+</span><span id="__span-4-44"><a id="__codelineno-4-44" name="__codelineno-4-44" href="#__codelineno-4-44"></a>[Sat Jul 22 23:18:10 2023] hub 4-0:1.0: USB hub found
+</span><span id="__span-4-45"><a id="__codelineno-4-45" name="__codelineno-4-45" href="#__codelineno-4-45"></a>[Sat Jul 22 23:18:10 2023] hub 4-0:1.0: 1 port detected
+</span></code></pre></div>
+<p>插在 tianyi 笔记本上，内核有识别到</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a># dmesg
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>[Sun Jul 23 01:19:21 2023] usb 1-4: new high-speed USB device number 6 using xhci_hcd
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>[Sun Jul 23 01:19:21 2023] usb 1-4: New USB device found, idVendor=345f, idProduct=2130, bcdDevice=21.00
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>[Sun Jul 23 01:19:21 2023] usb 1-4: New USB device strings: Mfr=1, Product=5, SerialNumber=7
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>[Sun Jul 23 01:19:21 2023] usb 1-4: Product: USB2 Video
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>[Sun Jul 23 01:19:21 2023] usb 1-4: Manufacturer: MACROSILICON
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>[Sun Jul 23 01:19:21 2023] usb 1-4: SerialNumber: 20210621
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>[Sun Jul 23 01:19:21 2023] usb 1-4: Found UVC 1.00 device USB2 Video (345f:2130)
+</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>[Sun Jul 23 01:19:21 2023] usbcore: registered new interface driver usbhid
+</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>[Sun Jul 23 01:19:21 2023] usbhid: USB HID core driver
+</span><span id="__span-5-11"><a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>[Sun Jul 23 01:19:21 2023] usbcore: registered new interface driver snd-usb-audio
+</span><span id="__span-5-12"><a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>[Sun Jul 23 01:19:21 2023] hid-generic 0003:345F:2130.0001: hiddev0,hidraw0: USB HID v1.10 Device [MACROSILICON USB2 Video] on usb-0000:00:14.0-4/input4
+</span><span id="__span-5-13"><a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a>
+</span><span id="__span-5-14"><a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a># lsusb
+</span><span id="__span-5-15"><a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a>...
+</span><span id="__span-5-16"><a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a>Bus 001 Device 006: ID 345f:2130 MACROSILICON USB2 Video
+</span></code></pre></div>
+<p><img alt="" src="https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/20230723093807.png" /></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>[Sun Jul 23 10:17:35 2023] configfs-gadget.kvmd gadget.0: End Point Request ERROR: -108
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>[Sun Jul 23 10:17:35 2023] configfs-gadget.kvmd gadget.0: End Point Request ERROR: -108
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>[Sun Jul 23 10:17:35 2023] configfs-gadget.kvmd gadget.0: End Point Request ERROR: -108
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>v4l2-ctl --list-devices
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>v4l2-ctl --list-formats-ext
+</span></code></pre></div>
+<h4 id="键盘不工作">键盘不工作<a class="headerlink" href="#键盘不工作" title="Permanent link">&para;</a></h4>
+<p>插拔时，ryzen 上 dmesg 看到以下信息。web 中键盘不工作</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>[Tue Oct  3 18:28:12 2023] usb usb3-port3: attempt power cycle
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>[Tue Oct  3 18:28:12 2023] usb 3-3: new full-speed USB device number 16 using xhci_hcd
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>[Tue Oct  3 18:28:12 2023] usb 3-3: Device not responding to setup address.
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>[Tue Oct  3 18:28:13 2023] usb 3-3: Device not responding to setup address.
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>[Tue Oct  3 18:28:13 2023] usb 3-3: device not accepting address 16, error -71
+</span></code></pre></div>
+<p>重启开发板后，正常</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>[Tue Oct  3 18:28:23 2023] usb 3-3: new high-speed USB device number 18 using xhci_hcd
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>[Tue Oct  3 18:28:23 2023] usb 3-3: New USB device found, idVendor=1d6b, idProduct=0104, bcdDevice= 1.00
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>[Tue Oct  3 18:28:23 2023] usb 3-3: New USB device strings: Mfr=1, Product=2, SerialNumber=3
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>[Tue Oct  3 18:28:23 2023] usb 3-3: Product: Composite KVM Device
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>[Tue Oct  3 18:28:23 2023] usb 3-3: Manufacturer: PiKVM
+</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>[Tue Oct  3 18:28:23 2023] usb 3-3: SerialNumber: CAFEBABE
+</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>[Tue Oct  3 18:28:23 2023] input: PiKVM Composite KVM Device as /devices/pci0000:00/0000:00:08.1/0000:0a:00.3/usb3/3-3/3-3:1.0/0003:1D6B:0104.0006/input/input7
+</span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>[Tue Oct  3 18:28:23 2023] hid-generic 0003:1D6B:0104.0006: input,hidraw0: USB HID v1.01 Keyboard [PiKVM Composite KVM Device] on usb-0000:0a:00.3-3/input0
+</span></code></pre></div>
+<h3 id="usb">USB<a class="headerlink" href="#usb" title="Permanent link">&para;</a></h3>
+<p>扩展坞上</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>[Wed Nov 29 15:52:01 2023] usb 1-1.4: new high-speed USB device number 10 using xhci_hcd
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>[Wed Nov 29 15:52:01 2023] usb 1-1.4: New USB device found, idVendor=345f, idProduct=2130, bcdDevice=21.00
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>[Wed Nov 29 15:52:01 2023] usb 1-1.4: New USB device strings: Mfr=1, Product=2, SerialNumber=7
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>[Wed Nov 29 15:52:01 2023] usb 1-1.4: Product: USB3.0 UHD
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>[Wed Nov 29 15:52:01 2023] usb 1-1.4: Manufacturer: MACROSILICON
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>[Wed Nov 29 15:52:01 2023] usb 1-1.4: SerialNumber: 20210621
+</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a>[Wed Nov 29 15:52:01 2023] usb 1-1.4: Found UVC 1.00 device USB3.0 UHD (345f:2130)
+</span><span id="__span-10-8"><a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a>[Wed Nov 29 15:52:01 2023] hid-generic 0003:345F:2130.000B: hiddev1,hidraw0: USB HID v1.10 Device [MACROSILICON USB3.0 UHD] on usb-0000:02:00.0-1.4/input4
+</span></code></pre></div>
+<p>背板 usb3.0</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>[Wed Nov 29 16:14:47 2023] usb 4-1: new SuperSpeed USB device number 3 using xhci_hcd
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>[Wed Nov 29 16:14:47 2023] usb 4-1: LPM exit latency is zeroed, disabling LPM.
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>[Wed Nov 29 16:14:47 2023] usb 4-1: New USB device found, idVendor=345f, idProduct=2130, bcdDevice=31.00
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>[Wed Nov 29 16:14:47 2023] usb 4-1: New USB device strings: Mfr=1, Product=2, SerialNumber=3
+</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>[Wed Nov 29 16:14:47 2023] usb 4-1: Product: USB3.0 UHD
+</span><span id="__span-11-6"><a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>[Wed Nov 29 16:14:47 2023] usb 4-1: Manufacturer: MACROSILICON
+</span><span id="__span-11-7"><a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a>[Wed Nov 29 16:14:47 2023] usb 4-1: SerialNumber: 20210623
+</span><span id="__span-11-8"><a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a>[Wed Nov 29 16:14:47 2023] usb 4-1: Found UVC 1.00 device USB3.0 UHD (345f:2130)
+</span><span id="__span-11-9"><a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a>[Wed Nov 29 16:14:47 2023] hid-generic 0003:345F:2130.000C: hiddev1,hidraw0: USB HID v1.10 Device [MACROSILICON USB3.0 UHD] on usb-0000:0a:00.3-1/input4
+</span></code></pre></div>
+<p>前面板 usb3.0 无反应</p>
+<h3 id="采集卡">采集卡<a class="headerlink" href="#采集卡" title="Permanent link">&para;</a></h3>
+<h4 id="ms2109">ms2109<a class="headerlink" href="#ms2109" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>[Tue Jul 25 14:54:59 2023] usb 1-3: new high-speed USB device number 8 using xhci_hcd
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>[Tue Jul 25 14:55:06 2023] usb 1-3: new high-speed USB device number 9 using xhci_hcd
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>[Tue Jul 25 14:55:06 2023] usb 1-3: New USB device found, idVendor=1de1, idProduct=f105, bcdDevice= 4.09
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>[Tue Jul 25 14:55:06 2023] usb 1-3: New USB device strings: Mfr=1, Product=2, SerialNumber=3
+</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>[Tue Jul 25 14:55:06 2023] usb 1-3: Product: Display capture-UVC05
+</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>[Tue Jul 25 14:55:06 2023] usb 1-3: Manufacturer: Actions Micro
+</span><span id="__span-12-7"><a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a>[Tue Jul 25 14:55:06 2023] usb 1-3: SerialNumber: -1877663977
+</span><span id="__span-12-8"><a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a>[Tue Jul 25 14:55:06 2023] usb 1-3: Found UVC 1.00 device Display capture-UVC05 (1de1:f105)
+</span><span id="__span-12-9"><a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a>[Tue Jul 25 14:55:06 2023] usb 1-3: Warning! Unlikely big volume range (=7248), cval-&gt;res is probably wrong.
+</span><span id="__span-12-10"><a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a>[Tue Jul 25 14:55:06 2023] usb 1-3: [3] FU [Mic Capture Volume] ch = 1, val = -7264/-16/1
+</span><span id="__span-12-11"><a id="__codelineno-12-11" name="__codelineno-12-11" href="#__codelineno-12-11"></a>
+</span><span id="__span-12-12"><a id="__codelineno-12-12" name="__codelineno-12-12" href="#__codelineno-12-12"></a>
+</span><span id="__span-12-13"><a id="__codelineno-12-13" name="__codelineno-12-13" href="#__codelineno-12-13"></a>➜  ~ v4l2-ctl --list-formats-ext
+</span><span id="__span-12-14"><a id="__codelineno-12-14" name="__codelineno-12-14" href="#__codelineno-12-14"></a>ioctl: VIDIOC_ENUM_FMT
+</span><span id="__span-12-15"><a id="__codelineno-12-15" name="__codelineno-12-15" href="#__codelineno-12-15"></a>        Type: Video Capture
+</span><span id="__span-12-16"><a id="__codelineno-12-16" name="__codelineno-12-16" href="#__codelineno-12-16"></a>
+</span><span id="__span-12-17"><a id="__codelineno-12-17" name="__codelineno-12-17" href="#__codelineno-12-17"></a>        [0]: &#39;MJPG&#39; (Motion-JPEG, compressed)
+</span><span id="__span-12-18"><a id="__codelineno-12-18" name="__codelineno-12-18" href="#__codelineno-12-18"></a>                Size: Discrete 1920x1080
+</span><span id="__span-12-19"><a id="__codelineno-12-19" name="__codelineno-12-19" href="#__codelineno-12-19"></a>                        Interval: Discrete 0.017s (60.000 fps)
+</span><span id="__span-12-20"><a id="__codelineno-12-20" name="__codelineno-12-20" href="#__codelineno-12-20"></a>                        Interval: Discrete 0.033s (30.000 fps)
+</span><span id="__span-12-21"><a id="__codelineno-12-21" name="__codelineno-12-21" href="#__codelineno-12-21"></a>                        Interval: Discrete 0.067s (15.000 fps)
+</span><span id="__span-12-22"><a id="__codelineno-12-22" name="__codelineno-12-22" href="#__codelineno-12-22"></a>                        Interval: Discrete 0.017s (60.000 fps)
+</span><span id="__span-12-23"><a id="__codelineno-12-23" name="__codelineno-12-23" href="#__codelineno-12-23"></a>                        Interval: Discrete 0.033s (30.000 fps)
+</span><span id="__span-12-24"><a id="__codelineno-12-24" name="__codelineno-12-24" href="#__codelineno-12-24"></a>                        Interval: Discrete 0.067s (15.000 fps)
+</span><span id="__span-12-25"><a id="__codelineno-12-25" name="__codelineno-12-25" href="#__codelineno-12-25"></a>                Size: Discrete 1360x768
+</span><span id="__span-12-26"><a id="__codelineno-12-26" name="__codelineno-12-26" href="#__codelineno-12-26"></a>                        Interval: Discrete 0.017s (60.000 fps)
+</span><span id="__span-12-27"><a id="__codelineno-12-27" name="__codelineno-12-27" href="#__codelineno-12-27"></a>                        Interval: Discrete 0.033s (30.000 fps)
+</span><span id="__span-12-28"><a id="__codelineno-12-28" name="__codelineno-12-28" href="#__codelineno-12-28"></a>                        Interval: Discrete 0.067s (15.000 fps)
+</span><span id="__span-12-29"><a id="__codelineno-12-29" name="__codelineno-12-29" href="#__codelineno-12-29"></a>                Size: Discrete 1280x1024
+</span><span id="__span-12-30"><a id="__codelineno-12-30" name="__codelineno-12-30" href="#__codelineno-12-30"></a>                        Interval: Discrete 0.017s (60.000 fps)
+</span><span id="__span-12-31"><a id="__codelineno-12-31" name="__codelineno-12-31" href="#__codelineno-12-31"></a>                        Interval: Discrete 0.033s (30.000 fps)
+</span><span id="__span-12-32"><a id="__codelineno-12-32" name="__codelineno-12-32" href="#__codelineno-12-32"></a>                        Interval: Discrete 0.067s (15.000 fps)
+</span><span id="__span-12-33"><a id="__codelineno-12-33" name="__codelineno-12-33" href="#__codelineno-12-33"></a>                Size: Discrete 1280x960
+</span><span id="__span-12-34"><a id="__codelineno-12-34" name="__codelineno-12-34" href="#__codelineno-12-34"></a>                        Interval: Discrete 0.017s (60.000 fps)
+</span><span id="__span-12-35"><a id="__codelineno-12-35" name="__codelineno-12-35" href="#__codelineno-12-35"></a>                        Interval: Discrete 0.033s (30.000 fps)
+</span><span id="__span-12-36"><a id="__codelineno-12-36" name="__codelineno-12-36" href="#__codelineno-12-36"></a>                        Interval: Discrete 0.067s (15.000 fps)
+</span><span id="__span-12-37"><a id="__codelineno-12-37" name="__codelineno-12-37" href="#__codelineno-12-37"></a>                Size: Discrete 1280x720
+</span><span id="__span-12-38"><a id="__codelineno-12-38" name="__codelineno-12-38" href="#__codelineno-12-38"></a>                        Interval: Discrete 0.017s (60.000 fps)
+</span><span id="__span-12-39"><a id="__codelineno-12-39" name="__codelineno-12-39" href="#__codelineno-12-39"></a>                        Interval: Discrete 0.033s (30.000 fps)
+</span><span id="__span-12-40"><a id="__codelineno-12-40" name="__codelineno-12-40" href="#__codelineno-12-40"></a>                        Interval: Discrete 0.067s (15.000 fps)
+</span><span id="__span-12-41"><a id="__codelineno-12-41" name="__codelineno-12-41" href="#__codelineno-12-41"></a>                Size: Discrete 1024x768
+</span><span id="__span-12-42"><a id="__codelineno-12-42" name="__codelineno-12-42" href="#__codelineno-12-42"></a>                        Interval: Discrete 0.017s (60.000 fps)
+</span><span id="__span-12-43"><a id="__codelineno-12-43" name="__codelineno-12-43" href="#__codelineno-12-43"></a>                        Interval: Discrete 0.033s (30.000 fps)
+</span><span id="__span-12-44"><a id="__codelineno-12-44" name="__codelineno-12-44" href="#__codelineno-12-44"></a>                        Interval: Discrete 0.067s (15.000 fps)
+</span><span id="__span-12-45"><a id="__codelineno-12-45" name="__codelineno-12-45" href="#__codelineno-12-45"></a>                Size: Discrete 800x600
+</span><span id="__span-12-46"><a id="__codelineno-12-46" name="__codelineno-12-46" href="#__codelineno-12-46"></a>                        Interval: Discrete 0.017s (60.000 fps)
+</span><span id="__span-12-47"><a id="__codelineno-12-47" name="__codelineno-12-47" href="#__codelineno-12-47"></a>                        Interval: Discrete 0.033s (30.000 fps)
+</span><span id="__span-12-48"><a id="__codelineno-12-48" name="__codelineno-12-48" href="#__codelineno-12-48"></a>                        Interval: Discrete 0.067s (15.000 fps)
+</span><span id="__span-12-49"><a id="__codelineno-12-49" name="__codelineno-12-49" href="#__codelineno-12-49"></a>                Size: Discrete 720x576
+</span><span id="__span-12-50"><a id="__codelineno-12-50" name="__codelineno-12-50" href="#__codelineno-12-50"></a>                        Interval: Discrete 0.017s (60.000 fps)
+</span><span id="__span-12-51"><a id="__codelineno-12-51" name="__codelineno-12-51" href="#__codelineno-12-51"></a>                        Interval: Discrete 0.033s (30.000 fps)
+</span><span id="__span-12-52"><a id="__codelineno-12-52" name="__codelineno-12-52" href="#__codelineno-12-52"></a>                        Interval: Discrete 0.067s (15.000 fps)
+</span><span id="__span-12-53"><a id="__codelineno-12-53" name="__codelineno-12-53" href="#__codelineno-12-53"></a>                Size: Discrete 720x480
+</span><span id="__span-12-54"><a id="__codelineno-12-54" name="__codelineno-12-54" href="#__codelineno-12-54"></a>                        Interval: Discrete 0.017s (60.000 fps)
+</span><span id="__span-12-55"><a id="__codelineno-12-55" name="__codelineno-12-55" href="#__codelineno-12-55"></a>                        Interval: Discrete 0.033s (30.000 fps)
+</span><span id="__span-12-56"><a id="__codelineno-12-56" name="__codelineno-12-56" href="#__codelineno-12-56"></a>                        Interval: Discrete 0.067s (15.000 fps)
+</span><span id="__span-12-57"><a id="__codelineno-12-57" name="__codelineno-12-57" href="#__codelineno-12-57"></a>                Size: Discrete 640x480
+</span><span id="__span-12-58"><a id="__codelineno-12-58" name="__codelineno-12-58" href="#__codelineno-12-58"></a>                        Interval: Discrete 0.017s (60.000 fps)
+</span><span id="__span-12-59"><a id="__codelineno-12-59" name="__codelineno-12-59" href="#__codelineno-12-59"></a>                        Interval: Discrete 0.033s (30.000 fps)
+</span><span id="__span-12-60"><a id="__codelineno-12-60" name="__codelineno-12-60" href="#__codelineno-12-60"></a>                        Interval: Discrete 0.067s (15.000 fps)
+</span><span id="__span-12-61"><a id="__codelineno-12-61" name="__codelineno-12-61" href="#__codelineno-12-61"></a>
+</span><span id="__span-12-62"><a id="__codelineno-12-62" name="__codelineno-12-62" href="#__codelineno-12-62"></a>
+</span><span id="__span-12-63"><a id="__codelineno-12-63" name="__codelineno-12-63" href="#__codelineno-12-63"></a>➜  ~ v4l2-ctl --all
+</span><span id="__span-12-64"><a id="__codelineno-12-64" name="__codelineno-12-64" href="#__codelineno-12-64"></a>Driver Info:
+</span><span id="__span-12-65"><a id="__codelineno-12-65" name="__codelineno-12-65" href="#__codelineno-12-65"></a>        Driver name      : uvcvideo
+</span><span id="__span-12-66"><a id="__codelineno-12-66" name="__codelineno-12-66" href="#__codelineno-12-66"></a>        Card type        : Display capture-UVC05: Display
+</span><span id="__span-12-67"><a id="__codelineno-12-67" name="__codelineno-12-67" href="#__codelineno-12-67"></a>        Bus info         : usb-0000:02:00.0-3
+</span><span id="__span-12-68"><a id="__codelineno-12-68" name="__codelineno-12-68" href="#__codelineno-12-68"></a>        Driver version   : 5.15.99
+</span><span id="__span-12-69"><a id="__codelineno-12-69" name="__codelineno-12-69" href="#__codelineno-12-69"></a>        Capabilities     : 0x84a00001
+</span><span id="__span-12-70"><a id="__codelineno-12-70" name="__codelineno-12-70" href="#__codelineno-12-70"></a>                Video Capture
+</span><span id="__span-12-71"><a id="__codelineno-12-71" name="__codelineno-12-71" href="#__codelineno-12-71"></a>                Metadata Capture
+</span><span id="__span-12-72"><a id="__codelineno-12-72" name="__codelineno-12-72" href="#__codelineno-12-72"></a>                Streaming
+</span><span id="__span-12-73"><a id="__codelineno-12-73" name="__codelineno-12-73" href="#__codelineno-12-73"></a>                Extended Pix Format
+</span><span id="__span-12-74"><a id="__codelineno-12-74" name="__codelineno-12-74" href="#__codelineno-12-74"></a>                Device Capabilities
+</span><span id="__span-12-75"><a id="__codelineno-12-75" name="__codelineno-12-75" href="#__codelineno-12-75"></a>        Device Caps      : 0x04200001
+</span><span id="__span-12-76"><a id="__codelineno-12-76" name="__codelineno-12-76" href="#__codelineno-12-76"></a>                Video Capture
+</span><span id="__span-12-77"><a id="__codelineno-12-77" name="__codelineno-12-77" href="#__codelineno-12-77"></a>                Streaming
+</span><span id="__span-12-78"><a id="__codelineno-12-78" name="__codelineno-12-78" href="#__codelineno-12-78"></a>                Extended Pix Format
+</span><span id="__span-12-79"><a id="__codelineno-12-79" name="__codelineno-12-79" href="#__codelineno-12-79"></a>Media Driver Info:
+</span><span id="__span-12-80"><a id="__codelineno-12-80" name="__codelineno-12-80" href="#__codelineno-12-80"></a>        Driver name      : uvcvideo
+</span><span id="__span-12-81"><a id="__codelineno-12-81" name="__codelineno-12-81" href="#__codelineno-12-81"></a>        Model            : Display capture-UVC05: Display
+</span><span id="__span-12-82"><a id="__codelineno-12-82" name="__codelineno-12-82" href="#__codelineno-12-82"></a>        Serial           : -1877663977
+</span><span id="__span-12-83"><a id="__codelineno-12-83" name="__codelineno-12-83" href="#__codelineno-12-83"></a>        Bus info         : usb-0000:02:00.0-3
+</span><span id="__span-12-84"><a id="__codelineno-12-84" name="__codelineno-12-84" href="#__codelineno-12-84"></a>        Media version    : 5.15.99
+</span><span id="__span-12-85"><a id="__codelineno-12-85" name="__codelineno-12-85" href="#__codelineno-12-85"></a>        Hardware revision: 0x00000409 (1033)
+</span><span id="__span-12-86"><a id="__codelineno-12-86" name="__codelineno-12-86" href="#__codelineno-12-86"></a>        Driver version   : 5.15.99
+</span><span id="__span-12-87"><a id="__codelineno-12-87" name="__codelineno-12-87" href="#__codelineno-12-87"></a>Interface Info:
+</span><span id="__span-12-88"><a id="__codelineno-12-88" name="__codelineno-12-88" href="#__codelineno-12-88"></a>        ID               : 0x03000002
+</span><span id="__span-12-89"><a id="__codelineno-12-89" name="__codelineno-12-89" href="#__codelineno-12-89"></a>        Type             : V4L Video
+</span><span id="__span-12-90"><a id="__codelineno-12-90" name="__codelineno-12-90" href="#__codelineno-12-90"></a>Entity Info:
+</span><span id="__span-12-91"><a id="__codelineno-12-91" name="__codelineno-12-91" href="#__codelineno-12-91"></a>        ID               : 0x00000001 (1)
+</span><span id="__span-12-92"><a id="__codelineno-12-92" name="__codelineno-12-92" href="#__codelineno-12-92"></a>        Name             : Display capture-UVC05: Display
+</span><span id="__span-12-93"><a id="__codelineno-12-93" name="__codelineno-12-93" href="#__codelineno-12-93"></a>        Function         : V4L2 I/O
+</span><span id="__span-12-94"><a id="__codelineno-12-94" name="__codelineno-12-94" href="#__codelineno-12-94"></a>        Flags            : default
+</span><span id="__span-12-95"><a id="__codelineno-12-95" name="__codelineno-12-95" href="#__codelineno-12-95"></a>        Pad 0x01000007   : 0: Sink
+</span><span id="__span-12-96"><a id="__codelineno-12-96" name="__codelineno-12-96" href="#__codelineno-12-96"></a>          Link 0x0200000d: from remote pad 0x100000a of entity &#39;Processing 2&#39; (Video Pixel Formatter): Data, Enabled, Immutable
+</span><span id="__span-12-97"><a id="__codelineno-12-97" name="__codelineno-12-97" href="#__codelineno-12-97"></a>Priority: 2
+</span><span id="__span-12-98"><a id="__codelineno-12-98" name="__codelineno-12-98" href="#__codelineno-12-98"></a>Video input : 0 (Camera 1: ok)
+</span><span id="__span-12-99"><a id="__codelineno-12-99" name="__codelineno-12-99" href="#__codelineno-12-99"></a>Format Video Capture:
+</span><span id="__span-12-100"><a id="__codelineno-12-100" name="__codelineno-12-100" href="#__codelineno-12-100"></a>        Width/Height      : 1920/1080
+</span><span id="__span-12-101"><a id="__codelineno-12-101" name="__codelineno-12-101" href="#__codelineno-12-101"></a>        Pixel Format      : &#39;MJPG&#39; (Motion-JPEG)
+</span><span id="__span-12-102"><a id="__codelineno-12-102" name="__codelineno-12-102" href="#__codelineno-12-102"></a>        Field             : None
+</span><span id="__span-12-103"><a id="__codelineno-12-103" name="__codelineno-12-103" href="#__codelineno-12-103"></a>        Bytes per Line    : 0
+</span><span id="__span-12-104"><a id="__codelineno-12-104" name="__codelineno-12-104" href="#__codelineno-12-104"></a>        Size Image        : 3110400
+</span><span id="__span-12-105"><a id="__codelineno-12-105" name="__codelineno-12-105" href="#__codelineno-12-105"></a>        Colorspace        : sRGB
+</span><span id="__span-12-106"><a id="__codelineno-12-106" name="__codelineno-12-106" href="#__codelineno-12-106"></a>        Transfer Function : Rec. 709
+</span><span id="__span-12-107"><a id="__codelineno-12-107" name="__codelineno-12-107" href="#__codelineno-12-107"></a>        YCbCr/HSV Encoding: ITU-R 601
+</span><span id="__span-12-108"><a id="__codelineno-12-108" name="__codelineno-12-108" href="#__codelineno-12-108"></a>        Quantization      : Default (maps to Full Range)
+</span><span id="__span-12-109"><a id="__codelineno-12-109" name="__codelineno-12-109" href="#__codelineno-12-109"></a>        Flags             :
+</span><span id="__span-12-110"><a id="__codelineno-12-110" name="__codelineno-12-110" href="#__codelineno-12-110"></a>Crop Capability Video Capture:
+</span><span id="__span-12-111"><a id="__codelineno-12-111" name="__codelineno-12-111" href="#__codelineno-12-111"></a>        Bounds      : Left 0, Top 0, Width 1920, Height 1080
+</span><span id="__span-12-112"><a id="__codelineno-12-112" name="__codelineno-12-112" href="#__codelineno-12-112"></a>        Default     : Left 0, Top 0, Width 1920, Height 1080
+</span><span id="__span-12-113"><a id="__codelineno-12-113" name="__codelineno-12-113" href="#__codelineno-12-113"></a>        Pixel Aspect: 1/1
+</span><span id="__span-12-114"><a id="__codelineno-12-114" name="__codelineno-12-114" href="#__codelineno-12-114"></a>Selection Video Capture: crop_default, Left 0, Top 0, Width 1920, Height 1080, Flags:
+</span><span id="__span-12-115"><a id="__codelineno-12-115" name="__codelineno-12-115" href="#__codelineno-12-115"></a>Selection Video Capture: crop_bounds, Left 0, Top 0, Width 1920, Height 1080, Flags:
+</span><span id="__span-12-116"><a id="__codelineno-12-116" name="__codelineno-12-116" href="#__codelineno-12-116"></a>Streaming Parameters Video Capture:
+</span><span id="__span-12-117"><a id="__codelineno-12-117" name="__codelineno-12-117" href="#__codelineno-12-117"></a>        Capabilities     : timeperframe
+</span><span id="__span-12-118"><a id="__codelineno-12-118" name="__codelineno-12-118" href="#__codelineno-12-118"></a>        Frames per second: 60.000 (60/1)
+</span><span id="__span-12-119"><a id="__codelineno-12-119" name="__codelineno-12-119" href="#__codelineno-12-119"></a>        Read buffers     : 0
+</span><span id="__span-12-120"><a id="__codelineno-12-120" name="__codelineno-12-120" href="#__codelineno-12-120"></a>
+</span><span id="__span-12-121"><a id="__codelineno-12-121" name="__codelineno-12-121" href="#__codelineno-12-121"></a>Camera Controls
+</span><span id="__span-12-122"><a id="__codelineno-12-122" name="__codelineno-12-122" href="#__codelineno-12-122"></a>
+</span><span id="__span-12-123"><a id="__codelineno-12-123" name="__codelineno-12-123" href="#__codelineno-12-123"></a>                  auto_exposure 0x009a0901 (menu)   : min=0 max=3 default=0 value=0 (Auto Mode)
+</span><span id="__span-12-124"><a id="__codelineno-12-124" name="__codelineno-12-124" href="#__codelineno-12-124"></a>                                0: Auto Mode
+</span></code></pre></div>
+<h4 id="ms2130">ms2130<a class="headerlink" href="#ms2130" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>➜  ~ sudo dmesg --color=always -W
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>[264156.578383] usb 2-3: new SuperSpeed USB device number 2 using xhci_hcd
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>[264156.614502] usb 2-3: LPM exit latency is zeroed, disabling LPM.
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>[264156.639256] usb 2-3: New USB device found, idVendor=345f, idProduct=2130, bcdDevice=31.00
+</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>[264156.641654] usb 2-3: New USB device strings: Mfr=1, Product=2, SerialNumber=3
+</span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>[264156.644154] usb 2-3: Product: USB3 Video
+</span><span id="__span-13-7"><a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a>[264156.646540] usb 2-3: Manufacturer: MACROSILICON
+</span><span id="__span-13-8"><a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a>[264156.648972] usb 2-3: SerialNumber: 20210623
+</span><span id="__span-13-9"><a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a>[264156.676445] usb 2-3: Found UVC 1.00 device USB3 Video (345f:2130)
+</span><span id="__span-13-10"><a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a>[264156.735960] hid-generic 0003:345F:2130.000F: hiddev0,hidraw0: USB HID v1.10 Device [MACROSILICON USB3 Video] on usb-0000:02:00.0-3/input4
+</span><span id="__span-13-11"><a id="__codelineno-13-11" name="__codelineno-13-11" href="#__codelineno-13-11"></a>
+</span><span id="__span-13-12"><a id="__codelineno-13-12" name="__codelineno-13-12" href="#__codelineno-13-12"></a>Bus 002 Device 002: ID 345f:2130 MACROSILICON USB3 Video
+</span><span id="__span-13-13"><a id="__codelineno-13-13" name="__codelineno-13-13" href="#__codelineno-13-13"></a>
+</span><span id="__span-13-14"><a id="__codelineno-13-14" name="__codelineno-13-14" href="#__codelineno-13-14"></a>➜  ~ v4l2-ctl --list-formats-ext
+</span><span id="__span-13-15"><a id="__codelineno-13-15" name="__codelineno-13-15" href="#__codelineno-13-15"></a>ioctl: VIDIOC_ENUM_FMT
+</span><span id="__span-13-16"><a id="__codelineno-13-16" name="__codelineno-13-16" href="#__codelineno-13-16"></a>        Type: Video Capture
+</span><span id="__span-13-17"><a id="__codelineno-13-17" name="__codelineno-13-17" href="#__codelineno-13-17"></a>
+</span><span id="__span-13-18"><a id="__codelineno-13-18" name="__codelineno-13-18" href="#__codelineno-13-18"></a>        [0]: &#39;YUYV&#39; (YUYV 4:2:2)
+</span><span id="__span-13-19"><a id="__codelineno-13-19" name="__codelineno-13-19" href="#__codelineno-13-19"></a>                Size: Discrete 3840x2160
+</span><span id="__span-13-20"><a id="__codelineno-13-20" name="__codelineno-13-20" href="#__codelineno-13-20"></a>                        Interval: Discrete 0.056s (18.000 fps)
+</span><span id="__span-13-21"><a id="__codelineno-13-21" name="__codelineno-13-21" href="#__codelineno-13-21"></a>                Size: Discrete 2560x1600
+</span><span id="__span-13-22"><a id="__codelineno-13-22" name="__codelineno-13-22" href="#__codelineno-13-22"></a>                        Interval: Discrete 0.020s (50.000 fps)
+</span><span id="__span-13-23"><a id="__codelineno-13-23" name="__codelineno-13-23" href="#__codelineno-13-23"></a>                        Interval: Discrete 0.033s (30.000 fps)
+</span><span id="__span-13-24"><a id="__codelineno-13-24" name="__codelineno-13-24" href="#__codelineno-13-24"></a>                        Interval: Discrete 0.050s (20.000 fps)
+</span><span id="__span-13-25"><a id="__codelineno-13-25" name="__codelineno-13-25" href="#__codelineno-13-25"></a>                        Interval: Discrete 0.100s (10.000 fps)
+</span><span id="__span-13-26"><a id="__codelineno-13-26" name="__codelineno-13-26" href="#__codelineno-13-26"></a>                Size: Discrete 2560x1440
+</span><span id="__span-13-27"><a id="__codelineno-13-27" name="__codelineno-13-27" href="#__codelineno-13-27"></a>                        Interval: Discrete 0.020s (50.000 fps)
+</span><span id="__span-13-28"><a id="__codelineno-13-28" name="__codelineno-13-28" href="#__codelineno-13-28"></a>                        Interval: Discrete 0.033s (30.000 fps)
+</span><span id="__span-13-29"><a id="__codelineno-13-29" name="__codelineno-13-29" href="#__codelineno-13-29"></a>                        Interval: Discrete 0.050s (20.000 fps)
+</span><span id="__span-13-30"><a id="__codelineno-13-30" name="__codelineno-13-30" href="#__codelineno-13-30"></a>                        Interval: Discrete 0.100s (10.000 fps)
+</span><span id="__span-13-31"><a id="__codelineno-13-31" name="__codelineno-13-31" href="#__codelineno-13-31"></a>                Size: Discrete 2048x1152
+</span><span id="__span-13-32"><a id="__codelineno-13-32" name="__codelineno-13-32" href="#__codelineno-13-32"></a>                        Interval: Discrete 0.017s (60.000 fps)
+</span><span id="__span-13-33"><a id="__codelineno-13-33" name="__codelineno-13-33" href="#__codelineno-13-33"></a>                        Interval: Discrete 0.020s (50.000 fps)
+</span><span id="__span-13-34"><a id="__codelineno-13-34" name="__codelineno-13-34" href="#__codelineno-13-34"></a>                        Interval: Discrete 0.033s (30.000 fps)
+</span><span id="__span-13-35"><a id="__codelineno-13-35" name="__codelineno-13-35" href="#__codelineno-13-35"></a>                        Interval: Discrete 0.050s (20.000 fps)
+</span><span id="__span-13-36"><a id="__codelineno-13-36" name="__codelineno-13-36" href="#__codelineno-13-36"></a>                        Interval: Discrete 0.100s (10.000 fps)
+</span><span id="__span-13-37"><a id="__codelineno-13-37" name="__codelineno-13-37" href="#__codelineno-13-37"></a>                Size: Discrete 2048x1080
+</span><span id="__span-13-38"><a id="__codelineno-13-38" name="__codelineno-13-38" href="#__codelineno-13-38"></a>                        Interval: Discrete 0.017s (60.000 fps)
+</span><span id="__span-13-39"><a id="__codelineno-13-39" name="__codelineno-13-39" href="#__codelineno-13-39"></a>                        Interval: Discrete 0.020s (50.000 fps)
+</span><span id="__span-13-40"><a id="__codelineno-13-40" name="__codelineno-13-40" href="#__codelineno-13-40"></a>                        Interval: Discrete 0.033s (30.000 fps)
+</span><span id="__span-13-41"><a id="__codelineno-13-41" name="__codelineno-13-41" href="#__codelineno-13-41"></a>                        Interval: Discrete 0.050s (20.000 fps)
+</span><span id="__span-13-42"><a id="__codelineno-13-42" name="__codelineno-13-42" href="#__codelineno-13-42"></a>                        Interval: Discrete 0.100s (10.000 fps)
+</span><span id="__span-13-43"><a id="__codelineno-13-43" name="__codelineno-13-43" href="#__codelineno-13-43"></a>                Size: Discrete 1920x2160
+</span><span id="__span-13-44"><a id="__codelineno-13-44" name="__codelineno-13-44" href="#__codelineno-13-44"></a>                        Interval: Discrete 0.017s (60.000 fps)
+</span><span id="__span-13-45"><a id="__codelineno-13-45" name="__codelineno-13-45" href="#__codelineno-13-45"></a>                        Interval: Discrete 0.020s (50.000 fps)
+</span><span id="__span-13-46"><a id="__codelineno-13-46" name="__codelineno-13-46" href="#__codelineno-13-46"></a>                        Interval: Discrete 0.033s (30.000 fps)
+</span><span id="__span-13-47"><a id="__codelineno-13-47" name="__codelineno-13-47" href="#__codelineno-13-47"></a>                        Interval: Discrete 0.050s (20.000 fps)
+</span><span id="__span-13-48"><a id="__codelineno-13-48" name="__codelineno-13-48" href="#__codelineno-13-48"></a>                        Interval: Discrete 0.100s (10.000 fps)
+</span><span id="__span-13-49"><a id="__codelineno-13-49" name="__codelineno-13-49" href="#__codelineno-13-49"></a>                Size: Discrete 1920x1200
+</span><span id="__span-13-50"><a id="__codelineno-13-50" name="__codelineno-13-50" href="#__codelineno-13-50"></a>                        Interval: Discrete 0.017s (60.000 fps)
+</span><span id="__span-13-51"><a id="__codelineno-13-51" name="__codelineno-13-51" href="#__codelineno-13-51"></a>                        Interval: Discrete 0.020s (50.000 fps)
+</span><span id="__span-13-52"><a id="__codelineno-13-52" name="__codelineno-13-52" href="#__codelineno-13-52"></a>                        Interval: Discrete 0.033s (30.000 fps)
+</span><span id="__span-13-53"><a id="__codelineno-13-53" name="__codelineno-13-53" href="#__codelineno-13-53"></a>                        Interval: Discrete 0.050s (20.000 fps)
+</span><span id="__span-13-54"><a id="__codelineno-13-54" name="__codelineno-13-54" href="#__codelineno-13-54"></a>                        Interval: Discrete 0.100s (10.000 fps)
+</span><span id="__span-13-55"><a id="__codelineno-13-55" name="__codelineno-13-55" href="#__codelineno-13-55"></a>                Size: Discrete 1920x1080
+</span><span id="__span-13-56"><a id="__codelineno-13-56" name="__codelineno-13-56" href="#__codelineno-13-56"></a>                        Interval: Discrete 0.017s (60.000 fps)
+</span><span id="__span-13-57"><a id="__codelineno-13-57" name="__codelineno-13-57" href="#__codelineno-13-57"></a>                        Interval: Discrete 0.020s (50.000 fps)
+</span><span id="__span-13-58"><a id="__codelineno-13-58" name="__codelineno-13-58" href="#__codelineno-13-58"></a>                        Interval: Discrete 0.033s (30.000 fps)
+</span><span id="__span-13-59"><a id="__codelineno-13-59" name="__codelineno-13-59" href="#__codelineno-13-59"></a>                        Interval: Discrete 0.050s (20.000 fps)
+</span><span id="__span-13-60"><a id="__codelineno-13-60" name="__codelineno-13-60" href="#__codelineno-13-60"></a>                        Interval: Discrete 0.100s (10.000 fps)
+</span><span id="__span-13-61"><a id="__codelineno-13-61" name="__codelineno-13-61" href="#__codelineno-13-61"></a>                Size: Discrete 1360x768
+</span><span id="__span-13-62"><a id="__codelineno-13-62" name="__codelineno-13-62" href="#__codelineno-13-62"></a>                        Interval: Discrete 0.017s (60.000 fps)
+</span><span id="__span-13-63"><a id="__codelineno-13-63" name="__codelineno-13-63" href="#__codelineno-13-63"></a>                        Interval: Discrete 0.020s (50.000 fps)
+</span><span id="__span-13-64"><a id="__codelineno-13-64" name="__codelineno-13-64" href="#__codelineno-13-64"></a>                        Interval: Discrete 0.033s (30.000 fps)
+</span><span id="__span-13-65"><a id="__codelineno-13-65" name="__codelineno-13-65" href="#__codelineno-13-65"></a>                        Interval: Discrete 0.050s (20.000 fps)
+</span><span id="__span-13-66"><a id="__codelineno-13-66" name="__codelineno-13-66" href="#__codelineno-13-66"></a>                        Interval: Discrete 0.100s (10.000 fps)
+</span><span id="__span-13-67"><a id="__codelineno-13-67" name="__codelineno-13-67" href="#__codelineno-13-67"></a>                Size: Discrete 1280x1024
+</span><span id="__span-13-68"><a id="__codelineno-13-68" name="__codelineno-13-68" href="#__codelineno-13-68"></a>                        Interval: Discrete 0.017s (60.000 fps)
+</span><span id="__span-13-69"><a id="__codelineno-13-69" name="__codelineno-13-69" href="#__codelineno-13-69"></a>                        Interval: Discrete 0.020s (50.000 fps)
+</span><span id="__span-13-70"><a id="__codelineno-13-70" name="__codelineno-13-70" href="#__codelineno-13-70"></a>                        Interval: Discrete 0.033s (30.000 fps)
+</span><span id="__span-13-71"><a id="__codelineno-13-71" name="__codelineno-13-71" href="#__codelineno-13-71"></a>                        Interval: Discrete 0.050s (20.000 fps)
+</span><span id="__span-13-72"><a id="__codelineno-13-72" name="__codelineno-13-72" href="#__codelineno-13-72"></a>                        Interval: Discrete 0.100s (10.000 fps)
+</span><span id="__span-13-73"><a id="__codelineno-13-73" name="__codelineno-13-73" href="#__codelineno-13-73"></a>                Size: Discrete 1280x960
+</span><span id="__span-13-74"><a id="__codelineno-13-74" name="__codelineno-13-74" href="#__codelineno-13-74"></a>                        Interval: Discrete 0.017s (60.000 fps)
+</span><span id="__span-13-75"><a id="__codelineno-13-75" name="__codelineno-13-75" href="#__codelineno-13-75"></a>                        Interval: Discrete 0.020s (50.000 fps)
+</span><span id="__span-13-76"><a id="__codelineno-13-76" name="__codelineno-13-76" href="#__codelineno-13-76"></a>                        Interval: Discrete 0.033s (30.000 fps)
+</span><span id="__span-13-77"><a id="__codelineno-13-77" name="__codelineno-13-77" href="#__codelineno-13-77"></a>                        Interval: Discrete 0.050s (20.000 fps)
+</span><span id="__span-13-78"><a id="__codelineno-13-78" name="__codelineno-13-78" href="#__codelineno-13-78"></a>                        Interval: Discrete 0.100s (10.000 fps)
+</span><span id="__span-13-79"><a id="__codelineno-13-79" name="__codelineno-13-79" href="#__codelineno-13-79"></a>                Size: Discrete 1280x720
+</span><span id="__span-13-80"><a id="__codelineno-13-80" name="__codelineno-13-80" href="#__codelineno-13-80"></a>                        Interval: Discrete 0.017s (60.000 fps)
+</span><span id="__span-13-81"><a id="__codelineno-13-81" name="__codelineno-13-81" href="#__codelineno-13-81"></a>                        Interval: Discrete 0.020s (50.000 fps)
+</span><span id="__span-13-82"><a id="__codelineno-13-82" name="__codelineno-13-82" href="#__codelineno-13-82"></a>                        Interval: Discrete 0.033s (30.000 fps)
+</span><span id="__span-13-83"><a id="__codelineno-13-83" name="__codelineno-13-83" href="#__codelineno-13-83"></a>                        Interval: Discrete 0.050s (20.000 fps)
+</span><span id="__span-13-84"><a id="__codelineno-13-84" name="__codelineno-13-84" href="#__codelineno-13-84"></a>                        Interval: Discrete 0.100s (10.000 fps)
+</span><span id="__span-13-85"><a id="__codelineno-13-85" name="__codelineno-13-85" href="#__codelineno-13-85"></a>                Size: Discrete 1024x768
+</span><span id="__span-13-86"><a id="__codelineno-13-86" name="__codelineno-13-86" href="#__codelineno-13-86"></a>                        Interval: Discrete 0.017s (60.000 fps)
+</span><span id="__span-13-87"><a id="__codelineno-13-87" name="__codelineno-13-87" href="#__codelineno-13-87"></a>                        Interval: Discrete 0.020s (50.000 fps)
+</span><span id="__span-13-88"><a id="__codelineno-13-88" name="__codelineno-13-88" href="#__codelineno-13-88"></a>                        Interval: Discrete 0.033s (30.000 fps)
+</span><span id="__span-13-89"><a id="__codelineno-13-89" name="__codelineno-13-89" href="#__codelineno-13-89"></a>                        Interval: Discrete 0.050s (20.000 fps)
+</span><span id="__span-13-90"><a id="__codelineno-13-90" name="__codelineno-13-90" href="#__codelineno-13-90"></a>                        Interval: Discrete 0.100s (10.000 fps)
+</span><span id="__span-13-91"><a id="__codelineno-13-91" name="__codelineno-13-91" href="#__codelineno-13-91"></a>                Size: Discrete 720x480
+</span><span id="__span-13-92"><a id="__codelineno-13-92" name="__codelineno-13-92" href="#__codelineno-13-92"></a>                        Interval: Discrete 0.017s (60.000 fps)
+</span><span id="__span-13-93"><a id="__codelineno-13-93" name="__codelineno-13-93" href="#__codelineno-13-93"></a>                        Interval: Discrete 0.020s (50.000 fps)
+</span><span id="__span-13-94"><a id="__codelineno-13-94" name="__codelineno-13-94" href="#__codelineno-13-94"></a>                        Interval: Discrete 0.033s (30.000 fps)
+</span><span id="__span-13-95"><a id="__codelineno-13-95" name="__codelineno-13-95" href="#__codelineno-13-95"></a>                        Interval: Discrete 0.050s (20.000 fps)
+</span><span id="__span-13-96"><a id="__codelineno-13-96" name="__codelineno-13-96" href="#__codelineno-13-96"></a>                        Interval: Discrete 0.100s (10.000 fps)
+</span><span id="__span-13-97"><a id="__codelineno-13-97" name="__codelineno-13-97" href="#__codelineno-13-97"></a>                Size: Discrete 640x480
+</span><span id="__span-13-98"><a id="__codelineno-13-98" name="__codelineno-13-98" href="#__codelineno-13-98"></a>                        Interval: Discrete 0.017s (60.000 fps)
+</span><span id="__span-13-99"><a id="__codelineno-13-99" name="__codelineno-13-99" href="#__codelineno-13-99"></a>                        Interval: Discrete 0.020s (50.000 fps)
+</span><span id="__span-13-100"><a id="__codelineno-13-100" name="__codelineno-13-100" href="#__codelineno-13-100"></a>                        Interval: Discrete 0.033s (30.000 fps)
+</span><span id="__span-13-101"><a id="__codelineno-13-101" name="__codelineno-13-101" href="#__codelineno-13-101"></a>                        Interval: Discrete 0.050s (20.000 fps)
+</span><span id="__span-13-102"><a id="__codelineno-13-102" name="__codelineno-13-102" href="#__codelineno-13-102"></a>                        Interval: Discrete 0.100s (10.000 fps)
+</span><span id="__span-13-103"><a id="__codelineno-13-103" name="__codelineno-13-103" href="#__codelineno-13-103"></a>        [1]: &#39;MJPG&#39; (Motion-JPEG, compressed)
+</span><span id="__span-13-104"><a id="__codelineno-13-104" name="__codelineno-13-104" href="#__codelineno-13-104"></a>                Size: Discrete 3840x2160
+</span><span id="__span-13-105"><a id="__codelineno-13-105" name="__codelineno-13-105" href="#__codelineno-13-105"></a>                        Interval: Discrete 0.056s (18.000 fps)
+</span><span id="__span-13-106"><a id="__codelineno-13-106" name="__codelineno-13-106" href="#__codelineno-13-106"></a>                Size: Discrete 2560x1600
+</span><span id="__span-13-107"><a id="__codelineno-13-107" name="__codelineno-13-107" href="#__codelineno-13-107"></a>                Size: Discrete 2560x1440
+</span><span id="__span-13-108"><a id="__codelineno-13-108" name="__codelineno-13-108" href="#__codelineno-13-108"></a>                        Interval: Discrete 0.020s (50.000 fps)
+</span><span id="__span-13-109"><a id="__codelineno-13-109" name="__codelineno-13-109" href="#__codelineno-13-109"></a>                        Interval: Discrete 0.033s (30.000 fps)
+</span><span id="__span-13-110"><a id="__codelineno-13-110" name="__codelineno-13-110" href="#__codelineno-13-110"></a>                        Interval: Discrete 0.050s (20.000 fps)
+</span><span id="__span-13-111"><a id="__codelineno-13-111" name="__codelineno-13-111" href="#__codelineno-13-111"></a>                        Interval: Discrete 0.100s (10.000 fps)
+</span><span id="__span-13-112"><a id="__codelineno-13-112" name="__codelineno-13-112" href="#__codelineno-13-112"></a>                Size: Discrete 2048x1152
+</span><span id="__span-13-113"><a id="__codelineno-13-113" name="__codelineno-13-113" href="#__codelineno-13-113"></a>                        Interval: Discrete 0.017s (60.000 fps)
+</span><span id="__span-13-114"><a id="__codelineno-13-114" name="__codelineno-13-114" href="#__codelineno-13-114"></a>                        Interval: Discrete 0.020s (50.000 fps)
+</span><span id="__span-13-115"><a id="__codelineno-13-115" name="__codelineno-13-115" href="#__codelineno-13-115"></a>                        Interval: Discrete 0.033s (30.000 fps)
+</span><span id="__span-13-116"><a id="__codelineno-13-116" name="__codelineno-13-116" href="#__codelineno-13-116"></a>                        Interval: Discrete 0.050s (20.000 fps)
+</span><span id="__span-13-117"><a id="__codelineno-13-117" name="__codelineno-13-117" href="#__codelineno-13-117"></a>                        Interval: Discrete 0.100s (10.000 fps)
+</span><span id="__span-13-118"><a id="__codelineno-13-118" name="__codelineno-13-118" href="#__codelineno-13-118"></a>                Size: Discrete 2048x1080
+</span><span id="__span-13-119"><a id="__codelineno-13-119" name="__codelineno-13-119" href="#__codelineno-13-119"></a>                Size: Discrete 1920x2160
+</span><span id="__span-13-120"><a id="__codelineno-13-120" name="__codelineno-13-120" href="#__codelineno-13-120"></a>                Size: Discrete 1920x1200
+</span><span id="__span-13-121"><a id="__codelineno-13-121" name="__codelineno-13-121" href="#__codelineno-13-121"></a>                Size: Discrete 1920x1080
+</span><span id="__span-13-122"><a id="__codelineno-13-122" name="__codelineno-13-122" href="#__codelineno-13-122"></a>                Size: Discrete 1360x768
+</span><span id="__span-13-123"><a id="__codelineno-13-123" name="__codelineno-13-123" href="#__codelineno-13-123"></a>                Size: Discrete 1280x1024
+</span><span id="__span-13-124"><a id="__codelineno-13-124" name="__codelineno-13-124" href="#__codelineno-13-124"></a>                Size: Discrete 1280x960
+</span></code></pre></div>
+<p>出问题</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>➜  ~ sudo dmesg --color=always --ctime -W
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>[Tue Jul 25 16:47:39 2023] usb 1-3: new high-speed USB device number 29 using xhci_hcd
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>[Tue Jul 25 16:47:39 2023] usb 1-3: New USB device found, idVendor=345f, idProduct=2130, bcdDevice=21.00
+</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>[Tue Jul 25 16:47:39 2023] usb 1-3: New USB device strings: Mfr=1, Product=5, SerialNumber=7
+</span><span id="__span-14-5"><a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a>[Tue Jul 25 16:47:39 2023] usb 1-3: Product: USB2 Video
+</span><span id="__span-14-6"><a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a>[Tue Jul 25 16:47:39 2023] usb 1-3: Manufacturer: MACROSILICON
+</span><span id="__span-14-7"><a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a>[Tue Jul 25 16:47:39 2023] usb 1-3: SerialNumber: 20210621
+</span><span id="__span-14-8"><a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a>[Tue Jul 25 16:47:39 2023] usb 1-3: Found UVC 1.00 device USB2 Video (345f:2130)
+</span><span id="__span-14-9"><a id="__codelineno-14-9" name="__codelineno-14-9" href="#__codelineno-14-9"></a>[Tue Jul 25 16:47:39 2023] hid-generic 0003:345F:2130.0012: hiddev0,hidraw0: USB HID v1.10 Device [MACROSILICON USB2 Video] on usb-0000:02:00.0-3/input4
+</span><span id="__span-14-10"><a id="__codelineno-14-10" name="__codelineno-14-10" href="#__codelineno-14-10"></a>[Tue Jul 25 16:47:39 2023] usb 1-3: USB disconnect, device number 29
+</span><span id="__span-14-11"><a id="__codelineno-14-11" name="__codelineno-14-11" href="#__codelineno-14-11"></a>[Tue Jul 25 16:47:49 2023] usb usb2-port3: Cannot enable. Maybe the USB cable is bad?
+</span><span id="__span-14-12"><a id="__codelineno-14-12" name="__codelineno-14-12" href="#__codelineno-14-12"></a>[Tue Jul 25 16:47:53 2023] usb 1-3: new high-speed USB device number 31 using xhci_hcd
+</span><span id="__span-14-13"><a id="__codelineno-14-13" name="__codelineno-14-13" href="#__codelineno-14-13"></a>[Tue Jul 25 16:47:53 2023] usb usb2-port3: Cannot enable. Maybe the USB cable is bad?
+</span><span id="__span-14-14"><a id="__codelineno-14-14" name="__codelineno-14-14" href="#__codelineno-14-14"></a>[Tue Jul 25 16:47:57 2023] usb usb2-port3: Cannot enable. Maybe the USB cable is bad?
+</span><span id="__span-14-15"><a id="__codelineno-14-15" name="__codelineno-14-15" href="#__codelineno-14-15"></a>[Tue Jul 25 16:48:01 2023] usb usb2-port3: Cannot enable. Maybe the USB cable is bad?
+</span><span id="__span-14-16"><a id="__codelineno-14-16" name="__codelineno-14-16" href="#__codelineno-14-16"></a>[Tue Jul 25 16:48:05 2023] usb usb2-port3: Cannot enable. Maybe the USB cable is bad?
+</span><span id="__span-14-17"><a id="__codelineno-14-17" name="__codelineno-14-17" href="#__codelineno-14-17"></a>[Tue Jul 25 16:48:09 2023] usb usb2-port3: Cannot enable. Maybe the USB cable is bad?
+</span><span id="__span-14-18"><a id="__codelineno-14-18" name="__codelineno-14-18" href="#__codelineno-14-18"></a>[Tue Jul 25 16:48:20 2023] usb 1-3: new high-speed USB device number 32 using xhci_hcd
+</span><span id="__span-14-19"><a id="__codelineno-14-19" name="__codelineno-14-19" href="#__codelineno-14-19"></a>[Tue Jul 25 16:48:21 2023] usb 1-3: New USB device found, idVendor=345f, idProduct=2130, bcdDevice=21.00
+</span><span id="__span-14-20"><a id="__codelineno-14-20" name="__codelineno-14-20" href="#__codelineno-14-20"></a>[Tue Jul 25 16:48:21 2023] usb 1-3: New USB device strings: Mfr=1, Product=5, SerialNumber=7
+</span><span id="__span-14-21"><a id="__codelineno-14-21" name="__codelineno-14-21" href="#__codelineno-14-21"></a>[Tue Jul 25 16:48:21 2023] usb 1-3: Product: USB2 Video
+</span><span id="__span-14-22"><a id="__codelineno-14-22" name="__codelineno-14-22" href="#__codelineno-14-22"></a>[Tue Jul 25 16:48:21 2023] usb 1-3: Manufacturer: MACROSILICON
+</span><span id="__span-14-23"><a id="__codelineno-14-23" name="__codelineno-14-23" href="#__codelineno-14-23"></a>[Tue Jul 25 16:48:21 2023] usb 1-3: SerialNumber: 20210621
+</span><span id="__span-14-24"><a id="__codelineno-14-24" name="__codelineno-14-24" href="#__codelineno-14-24"></a>[Tue Jul 25 16:48:21 2023] usb 1-3: Found UVC 1.00 device USB2 Video (345f:2130)
+</span><span id="__span-14-25"><a id="__codelineno-14-25" name="__codelineno-14-25" href="#__codelineno-14-25"></a>[Tue Jul 25 16:48:21 2023] hid-generic 0003:345F:2130.0013: hiddev0,hidraw0: USB HID v1.10 Device [MACROSILICON USB2 Video] on usb-0000:02:00.0-3/input4
+</span><span id="__span-14-26"><a id="__codelineno-14-26" name="__codelineno-14-26" href="#__codelineno-14-26"></a>[Tue Jul 25 16:50:24 2023] usb 1-3: USB disconnect, device number 32
+</span><span id="__span-14-27"><a id="__codelineno-14-27" name="__codelineno-14-27" href="#__codelineno-14-27"></a>[Tue Jul 25 16:50:44 2023] usb usb2-port3: Cannot enable. Maybe the USB cable is bad?
+</span></code></pre></div>
+<ul>
+<li>ms2109 在 windows 下能正常工作<ul>
+<li>在 linux 下，ustream 报</li>
+</ul>
+</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>-- INFO  [268879.670    stream] -- Device fd=8 opened
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>-- INFO  [268879.670    stream] -- Using input channel: 0
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>-- INFO  [268879.685    stream] -- Using resolution: 640x480
+</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a>-- ERROR [268879.685    stream] -- Could not obtain the requested pixelformat=YUYV; driver gave us MJPEG
+</span><span id="__span-15-5"><a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a>-- INFO  [268879.685    stream] -- Falling back to pixelformat=MJPEG
+</span><span id="__span-15-6"><a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a>-- INFO  [268879.685    stream] -- Using pixelformat: MJPEG
+</span><span id="__span-15-7"><a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a>-- INFO  [268879.700    stream] -- Using HW FPS: 0 -&gt; 60 (coerced)
+</span><span id="__span-15-8"><a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a>-- ERROR [268879.700    stream] -- Device does not support setting of HW encoding quality parameters
+</span><span id="__span-15-9"><a id="__codelineno-15-9" name="__codelineno-15-9" href="#__codelineno-15-9"></a>-- INFO  [268879.700    stream] -- Using IO method: MMAP
+</span><span id="__span-15-10"><a id="__codelineno-15-10" name="__codelineno-15-10" href="#__codelineno-15-10"></a>-- INFO  [268879.702    stream] -- Requested 5 device buffers, got 5
+</span><span id="__span-15-11"><a id="__codelineno-15-11" name="__codelineno-15-11" href="#__codelineno-15-11"></a>-- INFO  [268879.704    stream] -- Capturing started
+</span><span id="__span-15-12"><a id="__codelineno-15-12" name="__codelineno-15-12" href="#__codelineno-15-12"></a>-- INFO  [268879.704    stream] -- Switching to HW encoder: the input is (M)JPEG ...
+</span><span id="__span-15-13"><a id="__codelineno-15-13" name="__codelineno-15-13" href="#__codelineno-15-13"></a>-- INFO  [268879.704    stream] -- Using JPEG quality: encoder default
+</span><span id="__span-15-14"><a id="__codelineno-15-14" name="__codelineno-15-14" href="#__codelineno-15-14"></a>-- INFO  [268879.704    stream] -- Creating pool JPEG with 1 workers ...
+</span><span id="__span-15-15"><a id="__codelineno-15-15" name="__codelineno-15-15" href="#__codelineno-15-15"></a>-- INFO  [268879.704    stream] -- Capturing ...
+</span><span id="__span-15-16"><a id="__codelineno-15-16" name="__codelineno-15-16" href="#__codelineno-15-16"></a>-- ERROR [268880.714    stream] -- Mainloop select() error: Inappropriate ioctl for device
+</span><span id="__span-15-17"><a id="__codelineno-15-17" name="__codelineno-15-17" href="#__codelineno-15-17"></a>-- INFO  [268880.714    stream] -- Destroying workers pool JPEG ...
+</span><span id="__span-15-18"><a id="__codelineno-15-18" name="__codelineno-15-18" href="#__codelineno-15-18"></a>-- INFO  [268880.715    stream] -- Capturing stopped
+</span><span id="__span-15-19"><a id="__codelineno-15-19" name="__codelineno-15-19" href="#__codelineno-15-19"></a>-- INFO  [268880.715    stream] -- Device fd=8 closed
+</span><span id="__span-15-20"><a id="__codelineno-15-20" name="__codelineno-15-20" href="#__codelineno-15-20"></a>
+</span><span id="__span-15-21"><a id="__codelineno-15-21" name="__codelineno-15-21" href="#__codelineno-15-21"></a>[Tue Jul 25 17:04:36 2023] uvcvideo 1-3:1.1: Non-zero status (-71) in video completion handler.
+</span></code></pre></div>
+<p>ms2130 插 USB3.0 没有反应，USB2.0，windows 和 linux 都能正常工作。</p>
+<p>开发板 USB2.0 无反应</p>
+<h4 id="使用-ustream-测试是否能够使用">使用 ustream 测试是否能够使用<a class="headerlink" href="#使用-ustream-测试是否能够使用" title="Permanent link">&para;</a></h4>
+<p><a href="https://github.com/pikvm/ustreamer">pikvm/ustreamer: µStreamer - Lightweight and fast MJPEG-HTTP streamer (github.com)</a></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>./ustreamer --device=/dev/video0 --host=0.0.0.0 --port=8000 -r 1920x1080 --format=MJPEG
+</span></code></pre></div>
+<p>ms2109</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>-- INFO  [266472.324    stream] -- Device fd=8 opened
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>-- INFO  [266472.324    stream] -- Using input channel: 0
+</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>-- INFO  [266472.339    stream] -- Using resolution: 1920x1080
+</span><span id="__span-17-4"><a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a>-- INFO  [266472.339    stream] -- Using pixelformat: MJPEG
+</span><span id="__span-17-5"><a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a>-- INFO  [266472.354    stream] -- Using HW FPS: 0 -&gt; 60 (coerced)
+</span><span id="__span-17-6"><a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a>-- ERROR [266472.354    stream] -- Device does not support setting of HW encoding quality parameters
+</span><span id="__span-17-7"><a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a>-- INFO  [266472.354    stream] -- Using IO method: MMAP
+</span><span id="__span-17-8"><a id="__codelineno-17-8" name="__codelineno-17-8" href="#__codelineno-17-8"></a>-- INFO  [266472.357    stream] -- Requested 5 device buffers, got 5
+</span><span id="__span-17-9"><a id="__codelineno-17-9" name="__codelineno-17-9" href="#__codelineno-17-9"></a>-- INFO  [266472.360    stream] -- Capturing started
+</span><span id="__span-17-10"><a id="__codelineno-17-10" name="__codelineno-17-10" href="#__codelineno-17-10"></a>-- INFO  [266472.360    stream] -- Switching to HW encoder: the input is (M)JPEG ...
+</span><span id="__span-17-11"><a id="__codelineno-17-11" name="__codelineno-17-11" href="#__codelineno-17-11"></a>-- INFO  [266472.360    stream] -- Using JPEG quality: encoder default
+</span><span id="__span-17-12"><a id="__codelineno-17-12" name="__codelineno-17-12" href="#__codelineno-17-12"></a>-- INFO  [266472.360    stream] -- Creating pool JPEG with 1 workers ...
+</span><span id="__span-17-13"><a id="__codelineno-17-13" name="__codelineno-17-13" href="#__codelineno-17-13"></a>-- INFO  [266472.360    stream] -- Capturing ...
+</span><span id="__span-17-14"><a id="__codelineno-17-14" name="__codelineno-17-14" href="#__codelineno-17-14"></a>-- ERROR [266473.375    stream] -- Mainloop select() error: Inappropriate ioctl for device
+</span><span id="__span-17-15"><a id="__codelineno-17-15" name="__codelineno-17-15" href="#__codelineno-17-15"></a>-- INFO  [266473.375    stream] -- Destroying workers pool JPEG ...
+</span><span id="__span-17-16"><a id="__codelineno-17-16" name="__codelineno-17-16" href="#__codelineno-17-16"></a>-- INFO  [266473.377    stream] -- Capturing stopped
+</span><span id="__span-17-17"><a id="__codelineno-17-17" name="__codelineno-17-17" href="#__codelineno-17-17"></a>-- INFO  [266473.379    stream] -- Device fd=8 closed
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>[Tue Jul 25 16:24:26 2023] uvcvideo 1-3:1.1: Non-zero status (-71) in video completion handler.
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>[Tue Jul 25 16:24:26 2023] uvcvideo 1-3:1.1: Non-zero status (-71) in video completion handler.
+</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>[Tue Jul 25 16:24:26 2023] uvcvideo 1-3:1.1: Non-zero status (-71) in video completion handler.
+</span></code></pre></div>
+<h3 id="键盘问题">键盘问题<a class="headerlink" href="#键盘问题" title="Permanent link">&para;</a></h3>
+<p>插入主板 usb2.0 接口，ryzen dmesg，几种错误如下</p>
+<ul>
+<li><code>usbhid 1-8:1.1: can't add hid device: -110</code></li>
+<li><code>usb usb1-port8: Cannot enable. Maybe the USB cable is bad?</code></li>
+<li><code>usbhid 1-8:1.1: can't add hid device: -71</code></li>
+</ul>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>➜<span class="w">  </span>~<span class="w"> </span>sudo<span class="w"> </span>dmesg<span class="w"> </span>--color<span class="o">=</span>always<span class="w"> </span>--ctime<span class="w"> </span>-W
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a><span class="o">[</span>Tue<span class="w"> </span>Jul<span class="w"> </span><span class="m">25</span><span class="w"> </span><span class="m">22</span>:01:09<span class="w"> </span><span class="m">2023</span><span class="o">]</span><span class="w"> </span>usb<span class="w"> </span><span class="m">1</span>-8:<span class="w"> </span>new<span class="w"> </span>high-speed<span class="w"> </span>USB<span class="w"> </span>device<span class="w"> </span>number<span class="w"> </span><span class="m">126</span><span class="w"> </span>using<span class="w"> </span>xhci_hcd
+</span><span id="__span-19-3"><a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a><span class="o">[</span>Tue<span class="w"> </span>Jul<span class="w"> </span><span class="m">25</span><span class="w"> </span><span class="m">22</span>:01:09<span class="w"> </span><span class="m">2023</span><span class="o">]</span><span class="w"> </span>usb<span class="w"> </span><span class="m">1</span>-8:<span class="w"> </span>device<span class="w"> </span>descriptor<span class="w"> </span>read/64,<span class="w"> </span>error<span class="w"> </span>-71
+</span><span id="__span-19-4"><a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a><span class="o">[</span>Tue<span class="w"> </span>Jul<span class="w"> </span><span class="m">25</span><span class="w"> </span><span class="m">22</span>:01:10<span class="w"> </span><span class="m">2023</span><span class="o">]</span><span class="w"> </span>usb<span class="w"> </span><span class="m">1</span>-8:<span class="w"> </span>New<span class="w"> </span>USB<span class="w"> </span>device<span class="w"> </span>found,<span class="w"> </span><span class="nv">idVendor</span><span class="o">=</span>1d6b,<span class="w"> </span><span class="nv">idProduct</span><span class="o">=</span><span class="m">0104</span>,<span class="w"> </span><span class="nv">bcdDevice</span><span class="o">=</span><span class="w"> </span><span class="m">1</span>.00
+</span><span id="__span-19-5"><a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a><span class="o">[</span>Tue<span class="w"> </span>Jul<span class="w"> </span><span class="m">25</span><span class="w"> </span><span class="m">22</span>:01:10<span class="w"> </span><span class="m">2023</span><span class="o">]</span><span class="w"> </span>usb<span class="w"> </span><span class="m">1</span>-8:<span class="w"> </span>New<span class="w"> </span>USB<span class="w"> </span>device<span class="w"> </span>strings:<span class="w"> </span><span class="nv">Mfr</span><span class="o">=</span><span class="m">1</span>,<span class="w"> </span><span class="nv">Product</span><span class="o">=</span><span class="m">2</span>,<span class="w"> </span><span class="nv">SerialNumber</span><span class="o">=</span><span class="m">3</span>
+</span><span id="__span-19-6"><a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a><span class="o">[</span>Tue<span class="w"> </span>Jul<span class="w"> </span><span class="m">25</span><span class="w"> </span><span class="m">22</span>:01:10<span class="w"> </span><span class="m">2023</span><span class="o">]</span><span class="w"> </span>usb<span class="w"> </span><span class="m">1</span>-8:<span class="w"> </span>Product:<span class="w"> </span>Composite<span class="w"> </span>KVM<span class="w"> </span>Device
+</span><span id="__span-19-7"><a id="__codelineno-19-7" name="__codelineno-19-7" href="#__codelineno-19-7"></a><span class="o">[</span>Tue<span class="w"> </span>Jul<span class="w"> </span><span class="m">25</span><span class="w"> </span><span class="m">22</span>:01:10<span class="w"> </span><span class="m">2023</span><span class="o">]</span><span class="w"> </span>usb<span class="w"> </span><span class="m">1</span>-8:<span class="w"> </span>Manufacturer:<span class="w"> </span>PiKVM
+</span><span id="__span-19-8"><a id="__codelineno-19-8" name="__codelineno-19-8" href="#__codelineno-19-8"></a><span class="o">[</span>Tue<span class="w"> </span>Jul<span class="w"> </span><span class="m">25</span><span class="w"> </span><span class="m">22</span>:01:10<span class="w"> </span><span class="m">2023</span><span class="o">]</span><span class="w"> </span>usb<span class="w"> </span><span class="m">1</span>-8:<span class="w"> </span>SerialNumber:<span class="w"> </span>CAFEBABE
+</span><span id="__span-19-9"><a id="__codelineno-19-9" name="__codelineno-19-9" href="#__codelineno-19-9"></a><span class="o">[</span>Tue<span class="w"> </span>Jul<span class="w"> </span><span class="m">25</span><span class="w"> </span><span class="m">22</span>:01:10<span class="w"> </span><span class="m">2023</span><span class="o">]</span><span class="w"> </span>input:<span class="w"> </span>PiKVM<span class="w"> </span>Composite<span class="w"> </span>KVM<span class="w"> </span>Device<span class="w"> </span>as<span class="w"> </span>/devices/pci0000:00/0000:00:01.2/0000:02:00.0/usb1/1-8/1-8:1.0/0003:1D6B:0104.0104/input/input257
+</span><span id="__span-19-10"><a id="__codelineno-19-10" name="__codelineno-19-10" href="#__codelineno-19-10"></a><span class="o">[</span>Tue<span class="w"> </span>Jul<span class="w"> </span><span class="m">25</span><span class="w"> </span><span class="m">22</span>:01:10<span class="w"> </span><span class="m">2023</span><span class="o">]</span><span class="w"> </span>hid-generic<span class="w"> </span><span class="m">0003</span>:1D6B:0104.0104:<span class="w"> </span>input,hidraw0:<span class="w"> </span>USB<span class="w"> </span>HID<span class="w"> </span>v1.01<span class="w"> </span>Keyboard<span class="w"> </span><span class="o">[</span>PiKVM<span class="w"> </span>Composite<span class="w"> </span>KVM<span class="w"> </span>Device<span class="o">]</span><span class="w"> </span>on<span class="w"> </span>usb-0000:02:00.0-8/input0
+</span><span id="__span-19-11"><a id="__codelineno-19-11" name="__codelineno-19-11" href="#__codelineno-19-11"></a><span class="o">[</span>Tue<span class="w"> </span>Jul<span class="w"> </span><span class="m">25</span><span class="w"> </span><span class="m">22</span>:01:56<span class="w"> </span><span class="m">2023</span><span class="o">]</span><span class="w"> </span>usbhid<span class="w"> </span><span class="m">1</span>-8:1.1:<span class="w"> </span>can<span class="s1">&#39;t add hid device: -110</span>
+</span><span id="__span-19-12"><a id="__codelineno-19-12" name="__codelineno-19-12" href="#__codelineno-19-12"></a><span class="s1">[Tue Jul 25 22:01:56 2023] usbhid: probe of 1-8:1.1 failed with error -110</span>
+</span><span id="__span-19-13"><a id="__codelineno-19-13" name="__codelineno-19-13" href="#__codelineno-19-13"></a><span class="s1">[Tue Jul 25 22:02:42 2023] usbhid 1-8:1.2: can&#39;</span>t<span class="w"> </span>add<span class="w"> </span>hid<span class="w"> </span>device:<span class="w"> </span>-110
+</span><span id="__span-19-14"><a id="__codelineno-19-14" name="__codelineno-19-14" href="#__codelineno-19-14"></a><span class="o">[</span>Tue<span class="w"> </span>Jul<span class="w"> </span><span class="m">25</span><span class="w"> </span><span class="m">22</span>:02:42<span class="w"> </span><span class="m">2023</span><span class="o">]</span><span class="w"> </span>usbhid:<span class="w"> </span>probe<span class="w"> </span>of<span class="w"> </span><span class="m">1</span>-8:1.2<span class="w"> </span>failed<span class="w"> </span>with<span class="w"> </span>error<span class="w"> </span>-110
+</span><span id="__span-19-15"><a id="__codelineno-19-15" name="__codelineno-19-15" href="#__codelineno-19-15"></a><span class="o">[</span>Tue<span class="w"> </span>Jul<span class="w"> </span><span class="m">25</span><span class="w"> </span><span class="m">22</span>:02:42<span class="w"> </span><span class="m">2023</span><span class="o">]</span><span class="w"> </span>usb<span class="w"> </span><span class="m">1</span>-8:<span class="w"> </span>USB<span class="w"> </span>disconnect,<span class="w"> </span>device<span class="w"> </span>number<span class="w"> </span><span class="m">126</span>
+</span><span id="__span-19-16"><a id="__codelineno-19-16" name="__codelineno-19-16" href="#__codelineno-19-16"></a>
+</span><span id="__span-19-17"><a id="__codelineno-19-17" name="__codelineno-19-17" href="#__codelineno-19-17"></a>
+</span><span id="__span-19-18"><a id="__codelineno-19-18" name="__codelineno-19-18" href="#__codelineno-19-18"></a><span class="o">[</span>Tue<span class="w"> </span>Jul<span class="w"> </span><span class="m">25</span><span class="w"> </span><span class="m">22</span>:02:44<span class="w"> </span><span class="m">2023</span><span class="o">]</span><span class="w"> </span>usb<span class="w"> </span><span class="m">1</span>-8:<span class="w"> </span>new<span class="w"> </span>high-speed<span class="w"> </span>USB<span class="w"> </span>device<span class="w"> </span>number<span class="w"> </span><span class="m">127</span><span class="w"> </span>using<span class="w"> </span>xhci_hcd
+</span><span id="__span-19-19"><a id="__codelineno-19-19" name="__codelineno-19-19" href="#__codelineno-19-19"></a><span class="o">[</span>Tue<span class="w"> </span>Jul<span class="w"> </span><span class="m">25</span><span class="w"> </span><span class="m">22</span>:02:44<span class="w"> </span><span class="m">2023</span><span class="o">]</span><span class="w"> </span>usb<span class="w"> </span><span class="m">1</span>-8:<span class="w"> </span>device<span class="w"> </span>descriptor<span class="w"> </span>read/all,<span class="w"> </span>error<span class="w"> </span>-71
+</span><span id="__span-19-20"><a id="__codelineno-19-20" name="__codelineno-19-20" href="#__codelineno-19-20"></a><span class="o">[</span>Tue<span class="w"> </span>Jul<span class="w"> </span><span class="m">25</span><span class="w"> </span><span class="m">22</span>:02:45<span class="w"> </span><span class="m">2023</span><span class="o">]</span><span class="w"> </span>usb<span class="w"> </span>usb1-port8:<span class="w"> </span>Cannot<span class="w"> </span>enable.<span class="w"> </span>Maybe<span class="w"> </span>the<span class="w"> </span>USB<span class="w"> </span>cable<span class="w"> </span>is<span class="w"> </span>bad?
+</span><span id="__span-19-21"><a id="__codelineno-19-21" name="__codelineno-19-21" href="#__codelineno-19-21"></a><span class="o">[</span>Tue<span class="w"> </span>Jul<span class="w"> </span><span class="m">25</span><span class="w"> </span><span class="m">22</span>:02:45<span class="w"> </span><span class="m">2023</span><span class="o">]</span><span class="w"> </span>usb<span class="w"> </span>usb1-port8:<span class="w"> </span>attempt<span class="w"> </span>power<span class="w"> </span>cycle
+</span><span id="__span-19-22"><a id="__codelineno-19-22" name="__codelineno-19-22" href="#__codelineno-19-22"></a><span class="o">[</span>Tue<span class="w"> </span>Jul<span class="w"> </span><span class="m">25</span><span class="w"> </span><span class="m">22</span>:02:46<span class="w"> </span><span class="m">2023</span><span class="o">]</span><span class="w"> </span>usb<span class="w"> </span><span class="m">1</span>-8:<span class="w"> </span>new<span class="w"> </span>high-speed<span class="w"> </span>USB<span class="w"> </span>device<span class="w"> </span>number<span class="w"> </span><span class="m">6</span><span class="w"> </span>using<span class="w"> </span>xhci_hcd
+</span><span id="__span-19-23"><a id="__codelineno-19-23" name="__codelineno-19-23" href="#__codelineno-19-23"></a><span class="o">[</span>Tue<span class="w"> </span>Jul<span class="w"> </span><span class="m">25</span><span class="w"> </span><span class="m">22</span>:02:46<span class="w"> </span><span class="m">2023</span><span class="o">]</span><span class="w"> </span>usb<span class="w"> </span><span class="m">1</span>-8:<span class="w"> </span>Device<span class="w"> </span>not<span class="w"> </span>responding<span class="w"> </span>to<span class="w"> </span>setup<span class="w"> </span>address.
+</span><span id="__span-19-24"><a id="__codelineno-19-24" name="__codelineno-19-24" href="#__codelineno-19-24"></a><span class="o">[</span>Tue<span class="w"> </span>Jul<span class="w"> </span><span class="m">25</span><span class="w"> </span><span class="m">22</span>:02:46<span class="w"> </span><span class="m">2023</span><span class="o">]</span><span class="w"> </span>usb<span class="w"> </span><span class="m">1</span>-8:<span class="w"> </span>Device<span class="w"> </span>not<span class="w"> </span>responding<span class="w"> </span>to<span class="w"> </span>setup<span class="w"> </span>address.
+</span><span id="__span-19-25"><a id="__codelineno-19-25" name="__codelineno-19-25" href="#__codelineno-19-25"></a><span class="o">[</span>Tue<span class="w"> </span>Jul<span class="w"> </span><span class="m">25</span><span class="w"> </span><span class="m">22</span>:02:46<span class="w"> </span><span class="m">2023</span><span class="o">]</span><span class="w"> </span>usb<span class="w"> </span><span class="m">1</span>-8:<span class="w"> </span>device<span class="w"> </span>not<span class="w"> </span>accepting<span class="w"> </span>address<span class="w"> </span><span class="m">6</span>,<span class="w"> </span>error<span class="w"> </span>-71
+</span><span id="__span-19-26"><a id="__codelineno-19-26" name="__codelineno-19-26" href="#__codelineno-19-26"></a>
+</span><span id="__span-19-27"><a id="__codelineno-19-27" name="__codelineno-19-27" href="#__codelineno-19-27"></a><span class="o">[</span>Tue<span class="w"> </span>Jul<span class="w"> </span><span class="m">25</span><span class="w"> </span><span class="m">22</span>:02:47<span class="w"> </span><span class="m">2023</span><span class="o">]</span><span class="w"> </span>usb<span class="w"> </span><span class="m">1</span>-8:<span class="w"> </span>new<span class="w"> </span>high-speed<span class="w"> </span>USB<span class="w"> </span>device<span class="w"> </span>number<span class="w"> </span><span class="m">7</span><span class="w"> </span>using<span class="w"> </span>xhci_hcd
+</span><span id="__span-19-28"><a id="__codelineno-19-28" name="__codelineno-19-28" href="#__codelineno-19-28"></a><span class="o">[</span>Tue<span class="w"> </span>Jul<span class="w"> </span><span class="m">25</span><span class="w"> </span><span class="m">22</span>:02:47<span class="w"> </span><span class="m">2023</span><span class="o">]</span><span class="w"> </span>usb<span class="w"> </span><span class="m">1</span>-8:<span class="w"> </span>New<span class="w"> </span>USB<span class="w"> </span>device<span class="w"> </span>found,<span class="w"> </span><span class="nv">idVendor</span><span class="o">=</span>1d6b,<span class="w"> </span><span class="nv">idProduct</span><span class="o">=</span><span class="m">0104</span>,<span class="w"> </span><span class="nv">bcdDevice</span><span class="o">=</span><span class="w"> </span><span class="m">1</span>.00
+</span><span id="__span-19-29"><a id="__codelineno-19-29" name="__codelineno-19-29" href="#__codelineno-19-29"></a><span class="o">[</span>Tue<span class="w"> </span>Jul<span class="w"> </span><span class="m">25</span><span class="w"> </span><span class="m">22</span>:02:47<span class="w"> </span><span class="m">2023</span><span class="o">]</span><span class="w"> </span>usb<span class="w"> </span><span class="m">1</span>-8:<span class="w"> </span>New<span class="w"> </span>USB<span class="w"> </span>device<span class="w"> </span>strings:<span class="w"> </span><span class="nv">Mfr</span><span class="o">=</span><span class="m">1</span>,<span class="w"> </span><span class="nv">Product</span><span class="o">=</span><span class="m">2</span>,<span class="w"> </span><span class="nv">SerialNumber</span><span class="o">=</span><span class="m">3</span>
+</span><span id="__span-19-30"><a id="__codelineno-19-30" name="__codelineno-19-30" href="#__codelineno-19-30"></a><span class="o">[</span>Tue<span class="w"> </span>Jul<span class="w"> </span><span class="m">25</span><span class="w"> </span><span class="m">22</span>:02:47<span class="w"> </span><span class="m">2023</span><span class="o">]</span><span class="w"> </span>usb<span class="w"> </span><span class="m">1</span>-8:<span class="w"> </span>Product:<span class="w"> </span>Composite<span class="w"> </span>KVM<span class="w"> </span>Device
+</span><span id="__span-19-31"><a id="__codelineno-19-31" name="__codelineno-19-31" href="#__codelineno-19-31"></a><span class="o">[</span>Tue<span class="w"> </span>Jul<span class="w"> </span><span class="m">25</span><span class="w"> </span><span class="m">22</span>:02:47<span class="w"> </span><span class="m">2023</span><span class="o">]</span><span class="w"> </span>usb<span class="w"> </span><span class="m">1</span>-8:<span class="w"> </span>Manufacturer:<span class="w"> </span>PiKVM
+</span><span id="__span-19-32"><a id="__codelineno-19-32" name="__codelineno-19-32" href="#__codelineno-19-32"></a><span class="o">[</span>Tue<span class="w"> </span>Jul<span class="w"> </span><span class="m">25</span><span class="w"> </span><span class="m">22</span>:02:47<span class="w"> </span><span class="m">2023</span><span class="o">]</span><span class="w"> </span>usb<span class="w"> </span><span class="m">1</span>-8:<span class="w"> </span>SerialNumber:<span class="w"> </span>CAFEBABE
+</span><span id="__span-19-33"><a id="__codelineno-19-33" name="__codelineno-19-33" href="#__codelineno-19-33"></a><span class="o">[</span>Tue<span class="w"> </span>Jul<span class="w"> </span><span class="m">25</span><span class="w"> </span><span class="m">22</span>:02:47<span class="w"> </span><span class="m">2023</span><span class="o">]</span><span class="w"> </span>input:<span class="w"> </span>PiKVM<span class="w"> </span>Composite<span class="w"> </span>KVM<span class="w"> </span>Device<span class="w"> </span>as<span class="w"> </span>/devices/pci0000:00/0000:00:01.2/0000:02:00.0/usb1/1-8/1-8:1.0/0003:1D6B:0104.0105/input/input258
+</span><span id="__span-19-34"><a id="__codelineno-19-34" name="__codelineno-19-34" href="#__codelineno-19-34"></a><span class="o">[</span>Tue<span class="w"> </span>Jul<span class="w"> </span><span class="m">25</span><span class="w"> </span><span class="m">22</span>:02:47<span class="w"> </span><span class="m">2023</span><span class="o">]</span><span class="w"> </span>hid-generic<span class="w"> </span><span class="m">0003</span>:1D6B:0104.0105:<span class="w"> </span>input,hidraw0:<span class="w"> </span>USB<span class="w"> </span>HID<span class="w"> </span>v1.01<span class="w"> </span>Keyboard<span class="w"> </span><span class="o">[</span>PiKVM<span class="w"> </span>Composite<span class="w"> </span>KVM<span class="w"> </span>Device<span class="o">]</span><span class="w"> </span>on<span class="w"> </span>usb-0000:02:00.0-8/input0
+</span><span id="__span-19-35"><a id="__codelineno-19-35" name="__codelineno-19-35" href="#__codelineno-19-35"></a><span class="o">[</span>Tue<span class="w"> </span>Jul<span class="w"> </span><span class="m">25</span><span class="w"> </span><span class="m">22</span>:02:47<span class="w"> </span><span class="m">2023</span><span class="o">]</span><span class="w"> </span>usbhid<span class="w"> </span><span class="m">1</span>-8:1.1:<span class="w"> </span>can<span class="s1">&#39;t add hid device: -71</span>
+</span><span id="__span-19-36"><a id="__codelineno-19-36" name="__codelineno-19-36" href="#__codelineno-19-36"></a><span class="s1">[Tue Jul 25 22:02:47 2023] usbhid: probe of 1-8:1.1 failed with error -71</span>
+</span><span id="__span-19-37"><a id="__codelineno-19-37" name="__codelineno-19-37" href="#__codelineno-19-37"></a><span class="s1">[Tue Jul 25 22:02:47 2023] usbhid f1-8:1.2: can&#39;</span>t<span class="w"> </span>add<span class="w"> </span>hid<span class="w"> </span>device:<span class="w"> </span>-71
+</span><span id="__span-19-38"><a id="__codelineno-19-38" name="__codelineno-19-38" href="#__codelineno-19-38"></a><span class="o">[</span>Tue<span class="w"> </span>Jul<span class="w"> </span><span class="m">25</span><span class="w"> </span><span class="m">22</span>:02:47<span class="w"> </span><span class="m">2023</span><span class="o">]</span><span class="w"> </span>usbhid:<span class="w"> </span>probe<span class="w"> </span>of<span class="w"> </span><span class="m">1</span>-8:1.2<span class="w"> </span>failed<span class="w"> </span>with<span class="w"> </span>error<span class="w"> </span>-71
+</span><span id="__span-19-39"><a id="__codelineno-19-39" name="__codelineno-19-39" href="#__codelineno-19-39"></a><span class="o">[</span>Tue<span class="w"> </span>Jul<span class="w"> </span><span class="m">25</span><span class="w"> </span><span class="m">22</span>:02:47<span class="w"> </span><span class="m">2023</span><span class="o">]</span><span class="w"> </span>usb<span class="w"> </span><span class="m">1</span>-8:<span class="w"> </span>USB<span class="w"> </span>disconnect,<span class="w"> </span>device<span class="w"> </span>number<span class="w"> </span><span class="m">7</span>
+</span></code></pre></div>
+<h4 id="usb30-ok">usb3.0 ok<a class="headerlink" href="#usb30-ok" title="Permanent link">&para;</a></h4>
+<p>发现 otg 键盘接 windows 是没问题的，然后发现 ryzen 使用 usb 3.0 接口没问题
+dmesg</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="o">[</span>Tue<span class="w"> </span>Jul<span class="w"> </span><span class="m">25</span><span class="w"> </span><span class="m">22</span>:04:38<span class="w"> </span><span class="m">2023</span><span class="o">]</span><span class="w"> </span>usb<span class="w"> </span><span class="m">3</span>-3.3:<span class="w"> </span>reset<span class="w"> </span>low-speed<span class="w"> </span>USB<span class="w"> </span>device<span class="w"> </span>number<span class="w"> </span><span class="m">28</span><span class="w"> </span>using<span class="w"> </span>xhci_hcd
+</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a><span class="o">[</span>Tue<span class="w"> </span>Jul<span class="w"> </span><span class="m">25</span><span class="w"> </span><span class="m">22</span>:04:39<span class="w"> </span><span class="m">2023</span><span class="o">]</span><span class="w"> </span>usb<span class="w"> </span><span class="m">3</span>-3.1:<span class="w"> </span>reset<span class="w"> </span>full-speed<span class="w"> </span>USB<span class="w"> </span>device<span class="w"> </span>number<span class="w"> </span><span class="m">34</span><span class="w"> </span>using<span class="w"> </span>xhci_hcd
+</span><span id="__span-20-3"><a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a><span class="o">[</span>Tue<span class="w"> </span>Jul<span class="w"> </span><span class="m">25</span><span class="w"> </span><span class="m">22</span>:20:12<span class="w"> </span><span class="m">2023</span><span class="o">]</span><span class="w"> </span>usb<span class="w"> </span><span class="m">3</span>-4:<span class="w"> </span>new<span class="w"> </span>high-speed<span class="w"> </span>USB<span class="w"> </span>device<span class="w"> </span>number<span class="w"> </span><span class="m">35</span><span class="w"> </span>using<span class="w"> </span>xhci_hcd
+</span><span id="__span-20-4"><a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a><span class="o">[</span>Tue<span class="w"> </span>Jul<span class="w"> </span><span class="m">25</span><span class="w"> </span><span class="m">22</span>:20:12<span class="w"> </span><span class="m">2023</span><span class="o">]</span><span class="w"> </span>usb<span class="w"> </span><span class="m">3</span>-4:<span class="w"> </span>New<span class="w"> </span>USB<span class="w"> </span>device<span class="w"> </span>found,<span class="w"> </span><span class="nv">idVendor</span><span class="o">=</span>1d6b,<span class="w"> </span><span class="nv">idProduct</span><span class="o">=</span><span class="m">0104</span>,<span class="w"> </span><span class="nv">bcdDevice</span><span class="o">=</span><span class="w"> </span><span class="m">1</span>.00
+</span><span id="__span-20-5"><a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a><span class="o">[</span>Tue<span class="w"> </span>Jul<span class="w"> </span><span class="m">25</span><span class="w"> </span><span class="m">22</span>:20:12<span class="w"> </span><span class="m">2023</span><span class="o">]</span><span class="w"> </span>usb<span class="w"> </span><span class="m">3</span>-4:<span class="w"> </span>New<span class="w"> </span>USB<span class="w"> </span>device<span class="w"> </span>strings:<span class="w"> </span><span class="nv">Mfr</span><span class="o">=</span><span class="m">1</span>,<span class="w"> </span><span class="nv">Product</span><span class="o">=</span><span class="m">2</span>,<span class="w"> </span><span class="nv">SerialNumber</span><span class="o">=</span><span class="m">3</span>
+</span><span id="__span-20-6"><a id="__codelineno-20-6" name="__codelineno-20-6" href="#__codelineno-20-6"></a><span class="o">[</span>Tue<span class="w"> </span>Jul<span class="w"> </span><span class="m">25</span><span class="w"> </span><span class="m">22</span>:20:12<span class="w"> </span><span class="m">2023</span><span class="o">]</span><span class="w"> </span>usb<span class="w"> </span><span class="m">3</span>-4:<span class="w"> </span>Product:<span class="w"> </span>Composite<span class="w"> </span>KVM<span class="w"> </span>Device
+</span><span id="__span-20-7"><a id="__codelineno-20-7" name="__codelineno-20-7" href="#__codelineno-20-7"></a><span class="o">[</span>Tue<span class="w"> </span>Jul<span class="w"> </span><span class="m">25</span><span class="w"> </span><span class="m">22</span>:20:12<span class="w"> </span><span class="m">2023</span><span class="o">]</span><span class="w"> </span>usb<span class="w"> </span><span class="m">3</span>-4:<span class="w"> </span>Manufacturer:<span class="w"> </span>PiKVM
+</span><span id="__span-20-8"><a id="__codelineno-20-8" name="__codelineno-20-8" href="#__codelineno-20-8"></a><span class="o">[</span>Tue<span class="w"> </span>Jul<span class="w"> </span><span class="m">25</span><span class="w"> </span><span class="m">22</span>:20:12<span class="w"> </span><span class="m">2023</span><span class="o">]</span><span class="w"> </span>usb<span class="w"> </span><span class="m">3</span>-4:<span class="w"> </span>SerialNumber:<span class="w"> </span>CAFEBABE
+</span><span id="__span-20-9"><a id="__codelineno-20-9" name="__codelineno-20-9" href="#__codelineno-20-9"></a><span class="o">[</span>Tue<span class="w"> </span>Jul<span class="w"> </span><span class="m">25</span><span class="w"> </span><span class="m">22</span>:20:12<span class="w"> </span><span class="m">2023</span><span class="o">]</span><span class="w"> </span>input:<span class="w"> </span>PiKVM<span class="w"> </span>Composite<span class="w"> </span>KVM<span class="w"> </span>Device<span class="w"> </span>as<span class="w"> </span>/devices/pci0000:00/0000:00:08.1/0000:0a:00.3/usb3/3-4/3-4:1.0/0003:1D6B:0104.0106/input/input259
+</span><span id="__span-20-10"><a id="__codelineno-20-10" name="__codelineno-20-10" href="#__codelineno-20-10"></a><span class="o">[</span>Tue<span class="w"> </span>Jul<span class="w"> </span><span class="m">25</span><span class="w"> </span><span class="m">22</span>:20:12<span class="w"> </span><span class="m">2023</span><span class="o">]</span><span class="w"> </span>hid-generic<span class="w"> </span><span class="m">0003</span>:1D6B:0104.0106:<span class="w"> </span>input,hidraw0:<span class="w"> </span>USB<span class="w"> </span>HID<span class="w"> </span>v1.01<span class="w"> </span>Keyboard<span class="w"> </span><span class="o">[</span>PiKVM<span class="w"> </span>Composite<span class="w"> </span>KVM<span class="w"> </span>Device<span class="o">]</span><span class="w"> </span>on<span class="w"> </span>usb-0000:0a:00.3-4/input0
+</span><span id="__span-20-11"><a id="__codelineno-20-11" name="__codelineno-20-11" href="#__codelineno-20-11"></a><span class="o">[</span>Tue<span class="w"> </span>Jul<span class="w"> </span><span class="m">25</span><span class="w"> </span><span class="m">22</span>:20:12<span class="w"> </span><span class="m">2023</span><span class="o">]</span><span class="w"> </span>input:<span class="w"> </span>PiKVM<span class="w"> </span>Composite<span class="w"> </span>KVM<span class="w"> </span>Device<span class="w"> </span>as<span class="w"> </span>/devices/pci0000:00/0000:00:08.1/0000:0a:00.3/usb3/3-4/3-4:1.1/0003:1D6B:0104.0107/input/input260
+</span><span id="__span-20-12"><a id="__codelineno-20-12" name="__codelineno-20-12" href="#__codelineno-20-12"></a><span class="o">[</span>Tue<span class="w"> </span>Jul<span class="w"> </span><span class="m">25</span><span class="w"> </span><span class="m">22</span>:20:12<span class="w"> </span><span class="m">2023</span><span class="o">]</span><span class="w"> </span>hid-generic<span class="w"> </span><span class="m">0003</span>:1D6B:0104.0107:<span class="w"> </span>input,hidraw1:<span class="w"> </span>USB<span class="w"> </span>HID<span class="w"> </span>v1.01<span class="w"> </span>Mouse<span class="w"> </span><span class="o">[</span>PiKVM<span class="w"> </span>Composite<span class="w"> </span>KVM<span class="w"> </span>Device<span class="o">]</span><span class="w"> </span>on<span class="w"> </span>usb-0000:0a:00.3-4/input1
+</span><span id="__span-20-13"><a id="__codelineno-20-13" name="__codelineno-20-13" href="#__codelineno-20-13"></a><span class="o">[</span>Tue<span class="w"> </span>Jul<span class="w"> </span><span class="m">25</span><span class="w"> </span><span class="m">22</span>:20:12<span class="w"> </span><span class="m">2023</span><span class="o">]</span><span class="w"> </span>input:<span class="w"> </span>PiKVM<span class="w"> </span>Composite<span class="w"> </span>KVM<span class="w"> </span>Device<span class="w"> </span>as<span class="w"> </span>/devices/pci0000:00/0000:00:08.1/0000:0a:00.3/usb3/3-4/3-4:1.2/0003:1D6B:0104.0108/input/input261
+</span><span id="__span-20-14"><a id="__codelineno-20-14" name="__codelineno-20-14" href="#__codelineno-20-14"></a><span class="o">[</span>Tue<span class="w"> </span>Jul<span class="w"> </span><span class="m">25</span><span class="w"> </span><span class="m">22</span>:20:12<span class="w"> </span><span class="m">2023</span><span class="o">]</span><span class="w"> </span>hid-generic<span class="w"> </span><span class="m">0003</span>:1D6B:0104.0108:<span class="w"> </span>input,hidraw2:<span class="w"> </span>USB<span class="w"> </span>HID<span class="w"> </span>v1.01<span class="w"> </span>Mouse<span class="w"> </span><span class="o">[</span>PiKVM<span class="w"> </span>Composite<span class="w"> </span>KVM<span class="w"> </span>Device<span class="o">]</span><span class="w"> </span>on<span class="w"> </span>usb-0000:0a:00.3-4/input2
+</span></code></pre></div>
+<p>lsusb 可以看到新出的设备</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>Bus 003 Device 035: ID 1d6b:0104 Linux Foundation Multifunction Composite Gadget
+</span></code></pre></div>
+<h3 id="bios-问题">bios 问题<a class="headerlink" href="#bios-问题" title="Permanent link">&para;</a></h3>
+<p>发现只要重启进入 bios，就会出很多问题</p>
+<ul>
+<li>刚开始屏幕和键鼠都是好的。除了鼠标移动延迟很大，基本不可用</li>
+<li>接着鼠标彻底动不了了</li>
+<li>然后 king3399 不知为何无法访问了，网络 ipv6 无法 ping 通，有时则显示超时 3000ms</li>
+<li>ssh session 中看到 htop CPU 占用率并不高</li>
+</ul>
+<p>dmesg 中许多报错</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>[Tue Jul 25 23:17:55 2023] wireguard: WireGuard 1.0.0 loaded. See www.wireguard.com for information.
+</span><span id="__span-22-2"><a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>[Tue Jul 25 23:17:55 2023] wireguard: Copyright (C) 2015-2019 Jason A. Donenfeld &lt;Jason@zx2c4.com&gt;. All Rights Reserved.
+</span><span id="__span-22-3"><a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a>[Tue Jul 25 23:20:48 2023] device wg0 entered promiscuous mode
+</span><span id="__span-22-4"><a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a>[Tue Jul 25 23:21:25 2023] device wg0 left promiscuous mode
+</span><span id="__span-22-5"><a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a>[Tue Jul 25 23:21:26 2023] device wg0 entered promiscuous mode
+</span><span id="__span-22-6"><a id="__codelineno-22-6" name="__codelineno-22-6" href="#__codelineno-22-6"></a>[Tue Jul 25 23:21:40 2023] device wg0 left promiscuous mode
+</span><span id="__span-22-7"><a id="__codelineno-22-7" name="__codelineno-22-7" href="#__codelineno-22-7"></a>[Tue Jul 25 23:38:47 2023] configfs-gadget.kvmd gadget.0: End Point Request ERROR: -108
+</span><span id="__span-22-8"><a id="__codelineno-22-8" name="__codelineno-22-8" href="#__codelineno-22-8"></a>[Tue Jul 25 23:53:30 2023] configfs-gadget.kvmd gadget.0: End Point Request ERROR: -108
+</span><span id="__span-22-9"><a id="__codelineno-22-9" name="__codelineno-22-9" href="#__codelineno-22-9"></a>[Tue Jul 25 23:53:49 2023] configfs-gadget.kvmd gadget.0: End Point Request ERROR: -108
+</span><span id="__span-22-10"><a id="__codelineno-22-10" name="__codelineno-22-10" href="#__codelineno-22-10"></a>[Tue Jul 25 23:55:13 2023] configfs-gadget.kvmd gadget.0: End Point Request ERROR: -108
+</span><span id="__span-22-11"><a id="__codelineno-22-11" name="__codelineno-22-11" href="#__codelineno-22-11"></a>p^Xp^Xn^X[Tue Jul 25 23:57:50 2023] dwc3 fe800000.usb: failed to send remote wakeup
+</span><span id="__span-22-12"><a id="__codelineno-22-12" name="__codelineno-22-12" href="#__codelineno-22-12"></a>[Tue Jul 25 23:57:53 2023] dwc3 fe800000.usb: failed to send remote wakeup
+</span><span id="__span-22-13"><a id="__codelineno-22-13" name="__codelineno-22-13" href="#__codelineno-22-13"></a>[Tue Jul 25 23:57:54 2023] dwc3 fe800000.usb: failed to send remote wakeup
+</span><span id="__span-22-14"><a id="__codelineno-22-14" name="__codelineno-22-14" href="#__codelineno-22-14"></a>l[Tue Jul 25 23:57:58 2023] dwc3 fe800000.usb: failed to send remote wakeup
+</span><span id="__span-22-15"><a id="__codelineno-22-15" name="__codelineno-22-15" href="#__codelineno-22-15"></a>[Tue Jul 25 23:58:00 2023] dwc3 fe800000.usb: failed to send remote wakeup
+</span><span id="__span-22-16"><a id="__codelineno-22-16" name="__codelineno-22-16" href="#__codelineno-22-16"></a>[Tue Jul 25 23:58:03 2023] dwc3 fe800000.usb: failed to send remote wakeup
+</span><span id="__span-22-17"><a id="__codelineno-22-17" name="__codelineno-22-17" href="#__codelineno-22-17"></a>[Tue Jul 25 23:58:04 2023] dwc3 fe800000.usb: failed to send remote wakeup
+</span><span id="__span-22-18"><a id="__codelineno-22-18" name="__codelineno-22-18" href="#__codelineno-22-18"></a>[Tue Jul 25 23:58:08 2023] configfs-gadget.kvmd gadget.0: End Point Request ERROR: -108
+</span><span id="__span-22-19"><a id="__codelineno-22-19" name="__codelineno-22-19" href="#__codelineno-22-19"></a>[Tue Jul 25 23:58:08 2023] configfs-gadget.kvmd gadget.0: End Point Request ERROR: -108
+</span><span id="__span-22-20"><a id="__codelineno-22-20" name="__codelineno-22-20" href="#__codelineno-22-20"></a>[Tue Jul 25 23:58:08 2023] configfs-gadget.kvmd gadget.0: End Point Request ERROR: -108
+</span><span id="__span-22-21"><a id="__codelineno-22-21" name="__codelineno-22-21" href="#__codelineno-22-21"></a>[Tue Jul 25 23:58:09 2023] dwc3 fe800000.usb: failed to send remote wakeup
+</span><span id="__span-22-22"><a id="__codelineno-22-22" name="__codelineno-22-22" href="#__codelineno-22-22"></a>[Tue Jul 25 23:58:22 2023] dwc3 fe800000.usb: failed to send remote wakeup
+</span><span id="__span-22-23"><a id="__codelineno-22-23" name="__codelineno-22-23" href="#__codelineno-22-23"></a>[Tue Jul 25 23:58:23 2023] dwc3 fe800000.usb: failed to send remote wakeup
+</span><span id="__span-22-24"><a id="__codelineno-22-24" name="__codelineno-22-24" href="#__codelineno-22-24"></a>[Tue Jul 25 23:58:43 2023] dwc3 fe800000.usb: failed to send remote wakeup
+</span><span id="__span-22-25"><a id="__codelineno-22-25" name="__codelineno-22-25" href="#__codelineno-22-25"></a>[Tue Jul 25 23:58:48 2023] dwc3 fe800000.usb: failed to send remote wakeup
+</span><span id="__span-22-26"><a id="__codelineno-22-26" name="__codelineno-22-26" href="#__codelineno-22-26"></a>[Tue Jul 25 23:58:50 2023] dwc3 fe800000.usb: failed to send remote wakeup
+</span><span id="__span-22-27"><a id="__codelineno-22-27" name="__codelineno-22-27" href="#__codelineno-22-27"></a>[Tue Jul 25 23:58:53 2023] dwc3 fe800000.usb: failed to send remote wakeup
+</span><span id="__span-22-28"><a id="__codelineno-22-28" name="__codelineno-22-28" href="#__codelineno-22-28"></a>[Wed Jul 26 00:01:08 2023] dwc3 fe800000.usb: failed to send remote wakeup
+</span><span id="__span-22-29"><a id="__codelineno-22-29" name="__codelineno-22-29" href="#__codelineno-22-29"></a>[Wed Jul 26 00:01:08 2023] configfs-gadget.kvmd gadget.0: End Point Request ERROR: -108
+</span><span id="__span-22-30"><a id="__codelineno-22-30" name="__codelineno-22-30" href="#__codelineno-22-30"></a>[Wed Jul 26 00:01:08 2023] configfs-gadget.kvmd gadget.0: End Point Request ERROR: -108
+</span><span id="__span-22-31"><a id="__codelineno-22-31" name="__codelineno-22-31" href="#__codelineno-22-31"></a>[Wed Jul 26 00:01:08 2023] configfs-gadget.kvmd gadget.0: End Point Request ERROR: -108
+</span></code></pre></div>
+<h2 id="pi-kvm-文档">PI-KVM 文档<a class="headerlink" href="#pi-kvm-文档" title="Permanent link">&para;</a></h2>
+<p><a href="https://github.com/pikvm">PiKVM Project (github.com)</a></p>
+<ul>
+<li>ustreamer 项目也是他们的</li>
+<li>kvmd</li>
+</ul>
+<p>文档：<a href="https://docs.pikvm.org/">PiKVM Handbook</a></p>
+<p>DIY: <a href="https://github.com/pikvm/pikvm#diy-getting-started">pikvm/pikvm: Open and inexpensive DIY IP-KVM based on Raspberry Pi (github.com)</a></p>
+<h3 id="mouse">mouse<a class="headerlink" href="#mouse" title="Permanent link">&para;</a></h3>
+<p><a href="https://docs.pikvm.org/mouse/">Mouse modes - PiKVM Handbook</a>
+There are two modes of pointer device: absolute and relative.</p>
+<p>By default, PiKVM uses absolute positioning mode as the most convenient for the user and software. However, this is not always supported by the BIOS/UEFI. For such cases, support is provided for the relative mode of operation, which can be enabled in the config.</p>
+<p><a href="https://docs.pikvm.org/usb_dynamic/">Dynamic USB configuration - PiKVM Handbook</a>
+由于 bios 貌似对 absolute 鼠标兼容性不够好，可以直接禁用</p>
+<blockquote>
+<p>In rare cases, the host BIOS/UEFI may not understand such a large number of emulated devices on single USB port, so some of them may need to be disabled.</p>
+<p>The <code>kvmd-otgconf</code> utility allows you to view and modify the USB configuration on the fly. It requires root permission and can be used for example from a web terminal.</p>
+</blockquote>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>kvmd-otgconf --disable-function mass_storage.usb0
+</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>kvmd-otgconf --enable-function mass_storage.usb0
+</span></code></pre></div>
+<h3 id="faq">FAQ<a class="headerlink" href="#faq" title="Permanent link">&para;</a></h3>
+<h4 id="can-i-use-pikvm-for-gaming">Can I use PiKVM for gaming?<a class="headerlink" href="#can-i-use-pikvm-for-gaming" title="Permanent link">&para;</a></h4>
+<p>No, because:</p>
+<ul>
+<li>For HDMI-CSI bridge, bus bandwidth is not enough to transmit more than 1080p50.</li>
+<li>For HDMI-USB dongle, high latency and low video quality.</li>
+<li>General hardware video capture differs from software streaming and introduces additional latency.</li>
+</ul>
+<h4 id="can-i-use-pikvm-with-non-raspberry-pi-boards-orange-nano-etc">Can I use PiKVM with non-Raspberry Pi boards (Orange, Nano, etc)?<a class="headerlink" href="#can-i-use-pikvm-with-non-raspberry-pi-boards-orange-nano-etc" title="Permanent link">&para;</a></h4>
+<p>Yes, but you will have to prepare the operating system yourself. For the PiKVM software, you will need to replace some config files (such as UDEV rules). If you are a developer or an experienced system administrator, you will not have any problems with this. In addition, we are open to patches. If you need help with this, please contact us via <a href="https://discord.gg/bpmXfz5">Discord</a> (#unofficial_ports channel).</p>
+<h4 id="video-problem">video problem<a class="headerlink" href="#video-problem" title="Permanent link">&para;</a></h4>
+<p><a href="https://docs.pikvm.org/faq/#video-problems">https://docs.pikvm.org/faq/#video-problems</a></p>
+<h3 id="csi-bridge-vs-usb-dongle">CSI bridge vs USB dongle<a class="headerlink" href="#csi-bridge-vs-usb-dongle" title="Permanent link">&para;</a></h3>
+<p>The dongle is completely supported and PiKVM works great with it. But it has some disadvantages compared with recommended <a href="https://aliexpress.com/item/4000102166176.html">HDMI-CSI bridge</a>: USB gives a lot of latency (200ms vs 100ms for MJPEG) and it doesn't support stream compression control (you won't be able to use PiKVM in a place with a poor internet connection). There is no H.264 support at the moment. It also cannot automatically detect screen resolution. All this is caused by the hardware limitations of the dongle itself. In addition, some users report hardware problems: the dongle may not work in the BIOS or simply stop working after a while. It's a black box, and no one knows what's inside it. If you have problems with it, it will not be possible to fix them.</p>
+<h2 id="如何实现-atx-电源控制">如何实现 ATX 电源控制<a class="headerlink" href="#如何实现-atx-电源控制" title="Permanent link">&para;</a></h2>
+<ul>
+<li>需要使用 atx 控制线<ul>
+<li>主板-PIKVM</li>
+<li>机箱-PIKVM</li>
+</ul>
+</li>
+<li>PIKVM 有一个板子用于将 atx 控制线转成 RJ45。板子可以 3d 打印一个 pcie slot 支架
+<a href="https://docs.pikvm.org/atx_board/#detailed-instructions">ATX control board - PiKVM Handbook</a></li>
+</ul>
+<p>Pi-KVM 项目可以支持调用一半 GPIO 驱动，这样就可以实现第三方开发板控制 GPIO 了？
+<a href="https://docs.pikvm.org/gpio/">GPIO (pins, relays, lamps, etc) - PiKVM Handbook</a></p>
+<p>嵌入式的视频接口</p>
+<ul>
+<li>MIPI DSI 视频输出，MIPI CSI 视频输入</li>
+</ul>
+<h2 id="网络相关">网络相关<a class="headerlink" href="#网络相关" title="Permanent link">&para;</a></h2>
+<h3 id="wg-quick-无法自启动">wg-quick 无法自启动<a class="headerlink" href="#wg-quick-无法自启动" title="Permanent link">&para;</a></h3>
+<p><a href="https://github.com/NixOS/nixpkgs/issues/30459">Wireguard - waiting for DNS before trying to start the interface · Issue #30459 · NixOS/nixpkgs (github.com)</a></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>Aug 07 23:17:57 king3399 wg-quick[1167]: [#] ip link add wg0 type wireguard
+</span><span id="__span-24-2"><a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>Aug 07 23:17:57 king3399 wg-quick[1167]: [#] wg setconf wg0 /dev/fd/63
+</span><span id="__span-24-3"><a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a>Aug 07 23:17:57 king3399 wg-quick[1241]: Name or service not known: `op1.my.to:51820&#39;
+</span><span id="__span-24-4"><a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a>Aug 07 23:17:57 king3399 wg-quick[1241]: Configuration parsing error
+</span><span id="__span-24-5"><a id="__codelineno-24-5" name="__codelineno-24-5" href="#__codelineno-24-5"></a>Aug 07 23:17:57 king3399 wg-quick[1167]: [#] ip link delete dev wg0
+</span><span id="__span-24-6"><a id="__codelineno-24-6" name="__codelineno-24-6" href="#__codelineno-24-6"></a>Aug 07 23:17:58 king3399 systemd[1]: wg-quick@wg0.service: Main process exited, code=exited, status=1/FAILURE
+</span></code></pre></div>
+<h2 id="pi-kvm-x86">Pi-KVM x86<a class="headerlink" href="#pi-kvm-x86" title="Permanent link">&para;</a></h2>
+<p>杂
+<a href="https://blog.cyyself.name/pikvm-m1-mac-mini/">基于 PiKVM 制作 M1 Mac Mini KVM – 属于 CYY 自己的世界 (cyyself.name)</a><a href="https://pinout.xyz/">Raspberry Pi GPIO Pinout</a></p>
+<p><a href="https://github.com/purplepalmdash/pikvmx86">GitHub - purplepalmdash/pikvmx86: Run Pi-KVM on x86</a></p>
+<ul>
+<li>HDMI-USB Dongle/35 RMB/USD 4.61,|<a href="https://item.taobao.com/item.htm?spm=a1z09.2.0.0.6eab2e8dKQmeGU&amp;id=619294316849&amp;_u=5mm2aq95e70">Taobao Link</a>|</li>
+<li>Arduino Leonard R3/26 RMB/USD 3.74<ul>
+<li>用于模拟键盘鼠标</li>
+</ul>
+</li>
+<li>USB-TTL PL2303/3.1 RMB/USD 0.45<ul>
+<li>用于 x86 连接 arduino</li>
+</ul>
+</li>
+<li>HDMI Line/7 RMB/USD 1</li>
+</ul>
+<p><a href="https://docs.arduino.cc/hardware/leonardo">Leonardo | Arduino Documentation</a>
+The Arduino Leonardo is a microcontroller board based on the ATmega32u4. It has 20 digital input/output pins (of which 7 can be used as PWM outputs and 12 as analog inputs), a 16 MHz crystal oscillator, a micro USB connection, a power jack, an ICSP header, and a reset button. It contains everything needed to support the microcontroller; simply connect it to a computer with a USB cable or power it with a AC-to-DC adapter or battery to get started.</p>
+<p>CSI 协议
+<a href="https://www.cnblogs.com/zhuangquan/p/16244034.html">《摄像头 —— MIPI CSI-2 简介》 - 一个不知道干嘛的小萌新 - 博客园 (cnblogs.com)</a></p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+  
+
+
+
+      
+    </article>
+  </div>
+
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+        
+      
+      <nav class="md-footer__inner md-grid" aria-label="页脚" >
+        
+          
+          <a href="../../../../../%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/2023/04/20/2023-04-20-%E5%85%B7%E4%BD%93%E6%95%B0%E5%AD%A6/" class="md-footer__link md-footer__link--prev" aria-label="上一页: 具体数学">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                上一页
+              </span>
+              <div class="md-ellipsis">
+                具体数学
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../../../../../%E5%8D%9A%E5%AE%A2/2023/09/01/2023-09-01-%E5%86%8D%E6%AC%A1%E7%90%86%E8%A7%A3Cache%E8%AE%BE%E8%AE%A1/" class="md-footer__link md-footer__link--next" aria-label="下一页: 再次理解 Cache 设计">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                下一页
+              </span>
+              <div class="md-ellipsis">
+                再次理解 Cache 设计
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/TheRainstorm" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../../../..", "features": ["navigation.instant", "navigation.instant.progress", "navigation.tracking", "navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.footer", "content.code.copy", "toc.follow", "toc.integrate"], "search": "../../../../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
+    
+    
+      <script src="../../../../../assets/javascripts/bundle.081f42fc.min.js"></script>
+      
+        <script src="../../../../../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
