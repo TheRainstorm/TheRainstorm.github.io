@@ -79,13 +79,20 @@ markdown_extensions:
         - name: mermaid
           class: mermaid
           format: !!python/name:pymdownx.superfences.fence_code_format
-  - pymdownx.tilde
   - def_list
   - pymdownx.tasklist:
       custom_checkbox: true
   - admonition
   - pymdownx.details
   - mdx_truly_sane_lists
+  - footnotes
+  - pymdownx.critic
+  - pymdownx.caret
+  - pymdownx.keys
+  - pymdownx.mark
+  - pymdownx.tilde
+  - pymdownx.tabbed:
+      alternate_style: true
 
 extra_javascript:
   # use mathjax

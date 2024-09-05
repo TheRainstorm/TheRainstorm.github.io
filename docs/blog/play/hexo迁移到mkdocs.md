@@ -328,5 +328,202 @@ docker run -v $PWD:/workdir davidanson/markdownlint-cli2:v0.13.0 "**/*.md" "#nod
 
 ## mkdocs 扩展格式
 
-箴言
+mkdocs 将 markdown 许多扩展语法都作为插件开启，比如 footnotes。
+### 箴言 Admonition
+
 [Admonitions - Material for MkDocs (squidfunk.github.io)](https://squidfunk.github.io/mkdocs-material/reference/admonitions/)
+
+- 默认标题为 note
+- `!!! note ""` 不使用标题
+
+=== "箴言"
+
+    !!! note "Phasellus posuere in sem ut cursus"
+    
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla et euismod
+        nulla. Curabitur feugiat, tortor non consequat finibus, justo purus auctor
+        massa, nec semper lorem quam in massa.
+
+=== "Source"
+
+    ```
+    !!! note "Phasellus posuere in sem ut cursus"
+    
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla et euismod
+        nulla. Curabitur feugiat, tortor non consequat finibus, justo purus auctor
+        massa, nec semper lorem quam in massa.
+    ```
+
+- 使用 `???` 表示可折叠的块
+- `???+` 默认展开
+
+=== "Collapsible blocks"
+
+    ???+ note
+    
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla et euismod
+        nulla. Curabitur feugiat, tortor non consequat finibus, justo purus auctor
+        massa, nec semper lorem quam in massa.
+
+=== "Source"
+
+    ```
+    ???+ note
+    
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla et euismod
+        nulla. Curabitur feugiat, tortor non consequat finibus, justo purus auctor
+        massa, nec semper lorem quam in massa.
+    ```
+
+其它类型见 https://squidfunk.github.io/mkdocs-material/reference/admonitions/#supported-types
+
+### footnotes
+
+[Footnotes - Material for MkDocs (squidfunk.github.io)](https://squidfunk.github.io/mkdocs-material/reference/footnotes/)
+
+```markdown
+Lorem ipsum[^1] dolor sit amet, consectetur adipiscing elit.[^2]
+
+[^1]: Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+
+[^2]:
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla et euismod
+    nulla. Curabitur feugiat, tortor non consequat finibus, justo purus auctor
+    massa, nec semper lorem quam in massa.
+```
+
+Lorem ipsum[^1] dolor sit amet, consectetur adipiscing elit.[^2]
+
+[^1]: Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+
+[^2]:
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla et euismod
+    nulla. Curabitur feugiat, tortor non consequat finibus, justo purus auctor
+    massa, nec semper lorem quam in massa.
+
+### highlighting
+
+对文本进行多种突出：高亮、下划线、删除线。
+
+[Formatting - Material for MkDocs (squidfunk.github.io)](https://squidfunk.github.io/mkdocs-material/reference/formatting/)
+
+#### Highlighting text
+
+=== "Highlighting text"
+
+    - ==This was marked (highlight)==
+    - This was inserted (underline)
+    - ~~This was deleted (strikethrough)~~
+
+=== "Source"
+
+    ```markdown
+    - ==This was marked (highlight)==
+    - ^^This was inserted (underline)^^
+    - ~~This was deleted (strikethrough)~~
+    ```
+
+#### Sub- and superscripts
+
+=== "Sub- and superscripts"
+
+    - H~2~O
+    - A^T^A
+
+=== "Source"
+
+    ```
+    - H~2~O
+    - A^T^A
+    ```
+
+### Content tabs
+
+创建 Tab 切换显示的内容。
+
+[Content tabs - Material for MkDocs (squidfunk.github.io)](https://squidfunk.github.io/mkdocs-material/reference/content-tabs/)
+
+=== "C"
+
+    ``` c
+    #include <stdio.h>
+
+    int main(void) {
+      printf("Hello world!\n");
+      return 0;
+    }
+    ```
+
+=== "C++"
+
+    ``` c++
+    #include <iostream>
+
+    int main(void) {
+      std::cout << "Hello world!" << std::endl;
+      return 0;
+    }
+    ```
+
+=== "Source"
+
+    ```
+    === "C"
+    
+        ``` c
+        #include <stdio.h>
+    
+        int main(void) {
+          printf("Hello world!\n");
+          return 0;
+        }
+        ```
+    
+    === "C++"
+    
+        ``` c++
+        #include <iostream>
+    
+        int main(void) {
+          std::cout << "Hello world!" << std::endl;
+          return 0;
+        }
+        ```
+    ```
+
+### diagrams
+
+[Diagrams - Material for MkDocs (squidfunk.github.io)](https://squidfunk.github.io/mkdocs-material/reference/diagrams/)
+
+> Material for MkDocs integrates with [Mermaid.js](https://mermaid.js.org/), a very popular and flexible solution for drawing diagrams.
+
+**obsidian 同样支持显示该格式。**
+
+=== "diagrams"
+
+    ``` mermaid
+    graph LR
+      A[Start] --> B{Error?};
+      B -->|Yes| C[Hmm...];
+      C --> D[Debug];
+      D --> B;
+      B ---->|No| E[Yay!];
+    ```
+
+=== "Source"
+
+    ```text
+    graph LR
+      A[Start] --> B{Error?};
+      B -->|Yes| C[Hmm...];
+      C --> D[Debug];
+      D --> B;
+      B ---->|No| E[Yay!];
+    ```
+
+
+其它格式参见：[State diagrams | Mermaid](https://mermaid.js.org/syntax/stateDiagram.html)
+### 其它
+
+math: [Math - Material for MkDocs (squidfunk.github.io)](https://squidfunk.github.io/mkdocs-material/reference/math/)
+task list: [Lists - Material for MkDocs (squidfunk.github.io)](https://squidfunk.github.io/mkdocs-material/reference/lists/)
