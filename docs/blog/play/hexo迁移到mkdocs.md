@@ -6,6 +6,7 @@ tags:
   - mkdocs
   - cloudfare
   - obsidian
+  - markdownlint-cli
 categories:
   - 折腾记录
 ---
@@ -157,7 +158,7 @@ build 后才会生成，直接 serve 是看不到的
 [Built-in meta plugin - Material for MkDocs (squidfunk.github.io)](https://squidfunk.github.io/mkdocs-material/plugins/meta/)
 The meta plugin solves the problem of setting metadata (front matter) for all pages in a folder, i.e., a subsection of your project, which is particularly useful to ensure that a certain subset of pages features specific tags, uses a custom template, or is attributed to an author.
 
-## Deploy
+## 静态网站部署
 
 ### cloudfare page
 
@@ -171,7 +172,7 @@ cf page 优势
 
 - cf page 支持很多 preset（各种静态网站框架），mkdocs 是其中之一，因此配置非常简单。
   - gh page 只支持 Jekyll，其它需要自定义 workflow 来生成 html 页面
-- 支持设置**Production branch**和**Preview branch**，监听不同 git 分支
+- 支持设置 **Production branch** 和 **Preview branch**，监听不同 git 分支
 - 支持选择不同的 build platform，目前有 ubuntu22.04 和 ubuntu20.04
 
 *注意：需要配置`requirements.txt`文件告诉 cf 安装依赖，否则 cf build 时会报错`mkdocs not found`*
@@ -227,8 +228,9 @@ mkdocs 官方提供的方式是方式 1，使用它的 workflow 脚本，会自�
 
 ## markdown 格式修复
 
-原本写的 markdown 文件有一些格式不太规范，切换成 mkdocs 后，有许多报错信息。以下列出其中一些问题，并且提供一个自动修复脚本[fix_markdown.py](../../code/fix_markdown.py)，避免一些枯燥的手动修改。
+原本写的 markdown 文件有一些格式不太规范（常见错误[^1]），切换成 mkdocs 后，有许多报错信息。以下列出其中一些问题，并且提供一个自动修复脚本[fix_markdown.py](../../code/fix_markdown.py)，避免一些枯燥的手动修改。
 
+[^1]: [A few common Markdown mistakes (github.com)](https://gist.github.com/DavidAnson/006a6c2a2d9d7b21b025)
 ### metadata
 
 markdown 开头部分可以定义一些元数据，如作者，日期等，这部分叫做 frontmatter。通常采用 yaml 格式。
@@ -243,6 +245,7 @@ ERROR   -  Error reading metadata 'date' of post 'blog/posts/2023-04-20-具体�
 脚本支持修复该问题。
 
 我使用 obsidian 的 Template 功能来自动生成 metadata，其默认生成的时间格式是不带秒的时间格式，因而导致了以上问题。
+
 可以自定义其模板时间格式：[Templates - Obsidian Help](https://help.obsidian.md/Plugins/Templates)
 修正后模板如下：
 
@@ -305,9 +308,24 @@ mkdocs 使用相对路径，指向引用的 md 文件，并且也支持使用`#`
 
 ### 列表前空行
 
+markdown 标准语法中，block 元素前后都需要空行。但是 obsidan 支持不加空行， github 也支持 list 前面不加空行。
+
 别人关于是否需要支持这个常见“错误”的讨论
 [Blank lines before lists, revisited - Spec - CommonMark Discussion](https://talk.commonmark.org/t/blank-lines-before-lists-revisited/1990/35)
 
-## mkdocs 格式
+修复办法
 
+- cd 到包含 md 的目录
+- 运行 markdownlint-cli2
+  - 其中 `**` 匹配任意符号，`*` 匹配除 `/` 外符号。因此 `**/*.md` 表示当前目录及子目录下所有 md 文件。 
+  - `#node_modules` 作为第二个参数同样是用于匹配文件。不过 `#` 用于取消（negate）匹配。因此该参数作用是排除 node_modules 目录，避免索引太多文件。
+  - `--fix` 参数用于修改源文件
+```shell
+docker run -v $PWD:/workdir davidanson/markdownlint-cli2:v0.13.0 "**/*.md" "#node_modules" --fix
+```
+## mkdocs 扩展格式
+
+箴言
 [Admonitions - Material for MkDocs (squidfunk.github.io)](https://squidfunk.github.io/mkdocs-material/reference/admonitions/)
+
+

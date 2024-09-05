@@ -328,3 +328,27 @@ Error: failed to start containers: jellyfin
                            NVRM: make sure that this kernel module and all NVIDIA driver
                            NVRM: components have the same version.
 ```
+
+
+
+## nvidia-container-toolkit  
+
+nvidia runtime
+
+```
+
+```
+
+nvidia-container-runtime 已经被 nvidia-container-toolkit  替代了： [NVIDIA/nvidia-container-runtime: NVIDIA container runtime (github.com)](https://github.com/NVIDIA/nvidia-container-runtime)
+
+安装教程
+
+[Installing the NVIDIA Container Toolkit — NVIDIA Container Toolkit 1.16.0 documentation](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html)
+
+Configure the container runtime by using the `nvidia-ctk` command:
+```
+sudo nvidia-ctk runtime configure --runtime=docker
+
+sudo systemctl restart docker
+
+```

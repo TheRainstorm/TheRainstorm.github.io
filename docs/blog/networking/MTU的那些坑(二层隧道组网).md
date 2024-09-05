@@ -1,5 +1,5 @@
 ---
-title: MTU 的那些坑
+title: MTU 的那些坑(二层隧道组网)
 date: 2024-03-15 12:55:15
 tags:
   - MTU
@@ -549,6 +549,67 @@ listening on any, link-type LINUX_SLL2 (Linux cooked v2), snapshot length 262144
 - 现在两端发送和接收的每个 udp 包，都额外经过了一次分片和合并，是否对性能有较大影响？
 - 同一侧的机器间访问，是否也需要路由器转发？这样是否有性能影响
   - 发现居然不是，因为同一侧的机器大部分在进入 openwrt 之前，就已经在 pve host 的 vmbr 上已经进行转发了。
+
+## VLAN 切换方案
+
+- 避免需要反复插拔网线来切换 AP 所在的 lan
+- AP 只用单根网线 连接路由器
+- 注：这里使用了 vxlan
+
+![便携路由器-L2-tunnel-新.drawio.png](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/%E4%BE%BF%E6%90%BA%E8%B7%AF%E7%94%B1%E5%99%A8-L2-tunnel-%E6%96%B0.drawio.png)
+
+### windows 获得错误的 v6 地址
+
+笔记本通过网线连接到 AX6S AP。由于每个端口配置了 10 作为 pvid，并且 10 是 untagged 的，因此笔记本相当于接入了 VLAN10。
+
+但是笔记本不知为何总会获得 VLAN20 的 ipv6 地址，而该地址是无法使用的。导致**访问 B 站时可能遇到奇怪的卡顿**，上网体验很差。
+
+tcpdump 增加 -e，显示以太网帧后发现了问题。
+
+- 由于每个 port 同时配置了 vlan 10 和 vlan 20，因此只要路由器发送 RA，就会在所有接口上发，不过会带上 vlan id。
+- windows 接收到 tagged 的包，并不会丢弃，而是正常接收，这导致错误地配置了 SLAAC 的地址。
+
+由于每个接口每 5 分钟对所有节点发送一次 RA，以下是抓到的 op2 和 op1 广播的 ra 消息。只要一接收到该消息，windows 就会出现错误的 v6 地址。
+```
+root@ax6s ➜  ~ tcpdump -nei lan3 -vvvv -tttt "icmp6 and (ip6[40] == 134 or ip6[40] == 133)" # rs, ra
+
+2024-08-05 01:12:58.032179 d2:c8:4c:f9:52:a2 > 33:33:00:00:00:01, ethertype 802.1Q (0x8100), length 178: vlan 10, p 0, ethertype IPv6 (0x86dd), (flowlabel 0x0f2eb, hlim 255, next-header ICMPv6 (58) payload length: 120) fe80::d0c8:4cff:fef9:52a2 > ff02::1: [icmp6 sum ok] ICMP6, router advertisement, length 120
+        hop limit 64, Flags [other stateful], pref medium, router lifetime 1800s, reachable time 0ms, retrans timer 0ms
+          source link-address option (1), length 8 (1): d2:c8:4c:f9:52:a2
+            0x0000:  d2c8 4cf9 52a2
+          mtu option (5), length 8 (1):  1492
+            0x0000:  0000 0000 05d4
+          prefix info option (3), length 32 (4): 2409:8a30:4ae:a540::/64, Flags [onlink, auto], valid time 258681s, pref. time 172281s
+            0x0000:  40c0 0003 f279 0002 a0f9 0000 0000 2409
+            0x0010:  8a30 04ae a540 0000 0000 0000 0000
+          route info option (24), length 24 (3):  2409:8a30:4ae:a540::/60, pref=medium, lifetime=1800s
+            0x0000:  3c00 0000 0708 2409 8a30 04ae a540 0000
+            0x0010:  0000 0000 0000
+          rdnss option (25), length 24 (3):  lifetime 1800s, addr: 2409:8a30:4ae:a540::10
+            0x0000:  0000 0000 0708 2409 8a30 04ae a540 0000
+            0x0010:  0000 0000 0010
+          advertisement interval option (7), length 8 (1):  600000ms
+            0x0000:  0000 0009 27c0
+2024-08-05 01:13:36.201962 00:16:3e:4b:67:80 > 33:33:00:00:00:01, ethertype 802.1Q (0x8100), length 154: vlan 20, p 0, ethertype IPv6 (0x86dd), (flowlabel 0x31634, hlim 255, next-header ICMPv6 (58) payload length: 96) fe80::216:3eff:fe4b:6780 > ff02::1: [icmp6 sum ok] ICMP6, router advertisement, length 96
+        hop limit 64, Flags [managed, other stateful], pref medium, router lifetime 1800s, reachable time 0ms, retrans timer 0ms
+          source link-address option (1), length 8 (1): 00:16:3e:4b:67:80
+            0x0000:  0016 3e4b 6780
+          mtu option (5), length 8 (1):  1370
+            0x0000:  0000 0000 055a
+          prefix info option (3), length 32 (4): 2001:da8:d800:c019::/64, Flags [onlink, auto], valid time 2443865s, pref. time 456665s
+            0x0000:  40c0 0025 4a59 0006 f7d9 0000 0000 2001
+            0x0010:  0da8 d800 c019 0000 0000 0000 0000
+          rdnss option (25), length 24 (3):  lifetime 1800s, addr: fe80::216:3eff:fe4b:6780
+            0x0000:  0000 0000 0708 fe80 0000 0000 0000 0216
+            0x0010:  3eff fe4b 6780
+          advertisement interval option (7), length 8 (1):  600000ms
+            0x0000:  0000 0009 27c0
+
+```
+
+解决方法：lan2 只能通过 wifi 接入即可，把所有 lan 端口都不加入 vlan20 即可（注意，wan 用于连接上级路由器 op2，因此需要保留 vlan20）
+
+![image.png](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/20240805013551.png)
 
 ## 参考
 
