@@ -146,6 +146,7 @@ docker run --entrypoint bash --name test --gpus '"device=0"' -u 0:0 -it ghcr.io/
 
 docker commit --author yuanfuya@qq.com --message 'fix interpolate parameter' --change='Entrypoint ["/usr/bin/python3.8", "-m", "video2x"]' test video2x:5.0.0-beta6.2
 ```
+
 #### rename
 
 ```
@@ -161,6 +162,7 @@ docker rmi old_image_name:old_tag
 ```
 docker compose pull && docker compose up -d
 ```
+
 ## dockerfile
 
 创建 Dockerfile，经常遇到因为某一步错误，导致反复 docker build。其实可以先创建一个基础环境，然后进入环境配置一遍，成功后再写 dockerfile。
@@ -315,7 +317,6 @@ ubuntu@dfc03804864c ➜  tree -L 4
 
 ### gpu
 
-
 ```
 Error response from daemon: failed to create task for container: failed to create shim task: OCI runtime create failed: runc create failed: unable to start container process: error during container init: error running hook #0: error running hook: exit status 1, stdout: , stderr: Auto-detected mode as 'legacy'
 nvidia-container-cli: initialization error: nvml error: driver/library version mismatch: unknown
@@ -328,8 +329,6 @@ Error: failed to start containers: jellyfin
                            NVRM: make sure that this kernel module and all NVIDIA driver
                            NVRM: components have the same version.
 ```
-
-
 
 ## nvidia-container-toolkit  
 
@@ -346,6 +345,7 @@ nvidia-container-runtime 已经被 nvidia-container-toolkit  替代了： [NVIDI
 [Installing the NVIDIA Container Toolkit — NVIDIA Container Toolkit 1.16.0 documentation](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html)
 
 Configure the container runtime by using the `nvidia-ctk` command:
+
 ```
 sudo nvidia-ctk runtime configure --runtime=docker
 

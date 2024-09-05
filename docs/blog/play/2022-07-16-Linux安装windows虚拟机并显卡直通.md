@@ -25,6 +25,7 @@ categories:
 - M.2 slot1: Samsung PM9A1 1TB
 - M.2 slot2: KIOXIA RC10 500GB
 - SATA: 西数紫盘 2TB
+
 ### 华硕 B550m 主板
 
 官方参数：[TUF GAMING B550M-PLUS (WI-FI) - Tech Specs｜Motherboards｜ASUS Global](https://www.asus.com/Motherboards-Components/Motherboards/TUF-Gaming/TUF-GAMING-B550M-PLUS-WI-FI/techspec/)
@@ -365,10 +366,12 @@ Group:  21  0000:0a:00.4 Audio device [0403]: Advanced Micro Devices, Inc. [AMD]
   - 要么 swap gpu slot
 - 解释问题原理，以及解决：[Explaining CSM, efifb=off, and Setting the Boot GPU Manually - The Passthrough POST](https://passthroughpo.st/explaining-csm-efifboff-setting-boot-gpu-manually/)
 - 是否需要 dump vbios：[(8) When is a GPU ROM required and how does it get used? : VFIO (reddit.com)](https://www.reddit.com/r/VFIO/comments/uyyb15/when_is_a_gpu_rom_required_and_how_does_it_get/)
+
 #### 问题可能导致的现象
 
 - windows循环蓝屏。自己直通1063遇到的，解决办法可以不插显示器启动，或者使用命令reset显卡
 - 报43错误，驱动安装不上。1060换成AMD 6500xt时遇到的，解决办法就是不插显示器启动。（后面给czw在PVE里直通amd 6500xt时又遇到一样问题，但是解决办法不一样。
+
 #### 问题原因
 
 - uefi 是电脑启动后 cpu 最早运行的代码
@@ -381,6 +384,7 @@ Group:  21  0000:0a:00.4 Audio device [0403]: Advanced Micro Devices, Inc. [AMD]
 关闭 primary gpu 的显示器，second gpu 插上 hdmi 欺骗器（不插的话相当于没有显示器，启动时自检，显卡亮白灯，但是对于linux还是可以进入系统）
 
 **可以使用脚本避免重启电脑**，参考遇到的问题里的[Windows 启动时循环蓝屏]。
+
 #### 方法一：CSM
 
 UEFI 开启 CSM。让 UEFI 初始化另一个 GPU。[关于 CSM 和 UEFI 你要知道的一些事 - 知乎 (zhihu.com)](https://zhuanlan.zhihu.com/p/36530184)
@@ -422,15 +426,18 @@ QEMU can expose the vBIOS from a ROM file supplied to it by libvirt.
 
 - dump：[Dump_GPU_vBIOS/dump_vbios.sh at master · SpaceinvaderOne/Dump_GPU_vBIOS (github.com)](https://github.com/SpaceinvaderOne/Dump_GPU_vBIOS/blob/master/dump_vbios.sh)
   [(8) How to dump GPU VBIOS on linux? : VFIO (reddit.com)](https://www.reddit.com/r/VFIO/comments/ma0s7j/how_to_dump_gpu_vbios_on_linux/)
+
   ```
   cd /sys/bus/pci/devices/0000:0a:00.0
   echo 1 > rom
   cat rom > /tmp/vbios
   echo 0 > rom
   ```
+
 - 从网络上下载（TechPowerup）
 
 使用vbios
+
 ```
 <hostdev mode='subsystem' type='pci' managed='yes'>
  <source>
@@ -557,11 +564,13 @@ This makes me imagine that putting a PC to sleep then waking it as you start you
 解决
 
 - kernel cmd
+
   ```
   video_vifib=off
   ```
 
 - xorg
+
   ```
   #/etc/X11/xorg.conf.d/second_gpu.conf
   Section "Device"
@@ -570,6 +579,7 @@ This makes me imagine that putting a PC to sleep then waking it as you start you
         BusID  "PCI:4:0:0" #bus id, device id, function id
   EndSection
   ```
+
 ### Windows 启动时循环蓝屏
 
 windows 启动时蓝屏，蓝屏两次后进入恢复界面，选择关机后再次启动依然蓝屏。
@@ -584,6 +594,7 @@ windows 启动时蓝屏，蓝屏两次后进入恢复界面，选择关机后再
 终止代码: VIDEO TDR FAILURE
 失败的操作：nvlddmkm.sys
 ```
+
 #### 解决
 
 发现问题可能是由于将 boot GPU 直通导致的[PCI passthrough via OVMF - ArchWiki (archlinux.org)](https://wiki.archlinux.org/title/PCI_passthrough_via_OVMF#Passing_the_boot_GPU_to_the_guest)
@@ -607,6 +618,7 @@ virsh start win10
 ```
 
 发现 Arch wiki 提到相同的解决方法[BAR_3:_cannot_reserve[mem]](https://wiki.archlinux.org/title/PCI_passthrough_via_OVMF#%22BAR_3:_cannot_reserve_[mem]%22_error_in_dmesg_after_starting_virtual_machine)
+
 ### host 安装 nvidia 驱动后启动会反复 load nvidia 驱动
 
 相当于 bind vifo 不起作用？
@@ -635,6 +647,7 @@ module_blacklist=nvidia
 ```
 softdep nvidia pre: vfio-pci
 ```
+
 ## 性能优化
 
 <https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html-single/virtualization_tuning_and_optimization_guide/index>

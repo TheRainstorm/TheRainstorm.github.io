@@ -231,6 +231,7 @@ mkdocs 官方提供的方式是方式 1，使用它的 workflow 脚本，会自�
 原本写的 markdown 文件有一些格式不太规范（常见错误[^1]），切换成 mkdocs 后，有许多报错信息。以下列出其中一些问题，并且提供一个自动修复脚本[fix_markdown.py](../../code/fix_markdown.py)，避免一些枯燥的手动修改。
 
 [^1]: [A few common Markdown mistakes (github.com)](https://gist.github.com/DavidAnson/006a6c2a2d9d7b21b025)
+
 ### metadata
 
 markdown 开头部分可以定义一些元数据，如作者，日期等，这部分叫做 frontmatter。通常采用 yaml 格式。
@@ -317,15 +318,15 @@ markdown 标准语法中，block 元素前后都需要空行。但是 obsidan �
 
 - cd 到包含 md 的目录
 - 运行 markdownlint-cli2
-  - 其中 `**` 匹配任意符号，`*` 匹配除 `/` 外符号。因此 `**/*.md` 表示当前目录及子目录下所有 md 文件。 
+  - 其中 `**` 匹配任意符号，`*` 匹配除 `/` 外符号。因此 `**/*.md` 表示当前目录及子目录下所有 md 文件。
   - `#node_modules` 作为第二个参数同样是用于匹配文件。不过 `#` 用于取消（negate）匹配。因此该参数作用是排除 node_modules 目录，避免索引太多文件。
   - `--fix` 参数用于修改源文件
+
 ```shell
 docker run -v $PWD:/workdir davidanson/markdownlint-cli2:v0.13.0 "**/*.md" "#node_modules" --fix
 ```
+
 ## mkdocs 扩展格式
 
 箴言
 [Admonitions - Material for MkDocs (squidfunk.github.io)](https://squidfunk.github.io/mkdocs-material/reference/admonitions/)
-
-

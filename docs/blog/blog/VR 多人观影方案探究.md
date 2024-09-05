@@ -14,6 +14,7 @@ VR 比较常见的一个功能便是拿来看看视频，巨大的屏幕以及�
 我相信，这种加强人与人的链接，必然是 VR 未来发展的很重要的一个方向。（比如在 VRChat 中，玩家能做到的不仅是一起观影，还能一起玩游戏、一起逛图甚至一起陪伴睡觉。确实能瞥见一点元宇宙的影子）
 
 回到正题，由于目前 VR 还处于一个开拓区，许多应用都没有完全明确的形态。针对 VR 多人观影，并没有非常成熟的应用，不同软件侧重的功能不同。以下是我对试过的一些方案的总结
+
 ## 现有方案总结
 
 - Pico 视频多人观影
@@ -192,6 +193,7 @@ VR 比较常见的一个功能便是拿来看看视频，巨大的屏幕以及�
   - 其它工具还支持 interlaving audio and video: [Fragmentation, segmentation, splitting and interleaving · gpac/gpac Wiki (github.com)](https://github.com/gpac/gpac/wiki/Fragmentation,-segmentation,-splitting-and-interleaving)
 - 支持 3d 视频的播放器？：[ProTV 2.3 for VRChat (Udon Video Player) [Free DL available] (gumroad.com)](https://architechvr.gumroad.com/l/protv)
 - [USharpVideo](https://github.com/MerlinVR/USharpVideo)是前端，后端基于 AVPro ?[AVPro Only · MerlinVR/USharpVideo Wiki (github.com)](https://github.com/MerlinVR/USharpVideo/wiki/avpro-only)
+
 ```
 public VRCUnityVideoPlayer unityVideo;
 public VRCAVProVideoPlayer avProVideo;

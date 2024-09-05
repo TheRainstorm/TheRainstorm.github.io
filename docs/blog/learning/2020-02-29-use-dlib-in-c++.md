@@ -70,18 +70,18 @@ windows 下还需`gdi32, comctl32, user32, winmm, ws2_32, or imm32`库
 
 - 把 dlib 的**父目录**添加到 include search path
 
-  >  You should *NOT* add the dlib folder itself to your compiler's include path.
-  >   Doing so will cause the build to fail because of name collisions (such as
-  >   dlib/string.h and string.h from the standard library). Instead you should
-  >   add the folder that contains the dlib folder to your include search path
-  >   and then use include statements of the form #include <dlib/queue.h> or
-  >   #include "dlib/queue.h".  This will ensure that everything builds correctly.
+  > You should *NOT* add the dlib folder itself to your compiler's include path.
+  > Doing so will cause the build to fail because of name collisions (such as
+  > dlib/string.h and string.h from the standard library). Instead you should
+  > add the folder that contains the dlib folder to your include search path
+  > and then use include statements of the form #include <dlib/queue.h> or
+  > #include "dlib/queue.h".  This will ensure that everything builds correctly.
 
 - 把 dlib/all/source.cpp 添加到源文件
 
   > If you are using Visual Studio you add .cpp files to your application using
-  >   the solution explorer window.  Specifically, right click on Source Files,
-  >   then select Add -> Existing Item and select the .cpp files you want to add.
+  > the solution explorer window.  Specifically, right click on Source Files,
+  > then select Add -> Existing Item and select the .cpp files you want to add.
 
 - 如果需要 libjpeg 等，把 dlib/external 文件夹下的源文件添加到 project，并 define the DLIB_PNG_SUPPORT and DLIB_JPEG_SUPPORT preprocessor directives.
 

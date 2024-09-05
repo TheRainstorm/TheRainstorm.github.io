@@ -18,9 +18,9 @@ categories:
 
     之前还研究过这类软件一般是怎么发现server的。发现确实有一些方法可以实现跨网络的发现。比如常见的“发现”协议（不知道术语是什么）有mDNS和upnp。是通过ipv4 multicast实现的，所以只要能proxy多播包，就可以实现在两个网络互相发现。
 
-
 2024/4/17 update: 今天在搜索 vxlan 时发现了一篇博客也遇到了这个问题。他的解决方案是通过设置 bridge-nf-call-iptables 使得桥接的数据包也通过 iptable，然后再通过 iptable 修正 MSS。因此其方案对于 UDP 仍然存在问题。不过将 bridge 的包进行三层的处理的思路是一样的。[在 OpenWrt 设备间使用 VXLAN 创建隧道 – t123yh's Blog](https://blog.t123yh.xyz:3/index.php/archives/941)
 看来这个问题并不是 gre 才会有的。那有没有更加现代的二层隧道协议，能够自动解决这个问题呢？
+
 ### 二层隧道方案
 
 隧道方案如下图所示：
@@ -102,8 +102,8 @@ $ ping www.baidu.com -l 1373 -f
 
     使用`-s`指定数据部分大小，使用`-M do`禁止分片
 
-
 可以看到，我到百度的 PTMU 为 1372（因为实际中经过了一个 1400 的 wg 隧道）
+
 - 其中 `-l` 指定 icmp data 部分，因此实际 ip 包大小为：20 + 8 + 1372 = 1400
 - `-f`禁用分片
 
@@ -132,7 +132,6 @@ iptables -t mangle -A POSTROUTING -p tcp --tcp-flags SYN,RST SYN -o eth0 -j TCPM
 # 根据PMTU自动设置
 iptables -t mangle -A POSTROUTING -p tcp --tcp-flags SYN,RST SYN -o eth0 -j TCPMSS --clamp-mss-to-pmtu
 ```
-
 
 !!! info "openwrt 只对 forward 进行 MSS clamping？"
 
@@ -324,6 +323,7 @@ $ ping 192.168.35.180 -l 1257
 正在 Ping 192.168.35.180 具有 1257 字节的数据:
 Control-C
 ```
+
 ## 总结与思考
 
 - 原因在于二层 MTU 不一致，导致包经过一个更小的通路时既无法分片，也无法返回 ICMP 报错（否则设置了 PMTU，下一次就可以通过），从而导致黑洞。
@@ -348,7 +348,7 @@ Control-C
 - 有没有 L2 上的 PMTUD？或者不基于 ICMP 不就行了？
 - ARP proxy，让两边通信实际并不直接通信（走 gre 隧道），而是让路由器路由一下，比如通过 wg 隧道通信？
 
-## 解决了？！！！
+## 解决了？
 
 2024/03/17
 
@@ -383,6 +383,7 @@ add rule bridge gre_tap_fix_mtu c1 meta iifname eth1 ip daddr 192.168.35.0/24 me
 mtr 测试，可以发现两边 ping 时，路由多了一跳。原本是直接发送，现在变成路由器转发一次
 
 op1 lan 内设备访问两个设备，分别过 gre 隧道和不过
+
 ```shell
 ➜  ~ tracepath -n 192.168.35.126
  1?: [LOCALHOST]                      pmtu 1500
@@ -521,6 +522,7 @@ trace id 3786311f inet fw4 mangle_forward policy accept
 例子：直接 ping op2，会发现包从 eth2 进入后，会从 vxlan 出去，再wg_s2s 回，而不会直接 eth2 -> eth1。这可能是因为包已经被 bridge 拿走了，所以不会 eth2 -> eth1。这导致实际上延迟从 1ms 变为 2ms。
 
 p.s 如果 op1 上原本是无法访问 op2 的话，这样还会导致连接 lan2 wifi 无法访问 lan 的情况。
+
 ```
 root@op2 ➜  ~ tcpdump -ni any icmp and host 192.168.36.1
 tcpdump: data link type LINUX_SLL2
@@ -536,12 +538,14 @@ listening on any, link-type LINUX_SLL2 (Linux cooked v2), snapshot length 262144
 解决办法：针对 lan1 的地址，也将 bridge 转成 route 即可。
 
 改完后再抓包，可以发现包从 br-lan2 就 Input 了，不像之前得绕路从 wg_s2s input 的情况。
+
 ```
 20:45:55.192422 eth2  P   IP 192.168.35.180.31195 > 192.168.36.1.2202: Flags [.], ack 5648, win 8193, length 0
 20:45:55.192422 br-lan2 In  IP 192.168.35.180.31195 > 192.168.36.1.2202: Flags [.], ack 5648, win 8193, length 0
 20:45:55.294526 br-lan2 Out IP 192.168.36.1.2202 > 192.168.35.180.31195: Flags [P.], seq 5648:5852, ack 1, win 502, length 204
 20:45:55.294528 eth2  Out IP 192.168.36.1.2202 > 192.168.35.180.31195: Flags [P.], seq 5648:5852, ack 1, win 502, length 204
 ```
+
 ## 再次总结与思考
 
 虽然成功解决了，现在 moonlight UDP 串流没有问题了。但是可能的问题还有：
@@ -570,6 +574,7 @@ tcpdump 增加 -e，显示以太网帧后发现了问题。
 - windows 接收到 tagged 的包，并不会丢弃，而是正常接收，这导致错误地配置了 SLAAC 的地址。
 
 由于每个接口每 5 分钟对所有节点发送一次 RA，以下是抓到的 op2 和 op1 广播的 ra 消息。只要一接收到该消息，windows 就会出现错误的 v6 地址。
+
 ```
 root@ax6s ➜  ~ tcpdump -nei lan3 -vvvv -tttt "icmp6 and (ip6[40] == 134 or ip6[40] == 133)" # rs, ra
 

@@ -130,9 +130,11 @@ tcpdump 抓到的 NS，NA
 
 ndppd 不生效，restart 后才生效
 需要研究。
-### ndppd 不响应 NS（配置文件错误） 
+
+### ndppd 不响应 NS（配置文件错误）
 
 king6 上 ndppd 是可以看到 write_advert 对应发出 NA 的
+
 ```
 (debug) iface::read() len=86
 (debug) iface::read_solicit() saddr=2001:da8:d800:336::1, daddr=ff02::1:ffef:aa01, len=86
@@ -145,6 +147,7 @@ king6 上 ndppd 是可以看到 write_advert 对应发出 NA 的
 ```
 
 我的 op1
+
 ```
 (debug) checking 2001:da8:d800:336::ae86:0/120 against fe80::ee8e:b5ff:febc:304f
 (debug) iface::read() len=86
@@ -161,12 +164,14 @@ king6 上 ndppd 是可以看到 write_advert 对应发出 NA 的
 ### 需要 ping 一下触发 NS 才能通网
 
 尝试给 br-lan 添加一个新地址 `2001:da8:d800:336::beef:aa03`
+
 ```
 root@op1 ➜  ~ ping -I 2001:da8:d800:336::beef:aa03 2408:4002:102f:7600::1
 
 ```
 
 可以发现从 wan 口发出去了，但是学校没有对其转发
+
 ```
 22:58:52.387671 br-wan Out IP6 2001:da8:d800:336::beef:aa03 > 2408:4002:102f:7600::1: ICMP6, echo request, id 19045, seq 33, length 64
 22:58:52.387674 eth0  Out IP6 2001:da8:d800:336::beef:aa03 > 2408:4002:102f:7600::1: ICMP6, echo request, id 19045, seq 33, length 64
@@ -176,12 +181,14 @@ root@op1 ➜  ~ ping -I 2001:da8:d800:336::beef:aa03 2408:4002:102f:7600::1
 
 - 可以 ping 学校网关
 - 可以从外网 ping 该 ipv6
+
 ```
 2024-04-26 23:01:58.974842 IP6 2001:da8:d800:336::1 > ff02::1:ffef:aa03: ICMP6, neighbor solicitation, who has 2001:da8:d800:336::beef:aa03, length 32
 2024-04-26 23:01:58.974947 IP6 2001:da8:d800:336::1c > 2001:da8:d800:336::1: ICMP6, neighbor advertisement, tgt is 2001:da8:d800:336::beef:aa03, length 32
 ```
 
 然后就可以通了
+
 ```
 23:03:12.080272 br-wan Out IP6 2001:da8:d800:336::beef:aa03 > 2408:4002:102f:7600::1: ICMP6, echo request, id 20919, seq 4, length 64
 23:03:12.080274 eth0  Out IP6 2001:da8:d800:336::beef:aa03 > 2408:4002:102f:7600::1: ICMP6, echo request, id 20919, seq 4, length 64
@@ -192,4 +199,3 @@ root@op1 ➜  ~ ping -I 2001:da8:d800:336::beef:aa03 2408:4002:102f:7600::1
 ## 参考资料
 
 - [ndppd/README at 0.2.5 · DanielAdolfsson/ndppd (github.com)](https://github.com/DanielAdolfsson/ndppd/blob/0.2.5/README)
-
