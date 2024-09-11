@@ -156,6 +156,11 @@ Openwrt 的 MSS 功能放在防火墙 Zone 设置中（毕竟是基于 iptable �
 
 ![image.png](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/20240316200359.png)
 
+
+### MTU 1508？
+
+[How to correctly set MTU of all my network interfaces (wan and lan)? - Installing and Using OpenWrt / Network and Wireless Configuration - OpenWrt Forum](https://forum.openwrt.org/t/how-to-correctly-set-mtu-of-all-my-network-interfaces-wan-and-lan/108298/12)
+[RFC 4638 - Accommodating a Maximum Transit Unit/Maximum Receive Unit (MTU/MRU) Greater Than 1492 in the Point-to-Point Protocol over Ethernet (PPPoE) (ietf.org)](https://datatracker.ietf.org/doc/html/rfc4638)
 ### 参考资料
 
 - 提到隧道往往需要限制 MSS 来避免分片：[什么是 MSS（最大分段大小）？ | Cloudflare (cloudflare-cn.com)](https://www.cloudflare-cn.com/learning/network-layer/what-is-mss/)
@@ -554,6 +559,10 @@ listening on any, link-type LINUX_SLL2 (Linux cooked v2), snapshot length 262144
 - 同一侧的机器间访问，是否也需要路由器转发？这样是否有性能影响
   - 发现居然不是，因为同一侧的机器大部分在进入 openwrt 之前，就已经在 pve host 的 vmbr 上已经进行转发了。
 
+### 通过 DHCP option 设置所有设备 MTU
+
+只要 dhcp server 启用了 mtu option，好像主流系统都会使用。正好我的 360t7 无法使用 nft bridge 命令导致分片损耗很大，可以试一试该方案。
+
 ## VLAN 切换方案
 
 - 避免需要反复插拔网线来切换 AP 所在的 lan
@@ -562,7 +571,7 @@ listening on any, link-type LINUX_SLL2 (Linux cooked v2), snapshot length 262144
 
 ![便携路由器-L2-tunnel-新.drawio.png](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/%E4%BE%BF%E6%90%BA%E8%B7%AF%E7%94%B1%E5%99%A8-L2-tunnel-%E6%96%B0.drawio.png)
 
-### windows 获得错误的 v6 地址
+### windows 获得错误的 v6 地址（RA 跨了网段）
 
 笔记本通过网线连接到 AX6S AP。由于每个端口配置了 10 作为 pvid，并且 10 是 untagged 的，因此笔记本相当于接入了 VLAN10。
 
@@ -571,7 +580,7 @@ listening on any, link-type LINUX_SLL2 (Linux cooked v2), snapshot length 262144
 tcpdump 增加 -e，显示以太网帧后发现了问题。
 
 - 由于每个 port 同时配置了 vlan 10 和 vlan 20，因此只要路由器发送 RA，就会在所有接口上发，不过会带上 vlan id。
-- windows 接收到 tagged 的包，并不会丢弃，而是正常接收，这导致错误地配置了 SLAAC 的地址。
+- **windows 接收到 tagged 的包，并不会丢弃，而是正常接收，这导致错误地配置了 SLAAC 的地址**。
 
 由于每个接口每 5 分钟对所有节点发送一次 RA，以下是抓到的 op2 和 op1 广播的 ra 消息。只要一接收到该消息，windows 就会出现错误的 v6 地址。
 
@@ -612,7 +621,7 @@ root@ax6s ➜  ~ tcpdump -nei lan3 -vvvv -tttt "icmp6 and (ip6[40] == 134 or ip6
 
 ```
 
-解决方法：lan2 只能通过 wifi 接入即可，把所有 lan 端口都不加入 vlan20 即可（注意，wan 用于连接上级路由器 op2，因此需要保留 vlan20）
+解决方法：设置 lan2 只能通过 wifi 接入，所有 lan 端口都不加入 vlan20（注意，wan 用于连接上级路由器 op2，因此需要保留 vlan20）
 
 ![image.png](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/20240805013551.png)
 
