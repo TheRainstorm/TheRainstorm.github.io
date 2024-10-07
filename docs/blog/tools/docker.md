@@ -61,6 +61,7 @@ docker run --user <username_or_UID> <image_name>
 docker run -it --rm --name test --entrypoint bash image
 ```
 
+应用场景：如果容器在反复重启，导致无法 exec 上去。此时就需要使用镜像重新 docker run，然后修改 entrypoint 避免再次失败重启。
 ### images 相关
 
 ```bash
