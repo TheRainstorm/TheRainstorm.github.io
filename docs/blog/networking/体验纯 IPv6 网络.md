@@ -39,6 +39,8 @@ I'm working on a few other bits at the moment, not sure when I'll have the time 
 
 ![image.png](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/20241008011951.png)
 
+并且 /48 的前缀，我可以划分 65536 个子网！
+
 <!-- more -->
 
 有用链接
@@ -341,4 +343,8 @@ trunk 接口（刚好使用了原本的 WAN 口，这样接线时容易记起来
   - AP 上创建 lan3 接口，使用 dhcpv6 client 协议
     - 也可以获得 v6 地址
 - 此时设备突然可以通过 wifi 获得 v6 地址了
+- 后面发现，重点检查 vxlan 和 eth 接口的 master 是否确实是 br-lan。后面又遇到一次不通网，便是该问题。可以手动设置。
+```
+ip link set dev vxlan1 master br-lan3
+```
 

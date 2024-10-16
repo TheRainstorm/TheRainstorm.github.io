@@ -53,6 +53,25 @@ docker update --restart unless-stopped redis
 docker run --user <username_or_UID> <image_name>
 ```
 
+#### restart
+
+
+- no
+  - Don't automatically restart the container. (Default)
+- `on-failure[:max-retries]`
+  - Restart the container if it exits due to an error, which manifests as a non-zero exit code. Optionally, limit the number of times the Docker daemon attempts to restart the container using the :max-retries option. The on-failure policy only prompts a restart if the container exits with a failure. It doesn't restart the container if the daemon restarts.
+- always
+  - Always restart the container if it stops. If it's manually stopped, it's restarted only when Docker daemon restarts or the container itself is manually restarted.
+- unless-stopped
+  - Similar to always, except that when the container is stopped (manually or otherwise), it isn't restarted even after Docker daemon restarts.
+
+```
+docker run -d --restart unless-stopped redis
+
+docker update --restart unless-stopped redis
+```
+
+
 #### 覆盖 Entrypoint
 
 对于那些指定了 entrypoint 为特定程序，如 python 的容易非常有用，可以用于上去维修。
