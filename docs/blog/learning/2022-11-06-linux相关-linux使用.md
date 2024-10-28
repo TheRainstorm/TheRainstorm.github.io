@@ -300,10 +300,10 @@ apt install lightdm
 
 ![](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/20240912193122.png)
 
+*好像需要进入 graphical.target 才能正常使用。gdm 可以在 multi-user.target 下 通过  sudo systemctl start gdm 启动图形界面。lightdm systemctl start 报错*
 #### gdm3
 
 选中用户，输入密码时右下脚才会出现齿轮来切换桌面环境。
-
 
 切换 wayland 和 xorg[How to Enable or Disable Wayland on Ubuntu 22.04 Desktop – TecAdmin](https://tecadmin.net/how-to-enable-or-disable-wayland-on-ubuntu-22-04-desktop/)
 

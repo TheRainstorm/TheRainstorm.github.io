@@ -65,6 +65,73 @@ categories:
 - 对于需要 authentication 的代理服务器，通常格式如下 [git/Documentation/config/http.txt at 0ca365c2ed48084974c7081bdfe3189094a2b993 · git/git (github.com)](https://github.com/git/git/blob/0ca365c2ed48084974c7081bdfe3189094a2b993/Documentation/config/http.txt#L8-L9)
   - `[protocol://][user[:password]@]proxyhost[:port][/path]`
 
+## All in One proxy
+
+发现真的有同时支持各种代理的应用，还支持端口复用。使用 python 配置简单，因此后面方案基本都被淘汰了。
+### pproxy
+
+[qwj/python-proxy: HTTP/HTTP2/HTTP3/Socks4/Socks5/Shadowsocks/ShadowsocksR/SSH/Redirect/Pf TCP/UDP asynchronous tunnel proxy implemented in Python 3 asyncio. (github.com)](https://github.com/qwj/python-proxy)
+
+一条命令，支持 ipv4 和 ipv6
+```
+pproxy -l http+socks5://:11223
+
+docker run --name pproxy -d --restart unless-stoped -p 11223:11223 mosajjal/pproxy:latest -l http+socks5://:11223
+
+```
+
+`-l` 参数支持的格式
+```
+{scheme}://[{cipher}@]{netloc}/[@{localbind}][,{plugins}][?{rules}][#{auth}]
+```
+
+- netloc
+    - It can be "hostname:port" or "/unix_domain_socket". If the hostname is empty, server will listen on all interfaces.
+    - Valid netloc: localhost:8080, 0.0.0.0:8123, /tmp/domain_socket, :8123
+- localbind
+    - It can be "@in" or @ipv4_address or @ipv6_address
+    - Valid localbind: @in, @192.168.1.15, @::1
+- The username, colon ':', and the password
+#### 认证
+
+认证只支持密码，**不支持 ip 的方式**
+
+- 可以通过外部的防火墙实现只允许部分 ip
+
+```
+$ pproxy -l http://domain1.com:443#username:password
+```
+#### 访问控制
+
+访问控制通过正则表达式。貌似不能指定 ip
+
+创建 rules 文件
+```
+#google domains
+(?:.+\.)?google.*\.com
+(?:.+\.)?gstatic\.com
+(?:.+\.)?gmail\.com
+(?:.+\.)?ntp\.org
+(?:.+\.)?glpals\.com
+(?:.+\.)?akamai.*\.net
+(?:.+\.)?ggpht\.com
+(?:.+\.)?android\.com
+(?:.+\.)?gvt1\.com
+(?:.+\.)?youtube.*\.com
+(?:.+\.)?ytimg\.com
+(?:.+\.)?goo\.gl
+(?:.+\.)?youtu\.be
+(?:.+\.)?google\..+
+```
+
+```
+pproxy -r http://aa.bb.cc.dd:8080?rules -vv
+```
+
+_pproxy_ will serve incoming traffic by http/socks4/socks5 auto-detect protocol, redirect all google traffic to http proxy aa.bb.cc.dd:8080, and visit all other traffic directly from local.
+
+- -b BLOCK          block regex rules
+
 ## HTTP 代理服务器
 
 ### privoxy
@@ -501,3 +568,28 @@ sudo vim /etc/shadowsocks-libev/local.json
 /usr/bin/ss-server -c /etc/shadowsocks-libev/server.json
 /usr/bin/ss-local -c /etc/shadowsocks-libev/local.json
 ```
+
+## 代理应用
+
+### github git clone ssh 协议
+
+代理 git clone ssh 协议
+
+```
+# ~/.ssh/config
+Host github.com
+  HostName github.com
+  User git
+  IdentityFile ~/.ssh/id_ed25519
+  ProxyCommand nc -X connect -x '[2001:da8:xxx::xxx]:yyy' %h %p
+```
+
+测试 github 密钥被添加到哪个**仓库**或者整个用户
+```
+(base) fyyuan@snode2 ➜  repo ssh -T -ai ~/.ssh/id_ed25519 git@github.com
+Hi TheRainstorm/gpu-interval-model! You've successfully authenticated, but GitHub does not provide shell access.
+(base) fyyuan@snode2 ➜  repo vim ~/.ssh/config
+(base) fyyuan@snode2 ➜  repo ssh -T -ai ~/.ssh/id_ed25519 git@github.com
+Hi TheRainstorm! You've successfully authenticated, but GitHub does not provide shell access.
+```
+
