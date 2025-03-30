@@ -625,6 +625,200 @@ root@ax6s ➜  ~ tcpdump -nei lan3 -vvvv -tttt "icmp6 and (ip6[40] == 134 or ip6
 
 ![image.png](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/20240805013551.png)
 
+## 2024/12 更新 L2TPv3（failed）
+
+请教一下群内大佬关于 vxlan 的问题，我现在有 B 和 C 两个设备通过 vxlan 连接到 A，B 和 C 都能访问 A，但是 B 和 C 之间不通，请问这是默认行为吗？B 访问 C 时，tcpdump 抓包能在 A 上抓到 arp 但是没有响应。
+
+vxlan 不通的原因
+
+- A 在 vxlan0 上收到 B -> C 的包，mac 地址是 B -> C，不是自己的，直接丢弃。
+  - 如果有 hairpin 功能，也许可行
+- vxlan 设计的是多个机器通过虚拟端口间通信，就像在一个交换机上。我这里的情况，变成了希望从一个端口来回一趟。
+
+意识到 gre 和 vxlan 这样的协议没有处理 MTU 问题，是因为他们的应用场景。GRE tap确实没想到只能在两个设备间 L2 连接有什么用。 vxlan 用于实现不同 VTEP 之间多对多连接（底层最好基于多播，或者在一个二层内，多跳的网络扩展性不好），可以用于数据中心连接多个机柜中的虚拟机。
+至于二层组网场景，企业使用的协议是 L2TPv3 这种协议，v3 是版本号。L2TPv3 并且可以和普通以太网桥接起来，支持处理分片。关键词为 L2TPv3 Pseudowire
+
+**发现仍然还是不行，将不同 MTU 接口 bridge 在一起还是有问题**
+
+```
+TheRainstorm, [2024/12/7 15:17]
+请教一下群内大佬关于 vxlan 的问题，我现在有 B 和 C 两个设备通过 vxlan 连接到 A，B 和 C 都能访问 A，但是 B 和 C 之间不通，请问这是默认行为吗？B 访问 C 时，tcpdump 抓包能在 A 上抓到 arp 但是没有响应。
+
+TheRainstorm, [2024/12/7 15:19]
+创建 vxlan 的命令：ip link add vxlan0 type vxlan id 8 remote xxx dev eth0 dstport 4789
+
+Ciel, [2024/12/7 15:19]
+看起来你的A没有处理转发（？
+
+TheRainstorm, [2024/12/7 15:20]
+A 是 openwrt，转发是开的。并且理论上 in 和 out 的接口都是 vxlan0，所以应该也没有防火墙问题？
+
+Miao Wang, [2024/12/7 15:20]
+你 abc 三个机器上 vxlan 网络的 IP 是同一个网段？
+
+TheRainstorm, [2024/12/7 15:22]
+是的，都是 A 上 dhcp 下发的地址。B 是我手动添加的静态地址。A 上将 vxlan0 和 eth0 bridge 到了一起。B 和 C 都能访问 A 的 eth0 下设备，但是之间就不互通
+
+Miao Wang, [2024/12/7 15:22]
+这是期待的现象
+
+Miao Wang, [2024/12/7 15:22]
+vxlan 隧道是个多点的隧道
+
+Miao Wang, [2024/12/7 15:23]
+里面有个转发表
+
+Miao Wang, [2024/12/7 15:23]
+写明指定的 mac 地址要发到哪个隧道端点
+
+Miao Wang, [2024/12/7 15:23]
+而你 ip link add 里的 remote 是指没有查到的默认目标
+
+Miao Wang, [2024/12/7 15:24]
+所以当 B 访问 C 的时候，相当于是 A 收到了 B 发给 C 的包，不是发给自己的，丢掉
+
+Miao Wang, [2024/12/7 15:25]
+对于你的需求，看你 B 和 C 的访问，到底你是否想要经由 A 转发
+
+Miao Wang, [2024/12/7 15:26]
+如果需要，那么可能的一个操作是在 A 的 vxlan 接口上开 hairpin（我没试过）
+
+Miao Wang, [2024/12/7 15:27]
+你把以太网和 vxlan bridge 起来都是不对的
+
+Miao Wang, [2024/12/7 15:27]
+因为它们 mtu 不一样
+
+Miao Wang, [2024/12/7 15:27]
+而 vxlan 不支持分片
+
+TheRainstorm, [2024/12/7 15:29]
+这个确实，我之前踩了这个坑。后面发现使用 add rule bridge gre_tap_fix_mtu c1 meta iifname eth1 ip daddr 192.168.35.0/24 meta pkttype set host ether daddr set 00:16:3e:4b:67:80 counter 这样一条 nft 命令可以解决
+
+TheRainstorm, [2024/12/7 15:30]
+就是 nft 修改下目的 mac 地址，改为 A 的 bridge mac 地址。这样 A 就会对包在 3 层进行转发一次
+
+Miao Wang, [2024/12/7 15:31]
+哦，那也不是不可以
+
+TheRainstorm, [2024/12/7 15:32]
+A 转发的同时就会分片了，同时也可以使用 MSS clamping 修改 TCP 连接的 MSS 来避免分片
+
+Miao Wang, [2024/12/7 15:33]
+不是，我是说 B 和你被桥起来的 eth0 里面的设备的通信
+
+Miao Wang, [2024/12/7 15:36]
+因为这种通信不一定是 tcp，轮不到你改 mss；而且有些应用（比如路由协议）还对跳数有要求，你这个由 A 三层转发的话，就多出来了一跳
+
+Miao Wang, [2024/12/7 15:37]
+我给你一个一劳永逸的建议是，B 和 C 分别建立一个 l2tpv3 的隧道，在 A 上把两个隧道接口和 eth0 桥起来
+
+Miao Wang, [2024/12/7 15:37]
+vxlan 不适合你这种场景
+
+Miao Wang, [2024/12/7 15:37]
+l2tpv3 是点到点的隧道，而且支持分片
+
+TheRainstorm, [2024/12/7 15:39]
+就是本来 B 是直接发给 eth0 下的设备 D 的，B 分片是按 1500 分的，A 收到原本目的 mac 地址为 D 的包改为 A 自己的，就会传到 3 层处理。将分片合并后，按照 eth0 设置的 mtu（减去 VXLAN 的开销） 重新分片。相当与中间多了个分片合并的开销。对于 TCP 流量还可以使用 MSS clamping 消除这个开销，对于 UDP 确实就需要承受这个开销，但是至少不会出现大包不通的情况
+
+Miao Wang, [2024/12/7 15:40]
+B 的 vxlan mtu 小
+
+Miao Wang, [2024/12/7 15:40]
+你考虑一下 D 发给 B？
+
+Miao Wang, [2024/12/7 15:41]
+D 发出来的包是 1500，到 A 这里（注意是二层来的，目的 mac 是 B），由 A 的 bridge 二层转发给 vxlan 接口
+
+Miao Wang, [2024/12/7 15:41]
+然后超过 vxlan 接口的 mtu，丢弃
+
+Miao Wang, [2024/12/7 15:43]
+你要是强行把 vxlan 接口的 mtu 设置为 1500 也可以，那么就是 vxlan 在 underlay 网络发包的时候发现加上隧道头和 udp 头之后超过 underlay 的 mtu，丢弃
+
+TheRainstorm, [2024/12/7 15:43]
+哦，我描述不对。其实 B 和 A 都是路由器，我需要在 B 和 A 上都对本地 eth0 下设备发往对面（vxlan）的包使用那个 nft 命令
+
+Miao Wang, [2024/12/7 15:44]
+所以我觉得你的实现似乎很复杂，很麻烦，把不该用在这个场景下的东西拿了过来
+
+Miao Wang, [2024/12/7 15:45]
+你到底要二层通还是三层通，三层通直接用 gre 隧道，二层通的话用 l2tp 隧道
+
+Miao Wang, [2024/12/7 15:45]
+你现在似乎状态是，呈现的样子好像是二层的，但是实际上还是三层转发
+
+TheRainstorm, [2024/12/7 15:46]
+确实，我可以看看你说的 l2tpv3。
+
+TheRainstorm, [2024/12/7 15:47]
+不过对应用来说没关系，因为我只是需要二层设备发现的能力
+
+Miao Wang, [2024/12/7 15:47]
+嗯，vxlan 主要还是点到多点的用途，就是希望参与的每个节点直接通信
+
+Miao Wang, [2024/12/7 15:47]
+不过现在看似乎不太行。。。。
+
+Miao Wang, [2024/12/7 15:47]
+比如如果是局域网的广播包，你这个似乎就很难处理。。。。
+
+Miao Wang, [2024/12/7 15:48]
+就是 ip l2tp add tunnel，然后 ip l2tp add session 就好了
+```
+
+
+[L2TPv3原理介绍 - AR100, AR120, AR150, AR160, AR200, AR300, AR1200, AR2200, AR3200, AR3600 V200R010 配置指南-VPN（命令行） - 华为](https://support.huawei.com/enterprise/zh/doc/EDOC1100033731/12541fbc)
+
+### L2TP 配置
+
+```
+sudo ip l2tp add tunnel tunnel_id 100 peer_tunnel_id 1 encap udp local 222.195.72.114 remote 114.214.236.72 udp_sport 1701 udp_dport 1702
+sudo ip l2tp add session tunnel_id 100 session_id 1 peer_session_id 1
+
+ip l2tp add tunnel tunnel_id 1 peer_tunnel_id 100 encap udp remote 222.195.72.114 local 114.214.236.72 udp_sport 1702 udp_dport 1701
+ip l2tp add session tunnel_id 1 session_id 1 peer_session_id 1
+```
+
+之后在 op1 上将 l2tpeth0 添加到 LAN bridge 即可。
+```
+17:11:10.199353 l2tpeth0 P   IP 192.168.35.42 > 192.168.35.183: ICMP echo request, id 35, seq 17, length 64
+17:11:10.199366 vxlan0 Out IP 192.168.35.42 > 192.168.35.183: ICMP echo request, id 35, seq 17, length 64
+17:11:10.204473 vxlan0 P   IP 192.168.35.183 > 192.168.35.42: ICMP echo reply, id 35, seq 17, length 64
+17:11:10.204496 l2tpeth0 Out IP 192.168.35.183 > 192.168.35.42: ICMP echo reply, id 35, seq 17, length 64
+```
+### openwrt L2TPv3 Pseudowire bridged to LAN
+
+https://openwrt.org/docs/guide-user/network/tunneling_interface_protocols#l2tpv3_pseudowire_bridged_to_lan
+
+```
+opkg install xl2tpd
+
+modprobe l2tp_eth l2tp_ip l2tp_ip6
+```
+
+发现配置文件选项不太一样，是早期的 openwrt 网络配置，interface 直接使用 type bridge，而不是一个 device
+
+This example establishes a Pseudowire Tunnel and bridges it to the LAN ports. The existing lan interface is reused with protocol `l2tp` instead of `static`.
+
+```
+config interface 'lan'
+	option proto     'l2tp'
+	option type      'bridge'
+	option ifname    'eth0'
+	option ipaddr    '192.168.1.1'
+	option netmask   '255.255.255.0'
+	option localaddr '178.24.154.19'
+	option peeraddr  '89.44.33.61'
+	option encap     'udp'
+	option sport     '4000'
+	option dport     '5410'
+```
+
+[Pseudowire [Old OpenWrt Wiki]](https://oldwiki.archive.openwrt.org/doc/howto/pseudowire)
+**仍然不支持 bridge 不同 MTU 的设备**。
+> For now the setup works so both sides can ping each other. An ssh connection, however, is not either possible or freezes after a few seconds. The reason: The bridge for the L2TPv3 contains devices with different MTU3 . Furthermore, as the connection is bridged no routing happens and the MTU is not automatically adjusted by the router. All devices in the LAN usually use a MTU of 1500. The MTU of the L2TPv3 devices is about 1400. As the tunnel itself can not fragment packets all packets bigger than the MTU are lost. This happens at longer HTTP request, too. To solve the problem bridge firewalling and TCP MSS Clamping is used. Bridge firewalling means the iptables rules are used when a packet passes a bridge. Normally this should not work, as a bridge only works in Layer 2. However, if bridge firewalling is enabled in the kernel a bridge can work in Layer 2 as well as Layer 3. The following sysctl keys are used for this:
 ## 参考
 
 - windows 查看 PMTU：[Windows MTU active value after pmtu ? - Microsoft Community](https://answers.microsoft.com/en-us/windows/forum/all/windows-mtu-active-value-after-pmtu/ed7c2ce3-adc3-4135-9539-267a8e9fbe56)

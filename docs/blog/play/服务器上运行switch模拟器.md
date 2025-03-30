@@ -519,19 +519,33 @@ GoW 的替代升级版本，仅使用单个镜像包含 moonlight server、Pulse
 
 ### 设置
 
-前提
-
-- nvidia-container-toolkit
-- `sudo cat /sys/module/nvidia_drm/parameters/modeset` 需要为 Y
-  - nvidia-drm 和 DRM 有关，wolf 基于 wayland 需要使用 DRM
-  - 没有开启的话需要更改模块参数，重新加载。由于 nvidia 模块通常被占用，因此一般无法直接重新加载 模块，需要修改参数，然后重启。
-  ```
-  sudo vim /etc/modprobe.d/nvidia-drm.conf
-  options nvidia-drm modeset=1
-  sudo update-initramfs -u
-  ```
-
 [games-on-whales/wolf: Stream virtual desktops and games running in Docker (github.com)](https://github.com/games-on-whales/wolf)
+#### 前提
+
+1 安装配置 `nvidia-container-toolkit`
+ [Installing the NVIDIA Container Toolkit — NVIDIA Container Toolkit 1.17.0 documentation](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html)
+```
+sudo apt install nvidia-container-toolkit
+sudo nvidia-ctk runtime configure --runtime=docker
+
+systemctrl restart docker
+```
+
+2 启用 nvidia_drm
+```
+sudo cat /sys/module/nvidia_drm/parameters/modeset
+Y  # 输出 Y
+```
+
+- nvidia-drm 和 DRM 有关，wolf 基于 wayland 需要使用 DRM
+- 没有开启的话需要更改模块参数，重新加载。由于 nvidia 模块通常被占用，因此一般无法直接重新加载 模块，需要修改参数，然后重启。
+```
+sudo vim /etc/modprobe.d/nvidia-drm.conf
+options nvidia-drm modeset=1
+sudo update-initramfs -u
+```
+
+#### docker 参数
 
 ```
 docker run \
@@ -539,8 +553,9 @@ docker run \
     --network=host \
     -e XDG_RUNTIME_DIR=/tmp/sockets \
     -v /tmp/sockets:/tmp/sockets:rw \
-    -e HOST_APPS_STATE_FOLDER=/mnt/Disk1/wolf \
-    -v /mnt/Disk1/wolf:/etc/wolf:rw \
+    -e HOST_APPS_STATE_FOLDER=/extra/wolf \
+    -v /extra/wolf:/extra/wolf:rw \
+    -v /extra/wolf/cfg:/etc/wolf/cfg:rw \
     -v /var/run/docker.sock:/var/run/docker.sock:rw \
     -e NVIDIA_DRIVER_CAPABILITIES=all \
     -e NVIDIA_VISIBLE_DEVICES=all \
@@ -554,24 +569,17 @@ docker run \
     ghcr.io/games-on-whales/wolf:stable
 ```
 
-|                        |                     |                                                                                                                                                                     |
-| ---------------------- | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| HOST_APPS_STATE_FOLDER | /etc/wolf           | The base folder in the host where the running apps will store permanent state                                                                                       |
-| WOLF_RENDER_NODE       | /dev/dri/renderD128 | The default render node used for virtual desktops; see: [Multiple GPUs](https://games-on-whales.github.io/wolf/stable/user/configuration.html#_multiple_gpu)        |
-| WOLF_ENCODER_NODE      | $WOLF_RENDER_NODE   | The default render node used for the Gstreamer pipelines; see: [Multiple GPUs](https://games-on-whales.github.io/wolf/stable/user/configuration.html#_multiple_gpu) |
-#### 修改 app 存储数据的目录
 
-> Since Wolf supports multiple streaming sessions at the same time and each session can run a different app, we need to make sure that each app has its own folder where it can store permanent data.  
-> To achieve this, for each running app, Wolf will create a folder structure like this and then mount that as the home (`/home/retro`) for the docker container that will run the selected app.
+- `HOST_APPS_STATE_FOLDER`: defaults to `/etc/wolf`, 存储所有 app 的数据
+- `app_state_folder`: defaults to a unique identifier for each client so that every Moonlight session will have its own folder. Can be changed in the `config.toml` file. 和应用程序存储数据路径有关，可以在 toml 中单独配置
+- `app_title`: the title of the app as defined in the `config.toml` file. 和应用程序存储数据路径有关，可以在 toml 中单独配置
+
+原理：打开每个应用时，动态创建一个 docker 容器，并添加映射
 ```
-${HOST_APPS_STATE_FOLDER}/${app_state_folder}/${app_title}
+HOST_APPS_STATE_FOLDER/app_state_folder/app_title:/home/wolf
 ```
 
-主要和一下三个变量有关
-
-- `HOST_APPS_STATE_FOLDER`: defaults to `/etc/wolf`, can be changed via ENV
-- `app_state_folder`: defaults to a unique identifier for each client so that every Moonlight session will have its own folder. Can be changed in the `config.toml` file
-- `app_title`: the title of the app as defined in the `config.toml` file
+因此修改 HOST_APPS_STATE_FOLDER 时，需要额外增加一个映射将 host 中的 HOST_APPS_STATE_FOLDER 映射到容器内的 HOST_APPS_STATE_FOLDER。否则创建的 app 找不到 HOST_APPS_STATE_FOLDER 指向的 host 目录。
 
 ### 遇到的问题
 
@@ -597,6 +605,10 @@ sudo update-initramfs -u
 
 - 关闭大屏幕模式，在 config 中添加额外的环境变量 `STEAM_STARTUP_FLAGS=-steamos3`
 - 我自己发现连点两下有线连接，就能跳过这里的设置，直接进入 steam 了
+
+### 为 steam 添加单独映射的游戏路径
+
+
 ### windows compositor
 
 成功串流 firefox 后，注意到除了浏览器，就只能看到顶上系统的任务条。有按钮可以打开终端，终端以分屏形式展示。但是窗口都没有关闭按钮。感觉可能是类似 iw3 那种窗口管理器？
