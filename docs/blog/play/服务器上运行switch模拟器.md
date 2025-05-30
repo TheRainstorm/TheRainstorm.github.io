@@ -41,7 +41,7 @@ wolf 即插即用效果
 
 <!-- more -->
 
-# “计算卡”性能对比
+## “计算卡”性能对比
 
 [NVIDIA Tesla P40 Specs | TechPowerUp GPU Database](https://www.techpowerup.com/gpu-specs/tesla-p40.c2878)
 [NVIDIA Tesla P100 PCIe 16 GB Specs | TechPowerUp GPU Database](https://www.techpowerup.com/gpu-specs/tesla-p100-pcie-16-gb.c2888)
@@ -52,7 +52,7 @@ wolf 即插即用效果
 P100(0.84)< 1080 Ti(1) < P40(1.04) < Titan V(1.32) < 3070Ti(1.46)
 
 
-# LXD 虚拟机方案（不用了）
+## LXD 虚拟机方案（不用了）
 
 *p.s. lxd 必须使用本地用户，服务器现在已经没有本地 home 目录了，因此这个方案不再适用。*
 
@@ -60,7 +60,7 @@ P100(0.84)< 1080 Ti(1) < P40(1.04) < Titan V(1.32) < 3070Ti(1.46)
 Sorry, home directories outside of /home needs configuration.
 See https://forum.snapcraft.io/t/11209 for details.
 ```
-## steam 安装
+### steam 安装
 
 [5 Simple Ways to Install Steam on Linux - wikiHow](https://www.wikihow.com/Install-Steam-on-Linux)
 [Steam under Linux - Valve Developer Community (valvesoftware.com)](https://developer.valvesoftware.com/wiki/Steam_under_Linux)
@@ -69,7 +69,7 @@ dpkg i386
 steam play(proton)
 [Linux Gaming with Ubuntu Desktop Part 1: Steam & Proton | Ubuntu](https://ubuntu.com/blog/linux-gaming-with-ubuntu-desktop-steam-and-proton)
 
-## steam link 使用
+### steam link 使用
 
 steam link流式传输错误 无法连接以中继
 - 刚开始手机steam link无法连接。在lxd容器内开启wg全部流量走op2后可以。
@@ -82,20 +82,20 @@ steam link有声音，延迟红线是60。
 
 ![](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/steam-link-connected-ip.jpg)
 
-## sunshine 配置
+### sunshine 配置
 
 parsec althernative
 - moonlight + sunshine
 [(6) Parsec alternative for Linux : linux_gaming (reddit.com)](https://www.reddit.com/r/linux_gaming/comments/tz36bs/parsec_alternative_for_linux/)
 
-### setup
+#### setup
 
 [Nvidia’s GameStream is dead. Sunshine and Moonlight are great replacements. | Ars Technica](https://arstechnica.com/gaming/2023/04/nvidias-gamestream-is-dead-sunshine-and-moonlight-are-better-replacements/)
 [Usage - Sunshine documentation (lizardbyte.dev)](https://docs.lizardbyte.dev/projects/sunshine/en/latest/about/usage.html#setup)
 
-### 遇到的问题
+#### 遇到的问题
 
-#### use nvidia runtime
+##### use nvidia runtime
 
 ```
 Error: Failed to create session: Version mismatch between NvFBC and the X driver interface
@@ -123,7 +123,7 @@ Error: Failed to create a CUDA device: Operation not supported
 apt install libnvidia-fbc1-530
 ```
 
-## lxd 手柄
+### lxd 手柄
 
 moonlight连接sunshine后，没有手柄。尝试在lxd中添加/dev/uinput，结果moonlight连接后连键鼠都无法操作了。
 
@@ -156,128 +156,7 @@ lxd直通手柄
 - 以普通用户启动tigervnc，启动sunshine，/dev/input目录下并没有出现键盘设备和js设备（docker方案出现了mouse0-2, js0-1）
 - 以root用户启动tigervnc，普通用户启动sunshine，/dev/input出现了键鼠。但是无法操作键鼠了。
 
-#### docker 对比
-
-```
-
-```
-
-```
-root@531dd4a4763b:~# cat .config/sunshine/sunshine.log
-[2023:05:17:10:39:35]: Error: Failed to create session: This hardware does not support NvFBC
-[2023:05:17:10:39:35]: Error: Couldn't expose some/all drm planes for card: /dev/dri/card2
-[2023:05:17:10:39:35]: Info: Detecting connected monitors
-[2023:05:17:10:39:35]: Info: // Testing for available encoders, this may generate errors. You can safely ignore those errors. //
-[2023:05:17:10:39:35]: Info: Trying encoder [nvenc]
-[2023:05:17:10:39:35]: Info: Screencasting with X11
-[2023:05:17:10:39:35]: Info: SDR color coding [Rec. 601]
-[2023:05:17:10:39:35]: Info: Color range: [JPEG]
-[2023:05:17:10:39:36]: Error: Could not open codec [h264_nvenc]: Function not implemented
-[2023:05:17:10:39:36]: Info: Screencasting with X11
-[2023:05:17:10:39:36]: Info: SDR color coding [Rec. 601]
-[2023:05:17:10:39:36]: Info: Color range: [JPEG]
-[2023:05:17:10:39:36]: Error: Failed to create a CUDA device: Operation not supported
-[2023:05:17:10:39:36]: Info: Screencasting with X11
-[2023:05:17:10:39:36]: Info: SDR color coding [Rec. 601]
-[2023:05:17:10:39:36]: Info: Color range: [JPEG]
-[2023:05:17:10:39:36]: Error: Failed to create a CUDA device: Operation not supported
-[2023:05:17:10:39:36]: Info: Screencasting with X11
-[2023:05:17:10:39:36]: Info: SDR color coding [Rec. 601]
-[2023:05:17:10:39:36]: Info: Color range: [JPEG]
-[2023:05:17:10:39:36]: Error: Failed to create a CUDA device: Operation not supported
-[2023:05:17:10:39:36]: Info: Encoder [nvenc] failed
-[2023:05:17:10:39:36]: Info: Trying encoder [vaapi]
-[2023:05:17:10:39:36]: Info: Screencasting with X11
-[2023:05:17:10:39:36]: Info: SDR color coding [Rec. 601]
-[2023:05:17:10:39:36]: Info: Color range: [JPEG]
-[2023:05:17:10:39:36]: Info: vaGetDriverNameByIndex() failed with unknown libva error, driver_name = (null)
-[2023:05:17:10:39:36]: Error: Couldn't initialize va display: unknown libva error
-[2023:05:17:10:39:36]: Info: Screencasting with X11
-[2023:05:17:10:39:36]: Info: SDR color coding [Rec. 601]
-[2023:05:17:10:39:36]: Info: Color range: [JPEG]
-[2023:05:17:10:39:36]: Info: vaGetDriverNameByIndex() failed with unknown libva error, driver_name = (null)
-[2023:05:17:10:39:36]: Error: Couldn't initialize va display: unknown libva error
-[2023:05:17:10:39:36]: Info: Screencasting with X11
-[2023:05:17:10:39:36]: Info: SDR color coding [Rec. 601]
-[2023:05:17:10:39:36]: Info: Color range: [JPEG]
-[2023:05:17:10:39:36]: Info: vaGetDriverNameByIndex() failed with unknown libva error, driver_name = (null)
-[2023:05:17:10:39:36]: Error: Couldn't initialize va display: unknown libva error
-[2023:05:17:10:39:36]: Info: Screencasting with X11
-[2023:05:17:10:39:36]: Info: SDR color coding [Rec. 601]
-[2023:05:17:10:39:36]: Info: Color range: [JPEG]
-[2023:05:17:10:39:36]: Info: vaGetDriverNameByIndex() failed with unknown libva error, driver_name = (null)
-[2023:05:17:10:39:36]: Error: Couldn't initialize va display: unknown libva error
-[2023:05:17:10:39:36]: Info: Encoder [vaapi] failed
-[2023:05:17:10:39:36]: Info: Trying encoder [software]
-[2023:05:17:10:39:36]: Info: Screencasting with X11
-[2023:05:17:10:39:36]: Info: SDR color coding [Rec. 601]
-[2023:05:17:10:39:36]: Info: Color range: [JPEG]
-[2023:05:17:10:39:36]: Info: Screencasting with X11
-[2023:05:17:10:39:36]: Info: SDR color coding [Rec. 601]
-[2023:05:17:10:39:36]: Info: Color range: [JPEG]
-[2023:05:17:10:39:36]: Info: Screencasting with X11
-[2023:05:17:10:39:36]: Info: SDR color coding [Rec. 601]
-[2023:05:17:10:39:36]: Info: Color range: [JPEG]
-[2023:05:17:10:39:36]: Info: Screencasting with X11
-[2023:05:17:10:39:36]: Info: SDR color coding [Rec. 709]
-[2023:05:17:10:39:36]: Info: Color range: [JPEG]
-[2023:05:17:10:39:36]: Error: Could not open codec [libx264]: Invalid argument
-[2023:05:17:10:39:36]: Info: Screencasting with X11
-[2023:05:17:10:39:36]: Info: SDR color coding [Rec. 601]
-[2023:05:17:10:39:36]: Info: Color range: [JPEG]
-[2023:05:17:10:39:36]: Warning: software: h264: replacing nalu prefix data
-[2023:05:17:10:39:36]: Info:
-[2023:05:17:10:39:36]: Info: // Ignore any errors mentioned above, they are not relevant. //
-[2023:05:17:10:39:36]: Info:
-[2023:05:17:10:39:36]: Info: Found encoder software: [libx264]
-[2023:05:17:10:39:36]: Info: Adding avahi service Sunshine
-[2023:05:17:10:39:36]: Info: Configuration UI available at [https://localhost:47990]
-[2023:05:17:10:39:37]: Info: /CN=NVIDIA GameStream Client -- verified
-[2023:05:17:10:39:37]: Info: Avahi service Sunshine successfully established.
-[2023:05:17:10:39:40]: Info: /CN=NVIDIA GameStream Client -- verified
-[2023:05:17:10:39:43]: Info: /CN=NVIDIA GameStream Client -- verified
-[2023:05:17:10:39:47]: Info: /CN=NVIDIA GameStream Client -- verified
-[2023:05:17:10:39:47]: Info: /CN=NVIDIA GameStream Client -- verified
-[2023:05:17:10:39:50]: Info: /CN=NVIDIA GameStream Client -- verified
-[2023:05:17:10:39:51]: Info: /CN=NVIDIA GameStream Client -- verified
-[2023:05:17:10:39:51]: Info: /CN=NVIDIA GameStream Client -- verified
-[2023:05:17:10:39:53]: Info: /CN=NVIDIA GameStream Client -- verified
-[2023:05:17:10:39:54]: Info: /CN=NVIDIA GameStream Client -- verified
-[2023:05:17:10:39:57]: Info: /CN=NVIDIA GameStream Client -- verified
-[2023:05:17:10:39:57]: Info: /CN=NVIDIA GameStream Client -- verified
-[2023:05:17:10:39:58]: Info: /CN=NVIDIA GameStream Client -- verified
-[2023:05:17:10:39:58]: Info: Executing [Desktop]
-[2023:05:17:10:39:58]: Info: CLIENT CONNECTED
-[2023:05:17:10:39:58]: Info: Detecting connected monitors
-[2023:05:17:10:39:58]: Info: Screencasting with X11
-[2023:05:17:10:39:58]: Info: Configuring selected monitor (0) to stream
-[2023:05:17:10:39:58]: Info: Streaming display: DP-0 with res 1920x1080 offset by 0x0
-[2023:05:17:10:39:58]: Info: SDR color coding [Rec. 601]
-[2023:05:17:10:39:58]: Info: Color range: [MPEG]
-[2023:05:17:10:39:58]: Info: Setting default sink to: [sink-sunshine-stereo]
-[2023:05:17:10:39:58]: Info: Found default monitor by name: sink-sunshine-stereo.monitor
-[2023:05:17:10:40:00]: Info: /CN=NVIDIA GameStream Client -- verified
-[2023:05:17:10:40:03]: Info: /CN=NVIDIA GameStream Client -- verified
-[2023:05:17:10:40:07]: Info: /CN=NVIDIA GameStream Client -- verified
-[2023:05:17:10:40:10]: Info: /CN=NVIDIA GameStream Client -- verified
-[2023:05:17:10:40:13]: Info: /CN=NVIDIA GameStream Client -- verified
-[2023:05:17:10:40:17]: Info: /CN=NVIDIA GameStream Client -- verified
-[2023:05:17:10:40:20]: Info: /CN=NVIDIA GameStream Client -- verified
-[2023:05:17:10:40:20]: Info: /CN=NVIDIA GameStream Client -- verified
-[2023:05:17:10:40:23]: Info: /CN=NVIDIA GameStream Client -- verified
-[2023:05:17:10:40:27]: Info: /CN=NVIDIA GameStream Client -- verified
-[2023:05:17:10:40:30]: Info: /CN=NVIDIA GameStream Client -- verified
-[2023:05:17:10:40:33]: Info: /CN=NVIDIA GameStream Client -- verified
-[2023:05:17:10:40:37]: Info: /CN=NVIDIA GameStream Client -- verified
-[2023:05:17:10:40:40]: Info: /CN=NVIDIA GameStream Client -- verified
-[2023:05:17:10:40:43]: Info: /CN=NVIDIA GameStream Client -- verified
-[2023:05:17:10:40:47]: Info: /CN=NVIDIA GameStream Client -- verified
-[2023:05:17:10:40:50]: Info: /CN=NVIDIA GameStream Client -- verified
-```
-
-# Docker方案
-
-## Game on Whale (被 wolf 升级替代)
+## Docker方案--Game on Whale (被 wolf 升级替代)
 
 在docker容器里跑x11应用。可以直接在host上显示，也可以运行在headless服务器上，通过sunshine串流到本地。
 
@@ -506,7 +385,7 @@ gow-sunshine-1 exited with code 2
 
 进入后发现vulkan画面渲染有问题（黑屏），opengl没问题。更新到nvidia-drive-530后解决。
 
-## Wolf
+## Docker方案--Wolf
 
 GoW 的替代升级版本，仅使用单个镜像包含 moonlight server、PulseAudio、wayland、uinput等多个组件。一条命令 docker 命令就可以把服务起起来。
 
@@ -528,7 +407,7 @@ GoW 的替代升级版本，仅使用单个镜像包含 moonlight server、Pulse
 sudo apt install nvidia-container-toolkit
 sudo nvidia-ctk runtime configure --runtime=docker
 
-systemctrl restart docker
+systemctl restart docker
 ```
 
 2 启用 nvidia_drm
@@ -571,10 +450,12 @@ docker run \
 
 
 - `HOST_APPS_STATE_FOLDER`: defaults to `/etc/wolf`, 存储所有 app 的数据
-- `app_state_folder`: defaults to a unique identifier for each client so that every Moonlight session will have its own folder. Can be changed in the `config.toml` file. 和应用程序存储数据路径有关，可以在 toml 中单独配置
+- `app_state_folder`: defaults to a unique identifier for **each client** so that every Moonlight session will have its own folder. Can be changed in the `config.toml` file. 
+    - 默认是每个客户端采用独立的目录，因此**数据不共享**
+    - 可以在 app toml 中单独配置，实现客户端共享
 - `app_title`: the title of the app as defined in the `config.toml` file. 和应用程序存储数据路径有关，可以在 toml 中单独配置
 
-原理：打开每个应用时，动态创建一个 docker 容器，并添加映射
+原理：打开每个应用时，wolf 容器 **动态**创建一个 应用 app 容器，并添加映射
 ```
 HOST_APPS_STATE_FOLDER/app_state_folder/app_title:/home/wolf
 ```
@@ -606,6 +487,51 @@ sudo update-initramfs -u
 - 关闭大屏幕模式，在 config 中添加额外的环境变量 `STEAM_STARTUP_FLAGS=-steamos3`
 - 我自己发现连点两下有线连接，就能跳过这里的设置，直接进入 steam 了
 
+### 不同moonlight session 共享应用数据
+
+如下所示，手动修改`/opt/opt/wolf/cfg/config.toml`，将配对的 client 的 `app_state_folder` 设置成一样的（这里我已经将原本的 client 目录重命名为 `common`）
+
+```
+paired_clients = [
+{run_gid = 1000, run_uid = 1000, app_state_folder = "common", client_cert ="..."},
+]
+```
+
+wolf HOST_APPS_STATE_FOLDER 典型结构
+```
+/opt/opt/wolf
+├── 16963924829778730322
+│   ├── RetroArch
+│   └── Steam
+├── 4674202571325744356
+│   ├── Firefox
+│   ├── RetroArch
+│   ├── Steam
+│   └── Test ball
+├── 9429283158619851144
+│   └── RetroArch
+│       └── udev
+│           ├── control
+│           └── data
+│               └── c13:76
+├── cfg
+│   ├── backtrace.2024-10-11-08-54-29.207356030.dump
+│   ├── backtrace.2025-04-20-05-00-26.273162500.dump
+│   ├── cert.pem
+│   ├── config.toml
+│   └── key.pem
+├── common
+│   ├── Firefox
+│   ├── RetroArch
+│   │   └── retroarch.cfg
+│   └── Steam
+│       ├── Desktop
+│       │   ├── Finding Paradise.desktop
+│       │   ├── Proton Experimental.desktop
+│       │   └── Steam Linux Runtime 3.0 (sniper).desktop
+│       └── steam-2273430.log
+└── fake-udev
+```
 ### 为 steam 添加单独映射的游戏路径
 
 
@@ -642,25 +568,12 @@ Usage is controlled by environment variables on `[apps.runner]` configs:
 
 ![](https://kroki.io/plantuml/svg/eNplUEtPwzAMvudXWOWcf4CQEI8eoAIxIQ7TDqF1R0QaR07GQ4j_TuNlWyputr-H7S--Wx8Mmwl6mgJ59GmVvh0CY5-M3zpUapxhhOYyBGd7kyz52MCPAlivEpppk6tbyzjS10b9Hvkv5MYGzpzdvqVXt8O9pI2JZxGyyK7y0mgTsSh7R7sh89YdkRdl7dhhNGXzTXsvBg8BfSnbx2cY2H4gx1p0h-zRFdn1UydYuRy01hfF7PjCYlh45zKqrz3R_2Oq7gq-t6vnmvN_GasyqeqKUKWhxAm0w1GgQwCH4oQs8lh080kDffpMkkD-ACxkpww=)
 
-## nvidia runtime
-
-docker --gpu all，可以直接运行nvidia-smi（需要设置docker daemon中使用nvidia runtime）
-
-lxc添加gpu device后，set nvidia.runtime true后可以直接运行nvidia-smi
-- 添加gpu后，/dev/可以看到许多nvidia设备
-
-docker 特权容器 /dev下有host所有设备。而lxc特权容器，/dev下仍然只有少数设备。
-### nvidia-container-tookit
-
-现在已经更名
-
-安装方式见：[Installing the NVIDIA Container Toolkit — NVIDIA Container Toolkit 1.16.2 documentation](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html)
-## 其它链接
+## 其它方案
 
 docker steam：[mikenye/docker-steam: Valve's Steam, on Linux, in Docker. Perfect for gaming via Remote Play. (github.com)](https://github.com/mikenye/docker-steam)
 
 
-# 使用多GPU提升性能？
+## 使用多GPU提升性能？
 
 ### SLI
 
@@ -736,14 +649,3 @@ The "render nodes" concept tries to solve these scenarios by splitting the DRM u
 
 展示了AMD的两套驱动：Mesa和AMD自身的
 ![](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/20230516214345.png)
-
-
-## headless串流
-
-就是需要一个display adapter，无论是虚拟的还是物理的都可以
-
-[(7) Moonlight Streaming without Monitor (no dummy plug needed) : MoonlightStreaming (reddit.com)](https://www.reddit.com/r/MoonlightStreaming/comments/rzpcpc/moonlight_streaming_without_monitor_no_dummy_plug/)
-
-[如何在没有显示器的情况下运行 Parsec？这是适合您的虚拟监视器解决方案（间接显示） |由 Arche Basic |中等 --- How to run Parsec without monitor? Here’s a virtual monitor solution for you (Indirect Display) | by Arche Basic | Medium](https://archeb.medium.com/how-to-run-parsec-without-monitor-heres-a-virtual-monitor-solution-for-you-indirect-display-ecba5173b86a)
-
-# 
