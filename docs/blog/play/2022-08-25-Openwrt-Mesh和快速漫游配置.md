@@ -418,3 +418,9 @@ Thu Aug 17 23:01:42 2023 daemon.info dnsmasq-dhcp[1]: DHCPOFFER(br-lan) 192.168.
 Thu Aug 17 23:01:42 2023 daemon.info dnsmasq-dhcp[1]: DHCPREQUEST(br-lan) 192.168.33.218 2a:85:8f:ff:be:e3
 Thu Aug 17 23:01:42 2023 daemon.info dnsmasq-dhcp[1]: DHCPACK(br-lan) 192.168.33.218 2a:85:8f:ff:be:e3 Redmi-Note-11T-Pro
 ```
+
+## BATMAN
+
+[维基 - batman-adv - 开放式网状网络 --- Wiki - batman-adv - Open Mesh](https://www.open-mesh.org/projects/batman-adv/wiki/Wiki)
+
+[benkay86/openwrt-batman-tutorial：通过 LuCI 网页界面在 OpenWRT 上配置 802.11s 网状网络和 batman-adv 路由。 --- benkay86/openwrt-batman-tutorial: Configure 802.11s mesh with batman-adv routing on OpenWRT through the LuCI web interface.](https://github.com/benkay86/openwrt-batman-tutorial)

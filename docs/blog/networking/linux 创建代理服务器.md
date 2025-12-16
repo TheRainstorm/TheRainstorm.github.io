@@ -24,6 +24,7 @@ categories:
 首先复习下 HTTP 代理，这个协议很简单。第一种模式直接转发 HTTP 报文即可。第二种模式仅是使用了 HTTP 方法建立连接，打开 TCP 连接后就和 HTTP 报文没啥关系了，可以代理各种基于 TCP 的协议。（因此不支持 UDP）
 
 两种模式：
+
 - 中间人模式
   - 无法代理HTTPS，因为HTTPS需要证书，而代理服务器无法提供。
 - 隧道模式
@@ -59,7 +60,7 @@ categories:
 - 可以针对不同协议设置不同代理。**仅设置 http_proxy 的话，不会对 https 网站生效**
 - **建议使用小写**。The environment variables can be specified in l**ower case or upper case**. The lower case version has precedence. http_proxy is an exception as it is only available in lower case.
 - socks 协议家族
-  - `socks4://, socks4a://, socks5:// or socks5h:// `
+  - `socks4://, socks4a://, socks5:// or socks5h://`
   - `socks5h` 表示域名在代理服务器上解析
     - Since clients are allowed to use either resolved addresses or domain names, a convention from [cURL](https://en.wikipedia.org/wiki/CURL "CURL") exists to label the domain name variant of SOCKS5 "socks5h", and the other simply "socks5". A similar convention exists between SOCKS4a and SOCKS4.[[18]](https://en.wikipedia.org/wiki/SOCKS#cite_note-18)
 - 对于需要 authentication 的代理服务器，通常格式如下 [git/Documentation/config/http.txt at 0ca365c2ed48084974c7081bdfe3189094a2b993 · git/git (github.com)](https://github.com/git/git/blob/0ca365c2ed48084974c7081bdfe3189094a2b993/Documentation/config/http.txt#L8-L9)
@@ -68,30 +69,34 @@ categories:
 ## All in One proxy
 
 发现真的有同时支持各种代理的应用，还支持端口复用。使用 python 配置简单，因此后面方案基本都被淘汰了。
+
 ### pproxy
 
 [qwj/python-proxy: HTTP/HTTP2/HTTP3/Socks4/Socks5/Shadowsocks/ShadowsocksR/SSH/Redirect/Pf TCP/UDP asynchronous tunnel proxy implemented in Python 3 asyncio. (github.com)](https://github.com/qwj/python-proxy)
 
 一条命令，支持 ipv4 和 ipv6
+
 ```
 pproxy -l http+socks5://:11223
 
-docker run --name pproxy -d --restart unless-stoped -p 11223:11223 mosajjal/pproxy:latest -l http+socks5://:11223
+docker run --name pproxy -d --restart unless-stopped -p 11223:11223 mosajjal/pproxy:latest -l http+socks5://:11223
 
 ```
 
 `-l` 参数支持的格式
+
 ```
 {scheme}://[{cipher}@]{netloc}/[@{localbind}][,{plugins}][?{rules}][#{auth}]
 ```
 
 - netloc
-    - It can be "hostname:port" or "/unix_domain_socket". If the hostname is empty, server will listen on all interfaces.
-    - Valid netloc: localhost:8080, 0.0.0.0:8123, /tmp/domain_socket, :8123
+  - It can be "hostname:port" or "/unix_domain_socket". If the hostname is empty, server will listen on all interfaces.
+  - Valid netloc: localhost:8080, 0.0.0.0:8123, /tmp/domain_socket, :8123
 - localbind
-    - It can be "@in" or @ipv4_address or @ipv6_address
-    - Valid localbind: @in, @192.168.1.15, @::1
+  - It can be "@in" or @ipv4_address or @ipv6_address
+  - Valid localbind: @in, @192.168.1.15, @::1
 - The username, colon ':', and the password
+
 #### 认证
 
 认证只支持密码，**不支持 ip 的方式**
@@ -99,13 +104,15 @@ docker run --name pproxy -d --restart unless-stoped -p 11223:11223 mosajjal/ppro
 - 可以通过外部的防火墙实现只允许部分 ip
 
 ```
-$ pproxy -l http://domain1.com:443#username:password
+pproxy -l http://domain1.com:443#username:password
 ```
+
 #### 访问控制
 
 访问控制通过正则表达式。貌似不能指定 ip
 
 创建 rules 文件
+
 ```
 #google domains
 (?:.+\.)?google.*\.com
@@ -146,6 +153,7 @@ vim /etc/privoxy/config
 
 sudo systemctl start privoxy
 ```
+
 #### 我的访问控制
 
 由于这个 HTTP 代理是公开的。目前我不希望有人通过这个代理入侵我的内网。因此添加了如下规则。（在结尾处，能够覆盖前面的规则）
@@ -156,6 +164,7 @@ sudo systemctl start privoxy
 192.168.*.*
 10.*.*.*
 ```
+
 #### 访问控制文档
 
 privoxy 使用 action 来进行访问控制
@@ -164,7 +173,6 @@ privoxy 使用 action 来进行访问控制
 
 通过自定义配置 user.action 来覆盖默认配置 default.action（定义了许多预定义规则如拦截广告、拦截弹窗、Cookie 处理）
 > The over-riding principle when applying actions, is that the last action that matches a given URL wins. The broadest, most general rules go first (defined in default.action), followed by any exceptions (typically also in default.action), which are then followed lastly by any local preferences (typically in _user_.action). Generally, user.action has the last word.
-
 
 **action 文件由一系列 section 组成，包含了 action 和要匹配的 pattern**
 
@@ -187,6 +195,7 @@ media.example.com/.*banners
 - ipv6 地址需要使用 `<>` 包起来
 
 例子
+
 ```shell
 # host pattern  (glob synatax)
 
@@ -210,7 +219,7 @@ www[1-9a-ez].example.c*
 
 ##### **Action**
 
-默认是关闭的，除非在 action 文件中显示地打开（*So in this case Privoxy would just be a normal, non-blocking, non-filtering proxy.*）。使用 `+` 开启，`-` 关闭。
+默认是关闭的，除非在 action 文件中显示地打开（_So in this case Privoxy would just be a normal, non-blocking, non-filtering proxy._）。使用 `+` 开启，`-` 关闭。
 
 action 可能是带有参数的。多值的参数多次匹配可以累加
 
@@ -227,6 +236,7 @@ action list：有数不过来的 action，参考[manual](https://www.privoxy.org
 - add-header
 - **block**: Block ads or other unwanted content
   - A block reason that should be given to the user.
+
 ```
 {+block{No nasty stuff for you.}}
 # Block and replace with "blocked" page
@@ -241,6 +251,7 @@ action list：有数不过来的 action，参考[manual](https://www.privoxy.org
 # Block and then ignore
 adserver.example.net/.*\.js$
 ```
+
 - change-x-forwarded-for: Improve privacy by not forwarding the source of the request in the HTTP headers.
   - "block" to delete the header.
   - "add" to create the header (or append the client's IP address to an already existing one).
@@ -248,6 +259,7 @@ adserver.example.net/.*\.js$
   - All instances of text-based type, most notably HTML and JavaScript, to which this action applies, can be filtered on-the-fly through the specified regular expression based substitutions. (Note: as of version 3.0.3 plain text documents are exempted from filtering, because web servers often use the text/plain MIME type for all files whose type they don't know.)
 - limit-connect
 - **redirect**: Redirect requests to other sites.
+
 ```
 # Replace example.com's style sheet with another one
   { +redirect{http://localhost/css-replacements/example.com.css} }
@@ -310,17 +322,20 @@ adserver.example.net/.*\.js$
     - http_access
 
 配置文件需要讲究顺序，我们在 `http_access deny all` 前面添加额外的规则，在配置文件结尾加没有用
+
 ```
 acl ustc_net src 222.195.72.0/24
 acl ustc_net2 src 202.38.72.0/24
 
 http_access allow ustc_net ustc_net2
 ```
+
 #### 报错
 
 不知为何，在 ryzen 上通过 localhost 设置可以访问，在其它机器上都不行。
 
 curl 报错
+
 ```
 * Uses proxy env variable https_proxy == 'http://114.214.236.72:11223'
 * Trying 114.214.236.72:11223...
@@ -354,6 +369,7 @@ curl: (56) Received HTTP code 403 from proxy after CONNECT
 ```
 
 squid 日志
+
 ```
 1727852473.521    312 127.0.0.1 TCP_TUNNEL/200 534253 CONNECT www.youtube.com:443 - HIER_DIRECT/198.18.0.148 -
 1727852480.354    488 127.0.0.1 TCP_TUNNEL/200 533027 CONNECT www.youtube.com:443 - HIER_DIRECT/198.18.0.148 -
@@ -408,7 +424,6 @@ socks pass {
 }
 ```
 
-
 ```
 # The config file is divided into three parts;
 #    1) server settings
@@ -432,7 +447,6 @@ server setting 部分可以配置：
 curl: (7) No authentication method was acceptable. (It is quite likely that the SOCKS5 server wanted a username/password, since none was supplied to the server on this connection.)
 ```
 
-
 rule 部分用于实现访问控制，决定哪些 client 可以连接 socks，也决定 client 能够访问哪些内容。
 
 ```
@@ -453,6 +467,7 @@ client pass {
 ```
 
 man 中貌似没有关于 route 的介绍，但是实际上很简单，可以用于实现某些地址使用另一个 socks server 再次转发
+
 ```
 # route all http connects via an upstream socks server, aka "server-chaining".
 #route {
@@ -463,6 +478,7 @@ man 中貌似没有关于 route 的介绍，但是实际上很简单，可以用
 #### man 手册
 
 `man 5 danted.conf`
+
 ##### authentication methods
 
 - none
@@ -481,6 +497,7 @@ man 中貌似没有关于 route 的介绍，但是实际上很简单，可以用
   - Username/password-based  PAM authentication.  Similar to the method username, but the information is passed to the PAM subsystem for authentication, rather than Dante using the system password file directly.  When using PAM, be wary of memory leakages and other bugs in the external PAM library Dante will have to use on your platform.
 - bsdauth
   - This method requires the available client data to be verified by the BSD Authentication system.  Similar to the method username, but passed to the BSD authentication system instead.
+
 ##### rule
 
 有点像防火墙规则，决定哪些 client 可以连接 socks，也决定 client 能够访问哪些内容。
@@ -497,6 +514,7 @@ man 中貌似没有关于 route 的介绍，但是实际上很简单，可以用
 rule 由 `client pass/block` 或者 `socks pass/block` 开始，内容主要是匹配的 condition 相关的关键词（不过也有 log 这种 action 做一些额外操作）
 
 示例
+
 ```
 client pass {
     from: 0.0.0.0/0 to: 0.0.0.0/0
@@ -523,6 +541,7 @@ from, to 含义
   - The session keyword can be used any any rule to limit the number of active sessions and the rate at which they are established.
 - TRAFFIC MONITORING
   - The Dante server can be configured to monitor the traffic passing through it, and trigger alarms based on the observed network traffic
+
 ### ss-local + ss-server
 
 自己最熟悉的工具，因此配置起来很容易。
@@ -585,6 +604,7 @@ Host github.com
 ```
 
 测试 github 密钥被添加到哪个**仓库**或者整个用户
+
 ```
 (base) fyyuan@snode2 ➜  repo ssh -T -ai ~/.ssh/id_ed25519 git@github.com
 Hi TheRainstorm/gpu-interval-model! You've successfully authenticated, but GitHub does not provide shell access.
@@ -592,4 +612,3 @@ Hi TheRainstorm/gpu-interval-model! You've successfully authenticated, but GitHu
 (base) fyyuan@snode2 ➜  repo ssh -T -ai ~/.ssh/id_ed25519 git@github.com
 Hi TheRainstorm! You've successfully authenticated, but GitHub does not provide shell access.
 ```
-

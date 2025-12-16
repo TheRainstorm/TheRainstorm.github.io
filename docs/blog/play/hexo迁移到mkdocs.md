@@ -329,6 +329,7 @@ docker run -v $PWD:/workdir davidanson/markdownlint-cli2:v0.13.0 "**/*.md" "#nod
 ## mkdocs 扩展格式
 
 mkdocs 将 markdown 许多扩展语法都作为插件开启，比如 footnotes。
+
 ### 箴言 Admonition
 
 [Admonitions - Material for MkDocs (squidfunk.github.io)](https://squidfunk.github.io/mkdocs-material/reference/admonitions/)
@@ -375,7 +376,7 @@ mkdocs 将 markdown 许多扩展语法都作为插件开启，比如 footnotes�
         massa, nec semper lorem quam in massa.
     ```
 
-其它类型见 https://squidfunk.github.io/mkdocs-material/reference/admonitions/#supported-types
+其它类型见 <https://squidfunk.github.io/mkdocs-material/reference/admonitions/#supported-types>
 
 ### footnotes
 
@@ -394,7 +395,6 @@ Lorem ipsum[^1] dolor sit amet, consectetur adipiscing elit.[^2]
 
 Lorem ipsum[^1] dolor sit amet, consectetur adipiscing elit.[^2]
 
-[^1]: Lorem ipsum dolor sit amet, consectetur adipiscing elit.
 
 [^2]:
     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla et euismod
@@ -521,8 +521,8 @@ Lorem ipsum[^1] dolor sit amet, consectetur adipiscing elit.[^2]
       B ---->|No| E[Yay!];
     ```
 
-
 其它格式参见：[State diagrams | Mermaid](https://mermaid.js.org/syntax/stateDiagram.html)
+
 ### 其它
 
 math: [Math - Material for MkDocs (squidfunk.github.io)](https://squidfunk.github.io/mkdocs-material/reference/math/)

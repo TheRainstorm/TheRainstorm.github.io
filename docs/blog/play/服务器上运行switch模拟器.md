@@ -22,6 +22,8 @@ categories:
 - 只在使用人数不多的机器上实验，不会在 A100 等主力机器上实验
 - 只在没人用时实验
 
+各种方案，现在直接看 wolf 方案即可（gow 已经不再维护了）
+
 效果
 
 - docker gow
@@ -51,7 +53,6 @@ wolf 即插即用效果
 
 P100(0.84)< 1080 Ti(1) < P40(1.04) < Titan V(1.32) < 3070Ti(1.46)
 
-
 ## LXD 虚拟机方案（不用了）
 
 *p.s. lxd 必须使用本地用户，服务器现在已经没有本地 home 目录了，因此这个方案不再适用。*
@@ -60,6 +61,7 @@ P100(0.84)< 1080 Ti(1) < P40(1.04) < Titan V(1.32) < 3070Ti(1.46)
 Sorry, home directories outside of /home needs configuration.
 See https://forum.snapcraft.io/t/11209 for details.
 ```
+
 ### steam 安装
 
 [5 Simple Ways to Install Steam on Linux - wikiHow](https://www.wikihow.com/Install-Steam-on-Linux)
@@ -72,6 +74,7 @@ steam play(proton)
 ### steam link 使用
 
 steam link流式传输错误 无法连接以中继
+
 - 刚开始手机steam link无法连接。在lxd容器内开启wg全部流量走op2后可以。
 - 但是笔记本steam link不行，甚至可以测得速率。
   - 笔记本也开启wg全部流量走op2。居然就可以连接了
@@ -85,6 +88,7 @@ steam link有声音，延迟红线是60。
 ### sunshine 配置
 
 parsec althernative
+
 - moonlight + sunshine
 [(6) Parsec alternative for Linux : linux_gaming (reddit.com)](https://www.reddit.com/r/linux_gaming/comments/tz36bs/parsec_alternative_for_linux/)
 
@@ -110,7 +114,9 @@ Error: Failed to create a CUDA device: Operation not supported
 > I've seen the 'version mismatch between NvFBC and X driver' error when the NVidia driver installation is broken and multiple versions of driver & nvidia library versions exist on the system at build time. One source of this is manually installing CUDA by using the NVidia installer from their website instead of using only distro packages. The reason is that the CUDA installer from NVidia includes the full X driver as well so if you install the distro drivers then install the NVidia CUDA manually, your driver config will be broken and building with CUDA support enabled will get you this error.
 
 卸载nvida驱动后，使用nvidia runtime
+
 - [Error: Couldn't import RGB Image: 00003009 & Error: Unknown status & Error: Failed to create session: Version mismatch between NvFBC and the X driver interface · Issue #514 · LizardByte/Sunshine (github.com)](https://github.com/LizardByte/Sunshine/issues/514)
+
 ```
 Error: Couldn't find any of the following libraries: [libnvidia-fbc.so.1, libnvidia-fbc.so]
 [2023:05:15:14:01:19]: Error: Couldn't expose some/all drm planes for card: /dev/dri/card8
@@ -130,11 +136,10 @@ moonlight连接sunshine后，没有手柄。尝试在lxd中添加/dev/uinput，�
 但是steam link是可以的，发现steam link连接后，/dev/input下会出现js0和对应evet。将这些都lxc add后（也就是说需要steam link连接后再手动添加），容器内确实可以手柄操作了。但是要想让yuzu检测到手柄，还需要通过steam启动yuzu才行。
 
 后面发现可以直接直通/dev/input（当然为了避免权限问题，lxd可以以特权容器运行，这样就不需要经过uid和gid映射），然后moonlight连接后，键鼠没有出现问题。但是手柄还是不行，报错。感觉可以解决，但是发现帧数和docker方案差不多，因此就没去尝试解决了。
+
 ```
 Error: Could not create Sunshine Gamepad: Permission denied
 ```
-
-
 
 lxd直通手柄
 [Joystick Passthrough - LXD - Linux Containers Forum](https://discuss.linuxcontainers.org/t/joystick-passthrough/14383/6)
@@ -146,12 +151,13 @@ lxd直通手柄
 ```
 
 - 在host运行xorg，将unix socket暴露给容器。运行steam的方法[Unable to get input in container - LXD - Linux Containers Forum](https://discuss.linuxcontainers.org/t/unable-to-get-input-in-container/13609)
+
 > I suspect it may have to do with Xorg trying to list things through udev and udev not having database entries for those devices.
 > You could maybe cheat by copying the /run/udev data across to the container prior to starting Xorg, though I wonder if it wouldn’t be cleaner to run Xorg outside of the container, leaving all the input stuff handled there and then just expose the X11 socket to the container for it to run kodi against.
 > That’d be closer to other setups described on this forum before for running things like steam inside of a container.
 
-
 新发现：
+
 - /run/udev无法直通到lxd容器内（tmpfs的原因？）
 - 以普通用户启动tigervnc，启动sunshine，/dev/input目录下并没有出现键盘设备和js设备（docker方案出现了mouse0-2, js0-1）
 - 以root用户启动tigervnc，普通用户启动sunshine，/dev/input出现了键鼠。但是无法操作键鼠了。
@@ -212,11 +218,14 @@ UDEVD_NETWORK=service:udevd
 ### 额外设置
 
 #### headless display
+
 [Monitor requirements :: Games On Whales (games-on-whales.github.io)](https://games-on-whales.github.io/gow/monitor.html)
+
 - Edid.txt
 - xorg-screen.conf
 
 #### 使用闭源gpu驱动
+
 [NVIDIA GPUs :: Games On Whales (games-on-whales.github.io)](https://games-on-whales.github.io/gow/nvidia.html)
 
 - 设置nvidia container toolkit：`sudo nvidia-ctk runtime configure`
@@ -230,6 +239,7 @@ xorg-primary
 ### 添加自定义app
 
 需要基于base_app_image
+
 ```
 docker build -t yfy/gow-yuzu \
   --build-arg BASE_APP_IMAGE=gameonwhales/base-app:sha-b51c691 \
@@ -241,11 +251,13 @@ docker build -t yfy/gow-yuzu \
 #### dbus not found
 
 sunshine中需要使用dbus
+
 ```
 Failed to connect to system bus: Failed to connect to socket /run/dbus/system_bus_socket
 ```
 
 host安装
+
 ```
 apt install avahi-daemon
 ```
@@ -262,6 +274,7 @@ Your docker-compose is too old; please install v2.6.0 or later.
 For example type `docker-compose up` when using Compose standalone, instead of `docker compose up`.
 
 需要卸载老版本，然后安装docker-compose-pulgin（需要apt添加了docker给仓库）
+
 ```
 apt purge docker-compose
 apt install docker-compose-pulgin
@@ -269,6 +282,7 @@ apt install docker-compose-pulgin
 
 但是直接运行docker-compose会找不到命令
 apt-file search docker-compose可以发现docker-compose-pulgin提供了该程序，使用软连接即可
+
 ```
  sudo ln -s /usr/libexec/docker/cli-plugins/docker-compose /bin/docker-compose
 ```
@@ -278,6 +292,7 @@ apt-file search docker-compose可以发现docker-compose-pulgin提供了该程�
 打开网页显示403
 
 sunshine log
+
 ```
 [2023:05:15:14:16:33]: Error: Failed to create session: This hardware does not support NvFBC
 [2023:05:15:14:16:33]: Error: Couldn't expose some/all drm planes for card: /dev/dri/card1
@@ -297,6 +312,7 @@ sunshine log
 因此这样解决很麻烦。此时wireguard又排上用场了。可以使用wireguard让服务器和我这边直接位于一个LAN内！
 
 解决后成功使用moonlight连接。由于app是firefox，因此可以打开网页，播放音乐有声音！
+
 - 但是仍然无法播放b站视频。现象为一直加载视频
 - 浏览器中文字体缺失。
 
@@ -307,6 +323,7 @@ sunshine log
 尝试在A100 80g机器上跑。
 
 莫名奇妙退出了
+
 ```
 gow-sunshine-1  | chown: changing ownership of '/home/retro': Operation not permitted
 gow-steam-1     | chown: changing ownership of '/home/retro': Operation not permitted
@@ -322,6 +339,7 @@ gow-xorg-1      | warning: output DP-0 not found; ignoring
 取消local_state挂载后，firefox可以跑。（但是感觉是CPU渲染？鼠标很卡。而且不知道什么原因，移动几下鼠标后就画面就卡住了。播放b站视频也会卡住）
 
 多搞几下，最后直接闪退了
+
 ```
 [2023:05:16:03:58:59]: Info: CLIENT CONNECTED
 [2023:05:16:03:58:59]: Info: Detecting connected monitors
@@ -347,6 +365,7 @@ gow-firefox-1   | [Child 359, MediaDecoderStateMachine #1] WARNING: Decoder=7ff8
 #### docker-compose改为相对路径后sunshine exit2
 
 将gow复制到root目录，然后修改docker-compose中关于edid等文件为相对路径。结果一运行，sunshine就exit 2。貌似是没有显示器？
+
 ```
 gow-sunshine-1  | [2023:05:16:03:40:37]: Error: Missing extension: [EGL_EXT_image_dma_buf_import]
 gow-sunshine-1  | [2023:05:16:03:40:37]: Info: Encoder [software] failed
@@ -399,10 +418,12 @@ GoW 的替代升级版本，仅使用单个镜像包含 moonlight server、Pulse
 ### 设置
 
 [games-on-whales/wolf: Stream virtual desktops and games running in Docker (github.com)](https://github.com/games-on-whales/wolf)
+
 #### 前提
 
 1 安装配置 `nvidia-container-toolkit`
  [Installing the NVIDIA Container Toolkit — NVIDIA Container Toolkit 1.17.0 documentation](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html)
+
 ```
 sudo apt install nvidia-container-toolkit
 sudo nvidia-ctk runtime configure --runtime=docker
@@ -411,6 +432,7 @@ systemctl restart docker
 ```
 
 2 启用 nvidia_drm
+
 ```
 sudo cat /sys/module/nvidia_drm/parameters/modeset
 Y  # 输出 Y
@@ -418,6 +440,7 @@ Y  # 输出 Y
 
 - nvidia-drm 和 DRM 有关，wolf 基于 wayland 需要使用 DRM
 - 没有开启的话需要更改模块参数，重新加载。由于 nvidia 模块通常被占用，因此一般无法直接重新加载 模块，需要修改参数，然后重启。
+
 ```
 sudo vim /etc/modprobe.d/nvidia-drm.conf
 options nvidia-drm modeset=1
@@ -448,14 +471,14 @@ docker run \
     ghcr.io/games-on-whales/wolf:stable
 ```
 
-
 - `HOST_APPS_STATE_FOLDER`: defaults to `/etc/wolf`, 存储所有 app 的数据
-- `app_state_folder`: defaults to a unique identifier for **each client** so that every Moonlight session will have its own folder. Can be changed in the `config.toml` file. 
-    - 默认是每个客户端采用独立的目录，因此**数据不共享**
-    - 可以在 app toml 中单独配置，实现客户端共享
+- `app_state_folder`: defaults to a unique identifier for **each client** so that every Moonlight session will have its own folder. Can be changed in the `config.toml` file.
+  - 默认是每个客户端采用独立的目录，因此**数据不共享**
+  - 可以在 app toml 中单独配置，实现客户端共享
 - `app_title`: the title of the app as defined in the `config.toml` file. 和应用程序存储数据路径有关，可以在 toml 中单独配置
 
 原理：打开每个应用时，wolf 容器 **动态**创建一个 应用 app 容器，并添加映射
+
 ```
 HOST_APPS_STATE_FOLDER/app_state_folder/app_title:/home/wolf
 ```
@@ -471,11 +494,13 @@ HOST_APPS_STATE_FOLDER/app_state_folder/app_title:/home/wolf
 另一台服务器上却能够正常运行
 
 发现问题在于 nvidia-drm 没有启用，启用后就好了
+
 ```
 sudo vim /etc/modprobe.d/nvidia-drm.conf
 options nvidia-drm modeset=1
 sudo update-initramfs -u
 ```
+
 #### steam 大屏幕启动卡在网络设置
 
 提示 电量低，无法进行下一步操作
@@ -498,6 +523,7 @@ paired_clients = [
 ```
 
 wolf HOST_APPS_STATE_FOLDER 典型结构
+
 ```
 /opt/opt/wolf
 ├── 16963924829778730322
@@ -532,8 +558,8 @@ wolf HOST_APPS_STATE_FOLDER 典型结构
 │       └── steam-2273430.log
 └── fake-udev
 ```
-### 为 steam 添加单独映射的游戏路径
 
+### 为 steam 添加单独映射的游戏路径
 
 ### windows compositor
 
@@ -572,7 +598,6 @@ Usage is controlled by environment variables on `[apps.runner]` configs:
 
 docker steam：[mikenye/docker-steam: Valve's Steam, on Linux, in Docker. Perfect for gaming via Remote Play. (github.com)](https://github.com/mikenye/docker-steam)
 
-
 ## 使用多GPU提升性能？
 
 ### SLI
@@ -597,28 +622,30 @@ docker steam：[mikenye/docker-steam: Valve's Steam, on Linux, in Docker. Perfec
 [Direct Rendering Manager - Wikipedia](https://en.wikipedia.org/wiki/Direct_Rendering_Manager#Kernel_mode_setting)
 
 display server
+
 - 任何需要显示GUI的应用都是client
 - server和client间通过协议通信。
 - 从内核获得input（键盘、鼠标、触控板），并将其发送给不同的client
 - 声音通常不负责
 
 X11
+
 - 需要第二个程序(composting window manager)，负责窗口的组合(composting)。
 - 常见实现：x.org, xfree86
 ![](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/20230516221140.png)
 
-
 wayland不同
+
 - 包含了compositing
 - client可以直接访问framebuffer。Wayland compositors communicate with Wayland clients over the [Wayland display server protocol](https://en.wikipedia.org/wiki/Wayland_(display_server_protocol) "Wayland (display server protocol)"). This protocol defines that clients can directly write data into the framebuffer using the [EGL](https://en.wikipedia.org/wiki/EGL_(OpenGL) "EGL (OpenGL)") [rendering API](https://en.wikipedia.org/wiki/Rendering_API "Rendering API").
 ![](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/20230516221917.png)
-
 
 ## DRM
 
 linux内核模块
 
 The [Linux kernel](https://en.wikipedia.org/wiki/Linux_kernel "Linux kernel") already had an [API](https://en.wikipedia.org/wiki/Application_programming_interface "Application programming interface") called [fbdev](https://en.wikipedia.org/wiki/Linux_framebuffer "Linux framebuffer"), used to manage the [framebuffer](https://en.wikipedia.org/wiki/Framebuffer "Framebuffer") of a [graphics adapter](https://en.wikipedia.org/wiki/Graphics_adapter "Graphics adapter"),but it couldn't be used to handle the needs of modern 3D-accelerated [GPU](https://en.wikipedia.org/wiki/GPU "GPU")-based video hardware.
+
 - 需要队列
 These devices usually require setting and managing a command queue in [their own memory](https://en.wikipedia.org/wiki/Video_RAM "Video RAM") to dispatch commands to the GPU and also require management of buffers and free space within that memory
 - 避免了不同设备同时设置gpu导致冲突。
@@ -633,17 +660,16 @@ DRM包含通用的DRM core和硬件专用的DRM driver两部分。DRM core provi
 
 ![](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/20230516215751.png)
 
-
 ### 两大部分
 
 - GEM（Graphics Execution Manager）：
   - 管理显卡memory。Due to the increasing size of [video memory](https://en.wikipedia.org/wiki/Video_memory "Video memory") and the growing complexity of graphics APIs such as [OpenGL](https://en.wikipedia.org/wiki/OpenGL "OpenGL"), the strategy of reinitializing the graphics card state at each [context switch](https://en.wikipedia.org/wiki/Context_switch "Context switch") was too expensive, performance-wise. Also, modern [Linux desktops](https://en.wikipedia.org/wiki/Linux_desktop "Linux desktop") needed an optimal way to share off-screen buffers with the [compositing manager](https://en.wikipedia.org/wiki/Compositing_manager "Compositing manager"). These requirements led to the development of new methods to manage graphics [buffers](https://en.wikipedia.org/wiki/Data_buffer "Data buffer") inside the kernel. T
 - KMS（Kernel Mode Setting）
-  - 用于设置显卡输出分辨率，In order to work properly, a video card or graphics adapter must set a _[mode](https://en.wikipedia.org/wiki/Framebuffer#Display_modes "Framebuffer")_—a combination of [screen resolution](https://en.wikipedia.org/wiki/Screen_resolution "Screen resolution"), [color depth](https://en.wikipedia.org/wiki/Color_depth "Color depth") and [refresh rate](https://en.wikipedia.org/wiki/Refresh_rate "Refresh rate")—that is within the range of values supported by itself and the attached [display screen](https://en.wikipedia.org/wiki/Computer_monitor "Computer monitor").
+  - 用于设置显卡输出分辨率，In order to work properly, a video card or graphics adapter must set a *[mode](https://en.wikipedia.org/wiki/Framebuffer#Display_modes "Framebuffer")*—a combination of [screen resolution](https://en.wikipedia.org/wiki/Screen_resolution "Screen resolution"), [color depth](https://en.wikipedia.org/wiki/Color_depth "Color depth") and [refresh rate](https://en.wikipedia.org/wiki/Refresh_rate "Refresh rate")—that is within the range of values supported by itself and the attached [display screen](https://en.wikipedia.org/wiki/Computer_monitor "Computer monitor").
   - KMS has been adopted to such an extent that certain drivers which lack 3D acceleration (or for which the hardware vendor doesn't want to expose or implement it) nevertheless implement the KMS API without the rest of the DRM API, allowing display servers (like [Wayland](https://en.wikipedia.org/wiki/Wayland_(protocol) "Wayland (protocol)")) to run with ease.[[47]](https://en.wikipedia.org/wiki/Direct_Rendering_Manager#cite_note-47)
 
 render node：将计算和渲染的部分剥离开来，避免只有特权用户才能访问gpu。
-The "render nodes" concept tries to solve these scenarios by splitting the DRM user space API into two interfaces – one privileged and one non-privileged – and using separate device files (or "nodes") for each one. For every GPU found, its corresponding DRM driver—if it supports the render nodes feature—creates a device file `/dev/dri/renderD_X_`, called the _render node_, in addition to the primary node `/dev/dri/card_X_`
+The "render nodes" concept tries to solve these scenarios by splitting the DRM user space API into two interfaces – one privileged and one non-privileged – and using separate device files (or "nodes") for each one. For every GPU found, its corresponding DRM driver—if it supports the render nodes feature—creates a device file `/dev/dri/renderD_X_`, called the *render node*, in addition to the primary node `/dev/dri/card_X_`
 
 ### 硬件支持
 

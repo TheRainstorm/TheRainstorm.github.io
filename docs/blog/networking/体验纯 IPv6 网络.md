@@ -47,9 +47,11 @@ I'm working on a few other bits at the moment, not sure when I'll have the time 
 
 - ipw.cn
 - ipv6.test-ipv6.com
+
 ## 纯 IPv6 网站体验排行榜
 
 这里是最后使用手机接入一个纯 ipv6 网络后的体验
+
 ### 国外
 
 google 是真 nb，google 搜索，youtube 都支持 ipv6，并且体验还不错，搜索响应很快，能够提示推荐词，youtube 能观看 1080p 视频（跳转大概缓冲 4s）。
@@ -70,6 +72,7 @@ google 是真 nb，google 搜索，youtube 都支持 ipv6，并且体验还不�
 - reddit
 - twitch
 - instagram
+
 ### 国内
 
 淘宝系也是真 nb，手机 app 流畅的一笔，基本用不出区别。并且软件甚至会检测你的 ip 让你切换到全球地区
@@ -98,7 +101,7 @@ google 是真 nb，google 搜索，youtube 都支持 ipv6，并且体验还不�
   - 知乎
   - 微博
 - 不支持
-  -  贴吧
+  - 贴吧
   - 小红书
   - 豆瓣
 
@@ -113,8 +116,9 @@ google 是真 nb，google 搜索，youtube 都支持 ipv6，并且体验还不�
 
 ### 参考资料
 
-https://www.youtube.com/watch?v=LJPXz8eA3b8
+<https://www.youtube.com/watch?v=LJPXz8eA3b8>
 [[OpenWrt Wiki] IPv6 with Hurricane Electric using LuCI](https://openwrt.org/docs/guide-user/network/ipv6/ipv6tunnel-luci)
+
 ### 安装依赖
 
 6in4 需要
@@ -124,6 +128,7 @@ opkg install 6in4
 ```
 
 如果使用 PVE LXC 容器搭建的 openwrt，pve 中还需要另外 modprobe `sit, ip_tunnel` 模块
+
 ```
 root@ryzen-pve ➜  ~ lsmod | grep -E 'ipv6|sit|ip_tunnel|nf_conntrack_ipv6'
 sit                    36864  0
@@ -132,6 +137,7 @@ nf_reject_ipv6         24576  1 nft_reject_inet
 nf_defrag_ipv6         24576  1 nf_conntrack
 ip_tunnel              32768  2 ip_gre,sit
 ```
+
 ### 6in4 接口配置
 
 ![image.png](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/20241007232843.png)
@@ -154,6 +160,7 @@ tunnel 起来后，需要创建一个 lan2 接口，作为 ra server 和 dhcpv6 
 
 启用 ipv6 ra, dhcpv6 server
 ![image.png](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/20241007175555.png)
+
 ### 路由问题
 
 6in4 tunnel 本质还是一个三层隧道。**openwrt 对其配置也中少了一个叫做 source routing 的选项**（dhcpv6 和 pppoe 都有该选项），作用是会根据源地址匹配默认路由。这样在有多个上游 v6 地址时，可以根据包的源地址选择不同上游接口出去。
@@ -162,6 +169,7 @@ tunnel 起来后，需要创建一个 lan2 接口，作为 ra server 和 dhcpv6 
 没有这个选项，加上我们关闭了默认路由，因此**此时没有 ipv6 包会从隧道路由出去**。
 
 由于 HE tunnel 的 prefix 是不会变的，因此手动设置即可
+
 ```
 root@op1 ➜  ~ ip6 ro
 default from 2001:470:fab1::/48 dev 6in4-HE_tunnel metric 1024 pref medium
@@ -172,6 +180,7 @@ default from 2001:470:fab1::/48 dev 6in4-HE_tunnel metric 1024 pref medium
 果然是能通的，不过延迟来到了 569ms，感觉来回了两下美国。神奇的是 op2 lan 下设备延迟反而更低
 
 op2 路由器上测试
+
 ```
 root@op2 ➜  ping 2001:470:fab1:0:be24:11ff:fec1:6c9d
 PING 2001:470:fab1:0:be24:11ff:fec1:6c9d (2001:470:fab1:0:be24:11ff:fec1:6c9d): 56 data bytes
@@ -182,6 +191,7 @@ round-trip min/avg/max = 562.041/569.224/594.678 ms
 ```
 
 op2 lan 下设备测试，延迟只有 338 ms
+
 ```
 $ ping 2001:470:fab1:0:be24:11ff:fec1:6c9d -t
 正在 Ping 2001:470:fab1:0:be24:11ff:fec1:6c9d 具有 32 字节的数据:
@@ -192,6 +202,7 @@ $ ping 2001:470:fab1:0:be24:11ff:fec1:6c9d -t
 ```
 
 抓包都是从 pppoe-wan 口出去的，感觉唯一区别就是 src ip 不同。暂不清楚为何延迟有区别。
+
 ```
 root@op2 ➜  ~ tcpdump -ni any icmp6 and host 2001:470:fab1:0:be24:11ff:fec1:6c9d
 18:19:59.885930 pppoe-wan In  IP6 2001:470:fab1:0:be24:11ff:fec1:6c9d > 2409:8a30:4ad:d140::10: ICMP6, echo reply, id 41070, seq 18, length 64
@@ -221,6 +232,7 @@ op1 上抓包是能看到 lan 下设备发送了 RS 请求的，但是路由器�
 
 - 默认 dns 为 op1 路由器 lan2 接口 ipv6 地址，使用该接口解析（国外域名）会得到 fake-ip
 - 手动改用其它 dns，仍然会被劫持
+
 #### dns 下发
 
 openwrt 下发了本地接口作为 dns，我的本地 dns 使用了 fake ip 技术，没法直接使用
@@ -228,6 +240,7 @@ openwrt 下发了本地接口作为 dns，我的本地 dns 使用了 fake ip 技
 解决：openwrt lan 接口添加自定义的 dns
 
 效果
+
 ```
 无线局域网适配器 WLAN:
 
@@ -247,6 +260,7 @@ openwrt 下发了本地接口作为 dns，我的本地 dns 使用了 fake ip 技
    DNS 服务器  . . . . . . . . . . . : 2001:4860:4860::8888
    TCPIP 上的 NetBIOS  . . . . . . . : 已启用
 ```
+
 #### dns 劫持
 
 我的 openwrt 使用了透明代理，劫持了 udp 53 的 dns
@@ -258,6 +272,7 @@ nft insert rule inet fw4 dstnat udp dport 53 ip daddr {223.5.5.5, 119.29.29.29, 
 
 nft insert rule inet fw4 dstnat udp dport 53 ip6 daddr {2001:4860:4860::8888} return comment "IPv6_Disable_OpenClash_DNS_Hijack"
 ```
+
 #### DoT, DoH?
 
 另一种避免 dns 污染的方式是不使用明文的 dns 请求。如 DoH，现代浏览器都支持设置。
@@ -267,6 +282,7 @@ nft insert rule inet fw4 dstnat udp dport 53 ip6 daddr {2001:4860:4860::8888} re
 [DNS-over-TLS  |  Public DNS  |  Google for Developers](https://developers.google.com/speed/public-dns/docs/dns-over-tls)
 [DNS-over-HTTPS (DoH)  |  Public DNS  |  Google for Developers](https://developers.google.com/speed/public-dns/docs/doh)
 [Firefox DNS-over-HTTPS | Firefox Help (mozilla.org)](https://support.mozilla.org/en-US/kb/firefox-dns-over-https)
+
 #### dns 污染
 
 解决劫持后不知为何解析 youtube 解析不到 ipv6 地址。
@@ -292,6 +308,7 @@ Address: 2001::1
 由于 HE 需要有公网 ipv4，而我目前只有学校的教育网有公网 ipv4。因此必须在 op1 上才能搭建，但是我想要在 op2（出租屋）也能使用。于是再次需要以前用过的 L2 组网技术。
 
 令人吃惊的事，由于 vlan 的隔离性，使得 L2 这么底层的技术，要让让流量从学校精确到我的出租屋，再到我的无线路由器，不能对其它网络造成干扰，**居然只需要添加 1 个 vid，点点点就行了**。简单到令人感觉到 vlan 真神奇
+
 ### vxlan 本来就可以复用链路
 
 本来还在思考能否复用已有的 L2 隧道（原本已经基于 wg 两端搭建了一个 vxlan0 接口），比如**在隧道上运行 vlan** 是否支持。然后才意识到 vxlan 本来就是 vlan，有一个 vid，因此完全可以在两端再创建一个 vxlan1，指定不同的 vid 即可。
@@ -344,7 +361,7 @@ trunk 接口（刚好使用了原本的 WAN 口，这样接线时容易记起来
     - 也可以获得 v6 地址
 - 此时设备突然可以通过 wifi 获得 v6 地址了
 - 后面发现，重点检查 vxlan 和 eth 接口的 master 是否确实是 br-lan。后面又遇到一次不通网，便是该问题。可以手动设置。
+
 ```
 ip link set dev vxlan1 master br-lan3
 ```
-

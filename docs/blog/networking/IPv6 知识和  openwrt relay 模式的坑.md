@@ -17,17 +17,20 @@ ipv6 协议详细介绍了 ipv6 几种获得地址模式的区别：SLAAC, 无�
 
 <!-- more -->
 # ipv6 协议
+
 ## 参考资料
 
 ipv6地址和协议：[Network Layer: IPv6 addressing and IPv6 protocol - ICTShore.com](https://www.ictshore.com/free-ccna-course/network-layer-ipv6-addressing/)
 
 ipv6系列教学
--  [IPv6 from scratch - the very basics of IPv6 explained](https://youtu.be/oItwDXraK1M)
+
+- [IPv6 from scratch - the very basics of IPv6 explained](https://youtu.be/oItwDXraK1M)
 - [IPv6 explained - SLAAC and DHCPv6 (IPv6 from scratch part 2)](https://www.youtube.com/watch?v=jlG_nrCOmJc&t=1s)
 - openwrt ipv6设置：有PD情况，relay，VPN tunnel来获得PD：[IPv6 with OpenWrt - YouTube](https://www.youtube.com/watch?v=LJPXz8eA3b8)
 - 对应ipv6 cheat sheet：[ipv6 cheat sheet](https://github.com/onemarcfifty/cheat-sheets/blob/main/networking/ipv6.md)
 
 NDP
+
 - [How to: IPv6 Neighbor Discovery | APNIC Blog](https://blog.apnic.net/2019/10/18/how-to-ipv6-neighbor-discovery/)
   - NS, NA用于实现arp
   - NS用于实现DAD(Duplicate Address Detection）
@@ -64,9 +67,11 @@ multicast addresses  in in the link-local scope
 |ff02::fb|mDNSv6|
 |ff02::1:2|All DHCP Servers and Agents|
 |ff02::101|All NTP Servers|
+
 ## IPv6 addressing methods
 
 ipv4
+
 - unicast, multicast and broadcast
 ipv6
 - unicast, multicast, _link-local_ and _anycast_
@@ -105,6 +110,7 @@ icmp6报文格式
 
 [RFC 5175: IPv6 Router Advertisement Flags Option (rfc-editor.org)](https://www.rfc-editor.org/rfc/rfc5175.html)
 另外在**option**中有A flag和L flag（更具体是prefix info option）
+
 - [The IPv6 Prefix Information Option or Fun with the L Flag (infoblox.com)](https://blogs.infoblox.com/ipv6-coe/the-ipv6-prefix-information-option-or-fun-with-the-l-flag/)
 - [router - IPv6 RA flags and various combinations - Network Engineering Stack Exchange](https://networkengineering.stackexchange.com/questions/35373/ipv6-ra-flags-and-various-combinations)
 
@@ -128,13 +134,12 @@ tcpdump: listening on eth1, link-type EN10MB (Ethernet), capture size 262144 byt
 - RS, RA
 ![](https://www.ictshore.com/wp-content/uploads/2016/12/1015-11-Router_solicitation.png)
 
-
 ## SLAAC, stateless DHCPv6, stateful
 
 ### Stateless Auto Address Configuration (SLAAC)
 
 - When a device comes online, it sends a _Router Solicitation_ message. He’s basically asking “Are there some routers out there?”
-- If we have a router on the same network, that router will reply with a **Router Advertisement** message. contain information: 
+- If we have a router on the same network, that router will reply with a **Router Advertisement** message. contain information:
   - Who is the default gateway (the link-local address of the router itself)
   - What is the global unicast prefix (for example, `2001:DB8:ACAD:10::/64`)
 - the client is going to create a new global unicast address using the **EUI-64** technique
@@ -159,18 +164,17 @@ tcpdump: listening on eth1, link-type EN10MB (Ethernet), capture size 262144 byt
 [IPv6 Address Allocation Is Operating System-Specific « ipSpace.net blog](https://blog.ipspace.net/2016/01/ipv6-address-allocation-is-operating.html)
 
 三种不同地址分配方式
+
 - 静态设置
 - DHCPv6，在RA报文中，M(Managed configuration) flag设置，表示client可以发起DHCPv6来获得ipv6地址
 - SLAAC，RA报文中，A(auto configuration) flag设置，设备通过prefix和自己MAC地址（或者还有随机数）生成ipv6地址。
 
-
-
 不通操作系统有不通策略
+
 - android不支持DHCPv6，无论M是否设置，也不会发起DHCP request。
 - windows尽可能获得多的地址。即使手动设置了静态地址，也会获得DHCP地址和SLAAC地址。
   - 要想只有一个地址，可以将M flag关闭，这样windows就只有SLAAC地址。而如果把A关闭，那么安卓设备就无法使用了。
 Other operating systems grab all they can: Windows will happily ask for a DHCPv6-assigned address whenever it receives an RA message with the M flag set regardless of whether it already has a static IPv6 address, and will add an autoconfigured address to the mix if the prefixes in the RA messages have the A flag set regardless of whether it already got static and/or DHCPv6-assigned addresses.
-
 
 ## DHCPv6-PD
 
@@ -198,21 +202,27 @@ DHCPv6-PD是DHCPv6的一个扩展功能。不同于DHCPv6用于申请ipv6地址�
 lxd容器接入br1，获得了全局ipv6地址，但是确无法访问外网
 
 #### 正常时
+
 - 刚开始op2 ip neigh没有容器地址
 - 容器ping 6.ipw.cn时，op2 ip neigh出现容器地址。并且可以ping通
   - 约40s从REACHABLE变为STALE。约90s neigh条目消失。
 
 #### 不正常时
-*在op2上ip -6 -statistics neigh flush dev eth1(lan接口)就可以复现*
+
+*在op2上ip -6 -statistics neigh flush dev eth1(lan接口)就可以复现_
+
 - 容器无法ping通
 - 此时op2上有一条错误的neigh项，显示lxd容器位于路由器wan口(eth0)。状态为INCOMPLETE或FAILED
   - 如果ip6 ro get lxd地址，也会发现会匹配到wan出口
+
 ```
 root@op2 ➜  ~ ip6 neigh |grep 34a0
 2001:da8:d800:611:216:3eff:fe75:34a0 dev eth0  INCOMPLETE
 fe80::216:3eff:fe75:34a0 dev eth1 lladdr 00:16:3e:75:34:a0 STALE
 ```
+
 - 此时tcpdump op2 wan口，可以抓到op2 NS lxd容器的包。但是监控lan口则抓不到。
+
 ```
 root@op2 ➜  ~ tcpdump -i eth0 icmp6 |grep 34a0
 tcpdump: verbose output suppressed, use -v or -vv for full protocol decode
@@ -220,7 +230,9 @@ listening on eth0, link-type EN10MB (Ethernet), capture size 262144 bytes
 17:45:11.488397 IP6 2001:da8:d800:611:216:3eff:feb9:4ff6 > ff02::1:ff75:34a0: ICMP6, neighbor solicitation, who has 2001:da8:d800:611:216:3eff:fe75:34a0, length 32
 17:45:12.497482 IP6 2001:da8:d800:611:216:3eff:feb9:4ff6 > ff02::1:ff75:34a0: ICMP6, neighbor solicitation, who has 2001:da8:d800:611:216:3eff:fe75:34a0, length 32
 ```
+
 lan口只能抓到fe80的NS消息
+
 ```
 #tianyi tcpdump
 17:42:14.961479 IP6 fe80::216:3eff:fe3d:6fdc > fe80::216:3eff:fe75:34a0: ICMP6, neighbor solicitation, who has fe80::216:3eff:fe75:34a0, length 32
@@ -236,13 +248,13 @@ lan口只能抓到fe80的NS消息
 ![](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/20230713185648.png)
 但是设置ndproxy_slave后仍然不行
 
-
 ## 抓包
 
 ### 需要在其它地方ping LAN内机器，LAN机器才能上网
 
 windows无法上网
 路由器在wan口发送NS请求
+
 ```
 root@op2 ➜  ~ tcpdump -vvvv -ttt -i eth0 "icmp6 and (ip6[40] == 136 or ip6[40] == 135)" |grep b006
 tcpdump: listening on eth0, link-type EN10MB (Ethernet), capture size 262144 bytes
@@ -253,6 +265,7 @@ tcpdump: listening on eth0, link-type EN10MB (Ethernet), capture size 262144 byt
 ```
 
 win ping ipw，路由器确实将icmp转发出去（此后win ip变为8295）。pve上抓bridge，每次能看到两条
+
 ```
 root@tianyi ➜  ~ tcpdump -tttt -i vmbr1 "icmp6 and (ip6[40] == 128)"
 tcpdump: verbose output suppressed, use -v[v]... for full protocol decode
@@ -267,9 +280,11 @@ listening on vmbr1, link-type EN10MB (Ethernet), snapshot length 262144 bytes
 ```
 
 在另一台机器上访问win ip6，mtr，然后就通了
+
 - 中间路由器wan口对win发起了icmp echo，不知为什么，是mtr的原因？
   - **这里和后面openwrt NDP proxy的行为对上了！！！**。WAN上接收到学校NS A的请求，会在LAN上发icmp-echo请求给A。可以看到时间是对上的。
 - ustc域名那个是ryzen的ip
+
 ```
 root@tianyi ➜  ~ tcpdump -tttt -i vmbr1 "icmp6 and (ip6[40] == 128 or ip6[40]==129)"
 tcpdump: verbose output suppressed, use -v[v]... for full protocol decode
@@ -296,13 +311,14 @@ listening on vmbr1, link-type EN10MB (Ethernet), snapshot length 262144 bytes
 ```
 
 期间软路由上终于抓到school对win公网ip6发起NS请求
+
 - 比较神奇的是op对其进行了回应
+
 ```
 2023-07-19 17:11:50.226090 IP6 2001:da8:d800:611::1 > ff02::1:ffc8:8295: ICMP6, neighbor solicitation, who has 2001:da8:d800:611:fc9b:d4ed:c9c8:8295, length 32
 2023-07-19 17:11:51.263290 IP6 2001:da8:d800:611::1 > ff02::1:ffc8:8295: ICMP6, neighbor solicitation, who has 2001:da8:d800:611:fc9b:d4ed:c9c8:8295, length 32
 2023-07-19 17:11:51.904962 IP6 2001:da8:d800:611:6c4b:aaff:fe73:6e8c > 2001:da8:d800:611::1: ICMP6, neighbor advertisement, tgt is 2001:da8:d800:611:fc9b:d4ed:c9c8:8295, length 32
 ```
-
 
 ## 未解之谜
 
@@ -313,55 +329,52 @@ listening on vmbr1, link-type EN10MB (Ethernet), snapshot length 262144 bytes
   - 第二种情况，ping wan口还是不行，此时路由器是可以ping客户端的。也将echo从wan口路由出去了，但是收不到reply。此时如果在外网ping一下客户端的ipv6地址（确实能ping通），客户端上网就正常了。
 
 对应第一种情况的问题：
+
 - 路由器为什么ping不通lan下windows的ip6地址（临时的随机地址和静态的）
   - 为什么路由器上ping lan内win11ipv6地址时，向wan口发送NS报文，却不向lan口发
     - **路由器在arp一个ipv6地址时，如何选择多播的接口呢**？照理来说应该是link local scope的接口。但是这里两个接口应该都是link-local的？但是这是不是和wan和lan的隔离性冲突呢？
 
-
 对于第二种情况的问题
 openwrt NDP-Proxy relay模式的说明：
 >Forward NDP NS and NA messages between the designated master interface and downstream interfaces.
+
 - windows网卡启动并配置完一个静态地址和一个随机地址后，会发送NA报文，广播给所有节点。**那么路由器有将其转发给wan口吗？![win10-%E8%AE%BE%E7%BD%AEslaac%20ip%E5%92%8C%E9%9A%8F%E6%9C%BAip%E5%90%8E%EF%BC%8C%E4%BC%9A%E5%8F%91%E4%B8%80%E6%9D%A1NS%E6%8A%A5%E6%96%87.jpg](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/win10-%E8%AE%BE%E7%BD%AEslaac%20ip%E5%92%8C%E9%9A%8F%E6%9C%BAip%E5%90%8E%EF%BC%8C%E4%BC%9A%E5%8F%91%E4%B8%80%E6%9D%A1NS%E6%8A%A5%E6%96%87.jpg)**
 - 如果没有的话，是不是学校的路由器就不知道win11的存在，在转发echo请求时，发现ipv6地址没有记录，就直接丢掉了？（ipv4寝室图书馆之类的公共场所上游有 BRAS，必须触发认证才会把 v4 地址路由过来，这个触发动作就是 DHCP）
-
-
 
 RA service relay模式：
 > Forward RA messages received on the designated master interface to downstream interfaces
 
 win上抓包发现.路由器返回的RA报文中flag设置了proxy。
 
-
-
 tcpdump -tttt -n -i eth0 icmp6 -w eth0.pcap
 tcpdump -tttt -n -i eth1 icmp6 -w eth1.pcap
 
 wireshark filter
+
 ```
 ipv6.addr!=2001:da8:d800:611::1
 
 
 ```
 
-
 ## 未解之谜的解开
 
 [odhcpd 中继模式原理、局限以及解决方案 | Silent Blog (icpz.dev)](https://blog.icpz.dev/articles/notes/odhcpd-relay-mode-discuss/)
 [OpenWRT IPv6 中继模式 - Zero's Blog (sourceforge.io)](https://l2dy.sourceforge.io/2021/05/11/openwrt-ipv6-relay.html)
+
 ### 中继行为
 
 RS, RA的中继我自己也发现了，比较好理解
+>
 > 1. 从 slave interface 收到 RS 消息，odhcpd 会修改其源 MAC 地址为 master interface 再将其从 master interface 转发出去；
 > 2. 从 master interface 收到的 RA 消息，odhcpd 会修改其中源 MAC 地址为 slave interface 再将其从 slave interface 转发出去；
 > 3. 从 slave 收到的 RA 以及从 master 收到的 RS 消息会被忽略。
 
-
 NS，NA的中继则比较trick
 >对于 NDP 中继则不区分 master/slave 身份，以下仅以 M，S 两个 interface 做举例：
+>
 >1. 从 M 收到 NS 消息，odhcpd 会在 S 发送 icmp-echo 消息来让内核在 S interface 触发目的地址的 NDP 过程，若成功在 S 所在的链路发现了目的地址，则在 M 回复相应的 NA 消息，反之亦然；
 >2. 在上述步骤中成功在 M/S 链路被发现的节点地址会被加入路由表，以方便后续通信的路由策略。
-
-
 
 1. LAN 侧客户端 A （`2001:da8:abc:def::A/64`）发起了对全局路由地址（如 ipv6.google.com）的 echo-request 请求，该 IPv6 分组会被正常路由到 Google 的服务器；
 2. 服务器 echo-reply 的分组到达 WAN 口的**上游**，此时上游会在各个节点端口广播目标是 A 地址的 NS 消息，当路由器的 WAN 收到该 NS 时，会按照前文中 NDP 中继的行为进行中继；
@@ -370,6 +383,7 @@ NS，NA的中继则比较trick
 5. WAN 口根据步骤 3 中建立的路由表项将发往 A 的分组路由到 LAN 侧并交付。
 
 现象
+
 - win11 ping op1，发现根本收不到echo request，也就是WAN上游根本没有对其转发。这里是1发生了问题
   - 其实问题在于win11获得ip地址后，上游没收到任何消息。
   - 上游有BRAS，ipv4需要dhcp触发，才会进行路由。ipv6看来也有类似行为，可能触发条件就是NS？
@@ -382,9 +396,9 @@ NS，NA的中继则比较trick
     2. 路由器内核根据现有路由表进行转发，发现该分组属于 WAN 口的 /64 子网，所以在 WAN 口发送 NS 寻找 A 的 MAC 地址；
 
 解决
+
 - 对于上游不NS，直接转发reply到wan，这种情况只需要设置路由表，添加prefix到lan接口的路由即可
 - 对于上游不触发路由，需要其它设备ping后，才路由的情况。
-
 
 上游到底怎样才会触发对包的处理啊，win的临时ipv6地址可以（每次重启网卡都会变化），但是lxc容器的slaac反而不行了？以下时两个设备网卡启动时，wan口的icmp6包
 win11的
@@ -394,7 +408,6 @@ lxc的
 ![](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/20230720033559.png)
 
 不知道什么时候好的，把NDP proxy slave关掉lxc突然就直接能访问外网了
-
 
 ### 解决
 

@@ -32,6 +32,23 @@ who -m # 查看当前用户
 echo "hello" > /dev/pty/x   #直接给对应终端发送消息
 ```
 
+## 系统安装初始配置
+
+### locale
+
+```
+sudo vim /etc/locale.gen
+en_US.UTF-8 
+zh_CN.UTF-8
+
+sudo locale-gen
+```
+
+如果不小心写错了
+
+```
+sudo apt-get install --reinstall locales
+```
 
 ## 生活相关
 
@@ -133,6 +150,21 @@ debian 使用 wifi 方法总结：[WiFi/HowToUse - Debian Wiki](https://wiki.deb
 
 如果想要单独使用 iwd，需要 `/etc/iwd/main.conf` 开启网络配置（否则不会 dhcp 获得 v4 地址）
 
+**Setting static IP address in network configuration**
+
+Add the following section to `/var/lib/iwd/_network_._type_` file. For example:
+
+```
+/var/lib/iwd/spaceship.psk
+
+[IPv4]
+Address=192.168.1.10
+Netmask=255.255.255.0
+Gateway=192.168.1.1
+Broadcast=192.168.1.255
+DNS=192.168.1.1
+```
+
 ```
 [General]
 EnableNetworkConfiguration=true
@@ -155,12 +187,11 @@ CLI：
 - nmtui：使用起来很简单，可以编辑有线无线配置，激活连接等。
 - nmcli：更加底层的命令行，功能还是很强大的
 
-##### nmtui 
+##### nmtui
 
 简单的话，直接使用 nmtui，选择 Wifi 输入密码即可。
 
 ![image.png](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/20240918235326.png)
-
 
 ##### nmcli 基本使用
 
@@ -260,7 +291,6 @@ cvlc file.mp3
 7. If using a device without a PIN, one may need to manually trust the device before it can reconnect successfully. Enter `trust _MAC_address_` to do so.
 8. Enter `connect _MAC_address_` to establish a connection.
 
-
 ## 桌面环境
 
 ### 基本概念
@@ -270,7 +300,8 @@ cvlc file.mp3
 
 - 通常也自带了 window manager 和 Display manager
 
-[window manager](https://wiki.archlinux.org/title/Window_manager "Window manager") 
+[window manager](https://wiki.archlinux.org/title/Window_manager "Window manager")
+
 - DE 通常自带一个 window manager，但是也可以替换成兼容的其它 window manager
 - Window managers are X clients that control the appearance and behaviour of the frames ("windows") where the various graphical applications are drawn.
 - Window manager 时 Xorg 的概念，Wayland 下对应的组件是 Compositor。**Window managers are unique to Xorg**. The equivalent of window managers on Wayland are called [compositors](https://wiki.archlinux.org/title/Wayland#Compositors "Wayland") because they also act as [compositing window managers](https://en.wikipedia.org/wiki/Compositing_window_manager "wikipedia:Compositing window manager").
@@ -280,6 +311,7 @@ cvlc file.mp3
     - i3
 
 [Display manager - ArchWiki (archlinux.org)](https://wiki.archlinux.org/title/Display_manager)
+
 - A [display manager](https://en.wikipedia.org/wiki/X_display_manager_(program_type) "wikipedia:X display manager (program type)"), or **login manager**, is typically a graphical user interface that is displayed at the end of the boot process in place of the default shell.
 - **[GDM](https://wiki.archlinux.org/title/GDM "GDM")** — [GNOME](https://wiki.archlinux.org/title/GNOME "GNOME") display manager.
 - **[LightDM](https://wiki.archlinux.org/title/LightDM "LightDM")** — Cross-desktop display manager, can use various front-ends written in any toolkit.
@@ -294,6 +326,7 @@ gnome-shell：shell 就是我们可以看到的图形界面
 ![](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/20240912193508.png)
 
 安装时会提示和 gdm 冲突
+
 ```
 apt install lightdm
 ```
@@ -301,6 +334,7 @@ apt install lightdm
 ![](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/20240912193122.png)
 
 *好像需要进入 graphical.target 才能正常使用。gdm 可以在 multi-user.target 下 通过  sudo systemctl start gdm 启动图形界面。lightdm systemctl start 报错*
+
 #### gdm3
 
 选中用户，输入密码时右下脚才会出现齿轮来切换桌面环境。
@@ -336,7 +370,9 @@ AutomaticLogin=yfy
 #### 安装
 
 debian
+
 - ubuntu 貌似直接安装 xubuntu-desktop 即可，但是我试了 debian 安装方式也没问题
+
 ```
 apt install xfce4 xfce4-goodies
 ```
@@ -351,7 +387,6 @@ xfce4: This package is a metapackage; it depends on the core packages of the Xfc
 
 - ubuntu 安装 KDE：[How to Install KDE on Ubuntu [Beginner's Guide] (itsfoss.com)](https://itsfoss.com/install-kde-on-ubuntu/)
 
-
 KDE 和 KDE Plasma
 > Since they were not essentially a desktop environment anymore, a few years ago, they segregated the desktop environment. Plasma is the desktop environment and KDE is the umbrella project responsible for the development of Plasma desktop and a bunch of other applications.
 
@@ -365,7 +400,6 @@ sudo apt install kde-standard
 
 SDDM: KDE 自带的 diskplay manager
 
-
 ## 系统
 
 ### 遇到的问题
@@ -373,6 +407,7 @@ SDDM: KDE 自带的 diskplay manager
 #### 打不开 setting
 
 [Settings window does not open in Ubuntu 22.04 - Ask Ubuntu](https://askubuntu.com/questions/1420736/settings-window-does-not-open-in-ubuntu-22-04)
+
 ```
 sudo apt-get install --reinstall gnome-control-center
 ```
@@ -392,10 +427,10 @@ X11 forwarding request failed on channel 0
 [ssh - No xauth program; cannot forward X11 - Unix & Linux Stack Exchange](https://unix.stackexchange.com/questions/552601/no-xauth-program-cannot-forward-x11)
 
 解决
+
 ```
 apt install xauth
 ```
-
 
 # 硬件相关
 

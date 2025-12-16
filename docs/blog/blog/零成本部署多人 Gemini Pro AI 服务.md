@@ -17,15 +17,15 @@ categories:
 *update 20251216: 现在 google ai studio 免费层级无法再使用 2.5 pro 以上模型，flash 模型也只有 5 RPM 低的可怜的次数。*
 
 - [gemini 官网](gemini.google.com)
-    - google gemini 单独的网站。我一开始使用的这个网站，后面发现它不仅有较少的免费使用次数限制，并且还不支持联网。
-    - 之前有过学生认证免费试用 12个月 Google One 会员，普通用户也能免费试用 1 个月。会员可以无限制使用 2.5 Pro 模型。
+  - google gemini 单独的网站。我一开始使用的这个网站，后面发现它不仅有较少的免费使用次数限制，并且还不支持联网。
+  - 之前有过学生认证免费试用 12个月 Google One 会员，普通用户也能免费试用 1 个月。会员可以无限制使用 2.5 Pro 模型。
 - [Google AI studio](https://aistudio.google.com/)
-    - 也是 Google 的官方网站，不仅能第一时间使用 google 最新的模型，2.5 pro 居然还没有次数限制。
-    - 还可以使用 google 的 nano banana 模型画图
+  - 也是 Google 的官方网站，不仅能第一时间使用 google 最新的模型，2.5 pro 居然还没有次数限制。
+  - 还可以使用 google 的 nano banana 模型画图
 - [Vertex AI Platform | Google Cloud](https://cloud.google.com/vertex-ai?hl=en)
-    - 基于谷歌 GCP(Google Cloud Platform)
-    - 是谷歌的企业级方案
-    - Vertex AI studio 也可以通过网页使用
+  - 基于谷歌 GCP(Google Cloud Platform)
+  - 是谷歌的企业级方案
+  - Vertex AI studio 也可以通过网页使用
 
 我是在 Gemini 网站的 1 个月 Google One 会员到期后开始研究如何继续低成本使用 gemini 模型，毕竟 gemini 会员 20 美元/月 实在是有点贵。最好是基于 API 的方式，可以按量付费。接着我了解到 google cloud 新会员有 300 美金试用金，可以使用 3 个月，于是就有了这篇博客。
 
@@ -38,15 +38,15 @@ categories:
 
 - open-webui 功能很成熟：有完整的用户管理、权限管理、还可以分享对话。基本可以满足小团队的集中化 AI 使用需求
 - open-webui 的一些其它功能也有点超乎我的想象
-    - 对于本地部署 AI 模型也很合适，支持 ollama, comfyui 画图等
-    - 有 function，tool 等高级功能，支持社区插件，貌似可以实现很多扩展玩法
+  - 对于本地部署 AI 模型也很合适，支持 ollama, comfyui 画图等
+  - 有 function，tool 等高级功能，支持社区插件，貌似可以实现很多扩展玩法
 
 大纲
 
 - 注册 google cloud
-    - 绑定国外支付信用卡
-    - 注册时的疑问
-    - google cloud 的用法
+  - 绑定国外支付信用卡
+  - 注册时的疑问
+  - google cloud 的用法
 - google ai studio 创建 Gemini API Key
 - open-webui 配置
 - litellm 配置
@@ -68,13 +68,14 @@ categories:
 ![招商银行 Visa](http://s3gw.cmbimg.com/lb5022-gold-prd-1255000106/crdcardapply/intro/7602_VG.gif)
 
 Visa, MasterCard 说明可以参考 B 站视频：[seven科技生活](https://www.bilibili.com/video/BV1yB8gzwErs/)
+
 ### 注册时的疑问
 
 过程略。经验总结
 
 - 支付账号创建后无法更改国家（试用账号无法更改，之后可以创建其它支付账号）
 - 网上说会支付 0.01 美元用于验证支付方式，但实际我支付了 25 SGD，其中 5 SGD 会自动退回，而 20 SGD 默认相当于充值余额，需要手动申请退回（几个小时就可以退回）。**总得来说注册是免费的**
-    - 试用结束前不要申请退回，否则后面还会重新要求验证支付方式，我就这样子验证了 3 次。
+  - 试用结束前不要申请退回，否则后面还会重新要求验证支付方式，我就这样子验证了 3 次。
 
 #### 关于 Billing verification
 
@@ -99,7 +100,7 @@ The transaction has the following attributes:
 
 - 项目：所有服务都是绑定在一个项目里面的。
 - 结算账号：绑定了信用卡，每个项目需要一个结算账号
-    - 免费试用会创建一个 My First Project 项目，该项目绑定了一个结算账号。该结算账号是特殊的，可以保证不会扣费。除非手动将其升级成了完整的付费账号。[**升级付费帐号**](https://docs.cloud.google.com/free/docs/free-cloud-features#how-to-upgrade)
+  - 免费试用会创建一个 My First Project 项目，该项目绑定了一个结算账号。该结算账号是特殊的，可以保证不会扣费。除非手动将其升级成了完整的付费账号。[**升级付费帐号**](https://docs.cloud.google.com/free/docs/free-cloud-features#how-to-upgrade)
 
 有用链接
 
@@ -144,16 +145,16 @@ Gemini 总结
 | **Open WebUI 兼容性** | **极佳** (通过 OpenAI 协议直连)             | **一般** (需要配置环境变量或挂载密钥文件)                     |
 | **区域限制**           | 限制较少，全球大部分地区可用 (需梯子)                | 需指定 GCP 区域 (如 us-central1)，合规性更严             |
 
-
 主要的不同在于 Authentication (身份验证) 方式：
 
 - **Google AI Gemini API** 使用简单的 API key
-    - 请求中包含查询参数 `?key=YOUR_API_KEY` 或一个 HTTP 请求头 `x-goog-api-key` 来传递
+  - 请求中包含查询参数 `?key=YOUR_API_KEY` 或一个 HTTP 请求头 `x-goog-api-key` 来传递
 - **Vertex AI Gemini API** 使用标准的 Google Cloud IAM 身份验证 (OAuth 2.0)
-    - 在请求头中提供一个临时的、通过 gcloud 或服务账号获取的 `Bearer Token`
+  - 在请求头中提供一个临时的、通过 gcloud 或服务账号获取的 `Bearer Token`
       `-H "Authorization: Bearer $(gcloud auth print-access-token)"`
 
 *p.s*：这里没有区分 API 接口（HTTP RESTful 接口）和提供 API 调用的平台，它们是绑定在一起的。Google AI Studio 平台提供 Google AI Gemini API，Google Cloud Vertex AI Studio 提供 Vertex AI Gemini API。事实上，Google Gemini API 和 Vertex Gemini API  的 RESTful 接口不一样（身份验证、请求体 json 部分参数） ，但核心数据结构（Payload）非常相似。
+
 - Python 的 `google-generativeai` 和 `google-cloud-aiplatform` 是两个不同的库，它们分别封装了这两种不同的调用方式，但**最终都是把 `contents` 这个核心数据结构发送给了 Gemini 模型。**
 - 现在（Starting with the Gemini 2.0 release in late 2024）二者都可以通过 `google-genai` 库调用：[Migrate to the Google GenAI SDK  |  Gemini API  |  Google AI for Developers](https://ai.google.dev/gemini-api/docs/migrate)
 
@@ -184,7 +185,6 @@ google AI studio 和 vertex AI 价格是一样的
 - [Gemini Developer API pricing  |  Gemini API  |  Google AI for Developers](https://ai.google.dev/gemini-api/docs/pricing)
 - [Vertex AI Pricing  |  Google Cloud](https://cloud.google.com/vertex-ai/generative-ai/pricing)
 
-
 总体来说 2.5 pro 输入 1.25 \$/M，输出 10 \$/M。3-pro 价格有所上涨，输入到了 2 \$/M。根据 google 的结算报告来看，在2-3人中度使用的情况下，1 天大概需要 2-3\$。
 
 | Model                | Type                                 | Price (/1M tokens) <= 200K input tokens | Price (/1M tokens) > 200K input tokens | Price (/1M tokens) <= 200K **cached** input tokens | Price (/1M tokens) > 200K **cached** input tokens | Price (/1M tokens) <= 200K input tokens with batch API | Price (/1M tokens) > 200K input tokens with batch API |
@@ -197,12 +197,12 @@ google AI studio 和 vertex AI 价格是一样的
 |                      | Text output (response and reasoning) | $12                                     | $18                                    | N/A                                                | N/A                                               | $6                                                     | $9                                                    |
 |                      | Image Output**                       | $120                                    | N/A                                    | N/A                                                | N/A                                               | $60                                                    | N/A                                                   |
 
-
 ![image.png](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/20251125135728.png)
 
 OpenRouter 网页更容易看到模型价格信息对比。
 
 [Gemini 3 Pro Preview - API, Providers, Stats | OpenRouter](https://openrouter.ai/google/gemini-3-pro-preview)
+
 ## Open-WebUI
 
 [open-webui/open -webui: User-friendly AI Interface (Supports Ollama, OpenAI API, ...)](https://github.com/open-webui/open-webui)
@@ -234,16 +234,17 @@ volumes:
 不同镜像版本
 
 - open-webui:main
-    - 适合用于仅使用 openai api key 场景
+  - 适合用于仅使用 openai api key 场景
 - open-webui:main-slim
-    - For environments with limited storage or bandwidth, Open WebUI offers slim image variants that exclude pre-bundled models. These images are significantly smaller but download required models (whisper, embedding models) on first use.
+  - For environments with limited storage or bandwidth, Open WebUI offers slim image variants that exclude pre-bundled models. These images are significantly smaller but download required models (whisper, embedding models) on first use.
 - open-webui:ollama
-    - 继承了 ollama，支持 gpu 和 cpu
+  - 继承了 ollama，支持 gpu 和 cpu
+
 ### 设置
 
 此时已经可以在：管理员面板-》设置-》外部连接-》OpenAI 接口 中添加
 
-- URL: https://generativelanguage.googleapis.com/v1beta/openai/
+- URL: <https://generativelanguage.googleapis.com/v1beta/openai/>
 - 认证方式（密钥）：API key
 
 添加完成后，设置-》模型中可以看到所有模型
@@ -251,6 +252,7 @@ volumes:
 其它
 
 - 支持从 excel 批量导入用户
+
 ### 函数
 
 工具是外部的，函数是纯 python 脚本，运行在 open-webui 本地。
@@ -258,16 +260,16 @@ volumes:
 函数有几种
 
 - pipeline
-    - 启用后，会出现在 model 下拉列表中
+  - 启用后，会出现在 model 下拉列表中
 - filter
-    - 英文翻译
+  - 英文翻译
 - action
-    - 修改 open-webui，增加按钮
+  - 修改 open-webui，增加按钮
 
 ### (update 20251123) 使用 `Google Gemini` 函数完美支持 gemini
 
 [Google Gemini • Open WebUI Community](https://openwebui.com/posts/5a64dbc0-bd44-4d3a-84be-25232d5a8e84)
-https://github.com/owndev/Open-WebUI-Functions/blob/main/pipelines/google/google_gemini.py
+<https://github.com/owndev/Open-WebUI-Functions/blob/main/pipelines/google/google_gemini.py>
 
 - 直接在 open-webui 里用纯 python 实现了一个转换器，支持 Google AI API 和 Vertex AI API。
 - 直接支持显示思维链
@@ -279,13 +281,14 @@ https://github.com/owndev/Open-WebUI-Functions/blob/main/pipelines/google/google
 
 - 安装函数后，点击函数设置（齿轮）
 - 配置 google ai studio 的 API key
-    - **也支持 vertex ai API**
+  - **也支持 vertex ai API**
 - Gemini 模型出现在 model 下拉列表中
 
 同一个作者还有两个 Tool 用于开启搜索功能，但是我测试没有成功。
 
 - Grounding with Google search with [google_search_tool.py filter](https://github.com/owndev/Open-WebUI-Functions/tree/main/filters/google_search_tool.py)
 - Grounding with Vertex AI Search with [vertex_ai_search_tool.py filter](https://github.com/owndev/Open-WebUI-Functions/tree/main/filters/vertex_ai_search_tool.py)
+
 ## LiteLLM
 
 本质是一个 **“适配器”或“代理层”**
@@ -300,7 +303,7 @@ https://github.com/owndev/Open-WebUI-Functions/blob/main/pipelines/google/google
 google ai studio 提供了一个 兼容 OpenAI 的 API key，直接在 open-webui 中使用存在一些问题：
 
 - 2.5 pro 无法联网搜索，和显示思维链。（2.5-flash 模型倒是两个都正常）
-     - litellm 可以设置 merge_reasoning_content_in_choices 参数，可以正常显示思维链。
+  - litellm 可以设置 merge_reasoning_content_in_choices 参数，可以正常显示思维链。
 
 ### docker 部署 litellm proxy server
 
@@ -310,13 +313,14 @@ litellm 还是一个 python SDK，但是我们主要使用其 proxy 服务器的
 
 - 介绍了如何使用 litellm 请求 openai api 兼容的服务器
 - 将 litellm 自身暴露成一个 openai api 兼容的服务器
-    - 设置的 master_key 就是 cherry-studio 等软件需要的 OpenAI API Key
+  - 设置的 master_key 就是 cherry-studio 等软件需要的 OpenAI API Key
 
 docker compose 示例
 
 [litellm/docker-compose.yml at main · BerriAI/litellm](https://github.com/BerriAI/litellm/blob/main/docker-compose.yml)
 
 - 我将 prometheus 注释掉了，该服务只是不断监测服务是否在线。并提供一个数据面板。
+
 ```yaml
 services:
   litellm:
@@ -386,6 +390,7 @@ volumes:
   postgres_data:
     name: litellm_postgres_data # Named volume for Postgres data persistence
 ```
+
 ### 基本配置
 
 #### 修改 API key
@@ -399,10 +404,12 @@ volumes:
 [[Bug]：OpenAI gpt-5 在使用 OpenWebUI 时不显示思维输出 ·问题 #13419 ·BerriAI/利特尔姆 --- [Bug]: OpenAI gpt-5 not showing thinking outputs when using OpenWebUI · Issue #13419 · BerriAI/litellm](https://github.com/BerriAI/litellm/issues/13419)
 
 gemini/google ai studio 和 vertex 需要启用选项
+
 ```
 thinking: {"type": "enabled", "budget_tokens": 1024}  # budget_tokens: 1024-32768
 merge_reasoning_content_in_choices: true
 ```
+
 #### 启用联网搜索
 
 [Web Search | liteLLM](https://docs.litellm.ai/docs/completion/web_search)
@@ -426,6 +433,7 @@ merge_reasoning_content_in_choices: true
 如何获得 service_account.json 需要参考 google cloud 文档或者直接问LLM。
 
 `litellm_config.yaml`
+
 ```yaml
 model_list:
   - model_name: gemini-2.5-pro
@@ -437,6 +445,7 @@ model_list:
 ```
 
 `docker-compose.yaml` 文件中，添加了文件映射和环境变量。
+
 ```yaml
 volumes:
       - ./litellm_config.yaml:/app/config.yaml
@@ -452,7 +461,8 @@ environment:
 ```
 
 需要将 vertex_location 设置为 global
-https://github.com/BerriAI/litellm/issues/16780#issuecomment-3568703439
+<https://github.com/BerriAI/litellm/issues/16780#issuecomment-3568703439>
+
 ```
 vertex_location: "global"
 ```
@@ -460,7 +470,7 @@ vertex_location: "global"
 ### 使用其它兼容 OpenAI API 的模型
 
 其实最简单。兼容 openai 的 API key，直接设置 api_base 和 api_key 即可。
- 
+
 ```yaml
 model_list:
  - model_name: siliconflow/deepseek-ai/DeepSeek-V3.2
@@ -471,12 +481,12 @@ model_list:
 ```
 
 需要在model 前面添加 `openai`，否则 litellm 不知道 provider 是谁。
+
 ```
 08:29:06 - LiteLLM Router:ERROR: router.py:5157 - Error creating deployment: litellm.BadRequestError: LLM Provider NOT provided. Pass in the LLM provider you are trying to call. You passed model=deepseek-ai/DeepSeek-V3.2
  Pass model as E.g. For 'Huggingface' inference endpoints pass in `completion(model='huggingface/starcoder',..)` Learn more: https://docs.litellm.ai/docs/providers, ignoring and continuing with other deployments.
 Traceback (most recent call last)
 ```
-
 
 ## 其它 TODO
 
@@ -485,4 +495,3 @@ OpenAPI/New API 貌似功能比 LiteLLM 更多
 - [songquanpeng/one-api: LLM API 管理 & 分发系统，支持 OpenAI、Azure、Anthropic Claude、Google Gemini、DeepSeek、字节豆包、ChatGLM、文心一言、讯飞星火、通义千问、360 智脑、腾讯混元等主流模型，统一 API 适配，可用于 key 管理与二次分发。单可执行文件，提供 Docker 镜像，一键部署，开箱即用。LLM API management & key redistribution system, unifying multiple providers under a single API. Single binary, Docker-ready, with an English UI.](https://github.com/songquanpeng/one-api)
 - [QuantumNous/new-api: AI模型聚合管理中转分发系统，一个应用管理您的所有AI模型，支持将多种大模型转为统一格式调用，支持OpenAI、Claude、Gemini等格式，可供个人或者企业内部管理与分发渠道使用。🍥 The next-generation LLM gateway and AI asset management system supports multiple languages.](https://github.com/QuantumNous/new-api)
 - [feat: support claude and gemini in vertex ai by vaayne · Pull Request #1621 · songquanpeng/one-api](https://github.com/songquanpeng/one-api/pull/1621)
-

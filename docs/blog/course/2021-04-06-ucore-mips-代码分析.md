@@ -1250,7 +1250,7 @@ kernel_execve -> SYSCALL -> sys_exec -> do_execve
 
       1. 将 tf->tf_epc 设置为了 elf->e_entry。因此异常返回时便开始执行 elf 程序。
 
-      3. 在 tf->tf_status 中设置了 KSU_USER，因此从 SYSCALL 返回后，CPU 会转变为用户态。
+      2. 在 tf->tf_status 中设置了 KSU_USER，因此从 SYSCALL 返回后，CPU 会转变为用户态。
 
       ```c
        struct trapframe *tf = current->tf;

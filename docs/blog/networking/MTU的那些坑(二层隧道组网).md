@@ -156,11 +156,11 @@ Openwrt 的 MSS 功能放在防火墙 Zone 设置中（毕竟是基于 iptable �
 
 ![image.png](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/20240316200359.png)
 
-
 ### MTU 1508？
 
 [How to correctly set MTU of all my network interfaces (wan and lan)? - Installing and Using OpenWrt / Network and Wireless Configuration - OpenWrt Forum](https://forum.openwrt.org/t/how-to-correctly-set-mtu-of-all-my-network-interfaces-wan-and-lan/108298/12)
 [RFC 4638 - Accommodating a Maximum Transit Unit/Maximum Receive Unit (MTU/MRU) Greater Than 1492 in the Point-to-Point Protocol over Ethernet (PPPoE) (ietf.org)](https://datatracker.ietf.org/doc/html/rfc4638)
+
 ### 参考资料
 
 - 提到隧道往往需要限制 MSS 来避免分片：[什么是 MSS（最大分段大小）？ | Cloudflare (cloudflare-cn.com)](https://www.cloudflare-cn.com/learning/network-layer/what-is-mss/)
@@ -768,7 +768,6 @@ Miao Wang, [2024/12/7 15:48]
 就是 ip l2tp add tunnel，然后 ip l2tp add session 就好了
 ```
 
-
 [L2TPv3原理介绍 - AR100, AR120, AR150, AR160, AR200, AR300, AR1200, AR2200, AR3200, AR3600 V200R010 配置指南-VPN（命令行） - 华为](https://support.huawei.com/enterprise/zh/doc/EDOC1100033731/12541fbc)
 
 ### L2TP 配置
@@ -782,15 +781,17 @@ ip l2tp add session tunnel_id 1 session_id 1 peer_session_id 1
 ```
 
 之后在 op1 上将 l2tpeth0 添加到 LAN bridge 即可。
+
 ```
 17:11:10.199353 l2tpeth0 P   IP 192.168.35.42 > 192.168.35.183: ICMP echo request, id 35, seq 17, length 64
 17:11:10.199366 vxlan0 Out IP 192.168.35.42 > 192.168.35.183: ICMP echo request, id 35, seq 17, length 64
 17:11:10.204473 vxlan0 P   IP 192.168.35.183 > 192.168.35.42: ICMP echo reply, id 35, seq 17, length 64
 17:11:10.204496 l2tpeth0 Out IP 192.168.35.183 > 192.168.35.42: ICMP echo reply, id 35, seq 17, length 64
 ```
+
 ### openwrt L2TPv3 Pseudowire bridged to LAN
 
-https://openwrt.org/docs/guide-user/network/tunneling_interface_protocols#l2tpv3_pseudowire_bridged_to_lan
+<https://openwrt.org/docs/guide-user/network/tunneling_interface_protocols#l2tpv3_pseudowire_bridged_to_lan>
 
 ```
 opkg install xl2tpd
@@ -804,21 +805,163 @@ This example establishes a Pseudowire Tunnel and bridges it to the LAN ports. 
 
 ```
 config interface 'lan'
-	option proto     'l2tp'
-	option type      'bridge'
-	option ifname    'eth0'
-	option ipaddr    '192.168.1.1'
-	option netmask   '255.255.255.0'
-	option localaddr '178.24.154.19'
-	option peeraddr  '89.44.33.61'
-	option encap     'udp'
-	option sport     '4000'
-	option dport     '5410'
+ option proto     'l2tp'
+ option type      'bridge'
+ option ifname    'eth0'
+ option ipaddr    '192.168.1.1'
+ option netmask   '255.255.255.0'
+ option localaddr '178.24.154.19'
+ option peeraddr  '89.44.33.61'
+ option encap     'udp'
+ option sport     '4000'
+ option dport     '5410'
 ```
 
 [Pseudowire [Old OpenWrt Wiki]](https://oldwiki.archive.openwrt.org/doc/howto/pseudowire)
 **仍然不支持 bridge 不同 MTU 的设备**。
 > For now the setup works so both sides can ping each other. An ssh connection, however, is not either possible or freezes after a few seconds. The reason: The bridge for the L2TPv3 contains devices with different MTU3 . Furthermore, as the connection is bridged no routing happens and the MTU is not automatically adjusted by the router. All devices in the LAN usually use a MTU of 1500. The MTU of the L2TPv3 devices is about 1400. As the tunnel itself can not fragment packets all packets bigger than the MTU are lost. This happens at longer HTTP request, too. To solve the problem bridge firewalling and TCP MSS Clamping is used. Bridge firewalling means the iptables rules are used when a packet passes a bridge. Normally this should not work, as a bridge only works in Layer 2. However, if bridge firewalling is enabled in the kernel a bridge can work in Layer 2 as well as Layer 3. The following sysctl keys are used for this:
+
+## 2025/07 更新 ipv6 endpoint MTU 问题
+
+2025-07-27
+
+在展翼活动期间，使用手机开热点给 cudy mini 路由器使用（流量 50元 7 天 100G），发现 wg 能够通过 ipv6 连接，能够上网。但是使用 moonlight 串流却会出问题。
+![image.png](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/20250727214313.png)
+
+有两个解决办法
+
+- 将 windows 网络接口 MTU 设置成 1440
+- wg 改成 ipv4 连接
+
+由于在本文一开始也遇到了一样的 moonlight 报错，因此想到可能还是 MTU 问题。
+~~经过分析后，发现这个问题以前遇到过，原因是 home 中的 wan 口 MTU 为 1492（pppoe 占用了 8 bit），而便携路由器连接刷手机热点后的 wan 口 MTU 为 1500。ipv6 一大特点是基于 PMTUD 协议确定路径的最大 MTU（基于 icmpv6 协议），如果 PMTUD 实效（中间路径不返回 icmpv6 too big 包）就会导致路由黑洞现象。因此使用 ipv6 的正确解决办法是将 wan 口 mtu 设置成 1492。~~
+
+上述方法不行，ping 大包会报错，tcpdump 抓包 wg 虚拟ip icmp 和 wg 底层 UDP 如下所示：
+
+- lan 按照 1500 分片
+- wg 转发时按照 1400 分片，只接收到一个 628 的包（对面按照 wg0 mtu 1420，那么 2008 的 icmp 包，第二个分片恰好是 628）
+- icmpv6 抓包看不懂，不知为何 UDP 后的 length 可以 超过 1500
+
+```
+root@tr3000 ➜  ~ tcpdump -vni any icmp and host 192.168.35.1
+tcpdump: WARNING: any: That device doesn't support promiscuous mode
+(Promiscuous mode not supported on the "any" device)
+tcpdump: listening on any, link-type LINUX_SLL2 (Linux cooked v2), snapshot length 262144 bytes
+21:58:11.816104 phy0-ap0 P   IP (tos 0x0, ttl 128, id 45574, offset 0, flags [+], proto ICMP (1), length 1500)
+    192.168.1.180 > 192.168.35.1: ICMP echo request, id 1, seq 1231, length 1480
+21:58:11.816113 br-lan In  IP (tos 0x0, ttl 128, id 45574, offset 0, flags [+], proto ICMP (1), length 1500)
+    192.168.1.180 > 192.168.35.1: ICMP echo request, id 1, seq 1231, length 1480
+21:58:11.816115 br-lan.200 In  IP (tos 0x0, ttl 128, id 45574, offset 0, flags [+], proto ICMP (1), length 1500)
+    192.168.1.180 > 192.168.35.1: ICMP echo request, id 1, seq 1231, length 1480
+21:58:11.816485 phy0-ap0 P   IP (tos 0x0, ttl 128, id 45574, offset 1480, flags [none], proto ICMP (1), length 548)
+    192.168.1.180 > 192.168.35.1: ip-proto-1
+21:58:11.816488 br-lan In  IP (tos 0x0, ttl 128, id 45574, offset 1480, flags [none], proto ICMP (1), length 548)
+    192.168.1.180 > 192.168.35.1: ip-proto-1
+21:58:11.816489 br-lan.200 In  IP (tos 0x0, ttl 128, id 45574, offset 1480, flags [none], proto ICMP (1), length 548)
+    192.168.1.180 > 192.168.35.1: ip-proto-1
+21:58:11.816543 wg0   Out IP (tos 0x0, ttl 127, id 45574, offset 0, flags [+], proto ICMP (1), length 1396)
+    10.0.31.101 > 192.168.35.1: ICMP echo request, id 1, seq 1231, length 1376
+21:58:11.816557 wg0   Out IP (tos 0x0, ttl 127, id 45574, offset 1376, flags [none], proto ICMP (1), length 652)
+    10.0.31.101 > 192.168.35.1: ip-proto-1
+21:58:11.860168 wg0   In  IP (tos 0x0, ttl 64, id 29791, offset 1400, flags [none], proto ICMP (1), length 628)
+    192.168.35.1 > 10.0.31.101: ip-proto-1
+
+
+root@tr3000 ➜  ~ tcpdump -ni phy1-sta0 udp and host 2409:8a30:40a:109f:1563:a7c7:239f:c3ec
+tcpdump: verbose output suppressed, use -v[v]... for full protocol decode
+listening on phy1-sta0, link-type EN10MB (Ethernet), snapshot length 262144 bytes
+22:01:39.164507 IP6 2409:8931:ca5:1139:80af:caff:fe88:e0a.51820 > 2409:8a30:40a:109f:1563:a7c7:239f:c3ec.51820: UDP, length 96
+22:01:39.502795 IP6 2409:8931:ca5:1139:80af:caff:fe88:e0a.51820 > 2409:8a30:40a:109f:1563:a7c7:239f:c3ec.51820: UDP, length 96
+22:01:40.168370 IP6 2409:8931:ca5:1139:80af:caff:fe88:e0a.51820 > 2409:8a30:40a:109f:1563:a7c7:239f:c3ec.51820: UDP, length 96
+22:01:40.322089 IP6 2409:8931:ca5:1139:80af:caff:fe88:e0a > 2409:8a30:40a:109f:1563:a7c7:239f:c3ec: frag (0|1352) 51820 > 51820: UDP, length 1432
+22:01:40.322109 IP6 2409:8931:ca5:1139:80af:caff:fe88:e0a > 2409:8a30:40a:109f:1563:a7c7:239f:c3ec: frag (1352|88)
+22:01:40.322174 IP6 2409:8931:ca5:1139:80af:caff:fe88:e0a.51820 > 2409:8a30:40a:109f:1563:a7c7:239f:c3ec.51820: UDP, length 688
+22:01:40.366490 IP6 2409:8a30:40a:109f:1563:a7c7:239f:c3ec > 2409:8931:ca5:1139:80af:caff:fe88:e0a: frag (0|1440) 51820 > 51820: UDP, length 1452
+22:01:40.366506 IP6 2409:8a30:40a:109f:1563:a7c7:239f:c3ec > 2409:8931:ca5:1139:80af:caff:fe88:e0a: frag (1440|20)
+22:01:40.366558 IP6 2409:8a30:40a:109f:1563:a7c7:239f:c3ec.51820 > 2409:8931:ca5:1139:80af:caff:fe88:e0a.51820: UDP, length 672
+22:01:40.542662 IP6 2409:8a30:40a:109f:1563:a7c7:239f:c3ec.51820 > 2409:8931:ca5:1139:80af:caff:fe88:e0a.51820: UDP, length 80
+```
+
+测试 ipv6 的实际 MTU
+
+openwrt 的ping 不完整，需要安装额外包。并且默认 ping 路径无法找到，手动指定路径，参考：[Difference in all the 'ping' packages? Looking to find max MTU - Installing and Using OpenWrt - OpenWrt Forum](https://forum.openwrt.org/t/difference-in-all-the-ping-packages-looking-to-find-max-mtu/94638/11)
+
+```
+opkg install iputils-ping
+
+/overlay/upper/usr/bin/ping -s 1352 -M do 6.op1.yfycloud.site
+```
+
+### 分析 wg0 来回的 icmp 包
+
+tcpdump wg0
+
+cudy （wg0 mtu 设置为 1280）
+
+```
+root@tr3000 ➜  ~ tcpdump -ni wg0 icmp and host 192.168.35.1
+tcpdump: verbose output suppressed, use -v[v]... for full protocol decode
+listening on wg0, link-type RAW (Raw IP), snapshot length 262144 bytes
+22:41:31.411937 IP 10.0.31.101 > 192.168.35.1: ICMP echo request, id 1, seq 1267, length 1256  (1270)
+22:41:31.411960 IP 10.0.31.101 > 192.168.35.1: ip-proto-1   (772)
+22:41:31.463524 IP 192.168.35.1 > 10.0.31.101: ip-proto-1   (628)
+```
+
+op1 （wg0 mtu 设置为 1420）
+
+```
+root@op1 ➜  ~ tcpdump -ni wg0 icmp and host 10.0.31.101
+tcpdump: verbose output suppressed, use -v[v]... for full protocol decode
+listening on wg0, link-type RAW (Raw IP), snapshot length 262144 bytes
+22:37:40.352862 IP 10.0.31.101 > 192.168.35.1: ICMP echo request, id 1, seq 1260, length 1256  (1276)
+22:37:40.352876 IP 10.0.31.101 > 192.168.35.1: ip-proto-1  (772)
+22:37:40.352942 IP 192.168.35.1 > 10.0.31.101: ICMP echo reply, id 1, seq 1260, length 1400  (1420)
+22:37:40.352946 IP 192.168.35.1 > 10.0.31.101: ip-proto-1  (628)
+```
+
+### 解决办法
+
+两边 wg0 都设置为 1280，wan 接口 MTU 不一样没关系（一个设置为 1500，一个为 1492）
+
+这里和 lan 的 MTU（1500）没关系是因为 wg0 进行了 NAT，所以会收集分片按照 wg0 MTU 重新发送。
+
+优化
+
+- 减少到 op 的分片（windows 设置 MTU 和 wg0 一致）
+- wg0 分片最大设置为实际 PMTU - 80（基于 ipv6 的 wg）= 1360 - 80 = 1280。
+
+按上述优化实际抓包
+
+```
+root@tr3000 ➜  ~ tcpdump -ni any icmp and host 192.168.35.1 -v
+tcpdump: WARNING: any: That device doesn't support promiscuous mode
+(Promiscuous mode not supported on the "any" device)
+tcpdump: listening on any, link-type LINUX_SLL2 (Linux cooked v2), snapshot length 262144 bytes
+22:51:24.798775 phy0-ap0 P   IP (tos 0x0, ttl 128, id 46489, offset 0, flags [+], proto ICMP (1), length 1276)
+    192.168.1.180 > 192.168.35.1: ICMP echo request, id 1, seq 1288, length 1256
+22:51:24.798775 br-lan In  IP (tos 0x0, ttl 128, id 46489, offset 0, flags [+], proto ICMP (1), length 1276)
+    192.168.1.180 > 192.168.35.1: ICMP echo request, id 1, seq 1288, length 1256
+22:51:24.798775 br-lan.200 In  IP (tos 0x0, ttl 128, id 46489, offset 0, flags [+], proto ICMP (1), length 1276)
+    192.168.1.180 > 192.168.35.1: ICMP echo request, id 1, seq 1288, length 1256
+22:51:24.798826 phy0-ap0 P   IP (tos 0x0, ttl 128, id 46489, offset 1256, flags [none], proto ICMP (1), length 772)
+    192.168.1.180 > 192.168.35.1: ip-proto-1
+22:51:24.798826 br-lan In  IP (tos 0x0, ttl 128, id 46489, offset 1256, flags [none], proto ICMP (1), length 772)
+    192.168.1.180 > 192.168.35.1: ip-proto-1
+22:51:24.798826 br-lan.200 In  IP (tos 0x0, ttl 128, id 46489, offset 1256, flags [none], proto ICMP (1), length 772)
+    192.168.1.180 > 192.168.35.1: ip-proto-1
+22:51:24.798913 wg0   Out IP (tos 0x0, ttl 127, id 46489, offset 0, flags [+], proto ICMP (1), length 1276)
+    10.0.31.101 > 192.168.35.1: ICMP echo request, id 1, seq 1288, length 1256
+22:51:24.798928 wg0   Out IP (tos 0x0, ttl 127, id 46489, offset 1256, flags [none], proto ICMP (1), length 772)
+    10.0.31.101 > 192.168.35.1: ip-proto-1
+22:51:24.818301 wg0   In  IP (tos 0x0, ttl 64, id 61349, offset 0, flags [+], proto ICMP (1), length 1276)
+    192.168.35.1 > 10.0.31.101: ICMP echo reply, id 1, seq 1288, length 1256
+22:51:24.818301 wg0   In  IP (tos 0x0, ttl 64, id 61349, offset 1256, flags [none], proto ICMP (1), length 772)
+    192.168.35.1 > 10.0.31.101: ip-proto-1
+```
+
+- Down: 40, Up: 17/16
+- ipv4 和 ipv6 无明显区别
+
 ## 参考
 
 - windows 查看 PMTU：[Windows MTU active value after pmtu ? - Microsoft Community](https://answers.microsoft.com/en-us/windows/forum/all/windows-mtu-active-value-after-pmtu/ed7c2ce3-adc3-4135-9539-267a8e9fbe56)

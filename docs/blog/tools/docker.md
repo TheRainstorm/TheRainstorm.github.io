@@ -14,6 +14,16 @@ categories:
 
 ubuntu: [Install Docker Engine on Ubuntu | Docker Docs](https://docs.docker.com/engine/install/ubuntu/#prerequisites)
 
+debian: [Debian | Docker Docs](https://docs.docker.com/engine/install/debian/)
+
+| 特性       | ~/.docker/config.json          | ~/.config/docker/daemon.json           |
+| :------- | :----------------------------- | :------------------------------------- |
+| **核心组件** | **Client** (命令行工具)             | **Daemon** (后台引擎)                      |
+| **主要功能** | 告诉 Docker **你是谁** (Login Auth) | 告诉 Docker **怎么运行** (Storage, Net, Log) |
+| **修改生效** | 立即生效 (下次敲命令时)                  | **通常需重启 Docker 服务**                    |
+| **典型场景** | `docker login` 自动生成；配置 CLI 快捷键 | 配置国内镜像源；修改容器日志大小限制                     |
+| **代理设置** | 影响 `docker build` 时的网络环境（部分）   | 影响 `docker pull` 拉取镜像时的网络环境            |
+
 ## docker 命令行
 
 ### container 相关
@@ -55,7 +65,6 @@ docker run --user <username_or_UID> <image_name>
 
 #### restart
 
-
 - no
   - Don't automatically restart the container. (Default)
 - `on-failure[:max-retries]`
@@ -71,7 +80,6 @@ docker run -d --restart unless-stopped redis
 docker update --restart unless-stopped redis
 ```
 
-
 #### 覆盖 Entrypoint
 
 对于那些指定了 entrypoint 为特定程序，如 python 的容易非常有用，可以用于上去维修。
@@ -81,6 +89,15 @@ docker run -it --rm --name test --entrypoint bash image
 ```
 
 应用场景：如果容器在反复重启，导致无法 exec 上去。此时就需要使用镜像重新 docker run，然后修改 entrypoint 避免再次失败重启。
+
+#### workdir
+
+```
+docker run -it --rm -v $(pwd):/workspace --name test --entrypoint /bin/sh --workdir /workspace node:18-alpine
+
+npm install
+```
+
 ### images 相关
 
 ```bash
@@ -114,7 +131,7 @@ docker save --output busybox.tar busybox  # 输出到tar文件
 docker save -o ubuntu.tar ubuntu:lucid ubuntu:saucy  # 选择多个tag
 
 docker save myimage:latest | gzip > myimage_latest.tar.gz # 输出到标准输出并使用gzip压缩
-docker save myimage:latest | zstd > myimage_latest.tar.gz # 输出到标准输出并使用gzip压缩
+docker save myimage:latest | pv | zstd > myimage_latest.zstd
 ```
 
 导入
@@ -123,6 +140,7 @@ docker save myimage:latest | zstd > myimage_latest.tar.gz # 输出到标准输�
 docker load --input=file.tar
 
 zstd -d -c myimage_latest.tar.zst | docker load  # -c 输出到标准输出
+gzip -d -c myimage_latest.tar.zst | docker load  # -c 输出到标准输出
 ```
 
 **export/import**
@@ -175,6 +193,51 @@ docker tag old_image_name:old_tag new_image_name:new_tag
 docker rmi old_image_name:old_tag
 ```
 
+### 空间清理
+
+docker system df  # 查看空间，包含每种资源可以删除的比例（reclaimable）
+
+```
+yfy@ares ➜  ~ docker system df
+TYPE            TOTAL     ACTIVE    SIZE      RECLAIMABLE
+Images          5         5         7.21GB    74.81MB (1%)
+Containers      5         4         4.824GB   0B (0%)
+Local Volumes   4         2         7.698GB   14.07kB (0%)
+Build Cache     0         0         0B        0B
+```
+
+```
+docker image prune # 删除悬挂镜像（docker build），不会删除没使用的
+docker image prune -a  # 删除未使用的镜像
+```
+
+### 坑
+
+#### --env-file 字符串不要加引号
+
+若强行添加双引号（如 `MY_VAR="value"`），引号​**​会被视为值的一部分​**​，导致实际值为 `"value"`（包含引号），可能引发程序解析错误
+
+**`docker run -e` 命令​**​：  
+命令行中需用引号包裹含空格的字符串（如 `-e "MY_VAR=With space"`），但 `.env` 文件无需此操作
+
+## docker 高级
+
+### volume
+
+#### 复制 volume trick
+
+docker 不直接提供复制 volume 命令
+
+```
+docker volume create open-webui_open-webui
+
+docker run --rm \
+       -v open-webui:/from \
+       -v open-webui_open-webui:/to \
+       alpine sh -c "cd /from ; cp -av . /to"
+
+```
+
 ## docker compose
 
 ### 升级镜像
@@ -182,6 +245,23 @@ docker rmi old_image_name:old_tag
 ```
 docker compose pull && docker compose up -d
 ```
+
+### 问题
+
+#### 使用现有 volume
+
+默认创建 `项目名_volume`
+
+通过指定 `extrenal` 使用外部创建的 volume
+
+```
+volumes: # 将这里也修改为新卷名 
+    open-webui_new:
+    # 声明它是一个已经存在的、外部的卷
+    external: true
+```
+
+也可以将现有卷复制一份到新的名字，docker compose 会自动使用。
 
 ## dockerfile
 
@@ -209,6 +289,14 @@ docker run -it --rm app bash
 ```
 
 最后完善 Dockerfile
+
+### COPY 与上下文
+
+docker copy 只能复制上下文內的文件，可以在更顶级运行 docker build，通过 -f 指定 Dockerfile。
+
+```
+docker build -f docker/Dockerfile -t my-image .
+```
 
 ### 使用 entrypoint.sh 脚本
 
@@ -260,6 +348,15 @@ docker run -d --name pal --restart unless-stopped \
 
 - 使用`.dockerignore`文件，否则每次修改 Dockerfile，COPY 之后的步骤就都不能复用了
 
+#### ADD
+
+可以解压压缩包
+
+```
+WORKDIR /app
+ADD nickdir.tar.gz .
+```
+
 ### 发布到 dockerhub
 
 ```bash
@@ -268,6 +365,60 @@ docker login
 docker tag local_image:tag username/repository:tag
 docker push username/repository:tag
 ```
+
+### 清理空间
+
+```
+docker system df -v  
+```
+
+```
+docker system prune      # 删除停止的容器、未使用的镜像、网络、悬空镜像[1,3,6](@ref)
+docker system prune -a   # 强制删除所有未使用的镜像（包括有标签但未引用的镜像）[1,3,6](@ref)
+docker volume prune      # 删除未挂载的卷[3,11](@ref)
+docker network prune     # 删除未使用的网络[3](@ref)
+docker images prune
+```
+
+```
+docker rmi $(docker images -q -f "dangling=true")  # 删除无标签的镜像[2,4](@ref)
+```
+
+### 坑
+
+#### git safe 目录导致报错
+
+```
+git config --global safe.directory '*'
+```
+
+```
+ > [13/17] ADD MLNX_OFED_LINUX-5.7-1.0.2.0-ubuntu22.04-x86_64.tgz /:
+------
+Dockerfile:105
+--------------------
+ 103 |
+ 104 |     # 安装 MLNX OFED 用户态库
+ 105 | >>> ADD MLNX_OFED_LINUX-5.7-1.0.2.0-ubuntu22.04-x86_64.tgz /
+ 106 |     RUN cd /MLNX_OFED_LINUX-5.7-1.0.2.0-ubuntu22.04-x86_64 \
+ 107 |         && ./mlnxofedinstall --user-space-only --without-fw-update --force
+--------------------
+ERROR: failed to solve: Error processing tar file(exit status 1): failed to Lchown "/MLNX_OFED_LINUX-5.7-1.0.2.0-ubuntu22.04-x86_64/DEBS/neohost-sdk_1.5.0-102_amd64.deb" for UID 71873, GID 0 (try increasing the number of subordinate IDs in /etc/subuid and /etc/subgid): lchown /MLNX_OFED_LINUX-5.7-1.0.2.0-ubuntu22.04-x86_64/DEBS/neohost-sdk_1.5.0-102_amd64.deb: invalid argument
+```
+
+### 进阶：多阶段构建
+
+多阶段构建是为了分离构建环境和运行时环境，减小最终镜像体积。
+
+构建阶段可使用较大的开发环境（如完整版 `python:3.11`），而最终阶段改用精简镜像（如 `python:3.11-slim`），仅复制必要的运行文件（如编译后的代码、依赖包），避免携带构建工具和中间文件
+
+- `builder` 阶段安装依赖
+  - `pip install --user` 将包安装到​**​用户级目录​**​ `/root/.local/`
+    - 二进制文件：`/root/.local/bin/`
+    - 库文件：`/root/.local/lib/python3.11/site-packages/`
+- `final` 阶段复制并使用依赖
+  - 从 `builder` 阶段复制 `/root/.local` 目录到当前阶段的相同路径，完整保留依赖文件结构
+  - Python 运行时默认会搜索 `sys.path` 中的路径（包括用户级目录 `/root/.local/lib/python3.11/site-packages/`），因此无需额外配置即可导入已安装的包
 
 ## docker 实验
 
@@ -354,10 +505,6 @@ Error: failed to start containers: jellyfin
 
 nvidia runtime
 
-```
-
-```
-
 nvidia-container-runtime 已经被 nvidia-container-toolkit  替代了： [NVIDIA/nvidia-container-runtime: NVIDIA container runtime (github.com)](https://github.com/NVIDIA/nvidia-container-runtime)
 
 安装教程
@@ -370,5 +517,6 @@ Configure the container runtime by using the `nvidia-ctk` command:
 sudo nvidia-ctk runtime configure --runtime=docker
 
 sudo systemctl restart docker
-
 ```
+
+### nvidia cuda 镜像
