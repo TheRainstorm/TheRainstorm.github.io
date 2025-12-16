@@ -8,11 +8,13 @@ categories:
 ---
 我的 AI 模型使用历程可以概括为：ChatGPT → Gemini 1.5-pro → Deepseek-R1 → Gemini 2.5 pro。
 我从 ChatGPT 诞生以来开始使用大模型，最后一个有印象的版本是 ChatGPT-4o。但是由于 GPT 网络经常连不上，我转而尝试了 Gemini 1.5 flash/pro 模型。其中，flash 模型极快的速度让我印象深刻，3 秒就能得到结果在一些简单场景下用起来很方便。而 pro 模型给我留下的印象则是，它的回答基本没有废话，它的思维链也非常有逻辑。
-之后随着 Deepseek-R1 的发布，我又转向使用 Deepseek 模型了，主要是因为不必解决网络问题实在是方便，再加上它的性能已经能满足我大部分的需求。直到 1 个多月前，我开始使用 gemini 2.5 pro，它的效果让我感到惊艳。与 Deepseek-R1 相比，它带给我一种跨代式的提升感，于是成为我目前主要使用的模型之一。
+之后随着 Deepseek-R1 的发布，我又转向使用 Deepseek 模型，主要是因为不必解决网络问题实在是方便，再加上它的性能已经能满足我大部分的需求。直到 1 个多月前，我开始使用 gemini 2.5 pro，它的效果让我感到惊艳。与 Deepseek-R1 相比，它带给我一种跨代式的提升感，于是成为我目前主要使用的模型之一。
 
 *p.s 感觉 google AI 模型最近风头比较盛，前段时间发布的 nano banana 画图模型刚火出圈过一次，现在又新发布了 gemini 3.0 和 nano banana2，再次引起不小热度（20251118）。*
 
 目前官方途径使用 gemini 2.5 pro 有 3 种方式：
+
+*update 20251216: 现在 google ai studio 免费层级无法再使用 2.5 pro 以上模型，flash 模型也只有 5 RPM 低的可怜的次数。*
 
 - [gemini 官网](gemini.google.com)
     - google gemini 单独的网站。我一开始使用的这个网站，后面发现它不仅有较少的免费使用次数限制，并且还不支持联网。
@@ -45,7 +47,7 @@ categories:
     - 绑定国外支付信用卡
     - 注册时的疑问
     - google cloud 的用法
-- 创建 API
+- google ai studio 创建 Gemini API Key
 - open-webui 配置
 - litellm 配置
 
@@ -201,13 +203,42 @@ google AI studio 和 vertex AI 价格是一样的
 OpenRouter 网页更容易看到模型价格信息对比。
 
 [Gemini 3 Pro Preview - API, Providers, Stats | OpenRouter](https://openrouter.ai/google/gemini-3-pro-preview)
-## open-webui
+## Open-WebUI
 
 [open-webui/open -webui: User-friendly AI Interface (Supports Ollama, OpenAI API, ...)](https://github.com/open-webui/open-webui)
 
-### 搭建
+### docker 部署 open-webui
 
-搭建过程：省略
+[Quick Start | Open WebUI](https://docs.openwebui.com/getting-started/quick-start/)
+
+- OPENAI_API_KEY 之后进入网页设置即可
+
+```yaml
+version: '3.8'
+
+services:
+  open-webui:
+    image: ghcr.io/open-webui/open-webui:main
+    container_name: open-webui
+    ports:
+      - "3001:8080"
+    environment:
+      - OPENAI_API_KEY=your_secret_key
+    volumes:
+      - open-webui:/app/backend/data
+    restart: unless-stopped
+volumes:
+  open-webui:
+```
+
+不同镜像版本
+
+- open-webui:main
+    - 适合用于仅使用 openai api key 场景
+- open-webui:main-slim
+    - For environments with limited storage or bandwidth, Open WebUI offers slim image variants that exclude pre-bundled models. These images are significantly smaller but download required models (whisper, embedding models) on first use.
+- open-webui:ollama
+    - 继承了 ollama，支持 gpu 和 cpu
 ### 设置
 
 此时已经可以在：管理员面板-》设置-》外部连接-》OpenAI 接口 中添加
@@ -233,10 +264,9 @@ OpenRouter 网页更容易看到模型价格信息对比。
 - action
     - 修改 open-webui，增加按钮
 
-#### (update) Google Gemini
+### (update 20251123) 使用 `Google Gemini` 函数完美支持 gemini
 
-update 20251123
-
+[Google Gemini • Open WebUI Community](https://openwebui.com/posts/5a64dbc0-bd44-4d3a-84be-25232d5a8e84)
 https://github.com/owndev/Open-WebUI-Functions/blob/main/pipelines/google/google_gemini.py
 
 - 直接在 open-webui 里用纯 python 实现了一个转换器，支持 Google AI API 和 Vertex AI API。
@@ -245,6 +275,17 @@ https://github.com/owndev/Open-WebUI-Functions/blob/main/pipelines/google/google
 
 可以基本替代 LiteLLM 了
 
+使用方法
+
+- 安装函数后，点击函数设置（齿轮）
+- 配置 google ai studio 的 API key
+    - **也支持 vertex ai API**
+- Gemini 模型出现在 model 下拉列表中
+
+同一个作者还有两个 Tool 用于开启搜索功能，但是我测试没有成功。
+
+- Grounding with Google search with [google_search_tool.py filter](https://github.com/owndev/Open-WebUI-Functions/tree/main/filters/google_search_tool.py)
+- Grounding with Vertex AI Search with [vertex_ai_search_tool.py filter](https://github.com/owndev/Open-WebUI-Functions/tree/main/filters/vertex_ai_search_tool.py)
 ## LiteLLM
 
 本质是一个 **“适配器”或“代理层”**
@@ -254,16 +295,106 @@ https://github.com/owndev/Open-WebUI-Functions/blob/main/pipelines/google/google
 3. 将你的 `Gemini API Key` 添加到请求头中，发送给 Google AI Gemini API 的服务器。
 4. 收到 Gemini 的响应后，再**翻译**回 OpenAI 的格式返回给你。
 
-### 配置
+**对比直接使用 gemini 兼容 OpenAI 的 API key**
+
+google ai studio 提供了一个 兼容 OpenAI 的 API key，直接在 open-webui 中使用存在一些问题：
+
+- 2.5 pro 无法联网搜索，和显示思维链。（2.5-flash 模型倒是两个都正常）
+     - litellm 可以设置 merge_reasoning_content_in_choices 参数，可以正常显示思维链。
+
+### docker 部署 litellm proxy server
+
+litellm 还是一个 python SDK，但是我们主要使用其 proxy 服务器的用法。
+
+[Getting Started Tutorial | liteLLM](https://docs.litellm.ai/docs/proxy/docker_quick_start)
+
+- 介绍了如何使用 litellm 请求 openai api 兼容的服务器
+- 将 litellm 自身暴露成一个 openai api 兼容的服务器
+    - 设置的 master_key 就是 cherry-studio 等软件需要的 OpenAI API Key
+
+docker compose 示例
+
+[litellm/docker-compose.yml at main · BerriAI/litellm](https://github.com/BerriAI/litellm/blob/main/docker-compose.yml)
+
+- 我将 prometheus 注释掉了，该服务只是不断监测服务是否在线。并提供一个数据面板。
+```yaml
+services:
+  litellm:
+    build:
+      context: .
+      args:
+        target: runtime
+    image: ghcr.io/berriai/litellm:main-stable
+    #########################################
+    ## Uncomment these lines to start proxy with a config.yaml file ##
+    volumes:
+      - ./litellm_config.yaml:/app/config.yaml
+      - ./vertex_ai_service_account.json:/app/vertex_ai_service_account.json
+    command:
+      - "--config=/app/config.yaml"
+    ##############################################
+    ports:
+      - "3002:4000" # Map the container port to the host, change the host port if necessary
+    environment:
+      DATABASE_URL: "postgresql://llmproxy:dbpassword9090@db:5432/litellm"
+      STORE_MODEL_IN_DB: "True" # allows adding models to proxy via UI
+      GOOGLE_APPLICATION_CREDENTIALS: /app/vertex_ai_service_account.json
+    env_file:
+      - .env # Load local .env file
+    depends_on:
+      - db  # Indicates that this service depends on the 'db' service, ensuring 'db' starts first
+    healthcheck:  # Defines the health check configuration for the container
+      test: [ "CMD-SHELL", "wget --no-verbose --tries=1 http://localhost:4000/health/liveliness || exit 1" ]  # Command to execute for health check
+      interval: 30s  # Perform health check every 30 seconds
+      timeout: 10s   # Health check command times out after 10 seconds
+      retries: 3     # Retry up to 3 times if health check fails
+      start_period: 40s  # Wait 40 seconds after container start before beginning health checks
+
+  db:
+    image: postgres:16
+    restart: always
+    container_name: litellm_db
+    environment:
+      POSTGRES_DB: litellm
+      POSTGRES_USER: llmproxy
+      POSTGRES_PASSWORD: dbpassword9090
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data # Persists Postgres data across container restarts
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d litellm -U llmproxy"]
+      interval: 1s
+      timeout: 5s
+      retries: 10
+
+#  prometheus:
+#    image: prom/prometheus
+#    volumes:
+#      - prometheus_data:/prometheus
+#      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+#    ports:
+#      - "9095:9090"
+#    command:
+#      - "--config.file=/etc/prometheus/prometheus.yml"
+#      - "--storage.tsdb.path=/prometheus"
+#      - "--storage.tsdb.retention.time=15d"
+#    restart: always
+volumes:
+  prometheus_data:
+    driver: local
+  postgres_data:
+    name: litellm_postgres_data # Named volume for Postgres data persistence
+```
+### 基本配置
+
+#### 修改 API key
 
 修改 API key：[Rotating Master Key | liteLLM](https://docs.litellm.ai/docs/proxy/master_key_rotations)
-### 对比直接使用兼容的 OpenAI 接口
 
-相比直接使用 Google AI Gemini API 兼容的 OpenAI 接口
+### 通过 google ai studio api key 使用 gemini
 
-- OpenAI 兼容 API 2.5 pro 无法联网搜索，和显示思维链。（2.5-flash 模型倒是两个都正常）
-     - litellm 手动控制的可以
-### gemini 显示 thinking
+#### gemini 显示 thinking
 
 [[Bug]：OpenAI gpt-5 在使用 OpenWebUI 时不显示思维输出 ·问题 #13419 ·BerriAI/利特尔姆 --- [Bug]: OpenAI gpt-5 not showing thinking outputs when using OpenWebUI · Issue #13419 · BerriAI/litellm](https://github.com/BerriAI/litellm/issues/13419)
 
@@ -272,7 +403,7 @@ gemini/google ai studio 和 vertex 需要启用选项
 thinking: {"type": "enabled", "budget_tokens": 1024}  # budget_tokens: 1024-32768
 merge_reasoning_content_in_choices: true
 ```
-### 联网搜索
+#### 启用联网搜索
 
 [Web Search | liteLLM](https://docs.litellm.ai/docs/completion/web_search)
 
@@ -285,6 +416,67 @@ merge_reasoning_content_in_choices: true
 - 超出：35$/1000条
 
 你不能依赖 Open-WebUI 的“网络搜索”按钮，因为它发送的参数可能不是 Vertex AI 所期望的 `google_search_retrieval` 工具。最稳定、最可靠的方法是在 LiteLLM 的配置中创建一个专门用于搜索的“虚拟模型”。
+
+### 通过 vertex ai 使用 gemini
+
+在 google ai studio 有免费的 gemini2.5/3 额度时，经常遇到 server overload 的报错，需要过一会儿才能使用。但我明明是付费用户，使用也没有达到使用速率限制。对比感觉使用 vertex ai 更稳定些。
+
+[VertexAI [Gemini] | liteLLM](https://docs.litellm.ai/docs/providers/vertex)
+
+如何获得 service_account.json 需要参考 google cloud 文档或者直接问LLM。
+
+`litellm_config.yaml`
+```yaml
+model_list:
+  - model_name: gemini-2.5-pro
+    litellm_params:
+      model: vertex_ai/gemini-2.5-pro
+      vertex_project: "project-id"
+      vertex_location: "us-central1"
+      vertex_credentials: "/path/to/service_account.json" # [OPTIONAL] Do this OR `!gcloud auth application-default login` - run this to add vertex credentials to your env
+```
+
+`docker-compose.yaml` 文件中，添加了文件映射和环境变量。
+```yaml
+volumes:
+      - ./litellm_config.yaml:/app/config.yaml
+      - ./vertex_ai_service_account.json:/app/vertex_ai_service_account.json
+environment:
+      GOOGLE_APPLICATION_CREDENTIALS: /app/vertex_ai_service_account.json
+```
+
+#### 使用 gemini-3-pro 404
+
+```
+啊哦！回复有问题 litellm.ServiceUnavailableError: litellm.MidStreamFallbackError: litellm.NotFoundError: Vertex_ai_betaException - b'{\n "error": {\n "code": 404,\n "message": "Publisher Model `projects/axiomatic-spark-475316-e7/locations/us-central1/publishers/google/models/gemini-3-pro-preview` was not found or your project does not have access to it. Please ensure you are using a valid model version. For more information, see: https://cloud.google.com/vertex-ai/generative-ai/docs/learn/model-versions",\n "status": "NOT_FOUND"\n }\n}\n'. Received Model Group=vertex_ai/gemini-3-pro-preview Available Model Group Fallbacks=None
+```
+
+需要将 vertex_location 设置为 global
+https://github.com/BerriAI/litellm/issues/16780#issuecomment-3568703439
+```
+vertex_location: "global"
+```
+
+### 使用其它兼容 OpenAI API 的模型
+
+其实最简单。兼容 openai 的 API key，直接设置 api_base 和 api_key 即可。
+ 
+```yaml
+model_list:
+ - model_name: siliconflow/deepseek-ai/DeepSeek-V3.2
+    litellm_params:
+      model: openai/deepseek-ai/DeepSeek-V3.2
+      api_base: https://api.siliconflow.cn/v1
+      api_key: os.environ/SILICONFLOW_API_KEY
+```
+
+需要在model 前面添加 `openai`，否则 litellm 不知道 provider 是谁。
+```
+08:29:06 - LiteLLM Router:ERROR: router.py:5157 - Error creating deployment: litellm.BadRequestError: LLM Provider NOT provided. Pass in the LLM provider you are trying to call. You passed model=deepseek-ai/DeepSeek-V3.2
+ Pass model as E.g. For 'Huggingface' inference endpoints pass in `completion(model='huggingface/starcoder',..)` Learn more: https://docs.litellm.ai/docs/providers, ignoring and continuing with other deployments.
+Traceback (most recent call last)
+```
+
 
 ## 其它 TODO
 
