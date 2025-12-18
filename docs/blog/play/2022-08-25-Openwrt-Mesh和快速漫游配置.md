@@ -90,11 +90,11 @@ openwrt wifi 功能由 wpad 包提供。openwrt 提供了多种 wpad 包，针�
 
 ipv4 勾选 ignore interface 即可
 
-![image-20220825185126933](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/picgo/image-20220825185126933.png)
+![image-20220825185126933](https://imagebed.yfycloud.site/2025/12/49a5fda029ca80131762846cefdd305d.png)
 
 ipv6 需要将 ra, dhcpv6, ndp 均设置为 disabled
 
-![image-20220825185217075](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/picgo/image-20220825185217075.png)
+![image-20220825185217075](https://imagebed.yfycloud.site/2025/12/948e03fb95b80fa68bb6af5b71574617.png)
 
 ##### LAN 接口 ip 地址
 
@@ -102,19 +102,19 @@ LAN 接口需要设置 ip 地址，有两种方式（推荐第二种方法）
 
 - 设置静态地址，需要同时设置网关、DNS 为主路由
 
-  ![image-20220825185519836](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/picgo/image-20220825185519836.png)
+  ![image-20220825185519836](https://imagebed.yfycloud.site/2025/12/92a355c2d7b97374e2bd0fc1d3cf5d8f.png)
 
-  ![image-20220825185451076](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/picgo/image-20220825185451076.png)
+  ![image-20220825185451076](https://imagebed.yfycloud.site/2025/12/8cb7fb4392c27cbc0b4b3429e3ea403d.png)
 
 - 更简单的方式为将 LAN 设置为 dhcp 客户端。这样好处是不用配置，重启后路由器加入 mesh 后便可以成功上网。在之后可以在主路由 DHCP 设置中分配静态地址，这样路由器下次重启便会获得指定 ip 地址了。
 
-  ![image-20220825185619578](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/picgo/image-20220825185619578.png)
+  ![image-20220825185619578](https://imagebed.yfycloud.site/2025/12/d2553e06d7984afcb826f0827670760e.png)
 
 ##### 关闭防火墙，dns 等服务
 
 system->starup 中关闭一些不必要的服务，如 firewall, dnsmasq, odhcpd
 
-![image-20220825185835670](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/picgo/image-20220825185835670.png)
+![image-20220825185835670](https://imagebed.yfycloud.site/2025/12/776525ca5a5c6c7ed655643f298fbb66.png)
 
 主要部分已经配置完成。接下来是一些可选操作
 
@@ -127,25 +127,25 @@ mesh 需要占掉一个无线频段，这里我选择使用 2.4GHz。因为家�
 
 - 选择一个 radio 新建一个网络，比如 2.4GHz radio
 
-  ![image-20220825200934634](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/picgo/image-20220825200934634.png)
+  ![image-20220825200934634](https://imagebed.yfycloud.site/2025/12/a7aa5ecdd3376324ad00ae8f6c551464.png)
 
 - 设置 WIFI 信道，所有 mesh 节点需要使用相同信道
 
-  ![image-20220825221157178](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/picgo/image-20220825221157178.png)
+  ![image-20220825221157178](https://imagebed.yfycloud.site/2025/12/6e1dcd8b60c47d33b3664a5586cfd267.png)
 
 - 然后然后选择 mesh point 模式。mesh id 为一个字符串，保证 mesh 节点一致即可。加密必须选择 wpa3-SAE 加密。
 
-  ![image-20220825200917273](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/picgo/image-20220825200917273.png)
+  ![image-20220825200917273](https://imagebed.yfycloud.site/2025/12/d82603087a140eae99dab32d02e79c7e.png)
 
 #### 无线 802.11r 配置
 
 另一个 radio 用于提供上网，可以新建一个接口选择 AP 模式（默认已经存在）
 
-![image-20220825220833532](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/picgo/image-20220825220833532.png)
+![image-20220825220833532](https://imagebed.yfycloud.site/2025/12/bfcf2f69c7791163a0f1cbe6bbf5ecd2.png)
 
 为了实现快速漫游需要设置 802.11r，主要需要设置 Mobility Domain，保证所有节点相同
 
-![image-20220825220609260](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/picgo/image-20220825220609260.png)
+![image-20220825220609260](https://imagebed.yfycloud.site/2025/12/f3a6879c57411e87797a7529d90024b0.png)
 
 FT 协议的区别，个人感觉不太明显。
 
@@ -157,9 +157,9 @@ FT 协议的区别，个人感觉不太明显。
 
 下图分别是二楼主路由和一楼一台路由的信道分析图
 
-![image-20220825190223518](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/picgo/image-20220825190223518.png)
+![image-20220825190223518](https://imagebed.yfycloud.site/2025/12/64d3ceeea9303df2ceb45b7fe5bfe406.png)
 
-![image-20220825214252429](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/picgo/image-20220825214252429.png)
+![image-20220825214252429](https://imagebed.yfycloud.site/2025/12/ac9d4e1f2a6ab1630bd7200b3903f06a.png)
 
 #### 结果
 

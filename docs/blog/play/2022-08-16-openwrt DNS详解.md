@@ -20,7 +20,7 @@ categories:
 - openwrt DNS 和 DHCP 配置均位于/etc/config/dhcp
 - openwrt 使用 dnsmasq 和 odhcpd。它们功能如下：
 
-  ![image-20220816220011245](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/picgo/image-20220816220011245.png)
+  ![image-20220816220011245](https://imagebed.yfycloud.site/2025/12/8d2865b9d025fcdeb011013e21bc26e2.png)
 
 - 总结来说：
   - dnsmasq 将自己设置为 DHCP 客户端的 DNS

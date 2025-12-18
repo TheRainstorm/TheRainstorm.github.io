@@ -101,7 +101,7 @@ ip -6 ro add 2001:da8:d800:336::beef:aaaa dev br-lan
 ### 效果
 
 阿里 ecs 上 mtr 效果
-![image.png](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/20240228001726.png)
+![image.png](https://imagebed.yfycloud.site/2025/12/cbe9860cee184886deb4e16e3260b18d.png)
 
 tcpdump 抓到的 NS，NA
 

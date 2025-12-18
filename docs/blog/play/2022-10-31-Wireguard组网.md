@@ -30,9 +30,9 @@ wireguard 是一种基于 UDP 的隧道协议，可以在不同设备间建立�
 
 - 点对点连接。多个 VPC 间两两连接，保证延迟最低
 - 星型结构，每个节点只需要配置和中心节点的连接
-![image.png](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/20231119113553.png)
+![image.png](https://imagebed.yfycloud.site/2025/12/e6bed01a693962f06c78c6d7b1b71c71.png)
 
-![image.png](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/20231119113807.png)
+![image.png](https://imagebed.yfycloud.site/2025/12/1586661f4c3fccbd44f018a51ed4d0e9.png)
 
 ### wg+gretap 二层隧道
 
@@ -44,7 +44,7 @@ TODO
 
 三个路由器通过 wg 两两连接（其实不一定需要这个结构，也可以配置成 op2-op1-op3 这种链状结构，这种结构主要降低了一次转发，延迟一般更短）
 
-![](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/picgo/20230218185024.png)
+![](https://imagebed.yfycloud.site/2025/12/16e0ab611f09adaa806929d5366a36c2.png)
 
 ### wg site to site 配置
 
@@ -59,28 +59,28 @@ TODO
 两边均创建好后再相互添加 peer
 
 op1
-![image.png](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/20231119200543.png)
-![image.png](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/20231119200631.png)
+![image.png](https://imagebed.yfycloud.site/2025/12/0032f54f93477d9c73a05fda22873fbd.png)
+![image.png](https://imagebed.yfycloud.site/2025/12/a5fe917e7d1e4559ef76cd4169c9fd2d.png)
 
 op2
-![image.png](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/20231119200722.png)
-![image.png](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/20231119200800.png)
+![image.png](https://imagebed.yfycloud.site/2025/12/d7372ac5cd0e974ec59b3b34a0cb408e.png)
+![image.png](https://imagebed.yfycloud.site/2025/12/3af4f5969ed2421881628e572f031eb5.png)
 
 op1 上 op2 peer 设置例子
 
 - allowed ip 填写 op2 wg_s2s 接口设置的私有地址，并填写 op2 所在的子网网段
 - route allow ip 需要勾选，作用是让 openwrt 根据 allowed ip 生成路由
-![image.png](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/20231119201040.png)
+![image.png](https://imagebed.yfycloud.site/2025/12/18831d8618cf8158532ea57e54560856.png)
 
 #### 防火墙
 
 两边需要添加以下防火墙规则，保证 wg 能从 wan 正常连接。协议勾选 UDP 即可
-![image.png](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/20231119203752.png)
+![image.png](https://imagebed.yfycloud.site/2025/12/0f01b068304c6e35d5224bc770cc51f1.png)
 
 然后是关于 zone 的设置。
 
 wg_s2s 接口可以配置成 lan zone，在接口中勾选 lan 即可，如下图所示。
-![image.png](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/20231119204543.png)
+![image.png](https://imagebed.yfycloud.site/2025/12/94beecb15506e5dcefa480bb2f193873.png)
 这样后面的 zone 之间转发规则就不需要修改。以下段落可以跳过。
 
 以下设置适合对防火墙原理感兴趣的用户：
@@ -96,12 +96,12 @@ op1 和 op2 lan,wan, wg_s2s zone 的设置如下图：
   - 勾选：表示从 wg_s2s 出去的流量会经过 SNAT，即将源地址（可能是 lan 设备的地址）换为 wg_s2s 的地址。这样从一个子网访问另一个子网时，另一个子网只能看到经过 NAT 后的地址，而不知道发起设备的 lan 地址。
   - 不勾选：好处就是两个子网相互访问时能保留 ip 信息。缺点是由于只为 wg_s2s 设置了两边 lan 网段的路由（上一节的 allowed ip），一个路由器上的其它接口（如 wg1）无法通过 wg_s2s 访问另外一个子网。
     - 没有太多接口的简单网络情况下，建议是不勾选
-![image.png](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/20231119201258.png)
+![image.png](https://imagebed.yfycloud.site/2025/12/a5dca9f0e713a94e1692a9dd043e154a.png)
 
 #### 路由
 
 上面 op2 在添加 op1 peer 时，allowed ip 设置了 0.0.0.0/0，表示所有流量都走 wg_s2s 出去。即 op2 通过 op1 上网。
-![image.png](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/20231119205004.png)
+![image.png](https://imagebed.yfycloud.site/2025/12/573493dcf6e00240ce1dd0f10441c6bf.png)
 
 wg_s2s peer 设置好 allowed ip 的情况下，openwrt 已经正确生成了路由规则，如下所示
 
@@ -171,7 +171,7 @@ listening on any, link-type LINUX_SLL2 (Linux cooked v2), snapshot length 262144
 
 在开启了 masquerading 时，不会出问题。比如手机通过 wg0 连回 op1，再访问 op2 的 lan。网络包的转发过程如下
 
-![image.png](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/20231119212900.png)
+![image.png](https://imagebed.yfycloud.site/2025/12/fb3355ef4326a32e7a9f9348451215e2.png)
 
 解决该问题的方法和上图是一样的，就是通过 iptable，只针对 wg1 流量通过 wg_s2s 时进行 SNAT
 
@@ -182,7 +182,7 @@ iptables -t nat -A POSTROUTING -s 172.16.0.0/24 -o wg_s2s -j MASQUERADE
 该命令重启后失效，可以把它写入`/etc/rc.local`，在 openwrt 重启后自动运行。
 
 更方便的是直接使用 openwrt 提供的 NAT 设置，设置会保存在`/etc/config/firewall`的`nat` section 中。
-![image.png](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/20231119213524.png)
+![image.png](https://imagebed.yfycloud.site/2025/12/140393c0f323c91549a30b3f0d07c136.png)
 
 ### wg 其它相关问题
 
@@ -316,7 +316,7 @@ wg0 client 同时和连接两个 op
 
 参考：[Routing for multiple uplinks/providers (lartc.org)](https://lartc.org/howto/lartc.rpdb.multiple-links.html#AEN267)
 
-![image-20221031222237862](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/picgo/image-20221031222237862.png)
+![image-20221031222237862](https://imagebed.yfycloud.site/2025/12/1ac5b183d2252ea76b04bd29d957b254.png)
 
 1. 首先，在 main 路由表中添加到两个 ISP 网段的路由，这保证可以访问到两个 ISP 的网关
 
@@ -371,10 +371,10 @@ The chain of thought typically goes like this:
 - gre, gretap
 
 GRE tunnels
-![gre](https://developers.redhat.com/blog/wp-content/uploads/2019/03/gre.png)
+![gre](https://imagebed.yfycloud.site/2025/12/3fc11414671a30af4bb89fa91ac922b3.png)
 
 GRETAP
-![](https://developers.redhat.com/blog/wp-content/uploads/2019/03/gretap.png)
+![](https://imagebed.yfycloud.site/2025/12/6bb7a6bd6c55bbdbe4acd778291cf29c.png)
 
 一种协同使用多种隧道例子
 
@@ -455,23 +455,23 @@ ip6_tunnel
 - protocal 选择 gretap over ipv4
 - local 和 remote 地址填 wg 接口地址
 - 创建成功后，ip a 可以看到多出一个 gre4t-gre1 的接口
-![](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/20230915185240.png)
+![](https://imagebed.yfycloud.site/2025/12/8d14e145a5c53ff7f8301adf32cf0466.png)
 
 如果使用 wan 口 ipv6 创建 gre tap，两端都需要添加 allow gre input 的防火墙规则。默认是没有 gre 类型的，在 custom 中输入 47 或则 gre 回车便会出现该类型。
-![](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/20240227171647.png)
+![](https://imagebed.yfycloud.site/2025/12/274a0a0bb861b29d9c38a2775c0e996b.png)
 
 #### op1 将 gre device 添加到 bridge
 
 - 名字填@gre1（也可以直接写 gre4t-gre1）
-![](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/20230915185229.png)
+![](https://imagebed.yfycloud.site/2025/12/63ccc811ce5bfceafd5b95afb4cfcccb.png)
 
 #### op1 设置防火墙 wan forward
 
 - 将 gre1 设置为 wan
 - 防火墙中，设置**wan zone forward 为 accept**（默认为 reject）。**否则 gre1 设备上来包无法从 wan 转发出去**，从而无法访问互联网。
-![](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/20230915190627.png)
+![](https://imagebed.yfycloud.site/2025/12/36961066107102239e346cec05679897.png)
 
-![](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/20230915190345.png)
+![](https://imagebed.yfycloud.site/2025/12/d8d6e8002d15a81d3d2e9d4721edf4e5.png)
 
 #### op2 设置 dhcpv6
 
@@ -480,7 +480,7 @@ ip6_tunnel
 - 该接口高级设置中可以勾选 source route，这样对于有多个 uplink，就能自动处理路由
   - 源地址为该 pd 的地址，走 tap 接口
   - 源地址为 wan 口 slaac 的地址，走原来的 wan 口
-![](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/20230915185518.png)
+![](https://imagebed.yfycloud.site/2025/12/5306a881a9a6eb2dd4f77335e5d5b8c0.png)
 
 ## ubuntu gre 配置
 

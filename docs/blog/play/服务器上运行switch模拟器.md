@@ -28,18 +28,18 @@ categories:
 
 - docker gow
 
-![](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/Snipaste_2023-05-14_17-19-00.jpg)
-![Snipaste_2023-05-16_15-08-25.jpg](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/Snipaste_2023-05-16_15-08-25.jpg)
+![](https://imagebed.yfycloud.site/2025/12/f3c56521a11c7c10773dc9d3ae09f178.jpg)
+![Snipaste_2023-05-16_15-08-25.jpg](https://imagebed.yfycloud.site/2025/12/816dadcd634d17199eeea1f86123f6e0.jpg)
 
-![](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/snode2-steam-system-info.jpg)
+![](https://imagebed.yfycloud.site/2025/12/8343ff2a8a36c9bddda169dece2e7e9b.jpg)
 
-![](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/Snipaste_2023-05-16_14-51-03.jpg)
+![](https://imagebed.yfycloud.site/2025/12/c22ac18ed457fdc1bff4d93f5b37960d.jpg)
 
 wolf 即插即用效果
 
-![image.png](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/20241003112530.png)
+![image.png](https://imagebed.yfycloud.site/2025/12/c047ebc2ed05b0036da1588cb4f09e8e.png)
 
-![image.png](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/20241003112556.png)
+![image.png](https://imagebed.yfycloud.site/2025/12/1b781cc82e29df0f1d04cb1ac4251562.png)
 
 <!-- more -->
 
@@ -48,8 +48,8 @@ wolf 即插即用效果
 [NVIDIA Tesla P40 Specs | TechPowerUp GPU Database](https://www.techpowerup.com/gpu-specs/tesla-p40.c2878)
 [NVIDIA Tesla P100 PCIe 16 GB Specs | TechPowerUp GPU Database](https://www.techpowerup.com/gpu-specs/tesla-p100-pcie-16-gb.c2888)
 
-![](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/20230615135150.png)
-![](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/20230615134759.png)
+![](https://imagebed.yfycloud.site/2025/12/d8e9ac96040e256239dc3cf2d0448239.png)
+![](https://imagebed.yfycloud.site/2025/12/dff329b5928a6cfb1bca4a04bd0d5e44.png)
 
 P100(0.84)< 1080 Ti(1) < P40(1.04) < Titan V(1.32) < 3070Ti(1.46)
 
@@ -83,7 +83,7 @@ steam link流式传输错误 无法连接以中继
 steam link有声音，延迟红线是60。
 可以玩星露谷，但是无法使用手柄操作。
 
-![](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/steam-link-connected-ip.jpg)
+![](https://imagebed.yfycloud.site/2025/12/dae83e05802b523822e349acfd71b827.jpg)
 
 ### sunshine 配置
 
@@ -175,7 +175,7 @@ lxd直通手柄
 
 ### 组件分析
 
-![](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/20230516171521.png)
+![](https://imagebed.yfycloud.site/2025/12/cee275b20018defdb38b70bcc1abcc61.png)
 
 #### xorg
 
@@ -316,7 +316,7 @@ sunshine log
 - 但是仍然无法播放b站视频。现象为一直加载视频
 - 浏览器中文字体缺失。
 
-![](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/20230515233000.png)
+![](https://imagebed.yfycloud.site/2025/12/2e25b5161d6bf166a05fb5140c2ff76d.png)
 
 #### sunshine无法挂载路径闪退
 
@@ -585,14 +585,14 @@ Usage is controlled by environment variables on `[apps.runner]` configs:
 - It doesn’t scale well with multiple remote clients when sharing a single host
 
 有没有一个办法可以直接从应用读取图像？
-![](https://kroki.io/plantuml/svg/eNpljTEOwjAMRfecwgpzr4DEAhNTB4aqQxqcEuHEUepKIMTdaVNUQGxffu9_D1cfk8kmgOWQOGKUWu6EkNGKiT2hUm7CCHqXEnlrxHMcNDwUQFMLmtDOae8zOr616rn6JyanYUO-v0hHIy6VwyB5KmEuqiUezzNojsyxqOX-Xoaq2v5U1j__5JMX9jX4AkhsTU8=)
+![](https://imagebed.yfycloud.site/2025/12/f084ef6552e1e9530357e0e788591948.)
 
 总结
 
 通过自定义个一个 Wayland Compositor 实现了该功能。得益于 linux DRM，compositor 和 app 间可以通过 EGL 共享 GPU memory，避免需要在 CPU 和 GPU 间复制 2 次。目前存在的问题是从 compositor 到 Gstreamer 需要一次复制，使用 DMA buffer 也许可以解决该问题，但是目前存在一些问题，和 modifier 有关。
 > What are modifiers? Modifiers add additional vendor specific properties to the internal pixel layout of a buffer. These modifiers are usually internally used by the GPU to speed up certain operations depending on characteristics of the hardware.
 
-![](https://kroki.io/plantuml/svg/eNplUEtPwzAMvudXWOWcf4CQEI8eoAIxIQ7TDqF1R0QaR07GQ4j_TuNlWyputr-H7S--Wx8Mmwl6mgJ59GmVvh0CY5-M3zpUapxhhOYyBGd7kyz52MCPAlivEpppk6tbyzjS10b9Hvkv5MYGzpzdvqVXt8O9pI2JZxGyyK7y0mgTsSh7R7sh89YdkRdl7dhhNGXzTXsvBg8BfSnbx2cY2H4gx1p0h-zRFdn1UydYuRy01hfF7PjCYlh45zKqrz3R_2Oq7gq-t6vnmvN_GasyqeqKUKWhxAm0w1GgQwCH4oQs8lh080kDffpMkkD-ACxkpww=)
+![](https://imagebed.yfycloud.site/2025/12/1780bb51198f5ab36ae041dfff75d9b0.)
 
 ## 其它方案
 
@@ -632,13 +632,13 @@ X11
 
 - 需要第二个程序(composting window manager)，负责窗口的组合(composting)。
 - 常见实现：x.org, xfree86
-![](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/20230516221140.png)
+![](https://imagebed.yfycloud.site/2025/12/8f842889cb240ee7f67f124687fa0491.png)
 
 wayland不同
 
 - 包含了compositing
 - client可以直接访问framebuffer。Wayland compositors communicate with Wayland clients over the [Wayland display server protocol](https://en.wikipedia.org/wiki/Wayland_(display_server_protocol) "Wayland (display server protocol)"). This protocol defines that clients can directly write data into the framebuffer using the [EGL](https://en.wikipedia.org/wiki/EGL_(OpenGL) "EGL (OpenGL)") [rendering API](https://en.wikipedia.org/wiki/Rendering_API "Rendering API").
-![](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/20230516221917.png)
+![](https://imagebed.yfycloud.site/2025/12/53a454acf45dd4c54f2b8d0fbfbe9d40.png)
 
 ## DRM
 
@@ -658,7 +658,7 @@ These devices usually require setting and managing a command queue in [their ow
 
 DRM包含通用的DRM core和硬件专用的DRM driver两部分。DRM core provides the basic framework where different DRM drivers can register and also provides to user space a minimal set of ioctls with common, hardware-independent functionality。当DRM driver提供了增强的API时，用户空间的libdrm也需要额外的libdrm-*driver*进行扩展。
 
-![](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/20230516215751.png)
+![](https://imagebed.yfycloud.site/2025/12/62830dce56d8278cec31672e94061a03.png)
 
 ### 两大部分
 

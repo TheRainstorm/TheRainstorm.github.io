@@ -25,7 +25,7 @@ categories:
 
 隧道方案如下图所示：
 
-![二层隧道拓扑图](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/gre-tap.drawio.png)
+![二层隧道拓扑图](https://imagebed.yfycloud.site/2025/12/cfb4e05dc826fe11d8a8f2fcef459870.png)
 
 - 两个路由器间通过 WAN 口 IPv4 建立 GRE Tap 隧道
 - op1 上将直接将 tap 接口桥接到到原有 br-lan 上
@@ -60,13 +60,13 @@ categories:
 ### IP 分片
 
 MTU，链路层的概念，表示能承载的网络层及以上的包的大小。正常以太网帧的 payload 部分范围应该在 46B - 1500B 之间，也就是 MTU 最大为 1500。
-![image.png](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/20240315234352.png)
+![image.png](https://imagebed.yfycloud.site/2025/12/1a64fde7c51ee4dc93765a0b9165e7ba.png)
 
 当我们使用 GRE，Wireguard 等隧道时，实际的 MTU 需要减去额外 Header 的开销，因此就会小于 1500。比如 wg ipv4 = 1440, wg ipv6 = 1420。
 
 当上层协议包大小超过链路层 MTU 时，我们需要一种机制将包拆分，然后合并（重组）。这个功能是在 IP 层实现的。IPv4 Header 中有 Flag 和 Fragment offset，用于实现分片与合并。
 
-![image.png](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/20240315235458.png)
+![image.png](https://imagebed.yfycloud.site/2025/12/df268a41bf41635b23565bd610242383.png)
 
 !!! note "Don't fragment 标志"
 
@@ -108,7 +108,7 @@ $ ping www.baidu.com -l 1373 -f
 - `-f`禁用分片
 
 下图是使用 wireshark 抓到的 ICMP 包截图。type 为 destination unreachable，code 表明这是由于需要分片导致的。ICMP 中还包含了下一跳的 MTU（1400），并且将原本的 ip 包放在了结尾（可以看到原本的 IP 头，和 icmp 头）
-![image.png](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/20240316192524.png)
+![image.png](https://imagebed.yfycloud.site/2025/12/5eb2913df782d95992a14da270b0c740.png)
 
 ### PMTUD 失败与 MSS clamping
 
@@ -121,7 +121,7 @@ $ ping www.baidu.com -l 1373 -f
     - MSS (maximum segment size) 是 TCP 中的概念，是连接双方能够接收的最大 segment 大小。
     - MSS = MTU - IP header - TCP header。MTU 为 1500 时，MSS 为 1460
     - MSS 会在 TCP 三次握手时进行协商，作为 TCP 头中 option 的内容。[并且只能在 SYNC 被设置时才能包含。](https://en.wikipedia.org/wiki/Transmission_Control_Protocol#:~:text=urgent%20data%20byte.-,Options,-(Variable%200%E2%80%93320)
-    ![image.png](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/20240316195430.png)
+    ![image.png](https://imagebed.yfycloud.site/2025/12/6eb07a37a9b08085523e35c54dc0ff9b.png)
 
 MSS clamping 基于 iptable 实现。可以设置静态的数值，也可以设置成根据出口网卡 MTU 自动设置。
 
@@ -150,11 +150,11 @@ iptables -t mangle -A POSTROUTING -p tcp --tcp-flags SYN,RST SYN -o eth0 -j TCPM
 
     MTU的影响是单项的，即路由器往一个接口转发时，如果包大于接口MTU，就会进行分片。MSS clamping后，从该接口进入和出去的包都会被修改MSS。这里列一张参考文献中的图
     
-    ![image.png](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/20240316201316.png)
+    ![image.png](https://imagebed.yfycloud.site/2025/12/aab8b424b919d0af80bb9d9713ba703f.png)
 
 Openwrt 的 MSS 功能放在防火墙 Zone 设置中（毕竟是基于 iptable 的，确实是防火墙功能），默认 WAN zone 的 MSS clamping 是勾选上的。如果有 wireguard 等隧道接口的话，建议也勾上，因此这样可以避免在路由器上分片，提升 TCP 性能。
 
-![image.png](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/20240316200359.png)
+![image.png](https://imagebed.yfycloud.site/2025/12/df0a3cbe5c88d0801184994d21062236.png)
 
 ### MTU 1508？
 
@@ -367,7 +367,7 @@ bridge input meta iif eth0 ip saddr 192.168.0.0/16 tcp dport 80 meta pkttype set
 
 搜索一下，真的有这种做法，用于实现中间人攻击
 [Bridge + nftables: How to redirect incoming HTTP/HTTPS traffic to local port 8080? - Server Fault](https://serverfault.com/questions/996794/bridge-nftables-how-to-redirect-incoming-http-https-traffic-to-local-port-808)
-![](https://i.stack.imgur.com/tpJDs.png)
+![](https://imagebed.yfycloud.site/2025/12/1b61b57d3d16bdfeb615475804f13a0e.png)
 
 尝试后真的成功了
 
@@ -569,7 +569,7 @@ listening on any, link-type LINUX_SLL2 (Linux cooked v2), snapshot length 262144
 - AP 只用单根网线 连接路由器
 - 注：这里使用了 vxlan
 
-![便携路由器-L2-tunnel-新.drawio.png](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/%E4%BE%BF%E6%90%BA%E8%B7%AF%E7%94%B1%E5%99%A8-L2-tunnel-%E6%96%B0.drawio.png)
+![便携路由器-L2-tunnel-新.drawio.png](https://imagebed.yfycloud.site/2025/12/e854252743765c512fe2944630fd2d44.png)
 
 ### windows 获得错误的 v6 地址（RA 跨了网段）
 
@@ -623,7 +623,7 @@ root@ax6s ➜  ~ tcpdump -nei lan3 -vvvv -tttt "icmp6 and (ip6[40] == 134 or ip6
 
 解决方法：设置 lan2 只能通过 wifi 接入，所有 lan 端口都不加入 vlan20（注意，wan 用于连接上级路由器 op2，因此需要保留 vlan20）
 
-![image.png](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/20240805013551.png)
+![image.png](https://imagebed.yfycloud.site/2025/12/5f3e6867e77987c070dd9e2d48452056.png)
 
 ## 2024/12 更新 L2TPv3（failed）
 
@@ -826,7 +826,7 @@ config interface 'lan'
 2025-07-27
 
 在展翼活动期间，使用手机开热点给 cudy mini 路由器使用（流量 50元 7 天 100G），发现 wg 能够通过 ipv6 连接，能够上网。但是使用 moonlight 串流却会出问题。
-![image.png](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/20250727214313.png)
+![image.png](https://imagebed.yfycloud.site/2025/12/608760730392059374d5b1a35b12dc94.png)
 
 有两个解决办法
 

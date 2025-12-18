@@ -65,7 +65,7 @@ categories:
 - 官方链接：[招商银行信用卡全家福-信用卡快速办理_网上在线申请信用卡-招商银行信用卡官方网站](https://cc.cmbchina.com/card/?WT.mc_id=N17PCGW100AY689100ZH)
 - 办理流程：上门填信息（次日）-> 等待邮寄（3天）-> 激活（完成）
 
-![招商银行 Visa](http://s3gw.cmbimg.com/lb5022-gold-prd-1255000106/crdcardapply/intro/7602_VG.gif)
+![招商银行 Visa](https://imagebed.yfycloud.site/2025/12/0fd145b559ec36108b2b88ca650c66ab.gif)
 
 Visa, MasterCard 说明可以参考 B 站视频：[seven科技生活](https://www.bilibili.com/video/BV1yB8gzwErs/)
 
@@ -197,7 +197,7 @@ google AI studio 和 vertex AI 价格是一样的
 |                      | Text output (response and reasoning) | $12                                     | $18                                    | N/A                                                | N/A                                               | $6                                                     | $9                                                    |
 |                      | Image Output**                       | $120                                    | N/A                                    | N/A                                                | N/A                                               | $60                                                    | N/A                                                   |
 
-![image.png](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/20251125135728.png)
+![image.png](https://imagebed.yfycloud.site/2025/12/32599aa8083b14a8a5c7c0ff9f64bf53.png)
 
 OpenRouter 网页更容易看到模型价格信息对比。
 

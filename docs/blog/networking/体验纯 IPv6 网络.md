@@ -37,7 +37,7 @@ I'm working on a few other bits at the moment, not sure when I'll have the time 
 
 秀下最后大大的 **No IPv4 address detected**
 
-![image.png](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/20241008011951.png)
+![image.png](https://imagebed.yfycloud.site/2025/12/a41d966b21f47bca911ecf592dc98568.png)
 
 并且 /48 的前缀，我可以划分 65536 个子网！
 
@@ -58,7 +58,7 @@ google 是真 nb，google 搜索，youtube 都支持 ipv6，并且体验还不�
 
 其中 youtube 刚开始图标显示有问题，后来就完全正常了。
 
-![image.png](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/20241007231524.png)
+![image.png](https://imagebed.yfycloud.site/2025/12/22d279dc0b3870bd5d02854fb51e1cad.png)
 
 支持
 
@@ -77,7 +77,7 @@ google 是真 nb，google 搜索，youtube 都支持 ipv6，并且体验还不�
 
 淘宝系也是真 nb，手机 app 流畅的一笔，基本用不出区别。并且软件甚至会检测你的 ip 让你切换到全球地区
 
-![image.png](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/20241007231612.png)
+![image.png](https://imagebed.yfycloud.site/2025/12/32cd01e4e4660fa652c569e9580f0fca.png)
 
 视频网站
 
@@ -109,10 +109,10 @@ google 是真 nb，google 搜索，youtube 都支持 ipv6，并且体验还不�
 
 计划是通过 HE tunnel 获得一个 IPv6 的 PD 前缀（HE 默认给一个 64，可以申请一个 48），然后创建一个新的 LAN，作为 RA server 和 DHCPv6 server，为 lan 内所有设备分配 ipv6 地址。
 
-![image.png](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/20241007234017.png)
+![image.png](https://imagebed.yfycloud.site/2025/12/84915f035cb8029d7563321e30200678.png)
 
 最后效果
-![image.png](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/20241007234752.png)
+![image.png](https://imagebed.yfycloud.site/2025/12/ef119dcf41154b2f1a48f89ad40cc0a8.png)
 
 ### 参考资料
 
@@ -140,7 +140,7 @@ ip_tunnel              32768  2 ip_gre,sit
 
 ### 6in4 接口配置
 
-![image.png](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/20241007232843.png)
+![image.png](https://imagebed.yfycloud.site/2025/12/7cb3b1d9b7954c3a6b3bc5bab188cffd.png)
 
 Advanced Setting 中不勾选使用默认路由，避免覆盖掉 WAN6 口的默认路由。
 
@@ -153,13 +153,13 @@ tunnel 起来后，需要创建一个 lan2 接口，作为 ra server 和 dhcpv6 
 协议选择静态地址，和正常 lan 不同的是，我们不需要指定 ipv4 地址，因为我们要打造一个存 ipv4 环境。因此 ipv4 server 啥的都不需要勾选。
 
 分配 ipv6 prefix 长度选择 48（全部用掉），prefix filter 选择从 HE tunnel 接口获得
-![image.png](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/20241007234446.png)
+![image.png](https://imagebed.yfycloud.site/2025/12/4f7b3638b075c3a4f807f8de4a3d6638.png)
 
 不要开启 ipv4 dhcp server，选择 ignore
-![image.png](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/20241007234634.png)
+![image.png](https://imagebed.yfycloud.site/2025/12/3030b516e0573fee41da85a042aa3493.png)
 
 启用 ipv6 ra, dhcpv6 server
-![image.png](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/20241007175555.png)
+![image.png](https://imagebed.yfycloud.site/2025/12/401d6e07b7d552798886e4d42024b6e6.png)
 
 ### 路由问题
 
@@ -315,11 +315,11 @@ Address: 2001::1
 
 op2 添加 eth3，分配 vlan id 30
 
-![image.png](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/20241007214252.png)
+![image.png](https://imagebed.yfycloud.site/2025/12/2a1fd9902ae2c877efc2b52ce2bc92fa.png)
 
 op2 需要增加一个 eth3 设备，和 vxlan 设备桥接在一起
 
-![image.png](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/20241007214228.png)
+![image.png](https://imagebed.yfycloud.site/2025/12/676deef342bce1908ae4b10c6b46ef56.png)
 
 !!! note "openwrt 创建的 bridge 起不来"
 
@@ -335,11 +335,11 @@ op2 需要增加一个 eth3 设备，和 vxlan 设备桥接在一起
 
 trunk 接口（刚好使用了原本的 WAN 口，这样接线时容易记起来）增加一个 vid 即可接入 vlan
 
-![image.png](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/20241007213949.png)
+![image.png](https://imagebed.yfycloud.site/2025/12/526b80c2e227cad241a8618726a666a1.png)
 
 创建一个 interface，然后将 SSID 绑定到这个 interface 上，一切就完成了。连接该 SSID 即可连入 ipv6 only 的网络！
 
-![image.png](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/20241007222552.png)
+![image.png](https://imagebed.yfycloud.site/2025/12/b7380eaa724d2470791b2d37eeed8684.png)
 
 ![image.png](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/20241007222617.png)
 

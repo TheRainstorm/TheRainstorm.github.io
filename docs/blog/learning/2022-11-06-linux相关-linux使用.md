@@ -191,7 +191,7 @@ CLI：
 
 简单的话，直接使用 nmtui，选择 Wifi 输入密码即可。
 
-![image.png](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/20240918235326.png)
+![image.png](https://imagebed.yfycloud.site/2025/12/02d57b2ae3c69c7ab054738052de69f9.png)
 
 ##### nmcli 基本使用
 
@@ -323,7 +323,7 @@ gnome-shell：shell 就是我们可以看到的图形界面
 #### lightdm
 
 效果还是不错的，并且启动 xfce4 和 gnome 都没有遇到问题。
-![](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/20240912193508.png)
+![](https://imagebed.yfycloud.site/2025/12/5beaa6e482b805914d61d5e7e0d4db36.png)
 
 安装时会提示和 gdm 冲突
 
@@ -331,7 +331,7 @@ gnome-shell：shell 就是我们可以看到的图形界面
 apt install lightdm
 ```
 
-![](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/20240912193122.png)
+![](https://imagebed.yfycloud.site/2025/12/d0a8671a6e08bc4400f24cc9b3c9ab65.png)
 
 *好像需要进入 graphical.target 才能正常使用。gdm 可以在 multi-user.target 下 通过  sudo systemctl start gdm 启动图形界面。lightdm systemctl start 报错*
 
@@ -841,7 +841,7 @@ http://your.local.ip.address:8888/pc.mp3
 
 ##### linux to anything
 
-![](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/picgo/20230322144833.png)
+![](https://imagebed.yfycloud.site/2025/12/33d674167cefd95fdd55c0f2e1f03b02.png)
 
 ## 视频
 

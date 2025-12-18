@@ -106,7 +106,7 @@ NDP代替ipv4的ARP协议。NDP基于ICMPv6
 there is the _Address Resolution Protocol (ARP)_, which is used to map IPv4 addresses to MAC addresses. With IPv6, we can completely get rid of this protocol using a more efficient one, the **Neighbor Discovery Protocol (NDP)**. NDP relies on the **Internet Control Message Protocol version 6 (ICMPv6)** packet to do its job.
 
 icmp6报文格式
-![icmp6](https://www.ictshore.com/wp-content/uploads/2016/12/1015-09-ICMPv6.png)
+![icmp6](https://imagebed.yfycloud.site/2025/12/171c5077e95cd93920f7fc34dfcf4b8a.png)
 
 [RFC 5175: IPv6 Router Advertisement Flags Option (rfc-editor.org)](https://www.rfc-editor.org/rfc/rfc5175.html)
 另外在**option**中有A flag和L flag（更具体是prefix info option）
@@ -129,10 +129,10 @@ tcpdump: listening on eth1, link-type EN10MB (Ethernet), capture size 262144 byt
 ```
 
 - NS, NA
-![](https://www.ictshore.com/wp-content/uploads/2016/12/1015-10-Neighbor_discovery.png)
+![](https://imagebed.yfycloud.site/2025/12/f95791f77db04046157b75f02ad36805.jpg)
 
 - RS, RA
-![](https://www.ictshore.com/wp-content/uploads/2016/12/1015-11-Router_solicitation.png)
+![](https://imagebed.yfycloud.site/2025/12/e81a72fc01cc12c5a73d8399df8e0e42.png)
 
 ## SLAAC, stateless DHCPv6, stateful
 
@@ -245,7 +245,7 @@ lan口只能抓到fe80的NS消息
 - [NDP relay not working because NDP proxy entries are not added · Issue #92 · openwrt/odhcpd (github.com)](https://github.com/openwrt/odhcpd/issues/92)
 
 遇到完全一样现象的
-![](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/20230713185648.png)
+![](https://imagebed.yfycloud.site/2025/12/9ef4ebfd08b0e9fd296c74042d90323b.png)
 但是设置ndproxy_slave后仍然不行
 
 ## 抓包

@@ -155,7 +155,7 @@ VR 比较常见的一个功能便是拿来看看视频，巨大的屏幕以及�
 
 [Choose live encoder settings, bitrates, and resolutions - YouTube Help (google.com)](https://support.google.com/youtube/answer/2853702?hl=en)
 
-![](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/20240526101525.png)
+![](https://imagebed.yfycloud.site/2025/12/311fcc0f07b1c1d78d16f79fba280d29.png)
 
 1080p@60 推荐 12 Mbps
 
@@ -165,19 +165,19 @@ VR 比较常见的一个功能便是拿来看看视频，巨大的屏幕以及�
 
 #### Movie & Chill
 
-![Movie & Chill](https://cdn.shopify.com/s/files/1/0415/3324/3552/files/vlcsnap-2022-11-17-15h48m36s604_1024x1024.png?v=1668728955)
+![Movie & Chill](https://imagebed.yfycloud.site/2025/12/795cceb6dd63a5060cd0c224ae524d20.png)
 
 #### Yet Another Movie Theater: Renewed
 
-![](https://cdn.shopify.com/s/files/1/0415/3324/3552/files/vlcsnap-2022-11-17-15h50m56s869_1024x1024.png?v=1668729113)
+![](https://imagebed.yfycloud.site/2025/12/989e86c31da8cb2a0d98e0b47e7c867e.png)
 
 #### Sovren’s Chill Home
 
-![Sovren’s Chill Home](https://cdn.shopify.com/s/files/1/0415/3324/3552/files/vlcsnap-2022-11-17-15h54m40s931_1024x1024.png?v=1668729292)
+![Sovren’s Chill Home](https://imagebed.yfycloud.site/2025/12/b6b977248fc8d78f3ed028642d8782b0.png)
 
 #### Campsite Movie Night
 
-![Campsite Movie Night](https://cdn.shopify.com/s/files/1/0415/3324/3552/files/vlcsnap-2022-11-17-15h56m08s989_1024x1024.png?v=1668729380)
+![Campsite Movie Night](https://imagebed.yfycloud.site/2025/12/c98c4585efff64dfb769dc24739ba329.png)
 
 ## 参考资料
 

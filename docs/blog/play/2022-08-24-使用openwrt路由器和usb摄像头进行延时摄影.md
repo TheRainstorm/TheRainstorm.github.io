@@ -59,13 +59,13 @@ categories:
 
 - 笔记本摄像头效果：1280x720
 
-  ![image-20220814120138521](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/picgo/image-20220814120138521.png)
+  ![image-20220814120138521](https://imagebed.yfycloud.site/2025/12/b3568ba2a5e2e210498400a0c2accbb9.png)
 
-  ![屏幕截图 (224)](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/picgo/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE(224).png)
+  ![屏幕截图 (224)](https://imagebed.yfycloud.site/2025/12/53eeef34d377b0cf1d60bdc7393e45c5.png).png)
 
 - 69 1080p 摄像头
 
-  ![image-20220814223205817](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/picgo/image-20220814223205817.png)
+  ![image-20220814223205817](https://imagebed.yfycloud.site/2025/12/5f64c243f5152720e50c93e7b93e383d.png)
 
 - [Review of the ELP-USBFHD01M camera (joancharmant.com)](http://joancharmant.com/blog/review-of-the-elp-usbfhd01m-camera/)
 

@@ -29,9 +29,9 @@ categories:
   - 无法代理HTTPS，因为HTTPS需要证书，而代理服务器无法提供。
 - 隧道模式
 
-![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/f975dcf4258847fc953be37343b14a36~tplv-k3u1fbpfcp-zoom-in-crop-mark:1512:0:0:0.awebp)
+![](https://imagebed.yfycloud.site/2025/12/ae57fbfbafab0f071f860c57106b4c53.awebp)
 
-![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/c514cc172f6c41e08f94e0a977dbf525~tplv-k3u1fbpfcp-zoom-in-crop-mark:1512:0:0:0.awebp)
+![](https://imagebed.yfycloud.site/2025/12/cd4c60923c8f1732fb8a085bbf372cc5.awebp)
 [HTTP 代理原理及实现 - 掘金 (juejin.cn)](https://juejin.cn/post/6998351770871152653)
 
 ### Socks 代理
@@ -40,7 +40,7 @@ categories:
 
 [理解socks5协议的工作过程和协议细节 | Bigbyto (wiyi.org)](https://wiyi.org/socks5-protocol-in-deep.html)
 
-![socks5 协议过程](https://wiyi.org/assets/images/socks5/client-socks5_f.jpg)
+![socks5 协议过程](https://imagebed.yfycloud.site/2025/12/8870bf9feafd15d029345e127c1f0c08.jpg)
 
 ### client 软件设置代理
 

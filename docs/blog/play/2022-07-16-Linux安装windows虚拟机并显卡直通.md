@@ -529,7 +529,7 @@ This makes me imagine that putting a PC to sleep then waking it as you start you
 
 - tightvnc 则会使用 QXL controller + PnP
 
-  ![image-20220718124846271](https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/picgo/image-20220718124846271.png)
+  ![image-20220718124846271](https://imagebed.yfycloud.site/2025/12/fd227c9ea80753a2c035f8b6c7238cc8.png)
 
 - 后面发现貌似 tightvnc 和 parsec 远程连接（使用虚拟显示适配器）和 VNC（使用显卡或者 QXL）都会使用，优先 VNC。
 
