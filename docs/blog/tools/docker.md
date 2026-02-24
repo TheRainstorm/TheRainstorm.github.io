@@ -211,6 +211,23 @@ docker image prune # 删除悬挂镜像（docker build），不会删除没使�
 docker image prune -a  # 删除未使用的镜像
 ```
 
+
+```
+root@docker ➜  litellm git:(master) ✗ docker system df
+TYPE            TOTAL     ACTIVE    SIZE      RECLAIMABLE
+Images          81        37        67.26GB   36.48GB (54%)
+Containers      42        42        584.6MB   0B (0%)
+Local Volumes   50        17        22.43GB   3.204GB (14%)
+Build Cache     343       0         10.1GB    10.1GB
+root@docker ➜  litellm git:(master) ✗ docker system df
+TYPE            TOTAL     ACTIVE    SIZE      RECLAIMABLE
+Images          61        37        42.22GB   11.44GB (27%)
+Containers      42        42        584.6MB   0B (0%)
+Local Volumes   50        17        22.43GB   3.204GB (14%)
+Build Cache     343       0         11.11GB   11.11GB
+
+```
+
 ### 坑
 
 #### --env-file 字符串不要加引号
@@ -298,7 +315,7 @@ docker copy 只能复制上下文內的文件，可以在更顶级运行 docker 
 docker build -f docker/Dockerfile -t my-image .
 ```
 
-### 使用 entrypoint.sh 脚本
+### entrypoint.sh 脚本
 
 使用 entrypoint 脚本可以实现根据用户运行容器时指定的环境变量，设置用户 uid,gid，从而保证容器和 host 文件权限正确。
 
@@ -327,6 +344,102 @@ else
     su abc -c "python3 run_config.py -c /config.json -m"
 fi
 ```
+
+#### 权限 gosu
+
+dockerfile 中配置了 entrypoint.sh，最后需要 exec command。并且希望以用户 UID:GID 执行。  
+看到的例子是 exec gosu command，请问为什么需要gosu，还有其它方法吗
+
+直接使用 Linux 自带的 `su` 或 `sudo` 在 Docker 容器中会有以下几个主要问题：
+
+1. **PID 1 与 信号转发 (Signal Forwarding)**
+
+在 Docker 中，容器启动的第一个进程（ENTRYPOINT）的 PID 是 1。PID 1 负责接收并处理系统信号（如 `SIGTERM`、`SIGINT`）。
+
+- **`su`/`sudo` 的问题**：它们会产生一个子进程来运行你的命令。当你执行 `docker stop` 时，Docker 向 PID 1 发送信号，但 `su`/`sudo` 往往不会将这些信号正确转发给子进程。这会导致你的应用无法优雅停机（Graceful Shutdown），最终在 10 秒后被内核强制 `SIGKILL`。
+- **`gosu` 的优点**：它不是通过子进程运行命令，而是通过调用 `execvp` 系统调用。这意味着 **`gosu` 会替换掉自己**，让你的应用进程直接继承 PID 1。这样应用就能直接接收到 Docker 发送的所有信号。
+
+2. **TTY 和 缓冲区问题**
+
+`sudo` 有时会要求 TTY（终端），而在自动化容器环境中，这会导致不必要的报错或奇怪的 I/O 行为。`gosu` 是为了 Docker 专门编写的，非常轻量，避开了这些复杂的 TTY 逻辑。
+
+3. **典型的使用场景：权限初始化**
+
+很多镜像（如 Redis, Postgres）需要在启动时：
+
+1. 以 `root` 身份做一些准备工作（如 `chown` 挂载的数据卷）。
+2. 准备完成后，降权到普通用户运行服务。  
+    `gosu` 正是完成“最后一步降权并替换进程”的最佳工具。
+
+| 工具                | 推荐指数  | 特点                          |
+| :---------------- | :---- | :-------------------------- |
+| **`gosu`**        | ⭐⭐⭐⭐⭐ | 行业标准，Go 编写，静态编译，稳定。         |
+| **`su-exec`**     | ⭐⭐⭐⭐⭐ | **Alpine 镜像首选**，极小。         |
+| **`setpriv`**     | ⭐⭐⭐⭐  | 现代 Linux 自带，无需额外下载。         |
+| **`su` / `sudo`** | ⭐     | **不推荐**，存在 PID 1 信号问题和进程残留。 |
+
+#### entrypoint, cmd 和 entrypoint.sh 关系
+
+- **场景 1：既有 ENTRYPOINT 又有 CMD**
+    - **用途**：制作“**工具型**”镜像（如 `curl`, `git`, `npm`，`mysqldump`）。
+    - **目的**：让镜像用起来像一个二进制程序，用户只需要跟参数。
+- **场景 2：只有 CMD (没有 ENTRYPOINT)**
+    - **用途**：制作“**OS型**”或“**应用型**”镜像（如 `nginx`, `tomcat`, `node`）。
+        - 镜像里装了若干个应用，手动选择运行什么，可以运行 bash 进入容器后再运行
+    - **目的**：提供默认启动命令，但允许用户完全重写命令进入容器调试。比如 `docker run -it my-nginx /bin/bash`，这时候用户输入的 `/bin/bash` 直接把默认的启动 Nginx 的命令全覆盖了，方便调试。
+- **场景 3：只有 ENTRYPOINT**
+    - **用途**：强制容器只能干这一件事，且没有默认参数（用户必须在 run 后面手动提供参数，否则报错或运行帮助信息）。
+        - 镜像启动一个不需要参数的服务，“**服务型**”镜像
+- 场景 3.2：entrypoint.sh
+    - 需要一些初始化的“**服务型**”镜像
+    - 结尾需要使用 exec 执行服务
+        - 保证服务 pid 为 1，可以接受信号
+        - 初始化脚本中的 PATH 等环境变量均会生效
+    - entrypoint 和 cmd 都可以被覆盖
+        - shell 替换
+
+**自己刚开始的理解**
+
+- cmd 是 docker run 镜像名后跟的命令，让容器的 PID1 执行什么
+    - 设置了 `CMD=["/bin/]` 后，docker run 不提供cmd 时，则使用 CMD 指定的
+- entrypoint 让容器表现得像一个可执行程序，直接传递参数
+- entrypoint.sh：同 entrypoint，好处是可以提前做一些初始化，设置环境变量。
+    - entrypoint.sh 结尾使用 exec $@，把当前 shell 替换成 CMD 命令。
+
+> **你的理解**：设置了 entrypoint 通常就不需要设置 cmd；设置 entrypoint 再设置 cmd，相当于给 entrypoint 提供一个参数。
+
+- **修正/完善（这是最容易出错的地方）**：
+    - 这取决于你使用的是 **Exec 格式** 还是 **Shell 格式**。
+    - **情况 A：Exec 格式（推荐，也是你理解的情况）**
+        - `ENTRYPOINT ["/bin/ping"]`
+        - `CMD ["localhost"]`
+        - **结果**：`CMD` 的内容会作为参数追加到 `ENTRYPOINT` 后面。实际执行：`/bin/ping localhost`。
+    - **情况 B：Shell 格式（坑点）**
+        - `ENTRYPOINT /bin/ping` (注意没有方括号)
+        - `CMD ["localhost"]`
+        - **结果**：`ENTRYPOINT` 会在 `/bin/sh -c` 中执行，它会**忽略**任何 `CMD` 或 `docker run` 传来的参数。`CMD` 在这里完全失效。
+
+**为什么要用 exec？（核心原因）**
+
+- 在 Linux 中，PID 1（一号进程）负责接收信号（如 `SIGTERM`，即 `docker stop` 发出的信号）。
+- 如果不加 `exec`：你的脚本 `entrypoint.sh` 是 PID 1，而你运行的程序（`$@`）是它的子进程。当你 `docker stop` 时，信号发给了脚本，脚本通常不会转发信号给子进程，导致程序无法优雅关闭，只能等待超时被 `SIGKILL` 强杀。
+- 加了 `exec`：`exec` 命令会用即将运行的程序**替换**当前的 Shell 进程。你的程序变成了 PID 1，可以直接接收并处理信号，实现优雅退出。
+
+### 环境变量
+
+设置了 entrypoint.sh 后，程序执行时都有哪些环境变量呢？
+
+- entrypoint.sh 结尾 exec 执行的程序肯定是有 entrypoint.sh 中设置的环境变量
+    - entrypoint.sh 在一个 shell 中执行，结尾 exec 直接把当前进程替换成 exec 的程序
+    - entrypoint.sh 中运行的子进程也有该环境
+
+#### Shell 隔离
+
+GitLab Runner 的 Shell Executor 在执行 Job 时，往往会启动一个新的 Shell（通常是 `bash --login`）。即使你在 `entrypoint.sh` 里改了 PATH，或者 source 了 conda.sh，**如果后续的初始化脚本（如** `/etc/profile` **或** `~/.bashrc`**）重新重置了 PATH**，你的修改就会失效。
+
+#### docker exec 继承 PID1
+
+**注意**：`docker exec` 进入的 Shell 通常不会自动 source `/etc/profile` 或运行 `entrypoint.sh` 里的逻辑，但它**会继承容器主进程（PID 1）的环境变量**。所以如果你的 `entrypoint.sh` 使用 `export` 设置了环境变量，`docker exec` 进去通常是能看到的。
 
 ### 其它小 tips
 

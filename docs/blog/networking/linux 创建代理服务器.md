@@ -16,6 +16,8 @@ categories:
 
 总结：调研下来，虽然这两种协议历史悠久，有成熟的软件工具。但是目前大部分软件功能都太多了，这导致配置很复杂（比如 squid 9000 行的配置文件）这对简单使用代理功能有点 overkill 了。不过虽然配置复杂，学习后至少能用，因此就先不纠结了。**要我说感觉可以使用 python 简单糊一个单文件脚本，支持 1）密码认证 2）基于 ip 的访问控制 3）并且端口复用，同时支持 http 和 socks。可以放在 TODO list 里。
 
+update 20260110：发现已经有 gost 这个项目了（在问 gemini ssh 正反向代理时提到的），支持 HTTP/HTTPS/HTTP2/SOCKS4(A)/SOCKS5 代理协议、支持代理链、支持反向代理。并且由于是 go 编写的，支持 arm,mips 等平台，软件只有 4M 可以轻松在路由器上跑起来。见后续文章 *ssh 代理的妙用*
+
 <!-- more -->
 ## 基础知识
 
@@ -69,7 +71,6 @@ categories:
 ## All in One proxy
 
 发现真的有同时支持各种代理的应用，还支持端口复用。使用 python 配置简单，因此后面方案基本都被淘汰了。
-
 ### pproxy
 
 [qwj/python-proxy: HTTP/HTTP2/HTTP3/Socks4/Socks5/Shadowsocks/ShadowsocksR/SSH/Redirect/Pf TCP/UDP asynchronous tunnel proxy implemented in Python 3 asyncio. (github.com)](https://github.com/qwj/python-proxy)

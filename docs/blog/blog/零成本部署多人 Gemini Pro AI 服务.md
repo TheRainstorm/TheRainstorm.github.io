@@ -115,6 +115,22 @@ The transaction has the following attributes:
 
 参考视频：[永久“白嫖”谷歌云服务器 | 更新整合版 | 创建永久免费VPS、搭建科学上网 | 如何避免反撸扣费 | 每月200G流量 | 试用期过后如何重新激活 - YouTube](https://www.youtube.com/watch?v=12goOU6jG9w)，其中还介绍了如何查看 google 的项目结算费用。
 
+google 提供的免费层级服务：
+https://docs.cloud.google.com/free/docs/free-cloud-features?hl=zh-cn#free-tier-usage-limits
+
+其中 Compute Engine 提供：
+
+-  在美国的以下区域之一，每月 1 个非抢占式 `e2-micro` 虚拟机实例：
+    - 俄勒冈：`us-west1`。
+    - 爱荷华：`us-central1`。
+    - 南卡罗来纳：`us-east1`。
+- 每月 30 GB 标准永久性磁盘。
+- 每月 1 GB 的出站数据传输量 - 从北美到所有区域目的地（不包括中国和澳大利亚）。
+
+您的“免费层级”`e2-micro` 实例受时长限制，而非实例数量限制。您每个月都可以在达到当月免费使用小时数上限前，免费使用所有 `e2-micro` 实例。所有受支持[区域](https://docs.cloud.google.com/compute/docs/regions-zones?hl=zh-cn)的总用量将合并计算。
+
+GPU 和 TPU 不在“免费层级”计划范围内。您始终需要为添加到虚拟机实例中的 GPU 和 TPU 支付相应费用。
+
 ## 创建 Google AI Gemini API key
 
 目前 google 官方有两个平台提供 API 服务——Google AI studio 和 Google Cloud Vertex AI。以下是它们的区别：
