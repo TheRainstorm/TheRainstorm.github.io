@@ -1,0 +1,2226 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="记录一些关于数学、计算机的知识，以及一些日常。">
+      
+      
+      
+        <link rel="canonical" href="https://yfy.cqu.ai/%E9%98%85%E8%AF%BB/2021/01/01/2021-01-01-linux%E5%86%85%E6%A0%B8%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%AE%9E%E7%8E%B0%E9%98%85%E8%AF%BB/">
+      
+      
+        <link rel="prev" href="../../../../../%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/2020/10/11/2020-10-12-%E5%AE%89%E8%A3%85linux%E5%90%8E%E7%9A%84%E9%85%8D%E7%BD%AE/">
+      
+      
+        <link rel="next" href="../../../../../%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/2021/02/08/2021-02-08-%E6%9B%B4%E6%96%B0%E5%9B%BA%E6%80%81%E4%B9%8B%E6%97%85/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.3">
+    
+    
+      
+        <title>linux 内核设计与实现阅读 - Rain 的随笔</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#进程调度" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../../../../.." title="Rain 的随笔" class="md-header__button md-logo" aria-label="Rain 的随笔" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Rain 的随笔
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              linux 内核设计与实现阅读
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    
+  
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="../../../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  博客
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../about/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  关于
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../tags/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  标签
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../series/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  系列
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../tools/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  工具
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../archive/2026/" class="md-tabs__link">
+          
+  
+  
+  归档
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../category/%E4%B8%AA%E4%BA%BA/" class="md-tabs__link">
+          
+  
+  
+  分类
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" hidden>
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../../.." title="Rain 的随笔" class="md-nav__button md-logo" aria-label="Rain 的随笔" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Rain 的随笔
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+    
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      <a href="../../../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    博客
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    关于
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../tags/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    标签
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../series/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    系列
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../tools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    工具
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    归档
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    归档
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2026/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2026
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2025/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2025
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2024/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2024
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2023/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2023
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2022/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2022
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2021/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2021
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2020/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2020
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2019/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2019
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    分类
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    分类
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E4%B8%AA%E4%BA%BA/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    个人
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E5%8D%9A%E5%AE%A2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    博客
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E5%8D%9A%E5%AE%A2--%E7%BD%91%E7%BB%9C/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    博客 &amp; 网络
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    学习笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    折腾记录
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    课程笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%85%B7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    软件工具
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E9%98%85%E8%AF%BB/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    阅读
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+  <div class="md-content md-content--post" data-md-component="content">
+    <div class="md-sidebar md-sidebar--post" data-md-component="sidebar" data-md-type="navigation">
+      <div class="md-sidebar__scrollwrap">
+        <div class="md-sidebar__inner md-post">
+          <nav class="md-nav md-nav--primary">
+            <div class="md-post__back">
+              <div class="md-nav__title md-nav__container">
+                <a href="../../../../.." class="md-nav__link">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+                  <span class="md-ellipsis">
+                    回到主页
+                  </span>
+                </a>
+              </div>
+            </div>
+            
+            <ul class="md-post__meta md-nav__list">
+              <li class="md-nav__item md-nav__item--section">
+                <div class="md-post__title">
+                  <span class="md-ellipsis">
+                    元数据
+                  </span>
+                </div>
+                <nav class="md-nav">
+                  <ul class="md-nav__list">
+                    <li class="md-nav__item">
+                      <div class="md-nav__link">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 19H5V8h14m-3-7v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1V1m-1 11h-5v5h5z"/></svg>
+                        <time datetime="2021-01-01 00:00:00+00:00" class="md-ellipsis">2021年1月1日</time>
+                      </div>
+                    </li>
+                    
+                    
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 3v15h3V3zm3 2 4 13 3-1-4-13zM5 5v13h3V5zM3 19v2h18v-2z"/></svg>
+                          <span class="md-ellipsis">
+                            分类于
+                            
+                              <a href="../../../../../category/%E9%98%85%E8%AF%BB/">阅读</a></span>
+                        </div>
+                      </li>
+                    
+                    
+                      
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20a8 8 0 0 0 8-8 8 8 0 0 0-8-8 8 8 0 0 0-8 8 8 8 0 0 0 8 8m0-18a10 10 0 0 1 10 10 10 10 0 0 1-10 10C6.47 22 2 17.5 2 12A10 10 0 0 1 12 2m.5 5v5.25l4.5 2.67-.75 1.23L11 13V7z"/></svg>
+                          <span class="md-ellipsis">
+                            
+                              需要 5 分钟阅读时间
+                            
+                          </span>
+                        </div>
+                      </li>
+                    
+                  </ul>
+                </nav>
+              </li>
+            </ul>
+            
+          </nav>
+          
+            
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#进程调度" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        进程调度
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#系统调用" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        系统调用
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#中断处理程序" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        中断处理程序
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#下半部" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        下半部
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#内核同步介绍" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        内核同步介绍
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#内核同步实现" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        内核同步实现
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#定时器和时间管理" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        定时器和时间管理
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#内存管理" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        内存管理
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#虚拟文件系统" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        虚拟文件系统
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#块-io-层" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        块 I/O 层
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#进程地址空间" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        进程地址空间
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+          
+        </div>
+      </div>
+    </div>
+    <article class="md-content__inner md-typeset">
+      
+        
+  
+
+
+  <nav class="md-tags" >
+    
+      
+      
+      
+      
+        <a href="../../../../../tags/#tag:kernel" class="md-tag">kernel</a>
+      
+    
+      
+      
+      
+      
+        <a href="../../../../../tags/#tag:linux" class="md-tag">linux</a>
+      
+    
+  </nav>
+
+
+
+  <h1>linux 内核设计与实现阅读</h1>
+
+<p>linux 内核设计与实现（原书第 3 版）, Robert Love</p>
+<ul>
+<li>一个内核由：负责响应中断的中断服务程序，负责多个程序分享处理器时间的进程调度程序，负责管理进程地址空间的内存管理程序和网络、进程间通信等系统服务程序组成。</li>
+</ul>
+<ul>
+<li>
+<p>应用程序通过系统调用访问内核，内核运行于进程上下文中。（不同进程运行同样的内核代码，上下文不同，因此有不同效果）</p>
+<ul>
+<li>对于中断来说，内核运行于中断上下文</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>单内核和微内核。linux 汲取了微内核的优点：linux 是模块化的，多线程的以及内核本身可调度的。</li>
+</ul>
+<ul>
+<li>inline 函数必须用 static 修饰，涉及到编译，因为 inline 的含义有点像宏。而如果不用 static 修饰，那么其他文件的函数也可以调用它，那么就会导致不得不建立一个符号表项。因此声明为 static 实现起来更简单。</li>
+</ul>
+<ul>
+<li>内核使用的 C 语言用到了 ISO99 和 GUN C 扩展特性，其中几个用的比较广的 GUN C 扩展特性<ul>
+<li>内联函数</li>
+<li>内联汇编</li>
+</ul>
+</li>
+</ul>
+<!-- more -->
+
+<h3 id="进程调度">进程调度<a class="headerlink" href="#进程调度" title="Permanent link">&para;</a></h3>
+<ul>
+<li>每个 CPU 都有单独的运行队列 runqueue，每个 runqueue 实际包含两个 prio_array 结构的数据 active, expire。active 记录时间片还没有运行完的进程，expire 则是运行完的。prio_array 包含一个 bitmap 和实际的对应不同优先级的进程链表 struct list_head queue（queue[MAX_PRIO]），调度时 schedule():/kernel/sched.c 更具 bitmap 找到非空的最高优先级的链表的第一个进程作为全局优先级最高的进程。</li>
+</ul>
+<ul>
+<li>重新分配时间片，task_timeslice() 根据任务的静态优先级（用户指定的 nice 值）分配时间片。默认 nice 为 0 为 100ms。</li>
+</ul>
+<ul>
+<li>降低交互进程响应时间：每个定时器中断会调用 scheduler_tick()，该函数减少任务的时间片，如果减为 0 了，则判断该进程是否为交互性进程，如果不是，则添加到 expired 队列中，如果是且没有发生 expired 队列饥饿时，继续添加到 active 队列</li>
+</ul>
+<ul>
+<li>
+<p>schedule 选择了下一个进程后，便通过 contex_switch 完成上下文交换。该函数通过则进一步通过以下两个函数实现</p>
+<ul>
+<li>asm/mmu_contex.h:switch_mm：切换虚拟内存</li>
+<li>asm/system.h:switch_to：实现处理器状态切换</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>
+<p><strong>什么时候调用 sechdule</strong></p>
+<ul>
+<li>内核通过 need_resched 标志来表明是否需要重新执行一次调度。<ul>
+<li>当时间片耗尽时 scheduler_tick 设置</li>
+<li>当更高优先级的进程进入可执行状态时，try_to_wake_up 设置</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>
+<p><strong>用户抢占</strong></p>
+<p>当内核即将返回到用户空间时，如果 need_resched 被设置，那么就会<strong>调用 schedule</strong>，从而发生用户抢占</p>
+</li>
+</ul>
+<ul>
+<li>
+<p>内核抢占</p>
+<p>linux 实现了内核抢占。在不支持内核抢占的系统中，内核代码可以一直执行。</p>
+</li>
+</ul>
+<ul>
+<li>
+<p>实时</p>
+<p>linux 支持 SCHED_FIFO 和 SCHED_RR 两种试试调度策略。FIFO 不适用时间片，会比任何 SCHED_NORMAL 的进程都先得到调度。一旦一个 SCHED_FIFO 处于执行状态就会一直执行，直到显示释放处理器为止。</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="系统调用">系统调用<a class="headerlink" href="#系统调用" title="Permanent link">&para;</a></h3>
+<ul>
+<li>系统调用应该提供机制 (mechanism)（需要提供什么功能）而不是策略 (policy)（怎么使用这些功能）（驱动设计也应该这样）</li>
+<li>系统调用内核实现，<strong>需要在函数前添加 asmlinkage 限定词</strong>，告诉编译器仅从栈中提取该函数的参数。<ul>
+<li>在内陷到内核空间之前，需要将系统调用号和参数都放到寄存器里（多于 5 个则传递一个用户空间指针），然后触发软中断 (int $0x80)，执行 128 号异常处理程序。该程序对应<strong>系统调用处理程序 system_call</strong>，在 entry.S 中用汇编实现。system_call 再将参数（从寄存器中获得）传递给真正的系统调用函数 sys_xxx。</li>
+<li>在看过的 mips ucore 中实现中，system_call 不是用汇编实现的，已经是 C 了。参数之类的都放在中断帧（内核栈中一个数据结构）里（包含各种寄存器）</li>
+<li>x86-64 中添加了 sysenter 的指令</li>
+</ul>
+</li>
+<li>copy_to_user 和 copy_from_user</li>
+<li>即使添加了自己的系统调用，由于 libc 库没有进行 wrap，因此用户程序需要通过汇编进行系统调用。linux 提供了相关宏——<code>_syscalln</code>，简化了该步骤</li>
+</ul>
+<h3 id="中断处理程序">中断处理程序<a class="headerlink" href="#中断处理程序" title="Permanent link">&para;</a></h3>
+<ul>
+<li>
+<p>中断上下文：</p>
+<p>当执行系统调用或运行内核线程时，内核处于进程上下文。而当内核执行中断处理程序时，内核处于中断上下文。</p>
+<p>中断栈：曾今，中断处理程序共享被中断进程的内核栈。2.6 版本后，中断处理程序有了自己的栈，大小为 1 个页，即 4KB。</p>
+</li>
+</ul>
+<ul>
+<li>中断处理程序不再进程上下文中运行，因此不能阻塞</li>
+</ul>
+<ul>
+<li>
+<p>过程</p>
+<ul>
+<li>
+<p>注册中断</p>
+<div class="language-c highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kt">int</span><span class="w"> </span><span class="n">request_irq</span><span class="p">(</span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">irq</span><span class="p">,</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">    </span><span class="n">irqreturn_t</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="n">handler</span><span class="p">)(</span><span class="kt">int</span><span class="p">,</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">pt_regs</span><span class="w"> </span><span class="o">*</span><span class="p">)),</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">    </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="n">irqflags</span><span class="p">,</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">devname</span><span class="p">,</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">dev_id</span><span class="p">)</span>
+</span></code></pre></div>
+<ul>
+<li>irq 为要分配的中断号，对于传统 PC 设备，该值通常是预先定义的</li>
+</ul>
+<ul>
+<li>handler 为中断处理程序</li>
+</ul>
+<ul>
+<li>irqflags<ul>
+<li>SA_INTERRUPT：快速中断，在禁止本地 CPU 上的所有中断情况下运行。</li>
+<li>SA_SHIRQ：共享中断线</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>
+<p>处理器某管脚接收到设备中断信号，关闭中断系统，跳转到中断程序<strong>入口点</strong>开始执行</p>
+<p>注：x86 中，对于每个中断号都会跳转到不同入口点</p>
+</li>
+</ul>
+<ul>
+<li>
+<p>入口点代码将中断号压栈，存放寄存器，然后调用 do_IRQ()</p>
+<div class="language-c highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">do_IRQ</span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">pt_regs</span><span class="w"> </span><span class="n">regs</span><span class="p">)</span>
+</span></code></pre></div>
+</li>
+</ul>
+<ul>
+<li>
+<p>do_IRQ 判断中断线上是否有注册的中断处理程序，并调用 handle_IRQ_event 进行处理。</p>
+<p>注 1：前面说到，CPU 接收到中断后，关闭了中断系统。在这里，如果 IRQ 类型不是 SA_INTERRUPT，则会重新打开中断。</p>
+<p>注 2：共享中断线的中断处理程序：依次调用在该中断线上注册的每一个程序。中断处理程序需要判断是否自己注册的设备产生了中断（通过检查硬件状态寄存器）</p>
+</li>
+</ul>
+<ul>
+<li>没有或者处理完后，则调用 ret_from_intr() 进行中断返回。</li>
+</ul>
+</li>
+</ul>
+<h3 id="下半部">下半部<a class="headerlink" href="#下半部" title="Permanent link">&para;</a></h3>
+<ul>
+<li>
+<p>上半部和下半部</p>
+<ul>
+<li>一个中断处理程序正在执行时，同一个中断线在所有处理器上都会被频闭掉。</li>
+<li><strong>因此同一个中断程序不会被嵌套调用</strong>，从而简化了中断处理程序的编写。</li>
+</ul>
+<ul>
+<li>对于 SA_INTERRUPT 类型中断，本地处理器的所有中断被禁用</li>
+<li>缩短中断被屏蔽时间对系统响应时间和性能很重要</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>
+<p>中断处理程序必须尽可能快速的完成，因此整个中断处理流程被分为了上下两部分。应尽可能将任务放到下半部执行，除了以下情况：</p>
+<ul>
+<li>对时间非常敏感</li>
+<li>和硬件相关</li>
+<li>要保证不被其他中断打断</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>
+<p>内核实现下半部的方式：</p>
+<ul>
+<li>软中断 (2.3)</li>
+<li>tasklet(2.3)</li>
+<li>workqueue(2.5)</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>
+<p>软中断</p>
+<ul>
+<li>一个 32 个表项数组用于注册软中断。</li>
+<li>do_softirq()</li>
+<li>什么时候触发软中断<ul>
+<li>中断处理程序退出前</li>
+<li>在 ksoftirq/n 内核线程中</li>
+</ul>
+</li>
+<li>避免加锁来提高性能</li>
+<li><strong>相同类别的软中断可能在不同处理器上同时执行</strong></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>
+<p>tasklet</p>
+<ul>
+<li>基于软中断实现</li>
+</ul>
+<ul>
+<li>不同类型的 tasklet：HI_SOFTIRQ, TASKLET_SOFTIRQ。</li>
+<li>相同类别的 tasklet 不能同时执行，不同类型 tasklet 可以同时执行</li>
+<li>避免软中断处理函数有触发软中断，导致用户空间进程饥饿。引入 ksoftirq，当大量软中断出现时，内核唤醒一组内核线程来处理这些负载，运行在最低优先级（nice 值为 19），保证最终肯定会被执行。</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>
+<p>workqueue</p>
+<ul>
+<li>可以阻塞</li>
+<li>由内核线程代为执行（一般使用默认的，也可以自己创建），可以调度</li>
+</ul>
+</li>
+</ul>
+<h3 id="内核同步介绍">内核同步介绍<a class="headerlink" href="#内核同步介绍" title="Permanent link">&para;</a></h3>
+<ul>
+<li>用户程序并发执行情形<ul>
+<li>伪并发：进程被抢占，并重新调度。在被抢占期间，另一个进程可能访问临界区</li>
+<li>多核处理器，进程并行执行（真并发）</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>内核并发执行情形<ul>
+<li>内核也支持抢占调度（换句话说，如果内核不支持抢占，那么单核情况，内核正常情况就不会遇到并发问题）</li>
+<li>中断</li>
+<li>SMP</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>在写代码时就需要考虑加锁，而不是写完了之后再加锁</li>
+<li>中断安全代码</li>
+<li>SMP 安全代码</li>
+<li>抢占安全代码</li>
+<li>刚开始锁的粒度都很粗，但是当锁的竞争变得严重时，设计就向更精细的加锁方向进化</li>
+</ul>
+<h3 id="内核同步实现">内核同步实现<a class="headerlink" href="#内核同步实现" title="Permanent link">&para;</a></h3>
+<ul>
+<li>
+<p>原子操作</p>
+<ul>
+<li>原子操作，比如 atomic_inc() 需要将内存中一个变量加 1。原子操作需要硬件支持</li>
+<li>原子性和顺序性：原子性表示操作是不可分割的，要么执行完要么不执行。而同步性表示多条指令即使执行在多个核上，他们间的顺序也依然要保持。通过屏障 (barrier) 实现</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>
+<p>锁</p>
+<ul>
+<li>临界区要进行的操作可能非常复杂，因此无法仅使用简单的原子操作。此时便需要引入锁的机制。</li>
+</ul>
+<ul>
+<li>
+<p>自旋锁 spinlock：</p>
+<ul>
+<li>自旋锁最多只能被一个线程持有</li>
+</ul>
+<ul>
+<li>当一个线程试图获得一个已经被持有的锁时，就会进入循环忙等待，直到锁被释放。</li>
+</ul>
+<ul>
+<li>适用于小的临界区</li>
+</ul>
+<ul>
+<li>可以在中断处理程序中使用（不会进入睡眠）</li>
+</ul>
+<ul>
+<li>
+<p><strong>中断处理程序获取自旋锁之前，需要禁止本地中断</strong>。否则，其它中断处理程序可能打断当前代码，并试图去获得已经被持有的锁，造成死锁。</p>
+<ul>
+<li><code>spin_lock_irqsave(&amp;mr_lock, flags)
+  ...//临界区
+  spin_unlock_irqrestore(&amp;mr_lock, flags)</code></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>
+<p>读/共享/S 锁，写/排它/X 锁</p>
+<p>当有大量读锁被占有时，可能导致写者饥饿</p>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>
+<p>信号量</p>
+<ul>
+<li>一个任务试图获得一个被占用的信号量时，信号量将其推进一个等待队列，然后让其睡眠。当持有信号量的进程将信号量释放后，将等待队列中的任务唤醒，并获得该信号量</li>
+<li>信号量支持多个进程持有同一个信号量，在声明信号量时指定，称为使用者数量。为 1 时则是二值信号量</li>
+<li>信号量支持两个原子操作，P(), V()，来自荷兰语 Proberen(探查), Vershogen(增加)。linux 中叫做 down() 和 up()。</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>
+<p>seq 锁：读之前保存一个序列值，读操作之后再检查以下序列值是否变化。没变化则说明临界区时没有写操作发生，否则循环重新读取。对写者有利。</p>
+<ul>
+<li>
+<p>```c
+  write_seqlock(&amp;sl)
+  ...
+  write_sequnlock(&amp;sl)</p>
+<p>do{
+ seq = read_seqbegin(&amp;sl)
+ ...
+}while(read_seqretry(&amp;sl, seq))
+```</p>
+</li>
+</ul>
+<ul>
+<li>代码位于 include/linux/seqlock.h</li>
+</ul>
+<ul>
+<li>write_seqlock 和 write_sequnlock 都会将 sl 内部的 seq 增加 1</li>
+</ul>
+<ul>
+<li>对于写者来说，可以直接进入临界区</li>
+</ul>
+<ul>
+<li>对于读者来说，如果第一次读取到的 seq 是奇数，则说明有写者进入了临界区，需要重新读。或者第一次读取到的 seq 和第二次读取到的不一致，说明。在读者进入临界区后，有写者进入了临界区，也需要重新读。</li>
+</ul>
+<ul>
+<li>为了防止有多个写者进入临界区，write_seqlock 中也使用了自选锁实现。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>
+<p>代码：</p>
+<ul>
+<li>原子整数操作：arch/*/include/atomic.h</li>
+<li>自旋锁：spinlock.h</li>
+<li>信号量：semaphore.h，rwsem.h</li>
+</ul>
+</li>
+</ul>
+<h3 id="定时器和时间管理">定时器和时间管理<a class="headerlink" href="#定时器和时间管理" title="Permanent link">&para;</a></h3>
+<ul>
+<li>系统定时器：为内核提供一个周期性的时钟中断，节拍可以设置<ul>
+<li><strong>节拍</strong>(tick)，节拍率 (tick rate) 也叫 HZ</li>
+<li>节拍率一般为 1000（早期为 100），不同体系结构也不一样</li>
+<li>节拍率更高可以提高时间驱动事件的解析度 resultion（感觉可以理解为粒度），单也会导致时钟中断负载变大。</li>
+<li>不使用周期时钟？有人尝试使用动态编程定时器来驱动一些事件（设定多少时间后触发中断）</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>
+<p>RTC 实时时钟：记录墙上时间，用于系统启动时初始化 xtime 变量</p>
+<ul>
+<li>
+<p>当前实际时间（墙上时间）存储在 xtime 变量中，定义于 kernel/timer.c。timespec 定义在<linux/time.h>中</p>
+<div class="language-c highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">struct</span><span class="w"> </span><span class="nc">timespec</span><span class="w"> </span><span class="n">xtime</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="k">struct</span><span class="w"> </span><span class="nc">timepsec</span><span class="p">{</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w"> </span><span class="kt">time_t</span><span class="w"> </span><span class="n">tv_sec</span><span class="p">;</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="n">tv_nsec</span><span class="p">;</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="p">}</span>
+</span></code></pre></div>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>
+<p>时钟中断处理程序</p>
+<ul>
+<li>分为体系结构相关部分和无关部分 (do_timer) 两部分</li>
+<li>do_timer 需要<ul>
+<li>对 jiffies_64 加 1</li>
+<li>执行到期的动态定时器</li>
+<li>scheduler_tick()</li>
+</ul>
+</li>
+<li>根据中断发生在用户空间还是内核空间，将任务的用户时间和系统时间增加 1。然而由于在一个节拍期间可能多次进入和退出内核，因此实际上并不足够精确。</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>通过 sys_gettimeofday 系统调用获得墙上时间</li>
+</ul>
+<ul>
+<li>
+<p>定时器（内核定时器）(kernel/timer.c)</p>
+<ul>
+<li>
+<p>```c
+  struct timer_list my_timer;</p>
+<p>init_timer(&amp;my_timer);</p>
+<p>my_timer.expires = jiffies + delay;
+my_timer.data = 0;
+my_timer.function = my_function;</p>
+<p>add_timer(&amp;my_timer);</p>
+<p>mod_timer(&amp;my_timer, jiffies+new_delay);
+del_timer(&amp;my_timer);</p>
+<p>```</p>
+</li>
+</ul>
+<ul>
+<li>
+<p>实现</p>
+<ul>
+<li>
+<p>时钟中断处理程序执行 update_process_timers()，该函数调用 run_local_timers()</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>void run_local_timers(){
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a> raise_softirq(TIMER_SOFTIRQ);
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>}
+</span></code></pre></div>
+</li>
+</ul>
+<ul>
+<li>即定时器作为软中断在下半部中执行</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>不能使用定时器来实现硬实时任务</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>
+<p>实现延迟执行</p>
+<ul>
+<li>
+<p>忙等待</p>
+<ul>
+<li>
+<p>下面的代码延迟两秒</p>
+<div class="language-c highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kt">unsigned</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="n">delay</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">jiffies</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">2</span><span class="o">*</span><span class="n">HZ</span><span class="p">;</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="k">while</span><span class="p">(</span><span class="n">time_before</span><span class="p">(</span><span class="n">jiffies</span><span class="p">,</span><span class="w"> </span><span class="n">delay</span><span class="p">))</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w"> </span><span class="p">;</span>
+</span></code></pre></div>
+</li>
+</ul>
+<ul>
+<li>C 编译器通常只会将变量 load 一次，这样的话上面的代码使用的 jiffies 就不对（jiffies 在后台随时钟中断不断被更新）。因此需要使用 volatile，<strong>关键字 volatile 指示编译器在每次访问变量时都重新重内存中读取。</strong></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>
+<p>短延迟</p>
+<ul>
+<li>如果需要延迟的时间短于一个节拍</li>
+</ul>
+<ul>
+<li>内核中提供延迟微秒和毫秒的函数 udelay 和 mdelay（linux/delay.h）</li>
+</ul>
+<ul>
+<li>udelay 通过<strong>执行数次循环</strong>实现，而不是 jiffies</li>
+</ul>
+<ul>
+<li>
+<p><strong>BogoMIPS</strong></p>
+<ul>
+<li>内核在启动时利用 calibrate_delay 计算 loops_per_jiffy，位于 init/main.c</li>
+</ul>
+<ul>
+<li>
+<p>BogoMIPS 表示处理器执行空循环时，执行指令的速度（相当于 CPU 频率），单位：百万/s</p>
+<p>因此：BogoMIPS = loops_per_jiffy * HZ / 500000。因为一个 loop 需要两条指令。</p>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>现在一般使用硬件定时器实现，更加精确。（CPU 频率会变化）</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="内存管理">内存管理<a class="headerlink" href="#内存管理" title="Permanent link">&para;</a></h3>
+<ul>
+<li>
+<p>struct page: <linux/mm.h></p>
+<p>内核给每个物理页都分配一个 page 结构体。虽然看上去很消耗内存，但是实际上不到 1/100，并且是值得的。</p>
+</li>
+</ul>
+<ul>
+<li>
+<p>struct zone: <linux/mmzone.h></p>
+<ul>
+<li>不同体系结构 zone 的划分不一样</li>
+<li>ZONE_NORMAL</li>
+<li>ZONE_DMA：DMA 可以使用的</li>
+<li>ZONE_HIGHMEM：无法永久映射到内核地址空间</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>内核启动时初始化：mm/page_alloc.c</li>
+</ul>
+<ul>
+<li>
+<p>请求内存的底层机制，以页为单位请求内存：<linux/gfp.h></p>
+<p>分配 2^order 个连续的物理页，并返回第一个页对应 page 指针</p>
+<div class="language-c highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="k">struct</span><span class="w"> </span><span class="nc">page</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">alloc_pages</span><span class="p">(</span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">gfp_mask</span><span class="p">,</span><span class="w"> </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">order</span><span class="p">)</span>
+</span></code></pre></div>
+<p>把给定的页转换成逻辑地址</p>
+<div class="language-c highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">page_address</span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">page</span><span class="w"> </span><span class="o">*</span><span class="n">page</span><span class="p">)</span>
+</span></code></pre></div>
+<p>直接返回请求的第一个页的逻辑地址</p>
+<div class="language-c highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="kt">unsigned</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="n">__get_free_pages</span><span class="p">(</span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">gfp_mask</span><span class="p">,</span><span class="w"> </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">order</span><span class="p">)</span>
+</span></code></pre></div>
+<p>获得一个页</p>
+<div class="language-c highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="k">struct</span><span class="w"> </span><span class="nc">page</span><span class="o">*</span><span class="n">alloc_page</span><span class="p">(</span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">gfp_mask</span><span class="p">)</span>
+</span></code></pre></div>
+<p>释放</p>
+<div class="language-c highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="kt">void</span><span class="w"> </span><span class="n">__free_pages</span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">page</span><span class="w"> </span><span class="o">*</span><span class="n">page</span><span class="p">,</span><span class="w"> </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">order</span><span class="p">)</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="kt">void</span><span class="w"> </span><span class="n">free_pages</span><span class="p">(</span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="n">addr</span><span class="p">,</span><span class="w"> </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">order</span><span class="p">)</span>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="kt">void</span><span class="w"> </span><span class="n">free_page</span><span class="p">(</span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="n">addr</span><span class="p">)</span>
+</span></code></pre></div>
+</li>
+</ul>
+<ul>
+<li>
+<p>kmalloc：<linux/slab.h></p>
+<ul>
+<li><code>c
+  void *kmallock(size_t size, int flags)</code></li>
+</ul>
+<ul>
+<li>获得以字节为单位的一块<strong>连续的</strong>内核内存</li>
+</ul>
+<ul>
+<li>
+<p>flag</p>
+<ul>
+<li>行为修饰符：如不能睡眠</li>
+<li>区修饰符</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>kfree：释放不是 kmalloc 分配的或则已经被释放的内存可能导致严重的后果</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>
+<p>vmalloc</p>
+<ul>
+<li>虚拟地址是连续的，而物理地址无需连续。</li>
+<li>vmalloc 一般在获得大块内存时使用：需要建立页表项，性能低</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>
+<p>slab 分配器</p>
+<ul>
+<li>
+<p>作用：避免频繁分配和释放页。</p>
+<ul>
+<li>slab 负责底层的对齐、着色、分配、释放等等</li>
+<li><strong>如果需要频繁创建很多相同类型的对象，应该使用 slab，而不是自己创建空闲链表。</strong></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>
+<p>比较特殊的几点</p>
+<ul>
+<li>让部分缓存专属于单个处理器，那么分配和释放就可以在不加 SMP 锁的情况下进行</li>
+<li>对存放的对象进行着色 (colored)，可以防止多个对象映射到相同的 cache line</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>
+<p>原理：</p>
+<ul>
+<li>频繁使用的数据结构会被频繁分配和释放，因此需要缓存它们。</li>
+<li>使用不同的 cache 来缓存不同的对象，如用于存放进程描述符，索引节点的对象</li>
+<li>cache 由若干个 slab 组成，一个 slab 包含若干个连续的物理页</li>
+<li>slab 可能为处于：满，部分满，空三种状态之一。优先在部分满的 slab 中分配对象。</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>
+<p>接口</p>
+<ul>
+<li>
+<p>创建一个 cache</p>
+<div class="language-c highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="n">kmem_cache_t</span><span class="w"> </span><span class="o">*</span><span class="n">kmem_cache_create</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="n">size</span><span class="p">,</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="w">                                </span><span class="kt">size_t</span><span class="w"> </span><span class="n">align</span><span class="p">,</span><span class="w"> </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="n">flags</span><span class="p">,</span>
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="w">                                </span><span class="kt">void</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="n">ctor</span><span class="p">)(</span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="n">kmem_cache_t</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">long</span><span class="p">),</span>
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="w">                                </span><span class="kt">void</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="n">ctor</span><span class="p">)(</span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="n">kmem_cache_t</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">long</span><span class="p">))</span>
+</span></code></pre></div>
+<ul>
+<li>size 为对象的大小</li>
+</ul>
+<ul>
+<li>align 为第一个对象的偏移，通常为 0</li>
+</ul>
+<ul>
+<li>
+<p>flags</p>
+<ul>
+<li>
+<p>SLAB_HWCACHE_ALGIN：命令 slab 层把每一个对象按 cache line 对齐，防止两个对象地址不同但映射到相同的 cache line</p>
+<p>注：不太明白，cache line 大小对齐不仍然会映射冲突吗？</p>
+</li>
+</ul>
+<ul>
+<li>SLAB_POISON：使用已知的值填充 slab</li>
+</ul>
+<ul>
+<li>SLAB_PANIC：分配失败时体形 slab 层。在要求分配必须成功时有用，比如系统启动时分配 VMA 结构的 cache。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>
+<p>创建 cache 后，获得一个对象</p>
+<div class="language-c highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">kmem_cache_alloc</span><span class="p">(</span><span class="n">kmem_cache_t</span><span class="w"> </span><span class="o">*</span><span class="n">cachep</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">flags</span><span class="p">)</span>
+</span></code></pre></div>
+<p>如果 cache 中所有 slab 都没有空闲的对象，则通过 kmem_getpages 获取新的页。</p>
+<div class="language-c highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">kmem_cache_alloc</span><span class="p">(</span><span class="n">kmem_cache_t</span><span class="w"> </span><span class="o">*</span><span class="n">cachep</span><span class="p">,</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">objp</span><span class="p">)</span>
+</span></code></pre></div>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>
+<p>内核栈</p>
+<ul>
+<li>不像用户进程，栈的大小可以动态增长，内核栈的大小是固定的。</li>
+<li>每个进程都有一个内核栈（内核运行在进程上下文），内核栈的大小一般是两个页。（可以编译时配置为 1 个页）</li>
+<li>在过去，中断处理程序和被中断进程共享内核栈，之后引入了中断栈，每个进程有一个中断栈</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="虚拟文件系统">虚拟文件系统<a class="headerlink" href="#虚拟文件系统" title="Permanent link">&para;</a></h3>
+<ul>
+<li>复习<ul>
+<li>磁盘结构<ul>
+<li>CHS geometry</li>
+<li>Logic Block Address</li>
+</ul>
+</li>
+<li>分区格式：MBR, GPT<ul>
+<li>MBR 分区格式在 fdisk, parted 等工具中一般标记为 dos 格式</li>
+<li>MBR(Master boot record) 位于第一个扇区，因此分区表不能太大，最多支持 4 个 primary 分区，如果需要多于 4 个分区，则需要使用 extend 分区+logic 分区的方式。</li>
+<li>MBR 也限制了最大只能支持 2TB 的磁盘</li>
+</ul>
+</li>
+<li>文件系统</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>VFS 作用：提供统一接口，支持不同文件系统</li>
+</ul>
+<ul>
+<li>
+<p><strong>Unix 文件系统采用了面向对象设计风格，使用了 4 中不同数据结构：超级块、索引节点、目录项、文件对象</strong>，每种数据结构都包含对其进行操作的函数</p>
+<ul>
+<li>其中超级块、索引节点在 Unix 风格的文件系统中有对应的磁盘数据结构</li>
+<li>如果要支持非 Unix 风格的文件系统，则仍然需要在内存中构造响应数据结构</li>
+<li>内存中的数据结构相比磁盘中的会多一些控制信息</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>
+<p>超级块：包含文件系统的控制信息。也叫文件系统控制块。</p>
+<ul>
+<li>当一个<strong>文件系统</strong>被挂载到一个<strong>目录</strong>时，内核通过 alloc_super 创建超级块，并填充相关数据（从磁盘读取）</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>
+<p>索引节点 inode</p>
+<ul>
+<li>
+<p>索引节点存储文件的元数据（如控制权限，大小，拥有者，创建时间）</p>
+<ul>
+<li>Unix 将文件信息和文件本身分别存储</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>
+<p>Unix 风格的文件系统中，索引节点存储在磁盘单独的块中</p>
+<ul>
+<li>没有索引节点的文件系统通常将信息作为文件的一部分存储起来</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>目录被当作一种特殊的文件，可以像文件一样进行操作</li>
+</ul>
+<ul>
+<li>
+<p>查找文件</p>
+<blockquote>
+<p>It starts at the beginning of the path name and looks up the inode of the first directory in the path. Then it uses that inode to look up the next directory in the path. When it reachs the end, it has found the inode of the file or directory it is trying to look up. But since it needs an <code>inode</code> to get started, how <strong>does</strong> it get started with the first lookup? There is an inode pointer kept in the superblock called <code>s_mounted</code> which points at an inode structure for the filesystem. T</p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>
+<p>目录项 dentry</p>
+<ul>
+<li>指向一个 inode</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>
+<p>目录项缓存 dcache</p>
+<ul>
+<li>用于快速路径解析</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>
+<p>文件对象</p>
+<ul>
+<li>进程打开一个文件时创建，包含文件当前位置、访问模式等信息。</li>
+<li>现在还不清楚，文件对象是不是每个进程私有的。</li>
+<li><strong>实现文件共享</strong>：不同进程的文件对象可以指向相同的 dentry 和 inode</li>
+</ul>
+</li>
+</ul>
+<h3 id="块-io-层">块 I/O 层<a class="headerlink" href="#块-io-层" title="Permanent link">&para;</a></h3>
+<ul>
+<li>字符设备太简单，因此没有子系统。而块设备有</li>
+<li>扇区是块设备的最小寻址单元，通常为 512 字节。<ul>
+<li>可以叫做：设备块</li>
+</ul>
+</li>
+<li>块是文件系统的最小寻址单元，通常为 512B, 1KB 或 4KB。<ul>
+<li>可以叫做：文件块，I/O 块</li>
+</ul>
+</li>
+</ul>
+<h3 id="进程地址空间">进程地址空间<a class="headerlink" href="#进程地址空间" title="Permanent link">&para;</a></h3>
+<p>Linux 内核完全注释 -0.12-v5.0-赵炯</p>
+<ul>
+<li>汇编中任何一个地址引用都可表示为该文件中{区地址 + 偏移}或者绝对地址。前一种有利于链接时的重定位</li>
+<li>
+<blockquote>
+<p>程序员使用符号来命名对象，链接器使用符号进行链接操作，而调试器利用符号进行调试</p>
+</blockquote>
+</li>
+</ul>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+  
+
+
+
+      
+    </article>
+  </div>
+
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+        
+      
+      <nav class="md-footer__inner md-grid" aria-label="页脚" >
+        
+          
+          <a href="../../../../../%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/2020/10/11/2020-10-12-%E5%AE%89%E8%A3%85linux%E5%90%8E%E7%9A%84%E9%85%8D%E7%BD%AE/" class="md-footer__link md-footer__link--prev" aria-label="上一页: 安装 linux 后的配置">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                上一页
+              </span>
+              <div class="md-ellipsis">
+                安装 linux 后的配置
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../../../../../%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/2021/02/08/2021-02-08-%E6%9B%B4%E6%96%B0%E5%9B%BA%E6%80%81%E4%B9%8B%E6%97%85/" class="md-footer__link md-footer__link--next" aria-label="下一页: 更新固态之旅">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                下一页
+              </span>
+              <div class="md-ellipsis">
+                更新固态之旅
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/TheRainstorm" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../../..", "features": ["navigation.instant", "navigation.instant.progress", "navigation.tracking", "navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.footer", "content.code.copy", "toc.follow", "toc.integrate"], "search": "../../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../../../../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

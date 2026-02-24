@@ -1,0 +1,2579 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="记录一些关于数学、计算机的知识，以及一些日常。">
+      
+      
+      
+        <link rel="canonical" href="https://yfy.cqu.ai/category/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+      
+      
+        <link rel="prev" href="../%E5%8D%9A%E5%AE%A2--%E7%BD%91%E7%BB%9C/">
+      
+      
+        <link rel="next" href="../%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.3">
+    
+    
+      
+        <title>学习笔记 - Rain 的随笔</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#学习笔记" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../.." title="Rain 的随笔" class="md-header__button md-logo" aria-label="Rain 的随笔" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Rain 的随笔
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              学习笔记
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  博客
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../about/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  关于
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../tags/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  标签
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../series/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  系列
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../tools/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  工具
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../archive/2026/" class="md-tabs__link">
+          
+  
+  
+  归档
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../%E4%B8%AA%E4%BA%BA/" class="md-tabs__link">
+          
+  
+  
+  分类
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Rain 的随笔" class="md-nav__button md-logo" aria-label="Rain 的随笔" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Rain 的随笔
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    博客
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    关于
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tags/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    标签
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../series/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    系列
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    工具
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    归档
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    归档
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../archive/2026/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2026
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../archive/2025/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2025
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../archive/2024/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2024
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../archive/2023/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2023
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../archive/2022/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2022
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../archive/2021/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2021
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../archive/2020/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2020
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../archive/2019/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2019
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    分类
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    分类
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E4%B8%AA%E4%BA%BA/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    个人
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E5%8D%9A%E5%AE%A2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    博客
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E5%8D%9A%E5%AE%A2--%E7%BD%91%E7%BB%9C/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    博客 &amp; 网络
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+    
+      
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    学习笔记
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    学习笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#linux-相关-基本命令" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        linux 相关-基本命令
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C&amp;C++
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cuda-优化" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CUDA 优化
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cuda-编程工具" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CUDA 编程&amp;工具
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cuda-架构" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CUDA 架构
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#c-编程风格规范" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C 编程风格规范
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#linux-相关-linux-使用" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        linux 相关-linux 使用
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#linux-相关-系统运维" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        linux 相关-系统运维
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#python-正则表达式" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        python 正则表达式
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#x86-记录" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        x86 记录
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gcc-mpi-源码编译" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        gcc mpi 源码编译
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#位操作-tricky" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        位操作 tricky
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#wsl-记录" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        WSL 记录
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#字体分类" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        字体分类
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#use-dlib-in-c" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Use dlib in C++
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#安装使用-opencvwindows" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        安装使用 OpenCV(windows)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#运行-hpl" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        运行 HPL
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    折腾记录
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    课程笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%85%B7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    软件工具
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E9%98%85%E8%AF%BB/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    阅读
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+  <div class="md-content" data-md-component="content">
+    <div class="md-content__inner">
+      <header class="md-typeset">
+        <h1 id="学习笔记">学习笔记<a class="headerlink" href="#学习笔记" title="Permanent link">&para;</a></h1>
+      </header>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
+          <time datetime="2024-03-02 23:37:03+00:00">2024年3月2日</time></li>
+        
+          <li class="md-meta__item">
+            分类于
+            
+              <a href="./" class="md-meta__link">学习笔记</a></li>
+        
+        
+          
+          <li class="md-meta__item">
+            
+              需要 6 分钟阅读时间
+            
+          </li>
+        
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="linux-相关-基本命令"><a class="toclink" href="../../%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/2024/03/02/2022-11-06-linux%E7%9B%B8%E5%85%B3-%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4/">linux 相关-基本命令</a></h2>
+<p>linux 相关</p>
+
+    
+      <nav class="md-post__action">
+        <a href="../../%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/2024/03/02/2022-11-06-linux%E7%9B%B8%E5%85%B3-%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4/">
+          继续阅读
+        </a>
+      </nav>
+    
+    
+  </div>
+</article>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
+          <time datetime="2023-04-20 15:45:00+00:00">2023年4月20日</time></li>
+        
+          <li class="md-meta__item">
+            分类于
+            
+              <a href="./" class="md-meta__link">学习笔记</a></li>
+        
+        
+          
+          <li class="md-meta__item">
+            
+              需要 21 分钟阅读时间
+            
+          </li>
+        
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="cc"><a class="toclink" href="../../%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/2023/04/20/2023-04-20-C%26C%2B%2B/">C&amp;C++</a></h2>
+<ul>
+<li>C++ 语言新机制（如闭包，for_each）</li>
+<li>C++ STL 使用<ul>
+<li>容器</li>
+<li>算法库</li>
+</ul>
+</li>
+<li>常见算法记录</li>
+</ul>
+
+    
+      <nav class="md-post__action">
+        <a href="../../%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/2023/04/20/2023-04-20-C%26C%2B%2B/">
+          继续阅读
+        </a>
+      </nav>
+    
+    
+  </div>
+</article>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
+          <time datetime="2023-04-16 16:16:00+00:00">2023年4月16日</time></li>
+        
+          <li class="md-meta__item">
+            分类于
+            
+              <a href="./" class="md-meta__link">学习笔记</a></li>
+        
+        
+          
+          <li class="md-meta__item">
+            
+              需要 3 分钟阅读时间
+            
+          </li>
+        
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="cuda-优化"><a class="toclink" href="../../%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/2023/04/16/2023-04-16-CUDA%E4%BC%98%E5%8C%96/">CUDA 优化</a></h2>
+<h3 id="sc07"><a class="toclink" href="../../%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/2023/04/16/2023-04-16-CUDA%E4%BC%98%E5%8C%96/#sc07">SC07</a></h3>
+<p><a href="https://www.enseignement.polytechnique.fr/profs/informatique/Eric.Goubault/Cours09/CUDA/SC07_CUDA_5_Optimization_Harris.pdf">Microsoft PowerPoint - SC07_Optimization_Harris.ppt [Read-Only] (polytechnique.fr)</a></p>
+<h4 id="常见优化方法"><a class="toclink" href="../../%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/2023/04/16/2023-04-16-CUDA%E4%BC%98%E5%8C%96/#常见优化方法">常见优化方法</a></h4>
+<p>优化目标</p>
+<ul>
+<li>对于计算密集应用：峰值性能 GFLOP/s</li>
+<li>对于访存密集应用：峰值带宽 bandwidth</li>
+</ul>
+<h4 id="二叉规约"><a class="toclink" href="../../%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/2023/04/16/2023-04-16-CUDA%E4%BC%98%E5%8C%96/#二叉规约">二叉规约</a></h4>
+<p>是 memory bound 应用：</p>
+<ul>
+<li>计算强度很低（1 flop/operator）</li>
+</ul>
+
+    
+      <nav class="md-post__action">
+        <a href="../../%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/2023/04/16/2023-04-16-CUDA%E4%BC%98%E5%8C%96/">
+          继续阅读
+        </a>
+      </nav>
+    
+    
+  </div>
+</article>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
+          <time datetime="2023-04-16 16:13:00+00:00">2023年4月16日</time></li>
+        
+          <li class="md-meta__item">
+            分类于
+            
+              <a href="./" class="md-meta__link">学习笔记</a></li>
+        
+        
+          
+          <li class="md-meta__item">
+            
+              需要 28 分钟阅读时间
+            
+          </li>
+        
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="cuda-编程工具"><a class="toclink" href="../../%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/2023/04/16/2023-04-16-CUDA%E7%BC%96%E7%A8%8B%26%E5%B7%A5%E5%85%B7/">CUDA 编程&amp;工具</a></h2>
+<h3 id="参考资料"><a class="toclink" href="../../%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/2023/04/16/2023-04-16-CUDA%E7%BC%96%E7%A8%8B%26%E5%B7%A5%E5%85%B7/#参考资料">参考资料</a></h3>
+<ul>
+<li><a href="https://cuda-tutorial.readthedocs.io/en/latest/tutorials/tutorial01/">Tutorial 01: Say Hello to CUDA - CUDA Tutorial (cuda-tutorial.readthedocs.io)</a></li>
+<li><a href="https://hpc.pku.edu.cn/download_2_cuda.html">北京大学高性能计算平台 (pku.edu.cn)</a></li>
+</ul>
+<h3 id="docker-cuda"><a class="toclink" href="../../%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/2023/04/16/2023-04-16-CUDA%E7%BC%96%E7%A8%8B%26%E5%B7%A5%E5%85%B7/#docker-cuda">docker cuda</a></h3>
+<p><a href="https://github.com/NVIDIA/nvidia-docker/issues/1268">What's the difference between the lastest nvidia-docker and nvidia container runtime？ · Issue #1268 · NVIDIA/nvidia-docker</a></p>
+<p><strong>问题描述</strong>：<br />
+在 Docker 中使用 GPU 时遇到驱动版本冲突问题，具体表现如下：</p>
+<ol>
+<li><strong>官方镜像正常工作</strong>：<br />
+    使用 <code>nvcr.io/nvidia/cuda:12.8.0-base-ubuntu22.04</code> + <code>--gpus all</code> 时，<code>nvidia-smi</code> 能正确显示 CUDA 版本，PyTorch 可调用 GPU。</li>
+<li><strong>自定义镜像异常</strong>：<br />
+    基于 <code>ubuntu:22.04</code> 自建镜像时，<code>nvidia-smi</code> 显示 CUDA 版本为 <code>N/A</code>，PyTorch 报错 <code>No GPU driver found</code>。若在镜像内手动安装驱动，则出现 <code>NVML driver/library version mismatch</code>（宿主机驱动版本与容器内不一致）。</li>
+<li><strong>疑问</strong>：
+    - 为何 NVIDIA 官方镜像无需安装驱动（<code>apt list</code> 无 <code>nvidia-driver</code>）却能工作？
+    - 如何解决自定义镜像的驱动版本冲突？强制对齐宿主机和容器内驱动的小版本难度大，是否有通用方案？</li>
+</ol>
+<h5 id="1-官方镜像为何无需安装驱动"><a class="toclink" href="../../%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/2023/04/16/2023-04-16-CUDA%E7%BC%96%E7%A8%8B%26%E5%B7%A5%E5%85%B7/#1-官方镜像为何无需安装驱动"><strong>1. 官方镜像为何无需安装驱动？</strong></a></h5>
+<p>NVIDIA 官方镜像（如 <code>nvcr.io/nvidia/cuda</code>）通过 <strong>NVIDIA Container Toolkit</strong> 实现 GPU 透传，其核心机制为：</p>
+<ul>
+<li><strong>挂载宿主机驱动库</strong>：容器启动时，自动挂载宿主机侧的 NVIDIA 驱动库（如 <code>libcuda.so</code>、<code>libnvidia-ptxjitcompiler.so</code>）到容器内的 <code>/usr/local/nvidia/lib64</code>。</li>
+<li><strong>环境变量配置</strong>：镜像内已设置 <code>LD_LIBRARY_PATH</code>，优先加载挂载的宿主机驱动库，而非容器内自带的库。</li>
+</ul>
+<p>查看 nvidia/cuda 镜像的 layer：<a href="https://hub.docker.com/layers/nvidia/cuda/12.8.0-cudnn-devel-ubuntu22.04/images/sha256-2a015be069bda4de48d677b6e3f271a2794560c7d788a39a18ecf218cae0751d">Image Layer Details - nvidia/cuda:12.8.0-cudnn-devel-ubuntu22.04 | Docker Hub</a></p>
+<p>其中确实大量设置了</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-55-1"><a id="__codelineno-55-1" name="__codelineno-55-1" href="#__codelineno-55-1"></a>/usr/local/nvidia/lib64
+</span></code></pre></div>
+<p>然后容器内该目录却并不存在。不过通过 locate libcuda.so 发现确实和自己的镜像不同</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-56-1"><a id="__codelineno-56-1" name="__codelineno-56-1" href="#__codelineno-56-1"></a>➜  ~ dpkg -S /usr/lib/x86_64-linux-gnu/libcuda.so.535.183.01
+</span><span id="__span-56-2"><a id="__codelineno-56-2" name="__codelineno-56-2" href="#__codelineno-56-2"></a>libnvidia-compute-535:amd64: /usr/lib/x86_64-linux-gnu/libcuda.so.535.183.01
+</span></code></pre></div>
+<h3 id="cuda-安装"><a class="toclink" href="../../%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/2023/04/16/2023-04-16-CUDA%E7%BC%96%E7%A8%8B%26%E5%B7%A5%E5%85%B7/#cuda-安装">CUDA 安装</a></h3>
+<p>总结：</p>
+<ul>
+<li><strong>最简单方式是看 cuda 下载页面提供的安装命令</strong></li>
+<li>deb 安装貌似无法只安装 cuda，不安装驱动</li>
+<li>runfile 安装可以做到不重启</li>
+<li>cuda-toolkit-12-1 包含 cuda</li>
+<li>nvidia-driver-530 包含驱动</li>
+</ul>
+
+    
+      <nav class="md-post__action">
+        <a href="../../%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/2023/04/16/2023-04-16-CUDA%E7%BC%96%E7%A8%8B%26%E5%B7%A5%E5%85%B7/">
+          继续阅读
+        </a>
+      </nav>
+    
+    
+  </div>
+</article>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
+          <time datetime="2023-04-16 16:00:00+00:00">2023年4月16日</time></li>
+        
+          <li class="md-meta__item">
+            分类于
+            
+              <a href="./" class="md-meta__link">学习笔记</a></li>
+        
+        
+          
+          <li class="md-meta__item">
+            
+              需要 27 分钟阅读时间
+            
+          </li>
+        
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="cuda-架构"><a class="toclink" href="../../%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/2023/04/16/2023-04-16-CUDA%E6%9E%B6%E6%9E%84/">CUDA 架构</a></h2>
+<h3 id="疑问"><a class="toclink" href="../../%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/2023/04/16/2023-04-16-CUDA%E6%9E%B6%E6%9E%84/#疑问">疑问</a></h3>
+<ul>
+<li>ampere 架构 SM 中有 4 个 process block，process block 对应一个 warp？意思是可以有 4 个 warp 同时执行？<ul>
+<li>Femi 架构没有 process block，SM 就是最小单元？</li>
+</ul>
+</li>
+<li>The threads of a thread block execute concurrently on one multiprocessor, and multiple thread blocks can execute concurrently on one multiprocessor.<ul>
+<li>这样岂不是若干 thread block 抢一个 SM 上的 shared memory？</li>
+<li>不同 threadblock 的 warp 并发执行，如何隐藏延迟</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>cuda 分块大小对性能影响很大，那么如何确定分块大小呢？<ul>
+<li>穷举</li>
+<li>分析模型？</li>
+</ul>
+</li>
+</ul>
+
+    
+      <nav class="md-post__action">
+        <a href="../../%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/2023/04/16/2023-04-16-CUDA%E6%9E%B6%E6%9E%84/">
+          继续阅读
+        </a>
+      </nav>
+    
+    
+  </div>
+</article>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
+          <time datetime="2022-11-14 18:14:50+00:00">2022年11月14日</time></li>
+        
+          <li class="md-meta__item">
+            分类于
+            
+              <a href="./" class="md-meta__link">学习笔记</a></li>
+        
+        
+          
+          <li class="md-meta__item">
+            
+              需要 2 分钟阅读时间
+            
+          </li>
+        
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="c-编程风格规范"><a class="toclink" href="../../%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/2022/11/14/2022-11-14-C%E7%BC%96%E7%A8%8B%E9%A3%8E%E6%A0%BC%E8%A7%84%E8%8C%83/">C 编程风格规范</a></h2>
+<p>C 编程风格规范</p>
+
+    
+      <nav class="md-post__action">
+        <a href="../../%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/2022/11/14/2022-11-14-C%E7%BC%96%E7%A8%8B%E9%A3%8E%E6%A0%BC%E8%A7%84%E8%8C%83/">
+          继续阅读
+        </a>
+      </nav>
+    
+    
+  </div>
+</article>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
+          <time datetime="2022-11-06 18:14:50+00:00">2022年11月6日</time></li>
+        
+          <li class="md-meta__item">
+            分类于
+            
+              <a href="./" class="md-meta__link">学习笔记</a></li>
+        
+        
+          
+          <li class="md-meta__item">
+            
+              需要 16 分钟阅读时间
+            
+          </li>
+        
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="linux-相关-linux-使用"><a class="toclink" href="../../%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/2022/11/06/2022-11-06-linux%E7%9B%B8%E5%85%B3-linux%E4%BD%BF%E7%94%A8/">linux 相关-linux 使用</a></h2>
+<p>记录从 OS 使用者的角度，记录 linux 的一些经验</p>
+
+    
+      <nav class="md-post__action">
+        <a href="../../%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/2022/11/06/2022-11-06-linux%E7%9B%B8%E5%85%B3-linux%E4%BD%BF%E7%94%A8/">
+          继续阅读
+        </a>
+      </nav>
+    
+    
+  </div>
+</article>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
+          <time datetime="2022-11-06 18:14:50+00:00">2022年11月6日</time></li>
+        
+          <li class="md-meta__item">
+            分类于
+            
+              <a href="./" class="md-meta__link">学习笔记</a></li>
+        
+        
+          
+          <li class="md-meta__item">
+            
+              需要 30 分钟阅读时间
+            
+          </li>
+        
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="linux-相关-系统运维"><a class="toclink" href="../../%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/2022/11/06/2022-11-06-linux%E7%9B%B8%E5%85%B3-%E7%B3%BB%E7%BB%9F%E8%BF%90%E7%BB%B4/">linux 相关-系统运维</a></h2>
+<p>大纲</p>
+<ul>
+<li>how linux kernel boot<ul>
+<li>kernel parameters</li>
+<li>grub</li>
+</ul>
+</li>
+<li>how user space start<ul>
+<li>init, systemd</li>
+<li>initial RAM filesystem</li>
+</ul>
+</li>
+<li>Shell</li>
+<li>Disk and filesystem<ul>
+<li>partitioning disk</li>
+<li>mount</li>
+</ul>
+</li>
+<li>User identification, authentification, authorization<ul>
+<li>identi</li>
+<li>user, group 定义</li>
+<li>PAM</li>
+</ul>
+</li>
+<li>System configuration<ul>
+<li>Logging</li>
+<li>Batch jobs</li>
+</ul>
+</li>
+</ul>
+
+    
+      <nav class="md-post__action">
+        <a href="../../%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/2022/11/06/2022-11-06-linux%E7%9B%B8%E5%85%B3-%E7%B3%BB%E7%BB%9F%E8%BF%90%E7%BB%B4/">
+          继续阅读
+        </a>
+      </nav>
+    
+    
+  </div>
+</article>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
+          <time datetime="2022-09-28 18:14:50+00:00">2022年9月28日</time></li>
+        
+          <li class="md-meta__item">
+            分类于
+            
+              <a href="./" class="md-meta__link">学习笔记</a></li>
+        
+        
+          
+          <li class="md-meta__item">
+            
+              需要 3 分钟阅读时间
+            
+          </li>
+        
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="python-正则表达式"><a class="toclink" href="../../%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/2022/09/28/2022-09-28-python%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/">python 正则表达式</a></h2>
+<p>python 正则表达式</p>
+
+    
+      <nav class="md-post__action">
+        <a href="../../%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/2022/09/28/2022-09-28-python%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/">
+          继续阅读
+        </a>
+      </nav>
+    
+    
+  </div>
+</article>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
+          <time datetime="2022-09-19 15:49:50+00:00">2022年9月19日</time></li>
+        
+          <li class="md-meta__item">
+            分类于
+            
+              <a href="./" class="md-meta__link">学习笔记</a></li>
+        
+        
+          
+          <li class="md-meta__item">
+            
+              需要 5 分钟阅读时间
+            
+          </li>
+        
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="x86-记录"><a class="toclink" href="../../%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/2022/09/19/2022-09-19-x86%E5%AD%A6%E4%B9%A0/">x86 记录</a></h2>
+<p>x86 记录</p>
+
+    
+      <nav class="md-post__action">
+        <a href="../../%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/2022/09/19/2022-09-19-x86%E5%AD%A6%E4%B9%A0/">
+          继续阅读
+        </a>
+      </nav>
+    
+    
+  </div>
+</article>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
+          <time datetime="2022-08-04 16:28:41+00:00">2022年8月4日</time></li>
+        
+          <li class="md-meta__item">
+            分类于
+            
+              <a href="./" class="md-meta__link">学习笔记</a></li>
+        
+        
+          
+          <li class="md-meta__item">
+            
+              需要 6 分钟阅读时间
+            
+          </li>
+        
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="gcc-mpi-源码编译"><a class="toclink" href="../../%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/2022/08/04/2022-08-04-gcc-mpi%E6%BA%90%E7%A0%81%E7%BC%96%E8%AF%91/">gcc mpi 源码编译</a></h2>
+<p>gcc mpi 源码编译过程记录</p>
+
+    
+      <nav class="md-post__action">
+        <a href="../../%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/2022/08/04/2022-08-04-gcc-mpi%E6%BA%90%E7%A0%81%E7%BC%96%E8%AF%91/">
+          继续阅读
+        </a>
+      </nav>
+    
+    
+  </div>
+</article>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
+          <time datetime="2022-05-23 18:14:50+00:00">2022年5月23日</time></li>
+        
+          <li class="md-meta__item">
+            分类于
+            
+              <a href="./" class="md-meta__link">学习笔记</a></li>
+        
+        
+          
+          <li class="md-meta__item">
+            
+              需要 3 分钟阅读时间
+            
+          </li>
+        
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="位操作-tricky"><a class="toclink" href="../../%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/2022/05/23/2022-05-23-%E4%BD%8D%E6%93%8D%E4%BD%9Ctricky/">位操作 tricky</a></h2>
+<p>位操作 tricks</p>
+
+    
+      <nav class="md-post__action">
+        <a href="../../%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/2022/05/23/2022-05-23-%E4%BD%8D%E6%93%8D%E4%BD%9Ctricky/">
+          继续阅读
+        </a>
+      </nav>
+    
+    
+  </div>
+</article>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
+          <time datetime="2020-10-11 23:04:42+00:00">2020年10月11日</time></li>
+        
+          <li class="md-meta__item">
+            分类于
+            
+              <a href="./" class="md-meta__link">学习笔记</a></li>
+        
+        
+          
+          <li class="md-meta__item">
+            
+              需要 2 分钟阅读时间
+            
+          </li>
+        
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="wsl-记录"><a class="toclink" href="../../%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/2020/10/11/2020-10-11-WSL%E8%AE%B0%E5%BD%95/">WSL 记录</a></h2>
+<h3 id="概述"><a class="toclink" href="../../%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/2020/10/11/2020-10-11-WSL%E8%AE%B0%E5%BD%95/#概述">概述</a></h3>
+<p>发现使用 wsl + docker + vs code(remote wsl + remote container 插件) 可以让开发、部署、运行整个流程变得更加方便。因此想写一篇文章记录接触 wsl 后了解到的一些知识以及遇到的一些问题以及解决方案（长期更新）。</p>
+
+    
+      <nav class="md-post__action">
+        <a href="../../%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/2020/10/11/2020-10-11-WSL%E8%AE%B0%E5%BD%95/">
+          继续阅读
+        </a>
+      </nav>
+    
+    
+  </div>
+</article>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
+          <time datetime="2020-10-11 23:03:51+00:00">2020年10月11日</time></li>
+        
+          <li class="md-meta__item">
+            分类于
+            
+              <a href="./" class="md-meta__link">学习笔记</a></li>
+        
+        
+          
+          <li class="md-meta__item">
+            
+              需要 6 分钟阅读时间
+            
+          </li>
+        
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="字体分类"><a class="toclink" href="../../%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/2020/10/11/2020-10-11-%E5%AD%97%E4%BD%93%E5%88%86%E7%B1%BB/">字体分类</a></h2>
+<div class="toc">
+<ul>
+<li><a href="../../%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/2020/10/11/2020-10-11-%E5%AD%97%E4%BD%93%E5%88%86%E7%B1%BB/#字体分类">字体分类</a></li>
+</ul>
+</div>
+<h3 id="概述"><a class="toclink" href="../../%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/2020/10/11/2020-10-11-%E5%AD%97%E4%BD%93%E5%88%86%E7%B1%BB/#概述">概述</a></h3>
+<p>目前还没有一种统一的字体分类方法。因此本文从易于理解的角度，使用 4 个维度对字体进行分类。</p>
+<p>简单来说，确定了大小、粗细、样式和字体系列后便确定了一种字体。</p>
+<h4 id="font-family"><a class="toclink" href="../../%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/2020/10/11/2020-10-11-%E5%AD%97%E4%BD%93%E5%88%86%E7%B1%BB/#font-family">font family</a></h4>
+<p><strong>字体系列</strong>(font family) 表示符合同一种设计风格的字体的集合。比如大名鼎鼎的 Helvetica 字体就因醒目，清晰而广泛应用于广告，宣传语等场合。Time New Roman 也是一种使用非常广泛的字体。</p>
+<p>一种字体系列包含多种变体字体，如 Times 包含 TimeIt(倾斜), TimeBd(加粗) 等。我们口语中说的某一种字体，其实通常说的是一种字体系列。</p>
+<p>而对于现有的五花八门的字体系列，可以根据一些特点分成 5 类，也叫<strong>通用字体系列</strong>(generic font families)。如 Helvetica 就属于无衬线 (sans serif) 字体。</p>
+<p>以下是字体系列的 5 种类别</p>
+
+    
+      <nav class="md-post__action">
+        <a href="../../%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/2020/10/11/2020-10-11-%E5%AD%97%E4%BD%93%E5%88%86%E7%B1%BB/">
+          继续阅读
+        </a>
+      </nav>
+    
+    
+  </div>
+</article>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
+          <time datetime="2020-03-01 01:25:00+00:00">2020年3月1日</time></li>
+        
+          <li class="md-meta__item">
+            分类于
+            
+              <a href="./" class="md-meta__link">学习笔记</a></li>
+        
+        
+          
+          <li class="md-meta__item">
+            
+              需要 2 分钟阅读时间
+            
+          </li>
+        
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="use-dlib-in-c"><a class="toclink" href="../../%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/2020/03/01/2020-02-29-use-dlib-in-c%2B%2B/">Use dlib in C++</a></h2>
+<h3 id="use-dlib-in-c_1"><a class="toclink" href="../../%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/2020/03/01/2020-02-29-use-dlib-in-c%2B%2B/#use-dlib-in-c_1">use dlib in c++</a></h3>
+<p>从方法 1.1 到 1.3 都不必预编译 dlib 库，而是在使用 dlib 的项目中编译。</p>
+<p>方法 1.4 介绍了将 dlib 预编译成静态库然后使用时会遇到的一些问题。</p>
+<h4 id="with-cmakeofficially-recommend"><a class="toclink" href="../../%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/2020/03/01/2020-02-29-use-dlib-in-c%2B%2B/#with-cmakeofficially-recommend">with CMake(officially recommend)</a></h4>
+<p>看<code>dlib/example/CMakeLists.txt</code></p>
+<div class="language-cmake highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nb">cmake_minimum_required</span><span class="p">(</span><span class="s">VERSION</span><span class="w"> </span><span class="s">2.8.12</span><span class="p">)</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="nb">project</span><span class="p">(</span><span class="s">examples</span><span class="p">)</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="c"># Tell cmake we will need dlib.  This command will pull in dlib and compile it</span>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="c"># into your project.  Note that you don&#39;t need to compile or install dlib.  All</span>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="c"># cmake needs is the dlib source code folder and it will take care of everything.</span>
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="nb">add_subdirectory</span><span class="p">(</span><span class="s">./dlib</span><span class="w"> </span><span class="s">dlib_build</span><span class="p">)</span>
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="nb">macro</span><span class="p">(</span><span class="s">add_example</span><span class="w"> </span><span class="s">name</span><span class="p">)</span>
+</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="w">   </span><span class="nb">add_executable</span><span class="p">(</span><span class="o">${</span><span class="nv">name</span><span class="o">}</span><span class="w"> </span><span class="o">${</span><span class="nv">name</span><span class="o">}</span><span class="s">.cpp</span><span class="p">)</span>
+</span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a><span class="w">   </span><span class="nb">target_link_libraries</span><span class="p">(</span><span class="o">${</span><span class="nv">name</span><span class="o">}</span><span class="w"> </span><span class="s">dlib::dlib</span><span class="w"> </span><span class="p">)</span>
+</span><span id="__span-3-13"><a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a><span class="nb">endmacro</span><span class="p">()</span>
+</span><span id="__span-3-14"><a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a>
+</span><span id="__span-3-15"><a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a><span class="c"># if an example requires GUI, call this macro to check DLIB_NO_GUI_SUPPORT to include or exclude</span>
+</span><span id="__span-3-16"><a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a><span class="nb">macro</span><span class="p">(</span><span class="s">add_gui_example</span><span class="w"> </span><span class="s">name</span><span class="p">)</span>
+</span><span id="__span-3-17"><a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a><span class="w">   </span><span class="nb">if</span><span class="w"> </span><span class="p">(</span><span class="s">DLIB_NO_GUI_SUPPORT</span><span class="p">)</span>
+</span><span id="__span-3-18"><a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a><span class="w">      </span><span class="nb">message</span><span class="p">(</span><span class="s2">&quot;No GUI support, so we won&#39;t build the ${name} example.&quot;</span><span class="p">)</span>
+</span><span id="__span-3-19"><a id="__codelineno-3-19" name="__codelineno-3-19" href="#__codelineno-3-19"></a><span class="w">   </span><span class="nb">else</span><span class="p">()</span>
+</span><span id="__span-3-20"><a id="__codelineno-3-20" name="__codelineno-3-20" href="#__codelineno-3-20"></a><span class="w">      </span><span class="nb">add_example</span><span class="p">(</span><span class="o">${</span><span class="nv">name</span><span class="o">}</span><span class="p">)</span>
+</span><span id="__span-3-21"><a id="__codelineno-3-21" name="__codelineno-3-21" href="#__codelineno-3-21"></a><span class="w">   </span><span class="nb">endif</span><span class="p">()</span>
+</span><span id="__span-3-22"><a id="__codelineno-3-22" name="__codelineno-3-22" href="#__codelineno-3-22"></a><span class="nb">endmacro</span><span class="p">()</span>
+</span><span id="__span-3-23"><a id="__codelineno-3-23" name="__codelineno-3-23" href="#__codelineno-3-23"></a>
+</span><span id="__span-3-24"><a id="__codelineno-3-24" name="__codelineno-3-24" href="#__codelineno-3-24"></a><span class="c"># </span>
+</span><span id="__span-3-25"><a id="__codelineno-3-25" name="__codelineno-3-25" href="#__codelineno-3-25"></a><span class="nb">add_gui_example</span><span class="p">(</span><span class="s">3d_point_cloud_ex</span><span class="p">)</span>
+</span></code></pre></div>
+<p>命令行执行：</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>mkdir<span class="w"> </span>build
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="nb">cd</span><span class="w"> </span>build
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>cmake<span class="w"> </span>..<span class="w"> </span>-G<span class="w"> </span><span class="s2">&quot;Visual Studio 14 2015 Win64&quot;</span><span class="w"> </span>-T<span class="w"> </span><span class="nv">host</span><span class="o">=</span>x64<span class="w"> </span><span class="c1">#-T host=x64告诉CMake生成64bit的可执行文件。其实安装了最新的VisualStudio后，-G -T都不用指定，默认使用最新的VisualStudio，默认64位。</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>cmake<span class="w"> </span>--build<span class="w"> </span>.<span class="w"> </span>--config<span class="w"> </span>Release
+</span></code></pre></div>
+<p>使用 CMake GUI 可以设置一些选项，configure, generate 之后可以使用命令行执行最后一步 (不用打开 VisualStudio)</p>
+<h4 id="with-gcc-in-terminal"><a class="toclink" href="../../%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/2020/03/01/2020-02-29-use-dlib-in-c%2B%2B/#with-gcc-in-terminal">with GCC in terminal</a></h4>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>g++<span class="w"> </span>-std<span class="o">=</span>c++11<span class="w"> </span>-O3<span class="w"> </span>-I..<span class="w"> </span>../dlib/all/source.cpp<span class="w"> </span>-lpthread<span class="w"> </span>-lX11<span class="w"> </span>example_program_name.cpp
+</span></code></pre></div>
+<p>windows 下还需<code>gdi32, comctl32, user32, winmm, ws2_32, or imm32</code>库</p>
+<h4 id="with-visualstudio"><a class="toclink" href="../../%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/2020/03/01/2020-02-29-use-dlib-in-c%2B%2B/#with-visualstudio">with VisualStudio</a></h4>
+<ul>
+<li>
+<p>把 dlib 的<strong>父目录</strong>添加到 include search path</p>
+<blockquote>
+<p>You should <em>NOT</em> add the dlib folder itself to your compiler's include path.
+Doing so will cause the build to fail because of name collisions (such as
+dlib/string.h and string.h from the standard library). Instead you should
+add the folder that contains the dlib folder to your include search path
+and then use include statements of the form #include <dlib/queue.h> or</p>
+<h2 id="include-dlibqueueh-this-will-ensure-that-everything-builds-correctly"><a class="toclink" href="../../%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/2020/03/01/2020-02-29-use-dlib-in-c%2B%2B/#include-dlibqueueh-this-will-ensure-that-everything-builds-correctly">include "dlib/queue.h".  This will ensure that everything builds correctly.</a></h2>
+</blockquote>
+</li>
+</ul>
+<ul>
+<li>
+<p>把 dlib/all/source.cpp 添加到源文件</p>
+<blockquote>
+<p>If you are using Visual Studio you add .cpp files to your application using
+the solution explorer window.  Specifically, right click on Source Files,
+then select Add -&gt; Existing Item and select the .cpp files you want to add.</p>
+</blockquote>
+</li>
+</ul>
+<ul>
+<li>如果需要 libjpeg 等，把 dlib/external 文件夹下的源文件添加到 project，并 define the DLIB_PNG_SUPPORT and DLIB_JPEG_SUPPORT preprocessor directives.</li>
+</ul>
+<h4 id="installing-dlib-as-a-precompiled-library"><a class="toclink" href="../../%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/2020/03/01/2020-02-29-use-dlib-in-c%2B%2B/#installing-dlib-as-a-precompiled-library">Installing dlib as a precompiled library</a></h4>
+<p>dlib 的 CMake 脚本包含 INSTALL target，因此可以像其它 C++ 库一样将 dlib 作为一个静态或动态库安装到系统上。</p>
+<ul>
+<li>
+<p><strong>使用预编译的库时，必须保证项目中使用的所有库都是同一个版本的 VisualStudio 编译出来的。</strong></p>
+<p>说明：<a href="http://siomsystems.com/mixing-visual-studio-versions/">Mixing Multiple Visual Studio Versions in a Program is Evil</a></p>
+</li>
+</ul>
+<ul>
+<li>调用 dlib 时出现 USER_ERROR <strong>inconsistent_build_configuration</strong> see_dlib_faq_2 错误。
+  需要将 build/dlib/config.h 文件拷贝到源码目录 dlib-19.17/dlib 进行覆盖。config.h 文件内有其说明。</li>
+</ul>
+<h3 id="配置-3d_face_reconstruction-总结"><a class="toclink" href="../../%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/2020/03/01/2020-02-29-use-dlib-in-c%2B%2B/#配置-3d_face_reconstruction-总结">配置 3d_face_reconstruction 总结</a></h3>
+<h4 id="1-opencv"><a class="toclink" href="../../%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/2020/03/01/2020-02-29-use-dlib-in-c%2B%2B/#1-opencv">1. OpenCV</a></h4>
+<ol>
+<li>
+<p>windows 下载预编译版 (只含有 msvc 编译的版本)</p>
+</li>
+<li>
+<p>CMake 直接使用 find_packages 即可。（需添加环境变量，以便找到 OpenCV 的 config 文件）</p>
+</li>
+</ol>
+<h4 id="2-dlib"><a class="toclink" href="../../%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/2020/03/01/2020-02-29-use-dlib-in-c%2B%2B/#2-dlib">2. dlib</a></h4>
+<ol>
+<li>
+<p>官方推荐将代码直接包含到项目中编译（好处是没有 ABI 一致性问题）</p>
+<p>CMake 中 add_subdirectory(/path/to/dlib/top/dir) 即可。（甚至可以自动从网上下载）</p>
+</li>
+</ol>
+<h4 id="3-boost"><a class="toclink" href="../../%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/2020/03/01/2020-02-29-use-dlib-in-c%2B%2B/#3-boost">3. boost</a></h4>
+<ol>
+<li>分为只含有头文件的库和需要独立编译的库。</li>
+<li>官方编译方法为：<ol>
+<li>先 build 出 Boost.Build（可以看作 Boost 的一个 build 工具）</li>
+<li>然后调用 b2 编译指定模块。（可以添加参数指定编译的库的路径）</li>
+<li>我的编译目录是 stage/（库位于 stage/lib/下）</li>
+</ol>
+</li>
+<li>CMake find_packages 暂时是失败的。</li>
+</ol>
+<h4 id="4-eos"><a class="toclink" href="../../%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/2020/03/01/2020-02-29-use-dlib-in-c%2B%2B/#4-eos">4. eos</a></h4>
+<ol>
+<li>只需要包含头文件即可 (header only)，include 和 3rdparty</li>
+<li>顶层目录下的 CMakeLists.txt 默认勾选了编译 example 下的示例（需要 boost 的 system, filesystem, program_options 和 openCV 的 core, higui, imgproc</li>
+<li>CMake 直接 add_subdirectory(/path/to/eos) 比较方便。</li>
+</ol>
+<h4 id="5-qt"><a class="toclink" href="../../%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/2020/03/01/2020-02-29-use-dlib-in-c%2B%2B/#5-qt">5. Qt</a></h4>
+<ol>
+<li>官方介绍了如何使用 CMake find_packages，自动 tic, moc 等。</li>
+</ol>
+<h4 id="todo"><a class="toclink" href="../../%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/2020/03/01/2020-02-29-use-dlib-in-c%2B%2B/#todo">TODO</a></h4>
+<ol>
+<li>学习 Qt，能自己写界面。</li>
+<li>明白 eos 那个示例程序输入输出是什么</li>
+<li>最后，自己来改写 eos 的程序，自己写 Qt 程序，最后展示出来。</li>
+</ol>
+    
+    
+  </div>
+</article>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
+          <time datetime="2020-02-29 12:00:00+00:00">2020年2月29日</time></li>
+        
+          <li class="md-meta__item">
+            分类于
+            
+              <a href="./" class="md-meta__link">学习笔记</a></li>
+        
+        
+          
+          <li class="md-meta__item">
+            
+              需要 2 分钟阅读时间
+            
+          </li>
+        
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="安装使用-opencvwindows"><a class="toclink" href="../../%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/2020/02/29/2020-02-29-%E5%AE%89%E8%A3%85%E4%BD%BF%E7%94%A8OpenCV%28windows%29/">安装使用 OpenCV(windows)</a></h2>
+<h3 id="install"><a class="toclink" href="../../%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/2020/02/29/2020-02-29-%E5%AE%89%E8%A3%85%E4%BD%BF%E7%94%A8OpenCV%28windows%29/#install">Install</a></h3>
+<h4 id="安装预编译版"><a class="toclink" href="../../%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/2020/02/29/2020-02-29-%E5%AE%89%E8%A3%85%E4%BD%BF%E7%94%A8OpenCV%28windows%29/#安装预编译版">安装预编译版</a></h4>
+<p>在<a href="https://opencv.org/releases.html">opencv.org</a>上提供了源代码以及各个操作系统的预编译版。windows 预编译版为一个 installer 程序，运行后会将各种文件 extract 到安装目录。安装完成后，<code>/path/to/opencv/</code>包含两个目录——build, source。source 为源代码目录 (和直接下载源代码解压一模一样)，build 下包含了许多其它文件。其中：</p>
+<ul>
+<li><strong>include/</strong>为调用 OpenCV 时需要包含的头文件 (源代码目录下也有)</li>
+</ul>
+<ul>
+<li>
+<p><strong>x64/vcxx/</strong>下包含 bin/和 lib/，为预编译的库。vcxx 代表使用 MSVC xx 编译的，运行时需要对应的 runtime 库。</p>
+<table>
+<thead>
+<tr>
+<th>IDE</th>
+<th>编译器</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>VS2017</td>
+<td>VC15</td>
+</tr>
+<tr>
+<td>VS2015</td>
+<td>VC14</td>
+</tr>
+<tr>
+<td>VS2013</td>
+<td>VC12</td>
+</tr>
+<tr>
+<td>VS2012</td>
+<td>VC11</td>
+</tr>
+<tr>
+<td>VS2010</td>
+<td>VC10</td>
+</tr>
+<tr>
+<td>VS2008</td>
+<td>VC9</td>
+</tr>
+<tr>
+<td>VS2005</td>
+<td>VC8</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+<ul>
+<li><strong>etc/</strong>文件夹中是 OpenCV 某些算法所依赖的数据集。</li>
+</ul>
+<ul>
+<li><strong><code>OpenCVConfig.cmake</code></strong>文件在使用 CMake 编译项目时可使用 find_package 自动搜索头文件、库文件路径</li>
+</ul>
+<ul>
+<li>其它文件暂时不管</li>
+</ul>
+<h4 id="从源文件编译-opencv"><a class="toclink" href="../../%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/2020/02/29/2020-02-29-%E5%AE%89%E8%A3%85%E4%BD%BF%E7%94%A8OpenCV%28windows%29/#从源文件编译-opencv">从源文件编译 OpenCV</a></h4>
+<p>略</p>
+<h3 id="usage"><a class="toclink" href="../../%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/2020/02/29/2020-02-29-%E5%AE%89%E8%A3%85%E4%BD%BF%E7%94%A8OpenCV%28windows%29/#usage">Usage</a></h3>
+<h4 id="通过-visualstudio-编译-opencv-程序"><a class="toclink" href="../../%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/2020/02/29/2020-02-29-%E5%AE%89%E8%A3%85%E4%BD%BF%E7%94%A8OpenCV%28windows%29/#通过-visualstudio-编译-opencv-程序">通过 VisualStudio 编译 OpenCV 程序</a></h4>
+<ol>
+<li>
+<p>菜单栏 project-&gt;properities。（或在右侧的 Solution Explorer 下找到一个 project(solution 和 project 的关系)。鼠标右键-&gt;Properities）</p>
+</li>
+<li>
+<p>C/C++/AdditionalIncludeDirectories。编译器从该文件夹下查找头文件。</p>
+<p>(<em>p.s.</em> <code>#include "opencv2/opencv.hpp"</code>和<code>#include "opencv.hpp"</code>对应不同的设置)</p>
+</li>
+<li>
+<p>Linker/Input/AdditionalDependencies 添加<code>opencv_world420.lib</code></p>
+</li>
+<li>
+<p>Linker/General/AdditionalLibraryDirectories 添加<code>opencv_world420.lib</code>所在目录。（或直接在 3 中输入绝对路径）</p>
+</li>
+<li>
+<p>设置环境变量，把<code>opencv_world420.dll</code>所在目录添加到 Path 变量。(否则运行时报错：无法找到<code>opencv_world420.dll</code>)。不添加环境变量的方法是直接把<code>opencv_world420.dll</code>拷贝到 exe 所在目录。</p>
+<p><em>p.s.</em> 貌似<code>opencv_world420.lib</code>表面上是一个静态链接库，但实际上是一个动态链接库，因而运行时需要<code>opencv_world420.dll</code>。而第 3 步如若改成添加<code>opencv_world420.dll</code>，则编译失败。</p>
+<blockquote>
+<p>LNK1107 could also occur if you attempt to pass a module (.dll or .netmodule extension created with <a href="https://docs.microsoft.com/en-us/cpp/build/reference/clr-common-language-runtime-compilation?view=vs-2019">/clr:noAssembly</a> or <a href="https://docs.microsoft.com/en-us/cpp/build/reference/noassembly-create-a-msil-module?view=vs-2019">/NOASSEMBLY</a>) to the linker; pass the .obj file instead.</p>
+</blockquote>
+</li>
+</ol>
+<h4 id="通过-cmake-编译-opencv-程序"><a class="toclink" href="../../%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/2020/02/29/2020-02-29-%E5%AE%89%E8%A3%85%E4%BD%BF%E7%94%A8OpenCV%28windows%29/#通过-cmake-编译-opencv-程序">通过 CMake 编译 OpenCV 程序</a></h4>
+<p>参考：<a href="https://docs.opencv.org/2.4/doc/tutorials/introduction/linux_gcc_cmake/linux_gcc_cmake.html">Using OpenCV with gcc and CMake</a></p>
+<p>通过 CMake 编译 OpenCV 程序有几点好处：</p>
+<ul>
+<li>在 Windows 和 Linux 之间移植程序不用更改设置。</li>
+</ul>
+<ul>
+<li>自动搜索 include，lib 路径。(通过<code>OpenCVConfig.cmake</code>文件，需添加到 Path 环境变量)</li>
+<li>写代码的方式比 VisualStudio 点击按钮然后输入方便，配置的文件可以保留下来用于其它项目。</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>
+<h2 id="include-某个文件vs-code-不会自动提示不会自动自动补全函数不会显示函数文档"><a class="toclink" href="../../%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/2020/02/29/2020-02-29-%E5%AE%89%E8%A3%85%E4%BD%BF%E7%94%A8OpenCV%28windows%29/#include-某个文件vs-code-不会自动提示不会自动自动补全函数不会显示函数文档">include 某个文件，VS Code 不会自动提示，不会自动自动补全函数，不会显示函数文档</a></h2>
+<p>（可以先用 CMake 配置好 include, lib 后，生成 sln 并用 VS 打开）</p>
+</li>
+</ul>
+<p>步骤：</p>
+<ol>
+<li>
+<p>添加<code>opencv/build/</code>到 Path(<code>OpenCVConfig.cmake</code>所在目录)。</p>
+</li>
+<li>
+<p>编写<code>CMakeLists.txt</code>。示例：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>cmake_minimum_required(VERSION 2.8)
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>project( DisplayImage )
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>find_package( OpenCV REQUIRED ) //
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>add_executable( DisplayImage DisplayImage.cpp )
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>target_link_libraries( DisplayImage ${OpenCV_LIBS} ) //
+</span></code></pre></div>
+</li>
+<li>
+<p>使用 CMake GUI，点击 configure(可以先 File-&gt;Delete Cache，删除掉之前的配置)</p>
+<p>选择 VS 的编译器。</p>
+</li>
+<li>
+<p>在中间面板修改一些变量的值。（重新 configure）</p>
+</li>
+<li>
+<p>Generate，在 build 目录下生成 VS 的 sln 文件，双击打开。</p>
+</li>
+<li>
+<p>在 ALL_BUILD 上右键 build。</p>
+</li>
+</ol>
+    
+    
+  </div>
+</article>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
+          <time datetime="2020-02-16 00:07:30+00:00">2020年2月16日</time></li>
+        
+          <li class="md-meta__item">
+            分类于
+            
+              <a href="./" class="md-meta__link">学习笔记</a></li>
+        
+        
+          
+          <li class="md-meta__item">
+            
+              需要 2 分钟阅读时间
+            
+          </li>
+        
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="运行-hpl"><a class="toclink" href="../../%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/2020/02/16/2020-02-16-HPL-complie/">运行 HPL</a></h2>
+<h3 id="编译-blascblas"><a class="toclink" href="../../%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/2020/02/16/2020-02-16-HPL-complie/#编译-blascblas">编译 BLAS/CBLAS</a></h3>
+<p>BLAS 为 fortran 接口的库，CBLAS 为 C 语言接口的库</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="w"> </span>tar<span class="w"> </span>zxf<span class="w"> </span>blas-3.8.0.tgz<span class="w"> </span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w"> </span>tar<span class="w"> </span>zxf<span class="w"> </span>cblas.tgz
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w"> </span><span class="nb">cd</span><span class="w"> </span>BLAS-3.8.0
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w"> </span>make<span class="w"> </span><span class="c1">#生成blas_LINUX.a</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="w"> </span>cp<span class="w"> </span>blas_LINUX.a<span class="w"> </span>../CBLAS
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="w"> </span><span class="nb">cd</span><span class="w"> </span>../CBLAS
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="w"> </span>vi<span class="w"> </span>Makefile.in
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="w"> </span><span class="c1">#修改</span>
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="w"> </span><span class="c1"># BLLIB = ../blas_LINUX.a</span>
+</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="w"> </span>make<span class="w"> </span><span class="c1">#在lib/下生成cblas_LINUX.a</span>
+</span></code></pre></div>
+<h3 id="编译-hpl"><a class="toclink" href="../../%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/2020/02/16/2020-02-16-HPL-complie/#编译-hpl">编译 HPL</a></h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>tar<span class="w"> </span>zxf<span class="w"> </span>hpl-2.3.tar.gz<span class="w"> </span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="nb">cd</span><span class="w"> </span>hpl-2.3
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>cp<span class="w"> </span>setup/Make.Linux_PII_CBLAS<span class="w"> </span>./Make.&lt;arch&gt;<span class="w"> </span><span class="c1">#在top-level 文件夹下</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>vi<span class="w"> </span>Make.&lt;arch&gt;<span class="w"> </span><span class="c1">#修改</span>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>make<span class="w"> </span>&lt;arch&gt;<span class="w"> </span><span class="c1">#在bin/&lt;arch&gt;/下生成HPL.dat xhpl</span>
+</span></code></pre></div>
+<h4 id="make示例"><a class="toclink" href="../../%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/2020/02/16/2020-02-16-HPL-complie/#make示例">Make.<arch>示例</a></h4>
+<h5 id="openmpicblas"><a class="toclink" href="../../%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/2020/02/16/2020-02-16-HPL-complie/#openmpicblas">OpenMPI+CBLAS</a></h5>
+<div class="language-makefile highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="nv">ARCH</span><span class="w">         </span><span class="o">=</span><span class="w"> </span>&lt;arch&gt;
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="nv">TOPdir</span><span class="w">       </span><span class="o">=</span><span class="w"> </span>/home/mpiuser/hpl-2.3
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="nv">MPdir</span><span class="w">        </span><span class="o">=</span><span class="w"> </span>/path/to/OpenMPI
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="nv">MPinc</span><span class="w">        </span><span class="o">=</span><span class="w"> </span>-I<span class="k">$(</span>MPdir<span class="k">)</span>/include
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="nv">MPlib</span><span class="w">        </span><span class="o">=</span><span class="w"> </span><span class="k">$(</span>MPdir<span class="k">)</span>/lib/libmpi.so
+</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>
+</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="nv">LAdir</span><span class="w">        </span><span class="o">=</span><span class="w"> </span>
+</span><span id="__span-6-10"><a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="nv">LAinc</span><span class="w">        </span><span class="o">=</span><span class="w"> </span>
+</span><span id="__span-6-11"><a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a><span class="nv">LAlib</span><span class="w">        </span><span class="o">=</span><span class="w"> </span>path/to/cblas_LINUX.a<span class="w"> </span>path/to/blas_LINUX.a<span class="w"> </span><span class="c1">#顺序不能改变，cblas依赖blas</span>
+</span><span id="__span-6-12"><a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a>
+</span><span id="__span-6-13"><a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a><span class="nv">HPL_OPTS</span><span class="w">     </span><span class="o">=</span><span class="w"> </span>-DHPL_CALL_CBLAS<span class="w"> </span>
+</span><span id="__span-6-14"><a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a>
+</span><span id="__span-6-15"><a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a><span class="nv">CC</span><span class="w">           </span><span class="o">=</span><span class="w"> </span>mpicc
+</span><span id="__span-6-16"><a id="__codelineno-6-16" name="__codelineno-6-16" href="#__codelineno-6-16"></a><span class="nv">LINKER</span><span class="w">       </span><span class="o">=</span><span class="w"> </span>mpif77
+</span></code></pre></div>
+<h3 id="hpl-优化"><a class="toclink" href="../../%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/2020/02/16/2020-02-16-HPL-complie/#hpl-优化">HPL 优化</a></h3>
+<h4 id="配置参数"><a class="toclink" href="../../%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/2020/02/16/2020-02-16-HPL-complie/#配置参数">配置参数</a></h4>
+<p>计算次数：</p>
+<div class="arithmatex">\[
+\#Ns \times \#NBs \times \#(Ps, Qs) \times \#PFACTs \times \#NBMINs \times \#BCASTs \times \#DEPTHs
+\]</div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>HPLinpack benchmark input file
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>Innovative Computing Laboratory, University of Tennessee
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>HPL.out      output file name (if any)
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>6            device out (6=stdout,7=stderr,file)
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>1            # of problems sizes (N)
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>8192         Ns
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>1            # of NBs
+</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>128          NBs
+</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>0            PMAP process mapping (0=Row-,1=Column-major)
+</span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a>3            # of process grids (P x Q)
+</span><span id="__span-7-11"><a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a>2 1 4        Ps
+</span><span id="__span-7-12"><a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a>2 4 1        Qs
+</span><span id="__span-7-13"><a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a>16.0         threshold
+</span><span id="__span-7-14"><a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a>3            # of panel fact
+</span><span id="__span-7-15"><a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a>0 1 2        PFACTs (0=left, 1=Crout, 2=Right)
+</span><span id="__span-7-16"><a id="__codelineno-7-16" name="__codelineno-7-16" href="#__codelineno-7-16"></a>2            # of recursive stopping criterium
+</span><span id="__span-7-17"><a id="__codelineno-7-17" name="__codelineno-7-17" href="#__codelineno-7-17"></a>2 4          NBMINs (&gt;= 1)
+</span><span id="__span-7-18"><a id="__codelineno-7-18" name="__codelineno-7-18" href="#__codelineno-7-18"></a>2            # of panels in recursion
+</span><span id="__span-7-19"><a id="__codelineno-7-19" name="__codelineno-7-19" href="#__codelineno-7-19"></a>2            NDIVs
+</span><span id="__span-7-20"><a id="__codelineno-7-20" name="__codelineno-7-20" href="#__codelineno-7-20"></a>3            # of recursive panel fact.
+</span><span id="__span-7-21"><a id="__codelineno-7-21" name="__codelineno-7-21" href="#__codelineno-7-21"></a>0 1 2        RFACTs (0=left, 1=Crout, 2=Right)
+</span><span id="__span-7-22"><a id="__codelineno-7-22" name="__codelineno-7-22" href="#__codelineno-7-22"></a>1            # of broadcast
+</span><span id="__span-7-23"><a id="__codelineno-7-23" name="__codelineno-7-23" href="#__codelineno-7-23"></a>0            BCASTs (0=1rg,1=1rM,2=2rg,3=2rM,4=Lng,5=LnM)
+</span><span id="__span-7-24"><a id="__codelineno-7-24" name="__codelineno-7-24" href="#__codelineno-7-24"></a>1            # of lookahead depth
+</span><span id="__span-7-25"><a id="__codelineno-7-25" name="__codelineno-7-25" href="#__codelineno-7-25"></a>0            DEPTHs (&gt;=0)
+</span><span id="__span-7-26"><a id="__codelineno-7-26" name="__codelineno-7-26" href="#__codelineno-7-26"></a>2            SWAP (0=bin-exch,1=long,2=mix)
+</span><span id="__span-7-27"><a id="__codelineno-7-27" name="__codelineno-7-27" href="#__codelineno-7-27"></a>64           swapping threshold
+</span><span id="__span-7-28"><a id="__codelineno-7-28" name="__codelineno-7-28" href="#__codelineno-7-28"></a>0            L1 in (0=transposed,1=no-transposed) form
+</span><span id="__span-7-29"><a id="__codelineno-7-29" name="__codelineno-7-29" href="#__codelineno-7-29"></a>0            U  in (0=transposed,1=no-transposed) form
+</span><span id="__span-7-30"><a id="__codelineno-7-30" name="__codelineno-7-30" href="#__codelineno-7-30"></a>1            Equilibration (0=no,1=yes)
+</span><span id="__span-7-31"><a id="__codelineno-7-31" name="__codelineno-7-31" href="#__codelineno-7-31"></a>8            memory alignment in double (&gt; 0)
+</span></code></pre></div>
+    
+    
+  </div>
+</article>
+      
+      
+        
+          
+
+
+
+<nav class="md-pagination">
+  
+</nav>
+        
+      
+    </div>
+  </div>
+
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="页脚" >
+        
+          
+          <a href="../%E5%8D%9A%E5%AE%A2--%E7%BD%91%E7%BB%9C/" class="md-footer__link md-footer__link--prev" aria-label="上一页: 博客 &amp;amp; 网络">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                上一页
+              </span>
+              <div class="md-ellipsis">
+                博客 &amp; 网络
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/" class="md-footer__link md-footer__link--next" aria-label="下一页: 折腾记录">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                下一页
+              </span>
+              <div class="md-ellipsis">
+                折腾记录
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/TheRainstorm" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.instant.progress", "navigation.tracking", "navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.footer", "content.code.copy", "toc.follow", "toc.integrate"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

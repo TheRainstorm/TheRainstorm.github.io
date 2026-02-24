@@ -1,0 +1,2381 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="记录一些关于数学、计算机的知识，以及一些日常。">
+      
+      
+      
+        <link rel="canonical" href="https://yfy.cqu.ai/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%85%B7/2022/11/28/2022-11-28-git/">
+      
+      
+        <link rel="prev" href="../../20/2022-11-20-bash/">
+      
+      
+        <link rel="next" href="../../29/2022-11-29-latex/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.3">
+    
+    
+      
+        <title>git - Rain 的随笔</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#高级" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../../../../.." title="Rain 的随笔" class="md-header__button md-logo" aria-label="Rain 的随笔" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Rain 的随笔
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              git
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    
+  
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="../../../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  博客
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../about/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  关于
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../tags/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  标签
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../series/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  系列
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../tools/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  工具
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../archive/2026/" class="md-tabs__link">
+          
+  
+  
+  归档
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../category/%E4%B8%AA%E4%BA%BA/" class="md-tabs__link">
+          
+  
+  
+  分类
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" hidden>
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../../.." title="Rain 的随笔" class="md-nav__button md-logo" aria-label="Rain 的随笔" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Rain 的随笔
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+    
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      <a href="../../../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    博客
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    关于
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../tags/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    标签
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../series/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    系列
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../tools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    工具
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    归档
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    归档
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2026/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2026
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2025/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2025
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2024/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2024
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2023/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2023
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2022/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2022
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2021/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2021
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2020/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2020
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2019/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2019
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    分类
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    分类
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E4%B8%AA%E4%BA%BA/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    个人
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E5%8D%9A%E5%AE%A2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    博客
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E5%8D%9A%E5%AE%A2--%E7%BD%91%E7%BB%9C/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    博客 &amp; 网络
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    学习笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    折腾记录
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    课程笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%85%B7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    软件工具
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E9%98%85%E8%AF%BB/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    阅读
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+  <div class="md-content md-content--post" data-md-component="content">
+    <div class="md-sidebar md-sidebar--post" data-md-component="sidebar" data-md-type="navigation">
+      <div class="md-sidebar__scrollwrap">
+        <div class="md-sidebar__inner md-post">
+          <nav class="md-nav md-nav--primary">
+            <div class="md-post__back">
+              <div class="md-nav__title md-nav__container">
+                <a href="../../../../.." class="md-nav__link">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+                  <span class="md-ellipsis">
+                    回到主页
+                  </span>
+                </a>
+              </div>
+            </div>
+            
+            <ul class="md-post__meta md-nav__list">
+              <li class="md-nav__item md-nav__item--section">
+                <div class="md-post__title">
+                  <span class="md-ellipsis">
+                    元数据
+                  </span>
+                </div>
+                <nav class="md-nav">
+                  <ul class="md-nav__list">
+                    <li class="md-nav__item">
+                      <div class="md-nav__link">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 19H5V8h14m-3-7v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1V1m-1 11h-5v5h5z"/></svg>
+                        <time datetime="2022-11-28 18:14:50+00:00" class="md-ellipsis">2022年11月28日</time>
+                      </div>
+                    </li>
+                    
+                    
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 3v15h3V3zm3 2 4 13 3-1-4-13zM5 5v13h3V5zM3 19v2h18v-2z"/></svg>
+                          <span class="md-ellipsis">
+                            分类于
+                            
+                              <a href="../../../../../category/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%85%B7/">软件工具</a></span>
+                        </div>
+                      </li>
+                    
+                    
+                      
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20a8 8 0 0 0 8-8 8 8 0 0 0-8-8 8 8 0 0 0-8 8 8 8 0 0 0 8 8m0-18a10 10 0 0 1 10 10 10 10 0 0 1-10 10C6.47 22 2 17.5 2 12A10 10 0 0 1 12 2m.5 5v5.25l4.5 2.67-.75 1.23L11 13V7z"/></svg>
+                          <span class="md-ellipsis">
+                            
+                              需要 7 分钟阅读时间
+                            
+                          </span>
+                        </div>
+                      </li>
+                    
+                  </ul>
+                </nav>
+              </li>
+            </ul>
+            
+          </nav>
+          
+            
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#高级" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        高级
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="高级">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#checkout" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        checkout
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="checkout">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#回退指定目录下的文件" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        回退指定目录下的文件
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reset" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        reset
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="reset">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#reset---soft---mixed---hard" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        reset --soft, --mixed, --hard
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reset-后恢复-reflog" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        reset 后恢复 reflog
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rebase" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        rebase
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#merge" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        merge
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="merge">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#no-ff" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        no-ff
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#no-commit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        no-commit
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pull" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        pull
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#refspec手动设置-fetch-分支" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Refspec（手动设置 fetch 分支）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Refspec（手动设置 fetch 分支）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#0-单次-fetch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0 单次 fetch
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1-set-branches" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1 set-branches
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-手动修改-gitconfig" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2 手动修改 .git/config
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#重名删除-refs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        重名/删除 refs
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#基础" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        基础
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="基础">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#branch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        branch
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="branch">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#查看分支-upstream" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        查看分支 upstream
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#设置-upstream" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        设置 upstream
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#重命名" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        重命名
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#remote" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        remote
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tag" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tag
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#小技巧" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        小技巧
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="小技巧">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#查找某个-commit-并显示修改" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        查找某个 commit 并显示修改
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shallow-clone" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        shallow clone
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#代码统计" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        代码统计
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#移动非当前分支到某个-commit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        移动非当前分支到某个 commit
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cherry-pick" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        cherry-pick
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#清除远程已删除的分支" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        清除远程已删除的分支
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#clean-untrack-文件" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        clean untrack 文件
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#代理" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        代理
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="代理">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#查看详细信息" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        查看详细信息
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#http-和-https-设置代理" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        http 和 https 设置代理
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ssh-代理" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ssh 代理
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="ssh 代理">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#windows" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        windows
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#遇到的问题" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        遇到的问题
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="遇到的问题">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#unsafe-directory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        unsafe directory
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#curl-92-http2-stream-0-was-not-closed-cleanly-cancel-err-8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        curl 92 HTTP/2 stream 0 was not closed cleanly: CANCEL (err 8)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#git-cherry-pick-allow-empty" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        git cherry-pick allow empty
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#patch-补丁" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        patch 补丁
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="patch 补丁">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diff-patch-工具" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        diff, patch 工具
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#git-format-patch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        git format-patch
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#format-patch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        format-patch
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#submodule" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        submodule
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="submodule">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#clone-submodule" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        clone submodule
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="clone submodule">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#file-not-allowed-问题" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        file not allowed 问题
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lfs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        LFS
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="LFS">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#参考" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        参考
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#使用方法" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        使用方法
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#撤销lfs跟踪并使用git管理" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        撤销LFS跟踪并使用Git管理
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+          
+        </div>
+      </div>
+    </div>
+    <article class="md-content__inner md-typeset">
+      
+        
+  
+
+
+  <nav class="md-tags" >
+    
+      
+      
+      
+      
+        <a href="../../../../../tags/#tag:git" class="md-tag">git</a>
+      
+    
+  </nav>
+
+
+
+  <h1>git</h1>
+
+<p>git</p>
+<!-- more -->
+
+<h2 id="高级">高级<a class="headerlink" href="#高级" title="Permanent link">&para;</a></h2>
+<ul>
+<li>从一个节点产生多个分支，能否 rebase 新的 cm 到该节点？</li>
+</ul>
+<h3 id="checkout">checkout<a class="headerlink" href="#checkout" title="Permanent link">&para;</a></h3>
+<h4 id="回退指定目录下的文件">回退指定目录下的文件<a class="headerlink" href="#回退指定目录下的文件" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>git checkout abc1234 -- /path/to/dir
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a># 此时该目录的旧版本文件已经进入暂存区（Staged），直接提交即可
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>git commit -m &quot;Revert changes in /path/to/dir&quot;
+</span></code></pre></div>
+<h3 id="reset">reset<a class="headerlink" href="#reset" title="Permanent link">&para;</a></h3>
+<h4 id="reset---soft---mixed---hard">reset --soft, --mixed, --hard<a class="headerlink" href="#reset---soft---mixed---hard" title="Permanent link">&para;</a></h4>
+<p><a href="https://stackoverflow.com/questions/3528245/whats-the-difference-between-git-reset-mixed-soft-and-hard">version control - What's the difference between git reset --mixed, --soft, and --hard? - Stack Overflow</a></p>
+<p>修改的不同阶段：</p>
+<ul>
+<li>in working directory：</li>
+<li>index / stagged：通过 git add</li>
+<li>commited：进入版本控制，commited 的修改总能找回来。</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>- A - B - C (master)
+</span></code></pre></div>
+<p>--soft B：将 C 的修改恢复到 index 中
+--mixed B：将 C 的修改恢复到 working directory 中
+--hard B：index 被修改为 B，<strong>working directory 清空</strong></p>
+<p><strong>git co 和 git reset --mixed 效果类似，都能保留当前 working directory，同时还能保留 git log。</strong></p>
+<h4 id="reset-后恢复-reflog">reset 后恢复 reflog<a class="headerlink" href="#reset-后恢复-reflog" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>git reflog
+</span></code></pre></div>
+<h3 id="rebase">rebase<a class="headerlink" href="#rebase" title="Permanent link">&para;</a></h3>
+<p>Q: git X 分支有 A, B, C 三个提交，Y 分支有 A, B2, C2 提交，如何将 X 分支 rebase 到 B2。其中 B 和 B2 存在冲突</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>git checkout X
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>git rebase &lt;B2_HASH&gt;
+</span></code></pre></div>
+<p><strong>rebase 会自动找到共同祖先</strong> A，并尝试把 B 和 C “搬运”到 B2 后面。</p>
+<h3 id="merge">merge<a class="headerlink" href="#merge" title="Permanent link">&para;</a></h3>
+<h4 id="no-ff">no-ff<a class="headerlink" href="#no-ff" title="Permanent link">&para;</a></h4>
+<p>git 有没有办法直接指定两个 commit（可能位于两个分支，或者一个分支但是间隔了很远），然后创建一个 merge 提交，从而对比两个commit 有哪些改动
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>git merge --no-ff
+</span></code></pre></div>
+这里的关键是 <code>--no-ff</code>（No Fast-forward），它强制生成一个新的 Merge Commit 节点，即使两个提交是线性关系。</p>
+<h4 id="no-commit">no-commit<a class="headerlink" href="#no-commit" title="Permanent link">&para;</a></h4>
+<p><div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>git merge --no-ff --no-commit
+</span></code></pre></div>
+告诉 Git 完成合并逻辑并把结果放到暂存区（Staging Area），但<strong>不要自动创建 commit</strong>。
+此时，Git 会停下来。你可以像平时开发一样修改代码、调整配置文件或者删除不需要的文件。</p>
+<h3 id="pull">pull<a class="headerlink" href="#pull" title="Permanent link">&para;</a></h3>
+<p><a href="https://zhuanlan.zhihu.com/p/1949416591696590287">直接使用git pull拉取代码，被同事狠狠地diss了！ - 知乎</a></p>
+<ol>
+<li><code>git</code> <code>pull</code> <code>--ff-only</code> will only do "fast-forward" updates: it fails if your local branch has diverged from the remote branch. This is the default.</li>
+<li><code>git</code> <code>pull</code> <code>--rebase</code> runs <code>git</code> <code>rebase</code></li>
+<li><code>git</code> <code>pull</code> <code>--no-rebase</code> runs <code>git</code> <code>merge</code>.</li>
+<li><code>git</code> <code>pull</code> <code>--squash</code> runs <code>git</code> <code>merge</code> <code>--squash</code></li>
+</ol>
+<h3 id="refspec手动设置-fetch-分支">Refspec（手动设置 fetch 分支）<a class="headerlink" href="#refspec手动设置-fetch-分支" title="Permanent link">&para;</a></h3>
+<p>clone 仓库时指定了 depth = 1, branch = dev/distributed，后面 git fetch origin 无法获取其他分支</p>
+<p>解决方法</p>
+<h4 id="0-单次-fetch">0 单次 fetch<a class="headerlink" href="#0-单次-fetch" title="Permanent link">&para;</a></h4>
+<p>不推荐，之后 git pull 仍然无法正常使用</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a># 语法：git fetch &lt;remote&gt; &lt;source_branch&gt;:&lt;destination_remote_tracking_branch&gt;
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>git fetch origin dev_4_9_2:refs/remotes/origin/dev_4_9_2
+</span></code></pre></div>
+<p>取消浅层克隆</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a># 下载仓库剩余的所有历史记录，并移除浅层限制
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>git fetch --unshallow
+</span></code></pre></div>
+<p>如果你不想下载所有历史，想开始跟踪其他分支</p>
+<h4 id="1-set-branches">1 set-branches<a class="headerlink" href="#1-set-branches" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>git remote set-branches --add origin dev_4_9_2
+</span></code></pre></div>
+<h4 id="2-手动修改-gitconfig">2 手动修改 .git/config<a class="headerlink" href="#2-手动修改-gitconfig" title="Permanent link">&para;</a></h4>
+<p>你可以手动修改 <code>.git/config</code> 文件</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>[remote &quot;origin&quot;]
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>fetch = +refs/heads/dev/distributed:refs/remotes/origin/dev/distributed
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>fetch = +refs/heads/dev_4_9_2:refs/remotes/origin/dev_4_9_2
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>#fetch = +refs/heads/*:refs/remotes/origin/*
+</span></code></pre></div>
+<h4 id="重名删除-refs">重名/删除 refs<a class="headerlink" href="#重名删除-refs" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>git show-ref dev/distributed
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>git update-ref -d refs/remotes/dev/distributed
+</span></code></pre></div>
+<p>删除 refs/remotes/ 下非 remote 仓库的 refs</p>
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="ch">#!/bin/bash</span>
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="c1"># 获取所有已配置的远程仓库名称 (例如: &quot;origin&quot;, &quot;local&quot;)</span>
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="nv">remotes</span><span class="o">=</span><span class="k">$(</span>git<span class="w"> </span>remote<span class="k">)</span>
+</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;发现有效的远程仓库: </span><span class="nv">$remotes</span><span class="s2">&quot;</span>
+</span><span id="__span-11-6"><a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;--- 开始查找并删除位置错误的远程引用 ---&quot;</span>
+</span><span id="__span-11-7"><a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a>
+</span><span id="__span-11-8"><a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a><span class="c1"># 遍历 &#39;refs/remotes/&#39;下的所有引用</span>
+</span><span id="__span-11-9"><a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a>git<span class="w"> </span><span class="k">for</span>-each-ref<span class="w"> </span>refs/remotes/<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="k">while</span><span class="w"> </span><span class="nb">read</span><span class="w"> </span>-r<span class="w"> </span>_<span class="w"> </span>_<span class="w"> </span>ref<span class="p">;</span><span class="w"> </span><span class="k">do</span>
+</span><span id="__span-11-10"><a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a><span class="w">    </span><span class="c1"># 截取掉 &quot;refs/remotes/&quot; 前缀，得到类似 &quot;dev/distributed&quot; 或 &quot;origin/main&quot; 的短名称</span>
+</span><span id="__span-11-11"><a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a><span class="w">    </span><span class="nv">short_ref</span><span class="o">=</span><span class="si">${</span><span class="nv">ref</span><span class="p">#refs/remotes/</span><span class="si">}</span>
+</span><span id="__span-11-12"><a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a>
+</span><span id="__span-11-13"><a id="__codelineno-11-13" name="__codelineno-11-13" href="#__codelineno-11-13"></a><span class="w">    </span><span class="c1"># 设置一个标记，判断当前引用是否属于一个已知的远程仓库</span>
+</span><span id="__span-11-14"><a id="__codelineno-11-14" name="__codelineno-11-14" href="#__codelineno-11-14"></a><span class="w">    </span><span class="nv">is_valid_remote_ref</span><span class="o">=</span><span class="nb">false</span>
+</span><span id="__span-11-15"><a id="__codelineno-11-15" name="__codelineno-11-15" href="#__codelineno-11-15"></a>
+</span><span id="__span-11-16"><a id="__codelineno-11-16" name="__codelineno-11-16" href="#__codelineno-11-16"></a><span class="w">    </span><span class="c1"># 检查短名称是否以 &quot;[remote_name]/&quot; 的形式开头</span>
+</span><span id="__span-11-17"><a id="__codelineno-11-17" name="__codelineno-11-17" href="#__codelineno-11-17"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span>remote<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="nv">$remotes</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
+</span><span id="__span-11-18"><a id="__codelineno-11-18" name="__codelineno-11-18" href="#__codelineno-11-18"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="o">[[</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$short_ref</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$remote</span><span class="s2">/&quot;</span>*<span class="w"> </span><span class="o">]]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+</span><span id="__span-11-19"><a id="__codelineno-11-19" name="__codelineno-11-19" href="#__codelineno-11-19"></a><span class="w">            </span><span class="nv">is_valid_remote_ref</span><span class="o">=</span><span class="nb">true</span>
+</span><span id="__span-11-20"><a id="__codelineno-11-20" name="__codelineno-11-20" href="#__codelineno-11-20"></a><span class="w">            </span><span class="k">break</span>
+</span><span id="__span-11-21"><a id="__codelineno-11-21" name="__codelineno-11-21" href="#__codelineno-11-21"></a><span class="w">        </span><span class="k">fi</span>
+</span><span id="__span-11-22"><a id="__codelineno-11-22" name="__codelineno-11-22" href="#__codelineno-11-22"></a><span class="w">    </span><span class="k">done</span>
+</span><span id="__span-11-23"><a id="__codelineno-11-23" name="__codelineno-11-23" href="#__codelineno-11-23"></a>
+</span><span id="__span-11-24"><a id="__codelineno-11-24" name="__codelineno-11-24" href="#__codelineno-11-24"></a><span class="w">    </span><span class="c1"># 如果引用不属于任何已知远程仓库，那它就是我们要删除的错误引用</span>
+</span><span id="__span-11-25"><a id="__codelineno-11-25" name="__codelineno-11-25" href="#__codelineno-11-25"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span>!<span class="w"> </span><span class="nv">$is_valid_remote_ref</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+</span><span id="__span-11-26"><a id="__codelineno-11-26" name="__codelineno-11-26" href="#__codelineno-11-26"></a><span class="w">        </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;正在删除错误引用: </span><span class="nv">$ref</span><span class="s2">&quot;</span>
+</span><span id="__span-11-27"><a id="__codelineno-11-27" name="__codelineno-11-27" href="#__codelineno-11-27"></a><span class="w">        </span>git<span class="w"> </span>update-ref<span class="w"> </span>-d<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$ref</span><span class="s2">&quot;</span>
+</span><span id="__span-11-28"><a id="__codelineno-11-28" name="__codelineno-11-28" href="#__codelineno-11-28"></a><span class="w">    </span><span class="k">fi</span>
+</span><span id="__span-11-29"><a id="__codelineno-11-29" name="__codelineno-11-29" href="#__codelineno-11-29"></a><span class="k">done</span>
+</span><span id="__span-11-30"><a id="__codelineno-11-30" name="__codelineno-11-30" href="#__codelineno-11-30"></a>
+</span><span id="__span-11-31"><a id="__codelineno-11-31" name="__codelineno-11-31" href="#__codelineno-11-31"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;--- 清理完成 ---&quot;</span>
+</span></code></pre></div>
+<h2 id="基础">基础<a class="headerlink" href="#基础" title="Permanent link">&para;</a></h2>
+<h3 id="branch">branch<a class="headerlink" href="#branch" title="Permanent link">&para;</a></h3>
+<h4 id="查看分支-upstream">查看分支 upstream<a class="headerlink" href="#查看分支-upstream" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>git br -vv
+</span></code></pre></div>
+<h4 id="设置-upstream">设置 upstream<a class="headerlink" href="#设置-upstream" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>git branch --set-upstream-to=origin/dev_4_9_2 dev_4_9_2
+</span></code></pre></div>
+<h4 id="重命名">重命名<a class="headerlink" href="#重命名" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>git branch -m foo bar
+</span></code></pre></div>
+<h3 id="remote">remote<a class="headerlink" href="#remote" title="Permanent link">&para;</a></h3>
+<ul>
+<li>可以查看仓库的 fetch url 和 push url</li>
+<li>origin/HEAD，表示仓库的默认分支（用于 git clone 等）</li>
+<li>远程仓库的分支</li>
+<li>本地仓库配置了 git push 的分支</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>git show remote origin
+</span></code></pre></div>
+<h2 id="tag">tag<a class="headerlink" href="#tag" title="Permanent link">&para;</a></h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>#显示所有tag
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>git tag
+</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>#显示具体tag信息
+</span><span id="__span-16-4"><a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a>git show v1.2
+</span><span id="__span-16-5"><a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a>#添加tag
+</span><span id="__span-16-6"><a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a>git tag v1.2 9fceb02 -a
+</span><span id="__span-16-7"><a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a>git tag v1.2 9fceb02 -a -m &quot;my tag&quot;
+</span><span id="__span-16-8"><a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a>#删除tag
+</span><span id="__span-16-9"><a id="__codelineno-16-9" name="__codelineno-16-9" href="#__codelineno-16-9"></a>git tag -d v1.2
+</span><span id="__span-16-10"><a id="__codelineno-16-10" name="__codelineno-16-10" href="#__codelineno-16-10"></a>#推送tag到远程
+</span><span id="__span-16-11"><a id="__codelineno-16-11" name="__codelineno-16-11" href="#__codelineno-16-11"></a>git push origin --tags
+</span></code></pre></div>
+<h2 id="小技巧">小技巧<a class="headerlink" href="#小技巧" title="Permanent link">&para;</a></h2>
+<h3 id="查找某个-commit-并显示修改">查找某个 commit 并显示修改<a class="headerlink" href="#查找某个-commit-并显示修改" title="Permanent link">&para;</a></h3>
+<ul>
+<li><code>-i</code> 忽略大小写</li>
+<li>--all 查找所有分支</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>git log --all --grep=&quot;你的搜索关键词&quot; -i
+</span></code></pre></div>
+<ul>
+<li><code>--stat</code> 仅显示修改了哪些文件</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>git show 199bb01d00 --stat
+</span></code></pre></div>
+<h3 id="shallow-clone">shallow clone<a class="headerlink" href="#shallow-clone" title="Permanent link">&para;</a></h3>
+<p>避免 clone 的仓库太大，将 git commit 记录截断。</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>git clone --depth 1 git://gcc.gnu.org/git/gcc.git
+</span></code></pre></div>
+<p><code>man git-clone</code>
+Create a shallow clone with a history truncated to the specified number of commits. Implies <code>--single-branch</code> unless <code>--no-single-branch</code> is given to fetch the histories near the tips of all branches. If you want to clone submodules shallowly, also pass <code>shallow-submodules</code>.</p>
+<h3 id="代码统计">代码统计<a class="headerlink" href="#代码统计" title="Permanent link">&para;</a></h3>
+<p><a href="https://www.cnblogs.com/ZJ199012/p/14411773.html">Git统计代码量和常用命令 - lovezj9012 - 博客园</a>
+<strong>统计每个人的增删行数</strong>  </p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>git log --format=&#39;%aN&#39; | sort -u | while read name; do echo -en &quot;$name\t&quot;; git log --author=&quot;$name&quot; --pretty=tformat: --numstat | awk &#39;{ add += $1; subs += $2; loc += $1 - $2 } END { printf &quot;added lines: %s, removed lines: %s, total lines: %s &quot;, add, subs, loc }&#39; -; done
+</span></code></pre></div>
+<p><strong>根据时间段排除文件夹统计</strong></p>
+<p>git log --since=2021-01-28 --until=2021-02-03 --pretty=tformat: --numstat -- . ":(exclude)src/test" | awk '{ add += $1; subs += $2; loc += $1 + $2 } END { printf "added lines: %s, removed lines: %s, total lines: %s\n", add, subs, loc }'</p>
+<p>-- . ":(exclude)folderName"  folderName指src/test文件夹，这里是相对路径
+-- . ":(exclude)folderName1"  ":(exclude)folderName2"  排除多个文件夹
+-- . ":(exclude)folderName"也 可以用在其他的统计中；--前只能有一个空格，有多个空格识别不了</p>
+<h3 id="移动非当前分支到某个-commit">移动非当前分支到某个 commit<a class="headerlink" href="#移动非当前分支到某个-commit" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>git branch -f b HEAD
+</span></code></pre></div>
+<h3 id="cherry-pick">cherry-pick<a class="headerlink" href="#cherry-pick" title="Permanent link">&para;</a></h3>
+<p>Q: git 分支 B 想要获得分支 A 上除了某一次提交外的其他5-6个提交，有什么简单的方法。分支 A 和 B 从某个点 C 分叉</p>
+<p>Cherry-pick 范围选择</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>cherry-pick  A..B   # (A, B]
+</span><span id="__span-22-2"><a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>cherry-pick  A^..B  # [A, B]，从 A 到 B 所有 commit。^作用是表示 A 的上一个
+</span></code></pre></div>
+<h3 id="清除远程已删除的分支">清除远程已删除的分支<a class="headerlink" href="#清除远程已删除的分支" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>git remote show origin  # 查看远程分支情况，git pull 和 git push 本地分支配置的上游分支
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>git remote prune origin
+</span><span id="__span-24-2"><a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>git fetch origin -p   # --prune
+</span></code></pre></div>
+<h3 id="clean-untrack-文件">clean untrack 文件<a class="headerlink" href="#clean-untrack-文件" title="Permanent link">&para;</a></h3>
+<p>有时候 git reset 后，会有大量 untrack 的文件</p>
+<ul>
+<li><code>-n</code> 或 <code>--dry-run</code> 参数来进行演习</li>
+<li><code>-f</code> 或 <code>--force</code>：这是强制执行的意思。如果没有这个参数，Git 不会真的删除文件，而是会提示您使用 <code>-f</code> 来确认。这是一个安全措施，防止您意外删除重要文件。</li>
+<li><code>-d</code>：这个参数表示连同未被追踪的目录一起删除。如果您只想删除文件而不删除目录，可以省略这个参数。</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>git clean -nd  # dry-run 测试一下
+</span><span id="__span-25-2"><a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a>git clean -fd
+</span></code></pre></div>
+<h2 id="代理">代理<a class="headerlink" href="#代理" title="Permanent link">&para;</a></h2>
+<h3 id="查看详细信息">查看详细信息<a class="headerlink" href="#查看详细信息" title="Permanent link">&para;</a></h3>
+<ul>
+<li><code>GIT_TRACE=1</code></li>
+<li><code>git --verbose &lt;cmd&gt;</code></li>
+</ul>
+<h3 id="http-和-https-设置代理">http 和 https 设置代理<a class="headerlink" href="#http-和-https-设置代理" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>
+</span></code></pre></div>
+<h3 id="ssh-代理">ssh 代理<a class="headerlink" href="#ssh-代理" title="Permanent link">&para;</a></h3>
+<h4 id="windows">windows<a class="headerlink" href="#windows" title="Permanent link">&para;</a></h4>
+<p>windows 下没有 nc 命令，需要 connect.exe（可以下载.c 文件编译成 exe 文件）</p>
+<p><a href="https://stackoverflow.com/questions/5103083/ssh-in-git-behind-proxy-on-windows-7">SSH in git behind proxy on windows 7 - Stack Overflow</a></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>Host github.com
+</span><span id="__span-27-2"><a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a>  HostName github.com
+</span><span id="__span-27-3"><a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a>  ...
+</span><span id="__span-27-4"><a id="__codelineno-27-4" name="__codelineno-27-4" href="#__codelineno-27-4"></a>  ProxyCommand connect -H 127.0.0.1:11223 %h %p
+</span></code></pre></div>
+<h2 id="遇到的问题">遇到的问题<a class="headerlink" href="#遇到的问题" title="Permanent link">&para;</a></h2>
+<h3 id="unsafe-directory">unsafe directory<a class="headerlink" href="#unsafe-directory" title="Permanent link">&para;</a></h3>
+<p><a href="https://stackoverflow.com/questions/71901632/fatal-error-unsafe-repository-home-repon-is-owned-by-someone-else">git - Fatal error "unsafe repository ('/home/repon' is owned by someone else)" - Stack Overflow</a></p>
+<p>git version &gt; Git 2.36</p>
+<p><code>git config --global --add safe.directory '*'</code></p>
+<h3 id="curl-92-http2-stream-0-was-not-closed-cleanly-cancel-err-8">curl 92 HTTP/2 stream 0 was not closed cleanly: CANCEL (err 8)<a class="headerlink" href="#curl-92-http2-stream-0-was-not-closed-cleanly-cancel-err-8" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>➜  repo git clone https://github.com/YaoFANGUK/video-subtitle-generator
+</span><span id="__span-28-2"><a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a>Cloning into &#39;video-subtitle-generator&#39;...
+</span><span id="__span-28-3"><a id="__codelineno-28-3" name="__codelineno-28-3" href="#__codelineno-28-3"></a>remote: Enumerating objects: 434, done.
+</span><span id="__span-28-4"><a id="__codelineno-28-4" name="__codelineno-28-4" href="#__codelineno-28-4"></a>remote: Counting objects: 100% (95/95), done.
+</span><span id="__span-28-5"><a id="__codelineno-28-5" name="__codelineno-28-5" href="#__codelineno-28-5"></a>remote: Compressing objects: 100% (53/53), done.
+</span><span id="__span-28-6"><a id="__codelineno-28-6" name="__codelineno-28-6" href="#__codelineno-28-6"></a>error: RPC failed; curl 92 HTTP/2 stream 0 was not closed cleanly: CANCEL (err 8)
+</span><span id="__span-28-7"><a id="__codelineno-28-7" name="__codelineno-28-7" href="#__codelineno-28-7"></a>error: 503 bytes of body are still expected
+</span><span id="__span-28-8"><a id="__codelineno-28-8" name="__codelineno-28-8" href="#__codelineno-28-8"></a>fetch-pack: unexpected disconnect while reading sideband packet
+</span><span id="__span-28-9"><a id="__codelineno-28-9" name="__codelineno-28-9" href="#__codelineno-28-9"></a>fatal: early EOF
+</span><span id="__span-28-10"><a id="__codelineno-28-10" name="__codelineno-28-10" href="#__codelineno-28-10"></a>fatal: fetch-pack: invalid index-pack output
+</span></code></pre></div>
+<p><a href="https://stackoverflow.com/questions/59282476/error-rpc-failed-curl-92-http-2-stream-0-was-not-closed-cleanly-protocol-erro">git - error: RPC failed; curl 92 HTTP/2 stream 0 was not closed cleanly: PROTOCOL_ERROR (err 1) - Stack Overflow</a></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>git config --global http.version HTTP/1.1
+</span></code></pre></div>
+<p>成功</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>➜  repo git clone https://github.com/YaoFANGUK/video-subtitle-generator
+</span><span id="__span-30-2"><a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a>Cloning into &#39;video-subtitle-generator&#39;...
+</span><span id="__span-30-3"><a id="__codelineno-30-3" name="__codelineno-30-3" href="#__codelineno-30-3"></a>remote: Enumerating objects: 434, done.
+</span><span id="__span-30-4"><a id="__codelineno-30-4" name="__codelineno-30-4" href="#__codelineno-30-4"></a>remote: Counting objects: 100% (95/95), done.
+</span><span id="__span-30-5"><a id="__codelineno-30-5" name="__codelineno-30-5" href="#__codelineno-30-5"></a>remote: Compressing objects: 100% (53/53), done.
+</span><span id="__span-30-6"><a id="__codelineno-30-6" name="__codelineno-30-6" href="#__codelineno-30-6"></a>remote: Total 434 (delta 46), reused 87 (delta 42), pack-reused 339
+</span><span id="__span-30-7"><a id="__codelineno-30-7" name="__codelineno-30-7" href="#__codelineno-30-7"></a>Receiving objects: 100% (434/434), 5.92 GiB | 21.39 MiB/s, done.
+</span><span id="__span-30-8"><a id="__codelineno-30-8" name="__codelineno-30-8" href="#__codelineno-30-8"></a>Resolving deltas: 100% (149/149), done.
+</span><span id="__span-30-9"><a id="__codelineno-30-9" name="__codelineno-30-9" href="#__codelineno-30-9"></a>Updating files: 100% (151/151), done.
+</span></code></pre></div>
+<p>貌似修改 buffer 也可以：<a href="https://www.cnblogs.com/guowenrui/p/17019268.html">GIT 推送错误 error: RPC failed；curl 92 HTTP/2 stream 0 was not closed cleanly: CANCEL (err 8) - 郭小睿 - 博客园 (cnblogs.com)</a></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>git config --global http.postBuffer 524288000
+</span></code></pre></div>
+<h3 id="git-cherry-pick-allow-empty">git cherry-pick allow empty<a class="headerlink" href="#git-cherry-pick-allow-empty" title="Permanent link">&para;</a></h3>
+<p>根据图片显示的信息，"the previous cherry-pick is now empty" 这句话表示​<strong>​之前的 cherry-pick 操作最终没有引入任何实际文件变更​</strong>​。这种情况通常出现在处理代码冲突时，以下是具体解析：</p>
+<p>​<strong>​坚持提交空操作​</strong>​（如需保留提交记录）</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a>git commit --allow-empty
+</span></code></pre></div>
+<p><strong>放弃空操作并继续</strong></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-33-1"><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a>git reset              # 重置当前cherry-pick操作
+</span><span id="__span-33-2"><a id="__codelineno-33-2" name="__codelineno-33-2" href="#__codelineno-33-2"></a>git cherry-pick --continue  # 继续处理后续提交
+</span></code></pre></div>
+<ul>
+<li>完全跳过此次无效的cherry-pick</li>
+<li>推荐选择，避免污染提交历史</li>
+</ul>
+<h2 id="patch-补丁">patch 补丁<a class="headerlink" href="#patch-补丁" title="Permanent link">&para;</a></h2>
+<h3 id="diff-patch-工具">diff, patch 工具<a class="headerlink" href="#diff-patch-工具" title="Permanent link">&para;</a></h3>
+<p>我对 A 文件进行了一些修改得到 B，现在 A 发生了变化，我如何将修改作用在新的 A 上</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-34-1"><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a>diff -u A B &gt; A.patch
+</span><span id="__span-34-2"><a id="__codelineno-34-2" name="__codelineno-34-2" href="#__codelineno-34-2"></a>
+</span><span id="__span-34-3"><a id="__codelineno-34-3" name="__codelineno-34-3" href="#__codelineno-34-3"></a>patch A_new --merge -o B_new &lt; A.patch
+</span><span id="__span-34-4"><a id="__codelineno-34-4" name="__codelineno-34-4" href="#__codelineno-34-4"></a>patch A_new --merge -o B_new -i A.patch
+</span></code></pre></div>
+<ul>
+<li><code>-i</code>: 指定 patch 文件，而不是从 stdin 读入</li>
+<li><code>-o</code>：patched 后的文件路径</li>
+<li><code>--merge</code>: 将冲突部分写入输出文件（使用 conflict marker），而不是创建单独的 <strong>reject</strong> 文件<ul>
+<li>conflict 标记就是 git 格式，vscode 中对其会可视化显示</li>
+</ul>
+</li>
+</ul>
+<h3 id="git-format-patch">git format-patch<a class="headerlink" href="#git-format-patch" title="Permanent link">&para;</a></h3>
+<p><a href="https://juejin.cn/post/6844903646384095245">Git 打补丁-- patch 和 diff 的使用（详细） - 掘金 (juejin.cn)</a></p>
+<blockquote>
+<p>Git 提供了两种补丁方案，一是用 git diff 生成的 UNIX 标准补丁.diff 文件，二是 git format-patch 生成的 Git 专用.patch 文件。 .diff 文件只是记录文件改变的内容，不带有 commit 记录信息，多个 commit 可以合并成一个 diff 文件。 .patch 文件带有记录文件改变的内容，也带有 commit 记录信息，每个 commit 对应一个 patch 文件。</p>
+</blockquote>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-35-1"><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a>git format-patch HEAD^  # 最新的一次 commit（上一次到现在的 commit）
+</span><span id="__span-35-2"><a id="__codelineno-35-2" name="__codelineno-35-2" href="#__codelineno-35-2"></a>git format-patch 【commit sha1 id】..【commit sha1 id】 # 某两次提交之间的所有patch
+</span></code></pre></div>
+<ul>
+<li><code>-o</code>: If -o is specified, output files are created in dir. Otherwise they are created in the current working directory</li>
+<li><code>-n</code>: -n, --numbered Name output in [PATCH n/m] format, even with a single patch.</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-36-1"><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a>git am 【path/to/xxx.patch】
+</span></code></pre></div>
+<p>git diff 相关</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-37-1"><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a>git diff 【commit sha1 id】 【commit sha1 id】 &gt; 【diff文件名】
+</span><span id="__span-37-2"><a id="__codelineno-37-2" name="__codelineno-37-2" href="#__codelineno-37-2"></a>git diff --no-index file1 file2 # 非git repo下，生成两个文件diff
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-38-1"><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a>git apply [--check] 【path/to/xxx.patch
+</span><span id="__span-38-2"><a id="__codelineno-38-2" name="__codelineno-38-2" href="#__codelineno-38-2"></a>git apply --check 【path/to/xxx.diff】
+</span></code></pre></div>
+<h3 id="format-patch">format-patch<a class="headerlink" href="#format-patch" title="Permanent link">&para;</a></h3>
+<p><a href="https://git-scm.com/docs/git-format-patch">Git - git-format-patch Documentation (git-scm.com)</a></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-39-1"><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a>git format-patch HEAD^  # 最新的一次 commit（上一次到现在的 commit）
+</span><span id="__span-39-2"><a id="__codelineno-39-2" name="__codelineno-39-2" href="#__codelineno-39-2"></a>git format-patch 【commit sha1 id】..【commit sha1 id】 # 某两次提交之间的所有patch
+</span></code></pre></div>
+<p>应用 patch</p>
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-40-1"><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a>git<span class="w"> </span>am<span class="w"> </span>patch/*.patch
+</span><span id="__span-40-2"><a id="__codelineno-40-2" name="__codelineno-40-2" href="#__codelineno-40-2"></a>
+</span><span id="__span-40-3"><a id="__codelineno-40-3" name="__codelineno-40-3" href="#__codelineno-40-3"></a><span class="c1"># 保留原本提交时间</span>
+</span><span id="__span-40-4"><a id="__codelineno-40-4" name="__codelineno-40-4" href="#__codelineno-40-4"></a>git<span class="w"> </span>am<span class="w"> </span>--committer-date-is-author-date<span class="w"> </span>patch/*.patch
+</span></code></pre></div>
+<h2 id="submodule">submodule<a class="headerlink" href="#submodule" title="Permanent link">&para;</a></h2>
+<p>可以本地添加 submodule</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-41-1"><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a>git submodule add ./third-party/nvbit_release third-party/nvbit_release
+</span></code></pre></div>
+<p>添加 submodule 后会生成<code>.gitmodules</code>文件</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-42-1"><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a>[submodule &quot;third-party/gpu-rodinia&quot;]
+</span><span id="__span-42-2"><a id="__codelineno-42-2" name="__codelineno-42-2" href="#__codelineno-42-2"></a>        path = third-party/gpu-rodinia
+</span><span id="__span-42-3"><a id="__codelineno-42-3" name="__codelineno-42-3" href="#__codelineno-42-3"></a>        url = ./third-party/gpu-rodinia
+</span><span id="__span-42-4"><a id="__codelineno-42-4" name="__codelineno-42-4" href="#__codelineno-42-4"></a>[submodule &quot;third-party/nvbit_release&quot;]
+</span><span id="__span-42-5"><a id="__codelineno-42-5" name="__codelineno-42-5" href="#__codelineno-42-5"></a>        path = third-party/nvbit_release
+</span><span id="__span-42-6"><a id="__codelineno-42-6" name="__codelineno-42-6" href="#__codelineno-42-6"></a>        url = ./third-party/nvbit_release
+</span><span id="__span-42-7"><a id="__codelineno-42-7" name="__codelineno-42-7" href="#__codelineno-42-7"></a>[submodule &quot;third-party/cuda-samples&quot;]
+</span><span id="__span-42-8"><a id="__codelineno-42-8" name="__codelineno-42-8" href="#__codelineno-42-8"></a>        path = third-party/cuda-samples
+</span><span id="__span-42-9"><a id="__codelineno-42-9" name="__codelineno-42-9" href="#__codelineno-42-9"></a>        url = ./third-party/cuda-samples
+</span><span id="__span-42-10"><a id="__codelineno-42-10" name="__codelineno-42-10" href="#__codelineno-42-10"></a>[submodule &quot;third-party/gpu-parboil&quot;]
+</span><span id="__span-42-11"><a id="__codelineno-42-11" name="__codelineno-42-11" href="#__codelineno-42-11"></a>        path = third-party/gpu-parboil
+</span><span id="__span-42-12"><a id="__codelineno-42-12" name="__codelineno-42-12" href="#__codelineno-42-12"></a>        url = ./third-party/gpu-parboil
+</span></code></pre></div>
+<h3 id="clone-submodule">clone submodule<a class="headerlink" href="#clone-submodule" title="Permanent link">&para;</a></h3>
+<p>clone 时默认是不会 clone 子模块的，需要添加 recursive。-j8 表示使用多线程下载。</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-43-1"><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a>git clone --recursive -j8 gpu-analysis-model gpu-analysis-model-70
+</span></code></pre></div>
+<p>会从<code>.gitmodules</code>中指定的 url 中 clone 仓库，然后 checkout 到对应 commit。如果是本地 commit，没有推送到远程，则会因为没有对应 commit 而报错。解决方法是改用本地仓库作为 url。</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-44-1"><a id="__codelineno-44-1" name="__codelineno-44-1" href="#__codelineno-44-1"></a>git submodule init
+</span><span id="__span-44-2"><a id="__codelineno-44-2" name="__codelineno-44-2" href="#__codelineno-44-2"></a>git submodule update
+</span><span id="__span-44-3"><a id="__codelineno-44-3" name="__codelineno-44-3" href="#__codelineno-44-3"></a>
+</span><span id="__span-44-4"><a id="__codelineno-44-4" name="__codelineno-44-4" href="#__codelineno-44-4"></a># 合并成一个
+</span><span id="__span-44-5"><a id="__codelineno-44-5" name="__codelineno-44-5" href="#__codelineno-44-5"></a>git submodule update --init --recursive
+</span><span id="__span-44-6"><a id="__codelineno-44-6" name="__codelineno-44-6" href="#__codelineno-44-6"></a>git submodule update --init --recursive --depth 1
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-45-1"><a id="__codelineno-45-1" name="__codelineno-45-1" href="#__codelineno-45-1"></a>git submodule deinit
+</span></code></pre></div>
+<h4 id="file-not-allowed-问题">file not allowed 问题<a class="headerlink" href="#file-not-allowed-问题" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-46-1"><a id="__codelineno-46-1" name="__codelineno-46-1" href="#__codelineno-46-1"></a>Submodule &#39;third-party/cuda-samples&#39; (/staff/fyyuan/repo/gpu-analysis-model/third-party/cuda-samples) registered for path &#39;third-party/cuda-samples&#39;
+</span><span id="__span-46-2"><a id="__codelineno-46-2" name="__codelineno-46-2" href="#__codelineno-46-2"></a>
+</span><span id="__span-46-3"><a id="__codelineno-46-3" name="__codelineno-46-3" href="#__codelineno-46-3"></a>Cloning into &#39;/staff/fyyuan/repo/gpu-analysis-model-70/third-party/cuda-samples&#39;...
+</span><span id="__span-46-4"><a id="__codelineno-46-4" name="__codelineno-46-4" href="#__codelineno-46-4"></a>fatal: transport &#39;file&#39; not allowed
+</span></code></pre></div>
+<p>解决方法</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-47-1"><a id="__codelineno-47-1" name="__codelineno-47-1" href="#__codelineno-47-1"></a>git config --global protocol.file.allow always
+</span></code></pre></div>
+<h2 id="lfs">LFS<a class="headerlink" href="#lfs" title="Permanent link">&para;</a></h2>
+<h3 id="参考">参考<a class="headerlink" href="#参考" title="Permanent link">&para;</a></h3>
+<ul>
+<li><a href="https://about.gitlab.com/blog/getting-started-with-git-lfs-tutorial/">Getting started with Git LFS</a></li>
+<li><a href="https://help.aliyun.com/zh/yunxiao/user-guide/how-to-use-git-lfs">如何使用Git LFS?_云效(Alibaba Cloud DevOps)-阿里云帮助中心</a></li>
+</ul>
+<h3 id="使用方法">使用方法<a class="headerlink" href="#使用方法" title="Permanent link">&para;</a></h3>
+<ol>
+<li>执行 track 命令建立跟踪
+    1. 实际修改了 <code>.gitattribute</code> 文件，需要 git add 提交 <code>git commit -m "Add \"*.bigfile\" LFS config "</code></li>
+</ol>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-48-1"><a id="__codelineno-48-1" name="__codelineno-48-1" href="#__codelineno-48-1"></a>git lfs track &quot;*.bigfile&quot; # 以`.bigfile`后缀结尾的文件使用Git LFS进行存储
+</span><span id="__span-48-2"><a id="__codelineno-48-2" name="__codelineno-48-2" href="#__codelineno-48-2"></a>
+</span><span id="__span-48-3"><a id="__codelineno-48-3" name="__codelineno-48-3" href="#__codelineno-48-3"></a>git lfs    # 查看当前已跟踪的Git LFS File 类型
+</span></code></pre></div>
+<ol>
+<li>新建 .bigfile 文件，然后 git add
+    1. git 实际创建 <strong>Git LFS Pointer</strong> 文件，包含<div class="language-text highlight"><pre><span></span><code><span id="__span-49-1"><a id="__codelineno-49-1" name="__codelineno-49-1" href="#__codelineno-49-1"></a>+version https://git-lfs.github.com/spec/v1
+</span><span id="__span-49-2"><a id="__codelineno-49-2" name="__codelineno-49-2" href="#__codelineno-49-2"></a>+oid sha256:49bc20df15e412a64472421e13fe86ff1c5165e18b2afccf160d4dc19fe68a14
+</span><span id="__span-49-3"><a id="__codelineno-49-3" name="__codelineno-49-3" href="#__codelineno-49-3"></a>+size 1073741824
+</span></code></pre></div>
+</li>
+</ol>
+<p><strong>本地的Git LFS文件是如何存储的</strong></p>
+<ul>
+<li>LFS缓存目录</li>
+<li>名称被改为 oid（Git LFS object id）</li>
+</ul>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-50-1"><a id="__codelineno-50-1" name="__codelineno-50-1" href="#__codelineno-50-1"></a><span class="nv">$tree</span><span class="w"> </span>.git/lfs
+</span><span id="__span-50-2"><a id="__codelineno-50-2" name="__codelineno-50-2" href="#__codelineno-50-2"></a>.git/lfs
+</span><span id="__span-50-3"><a id="__codelineno-50-3" name="__codelineno-50-3" href="#__codelineno-50-3"></a>├──<span class="w"> </span>objects
+</span><span id="__span-50-4"><a id="__codelineno-50-4" name="__codelineno-50-4" href="#__codelineno-50-4"></a>│<span class="w">    </span>└──<span class="w"> </span><span class="m">49</span>
+</span><span id="__span-50-5"><a id="__codelineno-50-5" name="__codelineno-50-5" href="#__codelineno-50-5"></a>│<span class="w">         </span>└──<span class="w"> </span>bc
+</span><span id="__span-50-6"><a id="__codelineno-50-6" name="__codelineno-50-6" href="#__codelineno-50-6"></a>│<span class="w">             </span>└──<span class="w"> </span>49bc20df15e412a64472421e13fe86ff1c5165e18b2afccf160d4dc19fe68a14
+</span><span id="__span-50-7"><a id="__codelineno-50-7" name="__codelineno-50-7" href="#__codelineno-50-7"></a>└──<span class="w"> </span>tmp
+</span><span id="__span-50-8"><a id="__codelineno-50-8" name="__codelineno-50-8" href="#__codelineno-50-8"></a><span class="m">4</span><span class="w"> </span>directories,<span class="w"> </span><span class="m">1</span><span class="w"> </span>file
+</span></code></pre></div>
+<h3 id="撤销lfs跟踪并使用git管理">撤销LFS跟踪并使用Git管理<a class="headerlink" href="#撤销lfs跟踪并使用git管理" title="Permanent link">&para;</a></h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-51-1"><a id="__codelineno-51-1" name="__codelineno-51-1" href="#__codelineno-51-1"></a>git<span class="w"> </span>lfs<span class="w"> </span>untrack<span class="w"> </span><span class="s2">&quot;*.bigfile&quot;</span>
+</span><span id="__span-51-2"><a id="__codelineno-51-2" name="__codelineno-51-2" href="#__codelineno-51-2"></a>git<span class="w"> </span>rm<span class="w"> </span>--cached<span class="w"> </span><span class="s2">&quot;*.bigfile&quot;</span>
+</span></code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-52-1"><a id="__codelineno-52-1" name="__codelineno-52-1" href="#__codelineno-52-1"></a>git<span class="w"> </span>add<span class="w"> </span><span class="s2">&quot;*.bigfile&quot;</span>
+</span><span id="__span-52-2"><a id="__codelineno-52-2" name="__codelineno-52-2" href="#__codelineno-52-2"></a>git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;restore &quot;</span>*.bigfile<span class="s2">&quot; to git from lfs&quot;</span>
+</span></code></pre></div>
+<p><strong>Git LFS处理流程</strong>
+<img alt="" src="https://imagebed.yfycloud.site/2025/12/0652c036219106acdb02d0801fb6d5ac.png" /></p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+  
+
+
+
+      
+    </article>
+  </div>
+
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+        
+      
+      <nav class="md-footer__inner md-grid" aria-label="页脚" >
+        
+          
+          <a href="../../20/2022-11-20-bash/" class="md-footer__link md-footer__link--prev" aria-label="上一页: bash">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                上一页
+              </span>
+              <div class="md-ellipsis">
+                bash
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../../29/2022-11-29-latex/" class="md-footer__link md-footer__link--next" aria-label="下一页: latex">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                下一页
+              </span>
+              <div class="md-ellipsis">
+                latex
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/TheRainstorm" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../../..", "features": ["navigation.instant", "navigation.instant.progress", "navigation.tracking", "navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.footer", "content.code.copy", "toc.follow", "toc.integrate"], "search": "../../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../../../../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,2350 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="记录一些关于数学、计算机的知识，以及一些日常。">
+      
+      
+      
+        <link rel="canonical" href="https://yfy.cqu.ai/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%85%B7/2022/07/19/2022-07-19-vnc%E5%92%8Crdp%E8%BF%9C%E7%A8%8B/">
+      
+      
+        <link rel="prev" href="../../../../../%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/2022/07/16/2022-07-16-Linux%E5%AE%89%E8%A3%85windows%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%B9%B6%E6%98%BE%E5%8D%A1%E7%9B%B4%E9%80%9A/">
+      
+      
+        <link rel="next" href="../../../../../%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/2022/07/22/2022-07-22-linux%E7%B3%BB%E7%BB%9F%E8%BF%81%E7%A7%BB/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.3">
+    
+    
+      
+        <title>vnc 和 rdp 远程 - Rain 的随笔</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#说明" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../../../../.." title="Rain 的随笔" class="md-header__button md-logo" aria-label="Rain 的随笔" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Rain 的随笔
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              vnc 和 rdp 远程
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    
+  
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="../../../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  博客
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../about/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  关于
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../tags/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  标签
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../series/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  系列
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../tools/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  工具
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../archive/2026/" class="md-tabs__link">
+          
+  
+  
+  归档
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../category/%E4%B8%AA%E4%BA%BA/" class="md-tabs__link">
+          
+  
+  
+  分类
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" hidden>
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../../.." title="Rain 的随笔" class="md-nav__button md-logo" aria-label="Rain 的随笔" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Rain 的随笔
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+    
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      <a href="../../../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    博客
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    关于
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../tags/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    标签
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../series/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    系列
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../tools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    工具
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    归档
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    归档
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2026/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2026
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2025/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2025
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2024/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2024
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2023/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2023
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2022/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2022
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2021/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2021
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2020/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2020
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2019/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2019
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    分类
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    分类
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E4%B8%AA%E4%BA%BA/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    个人
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E5%8D%9A%E5%AE%A2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    博客
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E5%8D%9A%E5%AE%A2--%E7%BD%91%E7%BB%9C/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    博客 &amp; 网络
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    学习笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    折腾记录
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    课程笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%85%B7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    软件工具
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E9%98%85%E8%AF%BB/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    阅读
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+  <div class="md-content md-content--post" data-md-component="content">
+    <div class="md-sidebar md-sidebar--post" data-md-component="sidebar" data-md-type="navigation">
+      <div class="md-sidebar__scrollwrap">
+        <div class="md-sidebar__inner md-post">
+          <nav class="md-nav md-nav--primary">
+            <div class="md-post__back">
+              <div class="md-nav__title md-nav__container">
+                <a href="../../../../.." class="md-nav__link">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+                  <span class="md-ellipsis">
+                    回到主页
+                  </span>
+                </a>
+              </div>
+            </div>
+            
+            <ul class="md-post__meta md-nav__list">
+              <li class="md-nav__item md-nav__item--section">
+                <div class="md-post__title">
+                  <span class="md-ellipsis">
+                    元数据
+                  </span>
+                </div>
+                <nav class="md-nav">
+                  <ul class="md-nav__list">
+                    <li class="md-nav__item">
+                      <div class="md-nav__link">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 19H5V8h14m-3-7v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1V1m-1 11h-5v5h5z"/></svg>
+                        <time datetime="2022-07-19 15:34:52+00:00" class="md-ellipsis">2022年7月19日</time>
+                      </div>
+                    </li>
+                    
+                    
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 3v15h3V3zm3 2 4 13 3-1-4-13zM5 5v13h3V5zM3 19v2h18v-2z"/></svg>
+                          <span class="md-ellipsis">
+                            分类于
+                            
+                              <a href="../../../../../category/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%85%B7/">软件工具</a></span>
+                        </div>
+                      </li>
+                    
+                    
+                      
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20a8 8 0 0 0 8-8 8 8 0 0 0-8-8 8 8 0 0 0-8 8 8 8 0 0 0 8 8m0-18a10 10 0 0 1 10 10 10 10 0 0 1-10 10C6.47 22 2 17.5 2 12A10 10 0 0 1 12 2m.5 5v5.25l4.5 2.67-.75 1.23L11 13V7z"/></svg>
+                          <span class="md-ellipsis">
+                            
+                              需要 11 分钟阅读时间
+                            
+                          </span>
+                        </div>
+                      </li>
+                    
+                  </ul>
+                </nav>
+              </li>
+            </ul>
+            
+          </nav>
+          
+            
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#说明" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        说明
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rdp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        RDP
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="RDP">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#安装" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        安装
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#问题" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        问题
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rdp-client" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        RDP client
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#vnc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        VNC
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="VNC">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tigervnc-ubuntu2004" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tigervnc ubuntu20.04
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="tigervnc ubuntu20.04">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#xfce4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        xfce4
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#遇到问题" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        遇到问题
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tigervnc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tigervnc
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="tigervnc">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#使用情况" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        使用情况
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#桌面环境" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        桌面环境
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#安装-tigervnc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        安装 tigervnc
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#连接密码" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        连接密码
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#配置-vncserver" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        配置 vncserver
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="配置 vncserver">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#配置的说明" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        配置的说明
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#运行" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        运行
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#隧道" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        隧道
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#问题_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        问题
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#x11vnc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        x11vnc
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="x11vnc">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#不同点" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        不同点
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#使用" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        使用
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#客户端" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        客户端
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="客户端">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#novncweb-客户端" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        noVNC(web 客户端)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#其它-remote-desktop" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        其它 remote desktop
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="其它 remote desktop">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#spice" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        spice
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#x11-原理" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        X11 原理
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="X11 原理">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#查看正在运行的-x-server" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        查看正在运行的 X server
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#x-server-display" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        X server, display
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#boot-to-text-prompt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        boot to text prompt
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#笔记本关闭屏幕" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        笔记本关闭屏幕
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+          
+        </div>
+      </div>
+    </div>
+    <article class="md-content__inner md-typeset">
+      
+        
+  
+
+
+  <nav class="md-tags" >
+    
+      
+      
+      
+      
+        <a href="../../../../../tags/#tag:x11" class="md-tag">X11</a>
+      
+    
+      
+      
+      
+      
+        <a href="../../../../../tags/#tag:novnc" class="md-tag">noVNC</a>
+      
+    
+      
+      
+      
+      
+        <a href="../../../../../tags/#tag:rdp" class="md-tag">rdp</a>
+      
+    
+      
+      
+      
+      
+        <a href="../../../../../tags/#tag:tigervnc" class="md-tag">tigervnc</a>
+      
+    
+      
+      
+      
+      
+        <a href="../../../../../tags/#tag:vnc" class="md-tag">vnc</a>
+      
+    
+      
+      
+      
+      
+        <a href="../../../../../tags/#tag:x11vnc" class="md-tag">x11vnc</a>
+      
+    
+  </nav>
+
+
+
+  <h1>vnc 和 rdp 远程</h1>
+
+<h2 id="说明">说明<a class="headerlink" href="#说明" title="Permanent link">&para;</a></h2>
+<p>写这个的原因是，网络上的教程真的太烂了。比如：</p>
+<ul>
+<li>没有说明就默认用 centos</li>
+<li>默认是服务器版本的 Linux 发行版，没有桌面环境</li>
+<li>桌面环境默认用 xfce，而很少有 gnome 的</li>
+<li>vnc 各种版本，默认只说明其中一种</li>
+<li>xstartup 没有任何说明，如何配置</li>
+</ul>
+<p>各种 remote desktop 软件，可以看到最近更新时间</p>
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/Comparison_of_remote_desktop_software">Comparison of remote desktop software - Wikipedia</a></li>
+</ul>
+<!-- more -->
+<h2 id="rdp">RDP<a class="headerlink" href="#rdp" title="Permanent link">&para;</a></h2>
+<p>RDP 是 Windows 远程桌面使用的一种<strong>专利</strong>协议。</p>
+<blockquote>
+<p><strong>Remote Desktop Protocol</strong> (<strong>RDP</strong>) is a <a href="https://en.wikipedia.org/wiki/Proprietary_protocol">proprietary protocol</a> developed by <a href="https://en.wikipedia.org/wiki/Microsoft">Microsoft</a> which provides a user with a <a href="https://en.wikipedia.org/wiki/Graphical_user_interface">graphical interface</a> to connect to another computer over a network connection.[<a href="https://en.wikipedia.org/wiki/Remote_Desktop_Protocol#cite_note-:0-1">1]</a> The user employs RDP client software for this purpose, while the other computer must run RDP server software.Clients exist for most versions of <a href="https://en.wikipedia.org/wiki/Microsoft_Windows">Microsoft Windows</a> (including <a href="https://en.wikipedia.org/wiki/Windows_Mobile">Windows Mobile</a>), <a href="https://en.wikipedia.org/wiki/Linux">Linux</a>, <a href="https://en.wikipedia.org/wiki/Unix">Unix</a>, <a href="https://en.wikipedia.org/wiki/MacOS">macOS</a>, <a href="https://en.wikipedia.org/wiki/IOS">iOS</a>, <a href="https://en.wikipedia.org/wiki/Android_(operating_system)">Android</a>, and other <a href="https://en.wikipedia.org/wiki/Operating_system">operating systems</a>. RDP servers are built into Windows operating systems; an RDP server for Unix and OS X also exists. By default, the server listens on <a href="https://en.wikipedia.org/wiki/Transmission_Control_Protocol">TCP</a> <a href="https://en.wikipedia.org/wiki/Computer_port_(software)">port</a> 3389[<a href="https://en.wikipedia.org/wiki/Remote_Desktop_Protocol#cite_note-MSKBDefaultPort-2">2]</a> and <a href="https://en.wikipedia.org/wiki/User_Datagram_Protocol">UDP</a> port 3389.[<a href="https://en.wikipedia.org/wiki/Remote_Desktop_Protocol#cite_note-3">3]</a></p>
+</blockquote>
+<p>但是不知怎么做到的，linux 下也有 rdp server 的开源实现——xrdp</p>
+<p><a href="https://github.com/neutrinolabs/xrdp">neutrinolabs/xrdp: xrdp: an open source RDP server (github.com)</a></p>
+<h3 id="安装">安装<a class="headerlink" href="#安装" title="Permanent link">&para;</a></h3>
+<ul>
+<li>对于服务器 linux 需要安装桌面环境，如 xfce，Gnome（不知为何网上搜索教程全部都默认你没有桌面环境，并且都叫你安装 xfce，感觉很奇怪）</li>
+</ul>
+<ul>
+<li>
+<p>安装只需要一行命令</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>sudo apt install xrdp
+</span></code></pre></div>
+</li>
+</ul>
+<ul>
+<li>
+<p>然后就可以通过 systemctl 看到服务正在运行了</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>sudo systemctl status xrdp
+</span></code></pre></div>
+<p>xrdp 监听的端口和 windows 一样也是 3389，需要打开防火墙。</p>
+</li>
+</ul>
+<ul>
+<li>然后便可以通过 RDP 客户端连接使用了</li>
+</ul>
+<h3 id="问题">问题<a class="headerlink" href="#问题" title="Permanent link">&para;</a></h3>
+<ul>
+<li>显示黑屏：xrdp 只支持同一个用户登录一个桌面。因此需要把其他登录了桌面的用户退出。</li>
+</ul>
+<ul>
+<li><strong>显示卡顿</strong>：网上有类似问题，但是还不知如何解决</li>
+<li>同样有任务栏 (dock) 不显示问题</li>
+</ul>
+<h3 id="rdp-client">RDP client<a class="headerlink" href="#rdp-client" title="Permanent link">&para;</a></h3>
+<p><a href="https://en.wikipedia.org/wiki/Remote_Desktop_Protocol">Remote Desktop Protocol - Wikipedia</a> #Non-Microsoft implementations</p>
+<ul>
+<li>mstsc.exe 的全名是 (microsoft terminal service client)</li>
+</ul>
+<ul>
+<li>rdesktop -&gt; FreeRDP -&gt; Remmina<ul>
+<li>rdesktop 很老</li>
+<li>命令行用 FreeRDP</li>
+<li>GUI 用 Remmina（基于 FreeRDP）</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>server<ul>
+<li>xrdp</li>
+</ul>
+</li>
+</ul>
+<h2 id="vnc">VNC<a class="headerlink" href="#vnc" title="Permanent link">&para;</a></h2>
+<p>VNC 则是一个开源的协议用于远程控制计算机</p>
+<blockquote>
+<p>In computing, <strong>Virtual Network Computing</strong> (<strong>VNC</strong>) is a graphical desktop-sharing system that uses the <a href="https://en.wikipedia.org/wiki/RFB_protocol">Remote Frame Buffer protocol (RFB)</a> to remotely control another <a href="https://en.wikipedia.org/wiki/Computer">computer</a>. It transmits the <a href="https://en.wikipedia.org/wiki/Computer_keyboard">keyboard</a> and <a href="https://en.wikipedia.org/wiki/Computer_mouse">mouse</a> input from one computer to another, relaying the graphical-<a href="https://en.wikipedia.org/wiki/Computer_screen">screen</a> updates, over a <a href="https://en.wikipedia.org/wiki/Computer_network">network</a>.[<a href="https://en.wikipedia.org/wiki/Virtual_Network_Computing#cite_note-1">1]</a></p>
+</blockquote>
+<p>linux 下有好多不同的 vncserver，如 tightvnc, tigervnc, ultravnc 等，<strong>不同 vncserver 的命令不同，配置文件不同</strong>，网上教程比较杂乱。这里以 tigervnc 为说明。</p>
+<h3 id="tigervnc-ubuntu2004">tigervnc ubuntu20.04<a class="headerlink" href="#tigervnc-ubuntu2004" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>sudo apt install tigervnc-standalone-server
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>vncserver -localhost no :1
+</span></code></pre></div>
+<h4 id="xfce4">xfce4<a class="headerlink" href="#xfce4" title="Permanent link">&para;</a></h4>
+<p><a href="https://groups.google.com/g/tigervnc-users/c/hrY6LJsZJ8c">vncserver 1.7 failed command /etc/X11/Xvnc-session Debian Stretch (google.com)</a></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>vncserver -localhost no :1 -xstartup ~/.vnc/xstartup-xfce4
+</span></code></pre></div>
+<p>xstartup-xfce4</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="ch">#! /bin/sh  </span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="nb">test</span><span class="w"> </span>x<span class="s2">&quot;</span><span class="nv">$SHELL</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>x<span class="s2">&quot;&quot;</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nv">SHELL</span><span class="o">=</span>/bin/bash<span class="w">  </span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="nb">test</span><span class="w"> </span>x<span class="s2">&quot;</span><span class="nv">$1</span><span class="s2">&quot;</span><span class="w">     </span><span class="o">=</span><span class="w"> </span>x<span class="s2">&quot;&quot;</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">set</span><span class="w"> </span>--<span class="w"> </span>default<span class="w">  </span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>vncconfig<span class="w"> </span>-iconic<span class="w"> </span><span class="p">&amp;</span><span class="w">  </span>
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="nv">$SHELL</span><span class="w"> </span>-l<span class="w"> </span><span class="s">&lt;&lt;EOF</span>
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>
+</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="s">xterm -geometry 80x24+10+10 -ls -title &quot;$VNCDE</span>SKTOP<span class="w"> </span>Desktop<span class="s2">&quot; &amp;  </span>
+</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>
+</span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="s2">DESKTOP_SESSION=xfce  </span>
+</span><span id="__span-4-13"><a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a><span class="s2">export DESKTOP_SESSION  </span>
+</span><span id="__span-4-14"><a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a><span class="s2">startxfce4</span>
+</span></code></pre></div>
+<h4 id="遇到问题">遇到问题<a class="headerlink" href="#遇到问题" title="Permanent link">&para;</a></h4>
+<p><a href="https://askubuntu.com/questions/1261037/cant-open-terminal-through-tightvncserver-on-ubuntu-20-no-gnome-panel">20.04 - Can't open terminal through tightvncserver on Ubuntu 20 / no gnome panel - Ask Ubuntu</a>
+vnc 点击 terminal 无法应
+原因：</p>
+<ul>
+<li>对于 xfce 点击 terminal，默认打开 x-terminal-emulator，而它链接到 gnome-terminal warpper。<ul>
+<li>You can get this info from Applications-&gt;File Manager-&gt;Edit-&gt;Configure custom actions..., and Applications-&gt;Settings-&gt;Settings Manager-&gt;Preferred Applications-&gt;Utilities, also to trace the symlink of x-terminal-emulator.</li>
+</ul>
+</li>
+<li>卡住是因为在尝试连接 d-bus。The thing is that gnome-terminal is trying to connect to D-Bus but failed to get a response and timed out, to verify it you could launch D-Bus first, e.g. <code>$ dbus-launch gnome-terminal</code> and you will see a gnome terminal pops up.</li>
+<li>最简单的方式是换一个 terminal。如 Applications-&gt;System-&gt;Xfce Terminal。或者<code>sudo update-alternatives --config x-terminal-emulator</code>修改默认的 terminal。可以选择 xfce4-terminal 或者 xterm</li>
+<li>
+<p>如果想要使用 gnome-terminal。将以下代码插入 xstartup 中 startxfce4 之前即可</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>xrdb $HOME/.Xresources 
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>xsetroot -solid grey
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>export XKL_XMODMAP_DISABLE=1 
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>export XDG_CURRENT_DESKTOP=&quot;GNOME-Flashback:Unity&quot; 
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>export XDG_MENU_PREFIX=&quot;gnome-flashback-&quot;
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>unset DBUS_SESSION_BUS_ADDRESS
+</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>
+</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>gnome-session --session=gnome-flashback-metacity --disable-acceleration-check &amp;
+</span></code></pre></div>
+</li>
+</ul>
+<h3 id="tigervnc">tigervnc<a class="headerlink" href="#tigervnc" title="Permanent link">&para;</a></h3>
+<p>参考：</p>
+<ul>
+<li><a href="https://help.ubuntu.com/community/VNC/Servers">VNC/Servers - Community Help Wiki (ubuntu.com)</a></li>
+<li><a href="https://page.syao.fun/2020/08/06/linux_vnc.html">VNC 的安装与使用 - SYAO</a><ul>
+<li>注意该教程针对 1.11 版本，1.12 中配置文件，systemd service 名称改变了。</li>
+</ul>
+</li>
+<li><a href="https://github.com/TigerVNC/tigervnc">TigerVNC/tigervnc: High performance, multi-platform VNC client and server (github.com)</a><ul>
+<li>readme 中的关于<em>Xvnc</em>,<em><a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#118;&#110;&#99;&#115;&#101;&#114;&#118;&#101;&#114;&#64;&#46;&#115;&#101;&#114;&#118;&#105;&#99;&#101;">&#118;&#110;&#99;&#115;&#101;&#114;&#118;&#101;&#114;&#64;&#46;&#115;&#101;&#114;&#118;&#105;&#99;&#101;</a></em>介绍已经过时了（名字变化了）</li>
+</ul>
+</li>
+</ul>
+<h4 id="使用情况">使用情况<a class="headerlink" href="#使用情况" title="Permanent link">&para;</a></h4>
+<ul>
+<li>台式机离开不用时，点击注销，win+L 锁屏是不够的。注销后，查看运行的 Xserver 会发现从 X1 变成了 X0。</li>
+<li>vnc 远程不再使用后，可以 systemctl stop 掉服务，也可以点击注销。此时 vnc 的 Xserver 也会关闭。</li>
+</ul>
+<h4 id="桌面环境">桌面环境<a class="headerlink" href="#桌面环境" title="Permanent link">&para;</a></h4>
+<p>需要有一个桌面环境 (desktop environment)</p>
+<p>ubuntu desktop 版使用自带的 GNOME 桌面即可，或者参考如何安装不同桌面环境，如 xfce：<a href="https://www.howtogeek.com/193129/how-to-install-and-use-another-desktop-environment-on-linux/">How to Install and Use Another Desktop Environment on Linux (howtogeek.com)</a></p>
+<h4 id="安装-tigervnc">安装 tigervnc<a class="headerlink" href="#安装-tigervnc" title="Permanent link">&para;</a></h4>
+<ul>
+<li>
+<p>apt 搜索 tigervnc 有很多包，需要确定哪个包包含 vnc server</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>~ apt search tigervnc
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>tigervnc-common/jammy,now 1.12.0+dfsg-4 amd64 [已安装，自动]
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>  Virtual network computing; Common software needed by servers
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>tigervnc-scraping-server/jammy 1.12.0+dfsg-4 amd64
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>  Virtual network computing server performing X screen scraping
+</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>
+</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>tigervnc-standalone-server/jammy,now 1.12.0+dfsg-4 amd64 [已安装]
+</span><span id="__span-6-10"><a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a>  Standalone virtual network computing server
+</span><span id="__span-6-11"><a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a>
+</span><span id="__span-6-12"><a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a>tigervnc-tools/jammy,now 1.12.0+dfsg-4 amd64 [已安装，自动]
+</span><span id="__span-6-13"><a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a>  Virtual network computing; Tools for both clients and servers
+</span><span id="__span-6-14"><a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a>
+</span><span id="__span-6-15"><a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a>tigervnc-viewer/jammy 1.12.0+dfsg-4 amd64
+</span><span id="__span-6-16"><a id="__codelineno-6-16" name="__codelineno-6-16" href="#__codelineno-6-16"></a>  Virtual network computing client for X
+</span><span id="__span-6-17"><a id="__codelineno-6-17" name="__codelineno-6-17" href="#__codelineno-6-17"></a>
+</span><span id="__span-6-18"><a id="__codelineno-6-18" name="__codelineno-6-18" href="#__codelineno-6-18"></a>tigervnc-xorg-extension/jammy 1.12.0+dfsg-4 amd64
+</span><span id="__span-6-19"><a id="__codelineno-6-19" name="__codelineno-6-19" href="#__codelineno-6-19"></a>  Virtual network computing X server extension
+</span></code></pre></div>
+</li>
+</ul>
+<ul>
+<li>
+<p>可以在<a href="https://packages.ubuntu.com/">Ubuntu – Ubuntu Packages Search</a>搜索，查看包里面包含哪些内容。比如 tigervnc-standalone-server</p>
+<p><a href="https://packages.ubuntu.com/jammy/amd64/tigervnc-standalone-server/filelist">https://packages.ubuntu.com/jammy/amd64/tigervnc-standalone-server/filelist</a></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>/etc/X11/Xtigervnc-session
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>/etc/tigervnc/vncserver.users
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>/lib/systemd/system/tigervncserver@.service
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>/usr/bin/Xtigervnc
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>/usr/bin/tigervncserver
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>/usr/libexec/tigervncsession-start
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>/usr/sbin/tigervncsession
+</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>/usr/share/doc/tigervnc-standalone-server/changelog.Debian.gz
+</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>/usr/share/doc/tigervnc-standalone-server/copyright
+</span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a>/usr/share/man/man1/Xtigervnc.1.gz
+</span><span id="__span-7-11"><a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a>/usr/share/man/man1/tigervncserver.1.gz
+</span><span id="__span-7-12"><a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a>/usr/share/man/man8/tigervncsession.8.gz
+</span></code></pre></div>
+<p>可以看到包含<code>/usr/bin/tigervncserver</code>，即为我们需要的。同时还包含一个 systemd 服务模板——<code>/lib/systemd/system/tigervncserver@.service</code>，说明可以使用 systemd 启动 vnc server</p>
+</li>
+</ul>
+<ul>
+<li>
+<p>安装</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>sudo apt install tigervnc-standalone-server
+</span></code></pre></div>
+</li>
+</ul>
+<h4 id="连接密码">连接密码<a class="headerlink" href="#连接密码" title="Permanent link">&para;</a></h4>
+<p>其它 vncserver，第一次运行时会让用户设置密码，如</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>vncserver -localhost no #设置为no localhost，不然只能在本计算机上访问（LAN内的都不行）。
+</span></code></pre></div>
+<p>tigervnc 1.10 后虽然不应使用 vncserver 来启动，但是也可以使用该方式设置密码。</p>
+<p>创建密码后，会生成~/.vnc/passwd 文件。</p>
+<h4 id="配置-vncserver">配置 vncserver<a class="headerlink" href="#配置-vncserver" title="Permanent link">&para;</a></h4>
+<p>我们需要配置$HOME/.vnc/tigervnc.conf，示例配置如下，其中只有 session 是必须的，对应<code>/usr/share/xsessions</code>目录下的一个桌面环境。</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>$session=ubuntu;
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>$geometry = &quot;1920x1080&quot;;
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>$localhost = &quot;no&quot;;
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>#$depth = &quot;24&quot;;
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>#$pixelformat = &quot;rgb888&quot;;
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>$SecurityTypes = &quot;VncAuth,TLSVnc&quot;;
+</span></code></pre></div>
+<h5 id="配置的说明">配置的说明<a class="headerlink" href="#配置的说明" title="Permanent link">&para;</a></h5>
+<ul>
+<li>查看 man tigervnc.conf(5x)</li>
+<li>查看<code>/etc/tigervnc/vncserver-config-defaults</code></li>
+<li>可查看<code>/lib/systemd/system/tigervncserver@.service</code>注释说明</li>
+</ul>
+<p>查看<code>man tigervnc.conf(5x)</code>可以知道，以下四级配置依次生效，后者覆盖前者：vncserver-config-defaults, $HOME/.vnc/tigervnc.conf, command-line option, vncserver-config-mandatory</p>
+<p>具体配置可查看<code>/etc/tigervnc/vncserver-config-defaults</code></p>
+<p><strong>user assign</strong></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>#/etc/tigervnc/vncserver.users
+</span></code></pre></div>
+<p><strong>startup script</strong></p>
+<ul>
+<li>相当于说默认条件下：<code>$vncUserDir/Xtigervnc-session</code>，<code>$vncUserDir/xstartup</code>，<code>/etc/X11/Xtigervnc-session</code>重要性依次降低，只有前者不存在的情况下才会执行后者。</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a># $vncStartup points to a script that will be started at the very beginning
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a># when neither $vncUserDir/Xtigervnc-session nor $vncUserDir/xstartup is present.
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a># If $vncUserDir/Xtigervnc-session is present, it will be used. Otherwise, we try
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a># $vncUserDir/xstartup. If this is also absent, then we use the script given by
+</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a># $vncStartup. If $vncStartup is specified in $vncUserDir/tigervnc.conf, then this
+</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a># script is used unconditionally. That is without checking for the presence of
+</span><span id="__span-12-7"><a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a># $vncUserDir/Xtigervnc-session or $vncUserDir/xstartup.
+</span><span id="__span-12-8"><a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a>#
+</span><span id="__span-12-9"><a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a># Default: $vncStartup = &quot;/etc/X11/Xtigervnc-session&quot;;
+</span></code></pre></div>
+<p><strong>session(桌面环境)</strong>，<strong>必须设置</strong></p>
+<ul>
+<li>
+<p>ubuntu22.04 安装了 xfce4 后的<code>/usr/share/xsessions</code></p>
+<ul>
+<li>ubuntu.desktop：使用 wayland 替代 X windows system</li>
+</ul>
+<ul>
+<li>ubuntu-xorg.desktop：使用 X windows system</li>
+<li>xfce.desktop</li>
+</ul>
+</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a># The $session option controls which X session type will be started. This
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a># should match one of the files in /usr/share/xsessions. For example, if there
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a># is a file called gnome.desktop, then $session = &quot;gnome&quot; would start this X
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a># session. The command to start the session is passed to the $vncStartup
+</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a># script. If this is not specified, then /etc/X11/Xtigervnc-session will start
+</span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a># the session specified by /usr/bin/x-session-manager.
+</span><span id="__span-13-7"><a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a>#
+</span><span id="__span-13-8"><a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a># Default: $session = undef;
+</span></code></pre></div>
+<p><strong>其它</strong></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>#显示器几何大小
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a># Default: $geometry = &quot;1920x1200&quot;;
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>
+</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>#颜色
+</span><span id="__span-14-5"><a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a># $depth       sets the framebuffer color depth. Must be one of 16, 24, or 32.
+</span><span id="__span-14-6"><a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a># $pixelformat sets the default pixelformat.
+</span><span id="__span-14-7"><a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a>#              A default can be derived if the tigervncserver is run in a
+</span><span id="__span-14-8"><a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a>#              X session -- either $ENV{DISPLAY} or the session given by
+</span><span id="__span-14-9"><a id="__codelineno-14-9" name="__codelineno-14-9" href="#__codelineno-14-9"></a>#              $getDefaultFrom -- with the -xdisplaydefaults option. The depth
+</span><span id="__span-14-10"><a id="__codelineno-14-10" name="__codelineno-14-10" href="#__codelineno-14-10"></a>#              and pixelformat can also be changed at the commandline with
+</span><span id="__span-14-11"><a id="__codelineno-14-11" name="__codelineno-14-11" href="#__codelineno-14-11"></a>#              the -depth and -pixelformat options. Otherwise, the fixed
+</span><span id="__span-14-12"><a id="__codelineno-14-12" name="__codelineno-14-12" href="#__codelineno-14-12"></a>#              defaults provided below for the two settings will be used.
+</span><span id="__span-14-13"><a id="__codelineno-14-13" name="__codelineno-14-13" href="#__codelineno-14-13"></a># Example: $depth = &quot;16&quot;;
+</span><span id="__span-14-14"><a id="__codelineno-14-14" name="__codelineno-14-14" href="#__codelineno-14-14"></a>#          $pixelformat = &quot;rgb565&quot;;
+</span><span id="__span-14-15"><a id="__codelineno-14-15" name="__codelineno-14-15" href="#__codelineno-14-15"></a># Default: $depth = &quot;24&quot;;
+</span><span id="__span-14-16"><a id="__codelineno-14-16" name="__codelineno-14-16" href="#__codelineno-14-16"></a># Default: $pixelformat = undef;
+</span><span id="__span-14-17"><a id="__codelineno-14-17" name="__codelineno-14-17" href="#__codelineno-14-17"></a>
+</span><span id="__span-14-18"><a id="__codelineno-14-18" name="__codelineno-14-18" href="#__codelineno-14-18"></a>#是否本地才能访问
+</span><span id="__span-14-19"><a id="__codelineno-14-19" name="__codelineno-14-19" href="#__codelineno-14-19"></a># Default: $localhost = &quot;yes&quot;; # if $SecurityTypes does not contain any TLS*
+</span><span id="__span-14-20"><a id="__codelineno-14-20" name="__codelineno-14-20" href="#__codelineno-14-20"></a>#                              #    or X509* security types or the $SecurityTypes
+</span><span id="__span-14-21"><a id="__codelineno-14-21" name="__codelineno-14-21" href="#__codelineno-14-21"></a>#                              #    does contain at least on *None security type.
+</span><span id="__span-14-22"><a id="__codelineno-14-22" name="__codelineno-14-22" href="#__codelineno-14-22"></a># Default: $localhost = &quot;no&quot;;  # Otherwise
+</span></code></pre></div>
+<h4 id="运行">运行<a class="headerlink" href="#运行" title="Permanent link">&para;</a></h4>
+<p>systemd 版本</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>sudo systemctl start tigervncserver@:1 #注意是:1不是1
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>sudo systemctl enable tigervncserver@:1 #开机自启动
+</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a>sudo systemctl stop tigervncserver@:1 
+</span></code></pre></div>
+<p>基本操作</p>
+<p>(使用 sudo 看到的是 root 用户开启的，看不到普通用户)</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>vncserver -list    #查看当前运行的server。 在tightvnc中没有这个选项，需要通过查看~/.vnc目录来查看
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>vncserver -kill :number  #停止指定的server
+</span></code></pre></div>
+<h4 id="隧道">隧道<a class="headerlink" href="#隧道" title="Permanent link">&para;</a></h4>
+<p>-localhost yes 时，只能在 127.0.0.1 上访问 vncserver，需要利用 ssh 在客户端上和服务器上建立一条隧道。</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>ssh -L 5901:localhost:5901 -C -N user@address -p PORT
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>ssh -L 5901:localhost:5901 -C -N rzyen #
+</span></code></pre></div>
+<ul>
+<li>
+<p>-L 5901:localhost:5901</p>
+<p>The <strong>-L</strong> argument specifies the post on your local computer (ours is <strong>59000</strong>) to the given host (<strong>localhost</strong>) and port (<strong>5901</strong>) on the destination server (<strong>server_ip_address</strong>).</p>
+</li>
+</ul>
+<ul>
+<li>-C: This argument speeds up processes and minimizes resource usage.</li>
+</ul>
+<ul>
+<li>-N: This argument prevents execution of remote commands and tells SSH to only forward ports</li>
+</ul>
+<h4 id="问题_1">问题<a class="headerlink" href="#问题_1" title="Permanent link">&para;</a></h4>
+<ul>
+<li>
+<p>远程访问界面和本地有些不一样。比如侧边栏自动隐藏了，只有按 win 键才会出现。</p>
+<ul>
+<li>
+<p><a href="https://github.com/TigerVNC/tigervnc/issues/1168">systemd can't start on ubuntu 20.04 with error: No user configured for display 1 · Issue #1168 · TigerVNC/tigervnc (github.com)</a></p>
+<blockquote>
+<p>Gnome session doesn't load users' settings, it loads defaults. For instance, how dock should look
+<a href="https://user-images.githubusercontent.com/2255040/103416828-f869f700-4b90-11eb-836e-4446767002a0.png"><img src="https://user-images.githubusercontent.com/2255040/103416828-f869f700-4b90-11eb-836e-4446767002a0.png" alt="image" style="zoom:25%;" /></a>
+And how it is right now:
+<a href="https://user-images.githubusercontent.com/2255040/103416852-0c155d80-4b91-11eb-8d1f-5ab7f534e8d4.png"><img src="https://user-images.githubusercontent.com/2255040/103416852-0c155d80-4b91-11eb-8d1f-5ab7f534e8d4.png" alt="image" style="zoom:25%;" /></a></p>
+</blockquote>
+</li>
+</ul>
+<ul>
+<li>使用 wayland 版的 ubuntu DE 不会遇到</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>
+<p>使用以下命令，连接后可以看到一双眼睛</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>tigervncserver -xstartup /usr/bin/xeyes
+</span></code></pre></div>
+</li>
+</ul>
+<ul>
+<li>
+<p>不同的命令到底作用是什么？</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>tigervncconfig
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>tigervncpasswd
+</span><span id="__span-19-3"><a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>tigervncserver
+</span><span id="__span-19-4"><a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a>tigervncsession
+</span><span id="__span-19-5"><a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a>Xtigervnc
+</span></code></pre></div>
+<ul>
+<li>
+<p>man Xvnc</p>
+<blockquote>
+<p>Xtigervnc is the X VNC (Virtual Network Computing) server.  It is based on a standard X server, but it has a "virtual" screen rather than a physical one.  X applications display themselves on it as if it were a normal X display, but they can only  be  accessed  via  a  VNC  viewer  -  see vncviewer(1).</p>
+<p>So  Xtigervnc  is really two servers in one. To the applications it is an X server, and to the remote VNC users it is a VNC server.</p>
+</blockquote>
+</li>
+</ul>
+<ul>
+<li>
+<p>man vncserver</p>
+<blockquote>
+<p>tigervncserver  is  used  to  start a TigerVNC (Virtual Network Computing) desktop. tigervncserver is a Perl wrapper script which simplifies the process of starting an instance of the TigerVNC server Xtigervnc.</p>
+<p>It runs Xtigervnc with appropriate options and starts some X  applications  to be displayed in the TigerVNC desktop.</p>
+</blockquote>
+</li>
+</ul>
+<ul>
+<li>
+<p>/etc/X11/Xsession</p>
+<blockquote>
+<p>global Xsession file -- used by display managers and xinit (startx)</p>
+</blockquote>
+<p>而 vncserver 默认会调用该脚本</p>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>
+<p>tigervnc1.12.0 直接使用 vncserver 启动报错（这说明了必须使用 systemd 启动）</p>
+<p>直接运行该命令会报 warnning 信息</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>➜  ~ vncserver -localhost no
+</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>vncserver: Warning: No X session desktop file or command for 0
+</span></code></pre></div>
+<p>此时 vnc 直接连接，只有一个黑白窗口显示<code>Xsession: unable to launch "0" X session --- "0" not found; falling back to default session</code></p>
+</li>
+</ul>
+<ul>
+<li>
+<p>既然 X windows System 本身就支持网络显示。为什么不在客户端上跑一个 X server，这样服务端的 X client 不久可以远程显示到客户端上了吗？</p>
+<p>man Xvnc  (tigervnc 1.10)</p>
+</li>
+</ul>
+<h3 id="x11vnc">x11vnc<a class="headerlink" href="#x11vnc" title="Permanent link">&para;</a></h3>
+<ul>
+<li><a href="https://wiki.archlinux.org/title/x11vnc">X11vnc - ArchWiki (archlinux.org)</a></li>
+</ul>
+<blockquote>
+<p><a href="https://en.wikipedia.org/wiki/x11vnc">x11vnc</a> is a VNC server, it allows one to view remotely and interact with real X displays (i.e. a display corresponding to a physical monitor, keyboard, and mouse) with any VNC viewer. While it is not developed any longer by its original author Karl Runge, <em>LibVNC</em> and the GitHub community have taken over the development.</p>
+<p><em>x11vnc</em> does not create an extra display (or X desktop) for remote control. Instead, it shows in real time the existing X11 display, unlike <em>Xvnc</em>, part of <a href="https://wiki.archlinux.org/title/TigerVNC">TigerVNC</a>, which is an alternative VNC server available in the <a href="https://wiki.archlinux.org/title/Official_repositories">official repositories</a>.</p>
+<p>Also note that x11vnc is not shipped with a client viewer. Any VNC viewer should do the job and be compatible with the x11vnc server while not necessarily using all its functionalities. TigerVNC's <em>vncviewer</em> is a recommended client.</p>
+</blockquote>
+<h4 id="不同点">不同点<a class="headerlink" href="#不同点" title="Permanent link">&para;</a></h4>
+<ul>
+<li>
+<p>x11vnc 和 tigervnc, tightvnc 的不同</p>
+<ul>
+<li>需要 remote 端实际插上显示器</li>
+<li>local 端 (控制端) 的画面和 remote 显示器显示相同的画面</li>
+</ul>
+<p>因此<strong>适合远程协助场景</strong></p>
+</li>
+</ul>
+<ul>
+<li>实际使用过程中发现卡顿有点大，远不如 tigervnc 流畅，属于勉强能用水平。</li>
+<li>默认情况下，剪贴板不起作用</li>
+</ul>
+<h4 id="使用">使用<a class="headerlink" href="#使用" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>x11vnc -display :0
+</span></code></pre></div>
+<p>运行时会输出一些 guideline，按照其一步一步来即可</p>
+<ul>
+<li>
+<p>running X server</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>An X server (the one you wish to view) must be running before x11vnc is
+</span><span id="__span-22-2"><a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>   started: x11vnc does not start the X server.  (however, see the -create
+</span><span id="__span-22-3"><a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a>   option if that is what you really want).
+</span></code></pre></div>
+</li>
+</ul>
+<ul>
+<li>
+<p>指定 X Display</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>** You must use -display &lt;disp&gt;, -OR- set and export your $DISPLAY
+</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>   environment variable to refer to the display of the desired X server.
+</span><span id="__span-23-3"><a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a> - Usually the display is simply &quot;:0&quot; (in fact x11vnc uses this if you forget
+</span><span id="__span-23-4"><a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a>   to specify it), but in some multi-user situations it could be &quot;:1&quot;, &quot;:2&quot;,
+</span><span id="__span-23-5"><a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a>   or even &quot;:137&quot;.  Ask your administrator or a guru if you are having
+</span><span id="__span-23-6"><a id="__codelineno-23-6" name="__codelineno-23-6" href="#__codelineno-23-6"></a>   difficulty determining what your X DISPLAY is.
+</span></code></pre></div>
+</li>
+</ul>
+<ul>
+<li>
+<p>auth</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>** Next, you need to have sufficient permissions (Xauthority)
+</span><span id="__span-24-2"><a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>   to connect to the X DISPLAY.   Here are some Tips:
+</span><span id="__span-24-3"><a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a>
+</span><span id="__span-24-4"><a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a> - Often, you just need to run x11vnc as the user logged into the X session.
+</span><span id="__span-24-5"><a id="__codelineno-24-5" name="__codelineno-24-5" href="#__codelineno-24-5"></a>   So make sure to be that user when you type x11vnc.
+</span><span id="__span-24-6"><a id="__codelineno-24-6" name="__codelineno-24-6" href="#__codelineno-24-6"></a> - Being root is usually not enough because the incorrect MIT-MAGIC-COOKIE
+</span><span id="__span-24-7"><a id="__codelineno-24-7" name="__codelineno-24-7" href="#__codelineno-24-7"></a>   file may be accessed.  The cookie file contains the secret key that
+</span><span id="__span-24-8"><a id="__codelineno-24-8" name="__codelineno-24-8" href="#__codelineno-24-8"></a>   allows x11vnc to connect to the desired X DISPLAY.
+</span><span id="__span-24-9"><a id="__codelineno-24-9" name="__codelineno-24-9" href="#__codelineno-24-9"></a> - You can explicitly indicate which MIT-MAGIC-COOKIE file should be used
+</span><span id="__span-24-10"><a id="__codelineno-24-10" name="__codelineno-24-10" href="#__codelineno-24-10"></a>   by the -auth option, e.g.:
+</span><span id="__span-24-11"><a id="__codelineno-24-11" name="__codelineno-24-11" href="#__codelineno-24-11"></a>       x11vnc -auth /home/someuser/.Xauthority -display :0
+</span><span id="__span-24-12"><a id="__codelineno-24-12" name="__codelineno-24-12" href="#__codelineno-24-12"></a>       x11vnc -auth /tmp/.gdmzndVlR -display :0
+</span><span id="__span-24-13"><a id="__codelineno-24-13" name="__codelineno-24-13" href="#__codelineno-24-13"></a>   you must have read permission for the auth file.
+</span><span id="__span-24-14"><a id="__codelineno-24-14" name="__codelineno-24-14" href="#__codelineno-24-14"></a>   See also &#39;-auth guess&#39; and &#39;-findauth&#39; discussed below.
+</span></code></pre></div>
+<p>无人登录</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>If NO ONE is logged into an X session yet, but there is a greeter login
+</span><span id="__span-25-2"><a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a>   program like &quot;gdm&quot;, &quot;kdm&quot;, &quot;xdm&quot;, or &quot;dtlogin&quot; running, you will need
+</span><span id="__span-25-3"><a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a>   to find and use the raw display manager MIT-MAGIC-COOKIE file.
+</span><span id="__span-25-4"><a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a>   Some examples for various display managers:
+</span><span id="__span-25-5"><a id="__codelineno-25-5" name="__codelineno-25-5" href="#__codelineno-25-5"></a>
+</span><span id="__span-25-6"><a id="__codelineno-25-6" name="__codelineno-25-6" href="#__codelineno-25-6"></a>     gdm:     -auth /var/gdm/:0.Xauth
+</span><span id="__span-25-7"><a id="__codelineno-25-7" name="__codelineno-25-7" href="#__codelineno-25-7"></a>              -auth /var/lib/gdm/:0.Xauth
+</span><span id="__span-25-8"><a id="__codelineno-25-8" name="__codelineno-25-8" href="#__codelineno-25-8"></a>     kdm:     -auth /var/lib/kdm/A:0-crWk72
+</span><span id="__span-25-9"><a id="__codelineno-25-9" name="__codelineno-25-9" href="#__codelineno-25-9"></a>              -auth /var/run/xauth/A:0-crWk72
+</span><span id="__span-25-10"><a id="__codelineno-25-10" name="__codelineno-25-10" href="#__codelineno-25-10"></a>     xdm:     -auth /var/lib/xdm/authdir/authfiles/A:0-XQvaJk
+</span><span id="__span-25-11"><a id="__codelineno-25-11" name="__codelineno-25-11" href="#__codelineno-25-11"></a>     dtlogin: -auth /var/dt/A:0-UgaaXa
+</span><span id="__span-25-12"><a id="__codelineno-25-12" name="__codelineno-25-12" href="#__codelineno-25-12"></a>   Sometimes the command &quot;ps wwwwaux | grep auth&quot; can reveal the file location.
+</span><span id="__span-25-13"><a id="__codelineno-25-13" name="__codelineno-25-13" href="#__codelineno-25-13"></a>
+</span><span id="__span-25-14"><a id="__codelineno-25-14" name="__codelineno-25-14" href="#__codelineno-25-14"></a>   Starting with x11vnc 0.9.9 you can have it try to guess by using:
+</span><span id="__span-25-15"><a id="__codelineno-25-15" name="__codelineno-25-15" href="#__codelineno-25-15"></a>
+</span><span id="__span-25-16"><a id="__codelineno-25-16" name="__codelineno-25-16" href="#__codelineno-25-16"></a>              -auth guess
+</span><span id="__span-25-17"><a id="__codelineno-25-17" name="__codelineno-25-17" href="#__codelineno-25-17"></a>
+</span><span id="__span-25-18"><a id="__codelineno-25-18" name="__codelineno-25-18" href="#__codelineno-25-18"></a>   (see also the x11vnc -findauth option.)
+</span><span id="__span-25-19"><a id="__codelineno-25-19" name="__codelineno-25-19" href="#__codelineno-25-19"></a>
+</span><span id="__span-25-20"><a id="__codelineno-25-20" name="__codelineno-25-20" href="#__codelineno-25-20"></a>   Only root will have read permission for the file, and so x11vnc must be run
+</span><span id="__span-25-21"><a id="__codelineno-25-21" name="__codelineno-25-21" href="#__codelineno-25-21"></a>   as root (or copy it).  The random characters in the filenames will of course
+</span><span id="__span-25-22"><a id="__codelineno-25-22" name="__codelineno-25-22" href="#__codelineno-25-22"></a>   change and the directory the cookie file resides in is system dependent.
+</span></code></pre></div>
+</li>
+</ul>
+<h3 id="客户端">客户端<a class="headerlink" href="#客户端" title="Permanent link">&para;</a></h3>
+<p>realvnc 客户端，windows 下有单文件运行版本</p>
+<h4 id="novncweb-客户端">noVNC(web 客户端)<a class="headerlink" href="#novncweb-客户端" title="Permanent link">&para;</a></h4>
+<p>VNC 可以实现浏览器版本的客户端——noVNC</p>
+<p>需要在服务端安装响应软件来实现 websocket 代理。</p>
+<h2 id="其它-remote-desktop">其它 remote desktop<a class="headerlink" href="#其它-remote-desktop" title="Permanent link">&para;</a></h2>
+<h3 id="spice">spice<a class="headerlink" href="#spice" title="Permanent link">&para;</a></h3>
+<p><a href="https://en.wikipedia.org/wiki/Simple_Protocol_for_Independent_Computing_Environments">Simple Protocol for Independent Computing Environments - Wikipedia</a></p>
+<ul>
+<li>
+<p>SPICE 最初用作虚拟机显示，有着不错的性能</p>
+<ul>
+<li>半虚拟化</li>
+</ul>
+<ul>
+<li>
+<blockquote>
+<p>The QEMU binary links to the spice-server library to provide this capability and implements the QXL paravirtualized framebuffer device to enable the guest OS to take advantage of the performance benefits the SPICE protocol offers.</p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>virt-viewer 默认</li>
+</ul>
+<ul>
+<li>现在也可以结合 xorg 用于 remote desktop connection (Xspice)</li>
+</ul>
+<h2 id="x11-原理">X11 原理<a class="headerlink" href="#x11-原理" title="Permanent link">&para;</a></h2>
+<h3 id="查看正在运行的-x-server">查看正在运行的 X server<a class="headerlink" href="#查看正在运行的-x-server" title="Permanent link">&para;</a></h3>
+<ul>
+<li>
+<p><a href="https://unix.stackexchange.com/questions/17255/is-there-a-command-to-list-all-open-displays-on-a-machine/17278#17278">ssh - Is there a command to list all open displays on a machine? - Unix &amp; Linux Stack Exchange</a></p>
+<p>原理是本地运行的 X server 和 X client 间的通信是通过共享内存方式实现的</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>➜  ~ ls /tmp/.X11-unix
+</span><span id="__span-26-2"><a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a>X0
+</span></code></pre></div>
+<p>开启 tigervnc 后会出现 X1</p>
+</li>
+</ul>
+<ul>
+<li>
+<p>登录了 gdm 后，gdm 启动 X server。</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>ps aux |grep xorg
+</span><span id="__span-27-2"><a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a>yfy         4380  4.7  1.0 1064284 81108 tty2    Sl+  14:11   0:00 /usr/lib/xorg/Xorg vt2 -displayfd 3 -auth /run/user/1000/gdm/Xauthority -background none -noreset -keeptty -verbose 3
+</span><span id="__span-27-3"><a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a>yfy         4997  0.0  0.0  12132   716 pts/0    S+   14:12   0:00 grep --color=auto --exclude-dir=.bzr --exclude-dir=CVS --exclude-dir=.git --exclude-dir=.hg --exclude-dir=.svn --exclude-dir=.idea --exclude-dir=.tox xorg
+</span></code></pre></div>
+</li>
+</ul>
+<h3 id="x-server-display">X server, display<a class="headerlink" href="#x-server-display" title="Permanent link">&para;</a></h3>
+<ul>
+<li>
+<p><a href="https://unix.stackexchange.com/questions/503806/what-are-x-server-display-and-screen/503884#503884">x11 - What are X server, display and screen? - Unix &amp; Linux Stack Exchange</a></p>
+<p><img alt="X11 connections example" src="https://imagebed.yfycloud.site/2025/12/89a1468a30a2c5467c231e3ac1eef349.png" /></p>
+</li>
+</ul>
+<h3 id="boot-to-text-prompt">boot to text prompt<a class="headerlink" href="#boot-to-text-prompt" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>sudo systemctl set-default multi-user.target
+</span><span id="__span-28-2"><a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a>#sudo systemctl set-default graphical.target
+</span><span id="__span-28-3"><a id="__codelineno-28-3" name="__codelineno-28-3" href="#__codelineno-28-3"></a>
+</span><span id="__span-28-4"><a id="__codelineno-28-4" name="__codelineno-28-4" href="#__codelineno-28-4"></a>sudo reboot
+</span></code></pre></div>
+<ul>
+<li>ctrl + alt + F2 进入 tty2。类似的 (F1, F3, ...)</li>
+</ul>
+<ul>
+<li>
+<p>即使是在 text 模式下，开启 display manager，会立马进入 GUI 界面，登录后一切正常。</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>sudo systemctl start gdm3
+</span></code></pre></div>
+</li>
+</ul>
+<ul>
+<li>
+<p>同样的，在 GUI 界面，关闭 display manager 后，ctrl-alt-F2 进入 text prompt</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>sudo systemctl stop gdm3
+</span></code></pre></div>
+</li>
+</ul>
+<ul>
+<li><strong>在 text 模式下，仍然可以使用 tiger vnc</strong></li>
+</ul>
+<p><strong>进一步的了解，可以看下 systemd 过程</strong></p>
+<h3 id="笔记本关闭屏幕">笔记本关闭屏幕<a class="headerlink" href="#笔记本关闭屏幕" title="Permanent link">&para;</a></h3>
+<ul>
+<li>
+<p><a href="https://wiki.archlinux.org/title/Display_Power_Management_Signaling">Display Power Management Signaling - ArchWiki (archlinux.org)</a></p>
+<ul>
+<li>Standby，suspend，off 是不同省电级别，但是是针对 CRT 显示器的，对于 LCD 显示器均相同。</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>Command Description
+</span><span id="__span-31-2"><a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a>xset s off Disable screen saver blanking
+</span><span id="__span-31-3"><a id="__codelineno-31-3" name="__codelineno-31-3" href="#__codelineno-31-3"></a>xset s 3600 3600 Change blank time to 1 hour
+</span><span id="__span-31-4"><a id="__codelineno-31-4" name="__codelineno-31-4" href="#__codelineno-31-4"></a>xset -dpms Turn off DPMS
+</span><span id="__span-31-5"><a id="__codelineno-31-5" name="__codelineno-31-5" href="#__codelineno-31-5"></a>xset s off -dpms Disable DPMS and prevent screen from blanking
+</span><span id="__span-31-6"><a id="__codelineno-31-6" name="__codelineno-31-6" href="#__codelineno-31-6"></a>xset dpms force off Turn off screen immediately
+</span><span id="__span-31-7"><a id="__codelineno-31-7" name="__codelineno-31-7" href="#__codelineno-31-7"></a>xset dpms force standby Standby screen
+</span><span id="__span-31-8"><a id="__codelineno-31-8" name="__codelineno-31-8" href="#__codelineno-31-8"></a>xset dpms force suspend Suspend screen
+</span></code></pre></div>
+</li>
+</ul>
+<ul>
+<li>笔记本关闭屏幕，只是出于省电。关闭台式机显示器电源应视为没有插屏幕。</li>
+</ul>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+  
+
+
+
+      
+    </article>
+  </div>
+
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+        
+      
+      <nav class="md-footer__inner md-grid" aria-label="页脚" >
+        
+          
+          <a href="../../../../../%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/2022/07/16/2022-07-16-Linux%E5%AE%89%E8%A3%85windows%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%B9%B6%E6%98%BE%E5%8D%A1%E7%9B%B4%E9%80%9A/" class="md-footer__link md-footer__link--prev" aria-label="上一页: Linux 安装 windows 虚拟机并显卡直通">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                上一页
+              </span>
+              <div class="md-ellipsis">
+                Linux 安装 windows 虚拟机并显卡直通
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../../../../../%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/2022/07/22/2022-07-22-linux%E7%B3%BB%E7%BB%9F%E8%BF%81%E7%A7%BB/" class="md-footer__link md-footer__link--next" aria-label="下一页: linux 系统迁移">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                下一页
+              </span>
+              <div class="md-ellipsis">
+                linux 系统迁移
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/TheRainstorm" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../../..", "features": ["navigation.instant", "navigation.instant.progress", "navigation.tracking", "navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.footer", "content.code.copy", "toc.follow", "toc.integrate"], "search": "../../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../../../../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

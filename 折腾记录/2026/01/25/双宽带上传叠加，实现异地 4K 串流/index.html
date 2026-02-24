@@ -1,0 +1,2113 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="记录一些关于数学、计算机的知识，以及一些日常。">
+      
+      
+      
+        <link rel="canonical" href="https://yfy.cqu.ai/%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/2026/01/25/%E5%8F%8C%E5%AE%BD%E5%B8%A6%E4%B8%8A%E4%BC%A0%E5%8F%A0%E5%8A%A0%EF%BC%8C%E5%AE%9E%E7%8E%B0%E5%BC%82%E5%9C%B0%204K%20%E4%B8%B2%E6%B5%81/">
+      
+      
+        <link rel="prev" href="../../../../../%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%85%B7/2026/01/11/ssh%20%E4%BB%A3%E7%90%86%E7%9A%84%E5%A6%99%E7%94%A8/">
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.3">
+    
+    
+      
+        <title>双宽带上传叠加，实现异地 4K 串流 - Rain 的随笔</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#宽带移机风波" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../../../../.." title="Rain 的随笔" class="md-header__button md-logo" aria-label="Rain 的随笔" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Rain 的随笔
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              双宽带上传叠加，实现异地 4K 串流
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    
+  
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="../../../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  博客
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../about/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  关于
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../tags/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  标签
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../series/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  系列
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../tools/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  工具
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../archive/2026/" class="md-tabs__link">
+          
+  
+  
+  归档
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../category/%E4%B8%AA%E4%BA%BA/" class="md-tabs__link">
+          
+  
+  
+  分类
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" hidden>
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../../.." title="Rain 的随笔" class="md-nav__button md-logo" aria-label="Rain 的随笔" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Rain 的随笔
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+    
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      <a href="../../../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    博客
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    关于
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../tags/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    标签
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../series/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    系列
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../tools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    工具
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    归档
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    归档
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2026/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2026
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2025/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2025
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2024/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2024
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2023/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2023
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2022/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2022
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2021/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2021
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2020/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2020
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2019/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2019
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    分类
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    分类
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E4%B8%AA%E4%BA%BA/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    个人
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E5%8D%9A%E5%AE%A2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    博客
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E5%8D%9A%E5%AE%A2--%E7%BD%91%E7%BB%9C/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    博客 &amp; 网络
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    学习笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    折腾记录
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    课程笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%85%B7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    软件工具
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E9%98%85%E8%AF%BB/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    阅读
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+  <div class="md-content md-content--post" data-md-component="content">
+    <div class="md-sidebar md-sidebar--post" data-md-component="sidebar" data-md-type="navigation">
+      <div class="md-sidebar__scrollwrap">
+        <div class="md-sidebar__inner md-post">
+          <nav class="md-nav md-nav--primary">
+            <div class="md-post__back">
+              <div class="md-nav__title md-nav__container">
+                <a href="../../../../.." class="md-nav__link">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+                  <span class="md-ellipsis">
+                    回到主页
+                  </span>
+                </a>
+              </div>
+            </div>
+            
+            <ul class="md-post__meta md-nav__list">
+              <li class="md-nav__item md-nav__item--section">
+                <div class="md-post__title">
+                  <span class="md-ellipsis">
+                    元数据
+                  </span>
+                </div>
+                <nav class="md-nav">
+                  <ul class="md-nav__list">
+                    <li class="md-nav__item">
+                      <div class="md-nav__link">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 19H5V8h14m-3-7v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1V1m-1 11h-5v5h5z"/></svg>
+                        <time datetime="2026-01-25 23:24:21+00:00" class="md-ellipsis">2026年1月25日</time>
+                      </div>
+                    </li>
+                    
+                    
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 3v15h3V3zm3 2 4 13 3-1-4-13zM5 5v13h3V5zM3 19v2h18v-2z"/></svg>
+                          <span class="md-ellipsis">
+                            分类于
+                            
+                              <a href="../../../../../category/%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/">折腾记录</a></span>
+                        </div>
+                      </li>
+                    
+                    
+                      
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20a8 8 0 0 0 8-8 8 8 0 0 0-8-8 8 8 0 0 0-8 8 8 8 0 0 0 8 8m0-18a10 10 0 0 1 10 10 10 10 0 0 1-10 10C6.47 22 2 17.5 2 12A10 10 0 0 1 12 2m.5 5v5.25l4.5 2.67-.75 1.23L11 13V7z"/></svg>
+                          <span class="md-ellipsis">
+                            
+                              需要 13 分钟阅读时间
+                            
+                          </span>
+                        </div>
+                      </li>
+                    
+                  </ul>
+                </nav>
+              </li>
+            </ul>
+            
+          </nav>
+          
+            
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#宽带移机风波" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        宽带移机风波
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="宽带移机风波">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pon-基础知识" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PON 基础知识
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#与宽带师傅的掰扯" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        与宽带师傅的掰扯
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#一波三折的安装" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        一波三折的安装
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#软路由双-wan-设置" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        软路由双 wan 设置
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#wireguard-带宽叠加配置" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        wireguard 带宽叠加配置
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="wireguard 带宽叠加配置">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ipv6-urpf-测试" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ipv6 uRPF 测试
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#基于-nft-的-udp-per-packet-负载均衡" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        基于 nft 的 UDP Per-Packet 负载均衡
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="基于 nft 的 UDP Per-Packet 负载均衡">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#nftables-设置" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        nftables 设置
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#策略路由设置" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        策略路由设置
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#效果测试" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        效果测试
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#过年回家4k串流测试" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        过年回家4K串流测试
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="过年回家4K串流测试">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#失效的排查" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        失效的排查
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="失效的排查">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#nftable-和-iptable-对比" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        nftable 和 iptable 对比
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="nftable 和 iptable 对比">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#重路由的原理" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        重路由的原理
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nftables-的核心三要素type-hook-priority" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        nftables 的核心三要素：Type, Hook, Priority
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#使用-iptable-实现一样的功能" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        使用 iptable 实现一样的功能
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sunshine-配置" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        sunshine 配置
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sqm-优化" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SQM 优化
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="SQM 优化">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#其它优化" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        其它优化
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#结语" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        结语
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+          
+        </div>
+      </div>
+    </div>
+    <article class="md-content__inner md-typeset">
+      
+        
+  
+
+
+  <nav class="md-tags" >
+    
+      
+      
+      
+      
+        <a href="../../../../../tags/#tag:ecmp" class="md-tag">ECMP</a>
+      
+    
+      
+      
+      
+      
+        <a href="../../../../../tags/#tag:hdr" class="md-tag">HDR</a>
+      
+    
+      
+      
+      
+      
+        <a href="../../../../../tags/#tag:pon" class="md-tag">PON</a>
+      
+    
+      
+      
+      
+      
+        <a href="../../../../../tags/#tag:sqm" class="md-tag">SQM</a>
+      
+    
+      
+      
+      
+      
+        <a href="../../../../../tags/#tag:moonlight" class="md-tag">moonlight</a>
+      
+    
+      
+      
+      
+      
+        <a href="../../../../../tags/#tag:nft" class="md-tag">nft</a>
+      
+    
+      
+      
+      
+      
+        <a href="../../../../../tags/#tag:sunshine" class="md-tag">sunshine</a>
+      
+    
+      
+      
+      
+      
+        <a href="../../../../../tags/#tag:urpf" class="md-tag">uRPF</a>
+      
+    
+      
+      
+      
+      
+        <a href="../../../../../tags/#tag:wireguard" class="md-tag">wireguard</a>
+      
+    
+      
+      
+      
+      
+        <a href="../../../../../tags/#tag:分光器" class="md-tag">分光器</a>
+      
+    
+      
+      
+      
+      
+        <a href="../../../../../tags/#tag:宽带" class="md-tag">宽带</a>
+      
+    
+  </nav>
+
+
+
+  <h1>双宽带上传叠加，实现异地 4K 串流</h1>
+
+<p>我玩异地串流已经很多年了。从读研时期起，我配了我的第一台台式机。之后每年寒暑假回家我都会不断优化我的串流体验。异地串流就像魔法一样，让我可以在家里巨大的电视屏幕上运行画面精美的大型游戏，或者连上键盘鼠标后化作一个云电脑，而这一切只需要插上一条网线。</p>
+<blockquote>
+<p>在直线距离 322km 的异地（网络延迟在 20ms 左右），我串流玩过像素风的ARPG 游戏神之天平、玩过画面精美的 3A 大作、玩过本地多人的游戏双人成行、玩过需要考验操作的动作游戏怪物猎人，还串流过 VR 游戏半条命：艾利克斯、恐怖游戏森林。我的所有串流经历里挑战最高的是串流 VR 游戏，VR 画面需要非常高的带宽，并且对延迟非常敏感，高延迟很容易造成眩晕感。串流 VR 大致需要 80Mbps 带宽，并且总延迟需要低于 45/60ms。</p>
+</blockquote>
+<p>然而我以往的串流体验依赖于学校提供的完美网络条件——有着千兆对等的宽带，还能选择三网出口来降低延迟。在我毕业后，我办理的移动千兆宽带只有 40Mbps 的上传带宽。这使得我回家后再也无法串流 VR 游戏，并且也只能 1080p 串流 PC 游戏，这显然是一个巨大的打击。</p>
+<blockquote>
+<p>学校的网络通服务每个月20元，提供了千兆对等的带宽、CERNET 的 v4 公网 IP 和 /60 的 v6 公网 IP。并且除教育网外，还支持切换到三大运营商的出口（NAT）。利用这完美的资源，我把我的台式机打造成了一台高性能的云游戏服务器，利用 wireguard 组网，实现了在家里访问学校的台式机。</p>
+<p>我询问了线下三大运营商的门店，但貌似都不太懂，都说没有更高上传的普通宽带。联通提供的便宜专线 300/100Mbps 需要 120 元/月，仍然太贵。之前听朋友说福建移动有 50 元上传提速到 300Mbps 的服务，但是我问了给我装宽带的移动师傅，并不知道这种事情。</p>
+</blockquote>
+<p>我之前给朋友办了一条千兆宽带（二宽优惠，10 元千兆）。在 25 年 12 月份，朋友说宽带 1 月底就不用了。那时我便萌生了之后将其移机，聚合两条宽带的想法。</p>
+<p>最终，这个想法在 1 月 24 号被正式实施。利用 ipv6 没有 uRPF 的特性，通过 wireguard 组网，并使用 nft 实现 UDP 包 per-packet 的负载均衡，最后成功把两条移动宽带的上行叠加在一起。</p>
+<p>这次过年回家，我实际测试了 4K 串流的游戏体验，并使用 SQM 优化了带宽叠加的稳定性。最终实现了低于20ms延迟、4K@60fps HDR、70 Mbps 码率的稳定串流的效果。遂写此文记录折腾心得，希望能帮助同样喜欢异地串流的同好。</p>
+<p>图1：串流跑到 68 Mbps 码率，不丢包（SQM 优化前）
+<img alt="image.png" src="https://imagebed.yfycloud.site/2026/02/4a4bcce6907a30428be2cb4f9d497112.png" /></p>
+<p>大纲</p>
+<ul>
+<li>宽带移机风波<ul>
+<li>与宽带师傅的掰扯</li>
+<li>一波三折的安装</li>
+<li>软路由双 wan 设置</li>
+</ul>
+</li>
+<li>wireguard 带宽叠加配置<ul>
+<li>ipv6 uRPF 测试</li>
+<li>基于 nft 的 UDP Per-Packet 负载均衡</li>
+<li>iperf3 测试</li>
+</ul>
+</li>
+<li>过年回家串流测试<ul>
+<li>失效的排查</li>
+<li>SQM 优化</li>
+<li>结语</li>
+</ul>
+</li>
+</ul>
+<!-- more -->
+
+<h2 id="宽带移机风波">宽带移机风波<a class="headerlink" href="#宽带移机风波" title="Permanent link">&para;</a></h2>
+<p>由于是在要一户内拉两条同一个运营商的宽带，比较少见，因此没那么顺利。为了将宽带移机过来，最后的方案是使用一个 1 分 2 分光器，将入户光纤分成两个，接在两个光猫上（注意，分光器的输入光纤也是公口，因此需要一个法兰盘（耦合器）与入户光纤对接）。光功率从 -16.8 dbm 降低为一个 -20 dbm，一个 -23 dbm，均位于 -24 的正常范围内。</p>
+<h3 id="pon-基础知识">PON 基础知识<a class="headerlink" href="#pon-基础知识" title="Permanent link">&para;</a></h3>
+<p>在刚开始和宽带师傅 A 沟通移机的过程中，由于不懂光纤入户方面的知识，所以显得很被动，只能听师傅讲什么是什么。然后结论就是让我拉线，收费 400。在请教群友后，才了解到分光器等知识，于是去了解了下现代宽带光纤入户的原理。</p>
+<p>分享一篇有关光纤入户折腾的博客，由此了解了很多 PON 基础知识。<a href="https://mozz.ie/posts/wdm-custom-combo-boardband/">波分单线复用笑传之Custom Combo Broadband - 蚊帐</a></p>
+<p>Gemini 总结：</p>
+<p><strong>PON (Passive Optical Network，无源光网络)</strong> 是现代光纤入户的核心架构</p>
+<ul>
+<li><strong>自来水厂 (OLT - 机房端)：</strong><ul>
+<li>这是源头。一根粗光纤从机房出来，携带了成千上万户人家的数据。</li>
+<li><strong>特点：</strong> 不同运营商（移动、电信）通常有各自的“水厂”和管道。所以群友说“同运营商可以用分光器，不同运营商不行”。</li>
+</ul>
+</li>
+<li><strong>主管道与阀门 (ODN - 光分配网)：</strong><ul>
+<li>光纤从机房出来，经过路边的交接箱，再到小区的机房，最后到你楼道的弱电井。</li>
+<li>在这个过程中，光信号经过了层层<strong>分光器</strong>。</li>
+<li>比如：机房出来 1 分 4，到了小区再 1 分 16，最后到楼道可能是 1 分 64。</li>
+<li><strong>关键点：</strong> 这中间的所有设备都<strong>不需要插电</strong>（所以叫“无源”），完全靠物理光学的折射/反射。</li>
+</ul>
+</li>
+<li><strong>水龙头 (ONU - 光猫端)：</strong><ul>
+<li>这就是你家。</li>
+</ul>
+</li>
+</ul>
+<p><strong>为什么你家可以用分光器？</strong><br />
+因为 PON 网络本质上就是<strong>一根光纤共享给几十个用户</strong>。</p>
+<ul>
+<li><strong>下行（下载）：</strong> 它是<strong>广播</strong>模式。机房就像大喇叭，把所有人的数据（张三看电影、李四打游戏）都发到这根光纤上。你家的光猫虽然接收到了所有数据，但它只筛选出“写着你名字”的数据包，扔掉别人的。</li>
+<li><strong>上行（上传）：</strong> 它是<strong>时分复用 (TDMA)</strong> 模式。因为大家共用一根线，不能同时说话（否则光会冲突）。光猫会听从机房指挥：“现在轮到张三发数据，李四闭嘴”，大家排队快速发光。</li>
+</ul>
+<p><strong>总结：</strong><br />
+你在家里加一个分光器，在物理层面上，只是相当于把运营商原本的 1:64 分光，人为变成了 1:65（或更细微的分支）。只要光信号强度足够让光猫识别出 0 和 1，对于机房的设备来说，它根本不知道（也不在乎）这根光纤是在楼道分的，还是在你家客厅分的。它只认光猫的注册码 (LOID/SN)。</p>
+<h3 id="与宽带师傅的掰扯">与宽带师傅的掰扯<a class="headerlink" href="#与宽带师傅的掰扯" title="Permanent link">&para;</a></h3>
+<p>刚开始说移机，师傅说移不了。为此掰扯了很久，他们发的消息有的有错别字，或者用的术语没听过，让人摸不着头脑。总结下来他们说的有用信息</p>
+<ul>
+<li>我们这入户是一路光纤（还有单独一路广电）</li>
+<li>楼道光配箱可能是 64 口，只给每户留了 1 个口，所以刚开始和我说没办法装两条宽带</li>
+<li>-25 dBm 是弱光，会被罚钱</li>
+<li>我现在的可能是接在 32 分光器上，如果之后用 64 分光器，光功率可能就不够了（装完后说的）</li>
+</ul>
+<p>在刚开始计划移机时，我联系了给我装宽带的师傅 A，他说我这小区入户只有一路光纤，装不了。我说加钱行吗，他说拉线要 400，移机可以不收费。
+之后我在网上咨询了群友，了解到可以在户内使用 1 分 2 分光器。于是再次联系了 A，但是 A 和我说带不动，说会掉 10 个点。最后他说他现在不负责我那片小区了，让我联系宽带师傅 B。</p>
+<p>在和 B 说了我的方案后，B 也认定没有 1 分 2 分光器，然后也说没办法拉线（原话是说户线穿不过去，强行穿线可能把原本光纤弄断）。我提供了淘宝分光器和我的光猫 -16.8dbm 的光功率截图，并说这个和 FTTR 业务原理应该一样吧。他说和 FTTR 不一样，FTTR 是主光猫发送光信号给子光猫。还说一个 “庞口” 64户，多一个都不行，加不上去。不过最后还是说可以给我试一下，并说我很专业。</p>
+<p>由于不懂师傅说的 “庞口” 是什么，还有所谓 64 口的限制，所以师傅的话还是没搞懂。不过我感觉应该是没啥问题的。最后，和师傅约定好周六来装，由我准备好分光器（到货后发现忘记买耦合器了，怕来不及让师傅带了几个耦合器）。师傅还说来过年时候不忙没啥事，忙的话就不会来了，还说不要上门费（不过当天让我在移动 APP 申请时还是支付了 100 元，我觉得还算正常，因此也没过问）</p>
+<p><strong>关于物料购买</strong></p>
+<ul>
+<li><strong>1分2 分光器（SC-UPC，蓝色方头）</strong>：</li>
+<li>光纤耦合器/法兰盘</li>
+<li>（不需要，分光器自带线）<strong>两根短光纤跳线（冷接头/成品线）</strong>：用于连接分光器和两个光猫。</li>
+</ul>
+<p><img alt="image.png" src="https://imagebed.yfycloud.site/2026/02/76c581b992ea1ea2d7a076f54d1112b9.png" /></p>
+<h3 id="一波三折的安装">一波三折的安装<a class="headerlink" href="#一波三折的安装" title="Permanent link">&para;</a></h3>
+<p><strong>超密无效</strong></p>
+<p>宽带师傅比预定的 9 点提前半小时到了，使用一个带屏幕的便携设备连接到了光猫上准备移机，不过试了几次查询到的光猫密码，都提示错误。他接着打了电话询问了别人，不过也没有得到解决办法。最后只好说下次再来，给我换一个光猫。好在中午我从朋友那问到了正确的密码，师傅同意再过来给我装。</p>
+<p>后面从群友那学到的光猫忘记超密后的处理方法</p>
+<ul>
+<li>记录 LOID 等信息</li>
+<li>重置光猫<ul>
+<li>光猫后面贴纸上的密码是普通用户，无法用于注册，因此要想办法获得超密</li>
+</ul>
+</li>
+<li>重置后移动光猫超密默认是通用超密： <code>aDm8H%MdA</code></li>
+</ul>
+<p><strong>宽带密码无效</strong></p>
+<p>在测试了光衰都没问题后，我将光猫改成了桥接，然后使用路由器拨号上网（使用之前记录的密码），结果怎么都拨号不成功。我想把宽带密码重置，结果移动 APP 最后一步无法提交成功。到最后突然发现手机上收到了移动的短信，说检测到我的移机申请，自动给我的宽带密码重置成了全 0 （这也太坑了）。于是输入正确密码后终于拨号成功了。</p>
+<blockquote>
+<p>小插曲：宽带师傅不知道如何让超密保持不变，我给他说明了通过删除 tr069 的连接，来禁止 ISP 下发配置，可以避免超密被修改。</p>
+</blockquote>
+<p><strong>最终光功率对比</strong></p>
+<p>宽带 A 的光猫</p>
+<ul>
+<li>支持启用 wifi6 热点</li>
+<li>GPON</li>
+<li>-16.6dbm -&gt; -20</li>
+</ul>
+<p>宽带 B 的光猫</p>
+<ul>
+<li>没有 wifi</li>
+<li>XGPON</li>
+<li>? -&gt; -23.2</li>
+</ul>
+<p>XGPON 的光猫光功率要低 3 个点，可能是光波长的原因。</p>
+<h3 id="软路由双-wan-设置">软路由双 wan 设置<a class="headerlink" href="#软路由双-wan-设置" title="Permanent link">&para;</a></h3>
+<ul>
+<li>本来希望使用 vlan 技术，把软路由 4 个网口使用一个 vlan awareness bridge 管理起来<ul>
+<li>软路由 vlan 设置如下表，5 是 wan1，6 是 wan2，10 是 lan</li>
+<li>好处是：现在使用 2 个物理网口作为 wan，必要时可以仅使用 1 个网口连接在交换机上，然后使用 vlan 进行端口复用（我有一个 8 口 2.5G 交换机，端口用不完）</li>
+</ul>
+</li>
+<li>但是发现在我设置了 vlan 后，wan1 pppoe 就是拨号不成功，即使对应端口 5 已经是 untagged 和 pvid。</li>
+<li>最后只好使用基本方案，创建两个普通的 bridge（vmbr0 和 vmbr10），软路由虚拟机连接到这两个 bridge 上</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>说明</th>
+<th>enp5s0</th>
+<th>enp4s0</th>
+<th>enp3s0</th>
+<th>enp2s0</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>5</td>
+<td>wan1</td>
+<td></td>
+<td></td>
+<td></td>
+<td>u*</td>
+</tr>
+<tr>
+<td>6</td>
+<td>wan2</td>
+<td></td>
+<td></td>
+<td>u*</td>
+<td></td>
+</tr>
+<tr>
+<td>10</td>
+<td>lan</td>
+<td>u*</td>
+<td>u*</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>20</td>
+<td>lan2</td>
+<td>t</td>
+<td>t</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="wireguard-带宽叠加配置">wireguard 带宽叠加配置<a class="headerlink" href="#wireguard-带宽叠加配置" title="Permanent link">&para;</a></h2>
+<p>本节实现了两条带宽上传的叠加，将  wg 隧道的单向带宽从 40mbps 提升到了 70mbps。</p>
+<h3 id="ipv6-urpf-测试">ipv6 uRPF 测试<a class="headerlink" href="#ipv6-urpf-测试" title="Permanent link">&para;</a></h3>
+<p>本节的方案依赖于 ipv6 源地址欺骗技术，这需要 ISP 没有开启 uRPF。uRPF 相关概念参考链接：</p>
+<ul>
+<li><a href="https://networklessons.com/ip-routing/unicast-reverse-path-forwarding-urpf">Unicast Reverse Path Forwarding (uRPF)</a></li>
+<li><a href="https://blog.ipspace.net/2014/01/does-urpf-make-sense-in-internet/">uRPF 在互联网服务提供商网络中有意义吗？ « ipSpace.net 博客 --- Does uRPF Make Sense in Internet Service Provider Networks? « ipSpace.net blog</a></li>
+</ul>
+<p>好在 ipv6 一般是没有开启的。为了测试，我们需要将源地址是 wan1 v6 ip 的包，从 wan2 接口上发送出去，并测试是否可以正常访问互联网。</p>
+<p>刚开始尝试了以下几种方法，没办法进行测试</p>
+<ul>
+<li><code>ping -I ip</code><ul>
+<li>-I 没办法既指定接口，又指定源 ip，只能选其一</li>
+<li>openwrt <code>-I</code> 选项需要安装完整版 ping：iputils-ping</li>
+</ul>
+</li>
+<li><code>traceroute -i iface -s ip</code><ul>
+<li>traceroute 会遇到 bind 失败问题</li>
+</ul>
+</li>
+</ul>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>root@op1<span class="w"> </span>➜<span class="w">  </span>~<span class="w"> </span>traceroute<span class="w"> </span>-6<span class="w"> </span>-i<span class="w"> </span>pppoe-wan<span class="w"> </span>-s<span class="w"> </span><span class="m">2409</span>:8a30:40a:949c::A<span class="w"> </span><span class="m">2400</span>:3200::1
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>traceroute<span class="w"> </span>to<span class="w"> </span><span class="m">2400</span>:3200::1<span class="w"> </span><span class="o">(</span><span class="m">2400</span>:3200::1<span class="o">)</span><span class="w"> </span>from<span class="w"> </span><span class="m">2409</span>:8a30:40a:949c::A,<span class="w"> </span><span class="m">30</span><span class="w"> </span>hops<span class="w"> </span>max,<span class="w"> </span><span class="m">72</span><span class="w"> </span>byte<span class="w"> </span>packets
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w"> </span><span class="m">1</span><span class="w">  </span><span class="m">2409</span>:8030:1:1::205<span class="w"> </span><span class="o">(</span><span class="m">2409</span>:8030:1:1::205<span class="o">)</span><span class="w">  </span><span class="m">3</span>.902<span class="w"> </span>ms<span class="w">  </span><span class="m">7</span>.962<span class="w"> </span>ms<span class="w">  </span><span class="m">3</span>.850<span class="w"> </span>ms
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w"> </span><span class="m">2</span>^C
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>root@op1<span class="w"> </span>➜<span class="w">  </span>~<span class="w"> </span>traceroute<span class="w"> </span>-6<span class="w"> </span>-i<span class="w"> </span>pppoe-wan<span class="w"> </span>-s<span class="w"> </span><span class="m">2409</span>:8a30:40a:94b0::B<span class="w"> </span><span class="m">2400</span>:3200::1
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>traceroute<span class="w"> </span>to<span class="w"> </span><span class="m">2400</span>:3200::1<span class="w"> </span><span class="o">(</span><span class="m">2400</span>:3200::1<span class="o">)</span><span class="w"> </span>from<span class="w"> </span><span class="m">2409</span>:8a30:40a:94b0::B,<span class="w"> </span><span class="m">30</span><span class="w"> </span>hops<span class="w"> </span>max,<span class="w"> </span><span class="m">72</span><span class="w"> </span>byte<span class="w"> </span>packets
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w"> </span>1traceroute:<span class="w"> </span>sendto:<span class="w"> </span>Network<span class="w"> </span>unreachable
+</span></code></pre></div>
+<p>最后使用策略路由方法测试成功：</p>
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># 1. 增加一条路由：在表 200 中，设置默认网关为 pppoe-wan2</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="c1"># **PPPoE 是点对点连接，不需要指定 via 网关 IP，直接指定 dev 即可**</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>ip<span class="w"> </span>-6<span class="w"> </span>route<span class="w"> </span>add<span class="w"> </span>default<span class="w"> </span>dev<span class="w"> </span>pppoe-wan2<span class="w"> </span>table<span class="w"> </span><span class="m">200</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="c1"># 2. 增加一条策略规则：所有源 IP 是 WAN1 IP 且目的是阿里云 v6 dns 的包，强制去查表 200</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>ip<span class="w"> </span>-6<span class="w"> </span>rule<span class="w"> </span>add<span class="w"> </span>from<span class="w"> </span><span class="m">2409</span>:8a30:40a:94b0::A<span class="w"> </span>to<span class="w"> </span><span class="m">2400</span>:3200::1<span class="w"> </span>table<span class="w"> </span><span class="m">200</span><span class="w"> </span>prior<span class="w"> </span><span class="m">5</span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="c1"># 3. 刷新路由缓存（让规则立即生效）</span>
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>ip<span class="w"> </span>-6<span class="w"> </span>route<span class="w"> </span>flush<span class="w"> </span>cache
+</span></code></pre></div>
+<p>使用 ping 测试，src 指定 wan1 ip
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>ping -6 -I 2409:8a30:40a:94b0::A 2400:3200::1
+</span></code></pre></div></p>
+<p>tcpdump 结果显示，包从 wan2 出去，从 wan1 返回。这说明 ISP  ipv6 没有启用 uRPF
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>root@op1 ➜  ~ tcpdump -i any icmp6 and host 2400:3200::1
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>tcpdump: WARNING: any: That device doesn&#39;t support promiscuous mode
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>(Promiscuous mode not supported on the &quot;any&quot; device)
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>tcpdump: verbose output suppressed, use -v[v]... for full protocol decode
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>listening on any, link-type LINUX_SLL2 (Linux cooked v2), snapshot length 262144 bytes
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>16:11:01.735326 pppoe-wan2 Out IP6 2409:8a30:40a:b38c::A &gt; 2400:3200::1: ICMP6, echo request, id 33413, seq 1, length 64
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>16:11:01.758877 pppoe-wan In  IP6 2400:3200::1 &gt; 2409:8a30:40a:b38c::A: ICMP6, echo reply, id 33413, seq 1, length 64
+</span></code></pre></div></p>
+<h3 id="基于-nft-的-udp-per-packet-负载均衡">基于 nft 的 UDP Per-Packet 负载均衡<a class="headerlink" href="#基于-nft-的-udp-per-packet-负载均衡" title="Permanent link">&para;</a></h3>
+<p>要实现带宽叠加有很多方法。其中 ECMP 是一个常见的技术，我以前也尝试过。但是该技术目前只能做到 per-flow 的负载均衡。这意味着单连接场景仍然无法叠加带宽。并且多连接场景，也很容易遇到流量都走到一个接口的情况。</p>
+<p>在询问 gemini 时，gemini 提供了一个使用 nft 和 策略路由实现 UDP Per-Packet 的负载均衡方案。由于是对每个 UDP 包处理，因此能够实现流量在两个 wan 口上均匀的分配。</p>
+<p>以下配置针对 openwrt。</p>
+<h4 id="nftables-设置">nftables 设置<a class="headerlink" href="#nftables-设置" title="Permanent link">&para;</a></h4>
+<p>目标：使用 nft 将所有 ipv6 udp 包轮流打上 0x100 和 0x200 的 mark，触发重路由</p>
+<p>添加 nft 文件 <code>/etc/nftables.d/12-wg_spoof.nft</code> ，内容解释：</p>
+<ul>
+<li>在 output 链上添加规则，只对路由器发出的流量生效，如果需要对转发流量也生效，需要使用 prerouting 表</li>
+<li>type 需要为 <code>route</code>，否则不会触发重路由</li>
+<li>使用 <code>ip6 nexthdr udp</code> 限制只对 UDP 包生效，对于 wireguard 来说够了</li>
+</ul>
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1">#/etc/nftables.d/12-wg_spoof.nft</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="c1"># 链：处理路由器本机发出的流量</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>chain<span class="w"> </span>wg_spoof_output<span class="w"> </span><span class="o">{</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="w">    </span><span class="nb">type</span><span class="w"> </span>route<span class="w"> </span>hook<span class="w"> </span>output<span class="w"> </span>priority<span class="w"> </span>mangle<span class="p">;</span><span class="w"> </span>policy<span class="w"> </span>accept<span class="p">;</span>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="w">    </span>ip6<span class="w"> </span>nexthdr<span class="w"> </span>udp<span class="w"> </span>mark<span class="w"> </span><span class="nb">set</span><span class="w"> </span>numgen<span class="w"> </span>inc<span class="w"> </span>mod<span class="w"> </span><span class="m">2</span><span class="w"> </span>map<span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="m">0</span><span class="w"> </span>:<span class="w"> </span>0x100,<span class="w"> </span><span class="m">1</span><span class="w"> </span>:<span class="w"> </span>0x200<span class="w"> </span><span class="o">}</span><span class="w"> </span>counter
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="o">}</span>
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>
+</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="c1"># 如果以后需要处理转发流量</span>
+</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="c1"># chain wg_spoof_prerouting {</span>
+</span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="c1">#     type route hook prerouting priority mangle; policy accept;</span>
+</span><span id="__span-4-13"><a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a><span class="c1"># }</span>
+</span></code></pre></div>
+<h4 id="策略路由设置">策略路由设置<a class="headerlink" href="#策略路由设置" title="Permanent link">&para;</a></h4>
+<p>目标：使用策略路由，将打上标签的包路由到对应出口</p>
+<ol>
+<li><code>vim /etc/iproute2/rt_tables</code> 增加 wan 和 wan2 两个表</li>
+<li>设置 ipv6 的策略路由和路由规则</li>
+</ol>
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>config<span class="w"> </span>route6
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">        </span>option<span class="w"> </span>interface<span class="w"> </span><span class="s1">&#39;wan&#39;</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">        </span>option<span class="w"> </span>target<span class="w"> </span><span class="s1">&#39;::/0&#39;</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">        </span>option<span class="w"> </span>table<span class="w"> </span><span class="s1">&#39;wan&#39;</span>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>config<span class="w"> </span>route6
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="w">        </span>option<span class="w"> </span>interface<span class="w"> </span><span class="s1">&#39;wan2&#39;</span>
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="w">        </span>option<span class="w"> </span>target<span class="w"> </span><span class="s1">&#39;::/0&#39;</span>
+</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="w">        </span>option<span class="w"> </span>table<span class="w"> </span><span class="s1">&#39;wan2&#39;</span>
+</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>
+</span><span id="__span-5-11"><a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>config<span class="w"> </span>rule6
+</span><span id="__span-5-12"><a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a><span class="w">        </span>option<span class="w"> </span>priority<span class="w"> </span><span class="s1">&#39;9&#39;</span>
+</span><span id="__span-5-13"><a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a><span class="w">        </span>option<span class="w"> </span>lookup<span class="w"> </span><span class="s1">&#39;wan&#39;</span>
+</span><span id="__span-5-14"><a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a><span class="w">        </span>option<span class="w"> </span>mark<span class="w"> </span><span class="s1">&#39;0x100&#39;</span>
+</span><span id="__span-5-15"><a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a>
+</span><span id="__span-5-16"><a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a>config<span class="w"> </span>rule6
+</span><span id="__span-5-17"><a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a><span class="w">        </span>option<span class="w"> </span>priority<span class="w"> </span><span class="s1">&#39;9&#39;</span>
+</span><span id="__span-5-18"><a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a><span class="w">        </span>option<span class="w"> </span>lookup<span class="w"> </span><span class="s1">&#39;wan2&#39;</span>
+</span><span id="__span-5-19"><a id="__codelineno-5-19" name="__codelineno-5-19" href="#__codelineno-5-19"></a><span class="w">        </span>option<span class="w"> </span>mark<span class="w"> </span><span class="s1">&#39;0x200&#39;</span>
+</span></code></pre></div>
+<p>最后效果
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>root@op1<span class="w"> </span>➜<span class="w">  </span>~<span class="w"> </span>ip<span class="w"> </span>-6<span class="w"> </span>ru
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="m">0</span>:<span class="w">      </span>from<span class="w"> </span>all<span class="w"> </span>lookup<span class="w"> </span><span class="nb">local</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="m">9</span>:<span class="w">      </span>from<span class="w"> </span>all<span class="w"> </span>fwmark<span class="w"> </span>0x100<span class="w"> </span>lookup<span class="w"> </span>wan
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="m">9</span>:<span class="w">      </span>from<span class="w"> </span>all<span class="w"> </span>fwmark<span class="w"> </span>0x200<span class="w"> </span>lookup<span class="w"> </span>wan2
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="m">32766</span>:<span class="w">  </span>from<span class="w"> </span>all<span class="w"> </span>lookup<span class="w"> </span>main
+</span></code></pre></div></p>
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>root@op1<span class="w"> </span>➜<span class="w">  </span>~<span class="w"> </span>ip<span class="w"> </span>-6<span class="w"> </span>route<span class="w"> </span>show<span class="w"> </span>table<span class="w"> </span>wan
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>default<span class="w"> </span>dev<span class="w"> </span>pppoe-wan<span class="w"> </span>metric<span class="w"> </span><span class="m">1024</span><span class="w"> </span>pref<span class="w"> </span>medium
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>root@op1<span class="w"> </span>➜<span class="w">  </span>~<span class="w"> </span>ip<span class="w"> </span>-6<span class="w"> </span>route<span class="w"> </span>show<span class="w"> </span>table<span class="w"> </span>wan2
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>default<span class="w"> </span>dev<span class="w"> </span>pppoe-wan2<span class="w"> </span>proto<span class="w"> </span>static<span class="w"> </span>metric<span class="w"> </span><span class="m">200</span><span class="w"> </span>pref<span class="w"> </span>medium
+</span></code></pre></div>
+<h3 id="效果测试">效果测试<a class="headerlink" href="#效果测试" title="Permanent link">&para;</a></h3>
+<p>iperf3 测试在 70Mbps
+<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>root@op3 ➜  ~ iperf3 -c 10.0.32.1 -R
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>Connecting to host 10.0.32.1, port 5201
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>Reverse mode, remote host 10.0.32.1 is sending
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>[  5] local 10.0.32.3 port 58138 connected to 10.0.32.1 port 5201
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>[ ID] Interval           Transfer     Bitrate
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>[  5]   0.00-1.00   sec  20.8 MBytes   174 Mbits/sec
+</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>[  5]   1.00-2.00   sec  8.88 MBytes  74.4 Mbits/sec
+</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a>[  5]   2.00-3.00   sec  8.12 MBytes  68.2 Mbits/sec
+</span><span id="__span-8-9"><a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a>[  5]   3.00-4.00   sec  8.88 MBytes  74.4 Mbits/sec
+</span><span id="__span-8-10"><a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a>[  5]   4.00-5.00   sec  8.38 MBytes  70.3 Mbits/sec
+</span><span id="__span-8-11"><a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a>[  5]   5.00-6.00   sec  8.88 MBytes  74.4 Mbits/sec
+</span><span id="__span-8-12"><a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a>[  5]   6.00-7.00   sec  8.75 MBytes  73.4 Mbits/sec
+</span><span id="__span-8-13"><a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a>[  5]   7.00-8.00   sec  8.38 MBytes  70.3 Mbits/sec
+</span><span id="__span-8-14"><a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a>[  5]   8.00-9.00   sec  8.62 MBytes  72.4 Mbits/sec
+</span><span id="__span-8-15"><a id="__codelineno-8-15" name="__codelineno-8-15" href="#__codelineno-8-15"></a>[  5]   9.00-10.00  sec  8.50 MBytes  71.3 Mbits/sec
+</span><span id="__span-8-16"><a id="__codelineno-8-16" name="__codelineno-8-16" href="#__codelineno-8-16"></a>- - - - - - - - - - - - - - - - - - - - - - - - -
+</span><span id="__span-8-17"><a id="__codelineno-8-17" name="__codelineno-8-17" href="#__codelineno-8-17"></a>[ ID] Interval           Transfer     Bitrate         Retr
+</span><span id="__span-8-18"><a id="__codelineno-8-18" name="__codelineno-8-18" href="#__codelineno-8-18"></a>[  5]   0.00-10.02  sec   101 MBytes  84.4 Mbits/sec  8228             sender
+</span><span id="__span-8-19"><a id="__codelineno-8-19" name="__codelineno-8-19" href="#__codelineno-8-19"></a>[  5]   0.00-10.00  sec  98.1 MBytes  82.3 Mbits/sec                  receiver
+</span></code></pre></div></p>
+<p>SMB 复制文件跑到 9.25MB/s
+<img alt="image.png" src="https://imagebed.yfycloud.site/2026/01/64d543ab4e0a6260cf2766109122c492.png" /></p>
+<h2 id="过年回家4k串流测试">过年回家4K串流测试<a class="headerlink" href="#过年回家4k串流测试" title="Permanent link">&para;</a></h2>
+<h3 id="失效的排查">失效的排查<a class="headerlink" href="#失效的排查" title="Permanent link">&para;</a></h3>
+<p>过年回来后，最期待的就是测试一下串流的效果。但是没想到回来第一天晚上测试，发现带宽叠加失效了，nft trace 调试了很久也没找到问题。此时透明代理也失效了，tg 登不上去。网络的两个问题让我心理始终不得劲，但是又没办法快速修好，所以也无可奈何。第二天出去吃酒了，没多少时间测试。直到第三天早上，我终于静下心来，开始排查网络的问题。透明代理的问题被发现是防火墙的问题导致的，添加一条允许转发规则后，问题便解决了。第一个问题的解决让我信心大增，开始排查我最关心的带宽叠加问题。</p>
+<p>我之前用 nft trace 调试功能已经发现 nft 规则是生效了的，wireguard 的 udp 包被轮流打上了不同 mark，问题在于后续没有触发重路由。为了更容易分析，我专门构造了一条 nft 规则，将目的地址是阿里云 dns 的所有 ipv6 包打上 0x200 mark（wan2），结果仍然是没有触发重路由，最终还是从 wan1 出去了。nft trace 结果如下：</p>
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>trace<span class="w"> </span>id<span class="w"> </span>a7268f01<span class="w"> </span>inet<span class="w"> </span>fw4<span class="w"> </span>trace_chain<span class="w"> </span>packet:<span class="w"> </span>oif<span class="w"> </span><span class="s2">&quot;pppoe-wan&quot;</span><span class="w"> </span>ip6<span class="w"> </span>saddr<span class="w"> </span><span class="m">2409</span>:8a30:40a:b38c::A<span class="w"> </span>ip6<span class="w"> </span>daddr<span class="w"> </span><span class="m">2400</span>:3200::1<span class="w"> </span>ip6<span class="w"> </span>dscp<span class="w"> </span>cs0<span class="w"> </span>ip6<span class="w"> </span>ecn<span class="w"> </span>not-ect<span class="w"> </span>ip6<span class="w"> </span>hoplimit<span class="w"> </span><span class="m">64</span><span class="w"> </span>ip6<span class="w"> </span>flowlabel<span class="w"> </span><span class="m">175028</span><span class="w"> </span>ip6<span class="w"> </span>nexthdr<span class="w"> </span>ipv6-icmp<span class="w"> </span>ip6<span class="w"> </span>length<span class="w"> </span><span class="m">64</span><span class="w"> </span>icmpv6<span class="w"> </span><span class="nb">type</span><span class="w"> </span>echo-request<span class="w"> </span>icmpv6<span class="w"> </span>code<span class="w"> </span><span class="m">0</span><span class="w"> </span>icmpv6<span class="w"> </span>parameter-problem<span class="w"> </span><span class="m">2497511425</span><span class="w"> </span>icmpv6<span class="w"> </span>taddr<span class="w"> </span><span class="m">0</span>:0:618d:8d69::3b8b:a00<span class="w"> </span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>trace<span class="w"> </span>id<span class="w"> </span>a7268f01<span class="w"> </span>inet<span class="w"> </span>fw4<span class="w"> </span>trace_chain<span class="w"> </span>rule<span class="w"> </span>ip6<span class="w"> </span>daddr<span class="w"> </span><span class="m">2400</span>:3200::1<span class="w"> </span>meta<span class="w"> </span>nftrace<span class="w"> </span><span class="nb">set</span><span class="w"> </span><span class="m">1</span><span class="w"> </span>counter<span class="w"> </span>packets<span class="w"> </span><span class="m">0</span><span class="w"> </span>bytes<span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="o">(</span>verdict<span class="w"> </span><span class="k">continue</span><span class="o">)</span>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>trace<span class="w"> </span>id<span class="w"> </span>a7268f01<span class="w"> </span>inet<span class="w"> </span>fw4<span class="w"> </span>trace_chain<span class="w"> </span>verdict<span class="w"> </span><span class="k">continue</span><span class="w"> </span>
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>trace<span class="w"> </span>id<span class="w"> </span>a7268f01<span class="w"> </span>inet<span class="w"> </span>fw4<span class="w"> </span>trace_chain<span class="w"> </span>policy<span class="w"> </span>accept<span class="w"> </span>
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>trace<span class="w"> </span>id<span class="w"> </span>a7268f01<span class="w"> </span>inet<span class="w"> </span>fw4<span class="w"> </span>wg_spoof_output<span class="w"> </span>packet:<span class="w"> </span>oif<span class="w"> </span><span class="s2">&quot;pppoe-wan&quot;</span><span class="w"> </span>ip6<span class="w"> </span>saddr<span class="w"> </span><span class="m">2409</span>:8a30:40a:b38c::A<span class="w"> </span>ip6<span class="w"> </span>daddr<span class="w"> </span><span class="m">2400</span>:3200::1<span class="w"> </span>ip6<span class="w"> </span>dscp<span class="w"> </span>cs0<span class="w"> </span>ip6<span class="w"> </span>ecn<span class="w"> </span>not-ect<span class="w"> </span>ip6<span class="w"> </span>hoplimit<span class="w"> </span><span class="m">64</span><span class="w"> </span>ip6<span class="w"> </span>flowlabel<span class="w"> </span><span class="m">175028</span><span class="w"> </span>ip6<span class="w"> </span>nexthdr<span class="w"> </span>ipv6-icmp<span class="w"> </span>ip6<span class="w"> </span>length<span class="w"> </span><span class="m">64</span><span class="w"> </span>icmpv6<span class="w"> </span><span class="nb">type</span><span class="w"> </span>echo-request<span class="w"> </span>icmpv6<span class="w"> </span>code<span class="w"> </span><span class="m">0</span><span class="w"> </span>icmpv6<span class="w"> </span>parameter-problem<span class="w"> </span><span class="m">2497511425</span><span class="w"> </span>icmpv6<span class="w"> </span>taddr<span class="w"> </span><span class="m">0</span>:0:618d:8d69::3b8b:a00<span class="w"> </span>
+</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>trace<span class="w"> </span>id<span class="w"> </span>a7268f01<span class="w"> </span>inet<span class="w"> </span>fw4<span class="w"> </span>wg_spoof_output<span class="w"> </span>rule<span class="w"> </span>ip6<span class="w"> </span>daddr<span class="w"> </span><span class="m">2400</span>:3200::1<span class="w"> </span>icmpv6<span class="w"> </span><span class="nb">type</span><span class="w"> </span>echo-request<span class="w"> </span>meta<span class="w"> </span>mark<span class="w"> </span><span class="nb">set</span><span class="w"> </span>0x00000200<span class="w"> </span>counter<span class="w"> </span>packets<span class="w"> </span><span class="m">3</span><span class="w"> </span>bytes<span class="w"> </span><span class="m">312</span><span class="w"> </span><span class="o">(</span>verdict<span class="w"> </span><span class="k">continue</span><span class="o">)</span>
+</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>trace<span class="w"> </span>id<span class="w"> </span>a7268f01<span class="w"> </span>inet<span class="w"> </span>fw4<span class="w"> </span>wg_spoof_output<span class="w"> </span>verdict<span class="w"> </span><span class="k">continue</span><span class="w"> </span>meta<span class="w"> </span>mark<span class="w"> </span>0x00000200<span class="w"> </span>
+</span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>trace<span class="w"> </span>id<span class="w"> </span>a7268f01<span class="w"> </span>inet<span class="w"> </span>fw4<span class="w"> </span>wg_spoof_output<span class="w"> </span>policy<span class="w"> </span>accept<span class="w"> </span>meta<span class="w"> </span>mark<span class="w"> </span>0x00000200<span class="w"> </span>
+</span><span id="__span-9-9"><a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a>trace<span class="w"> </span>id<span class="w"> </span>a7268f01<span class="w"> </span>inet<span class="w"> </span>fw4<span class="w"> </span>oversea_mangle_output<span class="w"> </span>packet:<span class="w"> </span>oif<span class="w"> </span><span class="s2">&quot;pppoe-wan&quot;</span><span class="w"> </span>ip6<span class="w"> </span>saddr<span class="w"> </span><span class="m">2409</span>:8a30:40a:b38c::A<span class="w"> </span>ip6<span class="w"> </span>daddr<span class="w"> </span><span class="m">2400</span>:3200::1<span class="w"> </span>ip6<span class="w"> </span>dscp<span class="w"> </span>cs0<span class="w"> </span>ip6<span class="w"> </span>ecn<span class="w"> </span>not-ect<span class="w"> </span>ip6<span class="w"> </span>hoplimit<span class="w"> </span><span class="m">64</span><span class="w"> </span>ip6<span class="w"> </span>flowlabel<span class="w"> </span><span class="m">175028</span><span class="w"> </span>ip6<span class="w"> </span>nexthdr<span class="w"> </span>ipv6-icmp<span class="w"> </span>ip6<span class="w"> </span>length<span class="w"> </span><span class="m">64</span><span class="w"> </span>icmpv6<span class="w"> </span><span class="nb">type</span><span class="w"> </span>echo-request<span class="w"> </span>icmpv6<span class="w"> </span>code<span class="w"> </span><span class="m">0</span><span class="w"> </span>icmpv6<span class="w"> </span>parameter-problem<span class="w"> </span><span class="m">2497511425</span><span class="w"> </span>icmpv6<span class="w"> </span>taddr<span class="w"> </span><span class="m">0</span>:0:618d:8d69::3b8b:a00<span class="w"> </span>
+</span><span id="__span-9-10"><a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a>trace<span class="w"> </span>id<span class="w"> </span>a7268f01<span class="w"> </span>inet<span class="w"> </span>fw4<span class="w"> </span>oversea_mangle_output<span class="w"> </span>verdict<span class="w"> </span><span class="k">continue</span><span class="w"> </span>meta<span class="w"> </span>mark<span class="w"> </span>0x00000200<span class="w"> </span>
+</span><span id="__span-9-11"><a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a>trace<span class="w"> </span>id<span class="w"> </span>a7268f01<span class="w"> </span>inet<span class="w"> </span>fw4<span class="w"> </span>oversea_mangle_output<span class="w"> </span>policy<span class="w"> </span>accept<span class="w"> </span>meta<span class="w"> </span>mark<span class="w"> </span>0x00000200<span class="w"> </span>
+</span><span id="__span-9-12"><a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a>trace<span class="w"> </span>id<span class="w"> </span>a7268f01<span class="w"> </span>inet<span class="w"> </span>fw4<span class="w"> </span>mangle_output<span class="w"> </span>packet:<span class="w"> </span>oif<span class="w"> </span><span class="s2">&quot;pppoe-wan&quot;</span><span class="w"> </span>ip6<span class="w"> </span>saddr<span class="w"> </span><span class="m">2409</span>:8a30:40a:b38c::A<span class="w"> </span>ip6<span class="w"> </span>daddr<span class="w"> </span><span class="m">2400</span>:3200::1<span class="w"> </span>ip6<span class="w"> </span>dscp<span class="w"> </span>cs0<span class="w"> </span>ip6<span class="w"> </span>ecn<span class="w"> </span>not-ect<span class="w"> </span>ip6<span class="w"> </span>hoplimit<span class="w"> </span><span class="m">64</span><span class="w"> </span>ip6<span class="w"> </span>flowlabel<span class="w"> </span><span class="m">175028</span><span class="w"> </span>ip6<span class="w"> </span>nexthdr<span class="w"> </span>ipv6-icmp<span class="w"> </span>ip6<span class="w"> </span>length<span class="w"> </span><span class="m">64</span><span class="w"> </span>icmpv6<span class="w"> </span><span class="nb">type</span><span class="w"> </span>echo-request<span class="w"> </span>icmpv6<span class="w"> </span>code<span class="w"> </span><span class="m">0</span><span class="w"> </span>icmpv6<span class="w"> </span>parameter-problem<span class="w"> </span><span class="m">2497511425</span><span class="w"> </span>icmpv6<span class="w"> </span>taddr<span class="w"> </span><span class="m">0</span>:0:618d:8d69::3b8b:a00<span class="w"> </span>
+</span><span id="__span-9-13"><a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a>trace<span class="w"> </span>id<span class="w"> </span>a7268f01<span class="w"> </span>inet<span class="w"> </span>fw4<span class="w"> </span>mangle_output<span class="w"> </span>verdict<span class="w"> </span><span class="k">continue</span><span class="w"> </span>meta<span class="w"> </span>mark<span class="w"> </span>0x00000200<span class="w"> </span>
+</span><span id="__span-9-14"><a id="__codelineno-9-14" name="__codelineno-9-14" href="#__codelineno-9-14"></a>trace<span class="w"> </span>id<span class="w"> </span>a7268f01<span class="w"> </span>inet<span class="w"> </span>fw4<span class="w"> </span>mangle_output<span class="w"> </span>policy<span class="w"> </span>accept<span class="w"> </span>meta<span class="w"> </span>mark<span class="w"> </span>0x00000200<span class="w"> </span>
+</span><span id="__span-9-15"><a id="__codelineno-9-15" name="__codelineno-9-15" href="#__codelineno-9-15"></a>trace<span class="w"> </span>id<span class="w"> </span>a7268f01<span class="w"> </span>inet<span class="w"> </span>fw4<span class="w"> </span>output<span class="w"> </span>packet:<span class="w"> </span>oif<span class="w"> </span><span class="s2">&quot;pppoe-wan&quot;</span><span class="w"> </span>ip6<span class="w"> </span>saddr<span class="w"> </span><span class="m">2409</span>:8a30:40a:b38c::A<span class="w"> </span>ip6<span class="w"> </span>daddr<span class="w"> </span><span class="m">2400</span>:3200::1<span class="w"> </span>ip6<span class="w"> </span>dscp<span class="w"> </span>cs0<span class="w"> </span>ip6<span class="w"> </span>ecn<span class="w"> </span>not-ect<span class="w"> </span>ip6<span class="w"> </span>hoplimit<span class="w"> </span><span class="m">64</span><span class="w"> </span>ip6<span class="w"> </span>flowlabel<span class="w"> </span><span class="m">175028</span><span class="w"> </span>ip6<span class="w"> </span>nexthdr<span class="w"> </span>ipv6-icmp<span class="w"> </span>ip6<span class="w"> </span>length<span class="w"> </span><span class="m">64</span><span class="w"> </span>icmpv6<span class="w"> </span><span class="nb">type</span><span class="w"> </span>echo-request<span class="w"> </span>icmpv6<span class="w"> </span>code<span class="w"> </span><span class="m">0</span><span class="w"> </span>icmpv6<span class="w"> </span>parameter-problem<span class="w"> </span><span class="m">2497511425</span><span class="w"> </span>icmpv6<span class="w"> </span>taddr<span class="w"> </span><span class="m">0</span>:0:618d:8d69::3b8b:a00<span class="w"> </span>
+</span><span id="__span-9-16"><a id="__codelineno-9-16" name="__codelineno-9-16" href="#__codelineno-9-16"></a>trace<span class="w"> </span>id<span class="w"> </span>a7268f01<span class="w"> </span>inet<span class="w"> </span>fw4<span class="w"> </span>output<span class="w"> </span>rule<span class="w"> </span>oifname<span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="s2">&quot;eth10&quot;</span>,<span class="w"> </span><span class="s2">&quot;br-wan&quot;</span>,<span class="w"> </span><span class="s2">&quot;pppoe-wan&quot;</span>,<span class="w"> </span><span class="s2">&quot;pppoe-wan2&quot;</span><span class="w"> </span><span class="o">}</span><span class="w"> </span>jump<span class="w"> </span>output_wan<span class="w"> </span>comment<span class="w"> </span><span class="s2">&quot;!fw4: Handle wan IPv4/IPv6 output traffic&quot;</span><span class="w"> </span><span class="o">(</span>verdict<span class="w"> </span>jump<span class="w"> </span>output_wan<span class="o">)</span>
+</span><span id="__span-9-17"><a id="__codelineno-9-17" name="__codelineno-9-17" href="#__codelineno-9-17"></a>trace<span class="w"> </span>id<span class="w"> </span>a7268f01<span class="w"> </span>inet<span class="w"> </span>fw4<span class="w"> </span>output_wan<span class="w"> </span>rule<span class="w"> </span>jump<span class="w"> </span>accept_to_wan<span class="w"> </span><span class="o">(</span>verdict<span class="w"> </span>jump<span class="w"> </span>accept_to_wan<span class="o">)</span>
+</span><span id="__span-9-18"><a id="__codelineno-9-18" name="__codelineno-9-18" href="#__codelineno-9-18"></a>trace<span class="w"> </span>id<span class="w"> </span>a7268f01<span class="w"> </span>inet<span class="w"> </span>fw4<span class="w"> </span>accept_to_wan<span class="w"> </span>rule<span class="w"> </span>oifname<span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="s2">&quot;eth10&quot;</span>,<span class="w"> </span><span class="s2">&quot;br-wan&quot;</span>,<span class="w"> </span><span class="s2">&quot;pppoe-wan&quot;</span>,<span class="w"> </span><span class="s2">&quot;pppoe-wan2&quot;</span><span class="w"> </span><span class="o">}</span><span class="w"> </span>counter<span class="w"> </span>packets<span class="w"> </span><span class="m">10658</span><span class="w"> </span>bytes<span class="w"> </span><span class="m">1260866</span><span class="w"> </span>accept<span class="w"> </span>comment<span class="w"> </span><span class="s2">&quot;!fw4: accept wan IPv4/IPv6 traffic&quot;</span><span class="w"> </span><span class="o">(</span>verdict<span class="w"> </span>accept<span class="o">)</span>
+</span><span id="__span-9-19"><a id="__codelineno-9-19" name="__codelineno-9-19" href="#__codelineno-9-19"></a>trace<span class="w"> </span>id<span class="w"> </span>a7268f01<span class="w"> </span>inet<span class="w"> </span>fw4<span class="w"> </span>mangle_postrouting<span class="w"> </span>packet:<span class="w"> </span>oif<span class="w"> </span><span class="s2">&quot;pppoe-wan&quot;</span><span class="w"> </span>ip6<span class="w"> </span>saddr<span class="w"> </span><span class="m">2409</span>:8a30:40a:b38c::A<span class="w"> </span>ip6<span class="w"> </span>daddr<span class="w"> </span><span class="m">2400</span>:3200::1<span class="w"> </span>ip6<span class="w"> </span>dscp<span class="w"> </span>cs0<span class="w"> </span>ip6<span class="w"> </span>ecn<span class="w"> </span>not-ect<span class="w"> </span>ip6<span class="w"> </span>hoplimit<span class="w"> </span><span class="m">64</span><span class="w"> </span>ip6<span class="w"> </span>flowlabel<span class="w"> </span><span class="m">175028</span><span class="w"> </span>ip6<span class="w"> </span>nexthdr<span class="w"> </span>ipv6-icmp<span class="w"> </span>ip6<span class="w"> </span>length<span class="w"> </span><span class="m">64</span><span class="w"> </span>icmpv6<span class="w"> </span><span class="nb">type</span><span class="w"> </span>echo-request<span class="w"> </span>icmpv6<span class="w"> </span>code<span class="w"> </span><span class="m">0</span><span class="w"> </span>icmpv6<span class="w"> </span>parameter-problem<span class="w"> </span><span class="m">2497511425</span><span class="w"> </span>icmpv6<span class="w"> </span>taddr<span class="w"> </span><span class="m">0</span>:0:618d:8d69::3b8b:a00<span class="w"> </span>
+</span><span id="__span-9-20"><a id="__codelineno-9-20" name="__codelineno-9-20" href="#__codelineno-9-20"></a>trace<span class="w"> </span>id<span class="w"> </span>a7268f01<span class="w"> </span>inet<span class="w"> </span>fw4<span class="w"> </span>mangle_postrouting<span class="w"> </span>verdict<span class="w"> </span><span class="k">continue</span><span class="w"> </span>meta<span class="w"> </span>mark<span class="w"> </span>0x00000200<span class="w"> </span>
+</span><span id="__span-9-21"><a id="__codelineno-9-21" name="__codelineno-9-21" href="#__codelineno-9-21"></a>trace<span class="w"> </span>id<span class="w"> </span>a7268f01<span class="w"> </span>inet<span class="w"> </span>fw4<span class="w"> </span>mangle_postrouting<span class="w"> </span>policy<span class="w"> </span>accept<span class="w"> </span>meta<span class="w"> </span>mark<span class="w"> </span>0x00000200<span class="w"> </span>
+</span><span id="__span-9-22"><a id="__codelineno-9-22" name="__codelineno-9-22" href="#__codelineno-9-22"></a>trace<span class="w"> </span>id<span class="w"> </span>a7268f01<span class="w"> </span>inet<span class="w"> </span>fw4<span class="w"> </span>srcnat<span class="w"> </span>packet:<span class="w"> </span>oif<span class="w"> </span><span class="s2">&quot;pppoe-wan&quot;</span><span class="w"> </span>ip6<span class="w"> </span>saddr<span class="w"> </span><span class="m">2409</span>:8a30:40a:b38c::A<span class="w"> </span>ip6<span class="w"> </span>daddr<span class="w"> </span><span class="m">2400</span>:3200::1<span class="w"> </span>ip6<span class="w"> </span>dscp<span class="w"> </span>cs0<span class="w"> </span>ip6<span class="w"> </span>ecn<span class="w"> </span>not-ect<span class="w"> </span>ip6<span class="w"> </span>hoplimit<span class="w"> </span><span class="m">64</span><span class="w"> </span>ip6<span class="w"> </span>flowlabel<span class="w"> </span><span class="m">175028</span><span class="w"> </span>ip6<span class="w"> </span>nexthdr<span class="w"> </span>ipv6-icmp<span class="w"> </span>ip6<span class="w"> </span>length<span class="w"> </span><span class="m">64</span><span class="w"> </span>icmpv6<span class="w"> </span><span class="nb">type</span><span class="w"> </span>echo-request<span class="w"> </span>icmpv6<span class="w"> </span>code<span class="w"> </span><span class="m">0</span><span class="w"> </span>icmpv6<span class="w"> </span>parameter-problem<span class="w"> </span><span class="m">2497511425</span><span class="w"> </span>icmpv6<span class="w"> </span>taddr<span class="w"> </span><span class="m">0</span>:0:618d:8d69::3b8b:a00<span class="w"> </span>
+</span><span id="__span-9-23"><a id="__codelineno-9-23" name="__codelineno-9-23" href="#__codelineno-9-23"></a>trace<span class="w"> </span>id<span class="w"> </span>a7268f01<span class="w"> </span>inet<span class="w"> </span>fw4<span class="w"> </span>srcnat<span class="w"> </span>rule<span class="w"> </span>oifname<span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="s2">&quot;eth10&quot;</span>,<span class="w"> </span><span class="s2">&quot;br-wan&quot;</span>,<span class="w"> </span><span class="s2">&quot;pppoe-wan&quot;</span>,<span class="w"> </span><span class="s2">&quot;pppoe-wan2&quot;</span><span class="w"> </span><span class="o">}</span><span class="w"> </span>jump<span class="w"> </span>srcnat_wan<span class="w"> </span>comment<span class="w"> </span><span class="s2">&quot;!fw4: Handle wan IPv4/IPv6 srcnat traffic&quot;</span><span class="w"> </span><span class="o">(</span>verdict<span class="w"> </span>jump<span class="w"> </span>srcnat_wan<span class="o">)</span>
+</span><span id="__span-9-24"><a id="__codelineno-9-24" name="__codelineno-9-24" href="#__codelineno-9-24"></a>trace<span class="w"> </span>id<span class="w"> </span>a7268f01<span class="w"> </span>inet<span class="w"> </span>fw4<span class="w"> </span>srcnat_wan<span class="w"> </span>verdict<span class="w"> </span><span class="k">continue</span><span class="w"> </span>meta<span class="w"> </span>mark<span class="w"> </span>0x00000200<span class="w"> </span>
+</span><span id="__span-9-25"><a id="__codelineno-9-25" name="__codelineno-9-25" href="#__codelineno-9-25"></a>trace<span class="w"> </span>id<span class="w"> </span>a7268f01<span class="w"> </span>inet<span class="w"> </span>fw4<span class="w"> </span>srcnat<span class="w"> </span>rule<span class="w"> </span>jump<span class="w"> </span>upnp_postrouting<span class="w"> </span>comment<span class="w"> </span><span class="s2">&quot;Hook into miniupnpd postrouting chain&quot;</span><span class="w"> </span><span class="o">(</span>verdict<span class="w"> </span>jump<span class="w"> </span>upnp_postrouting<span class="o">)</span>
+</span><span id="__span-9-26"><a id="__codelineno-9-26" name="__codelineno-9-26" href="#__codelineno-9-26"></a>trace<span class="w"> </span>id<span class="w"> </span>a7268f01<span class="w"> </span>inet<span class="w"> </span>fw4<span class="w"> </span>upnp_postrouting<span class="w"> </span>verdict<span class="w"> </span><span class="k">continue</span><span class="w"> </span>meta<span class="w"> </span>mark<span class="w"> </span>0x00000200<span class="w"> </span>
+</span><span id="__span-9-27"><a id="__codelineno-9-27" name="__codelineno-9-27" href="#__codelineno-9-27"></a>trace<span class="w"> </span>id<span class="w"> </span>a7268f01<span class="w"> </span>inet<span class="w"> </span>fw4<span class="w"> </span>srcnat<span class="w"> </span>verdict<span class="w"> </span><span class="k">continue</span><span class="w"> </span>meta<span class="w"> </span>mark<span class="w"> </span>0x00000200<span class="w"> </span>
+</span><span id="__span-9-28"><a id="__codelineno-9-28" name="__codelineno-9-28" href="#__codelineno-9-28"></a>trace<span class="w"> </span>id<span class="w"> </span>a7268f01<span class="w"> </span>inet<span class="w"> </span>fw4<span class="w"> </span>srcnat<span class="w"> </span>policy<span class="w"> </span>accept<span class="w"> </span>meta<span class="w"> </span>mark<span class="w"> </span>0x00000200<span class="w"> </span>
+</span></code></pre></div>
+<p>后来我想到测试一下 ipv4 是否能触发重路由，因为我之前研究双 wan 源入源出时，非常确定 TCP 是能够触发重路由的。没想到这次测试也没有触发重路由。好在我保留了之前测试时的 nft 脚本，对比发现不同的地方在于原本 nft 规则使用了 <code>type route</code>，而现在的是 <code>type filter</code>。这才想起来我这是我之前的临时修改，结果既没测试也没改回去。修正后问题便解决了，心里长舒一口气（我终于不用过年时修网络了）。</p>
+<blockquote>
+<p>想起来 24 年过年时在修 wr30u 路由器，当时还学习尝试用焊枪去编程 WSON8 闪存，结果失败了，25 年使用 mtk_uartboot 工具通过串口修好了那个 wr30u，而这个 wr30u 则是在更早时买来用于 wifi6 网络升级组 mesh 的</p>
+</blockquote>
+<h4 id="nftable-和-iptable-对比">nftable 和 iptable 对比<a class="headerlink" href="#nftable-和-iptable-对比" title="Permanent link">&para;</a></h4>
+<p>以下部分分析了为什么必须使用 type route，复习了 netfilter 的原理以及 nftables,iptables 的不同</p>
+<h5 id="重路由的原理"><strong>重路由的原理</strong><a class="headerlink" href="#重路由的原理" title="Permanent link">&para;</a></h5>
+<p>在 Linux 内核中，本地发出的数据包（Output）流程大致如下：</p>
+<ol>
+<li><strong>第一次路由查找</strong>：应用程序发送数据包，内核根据目的 IP 查找路由表，决定从哪个网卡发出，以及下一跳网关是谁</li>
+<li><strong>进入 Netfilter OUTPUT Hook</strong>：数据包进入 <code>NF_INET_LOCAL_OUT</code> 挂载点。这里就是 nft <code>wg_spoof_output</code> 链执行的地方</li>
+<li><strong>重新路由检查（Reroute Check）</strong>：当数据包离开 OUTPUT Hook 后，内核会检查数据包的某些关键属性（如 Firewall Mark / fwmark、TOS 等）是否在 Hook 中被修改了<ul>
+<li><strong>如果改变了</strong>：内核必须丢弃第一次的路由结果，根据新的 fwmark <strong>重新进行路由查找</strong>（调用的函数类似 <code>ip6_route_me_harder</code>）。这对于策略路由（Policy Routing）至关重要</li>
+<li><strong>如果没改变</strong>：使用第一次的路由结果继续发送</li>
+</ul>
+</li>
+<li><strong>Postrouting</strong>：进入后续流程</li>
+</ol>
+<p>在 prerouting 和 output 都有 reroute 检查，下图显示了 output 的 reroute 检查位置</p>
+<p><img alt="image.png" src="https://imagebed.yfycloud.site/2026/02/4a3330d96b8c90d4beda11f882c5463c.png" /></p>
+<p>更多 netfilter 知识参考</p>
+<ul>
+<li>lug201（推荐）<a href="https://201.ustclug.org/ops/network/firewall/#netfilter-chains">防火墙 - Linux 201</a></li>
+<li><a href="https://upload.wikimedia.org/wikipedia/commons/3/37/Netfilter-packet-flow.svg">upload.wikimedia.org/wikipedia/commons/3/37/Netfilter-packet-flow.svg</a></li>
+</ul>
+<h5 id="nftables-的核心三要素type-hook-priority"><strong>nftables 的核心三要素：Type, Hook, Priority</strong><a class="headerlink" href="#nftables-的核心三要素type-hook-priority" title="Permanent link">&para;</a></h5>
+<ul>
+<li><strong>Hook (挂载点)</strong><ul>
+<li><strong>含义</strong>： <strong>“在哪里”</strong> 处理数据包</li>
+<li><strong>解释</strong>：这是内核代码中的具体位置。比如 <code>prerouting</code>（刚进网卡）、<code>input</code>（发给本机）、<code>output</code>（本机发出）、<code>postrouting</code>（即将离开网卡）。</li>
+<li><strong>作用</strong>：决定了数据包在生命周期的哪个阶段被你的规则捕获。</li>
+</ul>
+</li>
+<li><strong>Type (类型)</strong><ul>
+<li><strong>含义</strong>：<strong>“能做什么”</strong></li>
+<li><strong>解释</strong>：它定义了这条链（Chain）背后的内核逻辑。
+    - <code>filter</code>：标准类型。主要用于过滤（Accept/Drop）。它<strong>不</strong>期望数据包的路由属性被修改。
+    - <code>route</code>：<strong>重路由类型</strong>。专门用于 Output 阶段。如果在这种链里修改了 Mark，内核知道必须重新查路由表（Route lookup）。
+    - <code>nat</code>：地址转换类型。拥有连接跟踪（Conntrack）的特殊处理能力，通常用于 SNAT/DNAT。</li>
+</ul>
+</li>
+<li><strong>Priority (优先级)</strong><ul>
+<li><strong>含义</strong>：<strong>“先做还是后做”</strong></li>
+<li><strong>解释</strong>：同一个 Hook 上可能挂着好几条链（比如一条做 NAT，一条做防火墙，一条做流量整形）。Priority 是一个<strong>数字</strong>，数字越小，越先执行。</li>
+<li><strong>助记</strong>：
+    - <code>priority filter</code> 其实等于数字 0。
+    - <code>priority mangle</code> 其实等于数字 -150。
+    - <code>priority nat</code> 其实等于数字 -100 (dstnat) 或 100 (srcnat)。</li>
+<li><strong>作用</strong>：决定了如果我有两条链都在 <code>hook output</code>，谁先拿到数据包。</li>
+</ul>
+</li>
+</ul>
+<p>iptable 和 nftable 不同，它的 type 被硬编码在“表（Table）”的名字上了：</p>
+<ul>
+<li>当你使用 <code>iptables -t filter</code> 表时 -&gt; 内核自动创建类似 nft 的 <code>type filter</code> 链。</li>
+<li>当你使用 <code>iptables -t mangle</code> 表时 -&gt; 内核自动创建类似 nft 的 <code>type route</code> 链（特别是在 Output 链上）。</li>
+<li>当你使用 <code>iptables -t nat</code> 表时 -&gt; 内核自动创建类似 nft 的 <code>type nat</code> 链。</li>
+</ul>
+<p>nftables 解耦了“表名”和“功能”。你可以创建一个叫 <code>my_table</code> 的表，然后在里面混合放 NAT 链、Filter 链和 Route 链。这是 iptables 做不到的。</p>
+<h5 id="使用-iptable-实现一样的功能"><strong>使用 iptable 实现一样的功能</strong><a class="headerlink" href="#使用-iptable-实现一样的功能" title="Permanent link">&para;</a></h5>
+<ul>
+<li>必须用 <code>mangle</code> 表（因为只有 mangle 表的 OUTPUT 链具备重路由检测能力，即对应 nft 的 <code>type route</code>）</li>
+<li>iptables 没有直接的 <code>numgen</code>（数字生成器）和 <code>map</code> 映射功能，需要用 <code>statistic</code> 模块来实现轮询（Round Robin）</li>
+</ul>
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="c1"># 第一条规则：匹配 50% 的包（每 2 个包里的第 1 个），打上 0x100</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>ip6tables<span class="w"> </span>-t<span class="w"> </span>mangle<span class="w"> </span>-A<span class="w"> </span>OUTPUT<span class="w"> </span>-p<span class="w"> </span>udp<span class="w"> </span>-m<span class="w"> </span>statistic<span class="w"> </span>--mode<span class="w"> </span>nth<span class="w"> </span>--every<span class="w"> </span><span class="m">2</span><span class="w"> </span>--packet<span class="w"> </span><span class="m">0</span><span class="w"> </span>-j<span class="w"> </span>MARK<span class="w"> </span>--set-mark<span class="w"> </span>0x100
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="c1"># 第二条规则：匹配剩下的包（每 2 个包里的第 2 个），打上 0x200</span>
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>ip6tables<span class="w"> </span>-t<span class="w"> </span>mangle<span class="w"> </span>-A<span class="w"> </span>OUTPUT<span class="w"> </span>-p<span class="w"> </span>udp<span class="w"> </span>-m<span class="w"> </span>statistic<span class="w"> </span>--mode<span class="w"> </span>nth<span class="w"> </span>--every<span class="w"> </span><span class="m">2</span><span class="w"> </span>--packet<span class="w"> </span><span class="m">1</span><span class="w"> </span>-j<span class="w"> </span>MARK<span class="w"> </span>--set-mark<span class="w"> </span>0x200
+</span></code></pre></div>
+<h3 id="sunshine-配置">sunshine 配置<a class="headerlink" href="#sunshine-配置" title="Permanent link">&para;</a></h3>
+<p>iperf3 测速时可以观察到 8000 Retr 次数，是有一定的丢包的。因此推荐增大 sunshine 的 FEC 参数。</p>
+<p><img alt="image.png" src="https://imagebed.yfycloud.site/2026/02/05cafa20c24cc8043d4bc678b80532c0.png" /></p>
+<p>FEC 设置成 30，4K 串流测试时没有观察到丢帧。bmon 可以看到两个 wan 口上的流量对比。</p>
+<p><img alt="image.png" src="https://imagebed.yfycloud.site/2026/02/4a4bcce6907a30428be2cb4f9d497112.png" /></p>
+<h3 id="sqm-优化">SQM 优化<a class="headerlink" href="#sqm-优化" title="Permanent link">&para;</a></h3>
+<p>在问 gemini BBR 能否优化 moonlight 串流时，gemini 给我提供了以下优化方法：</p>
+<p><strong>1 调整 WireGuard 的 MTU (最关键！)</strong></p>
+<p>异地组网串流最大的杀手是 <strong>IP 分片</strong>。</p>
+<ul>
+<li><strong>现象</strong>：视频流是大数据包，WireGuard 加密会增加包头。如果 WireGuard 的 MTU 设置太大（默认 1420），加上 PPPoE 的开销，数据包极其容易超过运营商的限制（通常 1492 或 1480），导致包被切碎（分片）。</li>
+<li><strong>后果</strong>：UDP 只要有一个分片丢了，整个视频帧就废了，导致画面瞬间马赛克或卡顿。</li>
+<li><strong>操作</strong>：<br />
+    在你的 <strong>N4500 (旁路由)</strong> 和 <strong>异地 WireGuard 节点</strong> 上，把 WireGuard 接口的 MTU 改小。<ul>
+<li><strong>建议值</strong>：<strong>1280</strong>（这是 IPv6 的最小标准值，也是最稳的值）。</li>
+<li>虽然 1280 会稍微降低一点传输效率（约 1-2%），但能彻底避免分片，对串流流畅度提升巨大。</li>
+</ul>
+</li>
+</ul>
+<p><strong>2 开启 SQM (Smart Queue Management)</strong></p>
+<p>虽然 BBR 不管 UDP，但 OpenWrt 里的 <strong>SQM (Cake/FQ_Codel)</strong> 管！</p>
+<ul>
+<li><strong>原理</strong>：SQM 能够智能识别小包（手柄操作、游戏指令）和大包（视频流），防止视频流把手柄操作堵在后面（导致输入延迟），同时能平滑视频流的突发数据。</li>
+<li><strong>操作</strong>：
+    1. 在 N4500 的 ImmortalWrt 里安装 <code>luci-app-sqm</code>。
+    2. 在“网络” -&gt; “SQM QoS”里启用。
+    3. <strong>接口</strong>：选择你的 WireGuard 接口（或者负责上传的 WAN 口）。
+    4. <strong>队列规程 (Queuing Discipline)</strong>：选择 <strong>Cake</strong> 或者 <strong>fq_codel</strong>。
+    5. <strong>上传/下载速度</strong>：设置为你实际带宽的 90-95%。</li>
+</ul>
+<p>在尝试设置 SQM 后，效果居然非常显著。iperf3 测速 Retr 丢包直接变为个位数，并且带宽完全遵从 SQM 里设置的最大值，最大可以跑到接近 80Mbps。</p>
+<p><img alt="image.png" src="https://imagebed.yfycloud.site/2026/02/66b69ae5790d8b256be94c956535c762.png" /></p>
+<p><img alt="image.png" src="https://imagebed.yfycloud.site/2026/02/84133e8f14747d67e285866141500c64.png" /></p>
+<p><img alt="image.png" src="https://imagebed.yfycloud.site/2026/02/ee80306597608fb837be15382a39b44e.png" /></p>
+<h4 id="其它优化">其它优化<a class="headerlink" href="#其它优化" title="Permanent link">&para;</a></h4>
+<p>wireguard 组网时，通过反复启动和停止 wg 接口，让 wg 随机使用不同端口，可以影响运营商的路由，降低隧道延迟。</p>
+<p>这是我反复抽奖时网络延迟记录。我刚开始抽到的 20ms 已经是最低的延迟了，我再重新抽奖时，只能抽到 &gt; 25ms 以上的端口（对应中间那段凸起），于是我又把端口改回去了。</p>
+<p><img alt="image.png" src="https://imagebed.yfycloud.site/2026/02/fb9a3bd222cfa70b151b2dd04abaffd4.png" /></p>
+<h3 id="结语">结语<a class="headerlink" href="#结语" title="Permanent link">&para;</a></h3>
+<p>这次过年期间，我终于在家宽上实现了我心心念念的 4K 串流。我用它来愉快地玩耍了很久燕云十六声，操作起来很顺手。另外，令我感到惊喜的是，去年给家里换的电视（小米 S Pro Mini LED）居然还有 HDR 功能，并且参数很不错（1792 分区，3000-4000nit，95% DCI-P3）。我用它试了下剑星的 HDR 模式，和我买的以 HDR 效果著称的 VA 屏的雷鸟 U8 显示器对比，没有看出区别，天空也是又白又亮，没有光晕很干净（除了颜色可能要调节一下）</p>
+<p>再加上我可以白嫖部门老大放置在公司的，一台闲置的 4090 显卡机器（我回来前也把网络、串流都搞定了，有 200Mbps 的上传），又有不一样的玩法。N 卡 40 系支持 VSR 功能，可以将浏览器画面超分到 4K。并且最重要的是，它还有一个容易被忽略的功能——它支持将 SDR 内容转换成 HDR 内容。我测试了 VSR 的 HDR 效果很不错，一些视频的观感有很大提升（HDR 此时比 1080p 到 4K 的提升还要大）。使用这套组合拳，我可以舒舒服服地在大电视刷 B 站时享受 4K HDR 的内容了。</p>
+<p><strong>那么问题来了，下一次，我的网络/串流要优化什么呢？</strong></p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+  
+
+
+
+      
+    </article>
+  </div>
+
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+        
+      
+      <nav class="md-footer__inner md-grid" aria-label="页脚" >
+        
+          
+          <a href="../../../../../%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%85%B7/2026/01/11/ssh%20%E4%BB%A3%E7%90%86%E7%9A%84%E5%A6%99%E7%94%A8/" class="md-footer__link md-footer__link--prev" aria-label="上一页: ssh 代理的妙用">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                上一页
+              </span>
+              <div class="md-ellipsis">
+                ssh 代理的妙用
+              </div>
+            </div>
+          </a>
+        
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/TheRainstorm" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../../..", "features": ["navigation.instant", "navigation.instant.progress", "navigation.tracking", "navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.footer", "content.code.copy", "toc.follow", "toc.integrate"], "search": "../../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../../../../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

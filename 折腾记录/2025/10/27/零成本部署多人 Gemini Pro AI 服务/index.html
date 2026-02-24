@@ -1,0 +1,2277 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="记录一些关于数学、计算机的知识，以及一些日常。">
+      
+      
+      
+        <link rel="canonical" href="https://yfy.cqu.ai/%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/2025/10/27/%E9%9B%B6%E6%88%90%E6%9C%AC%E9%83%A8%E7%BD%B2%E5%A4%9A%E4%BA%BA%20Gemini%20Pro%20AI%20%E6%9C%8D%E5%8A%A1/">
+      
+      
+        <link rel="prev" href="../../../../2024/11/23/%E4%BA%8C%E6%89%8B%E6%9C%BA%E6%A2%B0%E7%A1%AC%E7%9B%98%E8%B4%AD%E4%B9%B0/">
+      
+      
+        <link rel="next" href="../../../../../%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%85%B7/2026/01/11/ssh%20%E4%BB%A3%E7%90%86%E7%9A%84%E5%A6%99%E7%94%A8/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.3">
+    
+    
+      
+        <title>零成本部署多人Gemini Pro AI 服务 - Rain 的随笔</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#google-cloud-free-trial" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../../../../.." title="Rain 的随笔" class="md-header__button md-logo" aria-label="Rain 的随笔" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Rain 的随笔
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              零成本部署多人Gemini Pro AI 服务
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    
+  
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="../../../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  博客
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../about/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  关于
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../tags/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  标签
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../series/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  系列
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../tools/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  工具
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../archive/2026/" class="md-tabs__link">
+          
+  
+  
+  归档
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../category/%E4%B8%AA%E4%BA%BA/" class="md-tabs__link">
+          
+  
+  
+  分类
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" hidden>
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../../.." title="Rain 的随笔" class="md-nav__button md-logo" aria-label="Rain 的随笔" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Rain 的随笔
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+    
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      <a href="../../../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    博客
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    关于
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../tags/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    标签
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../series/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    系列
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../tools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    工具
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    归档
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    归档
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2026/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2026
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2025/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2025
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2024/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2024
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2023/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2023
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2022/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2022
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2021/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2021
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2020/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2020
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2019/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2019
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    分类
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    分类
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E4%B8%AA%E4%BA%BA/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    个人
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E5%8D%9A%E5%AE%A2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    博客
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E5%8D%9A%E5%AE%A2--%E7%BD%91%E7%BB%9C/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    博客 &amp; 网络
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    学习笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    折腾记录
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    课程笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%85%B7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    软件工具
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E9%98%85%E8%AF%BB/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    阅读
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+  <div class="md-content md-content--post" data-md-component="content">
+    <div class="md-sidebar md-sidebar--post" data-md-component="sidebar" data-md-type="navigation">
+      <div class="md-sidebar__scrollwrap">
+        <div class="md-sidebar__inner md-post">
+          <nav class="md-nav md-nav--primary">
+            <div class="md-post__back">
+              <div class="md-nav__title md-nav__container">
+                <a href="../../../../.." class="md-nav__link">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+                  <span class="md-ellipsis">
+                    回到主页
+                  </span>
+                </a>
+              </div>
+            </div>
+            
+            <ul class="md-post__meta md-nav__list">
+              <li class="md-nav__item md-nav__item--section">
+                <div class="md-post__title">
+                  <span class="md-ellipsis">
+                    元数据
+                  </span>
+                </div>
+                <nav class="md-nav">
+                  <ul class="md-nav__list">
+                    <li class="md-nav__item">
+                      <div class="md-nav__link">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 19H5V8h14m-3-7v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1V1m-1 11h-5v5h5z"/></svg>
+                        <time datetime="2025-10-27 19:00:13+00:00" class="md-ellipsis">2025年10月27日</time>
+                      </div>
+                    </li>
+                    
+                    
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 3v15h3V3zm3 2 4 13 3-1-4-13zM5 5v13h3V5zM3 19v2h18v-2z"/></svg>
+                          <span class="md-ellipsis">
+                            分类于
+                            
+                              <a href="../../../../../category/%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/">折腾记录</a></span>
+                        </div>
+                      </li>
+                    
+                    
+                      
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20a8 8 0 0 0 8-8 8 8 0 0 0-8-8 8 8 0 0 0-8 8 8 8 0 0 0 8 8m0-18a10 10 0 0 1 10 10 10 10 0 0 1-10 10C6.47 22 2 17.5 2 12A10 10 0 0 1 12 2m.5 5v5.25l4.5 2.67-.75 1.23L11 13V7z"/></svg>
+                          <span class="md-ellipsis">
+                            
+                              需要 10 分钟阅读时间
+                            
+                          </span>
+                        </div>
+                      </li>
+                    
+                  </ul>
+                </nav>
+              </li>
+            </ul>
+            
+          </nav>
+          
+            
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#google-cloud-free-trial" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Google Cloud Free Trial
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Google Cloud Free Trial">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#注册要求国际支付信用卡" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        注册要求（国际支付信用卡）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#注册时的疑问" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        注册时的疑问
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="注册时的疑问">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#关于-billing-verification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        关于 Billing verification
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#google-cloud-的用法" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Google Cloud 的用法
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Google Cloud 的用法">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#白嫖-vps" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        白嫖 VPS
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#创建-google-ai-gemini-api-key" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        创建 Google AI Gemini API key
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="创建 Google AI Gemini API key">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#导入项目" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        导入项目
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#创建-api-key" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        创建 API key
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#api-价格" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        API 价格
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#open-webui" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Open-WebUI
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Open-WebUI">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#docker-部署-open-webui" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        docker 部署 open-webui
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#设置" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        设置
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#函数" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        函数
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#update-20251123-使用-google-gemini-函数完美支持-gemini" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        (update 20251123) 使用 Google Gemini 函数完美支持 gemini
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#litellm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        LiteLLM
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="LiteLLM">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#docker-部署-litellm-proxy-server" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        docker 部署 litellm proxy server
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#基本配置" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        基本配置
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="基本配置">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#修改-api-key" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        修改 API key
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#通过-google-ai-studio-api-key-使用-gemini" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        通过 google ai studio api key 使用 gemini
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="通过 google ai studio api key 使用 gemini">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#gemini-显示-thinking" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        gemini 显示 thinking
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#启用联网搜索" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        启用联网搜索
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#通过-vertex-ai-使用-gemini" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        通过 vertex ai 使用 gemini
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="通过 vertex ai 使用 gemini">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#使用-gemini-3-pro-404" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        使用 gemini-3-pro 404
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#使用其它兼容-openai-api-的模型" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        使用其它兼容 OpenAI API 的模型
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#其它-todo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        其它 TODO
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+          
+        </div>
+      </div>
+    </div>
+    <article class="md-content__inner md-typeset">
+      
+        
+  
+
+
+  <nav class="md-tags" >
+    
+      
+      
+      
+      
+        <a href="../../../../../tags/#tag:linux" class="md-tag">linux</a>
+      
+    
+  </nav>
+
+
+
+  <h1>零成本部署多人Gemini Pro AI 服务</h1>
+
+<p>我的 AI 模型使用历程可以概括为：ChatGPT → Gemini 1.5-pro → Deepseek-R1 → Gemini 2.5 pro。
+我从 ChatGPT 诞生以来开始使用大模型，最后一个有印象的版本是 ChatGPT-4o。但是由于 GPT 网络经常连不上，我转而尝试了 Gemini 1.5 flash/pro 模型。其中，flash 模型极快的速度让我印象深刻，3 秒就能得到结果在一些简单场景下用起来很方便。而 pro 模型给我留下的印象则是，它的回答基本没有废话，它的思维链也非常有逻辑。
+之后随着 Deepseek-R1 的发布，我又转向使用 Deepseek 模型，主要是因为不必解决网络问题实在是方便，再加上它的性能已经能满足我大部分的需求。直到 1 个多月前，我开始使用 gemini 2.5 pro，它的效果让我感到惊艳。与 Deepseek-R1 相比，它带给我一种跨代式的提升感，于是成为我目前主要使用的模型之一。</p>
+<p><em>p.s 感觉 google AI 模型最近风头比较盛，前段时间发布的 nano banana 画图模型刚火出圈过一次，现在又新发布了 gemini 3.0 和 nano banana2，再次引起不小热度（20251118）。</em></p>
+<p>目前官方途径使用 gemini 2.5 pro 有 3 种方式：</p>
+<p><em>update 20251216: 现在 google ai studio 免费层级无法再使用 2.5 pro 以上模型，flash 模型也只有 5 RPM 低的可怜的次数。</em></p>
+<ul>
+<li><a href="gemini.google.com">gemini 官网</a><ul>
+<li>google gemini 单独的网站。我一开始使用的这个网站，后面发现它不仅有较少的免费使用次数限制，并且还不支持联网。</li>
+<li>之前有过学生认证免费试用 12个月 Google One 会员，普通用户也能免费试用 1 个月。会员可以无限制使用 2.5 Pro 模型。</li>
+</ul>
+</li>
+<li><a href="https://aistudio.google.com/">Google AI studio</a><ul>
+<li>也是 Google 的官方网站，不仅能第一时间使用 google 最新的模型，2.5 pro 居然还没有次数限制。</li>
+<li>还可以使用 google 的 nano banana 模型画图</li>
+</ul>
+</li>
+<li><a href="https://cloud.google.com/vertex-ai?hl=en">Vertex AI Platform | Google Cloud</a><ul>
+<li>基于谷歌 GCP(Google Cloud Platform)</li>
+<li>是谷歌的企业级方案</li>
+<li>Vertex AI studio 也可以通过网页使用</li>
+</ul>
+</li>
+</ul>
+<p>我是在 Gemini 网站的 1 个月 Google One 会员到期后开始研究如何继续低成本使用 gemini 模型，毕竟 gemini 会员 20 美元/月 实在是有点贵。最好是基于 API 的方式，可以按量付费。接着我了解到 google cloud 新会员有 300 美金试用金，可以使用 3 个月，于是就有了这篇博客。</p>
+<p>本文介绍了一种搭建多人共享 Gemini AI 服务的方案。该方案利用 Google Cloud Platform (GCP) 的 300 美元试用金创建 Gemini API，并结合 Open WebUI 作为前端界面，实现多人访问。该方案使用了 litellm 作为 AI gateway。litellm 项目用于将各种来源的 AI 服务集中在一起管理。可以将一些不支持 openai 的服务转换成 openai API。
+虽然 Google AI studio 原生支持 openai API，但是 litellm 也是有用的，可以解决一些小问题比如联网搜索不生效、显示思维链异常等。</p>
+<p>虽然 300 美元试用金只有 3 个月，但是通过这套 setup，未来可以将许多免费 AI 额度（比如 Google AI studio）给集中起来使用，还是很有用的。</p>
+<p>实现之后的一些收获感想</p>
+<ul>
+<li>open-webui 功能很成熟：有完整的用户管理、权限管理、还可以分享对话。基本可以满足小团队的集中化 AI 使用需求</li>
+<li>open-webui 的一些其它功能也有点超乎我的想象<ul>
+<li>对于本地部署 AI 模型也很合适，支持 ollama, comfyui 画图等</li>
+<li>有 function，tool 等高级功能，支持社区插件，貌似可以实现很多扩展玩法</li>
+</ul>
+</li>
+</ul>
+<p>大纲</p>
+<ul>
+<li>注册 google cloud<ul>
+<li>绑定国外支付信用卡</li>
+<li>注册时的疑问</li>
+<li>google cloud 的用法</li>
+</ul>
+</li>
+<li>google ai studio 创建 Gemini API Key</li>
+<li>open-webui 配置</li>
+<li>litellm 配置</li>
+</ul>
+<!-- more -->
+<h2 id="google-cloud-free-trial">Google Cloud Free Trial<a class="headerlink" href="#google-cloud-free-trial" title="Permanent link">&para;</a></h2>
+<h3 id="注册要求国际支付信用卡">注册要求（国际支付信用卡）<a class="headerlink" href="#注册要求国际支付信用卡" title="Permanent link">&para;</a></h3>
+<ul>
+<li>从来都不是 Google Cloud、Google Maps Platform 或 Firebase 的付费客户</li>
+<li>之前没有注册过免费试用版</li>
+<li><strong>信用卡</strong>或其他国际支付方式</li>
+</ul>
+<p>我使用的是招商银行 Visa 全币种国际信用卡，免年费。</p>
+<ul>
+<li>官方链接：<a href="https://cc.cmbchina.com/card/?WT.mc_id=N17PCGW100AY689100ZH">招商银行信用卡全家福-信用卡快速办理_网上在线申请信用卡-招商银行信用卡官方网站</a></li>
+<li>办理流程：上门填信息（次日）-&gt; 等待邮寄（3天）-&gt; 激活（完成）</li>
+</ul>
+<p><img alt="招商银行 Visa" src="https://imagebed.yfycloud.site/2025/12/0fd145b559ec36108b2b88ca650c66ab.gif" /></p>
+<p>Visa, MasterCard 说明可以参考 B 站视频：<a href="https://www.bilibili.com/video/BV1yB8gzwErs/">seven科技生活</a></p>
+<h3 id="注册时的疑问">注册时的疑问<a class="headerlink" href="#注册时的疑问" title="Permanent link">&para;</a></h3>
+<p>过程略。经验总结</p>
+<ul>
+<li>支付账号创建后无法更改国家（试用账号无法更改，之后可以创建其它支付账号）</li>
+<li>网上说会支付 0.01 美元用于验证支付方式，但实际我支付了 25 SGD，其中 5 SGD 会自动退回，而 20 SGD 默认相当于充值余额，需要手动申请退回（几个小时就可以退回）。<strong>总得来说注册是免费的</strong><ul>
+<li>试用结束前不要申请退回，否则后面还会重新要求验证支付方式，我就这样子验证了 3 次。</li>
+</ul>
+</li>
+</ul>
+<h4 id="关于-billing-verification">关于 Billing verification<a class="headerlink" href="#关于-billing-verification" title="Permanent link">&para;</a></h4>
+<p>当您注册免费试用时，Google 需要提供信用卡或其他付款方式。在您提交付款信息后，Google 会提交一次易，仅用于验证目的。 <strong>在此验证过程之后，除非您</strong><a href="https://docs.cloud.google.com/free/docs/free-cloud-features#how-to-upgrade"><strong>激活了完整的付费 Cloud Billing 帐号</strong></a> ，否则不会收取任何费用。</p>
+<p>The transaction has the following attributes:  </p>
+<ul>
+<li>The transaction is an authorization request to validate your Cloud Billing account. It is not a permanent charge.<br />
+    该交易是用于验证您的 Cloud 结算帐号的授权请求。这不是永久性收费。</li>
+<li>The transaction appears on your statement as being from Google.<br />
+    该交易在您的对帐单上显示为来自 Google。</li>
+<li>The transaction is between $0.00 and $1.00 USD. Your bank might convert this amount to a local currency.<br />
+    交易金额在 0.00 美元到 1.00 美元之间。您的银行可能会将此金额转换为当地货币。</li>
+<li>If you provide bank account information, the transaction might take up to 3 days to appear on your statement.<br />
+    如果您提供银行账户信息，则交易最多可能需要 3 天才能显示在您的对账单上。</li>
+<li>If you provide credit card information, this transaction might appear on your statement for up to one month before being automatically reversed.<br />
+    如果您提供信用卡信息，此交易可能会在您的对账单上显示长达一个月，然后自动撤销。</li>
+</ul>
+<h3 id="google-cloud-的用法">Google Cloud 的用法<a class="headerlink" href="#google-cloud-的用法" title="Permanent link">&para;</a></h3>
+<p>基本概念</p>
+<ul>
+<li>项目：所有服务都是绑定在一个项目里面的。</li>
+<li>结算账号：绑定了信用卡，每个项目需要一个结算账号<ul>
+<li>免费试用会创建一个 My First Project 项目，该项目绑定了一个结算账号。该结算账号是特殊的，可以保证不会扣费。除非手动将其升级成了完整的付费账号。<a href="https://docs.cloud.google.com/free/docs/free-cloud-features#how-to-upgrade"><strong>升级付费帐号</strong></a></li>
+</ul>
+</li>
+</ul>
+<p>有用链接</p>
+<ul>
+<li><a href="https://console.cloud.google.com/billing/projects">我的项目 – 结算 – Google Cloud 控制台</a></li>
+<li><a href="https://console.cloud.google.com/compute/instances">虚拟机实例 – Compute Engine – My First Project – Google Cloud 控制台</a></li>
+</ul>
+<h4 id="白嫖-vps">白嫖 VPS<a class="headerlink" href="#白嫖-vps" title="Permanent link">&para;</a></h4>
+<p>有了 google cloud 账号，还可以创建一个免费的 VPS：</p>
+<ul>
+<li>e2_micro（2 core + 1G + 200GB 免费流量）</li>
+</ul>
+<p>参考视频：<a href="https://www.youtube.com/watch?v=12goOU6jG9w">永久“白嫖”谷歌云服务器 | 更新整合版 | 创建永久免费VPS、搭建科学上网 | 如何避免反撸扣费 | 每月200G流量 | 试用期过后如何重新激活 - YouTube</a>，其中还介绍了如何查看 google 的项目结算费用。</p>
+<p>google 提供的免费层级服务：
+https://docs.cloud.google.com/free/docs/free-cloud-features?hl=zh-cn#free-tier-usage-limits</p>
+<p>其中 Compute Engine 提供：</p>
+<ul>
+<li>在美国的以下区域之一，每月 1 个非抢占式 <code>e2-micro</code> 虚拟机实例：
+    - 俄勒冈：<code>us-west1</code>。
+    - 爱荷华：<code>us-central1</code>。
+    - 南卡罗来纳：<code>us-east1</code>。</li>
+<li>每月 30 GB 标准永久性磁盘。</li>
+<li>每月 1 GB 的出站数据传输量 - 从北美到所有区域目的地（不包括中国和澳大利亚）。</li>
+</ul>
+<p>您的“免费层级”<code>e2-micro</code> 实例受时长限制，而非实例数量限制。您每个月都可以在达到当月免费使用小时数上限前，免费使用所有 <code>e2-micro</code> 实例。所有受支持<a href="https://docs.cloud.google.com/compute/docs/regions-zones?hl=zh-cn">区域</a>的总用量将合并计算。</p>
+<p>GPU 和 TPU 不在“免费层级”计划范围内。您始终需要为添加到虚拟机实例中的 GPU 和 TPU 支付相应费用。</p>
+<h2 id="创建-google-ai-gemini-api-key">创建 Google AI Gemini API key<a class="headerlink" href="#创建-google-ai-gemini-api-key" title="Permanent link">&para;</a></h2>
+<p>目前 google 官方有两个平台提供 API 服务——Google AI studio 和 Google Cloud Vertex AI。以下是它们的区别：</p>
+<p>参考来源1：<a href="https://gemini-api.apifox.cn/doc-3462291">在Google Cloud上运行Gemini - Google Gemini API 文档</a></p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>特性</strong></th>
+<th style="text-align: left;"><strong>Google AI Gemini API</strong></th>
+<th style="text-align: left;"><strong>Google Cloud Vertex AI Gemini API</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">最新的 Gemini 模型</td>
+<td style="text-align: left;">Gemini Pro 和 Gemini Ultra</td>
+<td style="text-align: left;">Gemini Pro 和 Gemini Ultra</td>
+</tr>
+<tr>
+<td style="text-align: left;">注册</td>
+<td style="text-align: left;">Google 账号</td>
+<td style="text-align: left;">Google Cloud 账号（含条款协议和结算）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>身份验证</strong></td>
+<td style="text-align: left;">API 密钥</td>
+<td style="text-align: left;">Google Cloud 服务帐号</td>
+</tr>
+<tr>
+<td style="text-align: left;">界面园地</td>
+<td style="text-align: left;">Google AI Studio</td>
+<td style="text-align: left;">Vertex AI Studio</td>
+</tr>
+<tr>
+<td style="text-align: left;">API 和 SDK</td>
+<td style="text-align: left;">Python、Node.js、Android (Kotlin/Java)、Swift、Go</td>
+<td style="text-align: left;">SDK 支持 Python、Node.js、Java、Go</td>
+</tr>
+<tr>
+<td style="text-align: left;">免费层级</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">面向新用户的 $300 Google Cloud 赠金</td>
+</tr>
+<tr>
+<td style="text-align: left;">配额（每分钟请求数）</td>
+<td style="text-align: left;"><a href="https://ai.google.dev/docs/increase_quota?hl=zh-cn">60（可以申请增加）</a></td>
+<td style="text-align: left;">应要求增加（默认值：60）</td>
+</tr>
+<tr>
+<td style="text-align: left;">企业支持服务</td>
+<td style="text-align: left;">否</td>
+<td style="text-align: left;">数据隐私权承诺 客户加密密钥 虚拟私有云 数据驻留 访问权限透明度</td>
+</tr>
+<tr>
+<td style="text-align: left;">MLOps</td>
+<td style="text-align: left;">否</td>
+<td style="text-align: left;">Vertex AI 上的完整 MLOps（例如：模型评估、模型监控、模型注册表）</td>
+</tr>
+</tbody>
+</table>
+<p>Gemini 总结</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">特性</th>
+<th style="text-align: left;">Google AI Studio (API Key)</th>
+<th style="text-align: left;">Vertex AI (GCP / ADC)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>主要目标人群</strong></td>
+<td style="text-align: left;">开发者、个人用户、快速原型开发</td>
+<td style="text-align: left;">企业、生产环境、大规模应用</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>鉴权方式</strong></td>
+<td style="text-align: left;"><strong>简单</strong>：仅需一个 API Key (字符串)</td>
+<td style="text-align: left;"><strong>复杂</strong>：OAuth2、Service Account (JSON文件) 或 ADC</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>配置难度</strong></td>
+<td style="text-align: left;">⭐ 极低 (复制粘贴即可)</td>
+<td style="text-align: left;">⭐⭐⭐ 高 (需配置 GCP 项目、计费、权限)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>费用 (Gemini)</strong></td>
+<td style="text-align: left;"><strong>有免费层级</strong> (有限流)，也有付费层级</td>
+<td style="text-align: left;"><strong>无免费层级</strong> (按 Token 计费，但在 GCP 试用金内)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>数据隐私 (关键)</strong></td>
+<td style="text-align: left;"><strong>免费版：Google 可能会使用数据训练</strong><br>付费版：不训练</td>
+<td style="text-align: left;"><strong>承诺绝对不使用客户数据训练模型</strong> (企业级合规)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Open WebUI 兼容性</strong></td>
+<td style="text-align: left;"><strong>极佳</strong> (通过 OpenAI 协议直连)</td>
+<td style="text-align: left;"><strong>一般</strong> (需要配置环境变量或挂载密钥文件)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>区域限制</strong></td>
+<td style="text-align: left;">限制较少，全球大部分地区可用 (需梯子)</td>
+<td style="text-align: left;">需指定 GCP 区域 (如 us-central1)，合规性更严</td>
+</tr>
+</tbody>
+</table>
+<p>主要的不同在于 Authentication (身份验证) 方式：</p>
+<ul>
+<li><strong>Google AI Gemini API</strong> 使用简单的 API key<ul>
+<li>请求中包含查询参数 <code>?key=YOUR_API_KEY</code> 或一个 HTTP 请求头 <code>x-goog-api-key</code> 来传递</li>
+</ul>
+</li>
+<li><strong>Vertex AI Gemini API</strong> 使用标准的 Google Cloud IAM 身份验证 (OAuth 2.0)<ul>
+<li>在请求头中提供一个临时的、通过 gcloud 或服务账号获取的 <code>Bearer Token</code>
+    <code>-H "Authorization: Bearer $(gcloud auth print-access-token)"</code></li>
+</ul>
+</li>
+</ul>
+<p><em>p.s</em>：这里没有区分 API 接口（HTTP RESTful 接口）和提供 API 调用的平台，它们是绑定在一起的。Google AI Studio 平台提供 Google AI Gemini API，Google Cloud Vertex AI Studio 提供 Vertex AI Gemini API。事实上，Google Gemini API 和 Vertex Gemini API  的 RESTful 接口不一样（身份验证、请求体 json 部分参数） ，但核心数据结构（Payload）非常相似。</p>
+<ul>
+<li>Python 的 <code>google-generativeai</code> 和 <code>google-cloud-aiplatform</code> 是两个不同的库，它们分别封装了这两种不同的调用方式，但<strong>最终都是把 <code>contents</code> 这个核心数据结构发送给了 Gemini 模型。</strong></li>
+<li>现在（Starting with the Gemini 2.0 release in late 2024）二者都可以通过 <code>google-genai</code> 库调用：<a href="https://ai.google.dev/gemini-api/docs/migrate">Migrate to the Google GenAI SDK  |  Gemini API  |  Google AI for Developers</a></li>
+</ul>
+<p>总体而言，Vertex AI Gemini API 更适合企业用户，提供了更多企业级支持。Google AI Gemini API 更适合个人，使用单个 API key 字符串验证很方便。</p>
+<p>另外，Google AI Studio 平台还提供了兼容 OpenAI API 的 API 服务，使用相同的 API Key，只需要更换 Endpoint url 即可。这样可以直接使用大量的现成的支持 openai api 的工具。参考：<a href="https://ai.google.dev/gemini-api/docs/openai">OpenAI compatibility  |  Gemini API  |  Google AI for Developers</a></p>
+<p>因此本文主要介绍创建 Google AI Gemini API 的方法。</p>
+<h3 id="导入项目">导入项目<a class="headerlink" href="#导入项目" title="Permanent link">&para;</a></h3>
+<p>Google AI Gemini API 同样需要绑定 Google Cloud 上的项目。要想使用试用的 300美金，不要创建新项目，而是导入 Google Cloud 上默认的试用项目。</p>
+<ol>
+<li>Go to <a href="https://aistudio.google.com/">Google AI Studio</a>.</li>
+<li>Open the <strong>Dashboard</strong> from the left side panel.</li>
+<li>Select <strong>Projects</strong>.</li>
+<li>Select the <strong>Import projects</strong> button in the <strong>Projects</strong> page.</li>
+<li>Search for and select the Google Cloud project you want to import and select the <strong>Import</strong> button.</li>
+</ol>
+<h3 id="创建-api-key">创建 API key<a class="headerlink" href="#创建-api-key" title="Permanent link">&para;</a></h3>
+<p><a href="https://gemini-api.apifox.cn/doc-3462186">获取 API 密钥 - Google Gemini API 文档</a></p>
+<h3 id="api-价格">API 价格<a class="headerlink" href="#api-价格" title="Permanent link">&para;</a></h3>
+<p>google AI studio 和 vertex AI 价格是一样的</p>
+<ul>
+<li><a href="https://ai.google.dev/gemini-api/docs/pricing">Gemini Developer API pricing  |  Gemini API  |  Google AI for Developers</a></li>
+<li><a href="https://cloud.google.com/vertex-ai/generative-ai/pricing">Vertex AI Pricing  |  Google Cloud</a></li>
+</ul>
+<p>总体来说 2.5 pro 输入 1.25 $/M，输出 10 $/M。3-pro 价格有所上涨，输入到了 2 $/M。根据 google 的结算报告来看，在2-3人中度使用的情况下，1 天大概需要 2-3$。</p>
+<table>
+<thead>
+<tr>
+<th>Model</th>
+<th>Type</th>
+<th>Price (/1M tokens) &lt;= 200K input tokens</th>
+<th>Price (/1M tokens) &gt; 200K input tokens</th>
+<th>Price (/1M tokens) &lt;= 200K <strong>cached</strong> input tokens</th>
+<th>Price (/1M tokens) &gt; 200K <strong>cached</strong> input tokens</th>
+<th>Price (/1M tokens) &lt;= 200K input tokens with batch API</th>
+<th>Price (/1M tokens) &gt; 200K input tokens with batch API</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Gemini 2.5 Pro</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>Input (text, image, video, audio)</td>
+<td>$1.25</td>
+<td>$2.5</td>
+<td>$0.125</td>
+<td>$0.250</td>
+<td>$0.625</td>
+<td>$1.25</td>
+</tr>
+<tr>
+<td></td>
+<td>Text output (response and reasoning)</td>
+<td>$10</td>
+<td>$15</td>
+<td>N/A</td>
+<td>N/A</td>
+<td>$5</td>
+<td>$7.5</td>
+</tr>
+<tr>
+<td>Gemini 3 Pro Preview</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>Input (text, image, video, audio)</td>
+<td>$2</td>
+<td>$4</td>
+<td>$0.2</td>
+<td>$0.4</td>
+<td>$1</td>
+<td>$2</td>
+</tr>
+<tr>
+<td></td>
+<td>Text output (response and reasoning)</td>
+<td>$12</td>
+<td>$18</td>
+<td>N/A</td>
+<td>N/A</td>
+<td>$6</td>
+<td>$9</td>
+</tr>
+<tr>
+<td></td>
+<td>Image Output**</td>
+<td>$120</td>
+<td>N/A</td>
+<td>N/A</td>
+<td>N/A</td>
+<td>$60</td>
+<td>N/A</td>
+</tr>
+</tbody>
+</table>
+<p><img alt="image.png" src="https://imagebed.yfycloud.site/2025/12/32599aa8083b14a8a5c7c0ff9f64bf53.png" /></p>
+<p>OpenRouter 网页更容易看到模型价格信息对比。</p>
+<p><a href="https://openrouter.ai/google/gemini-3-pro-preview">Gemini 3 Pro Preview - API, Providers, Stats | OpenRouter</a></p>
+<h2 id="open-webui">Open-WebUI<a class="headerlink" href="#open-webui" title="Permanent link">&para;</a></h2>
+<p><a href="https://github.com/open-webui/open-webui">open-webui/open -webui: User-friendly AI Interface (Supports Ollama, OpenAI API, ...)</a></p>
+<h3 id="docker-部署-open-webui">docker 部署 open-webui<a class="headerlink" href="#docker-部署-open-webui" title="Permanent link">&para;</a></h3>
+<p><a href="https://docs.openwebui.com/getting-started/quick-start/">Quick Start | Open WebUI</a></p>
+<ul>
+<li>OPENAI_API_KEY 之后进入网页设置即可</li>
+</ul>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;3.8&#39;</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="nt">services</span><span class="p">:</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">  </span><span class="nt">open-webui</span><span class="p">:</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ghcr.io/open-webui/open-webui:main</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">    </span><span class="nt">container_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">open-webui</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">    </span><span class="nt">ports</span><span class="p">:</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;3001:8080&quot;</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="w">    </span><span class="nt">environment</span><span class="p">:</span>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">OPENAI_API_KEY=your_secret_key</span>
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="w">    </span><span class="nt">volumes</span><span class="p">:</span>
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">open-webui:/app/backend/data</span>
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="w">    </span><span class="nt">restart</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">unless-stopped</span>
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="nt">volumes</span><span class="p">:</span>
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="w">  </span><span class="nt">open-webui</span><span class="p">:</span>
+</span></code></pre></div>
+<p>不同镜像版本</p>
+<ul>
+<li>open-webui:main<ul>
+<li>适合用于仅使用 openai api key 场景</li>
+</ul>
+</li>
+<li>open-webui:main-slim<ul>
+<li>For environments with limited storage or bandwidth, Open WebUI offers slim image variants that exclude pre-bundled models. These images are significantly smaller but download required models (whisper, embedding models) on first use.</li>
+</ul>
+</li>
+<li>open-webui:ollama<ul>
+<li>继承了 ollama，支持 gpu 和 cpu</li>
+</ul>
+</li>
+</ul>
+<h3 id="设置">设置<a class="headerlink" href="#设置" title="Permanent link">&para;</a></h3>
+<p>此时已经可以在：管理员面板-》设置-》外部连接-》OpenAI 接口 中添加</p>
+<ul>
+<li>URL: <a href="https://generativelanguage.googleapis.com/v1beta/openai/">https://generativelanguage.googleapis.com/v1beta/openai/</a></li>
+<li>认证方式（密钥）：API key</li>
+</ul>
+<p>添加完成后，设置-》模型中可以看到所有模型</p>
+<p>其它</p>
+<ul>
+<li>支持从 excel 批量导入用户</li>
+</ul>
+<h3 id="函数">函数<a class="headerlink" href="#函数" title="Permanent link">&para;</a></h3>
+<p>工具是外部的，函数是纯 python 脚本，运行在 open-webui 本地。</p>
+<p>函数有几种</p>
+<ul>
+<li>pipeline<ul>
+<li>启用后，会出现在 model 下拉列表中</li>
+</ul>
+</li>
+<li>filter<ul>
+<li>英文翻译</li>
+</ul>
+</li>
+<li>action<ul>
+<li>修改 open-webui，增加按钮</li>
+</ul>
+</li>
+</ul>
+<h3 id="update-20251123-使用-google-gemini-函数完美支持-gemini">(update 20251123) 使用 <code>Google Gemini</code> 函数完美支持 gemini<a class="headerlink" href="#update-20251123-使用-google-gemini-函数完美支持-gemini" title="Permanent link">&para;</a></h3>
+<p><a href="https://openwebui.com/posts/5a64dbc0-bd44-4d3a-84be-25232d5a8e84">Google Gemini • Open WebUI Community</a>
+<a href="https://github.com/owndev/Open-WebUI-Functions/blob/main/pipelines/google/google_gemini.py">https://github.com/owndev/Open-WebUI-Functions/blob/main/pipelines/google/google_gemini.py</a></p>
+<ul>
+<li>直接在 open-webui 里用纯 python 实现了一个转换器，支持 Google AI API 和 Vertex AI API。</li>
+<li>直接支持显示思维链</li>
+<li>直接支持调用 nano banana 绘图</li>
+</ul>
+<p>可以基本替代 LiteLLM 了</p>
+<p>使用方法</p>
+<ul>
+<li>安装函数后，点击函数设置（齿轮）</li>
+<li>配置 google ai studio 的 API key<ul>
+<li><strong>也支持 vertex ai API</strong></li>
+</ul>
+</li>
+<li>Gemini 模型出现在 model 下拉列表中</li>
+</ul>
+<p>同一个作者还有两个 Tool 用于开启搜索功能，但是我测试没有成功。</p>
+<ul>
+<li>Grounding with Google search with <a href="https://github.com/owndev/Open-WebUI-Functions/tree/main/filters/google_search_tool.py">google_search_tool.py filter</a></li>
+<li>Grounding with Vertex AI Search with <a href="https://github.com/owndev/Open-WebUI-Functions/tree/main/filters/vertex_ai_search_tool.py">vertex_ai_search_tool.py filter</a></li>
+</ul>
+<h2 id="litellm">LiteLLM<a class="headerlink" href="#litellm" title="Permanent link">&para;</a></h2>
+<p>本质是一个 <strong>“适配器”或“代理层”</strong></p>
+<ol>
+<li>接收你的 OpenAI 格式请求。</li>
+<li>将请求的结构<strong>翻译</strong>成 Gemini API 能理解的格式（例如，<code>"contents": [...]</code>）。</li>
+<li>将你的 <code>Gemini API Key</code> 添加到请求头中，发送给 Google AI Gemini API 的服务器。</li>
+<li>收到 Gemini 的响应后，再<strong>翻译</strong>回 OpenAI 的格式返回给你。</li>
+</ol>
+<p><strong>对比直接使用 gemini 兼容 OpenAI 的 API key</strong></p>
+<p>google ai studio 提供了一个 兼容 OpenAI 的 API key，直接在 open-webui 中使用存在一些问题：</p>
+<ul>
+<li>2.5 pro 无法联网搜索，和显示思维链。（2.5-flash 模型倒是两个都正常）<ul>
+<li>litellm 可以设置 merge_reasoning_content_in_choices 参数，可以正常显示思维链。</li>
+</ul>
+</li>
+</ul>
+<h3 id="docker-部署-litellm-proxy-server">docker 部署 litellm proxy server<a class="headerlink" href="#docker-部署-litellm-proxy-server" title="Permanent link">&para;</a></h3>
+<p>litellm 还是一个 python SDK，但是我们主要使用其 proxy 服务器的用法。</p>
+<p><a href="https://docs.litellm.ai/docs/proxy/docker_quick_start">Getting Started Tutorial | liteLLM</a></p>
+<ul>
+<li>介绍了如何使用 litellm 请求 openai api 兼容的服务器</li>
+<li>将 litellm 自身暴露成一个 openai api 兼容的服务器<ul>
+<li>设置的 master_key 就是 cherry-studio 等软件需要的 OpenAI API Key</li>
+</ul>
+</li>
+</ul>
+<p>docker compose 示例</p>
+<p><a href="https://github.com/BerriAI/litellm/blob/main/docker-compose.yml">litellm/docker-compose.yml at main · BerriAI/litellm</a></p>
+<ul>
+<li>我将 prometheus 注释掉了，该服务只是不断监测服务是否在线。并提供一个数据面板。</li>
+</ul>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nt">services</span><span class="p">:</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">  </span><span class="nt">litellm</span><span class="p">:</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">    </span><span class="nt">build</span><span class="p">:</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">      </span><span class="nt">context</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">.</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">      </span><span class="nt">args</span><span class="p">:</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">        </span><span class="nt">target</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">runtime</span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ghcr.io/berriai/litellm:main-stable</span>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="w">    </span><span class="c1">#########################################</span>
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="w">    </span><span class="c1">## Uncomment these lines to start proxy with a config.yaml file ##</span>
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="w">    </span><span class="nt">volumes</span><span class="p">:</span>
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./litellm_config.yaml:/app/config.yaml</span>
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./vertex_ai_service_account.json:/app/vertex_ai_service_account.json</span>
+</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="w">    </span><span class="nt">command</span><span class="p">:</span>
+</span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;--config=/app/config.yaml&quot;</span>
+</span><span id="__span-1-15"><a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a><span class="w">    </span><span class="c1">##############################################</span>
+</span><span id="__span-1-16"><a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a><span class="w">    </span><span class="nt">ports</span><span class="p">:</span>
+</span><span id="__span-1-17"><a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;3002:4000&quot;</span><span class="w"> </span><span class="c1"># Map the container port to the host, change the host port if necessary</span>
+</span><span id="__span-1-18"><a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a><span class="w">    </span><span class="nt">environment</span><span class="p">:</span>
+</span><span id="__span-1-19"><a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a><span class="w">      </span><span class="nt">DATABASE_URL</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;postgresql://llmproxy:dbpassword9090@db:5432/litellm&quot;</span>
+</span><span id="__span-1-20"><a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a><span class="w">      </span><span class="nt">STORE_MODEL_IN_DB</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;True&quot;</span><span class="w"> </span><span class="c1"># allows adding models to proxy via UI</span>
+</span><span id="__span-1-21"><a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a><span class="w">      </span><span class="nt">GOOGLE_APPLICATION_CREDENTIALS</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/app/vertex_ai_service_account.json</span>
+</span><span id="__span-1-22"><a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a><span class="w">    </span><span class="nt">env_file</span><span class="p">:</span>
+</span><span id="__span-1-23"><a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">.env</span><span class="w"> </span><span class="c1"># Load local .env file</span>
+</span><span id="__span-1-24"><a id="__codelineno-1-24" name="__codelineno-1-24" href="#__codelineno-1-24"></a><span class="w">    </span><span class="nt">depends_on</span><span class="p">:</span>
+</span><span id="__span-1-25"><a id="__codelineno-1-25" name="__codelineno-1-25" href="#__codelineno-1-25"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">db</span><span class="w">  </span><span class="c1"># Indicates that this service depends on the &#39;db&#39; service, ensuring &#39;db&#39; starts first</span>
+</span><span id="__span-1-26"><a id="__codelineno-1-26" name="__codelineno-1-26" href="#__codelineno-1-26"></a><span class="w">    </span><span class="nt">healthcheck</span><span class="p">:</span><span class="w">  </span><span class="c1"># Defines the health check configuration for the container</span>
+</span><span id="__span-1-27"><a id="__codelineno-1-27" name="__codelineno-1-27" href="#__codelineno-1-27"></a><span class="w">      </span><span class="nt">test</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="w"> </span><span class="s">&quot;CMD-SHELL&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;wget</span><span class="nv"> </span><span class="s">--no-verbose</span><span class="nv"> </span><span class="s">--tries=1</span><span class="nv"> </span><span class="s">http://localhost:4000/health/liveliness</span><span class="nv"> </span><span class="s">||</span><span class="nv"> </span><span class="s">exit</span><span class="nv"> </span><span class="s">1&quot;</span><span class="w"> </span><span class="p p-Indicator">]</span><span class="w">  </span><span class="c1"># Command to execute for health check</span>
+</span><span id="__span-1-28"><a id="__codelineno-1-28" name="__codelineno-1-28" href="#__codelineno-1-28"></a><span class="w">      </span><span class="nt">interval</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">30s</span><span class="w">  </span><span class="c1"># Perform health check every 30 seconds</span>
+</span><span id="__span-1-29"><a id="__codelineno-1-29" name="__codelineno-1-29" href="#__codelineno-1-29"></a><span class="w">      </span><span class="nt">timeout</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10s</span><span class="w">   </span><span class="c1"># Health check command times out after 10 seconds</span>
+</span><span id="__span-1-30"><a id="__codelineno-1-30" name="__codelineno-1-30" href="#__codelineno-1-30"></a><span class="w">      </span><span class="nt">retries</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3</span><span class="w">     </span><span class="c1"># Retry up to 3 times if health check fails</span>
+</span><span id="__span-1-31"><a id="__codelineno-1-31" name="__codelineno-1-31" href="#__codelineno-1-31"></a><span class="w">      </span><span class="nt">start_period</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">40s</span><span class="w">  </span><span class="c1"># Wait 40 seconds after container start before beginning health checks</span>
+</span><span id="__span-1-32"><a id="__codelineno-1-32" name="__codelineno-1-32" href="#__codelineno-1-32"></a>
+</span><span id="__span-1-33"><a id="__codelineno-1-33" name="__codelineno-1-33" href="#__codelineno-1-33"></a><span class="w">  </span><span class="nt">db</span><span class="p">:</span>
+</span><span id="__span-1-34"><a id="__codelineno-1-34" name="__codelineno-1-34" href="#__codelineno-1-34"></a><span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">postgres:16</span>
+</span><span id="__span-1-35"><a id="__codelineno-1-35" name="__codelineno-1-35" href="#__codelineno-1-35"></a><span class="w">    </span><span class="nt">restart</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">always</span>
+</span><span id="__span-1-36"><a id="__codelineno-1-36" name="__codelineno-1-36" href="#__codelineno-1-36"></a><span class="w">    </span><span class="nt">container_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">litellm_db</span>
+</span><span id="__span-1-37"><a id="__codelineno-1-37" name="__codelineno-1-37" href="#__codelineno-1-37"></a><span class="w">    </span><span class="nt">environment</span><span class="p">:</span>
+</span><span id="__span-1-38"><a id="__codelineno-1-38" name="__codelineno-1-38" href="#__codelineno-1-38"></a><span class="w">      </span><span class="nt">POSTGRES_DB</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">litellm</span>
+</span><span id="__span-1-39"><a id="__codelineno-1-39" name="__codelineno-1-39" href="#__codelineno-1-39"></a><span class="w">      </span><span class="nt">POSTGRES_USER</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">llmproxy</span>
+</span><span id="__span-1-40"><a id="__codelineno-1-40" name="__codelineno-1-40" href="#__codelineno-1-40"></a><span class="w">      </span><span class="nt">POSTGRES_PASSWORD</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dbpassword9090</span>
+</span><span id="__span-1-41"><a id="__codelineno-1-41" name="__codelineno-1-41" href="#__codelineno-1-41"></a><span class="w">    </span><span class="nt">ports</span><span class="p">:</span>
+</span><span id="__span-1-42"><a id="__codelineno-1-42" name="__codelineno-1-42" href="#__codelineno-1-42"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;5432:5432&quot;</span>
+</span><span id="__span-1-43"><a id="__codelineno-1-43" name="__codelineno-1-43" href="#__codelineno-1-43"></a><span class="w">    </span><span class="nt">volumes</span><span class="p">:</span>
+</span><span id="__span-1-44"><a id="__codelineno-1-44" name="__codelineno-1-44" href="#__codelineno-1-44"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">postgres_data:/var/lib/postgresql/data</span><span class="w"> </span><span class="c1"># Persists Postgres data across container restarts</span>
+</span><span id="__span-1-45"><a id="__codelineno-1-45" name="__codelineno-1-45" href="#__codelineno-1-45"></a><span class="w">    </span><span class="nt">healthcheck</span><span class="p">:</span>
+</span><span id="__span-1-46"><a id="__codelineno-1-46" name="__codelineno-1-46" href="#__codelineno-1-46"></a><span class="w">      </span><span class="nt">test</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;CMD-SHELL&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;pg_isready</span><span class="nv"> </span><span class="s">-d</span><span class="nv"> </span><span class="s">litellm</span><span class="nv"> </span><span class="s">-U</span><span class="nv"> </span><span class="s">llmproxy&quot;</span><span class="p p-Indicator">]</span>
+</span><span id="__span-1-47"><a id="__codelineno-1-47" name="__codelineno-1-47" href="#__codelineno-1-47"></a><span class="w">      </span><span class="nt">interval</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1s</span>
+</span><span id="__span-1-48"><a id="__codelineno-1-48" name="__codelineno-1-48" href="#__codelineno-1-48"></a><span class="w">      </span><span class="nt">timeout</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5s</span>
+</span><span id="__span-1-49"><a id="__codelineno-1-49" name="__codelineno-1-49" href="#__codelineno-1-49"></a><span class="w">      </span><span class="nt">retries</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10</span>
+</span><span id="__span-1-50"><a id="__codelineno-1-50" name="__codelineno-1-50" href="#__codelineno-1-50"></a>
+</span><span id="__span-1-51"><a id="__codelineno-1-51" name="__codelineno-1-51" href="#__codelineno-1-51"></a><span class="c1">#  prometheus:</span>
+</span><span id="__span-1-52"><a id="__codelineno-1-52" name="__codelineno-1-52" href="#__codelineno-1-52"></a><span class="c1">#    image: prom/prometheus</span>
+</span><span id="__span-1-53"><a id="__codelineno-1-53" name="__codelineno-1-53" href="#__codelineno-1-53"></a><span class="c1">#    volumes:</span>
+</span><span id="__span-1-54"><a id="__codelineno-1-54" name="__codelineno-1-54" href="#__codelineno-1-54"></a><span class="c1">#      - prometheus_data:/prometheus</span>
+</span><span id="__span-1-55"><a id="__codelineno-1-55" name="__codelineno-1-55" href="#__codelineno-1-55"></a><span class="c1">#      - ./prometheus.yml:/etc/prometheus/prometheus.yml</span>
+</span><span id="__span-1-56"><a id="__codelineno-1-56" name="__codelineno-1-56" href="#__codelineno-1-56"></a><span class="c1">#    ports:</span>
+</span><span id="__span-1-57"><a id="__codelineno-1-57" name="__codelineno-1-57" href="#__codelineno-1-57"></a><span class="c1">#      - &quot;9095:9090&quot;</span>
+</span><span id="__span-1-58"><a id="__codelineno-1-58" name="__codelineno-1-58" href="#__codelineno-1-58"></a><span class="c1">#    command:</span>
+</span><span id="__span-1-59"><a id="__codelineno-1-59" name="__codelineno-1-59" href="#__codelineno-1-59"></a><span class="c1">#      - &quot;--config.file=/etc/prometheus/prometheus.yml&quot;</span>
+</span><span id="__span-1-60"><a id="__codelineno-1-60" name="__codelineno-1-60" href="#__codelineno-1-60"></a><span class="c1">#      - &quot;--storage.tsdb.path=/prometheus&quot;</span>
+</span><span id="__span-1-61"><a id="__codelineno-1-61" name="__codelineno-1-61" href="#__codelineno-1-61"></a><span class="c1">#      - &quot;--storage.tsdb.retention.time=15d&quot;</span>
+</span><span id="__span-1-62"><a id="__codelineno-1-62" name="__codelineno-1-62" href="#__codelineno-1-62"></a><span class="c1">#    restart: always</span>
+</span><span id="__span-1-63"><a id="__codelineno-1-63" name="__codelineno-1-63" href="#__codelineno-1-63"></a><span class="nt">volumes</span><span class="p">:</span>
+</span><span id="__span-1-64"><a id="__codelineno-1-64" name="__codelineno-1-64" href="#__codelineno-1-64"></a><span class="w">  </span><span class="nt">prometheus_data</span><span class="p">:</span>
+</span><span id="__span-1-65"><a id="__codelineno-1-65" name="__codelineno-1-65" href="#__codelineno-1-65"></a><span class="w">    </span><span class="nt">driver</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">local</span>
+</span><span id="__span-1-66"><a id="__codelineno-1-66" name="__codelineno-1-66" href="#__codelineno-1-66"></a><span class="w">  </span><span class="nt">postgres_data</span><span class="p">:</span>
+</span><span id="__span-1-67"><a id="__codelineno-1-67" name="__codelineno-1-67" href="#__codelineno-1-67"></a><span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">litellm_postgres_data</span><span class="w"> </span><span class="c1"># Named volume for Postgres data persistence</span>
+</span></code></pre></div>
+<h3 id="基本配置">基本配置<a class="headerlink" href="#基本配置" title="Permanent link">&para;</a></h3>
+<h4 id="修改-api-key">修改 API key<a class="headerlink" href="#修改-api-key" title="Permanent link">&para;</a></h4>
+<p>修改 API key：<a href="https://docs.litellm.ai/docs/proxy/master_key_rotations">Rotating Master Key | liteLLM</a></p>
+<h3 id="通过-google-ai-studio-api-key-使用-gemini">通过 google ai studio api key 使用 gemini<a class="headerlink" href="#通过-google-ai-studio-api-key-使用-gemini" title="Permanent link">&para;</a></h3>
+<h4 id="gemini-显示-thinking">gemini 显示 thinking<a class="headerlink" href="#gemini-显示-thinking" title="Permanent link">&para;</a></h4>
+<p><a href="https://github.com/BerriAI/litellm/issues/13419">[Bug]：OpenAI gpt-5 在使用 OpenWebUI 时不显示思维输出 ·问题 #13419 ·BerriAI/利特尔姆 --- [Bug]: OpenAI gpt-5 not showing thinking outputs when using OpenWebUI · Issue #13419 · BerriAI/litellm</a></p>
+<p>gemini/google ai studio 和 vertex 需要启用选项</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>thinking: {&quot;type&quot;: &quot;enabled&quot;, &quot;budget_tokens&quot;: 1024}  # budget_tokens: 1024-32768
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>merge_reasoning_content_in_choices: true
+</span></code></pre></div>
+<h4 id="启用联网搜索">启用联网搜索<a class="headerlink" href="#启用联网搜索" title="Permanent link">&para;</a></h4>
+<p><a href="https://docs.litellm.ai/docs/completion/web_search">Web Search | liteLLM</a></p>
+<ul>
+<li>litellm 配置中开启了 <code>web_search_options: search_context_size: "medium"</code> 可以使用搜索</li>
+</ul>
+<p><strong>启用搜索也是要收费的</strong>，收费标准：<a href="https://cloud.google.com/vertex-ai/generative-ai/pricing">Vertex AI Pricing  |  Google Cloud</a></p>
+<ul>
+<li>2.0/2.5 Flash: 1500/天 免费</li>
+<li>2.5pro：10000 次/天 免费</li>
+<li>超出：35$/1000条</li>
+</ul>
+<p>你不能依赖 Open-WebUI 的“网络搜索”按钮，因为它发送的参数可能不是 Vertex AI 所期望的 <code>google_search_retrieval</code> 工具。最稳定、最可靠的方法是在 LiteLLM 的配置中创建一个专门用于搜索的“虚拟模型”。</p>
+<h3 id="通过-vertex-ai-使用-gemini">通过 vertex ai 使用 gemini<a class="headerlink" href="#通过-vertex-ai-使用-gemini" title="Permanent link">&para;</a></h3>
+<p>在 google ai studio 有免费的 gemini2.5/3 额度时，经常遇到 server overload 的报错，需要过一会儿才能使用。但我明明是付费用户，使用也没有达到使用速率限制。对比感觉使用 vertex ai 更稳定些。</p>
+<p><a href="https://docs.litellm.ai/docs/providers/vertex">VertexAI [Gemini] | liteLLM</a></p>
+<p>如何获得 service_account.json 需要参考 google cloud 文档或者直接问LLM。</p>
+<p><code>litellm_config.yaml</code></p>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nt">model_list</span><span class="p">:</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">model_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gemini-2.5-pro</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">    </span><span class="nt">litellm_params</span><span class="p">:</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">      </span><span class="nt">model</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">vertex_ai/gemini-2.5-pro</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">      </span><span class="nt">vertex_project</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;project-id&quot;</span>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="w">      </span><span class="nt">vertex_location</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;us-central1&quot;</span>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="w">      </span><span class="nt">vertex_credentials</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/path/to/service_account.json&quot;</span><span class="w"> </span><span class="c1"># [OPTIONAL] Do this OR `!gcloud auth application-default login` - run this to add vertex credentials to your env</span>
+</span></code></pre></div>
+<p><code>docker-compose.yaml</code> 文件中，添加了文件映射和环境变量。</p>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nt">volumes</span><span class="p">:</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./litellm_config.yaml:/app/config.yaml</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./vertex_ai_service_account.json:/app/vertex_ai_service_account.json</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="nt">environment</span><span class="p">:</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="w">      </span><span class="nt">GOOGLE_APPLICATION_CREDENTIALS</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/app/vertex_ai_service_account.json</span>
+</span></code></pre></div>
+<h4 id="使用-gemini-3-pro-404">使用 gemini-3-pro 404<a class="headerlink" href="#使用-gemini-3-pro-404" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>啊哦！回复有问题 litellm.ServiceUnavailableError: litellm.MidStreamFallbackError: litellm.NotFoundError: Vertex_ai_betaException - b&#39;{\n &quot;error&quot;: {\n &quot;code&quot;: 404,\n &quot;message&quot;: &quot;Publisher Model `projects/axiomatic-spark-475316-e7/locations/us-central1/publishers/google/models/gemini-3-pro-preview` was not found or your project does not have access to it. Please ensure you are using a valid model version. For more information, see: https://cloud.google.com/vertex-ai/generative-ai/docs/learn/model-versions&quot;,\n &quot;status&quot;: &quot;NOT_FOUND&quot;\n }\n}\n&#39;. Received Model Group=vertex_ai/gemini-3-pro-preview Available Model Group Fallbacks=None
+</span></code></pre></div>
+<p>需要将 vertex_location 设置为 global
+<a href="https://github.com/BerriAI/litellm/issues/16780#issuecomment-3568703439">https://github.com/BerriAI/litellm/issues/16780#issuecomment-3568703439</a></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>vertex_location: &quot;global&quot;
+</span></code></pre></div>
+<h3 id="使用其它兼容-openai-api-的模型">使用其它兼容 OpenAI API 的模型<a class="headerlink" href="#使用其它兼容-openai-api-的模型" title="Permanent link">&para;</a></h3>
+<p>其实最简单。兼容 openai 的 API key，直接设置 api_base 和 api_key 即可。</p>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="nt">model_list</span><span class="p">:</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w"> </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">model_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">siliconflow/deepseek-ai/DeepSeek-V3.2</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">litellm_params</span><span class="p p-Indicator">:</span>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="w">      </span><span class="nt">model</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openai/deepseek-ai/DeepSeek-V3.2</span>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="w">      </span><span class="nt">api_base</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://api.siliconflow.cn/v1</span>
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="w">      </span><span class="nt">api_key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">os.environ/SILICONFLOW_API_KEY</span>
+</span></code></pre></div>
+<p>需要在model 前面添加 <code>openai</code>，否则 litellm 不知道 provider 是谁。</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>08:29:06 - LiteLLM Router:ERROR: router.py:5157 - Error creating deployment: litellm.BadRequestError: LLM Provider NOT provided. Pass in the LLM provider you are trying to call. You passed model=deepseek-ai/DeepSeek-V3.2
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a> Pass model as E.g. For &#39;Huggingface&#39; inference endpoints pass in `completion(model=&#39;huggingface/starcoder&#39;,..)` Learn more: https://docs.litellm.ai/docs/providers, ignoring and continuing with other deployments.
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>Traceback (most recent call last)
+</span></code></pre></div>
+<h2 id="其它-todo">其它 TODO<a class="headerlink" href="#其它-todo" title="Permanent link">&para;</a></h2>
+<p>OpenAPI/New API 貌似功能比 LiteLLM 更多</p>
+<ul>
+<li><a href="https://github.com/songquanpeng/one-api">songquanpeng/one-api: LLM API 管理 &amp; 分发系统，支持 OpenAI、Azure、Anthropic Claude、Google Gemini、DeepSeek、字节豆包、ChatGLM、文心一言、讯飞星火、通义千问、360 智脑、腾讯混元等主流模型，统一 API 适配，可用于 key 管理与二次分发。单可执行文件，提供 Docker 镜像，一键部署，开箱即用。LLM API management &amp; key redistribution system, unifying multiple providers under a single API. Single binary, Docker-ready, with an English UI.</a></li>
+<li><a href="https://github.com/QuantumNous/new-api">QuantumNous/new-api: AI模型聚合管理中转分发系统，一个应用管理您的所有AI模型，支持将多种大模型转为统一格式调用，支持OpenAI、Claude、Gemini等格式，可供个人或者企业内部管理与分发渠道使用。🍥 The next-generation LLM gateway and AI asset management system supports multiple languages.</a></li>
+<li><a href="https://github.com/songquanpeng/one-api/pull/1621">feat: support claude and gemini in vertex ai by vaayne · Pull Request #1621 · songquanpeng/one-api</a></li>
+</ul>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+  
+
+
+
+      
+    </article>
+  </div>
+
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+        
+      
+      <nav class="md-footer__inner md-grid" aria-label="页脚" >
+        
+          
+          <a href="../../../../2024/11/23/%E4%BA%8C%E6%89%8B%E6%9C%BA%E6%A2%B0%E7%A1%AC%E7%9B%98%E8%B4%AD%E4%B9%B0/" class="md-footer__link md-footer__link--prev" aria-label="上一页: 二手机械硬盘购买">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                上一页
+              </span>
+              <div class="md-ellipsis">
+                二手机械硬盘购买
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../../../../../%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%85%B7/2026/01/11/ssh%20%E4%BB%A3%E7%90%86%E7%9A%84%E5%A6%99%E7%94%A8/" class="md-footer__link md-footer__link--next" aria-label="下一页: ssh 代理的妙用">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                下一页
+              </span>
+              <div class="md-ellipsis">
+                ssh 代理的妙用
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/TheRainstorm" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../../..", "features": ["navigation.instant", "navigation.instant.progress", "navigation.tracking", "navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.footer", "content.code.copy", "toc.follow", "toc.integrate"], "search": "../../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../../../../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

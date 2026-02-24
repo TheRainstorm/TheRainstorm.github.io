@@ -1,0 +1,1994 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="记录一些关于数学、计算机的知识，以及一些日常。">
+      
+      
+      
+        <link rel="canonical" href="https://yfy.cqu.ai/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/2022/09/19/2022-09-19-x86%E5%AD%A6%E4%B9%A0/">
+      
+      
+        <link rel="prev" href="../../../../../%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/2022/08/25/2022-08-25-Openwrt-Mesh%E5%92%8C%E5%BF%AB%E9%80%9F%E6%BC%AB%E6%B8%B8%E9%85%8D%E7%BD%AE/">
+      
+      
+        <link rel="next" href="../../28/2022-09-28-python%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.3">
+    
+    
+      
+        <title>x86 记录 - Rain 的随笔</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#x86-基础" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../../../../.." title="Rain 的随笔" class="md-header__button md-logo" aria-label="Rain 的随笔" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Rain 的随笔
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              x86 记录
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    
+  
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="../../../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  博客
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../about/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  关于
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../tags/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  标签
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../series/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  系列
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../tools/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  工具
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../archive/2026/" class="md-tabs__link">
+          
+  
+  
+  归档
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../category/%E4%B8%AA%E4%BA%BA/" class="md-tabs__link">
+          
+  
+  
+  分类
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" hidden>
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../../.." title="Rain 的随笔" class="md-nav__button md-logo" aria-label="Rain 的随笔" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Rain 的随笔
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+    
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      <a href="../../../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    博客
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    关于
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../tags/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    标签
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../series/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    系列
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../tools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    工具
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    归档
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    归档
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2026/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2026
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2025/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2025
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2024/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2024
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2023/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2023
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2022/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2022
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2021/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2021
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2020/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2020
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2019/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2019
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    分类
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    分类
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E4%B8%AA%E4%BA%BA/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    个人
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E5%8D%9A%E5%AE%A2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    博客
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E5%8D%9A%E5%AE%A2--%E7%BD%91%E7%BB%9C/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    博客 &amp; 网络
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    学习笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    折腾记录
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    课程笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%85%B7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    软件工具
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E9%98%85%E8%AF%BB/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    阅读
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+  <div class="md-content md-content--post" data-md-component="content">
+    <div class="md-sidebar md-sidebar--post" data-md-component="sidebar" data-md-type="navigation">
+      <div class="md-sidebar__scrollwrap">
+        <div class="md-sidebar__inner md-post">
+          <nav class="md-nav md-nav--primary">
+            <div class="md-post__back">
+              <div class="md-nav__title md-nav__container">
+                <a href="../../../../.." class="md-nav__link">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+                  <span class="md-ellipsis">
+                    回到主页
+                  </span>
+                </a>
+              </div>
+            </div>
+            
+            <ul class="md-post__meta md-nav__list">
+              <li class="md-nav__item md-nav__item--section">
+                <div class="md-post__title">
+                  <span class="md-ellipsis">
+                    元数据
+                  </span>
+                </div>
+                <nav class="md-nav">
+                  <ul class="md-nav__list">
+                    <li class="md-nav__item">
+                      <div class="md-nav__link">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 19H5V8h14m-3-7v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1V1m-1 11h-5v5h5z"/></svg>
+                        <time datetime="2022-09-19 15:49:50+00:00" class="md-ellipsis">2022年9月19日</time>
+                      </div>
+                    </li>
+                    
+                    
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 3v15h3V3zm3 2 4 13 3-1-4-13zM5 5v13h3V5zM3 19v2h18v-2z"/></svg>
+                          <span class="md-ellipsis">
+                            分类于
+                            
+                              <a href="../../../../../category/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a></span>
+                        </div>
+                      </li>
+                    
+                    
+                      
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20a8 8 0 0 0 8-8 8 8 0 0 0-8-8 8 8 0 0 0-8 8 8 8 0 0 0 8 8m0-18a10 10 0 0 1 10 10 10 10 0 0 1-10 10C6.47 22 2 17.5 2 12A10 10 0 0 1 12 2m.5 5v5.25l4.5 2.67-.75 1.23L11 13V7z"/></svg>
+                          <span class="md-ellipsis">
+                            
+                              需要 5 分钟阅读时间
+                            
+                          </span>
+                        </div>
+                      </li>
+                    
+                  </ul>
+                </nav>
+              </li>
+            </ul>
+            
+          </nav>
+          
+            
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#x86-基础" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        x86 基础
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="x86 基础">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#寄存器" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        寄存器
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#常见指令" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        常见指令
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#函数调用" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        函数调用
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="函数调用">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#abi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ABI
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#动态链接" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        动态链接
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#csapp-x86-汇编" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CSAPP x86 汇编
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="CSAPP x86 汇编">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#x86-指令-reference-网页" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        x86 指令 reference 网页
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#数据格式" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        数据格式
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#数据移动指令" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        数据移动指令
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="数据移动指令">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mov-movz-movs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        mov, movz, movs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cltdalias" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        cltd(alias)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#算术和逻辑操作" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        算术和逻辑操作
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="算术和逻辑操作">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#lea" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        lea
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#128-位乘除法" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        128 位乘除法
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#控制" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        控制
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="控制">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#条件码" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        条件码
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cmp-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        cmp, test
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#set" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        set
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#jmp-的-pc-相对寻址" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        jmp 的 PC 相对寻址
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#函数调用_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        函数调用
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="函数调用">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#基指针作用" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        基指针作用
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#浮点体系结构" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        浮点体系结构
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="浮点体系结构">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#浮点数据传送指令" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        浮点数据传送指令
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#浮点函数调用" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        浮点函数调用
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#浮点运算操作" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        浮点运算操作
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#位级操作" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        位级操作
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#比较" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        比较
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#x86-手册" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        x86 手册
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="x86 手册">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#内存管理" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        内存管理
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="内存管理">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#分段式管理" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        分段式管理
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#中断处理" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        中断处理
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+          
+        </div>
+      </div>
+    </div>
+    <article class="md-content__inner md-typeset">
+      
+        
+  
+
+
+  <nav class="md-tags" >
+    
+      
+      
+      
+      
+        <a href="../../../../../tags/#tag:x86" class="md-tag">x86</a>
+      
+    
+  </nav>
+
+
+
+  <h1>x86 记录</h1>
+
+<p>x86 记录</p>
+<!-- more -->
+
+<h2 id="x86-基础">x86 基础<a class="headerlink" href="#x86-基础" title="Permanent link">&para;</a></h2>
+<ul>
+<li>AT&amp;T 汇编格式，和 intel 格式。<ul>
+<li>简单区别：<ul>
+<li>AT&amp;T 中根据操作数 size 添加不同 suffix，如：b, w, l, q</li>
+<li>AT&amp;T 中使用%表示寄存器，$表示立即数。</li>
+<li>源操作数和目的操作数顺序相反。AT&amp;T 中第一个是源操作数，第二个是目的操作数。 （由于 x86 中，目的操作数又同时作为源操作数，所以这种写法感觉怪怪的。）</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>大多数编译器混合使用 32 和 64 位模式，32 位寄存器用来做整数计算，而 64 位用于保存内存地址。</li>
+</ul>
+<h3 id="寄存器">寄存器<a class="headerlink" href="#寄存器" title="Permanent link">&para;</a></h3>
+<h3 id="常见指令">常见指令<a class="headerlink" href="#常见指令" title="Permanent link">&para;</a></h3>
+<p>感觉比较重要的指令类别</p>
+<ul>
+<li>数据移动：mov</li>
+<li>基本计算指令：add, sub, imul, idiv</li>
+<li>分支跳转：cmp，jxx, jmp</li>
+</ul>
+<p><strong>寻址模式</strong></p>
+<ul>
+<li>立即数</li>
+<li>寄存器</li>
+<li>内存地址<ul>
+<li>indirect</li>
+<li>base-relative</li>
+<li>offset-scaled-base-relative</li>
+</ul>
+</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>movq (%rsi), %rax
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>movq    offset(%rsi), %rax
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>movq offset(%rbx, %rcx, scale), %rax
+</span></code></pre></div>
+<p>RISC 架构中一般采用 load/store 模式对内存进行读写，其它指令无法读写内存</p>
+<h3 id="函数调用">函数调用<a class="headerlink" href="#函数调用" title="Permanent link">&para;</a></h3>
+<p>相关指令</p>
+<ul>
+<li>call, ret</li>
+<li>enter, leave</li>
+</ul>
+<p>cheetsheet：<a href="https://pages.cs.wisc.edu/~remzi/Classes/354/Fall2012/Handouts/Handout-CallReturn.pdf">Handout-CallReturn.graffle (wisc.edu)</a></p>
+<h4 id="abi">ABI<a class="headerlink" href="#abi" title="Permanent link">&para;</a></h4>
+<p>需要知道<strong>调用约定（calling convention）</strong>，也为 ABI（应用二进制接口）<a href="https://en.wikipedia.org/wiki/X86_calling_conventions">x86 calling conventions - Wikipedia</a></p>
+<ul>
+<li>影响函数参数是如何传递的：通过栈或寄存器</li>
+</ul>
+<p>caller rules:</p>
+<ul>
+<li>保存 caller save 寄存器 (if use)：%rax, %rcx, %rdx</li>
+<li>整数参数 (包含指针）依次放在%rdi, %rsi, %rdx, %rcx, %r8, 和 %r9 寄存器中。</li>
+<li>浮点参数依次放在寄存器%xmm0-%xmm7 中。</li>
+<li>寄存器不够用时，参数放到栈中。将函数的参数以相反的顺序推送到堆栈。</li>
+<li>可变参数函数 (比如 printf), 寄存器%eax 需记录下浮点参数的个数。</li>
+<li>call<ul>
+<li>将 rip 压入栈</li>
+</ul>
+</li>
+</ul>
+<p>callee rules:</p>
+<ul>
+<li>保存 caller 帧的基址寄存器%rbp：push %rbp</li>
+<li>调整 rbp 指向当前帧，movq %rsp, %rbp</li>
+<li>分配局部变量空间，通过调整 esp</li>
+<li><strong>可以发现第一个参数位于 ebp+8 的位置</strong>(x86-32)</li>
+</ul>
+<ul>
+<li>保存 callee save 寄存器 (if use)：%rbx, %rsi, %rdi, %rbp, %rsp, and %r12-%r15</li>
+<li>返回值存储在 %eax 中。</li>
+<li>恢复 callee save 寄存器（弹栈）</li>
+<li>取消分配的局部变量</li>
+<li>恢复%rbp</li>
+<li>ret</li>
+</ul>
+<p><img alt="" src="https://imagebed.yfycloud.site/2025/12/cdbd3ab8774f308620d3acba8e92d4b5.png" /></p>
+<p>enter, leave 合并部分操作</p>
+<ul>
+<li>函数开头：push ebp; mov ebp, esp; 分配局部变量空间；可以通过 enter a b 实现。a 为分配的字节数，b 为嵌套级别，通常为 0。</li>
+<li>函数结尾：mov esp, ebp; pop ebp，可以使用 leave 代替。</li>
+</ul>
+<p>RISC 中没用专门的函数调用指令，而是使用分支跳转指令进行调用和返回，如 MIPS 中：beqal func, jr $31</p>
+<h3 id="动态链接">动态链接<a class="headerlink" href="#动态链接" title="Permanent link">&para;</a></h3>
+<ol>
+<li>
+<p>一个可执行文件生成的过程。
+ 编译（预处理，汇编），链接（静态，动态）</p>
+</li>
+<li>
+<p>可执行文件执行的过程
+ 创建进程 (fork, exec)
+ loader（静态，动态）</p>
+</li>
+<li>
+<p>一个可执行文件哪里会出现绝对地址</p>
+</li>
+</ol>
+<ul>
+<li>MIPS<ul>
+<li>PC-relative<ul>
+<li>beq, beqal</li>
+<li>b label (pseudo instruction)</li>
+</ul>
+</li>
+<li>indirect<ul>
+<li>jr：only used in call-return</li>
+</ul>
+</li>
+<li>pseudo-immediate<ul>
+<li>j</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>x86<ul>
+<li>jmp</li>
+<li>call（实际是相对偏移）</li>
+</ul>
+</li>
+</ul>
+<h2 id="csapp-x86-汇编"><strong>CSAPP x86 汇编</strong><a class="headerlink" href="#csapp-x86-汇编" title="Permanent link">&para;</a></h2>
+<h3 id="x86-指令-reference-网页">x86 指令 reference 网页<a class="headerlink" href="#x86-指令-reference-网页" title="Permanent link">&para;</a></h3>
+<p>x86 指令 ref：<a href="https://www.felixcloutier.com/x86/">x86 and amd64 instruction reference (felixcloutier.com)</a></p>
+<p>格式含义</p>
+<ul>
+<li>MOV <em>r/m8,r8</em><ul>
+<li>r8 表示大小为 8 位的寄存器</li>
+<li>m8 表示大小为 8 位的操作数对应的地址</li>
+<li>imm 表示立即数</li>
+</ul>
+</li>
+</ul>
+<h3 id="数据格式">数据格式<a class="headerlink" href="#数据格式" title="Permanent link">&para;</a></h3>
+<p><img alt="image-20220727184958311" src="https://imagebed.yfycloud.site/2025/12/6ffeda89201d9155790365398ac71fea.png" /></p>
+<ul>
+<li>x86_64 中，<strong>long 类型是 8 字节</strong>。</li>
+<li>x86 处理器曾实现过对<strong>80 位浮点数</strong>的全套浮点运算，在 C 中可以使用 long double 声明。不推荐使用。Double Extended Precision</li>
+</ul>
+<h3 id="数据移动指令">数据移动指令<a class="headerlink" href="#数据移动指令" title="Permanent link">&para;</a></h3>
+<h5 id="mov-movz-movs">mov, movz, movs<a class="headerlink" href="#mov-movz-movs" title="Permanent link">&para;</a></h5>
+<ul>
+<li>movl 会将寄存器高 32 位清 0，因此代替了 movzlq</li>
+<li>movabsq 用于 64 位立即数 mov</li>
+<li>cltq 是 movslq %eax, %rax</li>
+</ul>
+<h5 id="cltdalias">cltd(alias)<a class="headerlink" href="#cltdalias" title="Permanent link">&para;</a></h5>
+<p><code>cltd</code> is an alias for <code>cdq</code> (<a href="http://sourceware.org/binutils/docs/as/i386_002dMnemonics.html">reference</a>), which sign-extends <code>eax</code> into <code>edx:eax</code>.</p>
+<p>What this means in practice is that <code>edx</code> is filled with the most significant bit of <code>eax</code> (the sign bit). For example, if <code>eax</code> is <code>0x7F000000</code> <code>edx</code> would become <code>0x00000000</code> after <code>cdq</code>. And if <code>eax</code> is <code>0x80000000</code> <code>edx</code> would become <code>0xFFFFFFFF</code>.</p>
+<p><img alt="image-20220727190841956" src="https://imagebed.yfycloud.site/2025/12/09982560b1fbb09860520e1c21bb2778.png" /></p>
+<p><img alt="image-20220727191456889" src="https://imagebed.yfycloud.site/2025/12/be852a1a0e6c4a3567e2ac73d8833c49.png" /></p>
+<p><img alt="image-20220727191512098" src="https://imagebed.yfycloud.site/2025/12/369fa539c41638eeb701855edd8aa4be.png" /></p>
+<h3 id="算术和逻辑操作">算术和逻辑操作<a class="headerlink" href="#算术和逻辑操作" title="Permanent link">&para;</a></h3>
+<h5 id="lea">lea<a class="headerlink" href="#lea" title="Permanent link">&para;</a></h5>
+<ul>
+<li>lea（加载有效地址（load effective address)）可以用来执行简单的算术操作</li>
+</ul>
+<p><img alt="image-20220727192028818" src="https://imagebed.yfycloud.site/2025/12/a40b6bf23950d2219788a47acf1470f8.png" /></p>
+<h5 id="128-位乘除法">128 位乘除法<a class="headerlink" href="#128-位乘除法" title="Permanent link">&para;</a></h5>
+<ul>
+<li>八字 (oct word)，o 为后缀</li>
+<li>上面的 imulq，双操作数：将两个 64 位操作数产生一个 64 位乘积（截断时，无符号乘和补码乘的位级行为是一样的）</li>
+<li>idivq 时，rdx: rax 分别存余数和商。</li>
+</ul>
+<p><img alt="image-20220727193931062" src="https://imagebed.yfycloud.site/2025/12/3aed0ce69a037ebb803f646504904edc.png" /></p>
+<p><img alt="image-20220727193507768" src="https://imagebed.yfycloud.site/2025/12/f0a70592263b77e5e655c4698cad0dbe.png" /></p>
+<h3 id="控制">控制<a class="headerlink" href="#控制" title="Permanent link">&para;</a></h3>
+<h5 id="条件码">条件码<a class="headerlink" href="#条件码" title="Permanent link">&para;</a></h5>
+<ul>
+<li>CF: 进位标志。最近的操作使最高位产生了进位。可用来检査无符号操作的溢出。</li>
+<li>ZF: 零标志。最近的操作得出的结果为 0。</li>
+<li>SF: 符号标志。最近的操作得到的结果为负数。</li>
+<li>OF: 溢出标志。最近的操作导致一个补码溢出—— 正溢出或负溢出。</li>
+</ul>
+<p>leaq 指令不改变任何条件码，因为它是用来进行地址计算的。除此之外，图 3-10 中
+列出的所有指令都会设置条件码。对于逻辑操作，例如 XORÿ 进位标志和溢出标志会设
+置成 〇。对于移位操作，进位标志将设置为最后一个被移出的位，而溢出标志设置为 0。
+INC 和 DEC 指令会设置溢出和零标志，但是不会改变进位标志，至于原因，我们就不在
+这里深人探讨了。</p>
+<h5 id="cmp-test">cmp, test<a class="headerlink" href="#cmp-test" title="Permanent link">&para;</a></h5>
+<p><img alt="image-20220727194059694" src="https://imagebed.yfycloud.site/2025/12/ae6a9daa302212d9c1fc35ec05220995.png" /></p>
+<h5 id="set">set<a class="headerlink" href="#set" title="Permanent link">&para;</a></h5>
+<p><img alt="image-20220727194325976" src="https://imagebed.yfycloud.site/2025/12/79b634dc48728c83a74f363e35694877.png" /></p>
+<h5 id="jmp-的-pc-相对寻址">jmp 的 PC 相对寻址<a class="headerlink" href="#jmp-的-pc-相对寻址" title="Permanent link">&para;</a></h5>
+<h3 id="函数调用_1">函数调用<a class="headerlink" href="#函数调用_1" title="Permanent link">&para;</a></h3>
+<h5 id="基指针作用">基指针作用<a class="headerlink" href="#基指针作用" title="Permanent link">&para;</a></h5>
+<p>变长栈帧。一般情况下，栈帧的大小在编译时即可确定。但是对于 alloca 标准库函数，变长数组（int p[n]），栈帧大小是变化的。</p>
+<h3 id="浮点体系结构">浮点体系结构<a class="headerlink" href="#浮点体系结构" title="Permanent link">&para;</a></h3>
+<ul>
+<li>MMX</li>
+<li>SSE</li>
+<li>AVX<ul>
+<li>AVX2:2013 年 Core i7 Haswell 引入</li>
+<li>GCC 使用-mavx2</li>
+</ul>
+</li>
+</ul>
+<p>2000 年 Pentium 4 中引入了 SSE2。媒体指令开始包括那些对<strong>标量浮点数据</strong>进行操作的指令，使用 XMM 或 YMM 寄存器的低 32 位或 64 位中的单个值。这个标量模式提供了一组寄存器和指令，它们更类似于其他处理器支持浮点数的方式。所有能够执行 X86-64 代码的处理器都支持 SSE2 或更高的版本，因此 <strong>X86-64 浮点数是基于 SSE 或 AVX 的</strong>，包括传递过程参数和返回值的规则[77]。</p>
+<h5 id="浮点数据传送指令">浮点数据传送指令<a class="headerlink" href="#浮点数据传送指令" title="Permanent link">&para;</a></h5>
+<ul>
+<li>GCC 只用<strong>标量</strong>传送操作从内存传送数据到 XMM 寄存器或从 XMM 寄存器传送数据到内存。</li>
+<li>在两个 XMM 寄 存器之间传送 数据时，GCC 使用 vmovaps 传送单精度数，用 vtnovapd 传送双精度数（对于这些情况，程序复制整个寄存器还是只复制低位值既不会影响程序功能，也不会影响执行速度）</li>
+<li>推测 vmovss 的 s 分别表示 scal</li>
+<li>ar 标量和单精度，a 表示 aligned, p 表示 packed</li>
+</ul>
+<p><img alt="image-20220727202131276" src="https://imagebed.yfycloud.site/2025/12/03a070868c8e6ae525b0b3322fa0814f.png" /></p>
+<p>图 3-47 和图 3-48 给出了在浮点数和整数数据类型之间以及不同浮点格式之间进行转换的指令集合。</p>
+<p><img alt="image-20220727202807490" src="https://imagebed.yfycloud.site/2025/12/598cb2e87d4837fde449befa4a16e5a4.png" /></p>
+<ul>
+<li>最后的两行时 GCC 在 float 和 double 间转换的代码，没有使用基本的 vctsd2ss（有没有这条指令呢？）</li>
+</ul>
+<p><img alt="image-20220727203331930" src="https://imagebed.yfycloud.site/2025/12/86e218100d4acdc23bdd4abb0c66a0b0.png" /></p>
+<h5 id="浮点函数调用">浮点函数调用<a class="headerlink" href="#浮点函数调用" title="Permanent link">&para;</a></h5>
+<ul>
+<li>XMM 寄存器％xmm_0~％xmm_7 最多可以传递 8 个浮点参数。按照参数列出的顺序使用这些寄存器。可以通过栈传递额外的浮点参数</li>
+<li>函数使用寄存器％xmm_0 来返回浮点值。</li>
+<li>有的 XMM 寄存器都是调用者保存的。被调用者可以不用保存就覆盖这些寄存器中任意一个。</li>
+</ul>
+<h5 id="浮点运算操作">浮点运算操作<a class="headerlink" href="#浮点运算操作" title="Permanent link">&para;</a></h5>
+<p><img alt="image-20220727204128819" src="https://imagebed.yfycloud.site/2025/12/0316f8bbea8197763b24265c2495636b.png" /></p>
+<ul>
+<li>浮点运算指令无法使用立即数。编译器必须为所有的常量值分配和初始化存储空间</li>
+</ul>
+<p><img alt="image-20220727204247797" src="https://imagebed.yfycloud.site/2025/12/53561c6d3c8e15c3ee21d87eb7da12cb.png" /></p>
+<h5 id="位级操作">位级操作<a class="headerlink" href="#位级操作" title="Permanent link">&para;</a></h5>
+<p><img alt="image-20220727204906712" src="https://imagebed.yfycloud.site/2025/12/623cfd96c942a6cad72cfa2a779b8763.png" /></p>
+<h5 id="比较">比较<a class="headerlink" href="#比较" title="Permanent link">&para;</a></h5>
+<p><img alt="image-20220727205010011" src="https://imagebed.yfycloud.site/2025/12/4d813c4a190acef98a95bf2bf46d7b6d.png" /></p>
+<ul>
+<li>浮点比较指令会设置三个条件码：零标志位 ZF，进位标志位 CF 和奇偶标志位 PF<ul>
+<li>对于浮点比较，当两个操作数中任一个是 NaN 时，会设置 PF 位。</li>
+<li>当 x 为 NaN 时，比较 x==x 会得到 0</li>
+</ul>
+</li>
+</ul>
+<p><img alt="image-20220727205538097" src="https://imagebed.yfycloud.site/2025/12/0592b2eb3d8556bcfc69765cc75a9501.png" /></p>
+<h2 id="x86-手册">x86 手册<a class="headerlink" href="#x86-手册" title="Permanent link">&para;</a></h2>
+<h3 id="内存管理">内存管理<a class="headerlink" href="#内存管理" title="Permanent link">&para;</a></h3>
+<h4 id="分段式管理">分段式管理<a class="headerlink" href="#分段式管理" title="Permanent link">&para;</a></h4>
+<ul>
+<li>段选择子：用于查找 GDT，找到段的基地址</li>
+</ul>
+<h3 id="中断处理">中断处理<a class="headerlink" href="#中断处理" title="Permanent link">&para;</a></h3>
+<ul>
+<li>中断类型。几种不同的说法，含义是一样的<ul>
+<li>外部中断，内部中断</li>
+<li>异步中断，同步中断</li>
+<li>中断，异常</li>
+</ul>
+</li>
+<li>中断描述符</li>
+<li>中断描述符表 IDT, IDTR</li>
+</ul>
+<p>中断上下文切换过程</p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+  
+
+
+
+      
+    </article>
+  </div>
+
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+        
+      
+      <nav class="md-footer__inner md-grid" aria-label="页脚" >
+        
+          
+          <a href="../../../../../%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/2022/08/25/2022-08-25-Openwrt-Mesh%E5%92%8C%E5%BF%AB%E9%80%9F%E6%BC%AB%E6%B8%B8%E9%85%8D%E7%BD%AE/" class="md-footer__link md-footer__link--prev" aria-label="上一页: Openwrt Mesh 和快速漫游配置">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                上一页
+              </span>
+              <div class="md-ellipsis">
+                Openwrt Mesh 和快速漫游配置
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../../28/2022-09-28-python%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" class="md-footer__link md-footer__link--next" aria-label="下一页: python 正则表达式">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                下一页
+              </span>
+              <div class="md-ellipsis">
+                python 正则表达式
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/TheRainstorm" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../../..", "features": ["navigation.instant", "navigation.instant.progress", "navigation.tracking", "navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.footer", "content.code.copy", "toc.follow", "toc.integrate"], "search": "../../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../../../../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

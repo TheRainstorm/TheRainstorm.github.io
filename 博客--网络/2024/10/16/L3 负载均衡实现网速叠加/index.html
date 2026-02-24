@@ -1,0 +1,2120 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="记录一些关于数学、计算机的知识，以及一些日常。">
+      
+      
+      
+        <link rel="canonical" href="https://yfy.cqu.ai/%E5%8D%9A%E5%AE%A2--%E7%BD%91%E7%BB%9C/2024/10/16/L3%20%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E5%AE%9E%E7%8E%B0%E7%BD%91%E9%80%9F%E5%8F%A0%E5%8A%A0/">
+      
+      
+        <link rel="prev" href="../../../../../%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/2024/10/15/%E4%BD%BF%E7%94%A8%E5%85%B6%E5%AE%83%E8%AE%BE%E5%A4%87%E4%BD%9C%E4%B8%BA%E6%89%A9%E5%B1%95%E5%B1%8F%E5%B9%95/">
+      
+      
+        <link rel="next" href="../../../../../%E4%B8%AA%E4%BA%BA/2024/10/28/VR%20%E5%AF%B9%E7%8E%B0%E5%AE%9E%E7%9A%84%E5%BD%B1%E5%93%8D/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.3">
+    
+    
+      
+        <title>L3 负载均衡实现网速叠加 - Rain 的随笔</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#方案一-每台机器-nginx-反代作为-cdn-节点" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../../../../.." title="Rain 的随笔" class="md-header__button md-logo" aria-label="Rain 的随笔" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Rain 的随笔
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              L3 负载均衡实现网速叠加
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    
+  
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="../../../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  博客
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../about/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  关于
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../tags/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  标签
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../series/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  系列
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../tools/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  工具
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../archive/2026/" class="md-tabs__link">
+          
+  
+  
+  归档
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../category/%E4%B8%AA%E4%BA%BA/" class="md-tabs__link">
+          
+  
+  
+  分类
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" hidden>
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../../.." title="Rain 的随笔" class="md-nav__button md-logo" aria-label="Rain 的随笔" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Rain 的随笔
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+    
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      <a href="../../../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    博客
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    关于
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../tags/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    标签
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../series/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    系列
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../tools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    工具
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    归档
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    归档
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2026/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2026
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2025/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2025
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2024/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2024
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2023/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2023
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2022/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2022
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2021/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2021
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2020/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2020
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2019/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2019
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    分类
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    分类
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E4%B8%AA%E4%BA%BA/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    个人
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E5%8D%9A%E5%AE%A2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    博客
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E5%8D%9A%E5%AE%A2--%E7%BD%91%E7%BB%9C/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    博客 &amp; 网络
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    学习笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    折腾记录
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    课程笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%85%B7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    软件工具
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E9%98%85%E8%AF%BB/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    阅读
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+  <div class="md-content md-content--post" data-md-component="content">
+    <div class="md-sidebar md-sidebar--post" data-md-component="sidebar" data-md-type="navigation">
+      <div class="md-sidebar__scrollwrap">
+        <div class="md-sidebar__inner md-post">
+          <nav class="md-nav md-nav--primary">
+            <div class="md-post__back">
+              <div class="md-nav__title md-nav__container">
+                <a href="../../../../.." class="md-nav__link">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+                  <span class="md-ellipsis">
+                    回到主页
+                  </span>
+                </a>
+              </div>
+            </div>
+            
+            <ul class="md-post__meta md-nav__list">
+              <li class="md-nav__item md-nav__item--section">
+                <div class="md-post__title">
+                  <span class="md-ellipsis">
+                    元数据
+                  </span>
+                </div>
+                <nav class="md-nav">
+                  <ul class="md-nav__list">
+                    <li class="md-nav__item">
+                      <div class="md-nav__link">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 19H5V8h14m-3-7v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1V1m-1 11h-5v5h5z"/></svg>
+                        <time datetime="2024-10-16 15:08:33+00:00" class="md-ellipsis">2024年10月16日</time>
+                      </div>
+                    </li>
+                    
+                    
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 3v15h3V3zm3 2 4 13 3-1-4-13zM5 5v13h3V5zM3 19v2h18v-2z"/></svg>
+                          <span class="md-ellipsis">
+                            分类于
+                            
+                              <a href="../../../../../category/%E5%8D%9A%E5%AE%A2--%E7%BD%91%E7%BB%9C/">博客 &amp; 网络</a></span>
+                        </div>
+                      </li>
+                    
+                    
+                      
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20a8 8 0 0 0 8-8 8 8 0 0 0-8-8 8 8 0 0 0-8 8 8 8 0 0 0 8 8m0-18a10 10 0 0 1 10 10 10 10 0 0 1-10 10C6.47 22 2 17.5 2 12A10 10 0 0 1 12 2m.5 5v5.25l4.5 2.67-.75 1.23L11 13V7z"/></svg>
+                          <span class="md-ellipsis">
+                            
+                              需要 15 分钟阅读时间
+                            
+                          </span>
+                        </div>
+                      </li>
+                    
+                  </ul>
+                </nav>
+              </li>
+            </ul>
+            
+          </nav>
+          
+            
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#方案一-每台机器-nginx-反代作为-cdn-节点" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        方案一: 每台机器 nginx 反代，作为 CDN 节点
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="方案一: 每台机器 nginx 反代，作为 CDN 节点">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#wg-配置" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        wg 配置
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nginx-配置" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        nginx 配置
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aria2c-下载" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        aria2c 下载
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#方案二等价多路径路由-multipath-routing-ecmp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        方案二：等价多路径路由 multipath routing (ECMP)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="方案二：等价多路径路由 multipath routing (ECMP)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ecmp-概念" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ECMP 概念
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#openwrt-启用-ecmp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        openwrt 启用 ECMP
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#测速结果" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        测速结果
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#windows-不支持-masquerade-的妥协方法" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        windows 不支持 masquerade 的妥协方法
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="windows 不支持 masquerade 的妥协方法">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#综合两种方法" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        综合两种方法
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#遇到的坑" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        遇到的坑
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#参考资料" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        参考资料
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#单网卡开多个虚拟无线接口" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        单网卡开多个虚拟无线接口
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="单网卡开多个虚拟无线接口">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#另一个思路bridge-wifi-client" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        另一个思路：bridge wifi client
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#macvlan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        macvlan
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#如何让-udp-和-tcp-走不同路由" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        如何让 udp 和 tcp 走不同路由
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="如何让 udp 和 tcp 走不同路由">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#设置策略路由" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        设置策略路由
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nft-设置-mark" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        nft 设置 mark
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#conntrak-验证结果" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        conntrak 验证结果
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#参考资料_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        参考资料
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+          
+        </div>
+      </div>
+    </div>
+    <article class="md-content__inner md-typeset">
+      
+        
+  
+
+
+  <nav class="md-tags" >
+    
+      
+      
+      
+      
+        <a href="../../../../../tags/#tag:cdn" class="md-tag">CDN</a>
+      
+    
+      
+      
+      
+      
+        <a href="../../../../../tags/#tag:ecmp" class="md-tag">ECMP</a>
+      
+    
+      
+      
+      
+      
+        <a href="../../../../../tags/#tag:aria2c" class="md-tag">aria2c</a>
+      
+    
+      
+      
+      
+      
+        <a href="../../../../../tags/#tag:iw" class="md-tag">iw</a>
+      
+    
+      
+      
+      
+      
+        <a href="../../../../../tags/#tag:macvlan" class="md-tag">macvlan</a>
+      
+    
+      
+      
+      
+      
+        <a href="../../../../../tags/#tag:nginx" class="md-tag">nginx</a>
+      
+    
+      
+      
+      
+      
+        <a href="../../../../../tags/#tag:wireguard" class="md-tag">wireguard</a>
+      
+    
+      
+      
+      
+      
+        <a href="../../../../../tags/#tag:负载均衡" class="md-tag">负载均衡</a>
+      
+    
+  </nav>
+
+
+
+  <h1>L3 负载均衡实现网速叠加</h1>
+
+<ul>
+<li>公司有 wifi 和 网线接入。但是每条链路都严格限制成了 8 Mbps 的速度。</li>
+<li>同时连接 wifi 和 网线，修改路由表，让不同目的地址走不同链路，再结合 aria2c 的多源地址下载，可以实现网速叠加。示例命令：</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>aria2c -c -x 1 -s 2 https://alist.yfycloud.site:4433/d/Guest/Aria2/grpc.tar.xz\?sign\=JzEpqFm02IlJUuYfCQY3RZdU-NxYVyMElvQShef8Wy0\=:0  http://192.168.36.254:
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>8000/grpc.tar.xz
+</span></code></pre></div>
+<ul>
+<li>-s 2 表示文件被分成 2 份并行下载，-x 1 表示每个 host 最大创建 1 个连接。这里指定了 2 个源 url，因此意思就是从每个源各创建 1 个连接。</li>
+<li>其中源 alist.yfycloud.site 为公网地址，走以太网。源 192.168.36.254 走 wg（底层基于 wifi）</li>
+</ul>
+<p>但是上面使用了两台服务器提供相同的文件，由于有两个公网地址（使用 LAN 地址的链接底层 wg 仍然需要一个公网地址），因此分流比较简单。如果要缩减为 1 台服务器，就得有让即使是只有一个公网地址，也可以走不同路由的方法（即分别从以太网和 wifi 出去）</p>
+<p>我开始的想法是本地使用一个 nginx 反向代理远程的链接，使得请求不同本地地址 127.0.0.x bind 到不同出口出去。nginx 支持 <code>proxy_bind</code> 参数，支持绑定到不同源 ip 地址。但是没想到 Windows 的路由非常不灵活，<strong>无法实现源地址的路由</strong><sup id="fnref:6"><a class="footnote-ref" href="#fn:6">1</a></sup></p>
+<p>后面我利用一个简单的千兆路由器（xiaomi 4A gigabit version）将多台设备连接起来，并在每台设备上开启 nginx 反代，实现了只有一个公网地址的情况下，<strong>对同一个服务器的网速叠加</strong>效果。</p>
+<p>nginx 的方法虽然有效，但是整个 setup 有点复杂（windows 需要配置 nginx，设置路由表），并且只能针对一个目的地址叠加网速。访问网页其它内容就无法加速了。</p>
+<p>之后又去了解了 ECMP 技术，其中 per flow 和 per packet 分流的想法看上去确实很美好。如果可以实现的话，可以真正实现针对任意协议的网速叠加。（单连接在 per flow 情况下还无法提升速度，但是能够对不同单连接负载均衡也足够了）</p>
+<p>各方案总结</p>
+<ul>
+<li>单机器 wifi 有线叠加<ul>
+<li>方法：aria2c 指定多个源地址，不同地址使用不同路由。</li>
+<li>优点：简单，只需要使用 aria2c</li>
+<li>缺点：<ul>
+<li><strong>需要有多个公网 ip</strong>，否则无法根据目的地址路由</li>
+<li>几个链路就需要几个公网 ip （windows 不支持源地址路由导致的）</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>多机器使用 nginx 反代<ul>
+<li>方法：对上面方法的扩展，每台机器使用 nginx 反代，类似于 CDN 节点。叠加所有机器的链路</li>
+<li>优点<ul>
+<li>提升了扩展性，不同机器可以使用相同的公网 ip 反代</li>
+</ul>
+</li>
+<li>缺点<ul>
+<li>设置相对复杂</li>
+<li>只能代理 <strong>HTTP(S)</strong></li>
+<li>只能对设置的<strong>单个公网 ip</strong> 叠加链路，没设置的 ip 仍然只能使用一个链路</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>ECMP</strong> 负载均衡<ul>
+<li>方法：利用 linux 的等效多径路由，在路由器上就流量负载均衡到各节点出去</li>
+<li>优点<ul>
+<li>设置好后，对<strong>所有流量</strong>都可以负载均衡到不同链路。多线程下载就可以叠加网速。</li>
+</ul>
+</li>
+<li>缺点<ul>
+<li>windows 垃圾的网络能力，无法 masqerade 导致方案一度不可行（因为只有一个网段，最后回来的流量必然还是得走一个链路）</li>
+<li>利用 wg 在 openwrt 路由器和 windows 间创建额外的局域网段，<strong>将 SRC NAT 转移到 openwrt 上</strong>，规避了 windows 的限制。</li>
+<li>ECMP 的不足<ul>
+<li>第一个问题是不知道怎么配置 ECMP 检测<strong>失效的链路</strong>。 wg 断开连接后，ECMP 并不会删除掉坏掉的 nexthop。在这种情况下，总是导致网络不可用（虽然其它 nexthop 是可用的）</li>
+<li>第二个问题是<strong>链路利用率低</strong>，因为是 per-flow 进行负载均衡。计算 L4 hash 后，每个连接等可能分配到每个链路，并不保证不使用相同链路。而简单的数学计算我们可以得到 3 个链路，3 个连接时，使用全部链路的概率仅为 2/9，4 个连接时仅为 9/16。这也是为什么 iperf3 -P 3 每次结果可能不一样。n 个 链路 n 个连接情况下，利用率随着 n 增大，下降到极限值 <span class="arithmatex">\(1 - 1/e \approx 0.63\)</span></li>
+</ul>
+</li>
+<li>ECMP 节点作为下载机器时，只能使用本地链路。<ul>
+<li>如果路由器可以作为一个反代节点就可以解决，可惜我的 mi4a 只有 16M 的 flash，应该装不下（TODO：可以试试自己编译镜像）</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>下载 windows11 镜像，从一小时二十分钟，下降到二十分钟</strong>
+<img alt="image.png" src="https://imagebed.yfycloud.site/2025/12/3ee20563e25d45195183ac3e250bb164.png" />
+<img alt="image.png" src="https://imagebed.yfycloud.site/2025/12/41fdb6995e60942814eeeda518d498c3.png" /></p>
+<p>利用 mi4a + 两台 windows 共 3 个路径进行 ECMP，手机播放 B 站 4K 视频时的效果，CPU 有 %30-40 的占用。
+<img alt="image.png" src="https://imagebed.yfycloud.site/2025/12/4a4caf3f374a46893d8cf3798ac7e610.png" /></p>
+<!-- more -->
+<h2 id="方案一-每台机器-nginx-反代作为-cdn-节点">方案一: 每台机器 nginx 反代，作为 CDN 节点<a class="headerlink" href="#方案一-每台机器-nginx-反代作为-cdn-节点" title="Permanent link">&para;</a></h2>
+<p>问题考虑的是单台机器上如何复用多个链路，但是问题可以推广到有多台机器，复用所有节点链路的情况。</p>
+<p>此时已经增设了一台路由器，刷了 openwrt，各节点通过以太网连接路由器，因此每台机器剩余一个 wifi 链路用于连接外网。</p>
+<p>为了利用每台机器的无线链路。当一个节点下载时，必然要<strong>将流量路由到每台机器</strong>，并且<strong>从无线链路出去</strong>。</p>
+<h3 id="wg-配置">wg 配置<a class="headerlink" href="#wg-配置" title="Permanent link">&para;</a></h3>
+<p>为了使每台机器的无线链路能够实际上网，需要使用 wg（利用 wifi UDP 不用登录的特性）。为了使连接 wg 的流量实际走无线而不是以太网，我们需要<strong>在 windows 上添加一条 Endpoint 的静态路由</strong></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>route ADD 157.0.0.0 MASK 255.0.0.0  157.55.80.1 METRIC 3 IF 2
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>             destination^      ^mask      ^gateway     metric^    ^
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a># thinkpad
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>route ADD 112.32.59.100/32 10.3.120.1 METRIC 1 IF 7
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>route ADD 114.214.236.72/32 10.3.120.1 METRIC 1 IF 7
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a># s3-pro
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>sudo route ADD 114.214.236.72/32 10.3.100.1 METRIC 1 IF 3
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>sudo route ADD 112.32.59.100/32 10.3.100.1 METRIC 1 IF 3
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a># TYDIC
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>lan=$(route print |grep &#39;Intel(R) Wi-Fi 6&#39; | awk -F &#39;.&#39; &#39;{print $1}&#39;)
+</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>route add 36.159.243.204/32 10.6.152.1 if $lan
+</span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>route add 192.168.99.235/32 10.6.152.1 if $lan
+</span><span id="__span-1-15"><a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>
+</span><span id="__span-1-16"><a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a># 删除路由方法
+</span><span id="__span-1-17"><a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a>route delete 114.214.236.72/32
+</span></code></pre></div>
+<p>连接 wg 后，每台机器相当于有以太网（到路由器，再从路由器 WAN 出）和 wg（到我的公网机器） 两个网络出口。因此我们需要进行分流。由于使用以太网访问网络更稳定，因此默认路由走以太网，我们需要加速下载的 ip 走 wg。可以通过设置 wg 的 allow ip 来为我们自动设置路由。</p>
+<p>提示：</p>
+<ul>
+<li>别忘记开启防火墙，windwows 可能把wg 接口设置成公开网络。</li>
+</ul>
+<h3 id="nginx-配置">nginx 配置<a class="headerlink" href="#nginx-配置" title="Permanent link">&para;</a></h3>
+<p>而为了从每台机器下载，我们可以在每台机器上安装 nginx 进行进行反向代理。反代的地址为通过 wg 可以访问的内网地址。</p>
+<div class="admonition note">
+<p class="admonition-title">为什么不使用公网地址反代</p>
+<p>我的服务器有公网地址，因此也可以在反代时使用公网地址。然而我的路由器也可以提供一个无线链路，而我的路由器为 mi4a，rom 只有 8MB，安装不下太多软件。因此路由器上无法安装 nginx 反代。如果其它机器上也是用公网地址反代的话，在该机器下载时，就无法利用路由器的链路。我也研究了 Windows 是否支持根据源地址进行路由，至少我没有发现可行方法。当目的地址相同时，即使 bind 了地址（nginx proxy_bind），windows 仍然只会按按照目的地址路由。</p>
+</div>
+<p>为了使下载时指定每台机器更方便，我们可以在路由器上为每台机器设置域名。或者使用自动 dhcp 的 hostname 作为域名。</p>
+<p>示例 nginx 配置</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>server {
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>    listen 192.168.1.2:80;
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>    listen localhost:80;
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>    location / {
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>            proxy_set_header X-Forwarded-Proto $scheme;
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>            proxy_set_header Host $http_host;
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>            proxy_set_header X-Real-IP $remote_addr;
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>            proxy_set_header Range $http_range;
+</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>            proxy_set_header If-Range $http_if_range;
+</span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>            proxy_redirect off;
+</span><span id="__span-2-13"><a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>            # proxy_pass https://alist.yfycloud.site:4433/;
+</span><span id="__span-2-14"><a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a>            proxy_pass http://192.168.35.2:5244;
+</span><span id="__span-2-15"><a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a>            # the max size of file to upload
+</span><span id="__span-2-16"><a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a>            client_max_body_size 20000m;
+</span><span id="__span-2-17"><a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a>    }
+</span><span id="__span-2-18"><a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a>}
+</span></code></pre></div>
+<h3 id="aria2c-下载">aria2c 下载<a class="headerlink" href="#aria2c-下载" title="Permanent link">&para;</a></h3>
+<p>最后使用 aria2c 从不同机器下载</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>aria2c -c -x 1 -s 3 \
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>    http://s3-pro.lan/d/Guest/Aria2/SW_DVD9_Win_Pro_11_22H2.6_64BIT_ChnSimp_Pro_Ent_EDU_N_MLF_X23-39378.ISO?sign=x20IQ5x4wziM_s4fsPLl9qt3943XgQ_CkfaFrpJxoVA=:0 \
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>    http://thinkpad10.lan/d/Guest/Aria2/SW_DVD9_Win_Pro_11_22H2.6_64BIT_ChnSimp_Pro_Ent_EDU_N_MLF_X23-39378.ISO?sign=x20IQ5x4wziM_s4fsPLl9qt3943XgQ_CkfaFrpJxoVA=:0\
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>https://alist.yfycloud.site:4433/d/Guest/Aria2/SW_DVD9_Win_Pro_11_22H2.6_64BIT_ChnSimp_Pro_Ent_EDU_N_MLF_X23-39378.ISO?sign=x20IQ5x4wziM_s4fsPLl9qt3943XgQ_CkfaFrpJxoVA=:0
+</span></code></pre></div>
+<p>版本 2，路由器自身 114.214.236.72 用于 wg 连接了，因此路由到了 wifi，而未登录的 wifi TCP 是通过不了的，所以路由器上的连接会失败。（这点可以利用后面的 UDP 和 TCP 走不通路由解决）</p>
+<p>所以要使路由器发挥作用，可以在路由器上使用服务器另一个 lan 地址。</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>aria2c -c -x 1 -s 3 \
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>    http://s3-pro.lan/d/Guest/Aria2/SW_DVD9_Win_Pro_11_22H2.6_64BIT_ChnSimp_Pro_Ent_EDU_N_MLF_X23-39378.ISO?sign=x20IQ5x4wziM_s4fsPLl9qt3943XgQ_CkfaFrpJxoVA=:0 \
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>    http://thinkpad10.lan/d/Guest/Aria2/SW_DVD9_Win_Pro_11_22H2.6_64BIT_ChnSimp_Pro_Ent_EDU_N_MLF_X23-39378.ISO?sign=x20IQ5x4wziM_s4fsPLl9qt3943XgQ_CkfaFrpJxoVA=:0\
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>    http://192.168.35.3:5244/d/Guest/Aria2/SW_DVD9_Win_Pro_11_22H2.6_64BIT_ChnSimp_Pro_Ent_EDU_N_MLF_X23-39378.ISO?sign=x20IQ5x4wziM_s4fsPLl9qt3943XgQ_CkfaFrpJxoVA=:0
+</span></code></pre></div>
+<p>实测 3 个节点速度叠加成功</p>
+<p><img alt="image.png" src="https://imagebed.yfycloud.site/2025/12/2a52138249021d5fd86a70154416ffc0.png" /></p>
+<h2 id="方案二等价多路径路由-multipath-routing-ecmp">方案二：等价多路径路由 multipath routing (ECMP)<a class="headerlink" href="#方案二等价多路径路由-multipath-routing-ecmp" title="Permanent link">&para;</a></h2>
+<h3 id="ecmp-概念">ECMP 概念<a class="headerlink" href="#ecmp-概念" title="Permanent link">&para;</a></h3>
+<p>前面方式相当于需要手动指定多个代理节点，如果能实现路由器访问单个地址时自动使用不同接口多好。而 multipath routing ( ECMP ) 就可以做到这一点。</p>
+<div class="admonition note">
+<p class="admonition-title">weighted ECMP</p>
+<p>虽然我们这里都叫 equal cost multipath (ECMP)，但实际上使用的是 weighted ECMP。扩展的 weight 用于控制选择 nexthop 时的倾向。如果一个设置为 10 一个设置为 1，表示我们希望前者的流量是后者的 10 倍。</p>
+</div>
+<p>ECMP 概念</p>
+<blockquote>
+<p>With multipath routing you can distribute traffic destined to a single network over several paths (routes). It is an extension of the concept of the conventional routing table, where there is just one network→next hop association (or network→interface association or both). Instead, as we will see next, you can specify multiple next hops for one destination <sup id="fnref2:2"><a class="footnote-ref" href="#fn:2">3</a></sup></p>
+</blockquote>
+<p>ECMP 可以用来做负载均衡 <sup id="fnref:2"><a class="footnote-ref" href="#fn:2">3</a></sup>
+<img alt="image.png" src="https://imagebed.yfycloud.site/2025/12/d79453dc1e16dc07d1308cd0eb0ba2b0.png" /></p>
+<p>有 Per-Packet 和 Per-Flow 两种方式</p>
+<p>packet 是 ip 层传输的单个分组（数据报、数据包），而 flow 是有相同特性的一系列 packet 的集合，比如单个 TCP 连接的所有 packet。（linux 好像也是按照 flow 进行路由，以及对涉及到 NAT 的防火墙规则匹配的）</p>
+<p>per-packet 和 per-flow 分流的区别<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">2</a></sup>
+<img alt="image.png" src="https://imagebed.yfycloud.site/2025/12/d2ee6c1f03ef326f4140d821cd1cddaf.png" /></p>
+<p>理论上可以实现对单个 packet 的分流，但是实际上实现的是 per-flow  的分流</p>
+<blockquote>
+<p>It is important to keep in mind that existing Multipath Routing implementation in Linux is designed to distribute flows of packets over multiple paths, not individual packets. Selecting route in a per-packet manner does not play well with TCP, IP fragments, or Path MTU Discovery. <sup id="fnref:3"><a class="footnote-ref" href="#fn:3">4</a></sup></p>
+</blockquote>
+<p>ECMP 是怎么从多个 nexthop 中路由的呢</p>
+<blockquote>
+<p>To associate a packet with a flow, the net stack computes a hash over a subset of packet header fields. The resulting hash value is what drives the next-hop selection.</p>
+</blockquote>
+<p>使用的 hash 根据 ipv4 和 ipv6，以及是 forward 还是 locally generated packets 都有所不同</p>
+<ul>
+<li>for forwarded IPv4 packets (L3 hash)</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>{ Source Address, Destination Address }
+</span></code></pre></div>
+<ul>
+<li>for locally generated IPv4 packets (L4 hash)</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>{ Source Address, Destination Address, Protocol, Source Port, Destination Port }
+</span></code></pre></div>
+<ul>
+<li>for forwarded IPv6 packets (L3 hash)</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>{ Source Address, Destination Address, Flow Label, Next Header (protocol) }
+</span></code></pre></div>
+<ul>
+<li>for locally generated IPv6 packets (L4 hash)</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>{ Source Address, Destination Address, Flow Label, Next Header (protocol), Source Port, Destination Port }
+</span></code></pre></div>
+<blockquote>
+<p>IPv6分组因为有Flow Label的存在，IPv6即使只用到L3 Hash也可以实现L4负载均衡 <sup id="fnref3:1"><a class="footnote-ref" href="#fn:1">2</a></sup></p>
+</blockquote>
+<p><strong>IPv4 现在 forward 和 output packet 使用相同 hash</strong>，并通过 <code>fib_multipath_hash_policy</code> 选项控制</p>
+<blockquote>
+<p>However, with recently released Linux v4.12 selection of fields has changed a bit for IPv4 <a href="https://codecave.cc/multipath-routing-in-linux-part-2.html#f3">[4]</a>. An L3 hash is used by default for both forwarded and locally generated traffic, but the user can choose to use the L4 hash, in both forward and local output path, with a new sysctl <code>net.ipv4.fib_multipath_hash_policy</code>. <sup id="fnref2:3"><a class="footnote-ref" href="#fn:3">4</a></sup></p>
+</blockquote>
+<p><code>fib_multipath_hash_policy</code> - INTEGER: Controls which hash policy to use for multipath routes. Only valid for kernels built with CONFIG_IP_ROUTE_MULTIPATH enabled. Default: 0 (Layer 3) Possible values: <sup id="fnref:4"><a class="footnote-ref" href="#fn:4">5</a></sup></p>
+<ul>
+<li>0 - Layer 3</li>
+<li>1 - Layer 4</li>
+<li>2 - Layer 3 or inner Layer 3 if present</li>
+</ul>
+<h3 id="openwrt-启用-ecmp">openwrt 启用 ECMP<a class="headerlink" href="#openwrt-启用-ecmp" title="Permanent link">&para;</a></h3>
+<p>内核需要开启 <code>CONFIG_IP_ROUTE_MULTIPATH=y</code> 选项。至少我测试的 23.05 是默认打开的。</p>
+<p>然后就只需要添加路由即可，格式：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>ip route replace TARGET nexthop via GW1 dev DEV1 weight W1 nexthop via GW2 dev DEV2 weight W2
+</span></code></pre></div>
+<ul>
+<li>遇到报错</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>Error: either &quot;to&quot; is a duplicate, or &quot;nexthop&quot; is a garbage.
+</span></code></pre></div>
+<ul>
+<li><strong>安装ip-full</strong> 解决问题</li>
+<li>测试上面命令指定 nexthop 时，是不支持提示使用 src 的，不过影响不大。</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a># 测试单个地址
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>ip ro r 192.168.35.2 dev wg_local121
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>ip ro r 192.168.35.2 nexthop dev wg0 weight 1 nexthop dev wg_local121 weight 1
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>
+</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a># 测试默认路由
+</span><span id="__span-11-6"><a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>ip ro r default nexthop dev wg0 weight 1 nexthop dev wg_local121 weight 1
+</span><span id="__span-11-7"><a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a>ip ro r default nexthop dev wg0 weight 1 \
+</span><span id="__span-11-8"><a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a>  nexthop dev wg_local121 weight 1 \
+</span><span id="__span-11-9"><a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a>  nexthop dev wg_local120 weight 1
+</span><span id="__span-11-10"><a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a>
+</span><span id="__span-11-11"><a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a>ip ro r 192.168.35.2 nexthop dev wg0 weight 1 \
+</span><span id="__span-11-12"><a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a>  nexthop dev wg_local121 weight 1 \
+</span><span id="__span-11-13"><a id="__codelineno-11-13" name="__codelineno-11-13" href="#__codelineno-11-13"></a>  nexthop dev wg_local120 weight 1
+</span></code></pre></div>
+<h3 id="测速结果">测速结果<a class="headerlink" href="#测速结果" title="Permanent link">&para;</a></h3>
+<p>Edge 浏览器默认就会多线程，因此跑出了两个节点的速度（这里用的是一个节点开热点给路由器）</p>
+<p><img alt="image.png" src="https://imagebed.yfycloud.site/2025/12/3979cf0cfb55344b9dd6871740b5751f.png" /></p>
+<p>使用 aria2c，单个 src 即可</p>
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>aria2c<span class="w"> </span>-x<span class="w"> </span><span class="m">2</span><span class="w"> </span>-s<span class="w"> </span><span class="m">2</span><span class="w"> </span>https://alist.yfycloud.site:4433/d/Guest/Aria2/SW_DVD9_Win_Pro_11_22H2.6_64BIT_ChnSimp_Pro_Ent_EDU_N_MLF_X23-39378.ISO?sign<span class="o">=</span><span class="nv">x20IQ5x4wziM_s4fsPLl9qt3943XgQ_CkfaFrpJxoVA</span><span class="o">=</span>:0
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="m">10</span>/16<span class="w"> </span><span class="m">10</span>:27:36<span class="w"> </span><span class="o">[</span>NOTICE<span class="o">]</span><span class="w"> </span>Downloading<span class="w"> </span><span class="m">1</span><span class="w"> </span>item<span class="o">(</span>s<span class="o">)</span>
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="o">[</span><span class="c1">#b37202 370MiB/5.2GiB(6%) CN:2 DL:1.7MiB ETA:46m54s]</span>
+</span></code></pre></div>
+<p><code>iftop -i &lt;interface&gt;</code> 可以看到不同接口上的流量</p>
+<p><img alt="image.png" src="https://imagebed.yfycloud.site/2025/12/2d175baa1cfb4e8a9a032d8525f16bf5.png" /></p>
+<p>conntrack 可以看到 dst 分别是路由器的两个网络出口地址</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>conntrack -L -d 114.214.236.72
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>tcp      6 7440 ESTABLISHED src=192.168.1.2 dst=114.214.236.72 sport=21737 dport=4433 packets=40560 bytes=1686476 src=114.214.236.72 dst=10.3.103.238 sport=4433 dport=21737 packets=76481 bytes=112075471 [ASSURED] mark=0 use=1
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>
+</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>tcp      6 7439 ESTABLISHED src=192.168.1.2 dst=114.214.236.72 sport=21736 dport=4433 packets=31094 bytes=1336706 src=114.214.236.72 dst=192.168.137.50 sport=4433 dport=21736 packets=59620 bytes=105960001 [ASSURED] mark=0 use=1
+</span></code></pre></div>
+<p>使用 wg 后</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>~/ conntrack -L -d 192.168.35.2 -p tcp |grep 5244
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>tcp      6 7440 ESTABLISHED src=192.168.1.2 dst=192.168.35.2 sport=22999 dport=5244 packets=5268 bytes=217796 src=192.168.35.2 dst=10.121.31.202 sport=5244 dport=22999 packets=11238 bytes=20115018 [ASSURED] mark=0 use=1
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>
+</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>conntrack v1.4.8 (conntrack-tools): 7 flow entries have been shown.
+</span><span id="__span-14-5"><a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a>tcp      6 7440 ESTABLISHED src=192.168.1.2 dst=192.168.35.2 sport=23000 dport=5244 packets=6952 bytes=283793 src=192.168.35.2 dst=10.0.31.202 sport=5244 dport=23000 packets=13575 bytes=20894778 [ASSURED] mark=0 use=1
+</span></code></pre></div>
+<h3 id="windows-不支持-masquerade-的妥协方法">windows 不支持 masquerade 的妥协方法<a class="headerlink" href="#windows-不支持-masquerade-的妥协方法" title="Permanent link">&para;</a></h3>
+<p>如图，因为 windows 不支持转发时进行 src nat，导致实际上并不能利用 3 个及以上节点
+<img alt="ECMP.drawio.png" src="https://imagebed.yfycloud.site/2025/12/656cab85e78e110868ab9ae309ab8e49.png" /></p>
+<p>如图可以使用如下方式创建额外的网段
+<img alt="image.png" src="https://imagebed.yfycloud.site/2025/12/9bbb1748516503aa3ff5bac60bd5b4d6.png" /></p>
+<p>这样在 op1 上设置不同 peer 时，只需要路由该设备对应网段即可。如图中的 S3-Pro 的 wg0 到 op1 wg0 的连接。额外增加 <code>10.120.31.0/24</code> 这个网段</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>config wireguard_wg0
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>      option route_allowed_ips &#39;1&#39;
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>      list allowed_ips &#39;10.0.31.120/32&#39;
+</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a>      list allowed_ips &#39;10.120.31.0/24&#39;
+</span></code></pre></div>
+<p>mi4a 上可以设置源进源出</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>ip ro add default dev wg_local120 table wg120
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>ip ro add default dev wg_local121 table wg121
+</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>ip ro add default dev wg0 table wg0
+</span><span id="__span-16-4"><a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a>ip ru add from 10.120.31.0/24 lookup wg120
+</span><span id="__span-16-5"><a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a>ip ru add from 10.121.31.0/24 lookup wg121
+</span><span id="__span-16-6"><a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a>ip ru add from 10.0.31.0/24 lookup wg0
+</span></code></pre></div>
+<p>连接到 op2 上有时延迟更低，因此选择 wg 到 op2。不过 op2 对于目的地址为 op1 lan 的地址，会通过 wg_s2s 转发到 op1 上，并且没有 NAT。这会导致 op1 上的回包无法路由。</p>
+<p>解决办法为 op2 针对 wg0 进入的包进行 NAT</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>ip ru add iif wg0 lookup lan prior 4
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>
+</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>root@op2 ➜  ~ ipt lan
+</span><span id="__span-17-4"><a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a>192.168.35.0/24 dev wg_s2s proto static scope link
+</span></code></pre></div>
+<p>nft 规则，命令行方式</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a> nft add rule inet fw4 srcnat_wg_s2s iifname wg0 oifname wg_s2s counter masquerade
+</span></code></pre></div>
+<p>openwrt 持久化配置：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>/etc/nftables.d/12-wg0-nat.nft
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>
+</span><span id="__span-19-3"><a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>chain srcnat_wg0_from {
+</span><span id="__span-19-4"><a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a>    type nat hook postrouting priority srcnat; policy accept;
+</span><span id="__span-19-5"><a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a>    iifname wg0 oifname wg_s2s counter masquerade comment &quot;Masquerade traffic from wg0 to   wg_s2s&quot;
+</span><span id="__span-19-6"><a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a>}
+</span></code></pre></div>
+<h4 id="综合两种方法">综合两种方法<a class="headerlink" href="#综合两种方法" title="Permanent link">&para;</a></h4>
+<p>ECMP 方案除了有概率用不满所有链路，作为<strong>路径的节点</strong>，自身所有流量还会直接从 wg 接口出去，不会走路由器（如果 windows 有根据源地址进行路由的功能就可以避免，可惜没有），因此每个节点仍然只能使用单条链路。只有连接路由器的其它设备如手机可以充分利用 ECMP。</p>
+<p>因此，上面架构图中实际上还是保留一台设备 A 不作为 ECMP 路径，B 和路由器 2 条路经做 ECMP 即可。那么在有 ECMP 情况下能否使用之前方案跑满 3 条路径呢？</p>
+<p>由于最终 aria2c 命令需要使用 3 个源地址，每个对应 1 条链路，我们<strong>需要 3 个不同地址</strong>。</p>
+<p>对于路由器来说，我们需要一个地址避免路由器上对该地址重复使用 ECMP，需要占用一个地址。可以分配设备的一个局域网地址。即路由器上默认路由走 ECMP，一个局域网地址走路由器链路。</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>ip ro r 192.168.35.2 dev wg0
+</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>ip ro r default nexthop dev wg0 weight 1 nexthop dev wg_local121 weight 1
+</span></code></pre></div>
+<p>对于设备 B 来说，作为 ECMP 路径，所有流量都会走自己的链路，我们可以使用 <strong>nginx</strong> 在本地反代服务器任意地址，这样使用 B 的 lan 地址即可，避免占用服务器的地址。</p>
+<p>对于设备 A 来说，需要和路由器地址区分，这里分配服务器的另一个局域网地址。记住需要在 wg 中设置 allow ip 让该地址走 A 的链路。</p>
+<p>因此最后得到我们的命令</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>url_path=/d/Guest/Aria2/SW_DVD9_Win_Pro_11_22H2.6_64BIT_ChnSimp_Pro_Ent_EDU_N_MLF_X23-39378.ISO?sign=x20IQ5x4wziM_s4fsPLl9qt3943XgQ_CkfaFrpJxoVA=:0
+</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>
+</span><span id="__span-21-3"><a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>aria2c -c -x 1 -s 3 http://thinkpad10.lan$url_path http://192.168.35.3:5244$url_path http://192.168.35.2:5244$url_path
+</span></code></pre></div>
+<p>总结来说就是</p>
+<ul>
+<li>单个节点，有多少条上游链路就需要多少地址（基于 wireguard 可以使用 LAN 地址，但是连接 wg 仍然需要两个公网地址进行分流）</li>
+<li>不同节点间由于使用 nginx 反代，因此互不影响，可以使用相同的公网地址。</li>
+<li>举例来说，B 有两条链路，因此我的文件服务器就需要最少两个公网地址（我的服务器只有一个公网地址，但是好在我出租屋还有一条宽带，可以提供一个公网地址，而出租屋通过 wg 连接到我的服务器网络即可）</li>
+<li>A 提供一条链路（另一条连接路由器不算），需要一个地址（wg + LAN 地址即可）</li>
+<li>路由器有一条链路，需要一个地址（同样是 wg + LAN 地址）。<strong>由于路由器无法设置反代，因此不能和非 nginx 节点（比如下载节点）使用的地址冲突</strong>，否则最后的 aria2c 命令中就会有重复的 URI。</li>
+</ul>
+<h3 id="遇到的坑">遇到的坑<a class="headerlink" href="#遇到的坑" title="Permanent link">&para;</a></h3>
+<ul>
+<li>windows wg 接口重新连接后，需要重新开启转发</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a># Powershell(admin) 中执行
+</span><span id="__span-22-2"><a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>Set-NetIPInterface -Forwarding Enabled
+</span></code></pre></div>
+<p>aria2c 指定多个 -s 时，如果<strong>是相同 host 不同端口</strong>，那么需要把 -x 设置为 URI 数量，否则只会建立一个连接。</p>
+<h3 id="参考资料">参考资料<a class="headerlink" href="#参考资料" title="Permanent link">&para;</a></h3>
+<p><a href="https://arthurchiao.art/blog/intro-to-modern-lb-and-proxy-zh/">[译] 现代网络负载均衡与代理导论（2017） (arthurchiao.art)</a></p>
+<h2 id="单网卡开多个虚拟无线接口">单网卡开多个虚拟无线接口<a class="headerlink" href="#单网卡开多个虚拟无线接口" title="Permanent link">&para;</a></h2>
+<p>Q: openwrt wlan0 如何多次连接同一个 SSID，并获得多个 ip 地址
+chatgpt:</p>
+<blockquote>
+<p>在 OpenWrt 上，想要让同一个 Wi-Fi 网卡（<code>wlan0</code>）多次连接到同一个 SSID，并获取多个 IP 地址，通常可以通过创建多个虚拟无线接口（VIF，Virtual Interfaces）来实现。通过给每个虚拟接口分配不同的 MAC 地址，它们可以分别从路由器获取不同的 IP 地址</p>
+</blockquote>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>iw list | grep -A 10 &quot;interface combinations&quot;
+</span></code></pre></div>
+<p>mi4a</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>valid interface combinations:
+</span><span id="__span-24-2"><a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>                 * #{ IBSS } &lt;= 1, #{ managed, AP, mesh point, P2P-client, P2P-GO } &lt;= 8,
+</span><span id="__span-24-3"><a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a>                   total &lt;= 8, #channels &lt;= 1, STA/AP BI must match, radar detect widths: { 20 MHz (no HT), 20 MHz, 40 MHz, 80 MHz }
+</span><span id="__span-24-4"><a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a>
+</span><span id="__span-24-5"><a id="__codelineno-24-5" name="__codelineno-24-5" href="#__codelineno-24-5"></a>        HT Capability overrides:
+</span><span id="__span-24-6"><a id="__codelineno-24-6" name="__codelineno-24-6" href="#__codelineno-24-6"></a>                 * MCS: ff ff ff ff ff ff ff ff ff ff
+</span><span id="__span-24-7"><a id="__codelineno-24-7" name="__codelineno-24-7" href="#__codelineno-24-7"></a>                 * maximum A-MSDU length
+</span><span id="__span-24-8"><a id="__codelineno-24-8" name="__codelineno-24-8" href="#__codelineno-24-8"></a>                 * supported channel width
+</span><span id="__span-24-9"><a id="__codelineno-24-9" name="__codelineno-24-9" href="#__codelineno-24-9"></a>                 * short GI for 40 MHz
+</span><span id="__span-24-10"><a id="__codelineno-24-10" name="__codelineno-24-10" href="#__codelineno-24-10"></a>                 * max A-MPDU length exponent
+</span><span id="__span-24-11"><a id="__codelineno-24-11" name="__codelineno-24-11" href="#__codelineno-24-11"></a>                 * min MPDU start spacing
+</span><span id="__span-24-12"><a id="__codelineno-24-12" name="__codelineno-24-12" href="#__codelineno-24-12"></a>--
+</span><span id="__span-24-13"><a id="__codelineno-24-13" name="__codelineno-24-13" href="#__codelineno-24-13"></a>        valid interface combinations:
+</span><span id="__span-24-14"><a id="__codelineno-24-14" name="__codelineno-24-14" href="#__codelineno-24-14"></a>                 * #{ IBSS } &lt;= 1, #{ managed, AP, mesh point, P2P-client, P2P-GO } &lt;= 4,
+</span><span id="__span-24-15"><a id="__codelineno-24-15" name="__codelineno-24-15" href="#__codelineno-24-15"></a>                   total &lt;= 4, #channels &lt;= 1, STA/AP BI must match
+</span><span id="__span-24-16"><a id="__codelineno-24-16" name="__codelineno-24-16" href="#__codelineno-24-16"></a>        HT Capability overrides:
+</span><span id="__span-24-17"><a id="__codelineno-24-17" name="__codelineno-24-17" href="#__codelineno-24-17"></a>                 * MCS: ff ff ff ff ff ff ff ff ff ff
+</span><span id="__span-24-18"><a id="__codelineno-24-18" name="__codelineno-24-18" href="#__codelineno-24-18"></a>                 * maximum A-MSDU length
+</span><span id="__span-24-19"><a id="__codelineno-24-19" name="__codelineno-24-19" href="#__codelineno-24-19"></a>                 * supported channel width
+</span><span id="__span-24-20"><a id="__codelineno-24-20" name="__codelineno-24-20" href="#__codelineno-24-20"></a>                 * short GI for 40 MHz
+</span><span id="__span-24-21"><a id="__codelineno-24-21" name="__codelineno-24-21" href="#__codelineno-24-21"></a>                 * max A-MPDU length exponent
+</span><span id="__span-24-22"><a id="__codelineno-24-22" name="__codelineno-24-22" href="#__codelineno-24-22"></a>                 * min MPDU start spacing
+</span><span id="__span-24-23"><a id="__codelineno-24-23" name="__codelineno-24-23" href="#__codelineno-24-23"></a>        max # scan plans: 
+</span></code></pre></div>
+<ul>
+<li><strong>#{ IBSS } &lt;= 1</strong>: 表示网卡最多支持一个 <strong>IBSS</strong>（Independent Basic Service Set，独立基本服务集，即自组织网络，也称为 Ad-Hoc 模式）。</li>
+<li><strong>#{ managed, AP, mesh point, P2P-client, P2P-GO } &lt;= 8</strong>: 表示在 <strong>managed</strong>（STA，客户端模式）、<strong>AP</strong>（接入点模式）、<strong>mesh point</strong>（网状网络模式）、<strong>P2P-client</strong>（Wi-Fi Direct 客户端）、<strong>P2P-GO</strong>（Wi-Fi Direct 组所有者）这几种模式中，总共可以有<strong>最多 8 个</strong>接口运行。</li>
+<li><strong>total &lt;= 8</strong>: 这是总接口数量的限制，表示可以同时运行<strong>最多 8 个接口</strong>（包括所有类型的接口）。</li>
+<li><strong>#channels &lt;= 1</strong>: 这是信道限制，表示网卡只能在一个信道上工作。也就是说，即使你创建了多个接口，它们也必须在同一个 Wi-Fi 信道上工作（不能同时使用不同频段，例如 2.4GHz 和 5GHz）。</li>
+<li><strong>STA/AP BI must match</strong>: 这意味着 <strong>Station（客户端）和 AP（接入点）模式</strong>的信标间隔（Beacon Interval）必须匹配。</li>
+<li><strong>radar detect widths: { 20 MHz (no HT), 20 MHz, 40 MHz, 80 MHz }</strong>: 这表示网卡支持在雷达检测的情况下运行的频宽范围，通常与 DFS（动态频率选择）相关。这里网卡支持 20MHz 到 80MHz 的频宽。</li>
+</ul>
+<p>实验可以创建多个 client，但是只有一个可以连接。2.4G 芯片可以开 4 个，状态都是 enable，但是同时只有一个 interface 可以 dhcp 获得地址。5G 芯片，只有一个显示为 enable 状态。<strong>不知道是因为硬件的问题，总之不能多开</strong></p>
+<p><img alt="image.png" src="https://imagebed.yfycloud.site/2025/12/19012510be8d495fa3c268a69e51598b.png" /></p>
+<p>为什么要不同 SSID 呢？</p>
+<blockquote>
+<p>In theory, if there were multiple different SSIDs (different names), it would be possible to connect to more than one concurrently,
+<a href="https://forum.openwrt.org/t/mixing-multiple-ap-and-sta-interfaces-on-the-same-hardware-radio/140217">Mixing multiple 'ap' and 'sta' interfaces on the same hardware radio - Installing and Using OpenWrt - OpenWrt Forum</a></p>
+</blockquote>
+<p><a href="https://www.reddit.com/r/networking/comments/r6f80w/can_a_wifi_station_be_connected_to_more_than_one/">Can a WiFi station be connected to more than one SSID at once? : r/networking (reddit.com)</a></p>
+<h3 id="另一个思路bridge-wifi-client">另一个思路：bridge wifi client<a class="headerlink" href="#另一个思路bridge-wifi-client" title="Permanent link">&para;</a></h3>
+<p>如果能从 wlan1 接口发送多个 dhcp request 获得多个 ip 好像也行？这需要我创建多个虚拟接口，然后和 wifi 接口 bridge 起来。</p>
+<p>然而看到 bridge wifi 好像是不可行的？仔细一想这里的 bridge 岂不是和 mesh 有点像了。那么参考 mesh 设置，可能需要对方的路由器也支持你才能 bridge。
+<a href="https://forum.mikrotik.com/viewtopic.php?t=200222">Connect to WiFi, Bridge to Ethernet (DHCP) - MikroTik</a></p>
+<blockquote>
+<p>In general attempting to bridge wifi clients doesn't work.
+If the AP is a mikrotik running 6.xx versions, it has features that do work well with mikrotik clients, just choose station bridge on the maplite, and add it to the bridge. (choose ap bridge on the mikrotik AP)
+Otherwise, you can try setting the maplite wifi client to be a station pseudo bridge. That sort of works, sometimes. Unless you really need it bridged, you are probably better off just making the wifi interface a wan interface, and letting the devices behind it get an ip address from the maplite's local dhcp server and get to the main network via Nat.</p>
+</blockquote>
+<p>这才意识到以前的 bridge wifi 和 lan 是因为 wifi 工作在 AP 模式，所以才能和 lan bridge 在一起。
+<a href="https://openwrt.org/docs/guide-user/network/wifi/wifiextenders/bridgedap">[OpenWrt Wiki] Wi-Fi Extender/Repeater with Bridged AP over Ethernet</a>
+<img alt="image.png" src="https://imagebed.yfycloud.site/2025/12/036edc8e95a21390e08ebe939d068292.png" /></p>
+<p>找到了不能 bridge 的佐证，也提到了确实可以 AP + STA。<a href="https://desiato.infradead.org/pipermail/openwrt-devel/2015-August/008891.html">[OpenWrt-Devel] Multiple Wi-Fi client/AP interfaces on one radio (was: Change OpenWrt Wifi default settings) (infradead.org)</a></p>
+<blockquote>
+<p>Also note that, if you want to bridge a STA interface onto anything else, it'll need to be in "WDS" mode <em>and</em> the the AP to which it's connecting will also need to be in "WDS" mode (note the "option wds '1'", in my example above), because the standard "3-address mode" of Wi-Fi isn't bridgeable (and note that WDS "4-address mode" is bridgeable, but not standardised across different platforms--so you're probably OK so long as all of your equipment is running Linux and using the same Wi-Fi driver, but don't expect to bridge a STA interface that's connected non-Linux Wi-Fi router).
+</p>
+</blockquote>
+<h3 id="macvlan">macvlan<a class="headerlink" href="#macvlan" title="Permanent link">&para;</a></h3>
+<p>还是在那篇 ECMP 负载均衡的文章<sup id="fnref2:1"><a class="footnote-ref" href="#fn:1">2</a></sup>里看到了 macvlan 的用法，好像可以实现一个网卡虚拟出多个 mac 地址，然后获得多个地址。</p>
+<blockquote>
+<p>路由器上的RJ45网口是绑定到VLAN上的，如果是添加虚拟网卡到一个VLAN上就是<strong>单线多拨</strong>，添加到多个VLAN上就可以做<strong>多线多拨</strong>了
+这里的<code>eth0.2</code>对应于WAN口（在<code>Interface -&gt; Switch</code>可以看到WAN绑定在VLAN 2上），不同的设备可能有些许不同，这里在<code>eth0.2</code>上添加两个虚拟网卡
+</p>
+</blockquote>
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a><span class="k">for</span><span class="w"> </span>i<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="sb">`</span>seq<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">2</span><span class="sb">`</span>
+</span><span id="__span-25-2"><a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a><span class="k">do</span>
+</span><span id="__span-25-3"><a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a><span class="w">  </span>ip<span class="w"> </span>link<span class="w"> </span>add<span class="w"> </span>link<span class="w"> </span>eth0.2<span class="w"> </span>name<span class="w"> </span>veth<span class="nv">$i</span><span class="w"> </span><span class="nb">type</span><span class="w"> </span>macvlan
+</span><span id="__span-25-4"><a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a><span class="k">done</span>
+</span></code></pre></div>
+<p>但是我测试在 wlan1_0 上创建多个 veth 后，确实能在 wlan1_0 上抓到不同 mac 的 DHCP 请求，但是却获得不了 ip 地址。</p>
+<h2 id="如何让-udp-和-tcp-走不同路由">如何让 udp 和 tcp 走不同路由<a class="headerlink" href="#如何让-udp-和-tcp-走不同路由" title="Permanent link">&para;</a></h2>
+<p>路由器通过 udp wg 到我的公网机器上网。这导致我的公网 ip 需要走 wifi 路由，而该 wifi 不登陆只有 UDP 能通。因此到我公网 ip 的 TCP 流量就无法连接了。有没有办法让 UDP 流量走 wifi，而 tcp 流量走 wg 建立后的路由呢？</p>
+<p>答案是通过 nftable 给 UDP 流量设置 fwmark，然后使用策略路由对 UDP 流量进行分流。</p>
+<p><strong>UDPATE</strong>：有更简单方案，ip route 支持根据 ipproto 分流，一行命令就可以实现针对 UDP 和 TCP 的策略路由。不过目前 openwrt luci 不支持配置（底层的 uci 不支持）。给提了一个 issue：<a href="https://github.com/openwrt/luci/issues/7330">Missing ipproto keyword in network config rule section · Issue #7330 · openwrt/luci</a></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>ip ru add from all ipproto udp table udp_table prior 10
+</span></code></pre></div>
+<h3 id="设置策略路由">设置策略路由<a class="headerlink" href="#设置策略路由" title="Permanent link">&para;</a></h3>
+<p>UDP 流量使用 fwmark 2 进行路由表的选择（之后使用 nft 给 udp 包打上 mark）</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a># 创建额外的路由表
+</span><span id="__span-27-2"><a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a>echo &quot;1000 udp_table&quot; &gt;&gt; /etc/iproute2/rt_tables
+</span><span id="__span-27-3"><a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a>
+</span><span id="__span-27-4"><a id="__codelineno-27-4" name="__codelineno-27-4" href="#__codelineno-27-4"></a># 将 UDP 流量定向到 udp_table 
+</span><span id="__span-27-5"><a id="__codelineno-27-5" name="__codelineno-27-5" href="#__codelineno-27-5"></a>ip rule add fwmark 2 lookup udp_table prior 10
+</span><span id="__span-27-6"><a id="__codelineno-27-6" name="__codelineno-27-6" href="#__codelineno-27-6"></a>
+</span><span id="__span-27-7"><a id="__codelineno-27-7" name="__codelineno-27-7" href="#__codelineno-27-7"></a># 为 UDP 流量配置特定路由 
+</span><span id="__span-27-8"><a id="__codelineno-27-8" name="__codelineno-27-8" href="#__codelineno-27-8"></a>ip route add 114.214.236.72 via 10.3.100.1 dev wlan1_0 table udp_table
+</span></code></pre></div>
+<h3 id="nft-设置-mark">nft 设置 mark<a class="headerlink" href="#nft-设置-mark" title="Permanent link">&para;</a></h3>
+<p><em>p.s 刚开始无论使用 chatgpt 还是 google 搜索，都是提示在 prerouting chain 添加规则。然而我们这里是想要让 router 自身连接 wg 时，走特定的路由，因此应该在 output chain 中添加规则。打上 mark 后，会触发 rerouting<sup id="fnref:5"><a class="footnote-ref" href="#fn:5">6</a></sup></em></p>
+<p>使用 nft 打标记</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>nft add table ip mangle
+</span><span id="__span-28-2"><a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a>nft add chain ip mangle output \{ type route hook output priority -150 \; \}
+</span><span id="__span-28-3"><a id="__codelineno-28-3" name="__codelineno-28-3" href="#__codelineno-28-3"></a>nft add rule ip mangle output ip daddr 114.214.236.72 udp dport 51820 counter mark set 2
+</span><span id="__span-28-4"><a id="__codelineno-28-4" name="__codelineno-28-4" href="#__codelineno-28-4"></a>
+</span><span id="__span-28-5"><a id="__codelineno-28-5" name="__codelineno-28-5" href="#__codelineno-28-5"></a>nft -a list table ip mangle
+</span><span id="__span-28-6"><a id="__codelineno-28-6" name="__codelineno-28-6" href="#__codelineno-28-6"></a>nft delete rule ip mangle prerouting handle 7
+</span></code></pre></div>
+<p>使用 openwrt 配置文件方式，可以持久化</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>vim /etc/config/firewall
+</span><span id="__span-29-2"><a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a>
+</span><span id="__span-29-3"><a id="__codelineno-29-3" name="__codelineno-29-3" href="#__codelineno-29-3"></a>config include
+</span><span id="__span-29-4"><a id="__codelineno-29-4" name="__codelineno-29-4" href="#__codelineno-29-4"></a>        option enabled  1
+</span><span id="__span-29-5"><a id="__codelineno-29-5" name="__codelineno-29-5" href="#__codelineno-29-5"></a>        option type  &#39;script&#39;
+</span><span id="__span-29-6"><a id="__codelineno-29-6" name="__codelineno-29-6" href="#__codelineno-29-6"></a>        option path  &#39;/etc/firewall.user&#39;
+</span><span id="__span-29-7"><a id="__codelineno-29-7" name="__codelineno-29-7" href="#__codelineno-29-7"></a>        option fw4_compatible 1
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>~/ vim /etc/firewall.user
+</span><span id="__span-30-2"><a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a>nft add table ip mangle
+</span><span id="__span-30-3"><a id="__codelineno-30-3" name="__codelineno-30-3" href="#__codelineno-30-3"></a>nft add chain ip mangle output \{ type route hook output priority -150 \; \}
+</span><span id="__span-30-4"><a id="__codelineno-30-4" name="__codelineno-30-4" href="#__codelineno-30-4"></a>nft add rule ip mangle output udp dport 51820 counter mark set 2
+</span></code></pre></div>
+<h3 id="conntrak-验证结果">conntrak 验证结果<a class="headerlink" href="#conntrak-验证结果" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>opkg install conntrack 
+</span></code></pre></div>
+<p>走 wlan1_0 (guest wiif)</p>
+<ul>
+<li>contrack 输出中，17 表示是 udp 协议，tcp 是 6</li>
+<li>后面的数字是超时时间，默认 3 分钟不 active 就会断开连接</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a>~/ conntrack -L -d 114.214.236.72
+</span><span id="__span-32-2"><a id="__codelineno-32-2" name="__codelineno-32-2" href="#__codelineno-32-2"></a>udp      17 171 src=10.3.103.238 dst=114.214.236.72 sport=51820 dport=51820 packets=150 bytes=22092 src=114.214.236.72 dst=10.3.103.238 sport=51820 dport=51820 packets=149 bytes=33352 [ASSURED] mark=0 use=1
+</span></code></pre></div>
+<p>走 wlan0_3 (Hotspot)</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-33-1"><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a>udp      17 172 src=192.168.137.238 dst=114.214.236.72 sport=51820 dport=51820 packets=6 bytes=712 src=114.214.236.72 dst=192.168.137.238 sport=51820 dport=51820 packets=6 bytes=808 [ASSURED] mark=0 use=1
+</span></code></pre></div>
+<p>udp 分流成功</p>
+<ul>
+<li>可以看到特别的是 src 是 192.168.137.238，回包的 dst 却变成了 10.3.103.238</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-34-1"><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a>~/ conntrack -L -d 114.214.236.72
+</span><span id="__span-34-2"><a id="__codelineno-34-2" name="__codelineno-34-2" href="#__codelineno-34-2"></a>icmp     1 29 src=192.168.137.238 dst=114.214.236.72 type=8 code=0 id=8998 packets=29 bytes=2436 src=114.214.236.72 dst=192.168.137.238 type=0 code=0 id=8998 packets=26 bytes=2184 mark=0 use=1
+</span><span id="__span-34-3"><a id="__codelineno-34-3" name="__codelineno-34-3" href="#__codelineno-34-3"></a>udp      17 179 src=192.168.137.238 dst=114.214.236.72 sport=51820 dport=51820 packets=109 bytes=16288 src=114.214.236.72 dst=10.3.103.238 sport=51820 dport=41685 packets=106 bytes=16228 [ASSURED] mark=0 use=2
+</span></code></pre></div>
+<h3 id="参考资料_1">参考资料<a class="headerlink" href="#参考资料_1" title="Permanent link">&para;</a></h3>
+<ul>
+<li><a href="https://serverfault.com/questions/1100976/routing-fwmark-to-vpn-gateway-using-nftables-mark">iptables - Routing fwmark to VPN gateway using nftables mark - Server Fault</a></li>
+<li><a href="https://wiki.nftables.org/wiki-nftables/index.php/Setting_packet_metainformation">Setting packet metainformation - nftables wiki</a></li>
+<li>fwmark 针对单个 packet，ct mark 针对 conntack 连接：<a href="https://iedon.com/2024/08/03/1243.html/comment-page-1">在 OpenWrt 下配置「源进源出」的策略路由(使用 nftables) – iEdon</a></li>
+</ul>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:6">
+<p><a href="https://serverfault.com/questions/759630/choosing-gateway-based-on-source-ip-in-windows">networking - Choosing gateway based on Source IP in Windows - Server Fault</a>&#160;<a class="footnote-backref" href="#fnref:6" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:1">
+<p><a href="https://lwz322.github.io/2019/11/03/ECMP.html">路由负载均衡：ECMP - TimeForget (lwz322.github.io)</a>&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 2 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:1" title="Jump back to footnote 2 in the text">&#8617;</a><a class="footnote-backref" href="#fnref3:1" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+<li id="fn:2">
+<p><a href="https://codecave.cc/multipath-routing-in-linux-part-1.html#f1">Jakub Sitnicki's blog (codecave.cc)</a>&#160;<a class="footnote-backref" href="#fnref:2" title="Jump back to footnote 3 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:2" title="Jump back to footnote 3 in the text">&#8617;</a></p>
+</li>
+<li id="fn:3">
+<p><a href="https://codecave.cc/multipath-routing-in-linux-part-2.html">Jakub Sitnicki's blog (codecave.cc)</a>&#160;<a class="footnote-backref" href="#fnref:3" title="Jump back to footnote 4 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:3" title="Jump back to footnote 4 in the text">&#8617;</a></p>
+</li>
+<li id="fn:4">
+<p><a href="https://www.kernel.org/doc/Documentation/networking/ip-sysctl.txt">kernel.org/doc/Documentation/networking/ip-sysctl.txt</a>&#160;<a class="footnote-backref" href="#fnref:4" title="Jump back to footnote 5 in the text">&#8617;</a></p>
+</li>
+<li id="fn:5">
+<p><a href="https://inai.de/images/nf-packet-flow.png">nf-packet-flow.png (2412×790) (inai.de)</a>&#160;<a class="footnote-backref" href="#fnref:5" title="Jump back to footnote 6 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+  
+
+
+
+      
+    </article>
+  </div>
+
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+        
+      
+      <nav class="md-footer__inner md-grid" aria-label="页脚" >
+        
+          
+          <a href="../../../../../%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/2024/10/15/%E4%BD%BF%E7%94%A8%E5%85%B6%E5%AE%83%E8%AE%BE%E5%A4%87%E4%BD%9C%E4%B8%BA%E6%89%A9%E5%B1%95%E5%B1%8F%E5%B9%95/" class="md-footer__link md-footer__link--prev" aria-label="上一页: 使用其它设备作为扩展屏幕">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                上一页
+              </span>
+              <div class="md-ellipsis">
+                使用其它设备作为扩展屏幕
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../../../../../%E4%B8%AA%E4%BA%BA/2024/10/28/VR%20%E5%AF%B9%E7%8E%B0%E5%AE%9E%E7%9A%84%E5%BD%B1%E5%93%8D/" class="md-footer__link md-footer__link--next" aria-label="下一页: VR 对现实的影响">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                下一页
+              </span>
+              <div class="md-ellipsis">
+                VR 对现实的影响
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/TheRainstorm" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../../..", "features": ["navigation.instant", "navigation.instant.progress", "navigation.tracking", "navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.footer", "content.code.copy", "toc.follow", "toc.integrate"], "search": "../../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../../../../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

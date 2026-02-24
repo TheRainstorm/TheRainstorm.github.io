@@ -1,0 +1,2173 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="记录一些关于数学、计算机的知识，以及一些日常。">
+      
+      
+      
+        <link rel="canonical" href="https://yfy.cqu.ai/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%85%B7/2022/12/05/2022-12-05-windows%E7%9B%B8%E5%85%B3/">
+      
+      
+        <link rel="prev" href="../../../../../%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/2022/12/04/2022-12-04-%E5%AE%89%E5%8D%93%E5%88%B7%E6%9C%BA%E5%B9%B6%E5%AE%89%E8%A3%85linux/">
+      
+      
+        <link rel="next" href="../2022-12-05-hexo%E4%BD%BF%E7%94%A8/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.3">
+    
+    
+      
+        <title>windows 相关 - Rain 的随笔</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#远程桌面快捷键" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../../../../.." title="Rain 的随笔" class="md-header__button md-logo" aria-label="Rain 的随笔" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Rain 的随笔
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              windows 相关
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    
+  
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="../../../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  博客
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../about/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  关于
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../tags/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  标签
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../series/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  系列
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../tools/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  工具
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../archive/2026/" class="md-tabs__link">
+          
+  
+  
+  归档
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../category/%E4%B8%AA%E4%BA%BA/" class="md-tabs__link">
+          
+  
+  
+  分类
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" hidden>
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../../.." title="Rain 的随笔" class="md-nav__button md-logo" aria-label="Rain 的随笔" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Rain 的随笔
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+    
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      <a href="../../../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    博客
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    关于
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../tags/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    标签
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../series/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    系列
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../tools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    工具
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    归档
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    归档
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2026/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2026
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2025/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2025
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2024/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2024
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2023/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2023
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2022/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2022
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2021/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2021
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2020/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2020
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2019/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2019
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    分类
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    分类
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E4%B8%AA%E4%BA%BA/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    个人
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E5%8D%9A%E5%AE%A2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    博客
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E5%8D%9A%E5%AE%A2--%E7%BD%91%E7%BB%9C/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    博客 &amp; 网络
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    学习笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    折腾记录
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    课程笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%85%B7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    软件工具
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E9%98%85%E8%AF%BB/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    阅读
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+  <div class="md-content md-content--post" data-md-component="content">
+    <div class="md-sidebar md-sidebar--post" data-md-component="sidebar" data-md-type="navigation">
+      <div class="md-sidebar__scrollwrap">
+        <div class="md-sidebar__inner md-post">
+          <nav class="md-nav md-nav--primary">
+            <div class="md-post__back">
+              <div class="md-nav__title md-nav__container">
+                <a href="../../../../.." class="md-nav__link">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+                  <span class="md-ellipsis">
+                    回到主页
+                  </span>
+                </a>
+              </div>
+            </div>
+            
+            <ul class="md-post__meta md-nav__list">
+              <li class="md-nav__item md-nav__item--section">
+                <div class="md-post__title">
+                  <span class="md-ellipsis">
+                    元数据
+                  </span>
+                </div>
+                <nav class="md-nav">
+                  <ul class="md-nav__list">
+                    <li class="md-nav__item">
+                      <div class="md-nav__link">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 19H5V8h14m-3-7v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1V1m-1 11h-5v5h5z"/></svg>
+                        <time datetime="2022-12-05 15:49:50+00:00" class="md-ellipsis">2022年12月5日</time>
+                      </div>
+                    </li>
+                    
+                    
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 3v15h3V3zm3 2 4 13 3-1-4-13zM5 5v13h3V5zM3 19v2h18v-2z"/></svg>
+                          <span class="md-ellipsis">
+                            分类于
+                            
+                              <a href="../../../../../category/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%85%B7/">软件工具</a></span>
+                        </div>
+                      </li>
+                    
+                    
+                      
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20a8 8 0 0 0 8-8 8 8 0 0 0-8-8 8 8 0 0 0-8 8 8 8 0 0 0 8 8m0-18a10 10 0 0 1 10 10 10 10 0 0 1-10 10C6.47 22 2 17.5 2 12A10 10 0 0 1 12 2m.5 5v5.25l4.5 2.67-.75 1.23L11 13V7z"/></svg>
+                          <span class="md-ellipsis">
+                            
+                              需要 6 分钟阅读时间
+                            
+                          </span>
+                        </div>
+                      </li>
+                    
+                  </ul>
+                </nav>
+              </li>
+            </ul>
+            
+          </nav>
+          
+            
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#远程桌面快捷键" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        远程桌面快捷键
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#清除历史记录" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        清除历史记录
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#系统维护" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        系统维护
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="系统维护">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#磁盘挂载" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        磁盘挂载
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#用户" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        用户
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#本地组策略编辑器" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        本地组策略编辑器
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#网络" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        网络
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="网络">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#路由表" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        路由表
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#查看-neigh" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        查看 neigh
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#修改路由" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        修改路由
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#修改-ipv6ipv4-优先级" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        修改 ipv6，ipv4 优先级
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#查看设置-mtu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        查看设置 MTU
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#开启-forwarding" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        开启 Forwarding
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#监听的端口" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        监听的端口
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#设置-wg-网卡为专用网络" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        设置 wg 网卡为专用网络
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sid" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SID
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#开启-ssh" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        开启 ssh
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="开启 ssh">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#生成-ssh-key" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        生成 ssh key
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#使用-ssh-key-ssh-登录-windows挺麻烦" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        使用 ssh key ssh 登录 windows(挺麻烦)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#进程管理" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        进程管理
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#smb-共享" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SMB 共享
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="SMB 共享">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#本地组管理" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        本地组管理
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#将-smb-挂载到目录" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        将 smb 挂载到目录
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#微软账号登录导致-smb-无法连接" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        微软账号登录导致 SMB 无法连接
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#清除凭据" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        清除凭据
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#定时任务" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        定时任务
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="定时任务">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#简单自启动" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        简单自启动
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sc-命令" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        sc 命令
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#小工具-nssm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        小工具 nssm
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#windows-小问题" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        windows 小问题
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="windows 小问题">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#中文输入法候选框消失" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        中文输入法候选框消失
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#网络显示未连接实际有网" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        网络显示未连接实际有网
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#删除文件管理器中的网盘" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        删除文件管理器中的网盘
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#文件或目录损坏且无法读取" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        文件或目录损坏且无法读取
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#关闭历史记录" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        关闭历史记录
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#edge-hsts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        edge HSTS
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#关闭休眠文件和-pagefile" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        关闭休眠文件和 pagefile
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#总是不小心切换输入法" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        总是不小心切换输入法
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+          
+        </div>
+      </div>
+    </div>
+    <article class="md-content__inner md-typeset">
+      
+        
+  
+
+
+  <nav class="md-tags" >
+    
+      
+      
+      
+      
+        <a href="../../../../../tags/#tag:smb" class="md-tag">SMB</a>
+      
+    
+      
+      
+      
+      
+        <a href="../../../../../tags/#tag:windows" class="md-tag">windows</a>
+      
+    
+  </nav>
+
+
+
+  <h1>windows 相关</h1>
+
+<p>windows 相关</p>
+<!-- more -->
+
+<h2 id="远程桌面快捷键">远程桌面快捷键<a class="headerlink" href="#远程桌面快捷键" title="Permanent link">&para;</a></h2>
+<ul>
+<li>ctrl + alt + break：切换全屏/窗口</li>
+<li>ctrl + alt + home：显示连接状态栏</li>
+</ul>
+<p><a href="https://learn.microsoft.com/zh-cn/windows/win32/termserv/terminal-services-shortcut-keys">远程桌面服务快捷键 - Win32 apps | Microsoft Learn</a></p>
+<h2 id="清除历史记录">清除历史记录<a class="headerlink" href="#清除历史记录" title="Permanent link">&para;</a></h2>
+<ul>
+<li>打开文件资源管理器 → 点击右上角 ​<strong>​•••​</strong>​ → 选择 ​<strong>​“选项”​</strong>​。</li>
+<li>在 ​<strong>​“隐私”​</strong>​ 区域点击 ​<strong>​“清除”​</strong>​ 按钮 → 勾选 ​<strong>​“文件资源管理器历史记录”​</strong>​ 并确认</li>
+<li><em>效果</em>：清除“快速访问”中的最近文件和常用文件夹记录。</li>
+</ul>
+<p>SMB</p>
+<p><code>Win + R</code> 输入 <code>control</code> → 进入 ​<strong>​用户账户​</strong>​ → ​<strong>​管理你的凭据</strong></p>
+<h2 id="系统维护">系统维护<a class="headerlink" href="#系统维护" title="Permanent link">&para;</a></h2>
+<h3 id="磁盘挂载">磁盘挂载<a class="headerlink" href="#磁盘挂载" title="Permanent link">&para;</a></h3>
+<p>取消 smb 挂载</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>net use U: /delete
+</span></code></pre></div>
+<h3 id="用户">用户<a class="headerlink" href="#用户" title="Permanent link">&para;</a></h3>
+<p>查看用户</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>C:\Windows\System32&gt;net user
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>\\S3-PRO 的用户帐户
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>-------------------------------------------------------------------------------
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>15440                    Administrator            DefaultAccount
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>Guest                    joker                    WDAGUtilityAccount
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>yfy
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>命令成功完成。
+</span></code></pre></div>
+<p>启用用户</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>net user Administrator /active:yes  # 启动Administrator用户
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>net user Administrator password  # 设置用户密码
+</span></code></pre></div>
+<p>全部命令</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>NET USER
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>[username [password | *] [options]] [/DOMAIN]
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>         username {password | *} /ADD [options] [/DOMAIN]
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>         username [/DELETE] [/DOMAIN]
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>         username [/TIMES:{times | ALL}]
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>         username [/ACTIVE: {YES | NO}]
+</span></code></pre></div>
+<p>添加用户</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>net user &lt;user_name&gt; &lt;passwd&gt; /add
+</span></code></pre></div>
+<p>设置权限</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>net localgroup administrators [username] /add
+</span></code></pre></div>
+<p><a href="https://operating-systems.wonderhowto.com/how-to/create-admin-user-account-using-cmd-prompt-windows-0125689/">How to Create an Admin User Account Using CMD Prompt (Windows) « Operating Systems :: WonderHowTo</a></p>
+<h3 id="本地组策略编辑器">本地组策略编辑器<a class="headerlink" href="#本地组策略编辑器" title="Permanent link">&para;</a></h3>
+<p>win11-home 没有，需要自己安装</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>gpedit.msc
+</span></code></pre></div>
+<p>计算机配置-windows 设置 - 安全设置 - 本地策略</p>
+<ul>
+<li>用户权限分配<ul>
+<li>拒绝本地登录</li>
+<li>拒绝从网络访问这台计算机</li>
+<li>拒绝通过远程桌面服务登录</li>
+</ul>
+</li>
+<li>安全选项<ul>
+<li>账户：管理员账户状态。（即 Administrator 是否可见）</li>
+</ul>
+</li>
+</ul>
+<h3 id="网络">网络<a class="headerlink" href="#网络" title="Permanent link">&para;</a></h3>
+<h4 id="路由表">路由表<a class="headerlink" href="#路由表" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>route print -6
+</span></code></pre></div>
+<h4 id="查看-neigh">查看 neigh<a class="headerlink" href="#查看-neigh" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>netsh interface ipv6 show neighbors
+</span></code></pre></div>
+<h4 id="修改路由">修改路由<a class="headerlink" href="#修改路由" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>ROUTE [-f] [-p] [-4|-6] command [destination]
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>                  [MASK netmask]  [gateway] [METRIC metric]  [IF interface]
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>route print -4
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>route CHANGE 0.0.0.0 MASK 0.0.0.0 192.168.1.1 METRIC 30 IF 17 # IF 从 print 中获得
+</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>
+</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>route ADD 192.168.1.0 MASK 255.255.255.0 192.168.1.1 METRIC 1 IF 4
+</span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>route ADD 36.159.239.60/24 10.3.100.1 METRIC 1 IF 3
+</span><span id="__span-9-9"><a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a>
+</span><span id="__span-9-10"><a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a>route delete 0.0.0.0/0 if 16
+</span></code></pre></div>
+<p>使用 netsh 也可以</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>netsh interface ipv6 add route ::/0 46 fe80::2ad1:27ff:fec0:166c
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>route delete ::/0
+</span></code></pre></div>
+<h4 id="修改-ipv6ipv4-优先级">修改 ipv6，ipv4 优先级<a class="headerlink" href="#修改-ipv6ipv4-优先级" title="Permanent link">&para;</a></h4>
+<p><a href="https://ipw.cn/doc/ipv6/user/ipv4_ipv6_prefix_precedence.html">Windows10 设置 IPv4/v6 访问优先级 | IP 查询 (ipw.cn)</a></p>
+<p>IPv6(<code>::/0</code>)
+ IPv4(<code>::ffff:0:0/96</code>)</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>C:\Users\yfy&gt;netsh interface ipv6 show prefixpolicies
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>查询活动状态...
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>优先顺序    标签   前缀
+</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>----------  -----  --------------------------------
+</span><span id="__span-11-6"><a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>        50      0  ::1/128
+</span><span id="__span-11-7"><a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a>        40      1  ::/0
+</span><span id="__span-11-8"><a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a>        35      4  ::ffff:0:0/96
+</span><span id="__span-11-9"><a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a>        30      2  2002::/16
+</span><span id="__span-11-10"><a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a>         5      5  2001::/32
+</span><span id="__span-11-11"><a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a>         3     13  fc00::/7
+</span><span id="__span-11-12"><a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a>         1     11  fec0::/10
+</span><span id="__span-11-13"><a id="__codelineno-11-13" name="__codelineno-11-13" href="#__codelineno-11-13"></a>         1     12  3ffe::/16
+</span><span id="__span-11-14"><a id="__codelineno-11-14" name="__codelineno-11-14" href="#__codelineno-11-14"></a>         1      3  ::/96
+</span></code></pre></div>
+<p>将::ffff:0:0/96设置到::/0前面即可</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>netsh interface ipv6 set prefixpolicy ::ffff:0:0/96 100 4
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>netsh interface ipv6 add prefixpolicy ::/0 40 1
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>C:\Users\15440&gt;netsh interface ipv6 show prefixpolicies
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>查询活动状态...
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>优先顺序    标签   前缀
+</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>----------  -----  --------------------------------
+</span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>       100      4  ::ffff:0:0/96
+</span><span id="__span-13-7"><a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a>        50      0  ::1/128
+</span><span id="__span-13-8"><a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a>        40      1  ::/0
+</span><span id="__span-13-9"><a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a>        30      2  2002::/16
+</span><span id="__span-13-10"><a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a>         5      5  2001::/32
+</span><span id="__span-13-11"><a id="__codelineno-13-11" name="__codelineno-13-11" href="#__codelineno-13-11"></a>         3     13  fc00::/7
+</span><span id="__span-13-12"><a id="__codelineno-13-12" name="__codelineno-13-12" href="#__codelineno-13-12"></a>         1     11  fec0::/10
+</span><span id="__span-13-13"><a id="__codelineno-13-13" name="__codelineno-13-13" href="#__codelineno-13-13"></a>         1     12  3ffe::/16
+</span><span id="__span-13-14"><a id="__codelineno-13-14" name="__codelineno-13-14" href="#__codelineno-13-14"></a>         1      3  ::/96
+</span></code></pre></div>
+<h4 id="查看设置-mtu">查看设置 MTU<a class="headerlink" href="#查看设置-mtu" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>netsh interface ipv4 show subinterfaces
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>netsh interface ipv4 set subinterface &quot;以太网 2&quot; mtu=1500 store=persistent
+</span></code></pre></div>
+<p>查看 PMTU</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>netsh interface ipv4 show destinationcache
+</span></code></pre></div>
+<h4 id="开启-forwarding">开启 Forwarding<a class="headerlink" href="#开启-forwarding" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>Set-NetIPInterface -ifindex 4 -Forwarding Enabled
+</span></code></pre></div>
+<p>wireshard 能抓到从以太网来的 192.168.1.1 -&gt; 223.5.5.5 的包，但是 windows 没有对其进行转发。</p>
+<p>windows 开启转发：<a href="https://serverfault.com/questions/929081/how-can-i-enable-packet-forwarding-on-windows">How can I enable packet forwarding on Windows? - Server Fault</a></p>
+<ul>
+<li>两种方法。第一种方法修改注册表，需要重启</li>
+<li>第二种方法使用 powershell，不需要重启，可以修改指定接口</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a># 获得接口列表
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>Get-NetIPInterface | select ifIndex,InterfaceAlias,AddressFamily,ConnectionState,Forwarding | Sort-Object -Property IfIndex | Format-Table
+</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>
+</span><span id="__span-17-4"><a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a># 开启指定接口（从这个接口进来的流量允许转发）
+</span><span id="__span-17-5"><a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a>Set-NetIPInterface -ifindex &lt;required interface index from table&gt; -Forwarding Enabled
+</span><span id="__span-17-6"><a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a># 开启所有接口
+</span><span id="__span-17-7"><a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a>Set-NetIPInterface -Forwarding Enabled
+</span><span id="__span-17-8"><a id="__codelineno-17-8" name="__codelineno-17-8" href="#__codelineno-17-8"></a>
+</span><span id="__span-17-9"><a id="__codelineno-17-9" name="__codelineno-17-9" href="#__codelineno-17-9"></a># 禁用所有接口
+</span><span id="__span-17-10"><a id="__codelineno-17-10" name="__codelineno-17-10" href="#__codelineno-17-10"></a>Set-NetIPInterface -Forwarding Disabled
+</span><span id="__span-17-11"><a id="__codelineno-17-11" name="__codelineno-17-11" href="#__codelineno-17-11"></a>
+</span><span id="__span-17-12"><a id="__codelineno-17-12" name="__codelineno-17-12" href="#__codelineno-17-12"></a># 如果不行的话，看下 **Routing and Remote Access service** 是否开启了
+</span><span id="__span-17-13"><a id="__codelineno-17-13" name="__codelineno-17-13" href="#__codelineno-17-13"></a>Set-Service RemoteAccess -StartupType Automatic; Start-Service RemoteAccess
+</span></code></pre></div>
+<p>设置转发后，使用 wireguard 还需要 masquerade</p>
+<h4 id="监听的端口">监听的端口<a class="headerlink" href="#监听的端口" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>netstat -ano |findstr 
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>-a            显示所有连接和侦听端口。不指定则只显示连接
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>  -n            以数字形式显示地址和端口号。
+</span><span id="__span-19-3"><a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>  -o            显示拥有的与每个连接关联的进程 ID。
+</span></code></pre></div>
+<h4 id="设置-wg-网卡为专用网络">设置 wg 网卡为专用网络<a class="headerlink" href="#设置-wg-网卡为专用网络" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>Get-NetConnectionProfile
+</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>
+</span><span id="__span-20-3"><a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a>Set-NetConnectionProfile -InterfaceIndex 34 -NetworkCategory Private
+</span></code></pre></div>
+<h3 id="sid">SID<a class="headerlink" href="#sid" title="Permanent link">&para;</a></h3>
+<p>两个 windows 虚拟机，共用一个 windows 虚拟磁盘。如何避免 NTFS 用户 id 不同导致的权限冲突？</p>
+<p>方案来自 Chatgpt-4o (2024/5/18)</p>
+<ol>
+<li><strong>使用相同的域用户</strong>：如果虚拟机加入同一个域，可以使用域用户来访问共享磁盘。这种方式确保两个虚拟机上的用户具有相同的 SID。<ul>
+<li>没用过域管理</li>
+</ul>
+</li>
+<li><strong>手动对齐 SID</strong>：使用工具手动对齐两个虚拟机上的用户 SID。这种方法比较复杂，一般不推荐，但在特定情况下可以解决问题。<ul>
+<li>提到的 NewSID 工具早就不更新了。并且实现原理是查找并修改所有旧 SID 的表项，因此并不知道会不会导致其它问题。</li>
+<li><a href="https://learn.microsoft.com/en-us/sysinternals/downloads/newsid">NewSID - Sysinternals | Microsoft Learn</a></li>
+</ul>
+</li>
+<li><strong>共享目录的权限配置</strong>：对共享磁盘上的目录设置更宽松的权限，以避免权限冲突。<ul>
+<li>木匾采用的方案。将所有盘都设置成 Everyone 完全控制。由于权限是继承的，因此新创建的文件也是该权限。</li>
+</ul>
+</li>
+<li><strong>映射网络驱动器</strong>：通过网络共享方式访问虚拟磁盘，可以避免直接的 NTFS 权限问题。</li>
+</ol>
+<p>综合下来还是设置更宽松的权限方案适用性和兼容性比较好。</p>
+<ul>
+<li>已知问题：Everyone 权限配置后，zotero 仍然无法打开数据库。</li>
+</ul>
+<p>sid 记录</p>
+<p>win11</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>PS C:\Users\yfy&gt; wmic useraccount
+</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>AccountType  Caption                       Description                                                     Disabled  Domain     FullName  InstallDate  LocalAccount  Lockout  Name                PasswordChangeable  PasswordExpires  PasswordRequired  SID                                             SIDType  Status
+</span><span id="__span-21-3"><a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>512          KVM-WIN11\Administrator       管理计算机(域)的内置帐户                                        TRUE      KVM-WIN11                         TRUE          FALSE    Administrator       TRUE                FALSE            TRUE              S-1-5-21-1067228247-3673862886-1967894714-500   1        Degraded
+</span><span id="__span-21-4"><a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a>512          KVM-WIN11\DefaultAccount      系统管理的用户帐户。                                            TRUE      KVM-WIN11                         TRUE          FALSE    DefaultAccount      TRUE                FALSE            FALSE             S-1-5-21-1067228247-3673862886-1967894714-503   1        Degraded
+</span><span id="__span-21-5"><a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a>512          KVM-WIN11\Guest               供来宾访问计算机或访问域的内置帐户                              TRUE      KVM-WIN11                         TRUE          FALSE    Guest               FALSE               FALSE            FALSE             S-1-5-21-1067228247-3673862886-1967894714-501   1        Degraded
+</span><span id="__span-21-6"><a id="__codelineno-21-6" name="__codelineno-21-6" href="#__codelineno-21-6"></a>512          KVM-WIN11\WDAGUtilityAccount  系统为 Windows Defender 应用程序防护方案管理和使用的用户帐户。  TRUE      KVM-WIN11                         TRUE          FALSE    WDAGUtilityAccount  TRUE                TRUE             TRUE              S-1-5-21-1067228247-3673862886-1967894714-504   1        Degraded
+</span><span id="__span-21-7"><a id="__codelineno-21-7" name="__codelineno-21-7" href="#__codelineno-21-7"></a>512          KVM-WIN11\yfy                                                                                 FALSE     KVM-WIN11                         TRUE          FALSE    yfy                 TRUE                FALSE            FALSE             S-1-5-21-1067228247-3673862886-1967894714-1001  1        OK
+</span><span id="__span-21-8"><a id="__codelineno-21-8" name="__codelineno-21-8" href="#__codelineno-21-8"></a>
+</span><span id="__span-21-9"><a id="__codelineno-21-9" name="__codelineno-21-9" href="#__codelineno-21-9"></a>PS C:\Users\yfy&gt;
+</span></code></pre></div>
+<p>win10</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>yfy@kvm-win10 UCRT64 ~
+</span><span id="__span-22-2"><a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>$ wmic useraccount
+</span><span id="__span-22-3"><a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a>AccountType  Caption                       Description                                                     Disabled  Domain     FullName  InstallDate  LocalAccount  Lockout  Name                PasswordChangeable  PasswordExpires  PasswordRequired  SID                                             SIDType  Status
+</span><span id="__span-22-4"><a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a>512          KVM-WIN10\Administrator       管理计算机(域)的内置帐户                                        TRUE      KVM-WIN10                         TRUE          FALSE    Administrator       TRUE                FALSE            TRUE              S-1-5-21-3936709377-1542623274-3346462912-500   1        Degraded
+</span><span id="__span-22-5"><a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a>512          KVM-WIN10\DefaultAccount      系统管理的用户帐户。                                            TRUE      KVM-WIN10                         TRUE          FALSE    DefaultAccount      TRUE                FALSE            FALSE             S-1-5-21-3936709377-1542623274-3346462912-503   1        Degraded
+</span><span id="__span-22-6"><a id="__codelineno-22-6" name="__codelineno-22-6" href="#__codelineno-22-6"></a>512          KVM-WIN10\Guest               供来宾访问计算机或访问域的内置帐户                              TRUE      KVM-WIN10                         TRUE          FALSE    Guest               FALSE               FALSE            FALSE             S-1-5-21-3936709377-1542623274-3346462912-501   1        Degraded
+</span><span id="__span-22-7"><a id="__codelineno-22-7" name="__codelineno-22-7" href="#__codelineno-22-7"></a>512          KVM-WIN10\WDAGUtilityAccount  系统为 Windows Defender 应用程序防护方案管理和使用的用户帐户。  TRUE      KVM-WIN10                         TRUE          FALSE    WDAGUtilityAccount  TRUE                TRUE             TRUE              S-1-5-21-3936709377-1542623274-3346462912-504   1        Degraded
+</span><span id="__span-22-8"><a id="__codelineno-22-8" name="__codelineno-22-8" href="#__codelineno-22-8"></a>512          KVM-WIN10\yfy                                                                                 FALSE     KVM-WIN10                         TRUE          FALSE    yfy                 TRUE                FALSE            FALSE             S-1-5-21-3936709377-1542623274-3346462912-1001  1        OK
+</span></code></pre></div>
+<h3 id="开启-ssh">开启 ssh<a class="headerlink" href="#开启-ssh" title="Permanent link">&para;</a></h3>
+<h4 id="生成-ssh-key">生成 ssh key<a class="headerlink" href="#生成-ssh-key" title="Permanent link">&para;</a></h4>
+<p>复制于 tldr 命令输出</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>- Generate an RSA 4096 bit key with email as a comment:
+</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>   ssh-keygen -t rsa -b 4096 -C &quot;{{email}}&quot;
+</span></code></pre></div>
+<h4 id="使用-ssh-key-ssh-登录-windows挺麻烦">使用 ssh key ssh 登录 windows(挺麻烦)<a class="headerlink" href="#使用-ssh-key-ssh-登录-windows挺麻烦" title="Permanent link">&para;</a></h4>
+<ol>
+<li>
+<p>windows 开启 ssh server。
+ 搜索栏输入管理可选功能，搜索 openssh 服务器安装</p>
+</li>
+<li>
+<p>编辑 C:/ProgramData/ssh/sshd_config</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>确保以下 3 条没有被注释
+</span><span id="__span-24-2"><a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>PubkeyAuthentication yes
+</span><span id="__span-24-3"><a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a>AuthorizedKeysFile .ssh/authorized_keys
+</span><span id="__span-24-4"><a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a>PasswordAuthentication no
+</span><span id="__span-24-5"><a id="__codelineno-24-5" name="__codelineno-24-5" href="#__codelineno-24-5"></a>
+</span><span id="__span-24-6"><a id="__codelineno-24-6" name="__codelineno-24-6" href="#__codelineno-24-6"></a>确保以下 2 条有注释掉
+</span><span id="__span-24-7"><a id="__codelineno-24-7" name="__codelineno-24-7" href="#__codelineno-24-7"></a>#Match Group administrators
+</span><span id="__span-24-8"><a id="__codelineno-24-8" name="__codelineno-24-8" href="#__codelineno-24-8"></a>#       AuthorizedKeysFile __PROGRAMDATA__/ssh/administrators_authorized_keys
+</span></code></pre></div>
+</li>
+<li>
+<p>客户端将客户端的 public key 手动复制到（使用 ssh-copy-id 貌似会输出乱码失败）
+ ~/.ssh/authorized_keys</p>
+</li>
+<li>windows 重新启动 sshd（管理员）
+ net stop sshd
+ net start sshd</li>
+</ol>
+<h3 id="进程管理">进程管理<a class="headerlink" href="#进程管理" title="Permanent link">&para;</a></h3>
+<p><a href="https://superuser.com/questions/914782/how-do-you-list-all-processes-on-the-command-line-in-windows">How do you list all processes on the command line in Windows? - Super User</a></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>tasklist 
+</span></code></pre></div>
+<p>重启有道词典</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>taskkill /im YoudaoDict.exe /f 
+</span><span id="__span-26-2"><a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a>
+</span><span id="__span-26-3"><a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a>start /d&quot;D:\path\to\&quot; YoudaoDict.exe
+</span></code></pre></div>
+<h2 id="smb-共享">SMB 共享<a class="headerlink" href="#smb-共享" title="Permanent link">&para;</a></h2>
+<h3 id="本地组管理">本地组管理<a class="headerlink" href="#本地组管理" title="Permanent link">&para;</a></h3>
+<p><a href="https://post.smzdm.com/p/akxwkxqk/">Windows 10/ 11 下安全并正确地使用 SMB 共享_软件应用_什么值得买 (smzdm.com)</a></p>
+<ul>
+<li>创建一个专用用户用于 smb 共享</li>
+</ul>
+<h3 id="将-smb-挂载到目录">将 smb 挂载到目录<a class="headerlink" href="#将-smb-挂载到目录" title="Permanent link">&para;</a></h3>
+<p>windows 创建软链接  SMB 软链接
+对于大部分应用来说，软链接和原生的目录行为一样</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>mklink /d hexo-blog \\ryzen\Home\Documents\hexo-blog\source\_posts
+</span></code></pre></div>
+<p>这里的服务指：程序开机时自动在后台运行。和定时任务应该有点不同。</p>
+<h3 id="微软账号登录导致-smb-无法连接">微软账号登录导致 SMB 无法连接<a class="headerlink" href="#微软账号登录导致-smb-无法连接" title="Permanent link">&para;</a></h3>
+<p>微软账号登陆情况下，SMB 用户和密码</p>
+<ul>
+<li>用户：微软账号（邮箱地址）</li>
+<li>密码：微软账号密码（登录测试：<a href="https://account.microsoft.com/?ref=settings&amp;Platform=Windows11">Microsoft account | Home</a>）</li>
+</ul>
+<p>仍然无法登录原因</p>
+<blockquote>
+<p>这个问题<strong>通常</strong>是由于跟着安装引导<strong>直接登录微软账户→设置 PIN</strong> 导致的，因为从来没有使用过微软账户的密码验证登陆过，也就导致本地没有保存正确的密码，即使输入正确密码也无法验证
+<a href="https://patzer0.com/archives/windows10-or-11-failed-to-auth-smb-share-folder-by-microsoft-account-password">Windows10/11 SMB共享文件夹密码正确但一直错误的解决办法 | Patrick's Blog</a></p>
+</blockquote>
+<p>解决办法</p>
+<p><strong>Windows 设置→账户→登陆选项</strong>，禁用<strong>要求 Microsoft 账户使用 Windows Hello 登录</strong>，然后锁屏使用密码登录一次（不使用 pin）</p>
+<p>如果还是不行，尝试重启一下电脑。我是创建了一个本地用户登录了一次，然后突然就好了。</p>
+<h3 id="清除凭据">清除凭据<a class="headerlink" href="#清除凭据" title="Permanent link">&para;</a></h3>
+<p><code>Win + R</code> 输入 <code>control</code> → 进入 ​<strong>​用户账户​</strong>​ → ​<strong>​管理你的凭据</strong></p>
+<h2 id="定时任务">定时任务<a class="headerlink" href="#定时任务" title="Permanent link">&para;</a></h2>
+<h3 id="简单自启动">简单自启动<a class="headerlink" href="#简单自启动" title="Permanent link">&para;</a></h3>
+<p><strong>操作步骤：</strong></p>
+<ol>
+<li>找到您想要自启动的 <code>.exe</code> 文件，右键点击它，然后选择 <strong>创建快捷方式</strong>。</li>
+<li>按下键盘上的 <code>Win</code> + <code>R</code> 键，打开“运行”对话框。</li>
+<li>输入 <code>shell:startup</code> 并按回车。 这会打开当前用户的“启动”文件夹。</li>
+<li>将第一步创建的程序快捷方式复制或剪切到这个刚刚打开的“启动”文件夹中。</li>
+<li>下次您登录此用户账户时，该程序就会自动运行。</li>
+</ol>
+<p><strong>提示：</strong></p>
+<ul>
+<li><code>shell:startup</code> 对应的是当前用户的启动项。</li>
+<li>如果要为计算机上的所有用户设置自启动，可以在“运行”对话框中输入 <code>shell:common startup</code>。</li>
+</ul>
+<h3 id="sc-命令">sc 命令<a class="headerlink" href="#sc-命令" title="Permanent link">&para;</a></h3>
+<p>SC 是用来与服务控制管理器和服务进行通信的命令行程序</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>C:\Users\yfy&gt;sc create
+</span><span id="__span-28-2"><a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a>描述:
+</span><span id="__span-28-3"><a id="__codelineno-28-3" name="__codelineno-28-3" href="#__codelineno-28-3"></a>        在注册表和服务数据库中创建服务项。
+</span><span id="__span-28-4"><a id="__codelineno-28-4" name="__codelineno-28-4" href="#__codelineno-28-4"></a>用法:
+</span><span id="__span-28-5"><a id="__codelineno-28-5" name="__codelineno-28-5" href="#__codelineno-28-5"></a>        sc &lt;server&gt; create [service name] [binPath= ] &lt;option1&gt; &lt;option2&gt;...
+</span><span id="__span-28-6"><a id="__codelineno-28-6" name="__codelineno-28-6" href="#__codelineno-28-6"></a>
+</span><span id="__span-28-7"><a id="__codelineno-28-7" name="__codelineno-28-7" href="#__codelineno-28-7"></a>选项:
+</span><span id="__span-28-8"><a id="__codelineno-28-8" name="__codelineno-28-8" href="#__codelineno-28-8"></a>注意: 选项名称包括等号。
+</span><span id="__span-28-9"><a id="__codelineno-28-9" name="__codelineno-28-9" href="#__codelineno-28-9"></a>      等号和值之间需要一个空格。
+</span><span id="__span-28-10"><a id="__codelineno-28-10" name="__codelineno-28-10" href="#__codelineno-28-10"></a> type= &lt;own|share|interact|kernel|filesys|rec|userown|usershare&gt;
+</span><span id="__span-28-11"><a id="__codelineno-28-11" name="__codelineno-28-11" href="#__codelineno-28-11"></a>       (默认 = own)
+</span><span id="__span-28-12"><a id="__codelineno-28-12" name="__codelineno-28-12" href="#__codelineno-28-12"></a> start= &lt;boot|system|auto|demand|disabled|delayed-auto&gt;
+</span><span id="__span-28-13"><a id="__codelineno-28-13" name="__codelineno-28-13" href="#__codelineno-28-13"></a>       (默认 = demand)
+</span><span id="__span-28-14"><a id="__codelineno-28-14" name="__codelineno-28-14" href="#__codelineno-28-14"></a> error= &lt;normal|severe|critical|ignore&gt;
+</span><span id="__span-28-15"><a id="__codelineno-28-15" name="__codelineno-28-15" href="#__codelineno-28-15"></a>       (默认 = normal)
+</span><span id="__span-28-16"><a id="__codelineno-28-16" name="__codelineno-28-16" href="#__codelineno-28-16"></a> binPath= &lt;.exe 文件的 BinaryPathName&gt;
+</span><span id="__span-28-17"><a id="__codelineno-28-17" name="__codelineno-28-17" href="#__codelineno-28-17"></a> group= &lt;LoadOrderGroup&gt;
+</span><span id="__span-28-18"><a id="__codelineno-28-18" name="__codelineno-28-18" href="#__codelineno-28-18"></a> tag= &lt;yes|no&gt;
+</span><span id="__span-28-19"><a id="__codelineno-28-19" name="__codelineno-28-19" href="#__codelineno-28-19"></a> depend= &lt;依存关系(以 / (斜杠)分隔)&gt;
+</span><span id="__span-28-20"><a id="__codelineno-28-20" name="__codelineno-28-20" href="#__codelineno-28-20"></a> obj= &lt;AccountName|ObjectName&gt;
+</span><span id="__span-28-21"><a id="__codelineno-28-21" name="__codelineno-28-21" href="#__codelineno-28-21"></a>       (默认= LocalSystem)
+</span><span id="__span-28-22"><a id="__codelineno-28-22" name="__codelineno-28-22" href="#__codelineno-28-22"></a> DisplayName= &lt;显示名称&gt;
+</span><span id="__span-28-23"><a id="__codelineno-28-23" name="__codelineno-28-23" href="#__codelineno-28-23"></a> password= &lt;密码&gt;
+</span></code></pre></div>
+<p>不知道怎么添加命令行参数</p>
+<p>貌似 binPath 可以包含参数，没试过</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>sc create redis binpath= &quot;&quot;C:\Software\server\Redis\redis-server.exe&quot; --service-run &quot;rdis.windows-service.conf&quot;&quot; start= auto
+</span><span id="__span-29-2"><a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a>
+</span><span id="__span-29-3"><a id="__codelineno-29-3" name="__codelineno-29-3" href="#__codelineno-29-3"></a>作者：LAMYMAY
+</span><span id="__span-29-4"><a id="__codelineno-29-4" name="__codelineno-29-4" href="#__codelineno-29-4"></a>链接：https://www.jianshu.com/p/73d8dd70f918
+</span><span id="__span-29-5"><a id="__codelineno-29-5" name="__codelineno-29-5" href="#__codelineno-29-5"></a>来源：简书
+</span><span id="__span-29-6"><a id="__codelineno-29-6" name="__codelineno-29-6" href="#__codelineno-29-6"></a>著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+</span></code></pre></div>
+<h3 id="小工具-nssm">小工具 nssm<a class="headerlink" href="#小工具-nssm" title="Permanent link">&para;</a></h3>
+<p><a href="https://nssm.cc/">NSSM - the Non-Sucking Service Manager</a></p>
+<p>nssm install 显示添加服务的 GUI 界面</p>
+<p><img alt="" src="https://imagebed.yfycloud.site/2025/12/364ced1e4fa55f971170a534b77c9ec2.png" /></p>
+<h2 id="windows-小问题">windows 小问题<a class="headerlink" href="#windows-小问题" title="Permanent link">&para;</a></h2>
+<h3 id="中文输入法候选框消失">中文输入法候选框消失<a class="headerlink" href="#中文输入法候选框消失" title="Permanent link">&para;</a></h3>
+<p>实际问题居然是文件管理器。任务管理器中重启 Windows 资源管理器即可。</p>
+<h3 id="网络显示未连接实际有网">网络显示未连接实际有网<a class="headerlink" href="#网络显示未连接实际有网" title="Permanent link">&para;</a></h3>
+<p>测试以下两个域名 dns 解析是否正常</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>dns.msftncsi.com
+</span><span id="__span-30-2"><a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a>www.msftconnecttest.com
+</span></code></pre></div>
+<h3 id="删除文件管理器中的网盘">删除文件管理器中的网盘<a class="headerlink" href="#删除文件管理器中的网盘" title="Permanent link">&para;</a></h3>
+<p>new bing
+Q: 如何清除软件在 windows 文件管理器中注册的网盘
+A: 如果您想删除注册表中的网盘，请按照以下步骤操作：</p>
+<ol>
+<li>按下 Win+R 键打开运行窗口。</li>
+<li>输入 regedit 并按回车键打开注册表编辑器。</li>
+<li>在左侧导航栏中找到 HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\NetDrive。</li>
+<li>右键单击 NetDrive 并选择删除。</li>
+<li>关闭注册表编辑器。</li>
+</ol>
+<p>但是这里的路径不完全正确</p>
+<p>谷歌：删除注册表中的网盘
+得到许多类似问题</p>
+<p>在 regedit 中手动搜索 SeaDrive，可以找到位置，删除问题解决。</p>
+<h3 id="文件或目录损坏且无法读取">文件或目录损坏且无法读取<a class="headerlink" href="#文件或目录损坏且无法读取" title="Permanent link">&para;</a></h3>
+<p>qbittorent 移动种子时，我把进程强行杀掉了。导致磁盘上出现了文件夹无法删除的情况</p>
+<p>解决办法，扫描修复文件系统</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>chkdsk /f C:
+</span></code></pre></div>
+<h3 id="关闭历史记录">关闭历史记录<a class="headerlink" href="#关闭历史记录" title="Permanent link">&para;</a></h3>
+<h3 id="edge-hsts">edge HSTS<a class="headerlink" href="#edge-hsts" title="Permanent link">&para;</a></h3>
+<p>HSTS 是一种安全机制，强制浏览器使用 https 连接</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a>edge://net-internals/#hsts
+</span></code></pre></div>
+<p>Input a domain name to delete its dynamic HSTS policy. (<em>You cannot delete preloaded entries.</em>):</p>
+<h3 id="关闭休眠文件和-pagefile">关闭休眠文件和 pagefile<a class="headerlink" href="#关闭休眠文件和-pagefile" title="Permanent link">&para;</a></h3>
+<h3 id="总是不小心切换输入法">总是不小心切换输入法<a class="headerlink" href="#总是不小心切换输入法" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>设置 → 时间和语言 → 语言和区域</strong></li>
+<li>在「<strong>首选语言</strong>」里，找到 <strong>中文（简体，中国）</strong>
+    - 点右边 <strong>“…” → 语言选项</strong></li>
+<li>在「<strong>键盘</strong>」里：
+    - 只保留「微信输入法」</li>
+</ul>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+  
+
+
+
+      
+    </article>
+  </div>
+
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+        
+      
+      <nav class="md-footer__inner md-grid" aria-label="页脚" >
+        
+          
+          <a href="../../../../../%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/2022/12/04/2022-12-04-%E5%AE%89%E5%8D%93%E5%88%B7%E6%9C%BA%E5%B9%B6%E5%AE%89%E8%A3%85linux/" class="md-footer__link md-footer__link--prev" aria-label="上一页: 安卓刷机并安装 linux">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                上一页
+              </span>
+              <div class="md-ellipsis">
+                安卓刷机并安装 linux
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../2022-12-05-hexo%E4%BD%BF%E7%94%A8/" class="md-footer__link md-footer__link--next" aria-label="下一页: hexo 使用">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                下一页
+              </span>
+              <div class="md-ellipsis">
+                hexo 使用
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/TheRainstorm" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../../..", "features": ["navigation.instant", "navigation.instant.progress", "navigation.tracking", "navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.footer", "content.code.copy", "toc.follow", "toc.integrate"], "search": "../../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../../../../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

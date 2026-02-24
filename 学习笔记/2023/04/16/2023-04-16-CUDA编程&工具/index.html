@@ -1,0 +1,3110 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="记录一些关于数学、计算机的知识，以及一些日常。">
+      
+      
+      
+        <link rel="canonical" href="https://yfy.cqu.ai/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/2023/04/16/2023-04-16-CUDA%E7%BC%96%E7%A8%8B%26%E5%B7%A5%E5%85%B7/">
+      
+      
+        <link rel="prev" href="../2023-04-16-CUDA%E6%9E%B6%E6%9E%84/">
+      
+      
+        <link rel="next" href="../2023-04-16-CUDA%E4%BC%98%E5%8C%96/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.3">
+    
+    
+      
+        <title>CUDA 编程&工具 - Rain 的随笔</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#参考资料" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../../../../.." title="Rain 的随笔" class="md-header__button md-logo" aria-label="Rain 的随笔" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Rain 的随笔
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              CUDA 编程&工具
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    
+  
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="../../../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  博客
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../about/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  关于
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../tags/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  标签
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../series/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  系列
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../tools/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  工具
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../archive/2026/" class="md-tabs__link">
+          
+  
+  
+  归档
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../category/%E4%B8%AA%E4%BA%BA/" class="md-tabs__link">
+          
+  
+  
+  分类
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" hidden>
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../../.." title="Rain 的随笔" class="md-nav__button md-logo" aria-label="Rain 的随笔" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Rain 的随笔
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+    
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      <a href="../../../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    博客
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    关于
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../tags/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    标签
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../series/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    系列
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../tools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    工具
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    归档
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    归档
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2026/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2026
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2025/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2025
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2024/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2024
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2023/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2023
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2022/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2022
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2021/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2021
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2020/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2020
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2019/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2019
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    分类
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    分类
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E4%B8%AA%E4%BA%BA/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    个人
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E5%8D%9A%E5%AE%A2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    博客
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E5%8D%9A%E5%AE%A2--%E7%BD%91%E7%BB%9C/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    博客 &amp; 网络
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    学习笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    折腾记录
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    课程笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%85%B7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    软件工具
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E9%98%85%E8%AF%BB/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    阅读
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+  <div class="md-content md-content--post" data-md-component="content">
+    <div class="md-sidebar md-sidebar--post" data-md-component="sidebar" data-md-type="navigation">
+      <div class="md-sidebar__scrollwrap">
+        <div class="md-sidebar__inner md-post">
+          <nav class="md-nav md-nav--primary">
+            <div class="md-post__back">
+              <div class="md-nav__title md-nav__container">
+                <a href="../../../../.." class="md-nav__link">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+                  <span class="md-ellipsis">
+                    回到主页
+                  </span>
+                </a>
+              </div>
+            </div>
+            
+            <ul class="md-post__meta md-nav__list">
+              <li class="md-nav__item md-nav__item--section">
+                <div class="md-post__title">
+                  <span class="md-ellipsis">
+                    元数据
+                  </span>
+                </div>
+                <nav class="md-nav">
+                  <ul class="md-nav__list">
+                    <li class="md-nav__item">
+                      <div class="md-nav__link">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 19H5V8h14m-3-7v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1V1m-1 11h-5v5h5z"/></svg>
+                        <time datetime="2023-04-16 16:13:00+00:00" class="md-ellipsis">2023年4月16日</time>
+                      </div>
+                    </li>
+                    
+                    
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 3v15h3V3zm3 2 4 13 3-1-4-13zM5 5v13h3V5zM3 19v2h18v-2z"/></svg>
+                          <span class="md-ellipsis">
+                            分类于
+                            
+                              <a href="../../../../../category/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a></span>
+                        </div>
+                      </li>
+                    
+                    
+                      
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20a8 8 0 0 0 8-8 8 8 0 0 0-8-8 8 8 0 0 0-8 8 8 8 0 0 0 8 8m0-18a10 10 0 0 1 10 10 10 10 0 0 1-10 10C6.47 22 2 17.5 2 12A10 10 0 0 1 12 2m.5 5v5.25l4.5 2.67-.75 1.23L11 13V7z"/></svg>
+                          <span class="md-ellipsis">
+                            
+                              需要 28 分钟阅读时间
+                            
+                          </span>
+                        </div>
+                      </li>
+                    
+                  </ul>
+                </nav>
+              </li>
+            </ul>
+            
+          </nav>
+          
+            
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#参考资料" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        参考资料
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#docker-cuda" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        docker cuda
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="docker cuda">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-官方镜像为何无需安装驱动" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 官方镜像为何无需安装驱动？
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cuda-安装" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CUDA 安装
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="CUDA 安装">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#有用链接" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        有用链接
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cuda-和-driver-兼容性" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        cuda 和 driver 兼容性
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#不同-metapackage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        不同 metapackage
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="不同 metapackage">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#gpu-driver" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        gpu driver
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cuda-toolkit-nvcc-etc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        cuda toolkit (nvcc etc)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3种方式" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3种方式
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3种方式">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#nvidia-apt-源" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        nvidia apt 源
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#离线版-deb" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        离线版 deb
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#runfile" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        runfile
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#snode5-invalid-device-ordinal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        snode5 invalid device ordinal
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#安装不同发行版-deb" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        安装不同发行版 deb
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="安装不同发行版 deb">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#keyring-报错" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        keyring 报错
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gcc-版本不支持" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        gcc 版本不支持
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#安装后影响其它包" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        安装后影响其它包？
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#不同版本冲突性" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        不同版本冲突性
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#卸载" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        卸载
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#环境变量选择版本" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        环境变量选择版本
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#实例" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        实例
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nvcc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        NVCC
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="NVCC">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#是否需要-cu-文件" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        是否需要 cu 文件
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#两阶段编译" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        两阶段编译
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#jit-机制" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        JIT 机制
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fatbinaries" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        fatbinaries
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        example
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="example">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#jit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        JIT
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#省略-gpu-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        省略 gpu-code
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#--generate-code-指定多种组合" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        --generate-code 指定多种组合
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#查看编译结果包含哪些版本" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        查看编译结果包含哪些版本
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nvcc-选项" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        nvcc 选项
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="nvcc 选项">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#环境变量" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        环境变量
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#编译选项" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        编译选项
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cuda-编程" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cuda 编程
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Cuda 编程">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#多-device-系统" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        多 device 系统
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="多 device 系统">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#为什么-__device__-函数不需要-" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        为什么 __device__ 函数不需要 &lt;&lt;&lt;...&gt;&gt;&gt;
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#统一内存模型" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        统一内存模型
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#同步" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        同步
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cublas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        cuBLAS
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#工具" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        工具
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="工具">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#nvprof" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        nvprof
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="nvprof">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#visual-profilernvvp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Visual Profiler/nvvp
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Visual Profiler/nvvp">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#java-版本" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        java 版本
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ioexception-locking-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        IOException: locking file
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pc-sample-view" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PC sample View
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#memory-统计" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        memory 统计
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#source-disassembly" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        source-disassembly
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#warp-statestall原因" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Warp state/stall原因
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nvprof_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        nvprof
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nsight-compute" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Nsight Compute
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Nsight Compute">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ncu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ncu
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="ncu">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#metric" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        metric
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#问题" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        问题
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="问题">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#profiling-is-not-supported-on-this-device" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Profiling is not supported on this device
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#无权限使用-metric" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        无权限使用 metric
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#调试工具" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        调试工具
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="调试工具">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cuda-memck" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        cuda-memck
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cuda-gdb-调试" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        cuda-gdb 调试
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nvbit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        NVbit
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="NVbit">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#warp-level-指令" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        warp-level 指令
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cuda-sdk" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        cuda SDK
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+          
+        </div>
+      </div>
+    </div>
+    <article class="md-content__inner md-typeset">
+      
+        
+  
+
+
+  <nav class="md-tags" >
+    
+      
+      
+      
+      
+        <a href="../../../../../tags/#tag:cuda" class="md-tag">cuda</a>
+      
+    
+  </nav>
+
+
+
+<h2 id="参考资料">参考资料<a class="headerlink" href="#参考资料" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="https://cuda-tutorial.readthedocs.io/en/latest/tutorials/tutorial01/">Tutorial 01: Say Hello to CUDA - CUDA Tutorial (cuda-tutorial.readthedocs.io)</a></li>
+<li><a href="https://hpc.pku.edu.cn/download_2_cuda.html">北京大学高性能计算平台 (pku.edu.cn)</a></li>
+</ul>
+<h2 id="docker-cuda">docker cuda<a class="headerlink" href="#docker-cuda" title="Permanent link">&para;</a></h2>
+<p><a href="https://github.com/NVIDIA/nvidia-docker/issues/1268">What's the difference between the lastest nvidia-docker and nvidia container runtime？ · Issue #1268 · NVIDIA/nvidia-docker</a></p>
+<p><strong>问题描述</strong>：<br />
+在 Docker 中使用 GPU 时遇到驱动版本冲突问题，具体表现如下：</p>
+<ol>
+<li><strong>官方镜像正常工作</strong>：<br />
+    使用 <code>nvcr.io/nvidia/cuda:12.8.0-base-ubuntu22.04</code> + <code>--gpus all</code> 时，<code>nvidia-smi</code> 能正确显示 CUDA 版本，PyTorch 可调用 GPU。</li>
+<li><strong>自定义镜像异常</strong>：<br />
+    基于 <code>ubuntu:22.04</code> 自建镜像时，<code>nvidia-smi</code> 显示 CUDA 版本为 <code>N/A</code>，PyTorch 报错 <code>No GPU driver found</code>。若在镜像内手动安装驱动，则出现 <code>NVML driver/library version mismatch</code>（宿主机驱动版本与容器内不一致）。</li>
+<li><strong>疑问</strong>：
+    - 为何 NVIDIA 官方镜像无需安装驱动（<code>apt list</code> 无 <code>nvidia-driver</code>）却能工作？
+    - 如何解决自定义镜像的驱动版本冲突？强制对齐宿主机和容器内驱动的小版本难度大，是否有通用方案？</li>
+</ol>
+<h4 id="1-官方镜像为何无需安装驱动"><strong>1. 官方镜像为何无需安装驱动？</strong><a class="headerlink" href="#1-官方镜像为何无需安装驱动" title="Permanent link">&para;</a></h4>
+<p>NVIDIA 官方镜像（如 <code>nvcr.io/nvidia/cuda</code>）通过 <strong>NVIDIA Container Toolkit</strong> 实现 GPU 透传，其核心机制为：</p>
+<ul>
+<li><strong>挂载宿主机驱动库</strong>：容器启动时，自动挂载宿主机侧的 NVIDIA 驱动库（如 <code>libcuda.so</code>、<code>libnvidia-ptxjitcompiler.so</code>）到容器内的 <code>/usr/local/nvidia/lib64</code>。</li>
+<li><strong>环境变量配置</strong>：镜像内已设置 <code>LD_LIBRARY_PATH</code>，优先加载挂载的宿主机驱动库，而非容器内自带的库。</li>
+</ul>
+<p>查看 nvidia/cuda 镜像的 layer：<a href="https://hub.docker.com/layers/nvidia/cuda/12.8.0-cudnn-devel-ubuntu22.04/images/sha256-2a015be069bda4de48d677b6e3f271a2794560c7d788a39a18ecf218cae0751d">Image Layer Details - nvidia/cuda:12.8.0-cudnn-devel-ubuntu22.04 | Docker Hub</a></p>
+<p>其中确实大量设置了</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>/usr/local/nvidia/lib64
+</span></code></pre></div>
+<p>然后容器内该目录却并不存在。不过通过 locate libcuda.so 发现确实和自己的镜像不同</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>➜  ~ dpkg -S /usr/lib/x86_64-linux-gnu/libcuda.so.535.183.01
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>libnvidia-compute-535:amd64: /usr/lib/x86_64-linux-gnu/libcuda.so.535.183.01
+</span></code></pre></div>
+<h2 id="cuda-安装">CUDA 安装<a class="headerlink" href="#cuda-安装" title="Permanent link">&para;</a></h2>
+<p>总结：</p>
+<ul>
+<li><strong>最简单方式是看 cuda 下载页面提供的安装命令</strong></li>
+<li>deb 安装貌似无法只安装 cuda，不安装驱动</li>
+<li>runfile 安装可以做到不重启</li>
+<li>cuda-toolkit-12-1 包含 cuda</li>
+<li>nvidia-driver-530 包含驱动</li>
+</ul>
+<!-- more -->
+
+<h3 id="有用链接">有用链接<a class="headerlink" href="#有用链接" title="Permanent link">&para;</a></h3>
+<ul>
+<li>官方文档：<a href="https://docs.nvidia.com/cuda/cuda-installation-guide-linux/">cuda-installation-guide-linux 12.1 documentation (nvidia.com)</a></li>
+</ul>
+<p>cuda 下载</p>
+<ul>
+<li>最新版：<a href="https://developer.nvidia.com/cuda-downloads?target_os=Linux&amp;target_arch=x86_64&amp;Distribution=Ubuntu&amp;target_version=20.04">CUDA Toolkit 12.1 Downloads | NVIDIA Developer</a></li>
+<li>历史版：<a href="https://developer.nvidia.com/cuda-toolkit-archive">CUDA Toolkit Archive | NVIDIA Developer</a></li>
+</ul>
+<h3 id="cuda-和-driver-兼容性">cuda 和 driver 兼容性<a class="headerlink" href="#cuda-和-driver-兼容性" title="Permanent link">&para;</a></h3>
+<p>运行 cuda 程序，需要</p>
+<ul>
+<li>和 cuda 版本兼容的用户和内核驱动（每个 cuda 版本有个最低驱动版本）</li>
+<li>如果是动态链接的，系统需要有 cuda 版本对应的库</li>
+</ul>
+<p><img alt="image.png" src="https://imagebed.yfycloud.site/2025/12/ecb9bba8710209714137678a7fca9d4d.png" /></p>
+<p><a href="https://docs.nvidia.com/deploy/cuda-compatibility/">1. Why CUDA Compatibility — CUDA Compatibility r555 documentation</a></p>
+<p>10.x 之前，每次更新到一个小版本，都需要更新驱动。11.0 后有了小版本兼容性，因此老的驱动可以跑新的 cuda。cuda 11.0 要求最低 &gt;= 450.80.02*</p>
+<p>CUDA applications typically statically include all the libraries (for example cudart, CUDA math libraries such as cuBLAS, cuFFT) they need, so they should work on new drivers or CUDA Toolkit installations.</p>
+<p>难怪 ldd cuda 程序看不到 cudart。</p>
+<h3 id="不同-metapackage">不同 metapackage<a class="headerlink" href="#不同-metapackage" title="Permanent link">&para;</a></h3>
+<h4 id="gpu-driver">gpu driver<a class="headerlink" href="#gpu-driver" title="Permanent link">&para;</a></h4>
+<ul>
+<li>nvidia-<strong>driver</strong>-550-server<ul>
+<li>和 headless 貌似冲突，只能安装其一</li>
+</ul>
+</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>nvidia-driver-535
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>nvidia-driver-535-open
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>nvidia-driver-535-server
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>nvidia-driver-535-server-open
+</span></code></pre></div>
+<ul>
+<li><code>-open</code> 版本包含开源的内核模块，而非 <code>-open</code> 版本是闭源的。</li>
+<li><code>-server</code> 版本针对服务器和计算负载进行了优化，而非 <code>-server</code> 版本主要面向桌面和工作站使用。</li>
+</ul>
+<p>其它的元包大部分除了 driver 都会安装其它库</p>
+<ul>
+<li>nvidia-<strong>headless</strong>-550 (server, open)<ul>
+<li>This metapackage installs the NVIDIA driver and the libraries that enable parallel general purpose computation through CUDA and OpenCL.</li>
+<li>不能运行图形程序：openGL, vulkan</li>
+</ul>
+</li>
+<li>nvidia-<strong>dkms</strong>-550-server<ul>
+<li>This package builds the NVIDIA kernel module needed by the userspace driver, using DKMS. Provided that you have the kernel header packages installed, the kernel module will be built for your running kernel, and automatically rebuilt for any new kernel headers that are installed.</li>
+</ul>
+</li>
+<li>nvidia-headless-no-dkms-550<ul>
+<li>This metapackage installs the NVIDIA <strong>driver</strong> <strong>and</strong> the libraries that enable parallel general purpose computation through CUDA and OpenCL. DKMS will not be installed, and, therefore, the kernel module will not be built. . Install this package if you do not need X11 or Wayland support, which is provided by the nvidia-driver-535 metapackage.</li>
+<li>在内核更新后，DKMS 可以自动重新构建驱动模块，以确保与新内核兼容</li>
+</ul>
+</li>
+</ul>
+<h4 id="cuda-toolkit-nvcc-etc">cuda toolkit (nvcc etc)<a class="headerlink" href="#cuda-toolkit-nvcc-etc" title="Permanent link">&para;</a></h4>
+<p>cuda-toolkit-11-8</p>
+<ul>
+<li>Meta-package containing all the available toolkit packages related to native CUDA development. Contains the toolkit, samples, and documentation. Locked at CUDA Toolkit version 11.8.
+cuda-11-8</li>
+<li>Meta-package containing all the available packages required for native CUDA development. Contains the <strong>toolkit</strong>, samples, <strong>driver</strong> and documentation. Locked at CUDA Toolkit version 11.8.</li>
+</ul>
+<h3 id="3种方式">3种方式<a class="headerlink" href="#3种方式" title="Permanent link">&para;</a></h3>
+<ul>
+<li>发行版源自带的<ul>
+<li>只包含 nvidia-driver，<strong>不包含 cuda toolkit</strong></li>
+</ul>
+</li>
+<li>rpm/deb packages<ul>
+<li>离线版 deb 文件</li>
+<li>在线版 nvidia 源</li>
+</ul>
+</li>
+<li>runfile package<ul>
+<li>和发行版无关 (distribution-independent package)</li>
+</ul>
+</li>
+</ul>
+<h4 id="nvidia-apt-源">nvidia apt 源<a class="headerlink" href="#nvidia-apt-源" title="Permanent link">&para;</a></h4>
+<p>包含所有版本 cuda，driver。其中 driver 可能比发行版源中的 driver 优先级更高</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>sudo add-apt-repository &quot;deb https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/ /&quot;
+</span></code></pre></div>
+<h4 id="离线版-deb">离线版 deb<a class="headerlink" href="#离线版-deb" title="Permanent link">&para;</a></h4>
+<p>使用方法</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>sudo dpkg -i cuda-repo-xxx.deb
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>sudo cp /var/cuda-repo-xxx/cuda-*-keyring.gpg /usr/share/keyrings/
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>sudo apt update
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>sudo apt install cuda-toolkit-xxx
+</span></code></pre></div>
+<p>查看离线方法安装的 cuda 版本</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>~ dpkg --list |grep cuda-repo
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>ii  cuda-repo-ubuntu2004-11-8-local                             11.8.0-520.61.05-1                                             amd64        cuda repository configuration files
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>ii  cuda-repo-ubuntu2004-12-1-local                             12.1.0-530.30.02-1                                             amd64        cuda repository configuration files
+</span></code></pre></div>
+<p>可以看到cuda-repo 包含一个 apt list 文件</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>~ dkpg -L cuda-repo-ubuntu2004-11-8-local
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>/etc/apt/sources.list.d/cuda-ubuntu2004-11-8-local.list
+</span></code></pre></div>
+<p>内容为</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>fyyuan@snode6 ➜  ~ cat /etc/apt/sources.list.d/cuda-ubuntu2004-11-8-local.list
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>deb [signed-by=/usr/share/keyrings/cuda-368EAC11-keyring.gpg] file:///var/cuda-repo-ubuntu2004-11-8-local /
+</span></code></pre></div>
+<p>安装 deb 后，是添加了一个 repo。还需要再手动 install cuda。
+<strong>不知为何安装 cuda 时一定会自动更新 driver，而使用 runfile 方式，则可以选择不安装驱动。</strong></p>
+<ul>
+<li>问题在于 cuda 是最大的一个 metapackage，安装 cuda-toolkit-xx 就好了</li>
+</ul>
+<ul>
+<li>cuda-toolkit-12-1</li>
+<li>nvidia-driver-530</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>fyyuan@snode6 ➜  archive sudo apt install cuda --no-install-recommends
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>Reading package lists... Done
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>Building dependency tree
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>Reading state information... Done
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>Recommended packages:
+</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>  libnvidia-compute-530:i386 libnvidia-decode-530:i386 libnvidia-encode-530:i386 libnvidia-fbc1-530:i386 libnvidia-gl-530:i386
+</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a>
+</span><span id="__span-8-9"><a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a>The following packages will be REMOVED:
+</span><span id="__span-8-10"><a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a>  cuda-drivers-495 libnvidia-cfg1-495 libnvidia-compute-495 libnvidia-decode-495 libnvidia-encode-495 libnvidia-extra-495 libnvidia-fbc1-495 libnvidia-gl-495 nvidia-compute-utils-495 nvidia-dkms-495 nvidia-driver-495 nvidia-kernel-common-495 nvidia-kernel-source-495
+</span><span id="__span-8-11"><a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a>  nvidia-utils-495 xserver-xorg-video-nvidia-495
+</span><span id="__span-8-12"><a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a>
+</span><span id="__span-8-13"><a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a>The following NEW packages will be installed:
+</span><span id="__span-8-14"><a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a>  cuda-12-1 cuda-cccl-12-1 cuda-command-line-tools-12-1 cuda-compiler-12-1 cuda-cudart-12-1 cuda-cudart-dev-12-1 cuda-cuobjdump-12-1 cuda-cupti-12-1 cuda-cupti-dev-12-1 cuda-cuxxfilt-12-1 cuda-demo-suite-12-1 cuda-documentation-12-1 cuda-driver-dev-12-1 cuda-drivers-530
+</span><span id="__span-8-15"><a id="__codelineno-8-15" name="__codelineno-8-15" href="#__codelineno-8-15"></a>  cuda-gdb-12-1 cuda-libraries-12-1 cuda-libraries-dev-12-1 cuda-nsight-12-1 cuda-nsight-compute-12-1 cuda-nsight-systems-12-1 cuda-nvcc-12-1 cuda-nvdisasm-12-1 cuda-nvml-dev-12-1 cuda-nvprof-12-1 cuda-nvprune-12-1 cuda-nvrtc-12-1 cuda-nvrtc-dev-12-1 cuda-nvtx-12-1 cuda-nvvp-12-1
+</span><span id="__span-8-16"><a id="__codelineno-8-16" name="__codelineno-8-16" href="#__codelineno-8-16"></a>  cuda-opencl-12-1 cuda-opencl-dev-12-1 cuda-profiler-api-12-1 cuda-runtime-12-1 cuda-sanitizer-12-1 **cuda-toolkit-12-1** cuda-toolkit-12-1-config-common cuda-toolkit-12-config-common cuda-tools-12-1 cuda-visual-tools-12-1 gds-tools-12-1 libcublas-12-1 libcublas-dev-12-1
+</span><span id="__span-8-17"><a id="__codelineno-8-17" name="__codelineno-8-17" href="#__codelineno-8-17"></a>  libcufft-12-1 libcufft-dev-12-1 libcufile-12-1 libcufile-dev-12-1 libcurand-12-1 libcurand-dev-12-1 libcusolver-12-1 libcusolver-dev-12-1 libcusparse-12-1 libcusparse-dev-12-1 libnpp-12-1 libnpp-dev-12-1 libnvidia-cfg1-530 libnvidia-common-530 libnvidia-compute-530
+</span><span id="__span-8-18"><a id="__codelineno-8-18" name="__codelineno-8-18" href="#__codelineno-8-18"></a>  libnvidia-decode-530 libnvidia-encode-530 libnvidia-extra-530 libnvidia-fbc1-530 libnvidia-gl-530 libnvjitlink-12-1 libnvjitlink-dev-12-1 libnvjpeg-12-1 libnvjpeg-dev-12-1 libnvvm-samples-12-1 nsight-compute-2023.1.0 nsight-systems-2023.1.2 nvidia-compute-utils-530
+</span><span id="__span-8-19"><a id="__codelineno-8-19" name="__codelineno-8-19" href="#__codelineno-8-19"></a>  nvidia-dkms-530 **nvidia-driver-530** nvidia-kernel-common-530 nvidia-kernel-source-530 nvidia-utils-530 xserver-xorg-video-nvidia-530
+</span><span id="__span-8-20"><a id="__codelineno-8-20" name="__codelineno-8-20" href="#__codelineno-8-20"></a>The following packages will be upgraded:
+</span><span id="__span-8-21"><a id="__codelineno-8-21" name="__codelineno-8-21" href="#__codelineno-8-21"></a>  cuda cuda-drivers nvidia-modprobe nvidia-settings
+</span><span id="__span-8-22"><a id="__codelineno-8-22" name="__codelineno-8-22" href="#__codelineno-8-22"></a>4 upgraded, 76 newly installed, 15 to remove and 21 not upgraded.
+</span><span id="__span-8-23"><a id="__codelineno-8-23" name="__codelineno-8-23" href="#__codelineno-8-23"></a>Need to get 0 B/3,012 MB of archives.
+</span><span id="__span-8-24"><a id="__codelineno-8-24" name="__codelineno-8-24" href="#__codelineno-8-24"></a>After this operation, 7,064 MB of additional disk space will be used.
+</span><span id="__span-8-25"><a id="__codelineno-8-25" name="__codelineno-8-25" href="#__codelineno-8-25"></a>Do you want to continue? [Y/n]
+</span></code></pre></div>
+<h4 id="runfile">runfile<a class="headerlink" href="#runfile" title="Permanent link">&para;</a></h4>
+<p>不建议使用，否则会和 apt 方法冲突。且没有了 apt 的管理方式。</p>
+<h3 id="snode5-invalid-device-ordinal">snode5 invalid device ordinal<a class="headerlink" href="#snode5-invalid-device-ordinal" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>(base) fyyuan@snode5 ➜  cuda-samples-11.0 git:(main) ✗ bin/x86_64/linux/release/bandwidthTest
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>[CUDA Bandwidth Test] - Starting...
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>Running on...
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>cudaGetDeviceProperties returned 101
+</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>-&gt; invalid device ordinal
+</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>CUDA error at bandwidthTest.cu:256 code=101(cudaErrorInvalidDevice) &quot;cudaSetDevice(currentDevice)&quot;
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>(base) fyyuan@snode5 ➜  ~ sudo apt list --installed|grep nvidia
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>WARNING: apt does not have a stable CLI interface. Use with caution in scripts.
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>libnvidia-cfg1-470/now 470.182.03-0ubuntu0.20.04.1 amd64 [installed,upgradable to: 470.256.02-0ubuntu0.20.04.1]
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>libnvidia-common-470/now 470.182.03-0ubuntu0.20.04.1 all [installed,upgradable to: 470.256.02-0ubuntu0.20.04.1]
+</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a>libnvidia-compute-470/now 470.182.03-0ubuntu0.20.04.1 amd64 [installed,upgradable to: 470.256.02-0ubuntu0.20.04.1]
+</span><span id="__span-10-8"><a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a>libnvidia-container-tools/now 1.13.0-1 amd64 [installed,local]
+</span><span id="__span-10-9"><a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a>libnvidia-container1/now 1.13.0-1 amd64 [installed,local]
+</span><span id="__span-10-10"><a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a>libnvidia-decode-470/now 470.182.03-0ubuntu0.20.04.1 amd64 [installed,upgradable to: 470.256.02-0ubuntu0.20.04.1]
+</span><span id="__span-10-11"><a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a>libnvidia-encode-470/now 470.182.03-0ubuntu0.20.04.1 amd64 [installed,upgradable to: 470.256.02-0ubuntu0.20.04.1]
+</span><span id="__span-10-12"><a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a>libnvidia-extra-470/now 470.182.03-0ubuntu0.20.04.1 amd64 [installed,upgradable to: 470.256.02-0ubuntu0.20.04.1]
+</span><span id="__span-10-13"><a id="__codelineno-10-13" name="__codelineno-10-13" href="#__codelineno-10-13"></a>libnvidia-fbc1-470/now 470.182.03-0ubuntu0.20.04.1 amd64 [installed,upgradable to: 470.256.02-0ubuntu0.20.04.1]
+</span><span id="__span-10-14"><a id="__codelineno-10-14" name="__codelineno-10-14" href="#__codelineno-10-14"></a>libnvidia-gl-470/now 470.182.03-0ubuntu0.20.04.1 amd64 [installed,upgradable to: 470.256.02-0ubuntu0.20.04.1]
+</span><span id="__span-10-15"><a id="__codelineno-10-15" name="__codelineno-10-15" href="#__codelineno-10-15"></a>libnvidia-ifr1-470/now 470.182.03-0ubuntu0.20.04.1 amd64 [installed,upgradable to: 470.256.02-0ubuntu0.20.04.1]
+</span><span id="__span-10-16"><a id="__codelineno-10-16" name="__codelineno-10-16" href="#__codelineno-10-16"></a>libnvidia-ml-dev/focal,now 10.1.243-3 amd64 [installed]
+</span><span id="__span-10-17"><a id="__codelineno-10-17" name="__codelineno-10-17" href="#__codelineno-10-17"></a>nvidia-compute-utils-470/now 470.182.03-0ubuntu0.20.04.1 amd64 [installed,upgradable to: 470.256.02-0ubuntu0.20.04.1]
+</span><span id="__span-10-18"><a id="__codelineno-10-18" name="__codelineno-10-18" href="#__codelineno-10-18"></a>nvidia-container-runtime/now 3.13.0-1 all [installed,local]
+</span><span id="__span-10-19"><a id="__codelineno-10-19" name="__codelineno-10-19" href="#__codelineno-10-19"></a>nvidia-container-toolkit-base/now 1.13.0-1 amd64 [installed,local]
+</span><span id="__span-10-20"><a id="__codelineno-10-20" name="__codelineno-10-20" href="#__codelineno-10-20"></a>nvidia-container-toolkit/now 1.13.0-1 amd64 [installed,local]
+</span><span id="__span-10-21"><a id="__codelineno-10-21" name="__codelineno-10-21" href="#__codelineno-10-21"></a>nvidia-dkms-470/now 470.182.03-0ubuntu0.20.04.1 amd64 [installed,upgradable to: 470.256.02-0ubuntu0.20.04.1]
+</span><span id="__span-10-22"><a id="__codelineno-10-22" name="__codelineno-10-22" href="#__codelineno-10-22"></a>nvidia-driver-470/now 470.182.03-0ubuntu0.20.04.1 amd64 [installed,upgradable to: 470.256.02-0ubuntu0.20.04.1]
+</span><span id="__span-10-23"><a id="__codelineno-10-23" name="__codelineno-10-23" href="#__codelineno-10-23"></a>nvidia-kernel-common-470/now 470.182.03-0ubuntu0.20.04.1 amd64 [installed,upgradable to: 470.256.02-0ubuntu0.20.04.1]
+</span><span id="__span-10-24"><a id="__codelineno-10-24" name="__codelineno-10-24" href="#__codelineno-10-24"></a>nvidia-kernel-source-470/now 470.182.03-0ubuntu0.20.04.1 amd64 [installed,upgradable to: 470.256.02-0ubuntu0.20.04.1]
+</span><span id="__span-10-25"><a id="__codelineno-10-25" name="__codelineno-10-25" href="#__codelineno-10-25"></a>nvidia-utils-470/now 470.182.03-0ubuntu0.20.04.1 amd64 [installed,upgradable to: 470.256.02-0ubuntu0.20.04.1]
+</span><span id="__span-10-26"><a id="__codelineno-10-26" name="__codelineno-10-26" href="#__codelineno-10-26"></a>xserver-xorg-video-nvidia-470/now 470.182.03-0ubuntu0.20.04.1 amd64 [installed,upgradable to: 470.256.02-0ubuntu0.20.04.1]
+</span></code></pre></div>
+<h3 id="安装不同发行版-deb">安装不同发行版 deb<a class="headerlink" href="#安装不同发行版-deb" title="Permanent link">&para;</a></h3>
+<p>cuda 11.0 只有 20.04 deb，机器是 22.04。</p>
+<h4 id="keyring-报错">keyring 报错<a class="headerlink" href="#keyring-报错" title="Permanent link">&para;</a></h4>
+<p>直接安装 deb 文件，会遇到 keyring 错误</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>W: GPG error: file:/var/cuda-repo-ubuntu2004-11-0-local  Release: The following signatures couldn&#39;t be verified because the public key is not available: NO_PUBKEY F60F4B3D7FA2AF80
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>E: The repository &#39;file:/var/cuda-repo-ubuntu2004-11-0-local  Release&#39; is not signed.
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>N: Updating from such a repository can&#39;t be done securely, and is therefore disabled by default.
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>N: See apt-secure(8) manpage for repository creation and user configuration details.
+</span></code></pre></div>
+<p>解决配置 apt.source 禁用安全检查 <code>man apt.secue</code></p>
+<blockquote>
+<p>A repository which previously was authenticated but would loose this state in an update operation raises an error in all APT clients irrespective of the option to allow or forbid usage of insecure repositories. The error can be overcome by additionally setting Acquire::AllowDowngradeToInsecureRepositories to true or for Individual repositories with the sources.list(5) option allow-downgrade-to-insecure=yes.</p>
+</blockquote>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>vim /etc/apt/sources.list.d/cuda-ubuntu2004-11-0-local.list
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>deb [ allow-insecure=yes ] file:///var/cuda-repo-ubuntu2004-11-0-local /
+</span></code></pre></div>
+<p>如果还是不行（我遇到了），还是需要添加 key
+使用 gpg 方式：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/7fa2af80.pub sudo gpg --dearmor -o /usr/share/keyrings/nvidia-cuda-keyring.gpg 7fa2af80.pub echo &quot;deb [signed-by=/usr/share/keyrings/nvidia-cuda-keyring.gpg] https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/ /&quot; | sudo tee /etc/apt/sources.list.d/cuda.list rm 7fa2af80.pub
+</span></code></pre></div>
+<h4 id="gcc-版本不支持">gcc 版本不支持<a class="headerlink" href="#gcc-版本不支持" title="Permanent link">&para;</a></h4>
+<p>衍生问题</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>/usr/local/cuda-11.0/bin/../targets/x86_64-linux/include/crt/host_config.h:139:2: error: #error -- unsupported GNU version! gcc versions later than 9 are not supported! The nvcc flag &#39;-allow-unsupported-compiler&#39; can be used to override this version check; however, using an unsupported host compiler may cause compilation failure or incorrect run time execution. Use at your own risk.
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>  139 | #error -- unsupported GNU version! gcc versions later than 9 are not supported! The nvcc flag &#39;-allow-unsupported-compiler&#39; can be used to override this version check; however, using an unsupported host compiler may cause compilation failure or incorrect run time execution. Use at your own risk.
+</span></code></pre></div>
+<p>解决，安装不同版本 gcc，并使用 update-alternative 切换</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>sudo apt install gcc-9 g++-9
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-9 9
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-9 9
+</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a>sudo update-alternatives --config gcc
+</span><span id="__span-15-5"><a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a>sudo update-alternatives --config g++
+</span><span id="__span-15-6"><a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a>gcc --version
+</span></code></pre></div>
+<h4 id="安装后影响其它包">安装后影响其它包？<a class="headerlink" href="#安装后影响其它包" title="Permanent link">&para;</a></h4>
+<p>正常 20.04 apt nvidia-container-toolkit</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>APT-Sources: https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64  Packages
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>Description: NVIDIA Container toolkit
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>apt show nvidia-container-toolkit
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>Package: nvidia-container-toolkit
+</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>Version: 1.14.0~rc.2-1
+</span><span id="__span-17-4"><a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a>Priority: optional
+</span><span id="__span-17-5"><a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a>Section: utils
+</span><span id="__span-17-6"><a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a>Maintainer: NVIDIA CORPORATION &lt;cudatools@nvidia.com&gt;
+</span><span id="__span-17-7"><a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a>Installed-Size: 2,445 kB
+</span><span id="__span-17-8"><a id="__codelineno-17-8" name="__codelineno-17-8" href="#__codelineno-17-8"></a>Depends: nvidia-container-toolkit-base (= 1.14.0~rc.2-1), libnvidia-container-tools (&gt;= 1.14.0~rc.2-1), libnvidia-container-tools (&lt;&lt; 2.0.0), libseccomp2
+</span><span id="__span-17-9"><a id="__codelineno-17-9" name="__codelineno-17-9" href="#__codelineno-17-9"></a>Breaks: nvidia-container-runtime (&lt;= 3.5.0-1), nvidia-container-runtime-hook
+</span><span id="__span-17-10"><a id="__codelineno-17-10" name="__codelineno-17-10" href="#__codelineno-17-10"></a>Replaces: nvidia-container-runtime (&lt;= 3.5.0-1), nvidia-container-runtime-hook
+</span><span id="__span-17-11"><a id="__codelineno-17-11" name="__codelineno-17-11" href="#__codelineno-17-11"></a>Homepage: https://github.com/NVIDIA/nvidia-container-toolkit
+</span><span id="__span-17-12"><a id="__codelineno-17-12" name="__codelineno-17-12" href="#__codelineno-17-12"></a>Download-Size: 859 kB
+</span><span id="__span-17-13"><a id="__codelineno-17-13" name="__codelineno-17-13" href="#__codelineno-17-13"></a>APT-Manual-Installed: yes
+</span><span id="__span-17-14"><a id="__codelineno-17-14" name="__codelineno-17-14" href="#__codelineno-17-14"></a>APT-Sources: https://nvidia.github.io/libnvidia-container/experimental/ubuntu18.04/amd64  Packages
+</span><span id="__span-17-15"><a id="__codelineno-17-15" name="__codelineno-17-15" href="#__codelineno-17-15"></a>Description: NVIDIA Container toolkit
+</span><span id="__span-17-16"><a id="__codelineno-17-16" name="__codelineno-17-16" href="#__codelineno-17-16"></a> Provides tools and utilities to enable GPU support in containers.
+</span><span id="__span-17-17"><a id="__codelineno-17-17" name="__codelineno-17-17" href="#__codelineno-17-17"></a>
+</span><span id="__span-17-18"><a id="__codelineno-17-18" name="__codelineno-17-18" href="#__codelineno-17-18"></a>N: There are 15 additional records. Please use the &#39;-a&#39; switch to see them.
+</span></code></pre></div>
+<h3 id="不同版本冲突性">不同版本冲突性<a class="headerlink" href="#不同版本冲突性" title="Permanent link">&para;</a></h3>
+<p><a href="https://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html#handle-conflicting-installation-methods">https://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html#handle-conflicting-installation-methods</a>
+总结：</p>
+<ul>
+<li>安装 cuda tookit，不同版本间没有冲突</li>
+<li>安装 driver，不同版本使用同一种方式 (deb 或 runfile) 安装没有冲突</li>
+</ul>
+<h3 id="卸载">卸载<a class="headerlink" href="#卸载" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>sudo /usr/local/cuda-X.Y/bin/cuda-uninstaller  # runfile
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>
+</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>
+</span><span id="__span-18-4"><a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a># cuda
+</span><span id="__span-18-5"><a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a>sudo apt-get --purge remove &quot;*cuda*&quot; &quot;*cublas*&quot; &quot;*cufft*&quot; &quot;*cufile*&quot; &quot;*curand*&quot; &quot;*cusolver*&quot; &quot;*cusparse*&quot; &quot;*gds-tools*&quot; &quot;*npp*&quot; &quot;*nvjpeg*&quot; &quot;nsight*&quot; &quot;*nvvm*&quot;
+</span><span id="__span-18-6"><a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a>
+</span><span id="__span-18-7"><a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a># driver
+</span><span id="__span-18-8"><a id="__codelineno-18-8" name="__codelineno-18-8" href="#__codelineno-18-8"></a>sudo apt purge &quot;*nvidia*&quot; &quot;libxnvctrl*&quot;   # 只卸载nvidia-driver-xxx不够
+</span><span id="__span-18-9"><a id="__codelineno-18-9" name="__codelineno-18-9" href="#__codelineno-18-9"></a>
+</span><span id="__span-18-10"><a id="__codelineno-18-10" name="__codelineno-18-10" href="#__codelineno-18-10"></a># 
+</span><span id="__span-18-11"><a id="__codelineno-18-11" name="__codelineno-18-11" href="#__codelineno-18-11"></a>apt purge cuda-repo-xxx
+</span><span id="__span-18-12"><a id="__codelineno-18-12" name="__codelineno-18-12" href="#__codelineno-18-12"></a>
+</span><span id="__span-18-13"><a id="__codelineno-18-13" name="__codelineno-18-13" href="#__codelineno-18-13"></a>sudo apt autoremove
+</span></code></pre></div>
+<h3 id="环境变量选择版本">环境变量选择版本<a class="headerlink" href="#环境变量选择版本" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>cuda_version=&quot;cuda-11.0&quot;
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>export PATH=&quot;/usr/local/$cuda_version/bin:$PATH&quot;
+</span><span id="__span-19-3"><a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>export LD_LIBRARY_PATH=&quot;/usr/local/$cuda_version/lib64:$LD_LIBRARY_PATH&quot;
+</span><span id="__span-19-4"><a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a>export demo_suite=&quot;/usr/local/$cuda_version/extras/demo_suite&quot;
+</span><span id="__span-19-5"><a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a>
+</span><span id="__span-19-6"><a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a>cd $demo_suite
+</span><span id="__span-19-7"><a id="__codelineno-19-7" name="__codelineno-19-7" href="#__codelineno-19-7"></a>./deviceQuery   # 获得设备信息
+</span></code></pre></div>
+<p>nvcc 使用</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>nvcc<span class="w"> </span>-std<span class="o">=</span>c++11<span class="w"> </span>-lcurand<span class="w"> </span>-lcublas
+</span></code></pre></div>
+<h3 id="实例">实例<a class="headerlink" href="#实例" title="Permanent link">&para;</a></h3>
+<p>卸载 runfile 后重启（没重启还有很多 nvdia 的模块）</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>root@icarus3:/home/nfs/fyyuan# lsmod |grep nv
+</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>nvidia_drm             65536  0
+</span><span id="__span-21-3"><a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>nvidia_modeset       1273856  1 nvidia_drm
+</span><span id="__span-21-4"><a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a>nvidia              55701504  27 gdrdrv,nvidia_modeset
+</span><span id="__span-21-5"><a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a>drm_kms_helper        184320  4 ast,nvidia_drm
+</span><span id="__span-21-6"><a id="__codelineno-21-6" name="__codelineno-21-6" href="#__codelineno-21-6"></a>drm                   495616  7 drm_kms_helper,drm_vram_helper,ast,nvidia,nvidia_drm,ttm
+</span></code></pre></div>
+<p>安装 driver</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>root@icarus3:/home/nfs/fyyuan# apt-cache policy nvidia-driver-530
+</span><span id="__span-22-2"><a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>nvidia-driver-530:
+</span><span id="__span-22-3"><a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a>  Installed: 530.41.03-0ubuntu0.20.04.2
+</span><span id="__span-22-4"><a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a>  Candidate: 530.41.03-0ubuntu0.20.04.2
+</span><span id="__span-22-5"><a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a>  Version table:
+</span><span id="__span-22-6"><a id="__codelineno-22-6" name="__codelineno-22-6" href="#__codelineno-22-6"></a> *** 530.41.03-0ubuntu0.20.04.2 500
+</span><span id="__span-22-7"><a id="__codelineno-22-7" name="__codelineno-22-7" href="#__codelineno-22-7"></a>        500 https://mirrors.ustc.edu.cn/ubuntu focal-updates/restricted amd64 Packages
+</span><span id="__span-22-8"><a id="__codelineno-22-8" name="__codelineno-22-8" href="#__codelineno-22-8"></a>        500 https://mirrors.ustc.edu.cn/ubuntu focal-security/restricted amd64 Packages
+</span><span id="__span-22-9"><a id="__codelineno-22-9" name="__codelineno-22-9" href="#__codelineno-22-9"></a>        100 /var/lib/dpkg/status
+</span></code></pre></div>
+<p>安装 cuda</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>apt install nvidia-cuda-toolkit
+</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>
+</span><span id="__span-23-3"><a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a>root@icarus3:/home/nfs/fyyuan# nvcc -V
+</span><span id="__span-23-4"><a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a>nvcc: NVIDIA (R) Cuda compiler driver
+</span><span id="__span-23-5"><a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a>Copyright (c) 2005-2019 NVIDIA Corporation
+</span><span id="__span-23-6"><a id="__codelineno-23-6" name="__codelineno-23-6" href="#__codelineno-23-6"></a>Built on Sun_Jul_28_19:07:16_PDT_2019
+</span><span id="__span-23-7"><a id="__codelineno-23-7" name="__codelineno-23-7" href="#__codelineno-23-7"></a>Cuda compilation tools, release 10.1, V10.1.243
+</span></code></pre></div>
+<p>版本太老，为 10.1 的</p>
+<p>i0 上有许多 apt source</p>
+<ul>
+<li>cuda-ubuntu2004-12-1-local.list 对应/var/cuda-repo-ubuntu2004-12-1-local/，包含很多 deb 文件</li>
+<li>cuda-ubuntu2004-x86_64.list 为 <a href="https://developer.download.nvidia.com/compute/cuda">https://developer.download.nvidia.com/compute/cuda</a>
+  <code>deb [signed-by=/usr/share/keyrings/cuda-archive-keyring.gpg] https://developer.download.nvidia.com/compute/cuda    /repos/ubuntu2004/x86_64/ /</code></li>
+<li>source.list 中还直接包含<code>deb https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/ /</code></li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>root@icarus0:/usr/local/cuda-12.1/bin# ls /etc/apt/sources.list.d/
+</span><span id="__span-24-2"><a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>cuda-ubuntu2004-12-1-local.list       docker.list       nvidia-container-toolkit.list.save
+</span><span id="__span-24-3"><a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a>cuda-ubuntu2004-12-1-local.list.save  docker.list.save  nvidia-docker.list.save
+</span><span id="__span-24-4"><a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a>cuda-ubuntu2004-x86_64.list           mlnx.list
+</span><span id="__span-24-5"><a id="__codelineno-24-5" name="__codelineno-24-5" href="#__codelineno-24-5"></a>cuda-ubuntu2004-x86_64.list.save      mlnx.list.save
+</span></code></pre></div>
+<p>官网按照 deb(network)，发现添加了源，设置了</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>root@icarus3:/home/nfs/fyyuan# apt install cuda
+</span><span id="__span-25-2"><a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a>Reading package lists... Done
+</span><span id="__span-25-3"><a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a>Building dependency tree
+</span><span id="__span-25-4"><a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a>Reading state information... Done
+</span><span id="__span-25-5"><a id="__codelineno-25-5" name="__codelineno-25-5" href="#__codelineno-25-5"></a>The following additional packages will be installed:
+</span><span id="__span-25-6"><a id="__codelineno-25-6" name="__codelineno-25-6" href="#__codelineno-25-6"></a>  cuda-12-1 cuda-cccl-12-1 cuda-command-line-tools-12-1 cuda-compiler-12-1 cuda-cudart-12-1 cuda-cudart-dev-12-1 cuda-cuobjdump-12-1 cuda-cupti-12-1
+</span><span id="__span-25-7"><a id="__codelineno-25-7" name="__codelineno-25-7" href="#__codelineno-25-7"></a>  cuda-cupti-dev-12-1 cuda-cuxxfilt-12-1 cuda-demo-suite-12-1 cuda-documentation-12-1 cuda-driver-dev-12-1 cuda-drivers cuda-drivers-530 cuda-gdb-12-1
+</span><span id="__span-25-8"><a id="__codelineno-25-8" name="__codelineno-25-8" href="#__codelineno-25-8"></a>  cuda-libraries-12-1 cuda-libraries-dev-12-1 cuda-nsight-12-1 cuda-nsight-compute-12-1 cuda-nsight-systems-12-1 cuda-nvcc-12-1 cuda-nvdisasm-12-1
+</span><span id="__span-25-9"><a id="__codelineno-25-9" name="__codelineno-25-9" href="#__codelineno-25-9"></a>  cuda-nvml-dev-12-1 cuda-nvprof-12-1 cuda-nvprune-12-1 cuda-nvrtc-12-1 cuda-nvrtc-dev-12-1 cuda-nvtx-12-1 cuda-nvvp-12-1 cuda-opencl-12-1
+</span><span id="__span-25-10"><a id="__codelineno-25-10" name="__codelineno-25-10" href="#__codelineno-25-10"></a>  cuda-opencl-dev-12-1 cuda-profiler-api-12-1 cuda-runtime-12-1 cuda-sanitizer-12-1 cuda-toolkit-12-1 cuda-toolkit-12-1-config-common
+</span><span id="__span-25-11"><a id="__codelineno-25-11" name="__codelineno-25-11" href="#__codelineno-25-11"></a>  cuda-toolkit-12-config-common cuda-toolkit-config-common cuda-tools-12-1 cuda-visual-tools-12-1 default-jre default-jre-headless gds-tools-12-1
+</span><span id="__span-25-12"><a id="__codelineno-25-12" name="__codelineno-25-12" href="#__codelineno-25-12"></a>  libcublas-12-1 libcublas-dev-12-1 libcufft-12-1 libcufft-dev-12-1 libcufile-12-1 libcufile-dev-12-1 libcurand-12-1 libcurand-dev-12-1 libcusolver-12-1
+</span><span id="__span-25-13"><a id="__codelineno-25-13" name="__codelineno-25-13" href="#__codelineno-25-13"></a>  libcusolver-dev-12-1 libcusparse-12-1 libcusparse-dev-12-1 libnpp-12-1 libnpp-dev-12-1 libnvjitlink-12-1 libnvjitlink-dev-12-1 libnvjpeg-12-1
+</span><span id="__span-25-14"><a id="__codelineno-25-14" name="__codelineno-25-14" href="#__codelineno-25-14"></a>  libnvjpeg-dev-12-1 libnvvm-samples-12-1 nsight-compute-2023.1.1 nsight-systems-2023.1.2 nvidia-modprobe nvidia-settings openjdk-11-jre
+</span><span id="__span-25-15"><a id="__codelineno-25-15" name="__codelineno-25-15" href="#__codelineno-25-15"></a>  openjdk-11-jre-headless
+</span><span id="__span-25-16"><a id="__codelineno-25-16" name="__codelineno-25-16" href="#__codelineno-25-16"></a>Suggested packages:
+</span><span id="__span-25-17"><a id="__codelineno-25-17" name="__codelineno-25-17" href="#__codelineno-25-17"></a>  fonts-ipafont-gothic fonts-ipafont-mincho fonts-wqy-microhei | fonts-wqy-zenhei fonts-indic
+</span><span id="__span-25-18"><a id="__codelineno-25-18" name="__codelineno-25-18" href="#__codelineno-25-18"></a>The following NEW packages will be installed:
+</span><span id="__span-25-19"><a id="__codelineno-25-19" name="__codelineno-25-19" href="#__codelineno-25-19"></a>  cuda cuda-12-1 cuda-cccl-12-1 cuda-command-line-tools-12-1 cuda-compiler-12-1 cuda-cudart-12-1 cuda-cudart-dev-12-1 cuda-cuobjdump-12-1 cuda-cupti-12-1
+</span><span id="__span-25-20"><a id="__codelineno-25-20" name="__codelineno-25-20" href="#__codelineno-25-20"></a>  cuda-cupti-dev-12-1 cuda-cuxxfilt-12-1 cuda-demo-suite-12-1 cuda-documentation-12-1 cuda-driver-dev-12-1 cuda-drivers cuda-drivers-530 cuda-gdb-12-1
+</span><span id="__span-25-21"><a id="__codelineno-25-21" name="__codelineno-25-21" href="#__codelineno-25-21"></a>  cuda-libraries-12-1 cuda-libraries-dev-12-1 cuda-nsight-12-1 cuda-nsight-compute-12-1 cuda-nsight-systems-12-1 cuda-nvcc-12-1 cuda-nvdisasm-12-1
+</span><span id="__span-25-22"><a id="__codelineno-25-22" name="__codelineno-25-22" href="#__codelineno-25-22"></a>  cuda-nvml-dev-12-1 cuda-nvprof-12-1 cuda-nvprune-12-1 cuda-nvrtc-12-1 cuda-nvrtc-dev-12-1 cuda-nvtx-12-1 cuda-nvvp-12-1 cuda-opencl-12-1
+</span><span id="__span-25-23"><a id="__codelineno-25-23" name="__codelineno-25-23" href="#__codelineno-25-23"></a>  cuda-opencl-dev-12-1 cuda-profiler-api-12-1 cuda-runtime-12-1 cuda-sanitizer-12-1 cuda-toolkit-12-1 cuda-toolkit-12-1-config-common
+</span><span id="__span-25-24"><a id="__codelineno-25-24" name="__codelineno-25-24" href="#__codelineno-25-24"></a>  cuda-toolkit-12-config-common cuda-toolkit-config-common cuda-tools-12-1 cuda-visual-tools-12-1 default-jre default-jre-headless gds-tools-12-1
+</span><span id="__span-25-25"><a id="__codelineno-25-25" name="__codelineno-25-25" href="#__codelineno-25-25"></a>  libcublas-12-1 libcublas-dev-12-1 libcufft-12-1 libcufft-dev-12-1 libcufile-12-1 libcufile-dev-12-1 libcurand-12-1 libcurand-dev-12-1 libcusolver-12-1
+</span><span id="__span-25-26"><a id="__codelineno-25-26" name="__codelineno-25-26" href="#__codelineno-25-26"></a>  libcusolver-dev-12-1 libcusparse-12-1 libcusparse-dev-12-1 libnpp-12-1 libnpp-dev-12-1 libnvjitlink-12-1 libnvjitlink-dev-12-1 libnvjpeg-12-1
+</span><span id="__span-25-27"><a id="__codelineno-25-27" name="__codelineno-25-27" href="#__codelineno-25-27"></a>  libnvjpeg-dev-12-1 libnvvm-samples-12-1 nsight-compute-2023.1.1 nsight-systems-2023.1.2 nvidia-modprobe openjdk-11-jre openjdk-11-jre-headless
+</span><span id="__span-25-28"><a id="__codelineno-25-28" name="__codelineno-25-28" href="#__codelineno-25-28"></a>The following packages will be upgraded:
+</span><span id="__span-25-29"><a id="__codelineno-25-29" name="__codelineno-25-29" href="#__codelineno-25-29"></a>  nvidia-settings
+</span><span id="__span-25-30"><a id="__codelineno-25-30" name="__codelineno-25-30" href="#__codelineno-25-30"></a>1 upgraded, 69 newly installed, 0 to remove and 59 not upgraded.
+</span><span id="__span-25-31"><a id="__codelineno-25-31" name="__codelineno-25-31" href="#__codelineno-25-31"></a>Need to get 2802 MB of archives.
+</span><span id="__span-25-32"><a id="__codelineno-25-32" name="__codelineno-25-32" href="#__codelineno-25-32"></a>After this operation, 6511 MB of additional disk space will be used.
+</span><span id="__span-25-33"><a id="__codelineno-25-33" name="__codelineno-25-33" href="#__codelineno-25-33"></a>Do you want to continue? [Y/n]
+</span></code></pre></div>
+<h2 id="nvcc">NVCC<a class="headerlink" href="#nvcc" title="Permanent link">&para;</a></h2>
+<h3 id="是否需要-cu-文件">是否需要 cu 文件<a class="headerlink" href="#是否需要-cu-文件" title="Permanent link">&para;</a></h3>
+<p>文件后缀的选择取决于代码内容：</p>
+<ul>
+<li>​<strong>​使用 <code>.cu</code> 的情况​</strong>​：<ul>
+<li>包含 CUDA 核函数（<code>__global__</code> 修饰的函数）或设备端代码（如 <code>__device__</code> 函数）。</li>
+<li>调用了 CUDA 运行时 API（如 <code>cudaMalloc</code>、<code>cudaMemcpy</code>）。</li>
+<li>需要 <code>nvcc</code> 编译器处理（例如混合主机与设备代码的场景）</li>
+</ul>
+</li>
+<li>​<strong>​使用 <code>.cc</code> 的情况​</strong>​：<ul>
+<li>仅包含主机端 C++ 代码，且不涉及 CUDA API 或设备端操作。</li>
+<li>例如：纯逻辑控制、数据处理（如解析输入参数或处理计算结果）</li>
+</ul>
+</li>
+</ul>
+<p>cu 文件中，普通函数和 device 函数应该是被提取到不同文件里，单独编译的。</p>
+<p>cu 中部分函数还是需要使用 g++ 编译，因此需要设置 -fpic</p>
+<h3 id="两阶段编译">两阶段编译<a class="headerlink" href="#两阶段编译" title="Permanent link">&para;</a></h3>
+<p>GPU 不同 generation，二进制程序是不兼容的。为了保证应用的兼容性，采用了两阶段编译。</p>
+<p><a href="https://docs.nvidia.com/cuda/cuda-compiler-driver-nvcc/index.html#virtual-architectures">NVIDIA CUDA Compiler Driver</a></p>
+<ul>
+<li>nvcc 总是需要使用两个架构：虚拟架构 (compute_xx) 和真实架构 (sm_xx)</li>
+<li>sm 必须实现了 compute 的功能</li>
+<li>虚拟架构表明了应用使用到的能力，使用更低的虚拟架构允许在更广泛的硬件上运行</li>
+<li>真实架构越高，生成的代码就更高效（硬件特性更多）
+<img alt="" src="https://imagebed.yfycloud.site/2025/12/a8dd524650677f3da7b1a547833a5ddb.png" /></li>
+</ul>
+<h3 id="jit-机制">JIT 机制<a class="headerlink" href="#jit-机制" title="Permanent link">&para;</a></h3>
+<ul>
+<li>将 cubin 生成推迟到运行时</li>
+<li>缺点是增加了应用 startup 延迟
+<img alt="" src="https://imagebed.yfycloud.site/2025/12/9893005530166f07a4612e9e6072ca34.png" /></li>
+</ul>
+<p>By specifying a virtual code architecture instead of a <em>real</em> GPU, <code>nvcc</code> postpones the assembly of PTX code until application runtime, at which time the target GPU is exactly known.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>nvcc x.cu --gpu-architecture=compute_50 --gpu-code=compute_50
+</span></code></pre></div>
+<h3 id="fatbinaries">fatbinaries<a class="headerlink" href="#fatbinaries" title="Permanent link">&para;</a></h3>
+<p>将多种编译结果打包在一起</p>
+<p>A different solution to overcome startup delay by JIT while still allowing execution on newer GPUs is to specify multiple code instances</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>nvcc x.cu --gpu-architecture=compute_50 --gpu-code=compute_50,sm_50,sm_52
+</span></code></pre></div>
+<h3 id="example">example<a class="headerlink" href="#example" title="Permanent link">&para;</a></h3>
+<p><a href="https://docs.nvidia.com/cuda/cuda-compiler-driver-nvcc/index.html#nvcc-examples">NVIDIA CUDA Compiler Driver</a></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>--gpu-architecture, -arch
+</span><span id="__span-28-2"><a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a>--gpu-code, -code
+</span><span id="__span-28-3"><a id="__codelineno-28-3" name="__codelineno-28-3" href="#__codelineno-28-3"></a>--generate-code, -gencode   # --generate-code arch=compute_53,code=sm_53
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>nvcc x.cu --gpu-architecture=compute_50 --gpu-code=sm_50,sm_52
+</span></code></pre></div>
+<h4 id="jit">JIT<a class="headerlink" href="#jit" title="Permanent link">&para;</a></h4>
+<p>gpu-code 如果也指定虚拟架构，表明使用 JIT
+<code>--gpu-code</code> arguments can be virtual architectures. In this case the stage 2 translation will be omitted for such virtual architecture, and the stage 1 PTX result will be embedded instead. At application launch, and in case the driver does not find a better alternative, the stage 2 compilation will be invoked by the driver with the PTX as input.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>nvcc x.cu --gpu-architecture=compute_50 --gpu-code=compute_50,sm_50,sm_52
+</span></code></pre></div>
+<h4 id="省略-gpu-code">省略 gpu-code<a class="headerlink" href="#省略-gpu-code" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>nvcc x.cu --gpu-architecture=sm_52
+</span><span id="__span-31-2"><a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a>nvcc x.cu --gpu-architecture=compute_50
+</span></code></pre></div>
+<p>分别等价于</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a>nvcc x.cu --gpu-architecture=compute_52 --gpu-code=sm_52,compute_52
+</span><span id="__span-32-2"><a id="__codelineno-32-2" name="__codelineno-32-2" href="#__codelineno-32-2"></a>nvcc x.cu --gpu-architecture=compute_50 --gpu-code=compute_50
+</span></code></pre></div>
+<h4 id="--generate-code-指定多种组合">--generate-code 指定多种组合<a class="headerlink" href="#--generate-code-指定多种组合" title="Permanent link">&para;</a></h4>
+<p>使用一个虚拟架构，限制了功能。可以为不同硬件指定不同虚拟架构</p>
+<blockquote>
+<p><code>compute_50</code> assumes no half-precision floating-point operation support for both the <code>sm_50</code> code and the <code>sm_53</code> code:</p>
+</blockquote>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-33-1"><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a>nvcc x.cu \
+</span><span id="__span-33-2"><a id="__codelineno-33-2" name="__codelineno-33-2" href="#__codelineno-33-2"></a>    --generate-code arch=compute_50,code=sm_50 \
+</span><span id="__span-33-3"><a id="__codelineno-33-3" name="__codelineno-33-3" href="#__codelineno-33-3"></a>    --generate-code arch=compute_50,code=sm_52 \
+</span><span id="__span-33-4"><a id="__codelineno-33-4" name="__codelineno-33-4" href="#__codelineno-33-4"></a>    --generate-code arch=compute_53,code=sm_53
+</span></code></pre></div>
+<h4 id="查看编译结果包含哪些版本">查看编译结果包含哪些版本<a class="headerlink" href="#查看编译结果包含哪些版本" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-34-1"><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a>cuobjdump --list-elf
+</span></code></pre></div>
+<h3 id="nvcc-选项">nvcc 选项<a class="headerlink" href="#nvcc-选项" title="Permanent link">&para;</a></h3>
+<p>On all platforms, the default host compiler executable (<code>gcc</code> and <code>g++</code> on Linux and <code>cl.exe</code> on Windows) found in the current execution search path will be used, unless specified otherwise with appropriate options
+<img alt="" src="https://imagebed.yfycloud.site/2025/12/5ec8fa43587206f0f8faa8c1e4937e2d.png" /></p>
+<p><a href="https://docs.nvidia.com/cuda/cuda-compiler-driver-nvcc/index.html#options-for-steering-gpu-code-generation">NVIDIA CUDA Compiler Driver</a></p>
+<p>When <code>-arch=native</code> is specified, <code>nvcc</code> detects the visible GPUs on the system and generates codes for them, no PTX program will be generated for this option. It is a warning if there are no visible supported GPU on the system, and the default architecture will be used.</p>
+<p>If <code>-arch=all</code> is specified, <code>nvcc</code> embeds a compiled code image for all supported architectures <code>(sm_*)</code>, and a PTX program for the highest major virtual architecture. For <code>-arch=all-major</code>, <code>nvcc</code> embeds a compiled code image for all supported major versions <code>(sm_*0)</code>, plus the earliest supported, and adds a PTX program for the highest major virtual architecture.</p>
+<h4 id="环境变量">环境变量<a class="headerlink" href="#环境变量" title="Permanent link">&para;</a></h4>
+<p><a href="https://docs.nvidia.com/cuda/cuda-compiler-driver-nvcc/index.html#nvcc-environment-variables">https://docs.nvidia.com/cuda/cuda-compiler-driver-nvcc/index.html#nvcc-environment-variables</a></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-35-1"><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a>export NVCC_PREPEND_FLAGS=&#39;-G -keep -arch=sm_60&#39;
+</span><span id="__span-35-2"><a id="__codelineno-35-2" name="__codelineno-35-2" href="#__codelineno-35-2"></a>export NVCC_APPEND_FLAGS=&#39;-DNAME=&quot; foo &quot;&#39;
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-36-1"><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a>nvcc foo.cu -o foo
+</span><span id="__span-36-2"><a id="__codelineno-36-2" name="__codelineno-36-2" href="#__codelineno-36-2"></a># 等价于
+</span><span id="__span-36-3"><a id="__codelineno-36-3" name="__codelineno-36-3" href="#__codelineno-36-3"></a>nvcc -G -keep -arch=sm_60 foo.cu -o foo -DNAME=&quot; foo &quot;
+</span></code></pre></div>
+<h4 id="编译选项">编译选项<a class="headerlink" href="#编译选项" title="Permanent link">&para;</a></h4>
+<p>​<strong>​-Wall​</strong>​<br />
+启用所有标准警告，检测常见编码错误，如未使用的变量、错误的返回类型等。这是基础警告集合，覆盖了大部分潜在问题</p>
+<p><strong>-Wextra​</strong>​<br />
+在 <code>-Wall</code> 基础上添加额外警告，例如未使用的函数参数、未初始化的变量等。例如，<code>-Wunused-parameter</code> 的相反选项 <code>-Wno-unused-parameter</code> 会在此被覆盖</p>
+<p><strong>-Winit-self​</strong>​<br />
+检测变量在初始化时自我引用的行为（如 <code>int x = x;</code>），避免逻辑错误</p>
+<p><strong>-Wno-switch-bool​</strong>​<br />
+禁用对布尔类型在 <code>switch</code> 语句中使用的警告（如 <code>switch(true)</code>），允许特定场景的编码风格</p>
+<p>​<strong>​-Wunused-function​</strong>​<br />
+检测声明但未使用的静态函数，避免冗余代码</p>
+<p><strong>-Wuninitialized​</strong>​<br />
+检测未初始化的局部变量，防止不可预测的行为</p>
+<p><strong>-Wmissing-declarations​</strong>​<br />
+强制函数在使用前必须有声明，提升代码规范性</p>
+<p><strong>-Wno-unused-parameter​</strong>​<br />
+禁用对未使用函数参数的警告，常用于回调函数或接口实现中</p>
+<p><strong>-fdiagnostics-color=auto​</strong>​<br />
+根据终端支持自动启用彩色错误/警告输出，提升可读性</p>
+<p><strong>--threads=1​</strong>​<br />
+限制编译时使用的线程数为1，避免并行编译导致资源争用</p>
+<p>​<strong>​-Xfatbin=-compress-all​</strong>​<br />
+压缩生成的 <code>fatbin</code> 文件（包含多种架构的 PTX/CUBIN），减少二进制体积</p>
+<h2 id="cuda-编程">Cuda 编程<a class="headerlink" href="#cuda-编程" title="Permanent link">&para;</a></h2>
+<h3 id="多-device-系统">多 device 系统<a class="headerlink" href="#多-device-系统" title="Permanent link">&para;</a></h3>
+<p>很多操作都可以并发执行，如 host 和 device、memory 复制和 kernel launch 等</p>
+<p>steram 是用来管理并发执行的</p>
+<p>A host thread can set the device it operates on at any time by calling <code>cudaSetDevice()</code>. Device memory allocations and kernel launches are made on the currently set device; streams and events are created in association with the currently set device. If no call to <code>cudaSetDevice()</code> is made, the current device is device 0.</p>
+<h4 id="为什么-__device__-函数不需要-">为什么 <code>__device__</code> 函数不需要 <code>&lt;&lt;&lt;...&gt;&gt;&gt;</code><a class="headerlink" href="#为什么-__device__-函数不需要-" title="Permanent link">&para;</a></h4>
+<ul>
+<li><code>__device__</code> 函数本质上是 GPU 上的一个子程序或函数库，它不能独立启动。</li>
+<li>它的执行完全依赖于调用它的函数，没有自己的执行配置。</li>
+<li>当 <code>__global__</code> 函数被启动时，CUDA 运行时环境会负责为它分配线程资源，并管理它的执行。</li>
+<li>如果 <code>__global__</code> 函数调用了 <code>__device__</code> 函数，那么 <code>__device__</code> 函数会在 <code>__global__</code> 函数的线程上下文中执行，无需额外的配置。</li>
+</ul>
+<h3 id="统一内存模型">统一内存模型<a class="headerlink" href="#统一内存模型" title="Permanent link">&para;</a></h3>
+<p>在 CUDA 编程中，<code>__managed__</code> 是一个 CUDA 扩展关键字，用于标识被修饰的变量或数据结构将在主机（CPU）和设备（GPU）之间自动进行内存管理。它是 CUDA Unified Memory 功能的一部分，旨在简化主机和设备之间的内存管理和数据传输。</p>
+<p>通过使用 <code>__managed__</code> 关键字，您可以将变量或数据结构声明为统一内存（Unified Memory）。这意味着在使用这些统一内存对象时，无需显式地在主机和设备之间进行手动内存分配和数据传输。CUDA 运行时系统会自动处理内存的分配和迁移，以确保数据在主机和设备之间正确共享。</p>
+<h3 id="同步">同步<a class="headerlink" href="#同步" title="Permanent link">&para;</a></h3>
+<p><a href="https://stackoverflow.com/questions/15240432/does-syncthreads-synchronize-all-threads-in-the-grid">cuda - Does __syncthreads() synchronize all threads in the grid? - Stack Overflow</a></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-37-1"><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a>__syncthreads()  // 该函数同步block内线程（实际是warp，warp内线程执行的是相同指令，本身就是同步的）
+</span></code></pre></div>
+<ul>
+<li>cudaDeviceSynchronize<ul>
+<li>CPU 等待 GPU 完成 kernel 调用</li>
+</ul>
+</li>
+</ul>
+<p>CUDA 没有全局同步（block 间同步）</p>
+<ul>
+<li>对于 SM 数量很大的 GPU，硬件成本太高</li>
+<li>would force programmer to run fewer blocks (no more than # multiprocessors * # resident blocks / multiprocessor) to avoid deadlock, which may reduce overall efficiency
+解决办法：
+分解为多个 kernel</li>
+<li>kernel launch 作为 global sync point</li>
+<li>kernel launch has negligible HW overhead, low SW overhead</li>
+</ul>
+<h3 id="cublas">cuBLAS<a class="headerlink" href="#cublas" title="Permanent link">&para;</a></h3>
+<p>计算矩阵 A x B
+方式一：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-38-1"><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a>cublasSgemm (blas_handle, CUBLAS_OP_T, CUBLAS_OP_T,   //CUBLAS使用列优先存储。CUBLAS_OP_T表示进行转置，即行优先。列优先下leading dimesion为m(mxn矩阵)
+</span><span id="__span-38-2"><a id="__codelineno-38-2" name="__codelineno-38-2" href="#__codelineno-38-2"></a>                     m, n, k,
+</span><span id="__span-38-3"><a id="__codelineno-38-3" name="__codelineno-38-3" href="#__codelineno-38-3"></a>                     &amp;alpha,
+</span><span id="__span-38-4"><a id="__codelineno-38-4" name="__codelineno-38-4" href="#__codelineno-38-4"></a>                     d_A, k, d_B, n,
+</span><span id="__span-38-5"><a id="__codelineno-38-5" name="__codelineno-38-5" href="#__codelineno-38-5"></a>                     &amp;beta,
+</span><span id="__span-38-6"><a id="__codelineno-38-6" name="__codelineno-38-6" href="#__codelineno-38-6"></a>                     d_C, n); //结果仍为列优先，故计算得到C的转置
+</span></code></pre></div>
+<p>方式二：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-39-1"><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a>/* 通过计算B^T * A^T得到C^T，由于列优先所有d_C实际为C的行优先结果。 //https://stackoverflow.com/a/56064726
+</span><span id="__span-39-2"><a id="__codelineno-39-2" name="__codelineno-39-2" href="#__codelineno-39-2"></a>        疑问：这里beta等于0，故C的初始值没有影响，行列优先均可（ldc=m, n均正确）。但是如果非0，那么如何处理呢？
+</span><span id="__span-39-3"><a id="__codelineno-39-3" name="__codelineno-39-3" href="#__codelineno-39-3"></a>        */
+</span><span id="__span-39-4"><a id="__codelineno-39-4" name="__codelineno-39-4" href="#__codelineno-39-4"></a>        cublasSgemm(blas_handle, CUBLAS_OP_N, CUBLAS_OP_N,
+</span><span id="__span-39-5"><a id="__codelineno-39-5" name="__codelineno-39-5" href="#__codelineno-39-5"></a>                    n, m, k,
+</span><span id="__span-39-6"><a id="__codelineno-39-6" name="__codelineno-39-6" href="#__codelineno-39-6"></a>                    &amp;alpha,
+</span><span id="__span-39-7"><a id="__codelineno-39-7" name="__codelineno-39-7" href="#__codelineno-39-7"></a>                    d_B, n, d_A, k,
+</span><span id="__span-39-8"><a id="__codelineno-39-8" name="__codelineno-39-8" href="#__codelineno-39-8"></a>                    &amp;beta,
+</span><span id="__span-39-9"><a id="__codelineno-39-9" name="__codelineno-39-9" href="#__codelineno-39-9"></a>                    d_C, n);
+</span></code></pre></div>
+<h1 id="工具">工具<a class="headerlink" href="#工具" title="Permanent link">&para;</a></h1>
+<ul>
+<li>IDE/debug/profile工具预览：<a href="https://developer.nvidia.com/tools-overview">NVIDIA Developer Tools Overview | NVIDIA Developer</a></li>
+</ul>
+<p>Which tools are available on which GPU architectures</p>
+<p><a href="https://docs.nvidia.com/cuda/profiler-users-guide/#id5">Which tools are available on which GPU architectures</a></p>
+<table>
+<thead>
+<tr>
+<th>GPU architecture</th>
+<th>Visual Profiler and nvprof</th>
+<th>Nsight Systems</th>
+<th>Nsight Compute</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Maxwell</td>
+<td>Yes</td>
+<td>No</td>
+<td>No</td>
+</tr>
+<tr>
+<td>Pascal</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>No</td>
+</tr>
+<tr>
+<td>Volta</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Turing</td>
+<td>Yes*</td>
+<td>Yes</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Ampere and later GPU architectures</td>
+<td>No</td>
+<td>Yes</td>
+<td>Yes</td>
+</tr>
+</tbody>
+</table>
+<p>nsight sytem</p>
+<ul>
+<li>high level</li>
+</ul>
+<p>nsight compute</p>
+<ul>
+<li>detailed</li>
+<li>performance metrics</li>
+</ul>
+<h2 id="nvprof">nvprof<a class="headerlink" href="#nvprof" title="Permanent link">&para;</a></h2>
+<p>The <a href="https://docs.nvidia.com/cuda/profiler-users-guide/index.html#visual-profiler">Visual Profiler</a> is a graphical profiling tool that displays a timeline of your application’s CPU and GPU activity, and that includes an automated analysis engine to identify optimization opportunities. The <a href="https://docs.nvidia.com/cuda/profiler-users-guide/index.html#nvprof">nvprof</a> profiling tool enables you to collect and view profiling data from the command-line.</p>
+<p><strong>Note that Visual Profiler and nvprof will be deprecated in a future CUDA release.</strong> The NVIDIA Volta platform is the last architecture on which these tools are fully supported. It is recommended to use next-generation tools <a href="https://developer.nvidia.com/nsight-systems">NVIDIA Nsight Systems</a> for GPU and CPU sampling and tracing and <a href="https://developer.nvidia.com/nsight-compute">NVIDIA Nsight Compute</a> for GPU kernel profiling.</p>
+<h3 id="visual-profilernvvp">Visual Profiler/nvvp<a class="headerlink" href="#visual-profilernvvp" title="Permanent link">&para;</a></h3>
+<p><a href="https://developer.nvidia.com/nvidia-visual-profiler">NVIDIA Visual Profiler | NVIDIA Developer</a></p>
+<p><a href="https://docs.nvidia.com/cuda/profiler-users-guide/index.html#visual-profiler">https://docs.nvidia.com/cuda/profiler-users-guide/index.html#visual-profiler</a></p>
+<p>The Visual Profiler is available as both a standalone application and as part of Nsight Eclipse Edition. The standalone version of the Visual Profiler, <code>nvvp</code>, is included in the CUDA Toolkit for all supported OSes except for macOS.</p>
+<p>步骤</p>
+<ul>
+<li>安装设置 1.8 JRE</li>
+<li>Preparing An Application For Profiling</li>
+<li>create session: A session contains the settings, data, and profiling results associated with your application. Each session is saved in a separate file; so you can delete, move, copy, or share a session by simply deleting, moving, copying, or sharing the session file. By convention, the file extension <code>.nvvp</code> is used for Visual Profiler session files.</li>
+<li>analyziing</li>
+</ul>
+<h4 id="java-版本">java 版本<a class="headerlink" href="#java-版本" title="Permanent link">&para;</a></h4>
+<p>需要 Java Runtime Environment (JRE) 1.8
+可以启动时通过 vm 指定</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-40-1"><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a>nvvp -vm /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java
+</span></code></pre></div>
+<p>也可以设置全局 java 版本
+<code>update-alternatives</code> 是一个 Debian 系统中用于管理多个软件版本的工具。通过它，你可以轻松切换默认使用的 Java 版本</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-41-1"><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a>sudo update-alternatives --config java
+</span></code></pre></div>
+<h4 id="ioexception-locking-file">IOException: locking file<a class="headerlink" href="#ioexception-locking-file" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-42-1"><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a>(base) fyyuan@snode6 ➜  ~ nvvp -vm /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java
+</span><span id="__span-42-2"><a id="__codelineno-42-2" name="__codelineno-42-2" href="#__codelineno-42-2"></a>java.lang.RuntimeException: Error initializing storage.
+</span><span id="__span-42-3"><a id="__codelineno-42-3" name="__codelineno-42-3" href="#__codelineno-42-3"></a>        at org.eclipse.osgi.internal.framework.EquinoxContainer.&lt;init&gt;(EquinoxContainer.java:77)
+</span><span id="__span-42-4"><a id="__codelineno-42-4" name="__codelineno-42-4" href="#__codelineno-42-4"></a>        at org.eclipse.osgi.launch.Equinox.&lt;init&gt;(Equinox.java:31)
+</span><span id="__span-42-5"><a id="__codelineno-42-5" name="__codelineno-42-5" href="#__codelineno-42-5"></a>        at org.eclipse.core.runtime.adaptor.EclipseStarter.startup(EclipseStarter.java:295)
+</span><span id="__span-42-6"><a id="__codelineno-42-6" name="__codelineno-42-6" href="#__codelineno-42-6"></a>        at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:231)
+</span><span id="__span-42-7"><a id="__codelineno-42-7" name="__codelineno-42-7" href="#__codelineno-42-7"></a>        at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+</span><span id="__span-42-8"><a id="__codelineno-42-8" name="__codelineno-42-8" href="#__codelineno-42-8"></a>        at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+</span><span id="__span-42-9"><a id="__codelineno-42-9" name="__codelineno-42-9" href="#__codelineno-42-9"></a>        at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+</span><span id="__span-42-10"><a id="__codelineno-42-10" name="__codelineno-42-10" href="#__codelineno-42-10"></a>        at java.lang.reflect.Method.invoke(Method.java:498)
+</span><span id="__span-42-11"><a id="__codelineno-42-11" name="__codelineno-42-11" href="#__codelineno-42-11"></a>        at org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:648)
+</span><span id="__span-42-12"><a id="__codelineno-42-12" name="__codelineno-42-12" href="#__codelineno-42-12"></a>        at org.eclipse.equinox.launcher.Main.basicRun(Main.java:603)
+</span><span id="__span-42-13"><a id="__codelineno-42-13" name="__codelineno-42-13" href="#__codelineno-42-13"></a>        at org.eclipse.equinox.launcher.Main.run(Main.java:1465)
+</span><span id="__span-42-14"><a id="__codelineno-42-14" name="__codelineno-42-14" href="#__codelineno-42-14"></a>        at org.eclipse.equinox.launcher.Main.main(Main.java:1438)
+</span><span id="__span-42-15"><a id="__codelineno-42-15" name="__codelineno-42-15" href="#__codelineno-42-15"></a>Caused by: java.io.IOException: An error occurred while locking file &quot;/staff/fyyuan/.eclipse/org.eclipse.platform_4.4.1_868875438_linux_gtk_x86_64/configuration/org.eclipse.osgi/.manager/.fileTableLock&quot;: &quot;Input/output error&quot;. A common reason is that the file system or Runtime Environment does not support file locking for that location. Please choose a different location, or disable file locking by passing &quot;-Dosgi.locking=none&quot; as a VM argument.
+</span><span id="__span-42-16"><a id="__codelineno-42-16" name="__codelineno-42-16" href="#__codelineno-42-16"></a>        at org.eclipse.osgi.internal.location.Locker_JavaNio.lock(Locker_JavaNio.java:49)
+</span><span id="__span-42-17"><a id="__codelineno-42-17" name="__codelineno-42-17" href="#__codelineno-42-17"></a>        at org.eclipse.osgi.storagemanager.StorageManager.lock(StorageManager.java:388)
+</span><span id="__span-42-18"><a id="__codelineno-42-18" name="__codelineno-42-18" href="#__codelineno-42-18"></a>        at org.eclipse.osgi.storagemanager.StorageManager.open(StorageManager.java:701)
+</span><span id="__span-42-19"><a id="__codelineno-42-19" name="__codelineno-42-19" href="#__codelineno-42-19"></a>        at org.eclipse.osgi.storage.Storage.getChildStorageManager(Storage.java:1747)
+</span><span id="__span-42-20"><a id="__codelineno-42-20" name="__codelineno-42-20" href="#__codelineno-42-20"></a>        at org.eclipse.osgi.storage.Storage.getInfoInputStream(Storage.java:1764)
+</span><span id="__span-42-21"><a id="__codelineno-42-21" name="__codelineno-42-21" href="#__codelineno-42-21"></a>        at org.eclipse.osgi.storage.Storage.&lt;init&gt;(Storage.java:124)
+</span><span id="__span-42-22"><a id="__codelineno-42-22" name="__codelineno-42-22" href="#__codelineno-42-22"></a>        at org.eclipse.osgi.storage.Storage.createStorage(Storage.java:84)
+</span><span id="__span-42-23"><a id="__codelineno-42-23" name="__codelineno-42-23" href="#__codelineno-42-23"></a>        at org.eclipse.osgi.internal.framework.EquinoxContainer.&lt;init&gt;(EquinoxContainer.java:75)
+</span><span id="__span-42-24"><a id="__codelineno-42-24" name="__codelineno-42-24" href="#__codelineno-42-24"></a>        ... 11 more
+</span></code></pre></div>
+<p>提示的添加 vm 参数方法，添加到 cuda-tookit-dir/libnvvp/nvvp.ini 结尾（使用-vmargs 指定）</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-43-1"><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a>sudo vim /usr/local/cuda-11.8/libnvvp/nvvp.ini
+</span><span id="__span-43-2"><a id="__codelineno-43-2" name="__codelineno-43-2" href="#__codelineno-43-2"></a>
+</span><span id="__span-43-3"><a id="__codelineno-43-3" name="__codelineno-43-3" href="#__codelineno-43-3"></a>-startup
+</span><span id="__span-43-4"><a id="__codelineno-43-4" name="__codelineno-43-4" href="#__codelineno-43-4"></a>plugins/org.eclipse.equinox.launcher_1.3.0.v20140415-2008.jar
+</span><span id="__span-43-5"><a id="__codelineno-43-5" name="__codelineno-43-5" href="#__codelineno-43-5"></a>--launcher.library
+</span><span id="__span-43-6"><a id="__codelineno-43-6" name="__codelineno-43-6" href="#__codelineno-43-6"></a>plugins/org.eclipse.equinox.launcher.gtk.linux.x86_64_1.1.200.v20140603-1326
+</span><span id="__span-43-7"><a id="__codelineno-43-7" name="__codelineno-43-7" href="#__codelineno-43-7"></a>-data
+</span><span id="__span-43-8"><a id="__codelineno-43-8" name="__codelineno-43-8" href="#__codelineno-43-8"></a>@noDefault
+</span><span id="__span-43-9"><a id="__codelineno-43-9" name="__codelineno-43-9" href="#__codelineno-43-9"></a>-vmargs
+</span><span id="__span-43-10"><a id="__codelineno-43-10" name="__codelineno-43-10" href="#__codelineno-43-10"></a>-Dosgi.locking=none
+</span></code></pre></div>
+<h3 id="pc-sample-view">PC sample View<a class="headerlink" href="#pc-sample-view" title="Permanent link">&para;</a></h3>
+<ul>
+<li>compute_52 支持 PC 采样。<ul>
+<li>PC and state of warp are sampled at regular interval for one of the active warps per SM</li>
+<li>The warp state indicates if that warp issued an instruction in a cycle or why it was stalled and could not issue an instruction</li>
+<li>Hence the stall for the sampled warp need <strong>not necessarily indicate that there is a hole</strong> in the instruction issue pipeline.</li>
+</ul>
+</li>
+<li><strong>compute_60 支持 latency reasons</strong><ul>
+<li>While collecting these samples, <strong>there is no instruction issued in the respective warp scheduler</strong> and hence these give the latency reasons.</li>
+</ul>
+</li>
+</ul>
+<p>6.0 以上设备，Visual Profiler show two views: ‘Kernel Profile - PC Sampling’which gives the warp state view and‘Kernel Profile - PC Sampling - Latency’which gives the latency reasons.</p>
+<h3 id="memory-统计">memory 统计<a class="headerlink" href="#memory-统计" title="Permanent link">&para;</a></h3>
+<ul>
+<li>The data paths from the SMs to the memory spaces (Global, Local, Texture, Surface and Shared) report the total number of memory instructions executed, it includes both read and write operations.</li>
+<li>The data path between memory spaces and “Unified Cache” or “Shared Memory” reports the total amount of memory requests made.</li>
+<li>All other data paths report the total amount of transferred memory in bytes.</li>
+</ul>
+<p><img alt="" src="https://imagebed.yfycloud.site/2025/12/71d0b6280c16beed2f71d73ba4cddc1f.png" /></p>
+<h3 id="source-disassembly">source-disassembly<a class="headerlink" href="#source-disassembly" title="Permanent link">&para;</a></h3>
+<p><code>-lineinfo</code></p>
+<h3 id="warp-statestall原因">Warp state/stall原因<a class="headerlink" href="#warp-statestall原因" title="Permanent link">&para;</a></h3>
+<p><a href="https://docs.nvidia.com/cuda/profiler-users-guide/index.html#pc-sampling-view">1. Preparing An Application For Profiling — Profiler 12.3 documentation (nvidia.com)</a></p>
+<p><a href="https://docs.nvidia.com/cuda/profiler-users-guide/index.html#warp-state">https://docs.nvidia.com/cuda/profiler-users-guide/index.html#warp-state</a></p>
+<p>能够对应到源码进行分析：<a href="https://developer.nvidia.com/blog/cuda-7-5-pinpoint-performance-problems-instruction-level-profiling/">CUDA 7.5: Pinpoint Performance Problems with Instruction-Level Profiling | NVIDIA Technical Blog</a></p>
+<p><img alt="" src="https://imagebed.yfycloud.site/2025/12/52d65066008e1de6b10146b514fd874d.png" /></p>
+<ul>
+<li><strong>Instruction issued</strong></li>
+<li><strong>Stalled</strong><ul>
+<li><strong>Stalled for instruction fetch</strong><ul>
+<li>For very short kernels, consider fusing into a single kernels.</li>
+</ul>
+</li>
+<li><strong>Stalled for execution dependency</strong></li>
+<li><strong>Stalled for memory dependency</strong><ul>
+<li>尝试提高内存合并和/或获取字节的效率（对齐等）。使用 gld_efficiency 和 gst_efficiency 检查未合并的内存访问</li>
+<li>memory-level parallelism (MLP): the number of independent memory operations in flight per thread. Loop unrolling, loading vector types such as float4, and processing multiple elements per thread are all ways to increase memory-level parallelism.</li>
+<li>请考虑将经常访问的数据移动到更靠近 SM 的位置，例如使用共享内存或只读数据缓存。</li>
+<li>考虑尽可能重新计算数据，而不是从设备内存加载数据</li>
+<li>如果本地内存访问量很高，请考虑增加每个线程的寄存器计数以减少溢出，即使以占用率为代价</li>
+</ul>
+</li>
+<li><strong>Stalled for memory throttle</strong></li>
+<li><strong>Stalled for texture</strong></li>
+<li><strong>Stalled for sync</strong></li>
+<li><strong>Stalled for constant memory dependency</strong></li>
+<li><strong>Stalled for pipe busy</strong>：functional unit busy</li>
+<li><strong>Stalled for not selected</strong>：Warp 已准备就绪，但没有机会发出，因为选择了其他一些 Warp 进行发出。</li>
+<li><strong>Stalled for other</strong>：Warp 因不常见的原因（如编译器或硬件原因）而被阻止。开发人员无法控制这些 stall。</li>
+</ul>
+</li>
+</ul>
+<h2 id="nvprof_1">nvprof<a class="headerlink" href="#nvprof_1" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Summary Mode<ul>
+<li>默认模式，<code>nvprof</code> outputs a single result line for each kernel function and each type of CUDA memory copy/set performed by the application.</li>
+<li>如果不需要，可以使用 关闭 API 跟踪 <code>--profile-api-trace none</code> 。这减少了一些性能分析开销，尤其是在内核较短时。</li>
+</ul>
+</li>
+<li>gpu-trace<ul>
+<li>GPU-Trace mode provides a timeline of all activities taking place on the GPU in chronological order.</li>
+<li>按照时间顺序显示。同一个 kernel 会多次显示</li>
+<li><code>nvprof --print-gpu-trace matrixMul</code></li>
+</ul>
+</li>
+<li>API-trace: API-trace mode shows the timeline of all CUDA runtime and driver API calls invoked on the host in chronological order.<ul>
+<li>显示 runtime 和 driver API 调用</li>
+<li><code>nvprof --print-api-trace matrixMul</code></li>
+</ul>
+</li>
+<li>Event/metric Summary Mode<ul>
+<li><code>--events all</code> <code>--metrics all</code></li>
+</ul>
+</li>
+</ul>
+<p>An <strong>event</strong> is a countable activity, action, or occurrence on a device. It corresponds to a single hardware counter value which is collected during kernel execution. To see a list of all available events on a particular NVIDIA GPU, type <code>nvprof --query-events</code>.</p>
+<p>A <strong>metric</strong> is a characteristic of an application that is calculated from one or more event values. To see a list of all available metrics on a particular NVIDIA GPU, type <code>nvprof --query-metrics</code>. You can also refer to the <a href="https://docs.nvidia.com/cuda/profiler-users-guide/index.html#metrics-reference">metrics reference</a> .</p>
+<p>选项：(<a href="https://docs.nvidia.com/cuda/profiler-users-guide/#command-line-options">https://docs.nvidia.com/cuda/profiler-users-guide/#command-line-options</a>)</p>
+<p><code>Usage: nvprof [options] [application] [application-arguments]</code></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-44-1"><a id="__codelineno-44-1" name="__codelineno-44-1" href="#__codelineno-44-1"></a>--analysis-metrics
+</span><span id="__span-44-2"><a id="__codelineno-44-2" name="__codelineno-44-2" href="#__codelineno-44-2"></a>                        Collect profiling data that can be imported to Visual Profiler&#39;s
+</span><span id="__span-44-3"><a id="__codelineno-44-3" name="__codelineno-44-3" href="#__codelineno-44-3"></a>                        &quot;analysis&quot; mode. Note: Use &quot;--export-profile&quot; to specify
+</span><span id="__span-44-4"><a id="__codelineno-44-4" name="__codelineno-44-4" href="#__codelineno-44-4"></a>                        an export file.
+</span><span id="__span-44-5"><a id="__codelineno-44-5" name="__codelineno-44-5" href="#__codelineno-44-5"></a>
+</span><span id="__span-44-6"><a id="__codelineno-44-6" name="__codelineno-44-6" href="#__codelineno-44-6"></a>--devices &lt;device ids&gt;
+</span><span id="__span-44-7"><a id="__codelineno-44-7" name="__codelineno-44-7" href="#__codelineno-44-7"></a>                        Change the scope of subsequent &quot;--events&quot;, &quot;--metrics&quot;, &quot;--query-events&quot;
+</span><span id="__span-44-8"><a id="__codelineno-44-8" name="__codelineno-44-8" href="#__codelineno-44-8"></a>                        and &quot;--query-metrics&quot; options.
+</span><span id="__span-44-9"><a id="__codelineno-44-9" name="__codelineno-44-9" href="#__codelineno-44-9"></a>                        Allowed values:
+</span><span id="__span-44-10"><a id="__codelineno-44-10" name="__codelineno-44-10" href="#__codelineno-44-10"></a>                                all - change scope to all valid devices
+</span><span id="__span-44-11"><a id="__codelineno-44-11" name="__codelineno-44-11" href="#__codelineno-44-11"></a>                                comma-separated device IDs - change scope to specified
+</span><span id="__span-44-12"><a id="__codelineno-44-12" name="__codelineno-44-12" href="#__codelineno-44-12"></a>                        devices
+</span><span id="__span-44-13"><a id="__codelineno-44-13" name="__codelineno-44-13" href="#__codelineno-44-13"></a>
+</span><span id="__span-44-14"><a id="__codelineno-44-14" name="__codelineno-44-14" href="#__codelineno-44-14"></a>  -e,  --events &lt;event names&gt;
+</span><span id="__span-44-15"><a id="__codelineno-44-15" name="__codelineno-44-15" href="#__codelineno-44-15"></a>                        Specify the events to be profiled on certain device(s). Multiple
+</span><span id="__span-44-16"><a id="__codelineno-44-16" name="__codelineno-44-16" href="#__codelineno-44-16"></a>                        event names separated by comma can be specified. Which device(s)
+</span><span id="__span-44-17"><a id="__codelineno-44-17" name="__codelineno-44-17" href="#__codelineno-44-17"></a>                        are profiled is controlled by the &quot;--devices&quot; option. Otherwise
+</span><span id="__span-44-18"><a id="__codelineno-44-18" name="__codelineno-44-18" href="#__codelineno-44-18"></a>                        events will be collected on all devices.
+</span><span id="__span-44-19"><a id="__codelineno-44-19" name="__codelineno-44-19" href="#__codelineno-44-19"></a>                        For a list of available events, use &quot;--query-events&quot;.
+</span><span id="__span-44-20"><a id="__codelineno-44-20" name="__codelineno-44-20" href="#__codelineno-44-20"></a>                        Use &quot;--events all&quot; to profile all events available for each
+</span><span id="__span-44-21"><a id="__codelineno-44-21" name="__codelineno-44-21" href="#__codelineno-44-21"></a>                        device.
+</span><span id="__span-44-22"><a id="__codelineno-44-22" name="__codelineno-44-22" href="#__codelineno-44-22"></a>                        Use &quot;--devices&quot; and &quot;--kernels&quot; to select a specific kernel
+</span><span id="__span-44-23"><a id="__codelineno-44-23" name="__codelineno-44-23" href="#__codelineno-44-23"></a>                        invocation.
+</span><span id="__span-44-24"><a id="__codelineno-44-24" name="__codelineno-44-24" href="#__codelineno-44-24"></a> --kernels &lt;kernel path syntax&gt;
+</span><span id="__span-44-25"><a id="__codelineno-44-25" name="__codelineno-44-25" href="#__codelineno-44-25"></a>                        Change the scope of subsequent &quot;--events&quot;, &quot;--metrics&quot; options.
+</span><span id="__span-44-26"><a id="__codelineno-44-26" name="__codelineno-44-26" href="#__codelineno-44-26"></a>                        The syntax is as follows:
+</span><span id="__span-44-27"><a id="__codelineno-44-27" name="__codelineno-44-27" href="#__codelineno-44-27"></a>                                &lt;kernel name&gt;
+</span><span id="__span-44-28"><a id="__codelineno-44-28" name="__codelineno-44-28" href="#__codelineno-44-28"></a>                                Limit scope to given kernel name.
+</span><span id="__span-44-29"><a id="__codelineno-44-29" name="__codelineno-44-29" href="#__codelineno-44-29"></a>                        or
+</span><span id="__span-44-30"><a id="__codelineno-44-30" name="__codelineno-44-30" href="#__codelineno-44-30"></a>                                &lt;context id/name&gt;:&lt;stream id/name&gt;:&lt;kernel name&gt;:&lt;invocation&gt;
+</span><span id="__span-44-31"><a id="__codelineno-44-31" name="__codelineno-44-31" href="#__codelineno-44-31"></a>                        The context/stream IDs, names, kernel name and invocation
+</span><span id="__span-44-32"><a id="__codelineno-44-32" name="__codelineno-44-32" href="#__codelineno-44-32"></a>                        can be regular expressions. Empty string matches any number
+</span><span id="__span-44-33"><a id="__codelineno-44-33" name="__codelineno-44-33" href="#__codelineno-44-33"></a>                        or characters. If &lt;context id/name&gt; or &lt;stream id/name&gt;
+</span><span id="__span-44-34"><a id="__codelineno-44-34" name="__codelineno-44-34" href="#__codelineno-44-34"></a>                        is a positive number, it&#39;s strictly matched against the
+</span><span id="__span-44-35"><a id="__codelineno-44-35" name="__codelineno-44-35" href="#__codelineno-44-35"></a>                        CUDA context/stream ID. Otherwise it&#39;s treated as a regular
+</span><span id="__span-44-36"><a id="__codelineno-44-36" name="__codelineno-44-36" href="#__codelineno-44-36"></a>                        expression and matched against the context/stream name specified
+</span><span id="__span-44-37"><a id="__codelineno-44-37" name="__codelineno-44-37" href="#__codelineno-44-37"></a>                        by the NVTX library. If the invocation count is a positive
+</span><span id="__span-44-38"><a id="__codelineno-44-38" name="__codelineno-44-38" href="#__codelineno-44-38"></a>                        number, it&#39;s strictly matched against the invocation of
+</span><span id="__span-44-39"><a id="__codelineno-44-39" name="__codelineno-44-39" href="#__codelineno-44-39"></a>                        the kernel. Otherwise it&#39;s treated as a regular expression.
+</span><span id="__span-44-40"><a id="__codelineno-44-40" name="__codelineno-44-40" href="#__codelineno-44-40"></a>                        Example: --kernels &quot;1:foo:bar:2&quot; will profile any kernel
+</span><span id="__span-44-41"><a id="__codelineno-44-41" name="__codelineno-44-41" href="#__codelineno-44-41"></a>                        whose name contains &quot;bar&quot; and is the 2nd instance on context
+</span><span id="__span-44-42"><a id="__codelineno-44-42" name="__codelineno-44-42" href="#__codelineno-44-42"></a>                        1 and on stream named &quot;foo&quot;.
+</span><span id="__span-44-43"><a id="__codelineno-44-43" name="__codelineno-44-43" href="#__codelineno-44-43"></a>
+</span><span id="__span-44-44"><a id="__codelineno-44-44" name="__codelineno-44-44" href="#__codelineno-44-44"></a>  -m,  --metrics &lt;metric names&gt;
+</span><span id="__span-44-45"><a id="__codelineno-44-45" name="__codelineno-44-45" href="#__codelineno-44-45"></a>                        Specify the metrics to be profiled on certain device(s).
+</span><span id="__span-44-46"><a id="__codelineno-44-46" name="__codelineno-44-46" href="#__codelineno-44-46"></a>                        Multiple metric names separated by comma can be specified.
+</span><span id="__span-44-47"><a id="__codelineno-44-47" name="__codelineno-44-47" href="#__codelineno-44-47"></a>                        Which device(s) are profiled is controlled by the &quot;--devices&quot;
+</span><span id="__span-44-48"><a id="__codelineno-44-48" name="__codelineno-44-48" href="#__codelineno-44-48"></a>                        option. Otherwise metrics will be collected on all devices.
+</span><span id="__span-44-49"><a id="__codelineno-44-49" name="__codelineno-44-49" href="#__codelineno-44-49"></a>                        For a list of available metrics, use &quot;--query-metrics&quot;.
+</span><span id="__span-44-50"><a id="__codelineno-44-50" name="__codelineno-44-50" href="#__codelineno-44-50"></a>                        Use &quot;--metrics all&quot; to profile all metrics available for
+</span><span id="__span-44-51"><a id="__codelineno-44-51" name="__codelineno-44-51" href="#__codelineno-44-51"></a>                        each device.
+</span><span id="__span-44-52"><a id="__codelineno-44-52" name="__codelineno-44-52" href="#__codelineno-44-52"></a>                        Use &quot;--devices&quot; and &quot;--kernels&quot; to select a specific kernel
+</span><span id="__span-44-53"><a id="__codelineno-44-53" name="__codelineno-44-53" href="#__codelineno-44-53"></a>                        invocation.
+</span><span id="__span-44-54"><a id="__codelineno-44-54" name="__codelineno-44-54" href="#__codelineno-44-54"></a>                        Note: &quot;--metrics all&quot; does not include some metrics which
+</span><span id="__span-44-55"><a id="__codelineno-44-55" name="__codelineno-44-55" href="#__codelineno-44-55"></a>                        are needed for Visual Profiler&#39;s source level analysis.
+</span><span id="__span-44-56"><a id="__codelineno-44-56" name="__codelineno-44-56" href="#__codelineno-44-56"></a>                        For that, use &quot;--analysis-metrics&quot;.
+</span><span id="__span-44-57"><a id="__codelineno-44-57" name="__codelineno-44-57" href="#__codelineno-44-57"></a>
+</span><span id="__span-44-58"><a id="__codelineno-44-58" name="__codelineno-44-58" href="#__codelineno-44-58"></a> --pc-sampling-period &lt;period&gt;
+</span><span id="__span-44-59"><a id="__codelineno-44-59" name="__codelineno-44-59" href="#__codelineno-44-59"></a>                        Specify PC Sampling period in cycles,  at which the sampling
+</span><span id="__span-44-60"><a id="__codelineno-44-60" name="__codelineno-44-60" href="#__codelineno-44-60"></a>                        records will be dumped. Allowed values for the period are
+</span><span id="__span-44-61"><a id="__codelineno-44-61" name="__codelineno-44-61" href="#__codelineno-44-61"></a>                        integers between 5 to 31 both inclusive.
+</span><span id="__span-44-62"><a id="__codelineno-44-62" name="__codelineno-44-62" href="#__codelineno-44-62"></a>                        This will set the sampling period to (2^period) cycles
+</span><span id="__span-44-63"><a id="__codelineno-44-63" name="__codelineno-44-63" href="#__codelineno-44-63"></a>                        Default value is a number between 5 and 12 based on the setup.
+</span><span id="__span-44-64"><a id="__codelineno-44-64" name="__codelineno-44-64" href="#__codelineno-44-64"></a>                        Note: Only available for GM20X+.
+</span><span id="__span-44-65"><a id="__codelineno-44-65" name="__codelineno-44-65" href="#__codelineno-44-65"></a>
+</span><span id="__span-44-66"><a id="__codelineno-44-66" name="__codelineno-44-66" href="#__codelineno-44-66"></a> --print-api-summary
+</span><span id="__span-44-67"><a id="__codelineno-44-67" name="__codelineno-44-67" href="#__codelineno-44-67"></a>                  Print a summary of CUDA runtime/driver API calls.
+</span><span id="__span-44-68"><a id="__codelineno-44-68" name="__codelineno-44-68" href="#__codelineno-44-68"></a>
+</span><span id="__span-44-69"><a id="__codelineno-44-69" name="__codelineno-44-69" href="#__codelineno-44-69"></a> --print-api-trace
+</span><span id="__span-44-70"><a id="__codelineno-44-70" name="__codelineno-44-70" href="#__codelineno-44-70"></a>                  Print CUDA runtime/driver API trace.
+</span><span id="__span-44-71"><a id="__codelineno-44-71" name="__codelineno-44-71" href="#__codelineno-44-71"></a>
+</span><span id="__span-44-72"><a id="__codelineno-44-72" name="__codelineno-44-72" href="#__codelineno-44-72"></a> --print-gpu-trace
+</span><span id="__span-44-73"><a id="__codelineno-44-73" name="__codelineno-44-73" href="#__codelineno-44-73"></a>                        Print individual kernel invocations (including CUDA memcpy&#39;s/memset&#39;s)
+</span><span id="__span-44-74"><a id="__codelineno-44-74" name="__codelineno-44-74" href="#__codelineno-44-74"></a>                        and sort them in chronological order. In event/metric profiling
+</span><span id="__span-44-75"><a id="__codelineno-44-75" name="__codelineno-44-75" href="#__codelineno-44-75"></a>                        mode, show events/metrics for each kernel invocation.
+</span><span id="__span-44-76"><a id="__codelineno-44-76" name="__codelineno-44-76" href="#__codelineno-44-76"></a>  -s,  --print-summary
+</span><span id="__span-44-77"><a id="__codelineno-44-77" name="__codelineno-44-77" href="#__codelineno-44-77"></a>                        Print a summary of the profiling result on screen. Note:
+</span><span id="__span-44-78"><a id="__codelineno-44-78" name="__codelineno-44-78" href="#__codelineno-44-78"></a>                        This is the default unless &quot;--export-profile&quot; or other print
+</span><span id="__span-44-79"><a id="__codelineno-44-79" name="__codelineno-44-79" href="#__codelineno-44-79"></a>                        options are used.
+</span><span id="__span-44-80"><a id="__codelineno-44-80" name="__codelineno-44-80" href="#__codelineno-44-80"></a>
+</span><span id="__span-44-81"><a id="__codelineno-44-81" name="__codelineno-44-81" href="#__codelineno-44-81"></a>  -o,  --export-profile &lt;filename&gt;
+</span><span id="__span-44-82"><a id="__codelineno-44-82" name="__codelineno-44-82" href="#__codelineno-44-82"></a>                        Export the result file which can be imported later or opened
+</span><span id="__span-44-83"><a id="__codelineno-44-83" name="__codelineno-44-83" href="#__codelineno-44-83"></a>                        by the NVIDIA Visual Profiler.
+</span><span id="__span-44-84"><a id="__codelineno-44-84" name="__codelineno-44-84" href="#__codelineno-44-84"></a>                                &quot;%p&quot; in the file name string is replaced with the
+</span><span id="__span-44-85"><a id="__codelineno-44-85" name="__codelineno-44-85" href="#__codelineno-44-85"></a>                        process ID of the application being profiled.
+</span><span id="__span-44-86"><a id="__codelineno-44-86" name="__codelineno-44-86" href="#__codelineno-44-86"></a>                                &quot;%q{&lt;ENV&gt;}&quot; in the file name string is replaced
+</span><span id="__span-44-87"><a id="__codelineno-44-87" name="__codelineno-44-87" href="#__codelineno-44-87"></a>                        with the value of the environment variable &quot;&lt;ENV&gt;&quot;. If the
+</span><span id="__span-44-88"><a id="__codelineno-44-88" name="__codelineno-44-88" href="#__codelineno-44-88"></a>                        environment variable is not set it&#39;s an error.
+</span><span id="__span-44-89"><a id="__codelineno-44-89" name="__codelineno-44-89" href="#__codelineno-44-89"></a>                                &quot;%h&quot; in the file name string is replaced with the
+</span><span id="__span-44-90"><a id="__codelineno-44-90" name="__codelineno-44-90" href="#__codelineno-44-90"></a>                        hostname of the system.
+</span><span id="__span-44-91"><a id="__codelineno-44-91" name="__codelineno-44-91" href="#__codelineno-44-91"></a>                                &quot;%%&quot; in the file name string is replaced with &quot;%&quot;.
+</span><span id="__span-44-92"><a id="__codelineno-44-92" name="__codelineno-44-92" href="#__codelineno-44-92"></a>                                Any other character following &quot;%&quot; is illegal.
+</span><span id="__span-44-93"><a id="__codelineno-44-93" name="__codelineno-44-93" href="#__codelineno-44-93"></a>                        By default, this option disables the summary output. Note:
+</span><span id="__span-44-94"><a id="__codelineno-44-94" name="__codelineno-44-94" href="#__codelineno-44-94"></a>                        If the application being profiled creates child processes,
+</span><span id="__span-44-95"><a id="__codelineno-44-95" name="__codelineno-44-95" href="#__codelineno-44-95"></a>                        or if &#39;--profile-all-processes&#39; is used, the &quot;%p&quot; format
+</span><span id="__span-44-96"><a id="__codelineno-44-96" name="__codelineno-44-96" href="#__codelineno-44-96"></a>                        is needed to get correct export files for each process.
+</span></code></pre></div>
+<p>metric 具体含义：<a href="https://docs.nvidia.com/cuda/profiler-users-guide/index.html#metrics-reference">1. Preparing An Application For Profiling — Profiler 12.3 documentation (nvidia.com)</a></p>
+<blockquote>
+<p>The <a href="https://docs.nvidia.com/cuda/profiler-users-guide/index.html#visual-profiler">Visual Profiler</a> is a graphical profiling tool that displays a timeline of your application’s CPU and GPU activity, and that includes an automated analysis engine to identify optimization opportunities. The <a href="https://docs.nvidia.com/cuda/profiler-users-guide/index.html#nvprof">nvprof</a> profiling tool enables you to collect and view profiling data from the command-line.</p>
+</blockquote>
+<p>下一代</p>
+<blockquote>
+<p><strong>Note that Visual Profiler and nvprof will be deprecated in a future CUDA release.</strong> The NVIDIA Volta platform is the last architecture on which these tools are fully supported. It is recommended to use next-generation tools <a href="https://developer.nvidia.com/nsight-systems">NVIDIA Nsight Systems</a> for GPU and CPU sampling and tracing and <a href="https://developer.nvidia.com/nsight-compute">NVIDIA Nsight Compute</a> for GPU kernel profiling.</p>
+</blockquote>
+<p>迁移：<a href="https://docs.nvidia.com/cuda/profiler-users-guide/index.html#migrating-to-nsight-tools-from-visual-profiler-and-nvprof">1. Preparing An Application For Profiling — Profiler 12.3 documentation (nvidia.com)</a></p>
+<ul>
+<li>An <strong>event</strong> is a countable activity, action, or occurrence on a device. It corresponds to a single hardware counter value which is collected during kernel execution. To see a list of all available events on a particular NVIDIA GPU, type <code>nvprof --query-events</code>.</li>
+<li>A <strong>metric</strong> is a characteristic of an application that is calculated from one or more event values. To see a list of all available metrics on a particular NVIDIA GPU, type <code>nvprof --query-metrics</code>. You can also refer to the <a href="https://docs.nvidia.com/cuda/profiler-users-guide/index.html#metrics-reference">metrics reference</a> .</li>
+</ul>
+<p>支持 cudaProfilerStart, Stop CUDA API 用于专注部分代码的分析。nvprof 需要使用--profile-from-start off 来使用</p>
+<p>NVTX 用于给 CPU 代码打上标记，好在工具里看到</p>
+<blockquote>
+<p>To understand what the application’s CPU threads are doing outside of CUDA function calls, you can use the <a href="https://docs.nvidia.com/cuda/profiler-users-guide/index.html#nvidia-tools-extension">NVIDIA Tools Extension API</a> (NVTX). When you add NVTX markers and ranges to your application, the <a href="https://docs.nvidia.com/cuda/profiler-users-guide/index.html#timeline-view">Timeline View</a> shows when your CPU threads are executing within those regions.</p>
+</blockquote>
+<p>The Visual Profiler is available as both a standalone application and as part of Nsight Eclipse Edition. The standalone version of the Visual Profiler, <code>nvvp</code>, is included in the CUDA Toolkit for all supported OSes</p>
+<p>流程</p>
+<ul>
+<li>准备应用程序<ul>
+<li>二进制程序，不用专门修改。但是使用 NVTX 更好</li>
+</ul>
+</li>
+</ul>
+<h2 id="nsight-compute">Nsight Compute<a class="headerlink" href="#nsight-compute" title="Permanent link">&para;</a></h2>
+<p><a href="https://docs.nvidia.com/nsight-compute/index.html">Nsight Compute Documentation (nvidia.com)</a></p>
+<ul>
+<li><a href="https://docs.nvidia.com/nsight-compute/ProfilingGuide/index.html">Kernel Profiling Guide</a><ul>
+<li>Kernel Profiling Guide with metric types and meaning, data collection modes and FAQ for common problems.</li>
+</ul>
+</li>
+<li><a href="https://docs.nvidia.com/nsight-compute/NsightCompute/index.html">Nsight Compute</a><ul>
+<li>NVIDIA Nsight Compute User Interface (UI) manual. Information on all views, controls and workflows within the tool UI. Transitions guide for Visual Profiler.</li>
+</ul>
+</li>
+<li><a href="https://docs.nvidia.com/nsight-compute/NsightComputeCli/index.html">Nsight Compute CLI</a><ul>
+<li>NVIDIA Nsight Compute Command Line Interface (CLI) manual. Information on workflows and options for the command line, including multi-process profiling and NVTX filtering. Transitions guide for Nvprof.</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>nvprof：sm7.5 之前使用，被 nsight compute 替代</li>
+<li>Nsight compute<ul>
+<li>图形化界面</li>
+<li>命令行：ncu</li>
+</ul>
+</li>
+</ul>
+<h3 id="ncu">ncu<a class="headerlink" href="#ncu" title="Permanent link">&para;</a></h3>
+<p><a href="https://docs.nvidia.com/nsight-compute/NsightComputeCli/index.html">Nsight Compute CLI :: Nsight Compute Documentation (nvidia.com)</a></p>
+<h4 id="metric">metric<a class="headerlink" href="#metric" title="Permanent link">&para;</a></h4>
+<p>--metric</p>
+<blockquote>
+<p>Specify all metrics to be profiled, separated by comma. If no --section options are given, only the temporary section containing all metrics listed using this option is collected. If --section options are given in addition to --metrics, all metrics from those sections and from --metrics are collected.</p>
+</blockquote>
+<p>nvprof metric 在 ncu 中的表示
+<a href="https://docs.nvidia.com/nsight-compute/NsightComputeCli/index.html#nvprof-metric-comparison">Nsight Compute CLI :: Nsight Compute Documentation (nvidia.com)</a></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-45-1"><a id="__codelineno-45-1" name="__codelineno-45-1" href="#__codelineno-45-1"></a>|inst_executed|smsp__inst_executed.sum|
+</span></code></pre></div>
+<h3 id="问题">问题<a class="headerlink" href="#问题" title="Permanent link">&para;</a></h3>
+<h4 id="profiling-is-not-supported-on-this-device">Profiling is not supported on this device<a class="headerlink" href="#profiling-is-not-supported-on-this-device" title="Permanent link">&para;</a></h4>
+<p>Nsight compute 支持的 GPU：<a href="https://docs.nvidia.com/nsight-compute/ReleaseNotes/index.html#gpu-support">Release Notes :: Nsight Compute Documentation (nvidia.com)</a></p>
+<ul>
+<li>不支持 pascal（如 gtx1080），从 Volta GV100 开始支持</li>
+</ul>
+<p><img alt="" src="https://imagebed.yfycloud.site/2025/12/a9bcb4969a9c1fbc53f5b54e8af831f7.png" /></p>
+<p><img alt="" src="https://imagebed.yfycloud.site/2025/12/0988219d2ef978ef3b3bdf3864a66268.png" /></p>
+<h4 id="无权限使用-metric">无权限使用 metric<a class="headerlink" href="#无权限使用-metric" title="Permanent link">&para;</a></h4>
+<p>修改/etc/modprobe.d，重启保持修改</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-46-1"><a id="__codelineno-46-1" name="__codelineno-46-1" href="#__codelineno-46-1"></a>sudo vim /etc/modprobe.d/nvidia_profile.conf
+</span><span id="__span-46-2"><a id="__codelineno-46-2" name="__codelineno-46-2" href="#__codelineno-46-2"></a>
+</span><span id="__span-46-3"><a id="__codelineno-46-3" name="__codelineno-46-3" href="#__codelineno-46-3"></a>options nvidia NVreg_RestrictProfilingToAdminUsers=0
+</span><span id="__span-46-4"><a id="__codelineno-46-4" name="__codelineno-46-4" href="#__codelineno-46-4"></a>
+</span><span id="__span-46-5"><a id="__codelineno-46-5" name="__codelineno-46-5" href="#__codelineno-46-5"></a>update-initramfs -u -k all #更新initramfs, -k all指定所有内核版本
+</span></code></pre></div>
+<p>不用重启，临时修改方法</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-47-1"><a id="__codelineno-47-1" name="__codelineno-47-1" href="#__codelineno-47-1"></a>modprobe -rf nvidia_uvm nvidia_drm nvidia_modeset nvidia-vgpu-vfio nvidia
+</span><span id="__span-47-2"><a id="__codelineno-47-2" name="__codelineno-47-2" href="#__codelineno-47-2"></a>
+</span><span id="__span-47-3"><a id="__codelineno-47-3" name="__codelineno-47-3" href="#__codelineno-47-3"></a>modprobe nvidia NVreg_RestrictProfilingToAdminUsers=0
+</span></code></pre></div>
+<p>无法移除时，查看是什么进程占用了 gpu</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-48-1"><a id="__codelineno-48-1" name="__codelineno-48-1" href="#__codelineno-48-1"></a>sudo lsof /dev/nvidia*
+</span></code></pre></div>
+<p>可能需要停止 nvidia-persistenced.service 服务</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-49-1"><a id="__codelineno-49-1" name="__codelineno-49-1" href="#__codelineno-49-1"></a>sudo systemctl status nvidia-persistenced.service
+</span></code></pre></div>
+<h2 id="调试工具">调试工具<a class="headerlink" href="#调试工具" title="Permanent link">&para;</a></h2>
+<h3 id="cuda-memck">cuda-memck<a class="headerlink" href="#cuda-memck" title="Permanent link">&para;</a></h3>
+<p>使用 cuda-memcheck 检查程序是否有非法地址访问。会使得程序执行变慢</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-50-1"><a id="__codelineno-50-1" name="__codelineno-50-1" href="#__codelineno-50-1"></a>cuda-memcheck prog arg...
+</span></code></pre></div>
+<h3 id="cuda-gdb-调试">cuda-gdb 调试<a class="headerlink" href="#cuda-gdb-调试" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-51-1"><a id="__codelineno-51-1" name="__codelineno-51-1" href="#__codelineno-51-1"></a>nvcc -g -G XXX.cu -o XXX # -g对于cpu, -G对于GPU
+</span></code></pre></div>
+<p>cuda-gdb 和 gdb 使用类似。</p>
+<p>cuda 程序如果代码写错，执行时只能从内核日志中看到报错信息（如 Xid 报错），非常不便。</p>
+<p>而使用 cuda-gdb 可以直接定位哪出代码访存错误：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-52-1"><a id="__codelineno-52-1" name="__codelineno-52-1" href="#__codelineno-52-1"></a>(cuda-gdb) r 10 10 10                                                                                CUDA Exception: Warp Illegal Address                                                                 The exception was triggered at PC 0x55555617ff10 (GEMM.cu:82)
+</span><span id="__span-52-2"><a id="__codelineno-52-2" name="__codelineno-52-2" href="#__codelineno-52-2"></a>
+</span><span id="__span-52-3"><a id="__codelineno-52-3" name="__codelineno-52-3" href="#__codelineno-52-3"></a>Thread 1 &quot;GEMM&quot; received signal CUDA_EXCEPTION_14, Warp Illegal Address.
+</span><span id="__span-52-4"><a id="__codelineno-52-4" name="__codelineno-52-4" href="#__codelineno-52-4"></a>[Switching focus to CUDA kernel 0, grid 4, block (0,0,0), thread (0,6,0), device 0, sm 0, warp 6, lane 0] 0x000055555617ff20 in gemm_block_shared&lt;32, 32, 8&gt;&lt;&lt;&lt;(32,32,1),(32,32,1)&gt;&gt;&gt; (A=0x7fffbda00000, B=0x7fffd7800000, C=0x7fffd7c00000, m=1024, k=1024, n=1024) at GEMM.cu:82
+</span><span id="__span-52-5"><a id="__codelineno-52-5" name="__codelineno-52-5" href="#__codelineno-52-5"></a>82                  Bs[ty][tx] = B(iter * bm + ty, bx * bk + tx); //(tx, ty) in block B(iter, bx)
+</span><span id="__span-52-6"><a id="__codelineno-52-6" name="__codelineno-52-6" href="#__codelineno-52-6"></a>(cuda-gdb) quit
+</span><span id="__span-52-7"><a id="__codelineno-52-7" name="__codelineno-52-7" href="#__codelineno-52-7"></a>A debugging session is active.
+</span><span id="__span-52-8"><a id="__codelineno-52-8" name="__codelineno-52-8" href="#__codelineno-52-8"></a>        Inferior 1 [process 32589] will be killed.
+</span><span id="__span-52-9"><a id="__codelineno-52-9" name="__codelineno-52-9" href="#__codelineno-52-9"></a>Quit anyway? (y or n) y
+</span></code></pre></div>
+<h2 id="nvbit">NVbit<a class="headerlink" href="#nvbit" title="Permanent link">&para;</a></h2>
+<div class="language-cpp highlight"><pre><span></span><code><span id="__span-53-1"><a id="__codelineno-53-1" name="__codelineno-53-1" href="#__codelineno-53-1"></a><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">__ballot</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">predicate</span><span class="p">);</span><span class="w"> </span><span class="err">#</span>
+</span></code></pre></div>
+<ul>
+<li>If <code>predicate</code> is nonzero, <code>__ballot</code> returns a value with the <code>N</code>th bit set, where <code>N</code> is the thread index.</li>
+</ul>
+<div class="language-csharp highlight"><pre><span></span><code><span id="__span-54-1"><a id="__codelineno-54-1" name="__codelineno-54-1" href="#__codelineno-54-1"></a><span class="kt">int</span><span class="w"> </span><span class="nf">atomicOr</span><span class="p">(</span><span class="kt">int</span><span class="o">*</span><span class="w"> </span><span class="n">address</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">val</span><span class="p">);</span>
+</span></code></pre></div>
+<h3 id="warp-level-指令">warp-level 指令<a class="headerlink" href="#warp-level-指令" title="Permanent link">&para;</a></h3>
+<p><a href="https://tschmidt23.github.io/cse599i/CSE%20599%20I%20Accelerated%20Computing%20-%20Programming%20GPUs%20Lecture%2018.pdf">CSE 599 I Accelerated Computing - Programming GPUs Lecture 18.pdf (tschmidt23.github.io)</a></p>
+<p><img alt="" src="https://imagebed.yfycloud.site/2025/12/4a9733280ce679dfeceaf72a5515bef2.png" /></p>
+<p><img alt="" src="https://imagebed.yfycloud.site/2025/12/b3fbc730201a8f9e4441516b4e4c1ae0.png" /></p>
+<p><img alt="" src="https://imagebed.yfycloud.site/2025/12/7a88dccecada83f688dbf0bf9a980e80.png" /></p>
+<h2 id="cuda-sdk">cuda SDK<a class="headerlink" href="#cuda-sdk" title="Permanent link">&para;</a></h2>
+<ul>
+<li>HPC SDK
+<a href="https://catalog.ngc.nvidia.com/orgs/nvidia/containers/nvhpc">NVIDIA HPC SDK | NVIDIA NGC</a>
+<a href="https://docs.nvidia.com/hpc-sdk/hpc-sdk-release-notes/index.html">Release Notes Version 23.3 (nvidia.com)</a></li>
+</ul>
+<ul>
+<li>HPC benchmark
+<a href="https://catalog.ngc.nvidia.com/orgs/nvidia/containers/hpc-benchmarks">NVIDIA HPC-Benchmarks | NVIDIA NGC</a></li>
+</ul>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+  
+
+
+
+      
+    </article>
+  </div>
+
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+        
+      
+      <nav class="md-footer__inner md-grid" aria-label="页脚" >
+        
+          
+          <a href="../2023-04-16-CUDA%E6%9E%B6%E6%9E%84/" class="md-footer__link md-footer__link--prev" aria-label="上一页: CUDA 架构">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                上一页
+              </span>
+              <div class="md-ellipsis">
+                CUDA 架构
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../2023-04-16-CUDA%E4%BC%98%E5%8C%96/" class="md-footer__link md-footer__link--next" aria-label="下一页: CUDA 优化">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                下一页
+              </span>
+              <div class="md-ellipsis">
+                CUDA 优化
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/TheRainstorm" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../../..", "features": ["navigation.instant", "navigation.instant.progress", "navigation.tracking", "navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.footer", "content.code.copy", "toc.follow", "toc.integrate"], "search": "../../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../../../../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

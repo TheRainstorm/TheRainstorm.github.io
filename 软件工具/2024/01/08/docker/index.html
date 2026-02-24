@@ -1,0 +1,2368 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="记录一些关于数学、计算机的知识，以及一些日常。">
+      
+      
+      
+        <link rel="canonical" href="https://yfy.cqu.ai/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%85%B7/2024/01/08/docker/">
+      
+      
+        <link rel="prev" href="../../../../../%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/2024/01/07/hexo%E8%BF%81%E7%A7%BB%E5%88%B0mkdocs/">
+      
+      
+        <link rel="next" href="../../../../../%E5%8D%9A%E5%AE%A2--%E7%BD%91%E7%BB%9C/2024/02/27/%E4%B8%BA%E8%AE%BE%E5%A4%87%E5%88%86%E9%85%8D%E9%9D%99%E6%80%81v6-ndppd/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.3">
+    
+    
+      
+        <title>docker - Rain 的随笔</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#安装" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../../../../.." title="Rain 的随笔" class="md-header__button md-logo" aria-label="Rain 的随笔" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Rain 的随笔
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              docker
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    
+  
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="../../../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  博客
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../about/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  关于
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../tags/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  标签
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../series/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  系列
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../tools/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  工具
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../archive/2026/" class="md-tabs__link">
+          
+  
+  
+  归档
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../category/%E4%B8%AA%E4%BA%BA/" class="md-tabs__link">
+          
+  
+  
+  分类
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" hidden>
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../../.." title="Rain 的随笔" class="md-nav__button md-logo" aria-label="Rain 的随笔" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Rain 的随笔
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+    
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      <a href="../../../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    博客
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    关于
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../tags/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    标签
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../series/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    系列
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../tools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    工具
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    归档
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    归档
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2026/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2026
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2025/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2025
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2024/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2024
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2023/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2023
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2022/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2022
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2021/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2021
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2020/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2020
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2019/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2019
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    分类
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    分类
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E4%B8%AA%E4%BA%BA/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    个人
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E5%8D%9A%E5%AE%A2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    博客
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E5%8D%9A%E5%AE%A2--%E7%BD%91%E7%BB%9C/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    博客 &amp; 网络
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    学习笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    折腾记录
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    课程笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%85%B7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    软件工具
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E9%98%85%E8%AF%BB/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    阅读
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+  <div class="md-content md-content--post" data-md-component="content">
+    <div class="md-sidebar md-sidebar--post" data-md-component="sidebar" data-md-type="navigation">
+      <div class="md-sidebar__scrollwrap">
+        <div class="md-sidebar__inner md-post">
+          <nav class="md-nav md-nav--primary">
+            <div class="md-post__back">
+              <div class="md-nav__title md-nav__container">
+                <a href="../../../../.." class="md-nav__link">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+                  <span class="md-ellipsis">
+                    回到主页
+                  </span>
+                </a>
+              </div>
+            </div>
+            
+            <ul class="md-post__meta md-nav__list">
+              <li class="md-nav__item md-nav__item--section">
+                <div class="md-post__title">
+                  <span class="md-ellipsis">
+                    元数据
+                  </span>
+                </div>
+                <nav class="md-nav">
+                  <ul class="md-nav__list">
+                    <li class="md-nav__item">
+                      <div class="md-nav__link">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 19H5V8h14m-3-7v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1V1m-1 11h-5v5h5z"/></svg>
+                        <time datetime="2024-01-08 16:16:56+00:00" class="md-ellipsis">2024年1月8日</time>
+                      </div>
+                    </li>
+                    
+                    
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 3v15h3V3zm3 2 4 13 3-1-4-13zM5 5v13h3V5zM3 19v2h18v-2z"/></svg>
+                          <span class="md-ellipsis">
+                            分类于
+                            
+                              <a href="../../../../../category/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%85%B7/">软件工具</a></span>
+                        </div>
+                      </li>
+                    
+                    
+                      
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20a8 8 0 0 0 8-8 8 8 0 0 0-8-8 8 8 0 0 0-8 8 8 8 0 0 0 8 8m0-18a10 10 0 0 1 10 10 10 10 0 0 1-10 10C6.47 22 2 17.5 2 12A10 10 0 0 1 12 2m.5 5v5.25l4.5 2.67-.75 1.23L11 13V7z"/></svg>
+                          <span class="md-ellipsis">
+                            
+                              需要 8 分钟阅读时间
+                            
+                          </span>
+                        </div>
+                      </li>
+                    
+                  </ul>
+                </nav>
+              </li>
+            </ul>
+            
+          </nav>
+          
+            
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#安装" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        安装
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#docker-命令行" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        docker 命令行
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="docker 命令行">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#container-相关" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        container 相关
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="container 相关">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#restart" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        restart
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#覆盖-entrypoint" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        覆盖 Entrypoint
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#workdir" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        workdir
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#images-相关" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        images 相关
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="images 相关">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#saveload-vs-exportimport-vs-commit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        save/load vs export/import vs commit
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rename" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        rename
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#空间清理" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        空间清理
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#坑" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        坑
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="坑">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#--env-file-字符串不要加引号" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        --env-file 字符串不要加引号
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#docker-高级" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        docker 高级
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="docker 高级">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#volume" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        volume
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="volume">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#复制-volume-trick" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        复制 volume trick
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#docker-compose" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        docker compose
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="docker compose">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#升级镜像" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        升级镜像
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#问题" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        问题
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="问题">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#使用现有-volume" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        使用现有 volume
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dockerfile" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        dockerfile
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="dockerfile">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#copy-与上下文" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        COPY 与上下文
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#entrypointsh-脚本" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        entrypoint.sh 脚本
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="entrypoint.sh 脚本">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#权限-gosu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        权限 gosu
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#entrypoint-cmd-和-entrypointsh-关系" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        entrypoint, cmd 和 entrypoint.sh 关系
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#环境变量" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        环境变量
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="环境变量">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#shell-隔离" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Shell 隔离
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#docker-exec-继承-pid1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        docker exec 继承 PID1
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#其它小-tips" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        其它小 tips
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="其它小 tips">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#add" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ADD
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#发布到-dockerhub" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        发布到 dockerhub
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#清理空间" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        清理空间
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#坑_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        坑
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="坑">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#git-safe-目录导致报错" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        git safe 目录导致报错
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#进阶多阶段构建" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        进阶：多阶段构建
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#docker-实验" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        docker 实验
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="docker 实验">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#软硬链接" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        软硬链接
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gpu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        gpu
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nvidia-container-toolkit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        nvidia-container-toolkit
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="nvidia-container-toolkit">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#nvidia-cuda-镜像" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        nvidia cuda 镜像
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+          
+        </div>
+      </div>
+    </div>
+    <article class="md-content__inner md-typeset">
+      
+        
+  
+
+
+  <nav class="md-tags" >
+    
+      
+      
+      
+      
+        <a href="../../../../../tags/#tag:docker" class="md-tag">docker</a>
+      
+    
+  </nav>
+
+
+
+  <h1>docker</h1>
+
+<p>记录 docker 的使用，包含 docker 常用命令和 Dockerfile 的编写。目前已经成功使用 dockerfile 发布了第一个应用<a href="https://hub.docker.com/repository/docker/rzero/pal/general"><code>rzero/pal</code></a></p>
+<!-- more -->
+<h2 id="安装">安装<a class="headerlink" href="#安装" title="Permanent link">&para;</a></h2>
+<p>ubuntu: <a href="https://docs.docker.com/engine/install/ubuntu/#prerequisites">Install Docker Engine on Ubuntu | Docker Docs</a></p>
+<p>debian: <a href="https://docs.docker.com/engine/install/debian/">Debian | Docker Docs</a></p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">特性</th>
+<th style="text-align: left;">~/.docker/config.json</th>
+<th style="text-align: left;">~/.config/docker/daemon.json</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>核心组件</strong></td>
+<td style="text-align: left;"><strong>Client</strong> (命令行工具)</td>
+<td style="text-align: left;"><strong>Daemon</strong> (后台引擎)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>主要功能</strong></td>
+<td style="text-align: left;">告诉 Docker <strong>你是谁</strong> (Login Auth)</td>
+<td style="text-align: left;">告诉 Docker <strong>怎么运行</strong> (Storage, Net, Log)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>修改生效</strong></td>
+<td style="text-align: left;">立即生效 (下次敲命令时)</td>
+<td style="text-align: left;"><strong>通常需重启 Docker 服务</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>典型场景</strong></td>
+<td style="text-align: left;"><code>docker login</code> 自动生成；配置 CLI 快捷键</td>
+<td style="text-align: left;">配置国内镜像源；修改容器日志大小限制</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>代理设置</strong></td>
+<td style="text-align: left;">影响 <code>docker build</code> 时的网络环境（部分）</td>
+<td style="text-align: left;">影响 <code>docker pull</code> 拉取镜像时的网络环境</td>
+</tr>
+</tbody>
+</table>
+<h2 id="docker-命令行">docker 命令行<a class="headerlink" href="#docker-命令行" title="Permanent link">&para;</a></h2>
+<h3 id="container-相关">container 相关<a class="headerlink" href="#container-相关" title="Permanent link">&para;</a></h3>
+<p>docker run</p>
+<ul>
+<li><code>-it</code>：交互式</li>
+<li><code>-d</code>：启动后进入后台</li>
+<li><code>--rm</code>：运行后删除</li>
+<li><code>--name</code></li>
+<li><code>-p</code>：映射端口，多个端口重复多次-p</li>
+<li><code>-v src:dst</code>：bind mount</li>
+</ul>
+<p>删除容器，<code>-f</code>用于删除正在运行的容器</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>docker<span class="w"> </span>rm<span class="w"> </span>container
+</span></code></pre></div>
+<p>查看容器输出，<code>-f</code>跟踪输出</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>docker logs container -f
+</span></code></pre></div>
+<p>容器运行后，貌似不能修改映射端口和路径。可以通过 update 修改 cpu，内存等限制。
+更新容器 restart policy</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>docker<span class="w"> </span>update<span class="w"> </span>--restart<span class="w"> </span>unless-stopped<span class="w"> </span>redis
+</span></code></pre></div>
+<p>其它
+指定用户运行</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>docker<span class="w"> </span>run<span class="w"> </span>--user<span class="w"> </span>&lt;username_or_UID&gt;<span class="w"> </span>&lt;image_name&gt;
+</span></code></pre></div>
+<h4 id="restart">restart<a class="headerlink" href="#restart" title="Permanent link">&para;</a></h4>
+<ul>
+<li>no<ul>
+<li>Don't automatically restart the container. (Default)</li>
+</ul>
+</li>
+<li><code>on-failure[:max-retries]</code><ul>
+<li>Restart the container if it exits due to an error, which manifests as a non-zero exit code. Optionally, limit the number of times the Docker daemon attempts to restart the container using the :max-retries option. The on-failure policy only prompts a restart if the container exits with a failure. It doesn't restart the container if the daemon restarts.</li>
+</ul>
+</li>
+<li>always<ul>
+<li>Always restart the container if it stops. If it's manually stopped, it's restarted only when Docker daemon restarts or the container itself is manually restarted.</li>
+</ul>
+</li>
+<li>unless-stopped<ul>
+<li>Similar to always, except that when the container is stopped (manually or otherwise), it isn't restarted even after Docker daemon restarts.</li>
+</ul>
+</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>docker run -d --restart unless-stopped redis
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>docker update --restart unless-stopped redis
+</span></code></pre></div>
+<h4 id="覆盖-entrypoint">覆盖 Entrypoint<a class="headerlink" href="#覆盖-entrypoint" title="Permanent link">&para;</a></h4>
+<p>对于那些指定了 entrypoint 为特定程序，如 python 的容易非常有用，可以用于上去维修。</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>docker<span class="w"> </span>run<span class="w"> </span>-it<span class="w"> </span>--rm<span class="w"> </span>--name<span class="w"> </span><span class="nb">test</span><span class="w"> </span>--entrypoint<span class="w"> </span>bash<span class="w"> </span>image
+</span></code></pre></div>
+<p>应用场景：如果容器在反复重启，导致无法 exec 上去。此时就需要使用镜像重新 docker run，然后修改 entrypoint 避免再次失败重启。</p>
+<h4 id="workdir">workdir<a class="headerlink" href="#workdir" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>docker run -it --rm -v $(pwd):/workspace --name test --entrypoint /bin/sh --workdir /workspace node:18-alpine
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>npm install
+</span></code></pre></div>
+<h3 id="images-相关">images 相关<a class="headerlink" href="#images-相关" title="Permanent link">&para;</a></h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>docker<span class="w"> </span>images<span class="w">   </span><span class="c1"># 查看images</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>docker<span class="w"> </span>rmi<span class="w">      </span><span class="c1"># 删除</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>docker<span class="w"> </span><span class="nb">history</span><span class="w"> </span>&lt;image&gt;<span class="w">  </span><span class="c1"># 查看镜像历史记录（不同layer）</span>
+</span></code></pre></div>
+<p>重命名 image</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>docker<span class="w"> </span>tag<span class="w"> </span>old_image_name:old_tag<span class="w"> </span>new_image_name:new_tag
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>docker<span class="w"> </span>rmi<span class="w"> </span>old_image_name:old_tag
+</span></code></pre></div>
+<h4 id="saveload-vs-exportimport-vs-commit">save/load vs export/import vs commit<a class="headerlink" href="#saveload-vs-exportimport-vs-commit" title="Permanent link">&para;</a></h4>
+<p>总结</p>
+<ul>
+<li><code>docker save/load</code>：适用于备份和迁移一个或多个镜像，在不同的 Docker 主机之间传输。</li>
+<li><code>docker export/import</code>：适用于备份容器的文件系统，不包括完整的镜像元数据和历史记录。</li>
+<li><code>docker commit</code>：适用于创建基于容器当前状态的新镜像，包含新的一层 layer</li>
+</ul>
+<p><strong>save/load</strong></p>
+<p>将一个或多个镜像打包成 tar 归档文件，用于备份和传输镜像。
+输出</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>docker<span class="w"> </span>save<span class="w"> </span>--output<span class="w"> </span>busybox.tar<span class="w"> </span>busybox<span class="w">  </span><span class="c1"># 输出到tar文件</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>docker<span class="w"> </span>save<span class="w"> </span>-o<span class="w"> </span>ubuntu.tar<span class="w"> </span>ubuntu:lucid<span class="w"> </span>ubuntu:saucy<span class="w">  </span><span class="c1"># 选择多个tag</span>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>docker<span class="w"> </span>save<span class="w"> </span>myimage:latest<span class="w"> </span><span class="p">|</span><span class="w"> </span>gzip<span class="w"> </span>&gt;<span class="w"> </span>myimage_latest.tar.gz<span class="w"> </span><span class="c1"># 输出到标准输出并使用gzip压缩</span>
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>docker<span class="w"> </span>save<span class="w"> </span>myimage:latest<span class="w"> </span><span class="p">|</span><span class="w"> </span>pv<span class="w"> </span><span class="p">|</span><span class="w"> </span>zstd<span class="w"> </span>&gt;<span class="w"> </span>myimage_latest.zstd
+</span></code></pre></div>
+<p>导入</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>docker<span class="w"> </span>load<span class="w"> </span>--input<span class="o">=</span>file.tar
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>zstd<span class="w"> </span>-d<span class="w"> </span>-c<span class="w"> </span>myimage_latest.tar.zst<span class="w"> </span><span class="p">|</span><span class="w"> </span>docker<span class="w"> </span>load<span class="w">  </span><span class="c1"># -c 输出到标准输出</span>
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>gzip<span class="w"> </span>-d<span class="w"> </span>-c<span class="w"> </span>myimage_latest.tar.zst<span class="w"> </span><span class="p">|</span><span class="w"> </span>docker<span class="w"> </span>load<span class="w">  </span><span class="c1"># -c 输出到标准输出</span>
+</span></code></pre></div>
+<p><strong>export/import</strong></p>
+<p>将容器的文件系统导出为 tar 文件，但不包含镜像的元数据和历史记录。</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>docker export -o container_filesystem.tar container_id
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>docker import container_filesystem.tar new_image_name:new_tag
+</span></code></pre></div>
+<p><strong>commit</strong></p>
+<p>将容器目前的更改保存为新的一个 layer，从而基于该新镜像创建其它容器</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>docker<span class="w"> </span>commit<span class="w"> </span>nginx_base<span class="w"> </span>hello_world_nginx<span class="w">   </span><span class="c1"># 保存为hello_world_nginx镜像</span>
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>docker<span class="w"> </span>commit<span class="w"> </span>--author<span class="w"> </span>amit.sharma@sentinelone.com<span class="w"> </span>--message<span class="w"> </span><span class="s1">&#39;this is a basic nginx image&#39;</span><span class="w"> </span>nginx_base<span class="w"> </span>authored<span class="w"> </span><span class="c1"># 添加author, message信息</span>
+</span></code></pre></div>
+<p>可以通过<code>--change</code>修改原本容器的一些配置</p>
+<ul>
+<li>CMD</li>
+<li>ENTRYPOINT</li>
+<li>ENV</li>
+<li>EXPOSE</li>
+<li>USER</li>
+<li>VOLUME</li>
+<li>WORKDIR</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>docker commit --change=&#39;CMD [&quot;nginx&quot;, &quot;-T&quot;]&#39; nginx_base conf_dump
+</span></code></pre></div>
+<p>example</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>docker run --entrypoint bash --name test --gpus &#39;&quot;device=0&quot;&#39; -u 0:0 -it ghcr.io/k4yt3x/video2x:5.0.0-beta6
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>docker commit --author yuanfuya@qq.com --message &#39;fix interpolate parameter&#39; --change=&#39;Entrypoint [&quot;/usr/bin/python3.8&quot;, &quot;-m&quot;, &quot;video2x&quot;]&#39; test video2x:5.0.0-beta6.2
+</span></code></pre></div>
+<h4 id="rename">rename<a class="headerlink" href="#rename" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>docker tag old_image_name:old_tag new_image_name:new_tag
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>docker rmi old_image_name:old_tag
+</span></code></pre></div>
+<h3 id="空间清理">空间清理<a class="headerlink" href="#空间清理" title="Permanent link">&para;</a></h3>
+<p>docker system df  # 查看空间，包含每种资源可以删除的比例（reclaimable）</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>yfy@ares ➜  ~ docker system df
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>TYPE            TOTAL     ACTIVE    SIZE      RECLAIMABLE
+</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>Images          5         5         7.21GB    74.81MB (1%)
+</span><span id="__span-16-4"><a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a>Containers      5         4         4.824GB   0B (0%)
+</span><span id="__span-16-5"><a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a>Local Volumes   4         2         7.698GB   14.07kB (0%)
+</span><span id="__span-16-6"><a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a>Build Cache     0         0         0B        0B
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>docker image prune # 删除悬挂镜像（docker build），不会删除没使用的
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>docker image prune -a  # 删除未使用的镜像
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>root@docker ➜  litellm git:(master) ✗ docker system df
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>TYPE            TOTAL     ACTIVE    SIZE      RECLAIMABLE
+</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>Images          81        37        67.26GB   36.48GB (54%)
+</span><span id="__span-18-4"><a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a>Containers      42        42        584.6MB   0B (0%)
+</span><span id="__span-18-5"><a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a>Local Volumes   50        17        22.43GB   3.204GB (14%)
+</span><span id="__span-18-6"><a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a>Build Cache     343       0         10.1GB    10.1GB
+</span><span id="__span-18-7"><a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a>root@docker ➜  litellm git:(master) ✗ docker system df
+</span><span id="__span-18-8"><a id="__codelineno-18-8" name="__codelineno-18-8" href="#__codelineno-18-8"></a>TYPE            TOTAL     ACTIVE    SIZE      RECLAIMABLE
+</span><span id="__span-18-9"><a id="__codelineno-18-9" name="__codelineno-18-9" href="#__codelineno-18-9"></a>Images          61        37        42.22GB   11.44GB (27%)
+</span><span id="__span-18-10"><a id="__codelineno-18-10" name="__codelineno-18-10" href="#__codelineno-18-10"></a>Containers      42        42        584.6MB   0B (0%)
+</span><span id="__span-18-11"><a id="__codelineno-18-11" name="__codelineno-18-11" href="#__codelineno-18-11"></a>Local Volumes   50        17        22.43GB   3.204GB (14%)
+</span><span id="__span-18-12"><a id="__codelineno-18-12" name="__codelineno-18-12" href="#__codelineno-18-12"></a>Build Cache     343       0         11.11GB   11.11GB
+</span></code></pre></div>
+<h3 id="坑">坑<a class="headerlink" href="#坑" title="Permanent link">&para;</a></h3>
+<h4 id="--env-file-字符串不要加引号">--env-file 字符串不要加引号<a class="headerlink" href="#--env-file-字符串不要加引号" title="Permanent link">&para;</a></h4>
+<p>若强行添加双引号（如 <code>MY_VAR="value"</code>），引号​<strong>​会被视为值的一部分​</strong>​，导致实际值为 <code>"value"</code>（包含引号），可能引发程序解析错误</p>
+<p><strong><code>docker run -e</code> 命令​</strong>​：<br />
+命令行中需用引号包裹含空格的字符串（如 <code>-e "MY_VAR=With space"</code>），但 <code>.env</code> 文件无需此操作</p>
+<h2 id="docker-高级">docker 高级<a class="headerlink" href="#docker-高级" title="Permanent link">&para;</a></h2>
+<h3 id="volume">volume<a class="headerlink" href="#volume" title="Permanent link">&para;</a></h3>
+<h4 id="复制-volume-trick">复制 volume trick<a class="headerlink" href="#复制-volume-trick" title="Permanent link">&para;</a></h4>
+<p>docker 不直接提供复制 volume 命令</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>docker volume create open-webui_open-webui
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>
+</span><span id="__span-19-3"><a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>docker run --rm \
+</span><span id="__span-19-4"><a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a>       -v open-webui:/from \
+</span><span id="__span-19-5"><a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a>       -v open-webui_open-webui:/to \
+</span><span id="__span-19-6"><a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a>       alpine sh -c &quot;cd /from ; cp -av . /to&quot;
+</span></code></pre></div>
+<h2 id="docker-compose">docker compose<a class="headerlink" href="#docker-compose" title="Permanent link">&para;</a></h2>
+<h3 id="升级镜像">升级镜像<a class="headerlink" href="#升级镜像" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>docker compose pull &amp;&amp; docker compose up -d
+</span></code></pre></div>
+<h3 id="问题">问题<a class="headerlink" href="#问题" title="Permanent link">&para;</a></h3>
+<h4 id="使用现有-volume">使用现有 volume<a class="headerlink" href="#使用现有-volume" title="Permanent link">&para;</a></h4>
+<p>默认创建 <code>项目名_volume</code></p>
+<p>通过指定 <code>extrenal</code> 使用外部创建的 volume</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>volumes: # 将这里也修改为新卷名 
+</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>    open-webui_new:
+</span><span id="__span-21-3"><a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>    # 声明它是一个已经存在的、外部的卷
+</span><span id="__span-21-4"><a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a>    external: true
+</span></code></pre></div>
+<p>也可以将现有卷复制一份到新的名字，docker compose 会自动使用。</p>
+<h2 id="dockerfile">dockerfile<a class="headerlink" href="#dockerfile" title="Permanent link">&para;</a></h2>
+<p>创建 Dockerfile，经常遇到因为某一步错误，导致反复 docker build。其实可以先创建一个基础环境，然后进入环境配置一遍，成功后再写 dockerfile。</p>
+<p>先如下搭建一个基础环境</p>
+<div class="language-Dockerfile highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="k">FROM</span><span class="w"> </span><span class="s">ubuntu:22.04</span>
+</span><span id="__span-22-2"><a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>
+</span><span id="__span-22-3"><a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a><span class="k">RUN</span><span class="w"> </span>apt<span class="w"> </span>update<span class="se">\</span>
+</span><span id="__span-22-4"><a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a><span class="w">  </span><span class="o">&amp;&amp;</span><span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>...<span class="err">\</span>
+</span><span id="__span-22-5"><a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a>
+</span><span id="__span-22-6"><a id="__codelineno-22-6" name="__codelineno-22-6" href="#__codelineno-22-6"></a><span class="k">COPY</span><span class="w"> </span>.<span class="w"> </span>/app<span class="w"> </span>
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>docker build -t app .  # .表示build时的上下文，如果Dockerfile放在项目根目录的话。COPY .便表示将整个项目复制到容器
+</span></code></pre></div>
+<p>然后进入项目，手动安装剩余依赖，直到测试能够运行</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>docker<span class="w"> </span>run<span class="w"> </span>-it<span class="w"> </span>--rm<span class="w"> </span>app<span class="w"> </span>bash
+</span></code></pre></div>
+<p>最后完善 Dockerfile</p>
+<h3 id="copy-与上下文">COPY 与上下文<a class="headerlink" href="#copy-与上下文" title="Permanent link">&para;</a></h3>
+<p>docker copy 只能复制上下文內的文件，可以在更顶级运行 docker build，通过 -f 指定 Dockerfile。</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>docker build -f docker/Dockerfile -t my-image .
+</span></code></pre></div>
+<h3 id="entrypointsh-脚本">entrypoint.sh 脚本<a class="headerlink" href="#entrypointsh-脚本" title="Permanent link">&para;</a></h3>
+<p>使用 entrypoint 脚本可以实现根据用户运行容器时指定的环境变量，设置用户 uid,gid，从而保证容器和 host 文件权限正确。</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>ENTRYPOINT<span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="s2">&quot;/parse-and-link/docker/entrypoint.sh&quot;</span><span class="w"> </span><span class="o">]</span>
+</span></code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a><span class="ch">#!/bin/bash</span>
+</span><span id="__span-27-2"><a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a>
+</span><span id="__span-27-3"><a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a><span class="nv">PUID</span><span class="o">=</span><span class="si">${</span><span class="nv">PUID</span><span class="k">:-</span><span class="nv">1000</span><span class="si">}</span>
+</span><span id="__span-27-4"><a id="__codelineno-27-4" name="__codelineno-27-4" href="#__codelineno-27-4"></a><span class="nv">PGID</span><span class="o">=</span><span class="si">${</span><span class="nv">PGID</span><span class="k">:-</span><span class="nv">1000</span><span class="si">}</span>
+</span><span id="__span-27-5"><a id="__codelineno-27-5" name="__codelineno-27-5" href="#__codelineno-27-5"></a>
+</span><span id="__span-27-6"><a id="__codelineno-27-6" name="__codelineno-27-6" href="#__codelineno-27-6"></a><span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="sb">`</span>id<span class="w"> </span>-u<span class="w"> </span>abc<span class="sb">`</span><span class="w"> </span>-ne<span class="w"> </span><span class="nv">$PUID</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+</span><span id="__span-27-7"><a id="__codelineno-27-7" name="__codelineno-27-7" href="#__codelineno-27-7"></a><span class="w">    </span>usermod<span class="w"> </span>-u<span class="w"> </span><span class="nv">$PUID</span><span class="w"> </span>myuser
+</span><span id="__span-27-8"><a id="__codelineno-27-8" name="__codelineno-27-8" href="#__codelineno-27-8"></a><span class="k">fi</span>
+</span><span id="__span-27-9"><a id="__codelineno-27-9" name="__codelineno-27-9" href="#__codelineno-27-9"></a><span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="sb">`</span>id<span class="w"> </span>-g<span class="w"> </span>abc<span class="sb">`</span><span class="w"> </span>-ne<span class="w"> </span><span class="nv">$PGID</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+</span><span id="__span-27-10"><a id="__codelineno-27-10" name="__codelineno-27-10" href="#__codelineno-27-10"></a><span class="w">    </span>groupmod<span class="w"> </span>-g<span class="w"> </span><span class="nv">$PGID</span><span class="w"> </span>abc
+</span><span id="__span-27-11"><a id="__codelineno-27-11" name="__codelineno-27-11" href="#__codelineno-27-11"></a><span class="k">fi</span>
+</span><span id="__span-27-12"><a id="__codelineno-27-12" name="__codelineno-27-12" href="#__codelineno-27-12"></a>chown<span class="w"> </span>-R<span class="w"> </span>abc:abc<span class="w"> </span>/parse-and-link
+</span><span id="__span-27-13"><a id="__codelineno-27-13" name="__codelineno-27-13" href="#__codelineno-27-13"></a>
+</span><span id="__span-27-14"><a id="__codelineno-27-14" name="__codelineno-27-14" href="#__codelineno-27-14"></a><span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>-n<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$JELLYFIN_URL</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">]</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>-n<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$JELLYFIN_API_KEY</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">]</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+</span><span id="__span-27-15"><a id="__codelineno-27-15" name="__codelineno-27-15" href="#__codelineno-27-15"></a><span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Jellyfin URL is set to </span><span class="nv">$JELLYFIN_URL</span><span class="s2">&quot;</span>
+</span><span id="__span-27-16"><a id="__codelineno-27-16" name="__codelineno-27-16" href="#__codelineno-27-16"></a><span class="w">    </span>su<span class="w"> </span>abc<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;python3 run_config.py -c /config.json -m -j </span><span class="nv">$JELLYFIN_URL</span><span class="s2"> -k </span><span class="nv">$JELLYFIN_API_KEY</span><span class="s2">&quot;</span>
+</span><span id="__span-27-17"><a id="__codelineno-27-17" name="__codelineno-27-17" href="#__codelineno-27-17"></a><span class="k">else</span>
+</span><span id="__span-27-18"><a id="__codelineno-27-18" name="__codelineno-27-18" href="#__codelineno-27-18"></a><span class="w">    </span>su<span class="w"> </span>abc<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;python3 run_config.py -c /config.json -m&quot;</span>
+</span><span id="__span-27-19"><a id="__codelineno-27-19" name="__codelineno-27-19" href="#__codelineno-27-19"></a><span class="k">fi</span>
+</span></code></pre></div>
+<h4 id="权限-gosu">权限 gosu<a class="headerlink" href="#权限-gosu" title="Permanent link">&para;</a></h4>
+<p>dockerfile 中配置了 entrypoint.sh，最后需要 exec command。并且希望以用户 UID:GID 执行。<br />
+看到的例子是 exec gosu command，请问为什么需要gosu，还有其它方法吗</p>
+<p>直接使用 Linux 自带的 <code>su</code> 或 <code>sudo</code> 在 Docker 容器中会有以下几个主要问题：</p>
+<ol>
+<li><strong>PID 1 与 信号转发 (Signal Forwarding)</strong></li>
+</ol>
+<p>在 Docker 中，容器启动的第一个进程（ENTRYPOINT）的 PID 是 1。PID 1 负责接收并处理系统信号（如 <code>SIGTERM</code>、<code>SIGINT</code>）。</p>
+<ul>
+<li><strong><code>su</code>/<code>sudo</code> 的问题</strong>：它们会产生一个子进程来运行你的命令。当你执行 <code>docker stop</code> 时，Docker 向 PID 1 发送信号，但 <code>su</code>/<code>sudo</code> 往往不会将这些信号正确转发给子进程。这会导致你的应用无法优雅停机（Graceful Shutdown），最终在 10 秒后被内核强制 <code>SIGKILL</code>。</li>
+<li><strong><code>gosu</code> 的优点</strong>：它不是通过子进程运行命令，而是通过调用 <code>execvp</code> 系统调用。这意味着 <strong><code>gosu</code> 会替换掉自己</strong>，让你的应用进程直接继承 PID 1。这样应用就能直接接收到 Docker 发送的所有信号。</li>
+</ul>
+<ol>
+<li><strong>TTY 和 缓冲区问题</strong></li>
+</ol>
+<p><code>sudo</code> 有时会要求 TTY（终端），而在自动化容器环境中，这会导致不必要的报错或奇怪的 I/O 行为。<code>gosu</code> 是为了 Docker 专门编写的，非常轻量，避开了这些复杂的 TTY 逻辑。</p>
+<ol>
+<li><strong>典型的使用场景：权限初始化</strong></li>
+</ol>
+<p>很多镜像（如 Redis, Postgres）需要在启动时：</p>
+<ol>
+<li>以 <code>root</code> 身份做一些准备工作（如 <code>chown</code> 挂载的数据卷）。</li>
+<li>准备完成后，降权到普通用户运行服务。<br />
+<code>gosu</code> 正是完成“最后一步降权并替换进程”的最佳工具。</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">工具</th>
+<th style="text-align: left;">推荐指数</th>
+<th style="text-align: left;">特点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong><code>gosu</code></strong></td>
+<td style="text-align: left;">⭐⭐⭐⭐⭐</td>
+<td style="text-align: left;">行业标准，Go 编写，静态编译，稳定。</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong><code>su-exec</code></strong></td>
+<td style="text-align: left;">⭐⭐⭐⭐⭐</td>
+<td style="text-align: left;"><strong>Alpine 镜像首选</strong>，极小。</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong><code>setpriv</code></strong></td>
+<td style="text-align: left;">⭐⭐⭐⭐</td>
+<td style="text-align: left;">现代 Linux 自带，无需额外下载。</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong><code>su</code> / <code>sudo</code></strong></td>
+<td style="text-align: left;">⭐</td>
+<td style="text-align: left;"><strong>不推荐</strong>，存在 PID 1 信号问题和进程残留。</td>
+</tr>
+</tbody>
+</table>
+<h4 id="entrypoint-cmd-和-entrypointsh-关系">entrypoint, cmd 和 entrypoint.sh 关系<a class="headerlink" href="#entrypoint-cmd-和-entrypointsh-关系" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>场景 1：既有 ENTRYPOINT 又有 CMD</strong>
+    - <strong>用途</strong>：制作“<strong>工具型</strong>”镜像（如 <code>curl</code>, <code>git</code>, <code>npm</code>，<code>mysqldump</code>）。
+    - <strong>目的</strong>：让镜像用起来像一个二进制程序，用户只需要跟参数。</li>
+<li><strong>场景 2：只有 CMD (没有 ENTRYPOINT)</strong>
+    - <strong>用途</strong>：制作“<strong>OS型</strong>”或“<strong>应用型</strong>”镜像（如 <code>nginx</code>, <code>tomcat</code>, <code>node</code>）。
+        - 镜像里装了若干个应用，手动选择运行什么，可以运行 bash 进入容器后再运行
+    - <strong>目的</strong>：提供默认启动命令，但允许用户完全重写命令进入容器调试。比如 <code>docker run -it my-nginx /bin/bash</code>，这时候用户输入的 <code>/bin/bash</code> 直接把默认的启动 Nginx 的命令全覆盖了，方便调试。</li>
+<li><strong>场景 3：只有 ENTRYPOINT</strong>
+    - <strong>用途</strong>：强制容器只能干这一件事，且没有默认参数（用户必须在 run 后面手动提供参数，否则报错或运行帮助信息）。
+        - 镜像启动一个不需要参数的服务，“<strong>服务型</strong>”镜像</li>
+<li>场景 3.2：entrypoint.sh
+    - 需要一些初始化的“<strong>服务型</strong>”镜像
+    - 结尾需要使用 exec 执行服务
+        - 保证服务 pid 为 1，可以接受信号
+        - 初始化脚本中的 PATH 等环境变量均会生效
+    - entrypoint 和 cmd 都可以被覆盖
+        - shell 替换</li>
+</ul>
+<p><strong>自己刚开始的理解</strong></p>
+<ul>
+<li>cmd 是 docker run 镜像名后跟的命令，让容器的 PID1 执行什么
+    - 设置了 <code>CMD=["/bin/]</code> 后，docker run 不提供cmd 时，则使用 CMD 指定的</li>
+<li>entrypoint 让容器表现得像一个可执行程序，直接传递参数</li>
+<li>entrypoint.sh：同 entrypoint，好处是可以提前做一些初始化，设置环境变量。
+    - entrypoint.sh 结尾使用 exec $@，把当前 shell 替换成 CMD 命令。</li>
+</ul>
+<blockquote>
+<p><strong>你的理解</strong>：设置了 entrypoint 通常就不需要设置 cmd；设置 entrypoint 再设置 cmd，相当于给 entrypoint 提供一个参数。</p>
+</blockquote>
+<ul>
+<li><strong>修正/完善（这是最容易出错的地方）</strong>：
+    - 这取决于你使用的是 <strong>Exec 格式</strong> 还是 <strong>Shell 格式</strong>。
+    - <strong>情况 A：Exec 格式（推荐，也是你理解的情况）</strong>
+        - <code>ENTRYPOINT ["/bin/ping"]</code>
+        - <code>CMD ["localhost"]</code>
+        - <strong>结果</strong>：<code>CMD</code> 的内容会作为参数追加到 <code>ENTRYPOINT</code> 后面。实际执行：<code>/bin/ping localhost</code>。
+    - <strong>情况 B：Shell 格式（坑点）</strong>
+        - <code>ENTRYPOINT /bin/ping</code> (注意没有方括号)
+        - <code>CMD ["localhost"]</code>
+        - <strong>结果</strong>：<code>ENTRYPOINT</code> 会在 <code>/bin/sh -c</code> 中执行，它会<strong>忽略</strong>任何 <code>CMD</code> 或 <code>docker run</code> 传来的参数。<code>CMD</code> 在这里完全失效。</li>
+</ul>
+<p><strong>为什么要用 exec？（核心原因）</strong></p>
+<ul>
+<li>在 Linux 中，PID 1（一号进程）负责接收信号（如 <code>SIGTERM</code>，即 <code>docker stop</code> 发出的信号）。</li>
+<li>如果不加 <code>exec</code>：你的脚本 <code>entrypoint.sh</code> 是 PID 1，而你运行的程序（<code>$@</code>）是它的子进程。当你 <code>docker stop</code> 时，信号发给了脚本，脚本通常不会转发信号给子进程，导致程序无法优雅关闭，只能等待超时被 <code>SIGKILL</code> 强杀。</li>
+<li>加了 <code>exec</code>：<code>exec</code> 命令会用即将运行的程序<strong>替换</strong>当前的 Shell 进程。你的程序变成了 PID 1，可以直接接收并处理信号，实现优雅退出。</li>
+</ul>
+<h3 id="环境变量">环境变量<a class="headerlink" href="#环境变量" title="Permanent link">&para;</a></h3>
+<p>设置了 entrypoint.sh 后，程序执行时都有哪些环境变量呢？</p>
+<ul>
+<li>entrypoint.sh 结尾 exec 执行的程序肯定是有 entrypoint.sh 中设置的环境变量
+    - entrypoint.sh 在一个 shell 中执行，结尾 exec 直接把当前进程替换成 exec 的程序
+    - entrypoint.sh 中运行的子进程也有该环境</li>
+</ul>
+<h4 id="shell-隔离">Shell 隔离<a class="headerlink" href="#shell-隔离" title="Permanent link">&para;</a></h4>
+<p>GitLab Runner 的 Shell Executor 在执行 Job 时，往往会启动一个新的 Shell（通常是 <code>bash --login</code>）。即使你在 <code>entrypoint.sh</code> 里改了 PATH，或者 source 了 conda.sh，<strong>如果后续的初始化脚本（如</strong> <code>/etc/profile</code> <strong>或</strong> <code>~/.bashrc</code><strong>）重新重置了 PATH</strong>，你的修改就会失效。</p>
+<h4 id="docker-exec-继承-pid1">docker exec 继承 PID1<a class="headerlink" href="#docker-exec-继承-pid1" title="Permanent link">&para;</a></h4>
+<p><strong>注意</strong>：<code>docker exec</code> 进入的 Shell 通常不会自动 source <code>/etc/profile</code> 或运行 <code>entrypoint.sh</code> 里的逻辑，但它<strong>会继承容器主进程（PID 1）的环境变量</strong>。所以如果你的 <code>entrypoint.sh</code> 使用 <code>export</code> 设置了环境变量，<code>docker exec</code> 进去通常是能看到的。</p>
+<h3 id="其它小-tips">其它小 tips<a class="headerlink" href="#其它小-tips" title="Permanent link">&para;</a></h3>
+<p>测试版命令</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>docker<span class="w"> </span>run<span class="w"> </span>-it<span class="w"> </span>--rm<span class="w"> </span>--name<span class="w"> </span><span class="nb">test</span><span class="w"> </span>--entrypoint<span class="w"> </span>bash<span class="w"> </span>rzero/pal:v1.0
+</span></code></pre></div>
+<p>发布版命令</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>--name<span class="w"> </span>pal<span class="w"> </span>--restart<span class="w"> </span>unless-stopped<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-29-2"><a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a><span class="w">  </span>-e<span class="w"> </span><span class="nv">JELLYFIN_URL</span><span class="o">=</span><span class="s2">&quot;xxxxx&quot;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-29-3"><a id="__codelineno-29-3" name="__codelineno-29-3" href="#__codelineno-29-3"></a><span class="w">  </span>-e<span class="w"> </span><span class="nv">JELLYFIN_API_KEY</span><span class="o">=</span><span class="s2">&quot;xxxxx&quot;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-29-4"><a id="__codelineno-29-4" name="__codelineno-29-4" href="#__codelineno-29-4"></a><span class="w">  </span>-v<span class="w"> </span>./config/example.docker.json:/config.json<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-29-5"><a id="__codelineno-29-5" name="__codelineno-29-5" href="#__codelineno-29-5"></a><span class="w">  </span>rzero/pal:v1.0
+</span></code></pre></div>
+<ul>
+<li>使用<code>.dockerignore</code>文件，否则每次修改 Dockerfile，COPY 之后的步骤就都不能复用了</li>
+</ul>
+<h4 id="add">ADD<a class="headerlink" href="#add" title="Permanent link">&para;</a></h4>
+<p>可以解压压缩包</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>WORKDIR /app
+</span><span id="__span-30-2"><a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a>ADD nickdir.tar.gz .
+</span></code></pre></div>
+<h3 id="发布到-dockerhub">发布到 dockerhub<a class="headerlink" href="#发布到-dockerhub" title="Permanent link">&para;</a></h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>docker<span class="w"> </span>login
+</span><span id="__span-31-2"><a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a>
+</span><span id="__span-31-3"><a id="__codelineno-31-3" name="__codelineno-31-3" href="#__codelineno-31-3"></a>docker<span class="w"> </span>tag<span class="w"> </span>local_image:tag<span class="w"> </span>username/repository:tag
+</span><span id="__span-31-4"><a id="__codelineno-31-4" name="__codelineno-31-4" href="#__codelineno-31-4"></a>docker<span class="w"> </span>push<span class="w"> </span>username/repository:tag
+</span></code></pre></div>
+<h3 id="清理空间">清理空间<a class="headerlink" href="#清理空间" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a>docker system df -v  
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-33-1"><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a>docker system prune      # 删除停止的容器、未使用的镜像、网络、悬空镜像[1,3,6](@ref)
+</span><span id="__span-33-2"><a id="__codelineno-33-2" name="__codelineno-33-2" href="#__codelineno-33-2"></a>docker system prune -a   # 强制删除所有未使用的镜像（包括有标签但未引用的镜像）[1,3,6](@ref)
+</span><span id="__span-33-3"><a id="__codelineno-33-3" name="__codelineno-33-3" href="#__codelineno-33-3"></a>docker volume prune      # 删除未挂载的卷[3,11](@ref)
+</span><span id="__span-33-4"><a id="__codelineno-33-4" name="__codelineno-33-4" href="#__codelineno-33-4"></a>docker network prune     # 删除未使用的网络[3](@ref)
+</span><span id="__span-33-5"><a id="__codelineno-33-5" name="__codelineno-33-5" href="#__codelineno-33-5"></a>docker images prune
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-34-1"><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a>docker rmi $(docker images -q -f &quot;dangling=true&quot;)  # 删除无标签的镜像[2,4](@ref)
+</span></code></pre></div>
+<h3 id="坑_1">坑<a class="headerlink" href="#坑_1" title="Permanent link">&para;</a></h3>
+<h4 id="git-safe-目录导致报错">git safe 目录导致报错<a class="headerlink" href="#git-safe-目录导致报错" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-35-1"><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a>git config --global safe.directory &#39;*&#39;
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-36-1"><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a> &gt; [13/17] ADD MLNX_OFED_LINUX-5.7-1.0.2.0-ubuntu22.04-x86_64.tgz /:
+</span><span id="__span-36-2"><a id="__codelineno-36-2" name="__codelineno-36-2" href="#__codelineno-36-2"></a>------
+</span><span id="__span-36-3"><a id="__codelineno-36-3" name="__codelineno-36-3" href="#__codelineno-36-3"></a>Dockerfile:105
+</span><span id="__span-36-4"><a id="__codelineno-36-4" name="__codelineno-36-4" href="#__codelineno-36-4"></a>--------------------
+</span><span id="__span-36-5"><a id="__codelineno-36-5" name="__codelineno-36-5" href="#__codelineno-36-5"></a> 103 |
+</span><span id="__span-36-6"><a id="__codelineno-36-6" name="__codelineno-36-6" href="#__codelineno-36-6"></a> 104 |     # 安装 MLNX OFED 用户态库
+</span><span id="__span-36-7"><a id="__codelineno-36-7" name="__codelineno-36-7" href="#__codelineno-36-7"></a> 105 | &gt;&gt;&gt; ADD MLNX_OFED_LINUX-5.7-1.0.2.0-ubuntu22.04-x86_64.tgz /
+</span><span id="__span-36-8"><a id="__codelineno-36-8" name="__codelineno-36-8" href="#__codelineno-36-8"></a> 106 |     RUN cd /MLNX_OFED_LINUX-5.7-1.0.2.0-ubuntu22.04-x86_64 \
+</span><span id="__span-36-9"><a id="__codelineno-36-9" name="__codelineno-36-9" href="#__codelineno-36-9"></a> 107 |         &amp;&amp; ./mlnxofedinstall --user-space-only --without-fw-update --force
+</span><span id="__span-36-10"><a id="__codelineno-36-10" name="__codelineno-36-10" href="#__codelineno-36-10"></a>--------------------
+</span><span id="__span-36-11"><a id="__codelineno-36-11" name="__codelineno-36-11" href="#__codelineno-36-11"></a>ERROR: failed to solve: Error processing tar file(exit status 1): failed to Lchown &quot;/MLNX_OFED_LINUX-5.7-1.0.2.0-ubuntu22.04-x86_64/DEBS/neohost-sdk_1.5.0-102_amd64.deb&quot; for UID 71873, GID 0 (try increasing the number of subordinate IDs in /etc/subuid and /etc/subgid): lchown /MLNX_OFED_LINUX-5.7-1.0.2.0-ubuntu22.04-x86_64/DEBS/neohost-sdk_1.5.0-102_amd64.deb: invalid argument
+</span></code></pre></div>
+<h3 id="进阶多阶段构建">进阶：多阶段构建<a class="headerlink" href="#进阶多阶段构建" title="Permanent link">&para;</a></h3>
+<p>多阶段构建是为了分离构建环境和运行时环境，减小最终镜像体积。</p>
+<p>构建阶段可使用较大的开发环境（如完整版 <code>python:3.11</code>），而最终阶段改用精简镜像（如 <code>python:3.11-slim</code>），仅复制必要的运行文件（如编译后的代码、依赖包），避免携带构建工具和中间文件</p>
+<ul>
+<li><code>builder</code> 阶段安装依赖<ul>
+<li><code>pip install --user</code> 将包安装到​<strong>​用户级目录​</strong>​ <code>/root/.local/</code><ul>
+<li>二进制文件：<code>/root/.local/bin/</code></li>
+<li>库文件：<code>/root/.local/lib/python3.11/site-packages/</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><code>final</code> 阶段复制并使用依赖<ul>
+<li>从 <code>builder</code> 阶段复制 <code>/root/.local</code> 目录到当前阶段的相同路径，完整保留依赖文件结构</li>
+<li>Python 运行时默认会搜索 <code>sys.path</code> 中的路径（包括用户级目录 <code>/root/.local/lib/python3.11/site-packages/</code>），因此无需额外配置即可导入已安装的包</li>
+</ul>
+</li>
+</ul>
+<h2 id="docker-实验">docker 实验<a class="headerlink" href="#docker-实验" title="Permanent link">&para;</a></h2>
+<h3 id="软硬链接">软硬链接<a class="headerlink" href="#软硬链接" title="Permanent link">&para;</a></h3>
+<p>总结</p>
+<ul>
+<li>软链接需要使用相对路径，并且 src 和 dst（链接）最长相同路径的目录，必须同时存在于 docker 和 host</li>
+<li>硬链接没有任何要求，打上链接的一刻，任何地方均能访问到该文件</li>
+</ul>
+<p>实验：
+host:</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-37-1"><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a>➜<span class="w">  </span><span class="nb">pwd</span>
+</span><span id="__span-37-2"><a id="__codelineno-37-2" name="__codelineno-37-2" href="#__codelineno-37-2"></a>/home/yfy/scripts/test/mnt
+</span><span id="__span-37-3"><a id="__codelineno-37-3" name="__codelineno-37-3" href="#__codelineno-37-3"></a>➜<span class="w">  </span>tree<span class="w"> </span>-L<span class="w"> </span><span class="m">4</span>
+</span><span id="__span-37-4"><a id="__codelineno-37-4" name="__codelineno-37-4" href="#__codelineno-37-4"></a>.
+</span><span id="__span-37-5"><a id="__codelineno-37-5" name="__codelineno-37-5" href="#__codelineno-37-5"></a>├──<span class="w"> </span>Disk1
+</span><span id="__span-37-6"><a id="__codelineno-37-6" name="__codelineno-37-6" href="#__codelineno-37-6"></a>│<span class="w">   </span>├──<span class="w"> </span>links
+</span><span id="__span-37-7"><a id="__codelineno-37-7" name="__codelineno-37-7" href="#__codelineno-37-7"></a>│<span class="w">   </span>│<span class="w">   </span>└──<span class="w"> </span>Movie
+</span><span id="__span-37-8"><a id="__codelineno-37-8" name="__codelineno-37-8" href="#__codelineno-37-8"></a>│<span class="w">   </span>│<span class="w">       </span>├──<span class="w"> </span>aa.mp4<span class="w"> </span>-&gt;<span class="w"> </span>../../Movie/a.mp4
+</span><span id="__span-37-9"><a id="__codelineno-37-9" name="__codelineno-37-9" href="#__codelineno-37-9"></a>│<span class="w">   </span>│<span class="w">       </span>├──<span class="w"> </span>a.mp4<span class="w"> </span>-&gt;<span class="w"> </span>/home/yfy/scripts/test/mnt/Disk1/Movie/a.mp4
+</span><span id="__span-37-10"><a id="__codelineno-37-10" name="__codelineno-37-10" href="#__codelineno-37-10"></a>│<span class="w">   </span>│<span class="w">       </span>└──<span class="w"> </span>b.mp4<span class="w">   </span><span class="c1"># 硬链接</span>
+</span><span id="__span-37-11"><a id="__codelineno-37-11" name="__codelineno-37-11" href="#__codelineno-37-11"></a>│<span class="w">   </span>└──<span class="w"> </span>Movie
+</span><span id="__span-37-12"><a id="__codelineno-37-12" name="__codelineno-37-12" href="#__codelineno-37-12"></a>│<span class="w">       </span>└──<span class="w"> </span>a.mp4<span class="w">  </span><span class="c1"># 原始文件</span>
+</span><span id="__span-37-13"><a id="__codelineno-37-13" name="__codelineno-37-13" href="#__codelineno-37-13"></a>├──<span class="w"> </span>Disk2
+</span><span id="__span-37-14"><a id="__codelineno-37-14" name="__codelineno-37-14" href="#__codelineno-37-14"></a>├──<span class="w"> </span>outfile<span class="w"> </span>-&gt;<span class="w"> </span>../../outfile<span class="w">  </span><span class="c1"># 软链接到docker中看不到的目录文件</span>
+</span><span id="__span-37-15"><a id="__codelineno-37-15" name="__codelineno-37-15" href="#__codelineno-37-15"></a>└──<span class="w"> </span>outfile-hl<span class="w">   </span><span class="c1"># 硬链接</span>
+</span><span id="__span-37-16"><a id="__codelineno-37-16" name="__codelineno-37-16" href="#__codelineno-37-16"></a>
+</span><span id="__span-37-17"><a id="__codelineno-37-17" name="__codelineno-37-17" href="#__codelineno-37-17"></a><span class="m">5</span><span class="w"> </span>directories,<span class="w"> </span><span class="m">7</span><span class="w"> </span>files
+</span></code></pre></div>
+<p>docker:</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-38-1"><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a>ubuntu@dfc03804864c<span class="w"> </span>➜<span class="w">  </span><span class="nb">pwd</span>
+</span><span id="__span-38-2"><a id="__codelineno-38-2" name="__codelineno-38-2" href="#__codelineno-38-2"></a>/workspace/mnt
+</span><span id="__span-38-3"><a id="__codelineno-38-3" name="__codelineno-38-3" href="#__codelineno-38-3"></a>ubuntu@dfc03804864c<span class="w"> </span>➜<span class="w">  </span>tree<span class="w"> </span>-L<span class="w"> </span><span class="m">4</span>
+</span><span id="__span-38-4"><a id="__codelineno-38-4" name="__codelineno-38-4" href="#__codelineno-38-4"></a>.
+</span><span id="__span-38-5"><a id="__codelineno-38-5" name="__codelineno-38-5" href="#__codelineno-38-5"></a><span class="p">|</span>--<span class="w"> </span>Disk1
+</span><span id="__span-38-6"><a id="__codelineno-38-6" name="__codelineno-38-6" href="#__codelineno-38-6"></a><span class="p">|</span><span class="w">   </span><span class="p">|</span>--<span class="w"> </span>Movie
+</span><span id="__span-38-7"><a id="__codelineno-38-7" name="__codelineno-38-7" href="#__codelineno-38-7"></a><span class="p">|</span><span class="w">   </span><span class="p">|</span><span class="w">   </span><span class="sb">`</span>--<span class="w"> </span>a.mp4
+</span><span id="__span-38-8"><a id="__codelineno-38-8" name="__codelineno-38-8" href="#__codelineno-38-8"></a><span class="p">|</span><span class="w">   </span><span class="sb">`</span>--<span class="w"> </span>links
+</span><span id="__span-38-9"><a id="__codelineno-38-9" name="__codelineno-38-9" href="#__codelineno-38-9"></a><span class="p">|</span><span class="w">       </span><span class="sb">`</span>--<span class="w"> </span>Movie
+</span><span id="__span-38-10"><a id="__codelineno-38-10" name="__codelineno-38-10" href="#__codelineno-38-10"></a><span class="p">|</span><span class="w">           </span><span class="p">|</span>--<span class="w"> </span>a.mp4<span class="w"> </span>-&gt;<span class="w"> </span>/home/yfy/scripts/test/mnt/Disk1/Movie/a.mp4<span class="w">  </span><span class="o">(</span>无法访问<span class="o">)</span>
+</span><span id="__span-38-11"><a id="__codelineno-38-11" name="__codelineno-38-11" href="#__codelineno-38-11"></a><span class="p">|</span><span class="w">           </span><span class="p">|</span>--<span class="w"> </span>aa.mp4<span class="w"> </span>-&gt;<span class="w"> </span>../Movie/a.mp4<span class="w">  </span><span class="o">(</span>无法访问<span class="o">)</span>
+</span><span id="__span-38-12"><a id="__codelineno-38-12" name="__codelineno-38-12" href="#__codelineno-38-12"></a><span class="p">|</span><span class="w">           </span><span class="p">|</span>--<span class="w"> </span>aaa.mp4<span class="w"> </span>-&gt;<span class="w"> </span>../../Movie/a.mp4<span class="w">  </span>
+</span><span id="__span-38-13"><a id="__codelineno-38-13" name="__codelineno-38-13" href="#__codelineno-38-13"></a><span class="p">|</span><span class="w">           </span><span class="sb">`</span>--<span class="w"> </span>b.mp4
+</span><span id="__span-38-14"><a id="__codelineno-38-14" name="__codelineno-38-14" href="#__codelineno-38-14"></a><span class="p">|</span>--<span class="w"> </span>Disk2
+</span><span id="__span-38-15"><a id="__codelineno-38-15" name="__codelineno-38-15" href="#__codelineno-38-15"></a><span class="p">|</span>--<span class="w"> </span>outfile<span class="w"> </span>-&gt;<span class="w"> </span>../../outfile<span class="w">   </span><span class="o">(</span>无法访问<span class="o">)</span>
+</span><span id="__span-38-16"><a id="__codelineno-38-16" name="__codelineno-38-16" href="#__codelineno-38-16"></a><span class="sb">`</span>--<span class="w"> </span>outfile-hl<span class="w">  </span><span class="o">(</span>无法访问<span class="o">)</span>
+</span><span id="__span-38-17"><a id="__codelineno-38-17" name="__codelineno-38-17" href="#__codelineno-38-17"></a>
+</span><span id="__span-38-18"><a id="__codelineno-38-18" name="__codelineno-38-18" href="#__codelineno-38-18"></a><span class="m">5</span><span class="w"> </span>directories,<span class="w"> </span><span class="m">7</span><span class="w"> </span>files
+</span></code></pre></div>
+<p>在 docker 和 host 中查看 outfile-hl 的 inode 可以看到和源文件 outfile 是相同的</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-39-1"><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a>➜  ls -i ../../outfile
+</span><span id="__span-39-2"><a id="__codelineno-39-2" name="__codelineno-39-2" href="#__codelineno-39-2"></a>1091603 -rw-rw-r-- 2 yfy yfy 0 12月  9 16:57 ../../outfile
+</span><span id="__span-39-3"><a id="__codelineno-39-3" name="__codelineno-39-3" href="#__codelineno-39-3"></a>
+</span><span id="__span-39-4"><a id="__codelineno-39-4" name="__codelineno-39-4" href="#__codelineno-39-4"></a>➜  ls -i outfile-hl
+</span><span id="__span-39-5"><a id="__codelineno-39-5" name="__codelineno-39-5" href="#__codelineno-39-5"></a>1091603 -rw-rw-r-- 2 yfy yfy 0 12月  9 16:57 outfile-hl
+</span></code></pre></div>
+<h3 id="gpu">gpu<a class="headerlink" href="#gpu" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-40-1"><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a>Error response from daemon: failed to create task for container: failed to create shim task: OCI runtime create failed: runc create failed: unable to start container process: error during container init: error running hook #0: error running hook: exit status 1, stdout: , stderr: Auto-detected mode as &#39;legacy&#39;
+</span><span id="__span-40-2"><a id="__codelineno-40-2" name="__codelineno-40-2" href="#__codelineno-40-2"></a>nvidia-container-cli: initialization error: nvml error: driver/library version mismatch: unknown
+</span><span id="__span-40-3"><a id="__codelineno-40-3" name="__codelineno-40-3" href="#__codelineno-40-3"></a>Error: failed to start containers: jellyfin
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-41-1"><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a>[Sat Apr 13 23:38:47 2024] NVRM: API mismatch: the client has the version 535.171.04, but
+</span><span id="__span-41-2"><a id="__codelineno-41-2" name="__codelineno-41-2" href="#__codelineno-41-2"></a>                           NVRM: this kernel module has the version 535.161.07.  Please
+</span><span id="__span-41-3"><a id="__codelineno-41-3" name="__codelineno-41-3" href="#__codelineno-41-3"></a>                           NVRM: make sure that this kernel module and all NVIDIA driver
+</span><span id="__span-41-4"><a id="__codelineno-41-4" name="__codelineno-41-4" href="#__codelineno-41-4"></a>                           NVRM: components have the same version.
+</span></code></pre></div>
+<h2 id="nvidia-container-toolkit">nvidia-container-toolkit<a class="headerlink" href="#nvidia-container-toolkit" title="Permanent link">&para;</a></h2>
+<p>nvidia runtime</p>
+<p>nvidia-container-runtime 已经被 nvidia-container-toolkit  替代了： <a href="https://github.com/NVIDIA/nvidia-container-runtime">NVIDIA/nvidia-container-runtime: NVIDIA container runtime (github.com)</a></p>
+<p>安装教程</p>
+<p><a href="https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html">Installing the NVIDIA Container Toolkit — NVIDIA Container Toolkit 1.16.0 documentation</a></p>
+<p>Configure the container runtime by using the <code>nvidia-ctk</code> command:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-42-1"><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a>sudo nvidia-ctk runtime configure --runtime=docker
+</span><span id="__span-42-2"><a id="__codelineno-42-2" name="__codelineno-42-2" href="#__codelineno-42-2"></a>
+</span><span id="__span-42-3"><a id="__codelineno-42-3" name="__codelineno-42-3" href="#__codelineno-42-3"></a>sudo systemctl restart docker
+</span></code></pre></div>
+<h3 id="nvidia-cuda-镜像">nvidia cuda 镜像<a class="headerlink" href="#nvidia-cuda-镜像" title="Permanent link">&para;</a></h3>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+  
+
+
+
+      
+    </article>
+  </div>
+
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+        
+      
+      <nav class="md-footer__inner md-grid" aria-label="页脚" >
+        
+          
+          <a href="../../../../../%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/2024/01/07/hexo%E8%BF%81%E7%A7%BB%E5%88%B0mkdocs/" class="md-footer__link md-footer__link--prev" aria-label="上一页: hexo 迁移到 mkdoc">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                上一页
+              </span>
+              <div class="md-ellipsis">
+                hexo 迁移到 mkdoc
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../../../../../%E5%8D%9A%E5%AE%A2--%E7%BD%91%E7%BB%9C/2024/02/27/%E4%B8%BA%E8%AE%BE%E5%A4%87%E5%88%86%E9%85%8D%E9%9D%99%E6%80%81v6-ndppd/" class="md-footer__link md-footer__link--next" aria-label="下一页: 为设备分配静态 v6 基于 ndppd">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                下一页
+              </span>
+              <div class="md-ellipsis">
+                为设备分配静态 v6 基于 ndppd
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/TheRainstorm" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../../..", "features": ["navigation.instant", "navigation.instant.progress", "navigation.tracking", "navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.footer", "content.code.copy", "toc.follow", "toc.integrate"], "search": "../../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../../../../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,1723 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="记录一些关于数学、计算机的知识，以及一些日常。">
+      
+      
+      
+        <link rel="canonical" href="https://yfy.cqu.ai/%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/2022/02/13/2022-02-13-openwrt%E8%B7%AF%E7%94%B1%E5%99%A8%E9%80%89%E6%8B%A9/">
+      
+      
+        <link rel="prev" href="../2022-02-13-openwrt%E9%85%8D%E7%BD%AE/">
+      
+      
+        <link rel="next" href="../2022-02-13-openwrt%E7%BC%96%E8%AF%91/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.3">
+    
+    
+      
+        <title>openwrt 路由器选择 - Rain 的随笔</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#路由器相关知识" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../../../../.." title="Rain 的随笔" class="md-header__button md-logo" aria-label="Rain 的随笔" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Rain 的随笔
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              openwrt 路由器选择
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    
+  
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="../../../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  博客
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../about/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  关于
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../tags/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  标签
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../series/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  系列
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../tools/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  工具
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../archive/2026/" class="md-tabs__link">
+          
+  
+  
+  归档
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../category/%E4%B8%AA%E4%BA%BA/" class="md-tabs__link">
+          
+  
+  
+  分类
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" hidden>
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../../.." title="Rain 的随笔" class="md-nav__button md-logo" aria-label="Rain 的随笔" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Rain 的随笔
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+    
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      <a href="../../../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    博客
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    关于
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../tags/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    标签
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../series/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    系列
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../tools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    工具
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    归档
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    归档
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2026/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2026
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2025/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2025
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2024/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2024
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2023/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2023
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2022/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2022
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2021/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2021
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2020/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2020
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2019/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2019
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    分类
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    分类
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E4%B8%AA%E4%BA%BA/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    个人
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E5%8D%9A%E5%AE%A2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    博客
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E5%8D%9A%E5%AE%A2--%E7%BD%91%E7%BB%9C/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    博客 &amp; 网络
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    学习笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    折腾记录
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    课程笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%85%B7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    软件工具
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E9%98%85%E8%AF%BB/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    阅读
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+  <div class="md-content md-content--post" data-md-component="content">
+    <div class="md-sidebar md-sidebar--post" data-md-component="sidebar" data-md-type="navigation">
+      <div class="md-sidebar__scrollwrap">
+        <div class="md-sidebar__inner md-post">
+          <nav class="md-nav md-nav--primary">
+            <div class="md-post__back">
+              <div class="md-nav__title md-nav__container">
+                <a href="../../../../.." class="md-nav__link">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+                  <span class="md-ellipsis">
+                    回到主页
+                  </span>
+                </a>
+              </div>
+            </div>
+            
+            <ul class="md-post__meta md-nav__list">
+              <li class="md-nav__item md-nav__item--section">
+                <div class="md-post__title">
+                  <span class="md-ellipsis">
+                    元数据
+                  </span>
+                </div>
+                <nav class="md-nav">
+                  <ul class="md-nav__list">
+                    <li class="md-nav__item">
+                      <div class="md-nav__link">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 19H5V8h14m-3-7v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1V1m-1 11h-5v5h5z"/></svg>
+                        <time datetime="2022-02-13 01:18:16+00:00" class="md-ellipsis">2022年2月13日</time>
+                      </div>
+                    </li>
+                    
+                    
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 3v15h3V3zm3 2 4 13 3-1-4-13zM5 5v13h3V5zM3 19v2h18v-2z"/></svg>
+                          <span class="md-ellipsis">
+                            分类于
+                            
+                              <a href="../../../../../category/%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/">折腾记录</a></span>
+                        </div>
+                      </li>
+                    
+                    
+                      
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20a8 8 0 0 0 8-8 8 8 0 0 0-8-8 8 8 0 0 0-8 8 8 8 0 0 0 8 8m0-18a10 10 0 0 1 10 10 10 10 0 0 1-10 10C6.47 22 2 17.5 2 12A10 10 0 0 1 12 2m.5 5v5.25l4.5 2.67-.75 1.23L11 13V7z"/></svg>
+                          <span class="md-ellipsis">
+                            
+                              需要 5 分钟阅读时间
+                            
+                          </span>
+                        </div>
+                      </li>
+                    
+                  </ul>
+                </nav>
+              </li>
+            </ul>
+            
+          </nav>
+          
+            
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#路由器相关知识" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        路由器相关知识
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="路由器相关知识">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#基带射频fem芯片" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        基带、射频、FEM芯片
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#光猫-epon-gpon-xg-pon" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        光猫 EPON, GPON, XG-PON
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2022-之前" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2022 之前
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2022 之前">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#小米路由器型号总结" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        小米路由器型号总结
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="小米路由器型号总结">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cpu-分类" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CPU 分类
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cpu对比" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CPU对比
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#小米系列产品" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        小米系列产品
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2023-wifi6产品" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2023 wifi6产品
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2024-新需求" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2024 新需求
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2024 新需求">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#软路由做旁路由" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        软路由做旁路由
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+          
+        </div>
+      </div>
+    </div>
+    <article class="md-content__inner md-typeset">
+      
+        
+  
+
+
+  <nav class="md-tags" >
+    
+      
+      
+      
+      
+        <a href="../../../../../tags/#tag:openwrt" class="md-tag">openwrt</a>
+      
+    
+      
+      
+      
+      
+        <a href="../../../../../tags/#tag:如何实现网络自由" class="md-tag">如何实现网络自由</a>
+      
+    
+  </nav>
+
+
+
+  <h1>openwrt 路由器选择</h1>
+
+<p>记录下自己不同时期，购入路由器硬件时的调研</p>
+<p>发现直接看这里，就有推荐的性价比路由器：<a href="https://www.acwifi.net/0-wifi">特价路由汇总-路由器交流 (acwifi.net)</a></p>
+<!-- more -->
+
+<h2 id="路由器相关知识">路由器相关知识<a class="headerlink" href="#路由器相关知识" title="Permanent link">&para;</a></h2>
+<h3 id="基带射频fem芯片">基带、射频、FEM芯片<a class="headerlink" href="#基带射频fem芯片" title="Permanent link">&para;</a></h3>
+<p>by chatgpt o4</p>
+<ul>
+<li><strong>基带芯片（Baseband Chip）</strong>：负责处理所有的数字信号处理任务。它将从高层协议中接收到的数据转换为适合发送的信号，同时解码接收到的无线信号。基带处理包括调制、编码、加密等操作，是信号从数字数据到无线电信号和从无线电信号回到数字数据的桥梁。</li>
+</ul>
+<ul>
+<li><strong>射频芯片（RF Chip）</strong>：负责无线信号的发射和接收。射频芯片处理信号的调制和解调，将基带芯片处理过的信号转换为可通过天线发射的高频电磁波，同时将从天线接收到的信号转换回供基带芯片处理的信号。射频部分包括放大、滤波和频率合成等操作。</li>
+</ul>
+<p><strong>数据链路层和这些芯片的关系</strong></p>
+<p><strong>数据链路层</strong>（包括 MAC 层）位于基带芯片的上方，负责处理数据帧的组装、控制和发送。而基带芯片和射频芯片则位于更低的物理层，实现实际的信号传输和接收。</p>
+<ul>
+<li><strong>MAC 层</strong>和<strong>基带芯片</strong>：MAC 层控制数据的传输逻辑，基带芯片执行数据调制、编码以及从数据链路层到物理层的信号转换。</li>
+<li><strong>射频芯片</strong>：物理层的核心部分，处理无线信号的物理传输，通过天线进行无线电信号的发射和接收。</li>
+</ul>
+<p>FEM 芯片（Front-End Module）
+FEM 芯片的作用是优化信号的发射和接收质量，降低噪声、增强信号功率，并确保频率选择的精确性。</p>
+<h3 id="光猫-epon-gpon-xg-pon">光猫 EPON, GPON, XG-PON<a class="headerlink" href="#光猫-epon-gpon-xg-pon" title="Permanent link">&para;</a></h3>
+<p>被动光网络（PON）</p>
+<ul>
+<li>XG-PON<ul>
+<li><strong>XG-PON</strong> 是 10G PON 的标准之一，全称为 <strong>10G GPON</strong>。</li>
+<li>它是 <strong>GPON</strong>（Gigabit Passive Optical Network）的升级版本，提供高达 10 Gbps 的下行速率和 2.5 Gbps 的上行速率。</li>
+</ul>
+</li>
+<li>EPON<ul>
+<li><strong>EPON</strong> 基于以太网技术，全称为<strong>Ethernet Passive Optical Network</strong></li>
+<li>它是 IEEE 802.3 标准的一部分，提供对称的 1 Gbps 上行和下行速率。</li>
+<li>EPON 比 GPON 在以太网环境下更易于部署和管理，适用于以太网优先的网络结构。</li>
+</ul>
+</li>
+<li>GPON<ul>
+<li>是 XG-PON 的前一代，提供下行 2.5 Gbps 和上行 1.25 Gbps 的带宽。</li>
+<li>使用了 TDM（时分复用）技术共享带宽，并在全球广泛应用于光纤到户（FTTH）接入。</li>
+</ul>
+</li>
+</ul>
+<p>时分复用</p>
+<p>GPON 使用 <strong>TDM（时分复用, Time Division Multiplexing）</strong> 技术来传输数据。在 GPON 中，OLT（光线路终端）以固定的时间片将数据传送到不同的用户设备（ONT/ONU）。</p>
+<p>EPON 使用 <strong>TDMA（时分多址, Time Division Multiple Access）</strong> 复用技术，这与 GPON 的 TDM 有类似的概念，但在传输层面更加基于以太网协议。</p>
+<p>其它复用</p>
+<ul>
+<li>频分复用（FDM, Frequency Division Multiplexing）：<ul>
+<li>FDM 通过将信号分配到不同的频率范围（频带）上来实现多个信号的并行传输。每个用户占据不同的频率段，不同频率的信号可以同时传输。</li>
+<li>无线通信（如 AM/FM 广播）、有线电视、DSL 等。</li>
+</ul>
+</li>
+<li>码分复用（CDMA, Code Division Multiple Access）：<ul>
+<li>CDMA 通过为每个用户分配一个唯一的编码，将所有用户的数据混合在一起进行传输。接收端根据特定的编码分离出属于自己的信号。</li>
+</ul>
+</li>
+<li>正交频分复用（OFDM, Orthogonal Frequency Division Multiplexing）<ul>
+<li>OFDM 是 FDM 的一种特殊形式，通过将数据分割成多个子载波，每个子载波以正交的方式进行传输，避免频率间的干扰。每个子载波上携带部分数据，因此多个子载波同时传输数据。</li>
+<li><strong>示例</strong>：Wi-Fi（802.11 a/g/n/ac）、4G LTE、数字电视。</li>
+</ul>
+</li>
+<li>波分复用（WDM, Wavelength Division Multiplexing）<ul>
+<li>WDM 是频分复用的一种特例，应用于光纤通信系统中。它将不同波长的光（即不同颜色的光）作为不同的通道，通过同一根光纤同时传输多个光信号。</li>
+</ul>
+</li>
+<li>空分复用（SDM, Space Division Multiplexing）<ul>
+<li>SDM 通过在空间上将信号分离，实现多个信号的并行传输。每个信号通过不同的物理路径（如光纤或天线阵列）传输，互不干扰。</li>
+<li>光纤通信中的多芯光纤、MIMO（Multiple Input Multiple Output）无线通信技术。</li>
+</ul>
+</li>
+</ul>
+<h2 id="2022-之前">2022 之前<a class="headerlink" href="#2022-之前" title="Permanent link">&para;</a></h2>
+<p>如何选择一个可以刷 openwrt 的路由器？</p>
+<ul>
+<li><a href="https://post.smzdm.com/p/awznd6qg/">老房子 WiFi 布网攻略 篇三十八：WiFi 6 梅林或 openwrt 固件路由器入手指南_路由器_什么值得买 (smzdm.com)</a></li>
+<li><a href="https://post.smzdm.com/p/apzkqlrx/">老房子 WiFi 布网攻略 篇二十四：不漏油的路由器不是好矿机，矿渣路由器盘点_路由器_什么值得买 (smzdm.com)</a></li>
+<li>极路由、新路由：<a href="https://www.right.com.cn/forum/thread-8097191-1-1.html">机皇！几种高性价比矿渣路由器比较 - 新手入门及其它 (硬件)-恩山无线论坛 (right.com.cn)</a></li>
+</ul>
+<h3 id="小米路由器型号总结">小米路由器型号总结<a class="headerlink" href="#小米路由器型号总结" title="Permanent link">&para;</a></h3>
+<h4 id="cpu-分类">CPU 分类<a class="headerlink" href="#cpu-分类" title="Permanent link">&para;</a></h4>
+<ul>
+<li>mt7621 型号<ul>
+<li>R3G：咸鱼 50 元左右，有 USB3.0 接口，128MB 的 flash。</li>
+<li>4A 千兆版：咸鱼 70 元左右，外观简约漂亮，16MB NOR flash 有点小。</li>
+<li>C660x：咸鱼 100 多，支持 wifi6</li>
+</ul>
+</li>
+<li>高通型号<ul>
+<li><strong>目前 (22.03) 只有 AX6S 是受 openwrt 官方支持的</strong>，AX6, AX3600 有第三方支持。AX5 等其余未支持<ul>
+<li>不能刷好像是 linux kernel 还不支持高通的 IPQ SoC。</li>
+<li>B 站看到说 AX5 刷 openwrt 需要硬改内存为 1G，好像说高通的 wifi 驱动非常耗内存</li>
+</ul>
+</li>
+<li>AX6S：220 左右</li>
+<li>AX6:250-300 左右</li>
+</ul>
+</li>
+</ul>
+<h4 id="cpu对比">CPU对比<a class="headerlink" href="#cpu对比" title="Permanent link">&para;</a></h4>
+<p>参考：</p>
+<ul>
+<li>[<a href="https://www.right.com.cn/forum/thread-216888-1-1.html">转贴] 无线路由器CPU浅析 MT7621A、 BCM47189 到底谁强？-新手入门及其它(硬件)-恩山无线论坛 (right.com.cn)</a></li>
+</ul>
+<ul>
+<li>树莓派系列处理器：<a href="https://www.raspberrypi.com/documentation/computers/processors.html">Raspberry Pi Documentation - Processors</a><ul>
+<li>Raspberry Pi 2 Model B： BCM2836(quad-core Cortex-A7 )</li>
+<li>Raspberry Pi 3 Model B：BCM2837( quad-core Cortex-A53@1.2)<ul>
+<li>50% faster than the Raspberry Pi 2.</li>
+</ul>
+</li>
+<li>Raspberry Pi 3 Models A+, B+: BCM2837B0(quad-core Cortex-A53@1.4)<ul>
+<li>17% faster than the original Raspberry Pi 3</li>
+</ul>
+</li>
+<li>Raspberry Pi 4 Model B: BCM2837(quad-core Cortex-A72@1.5 GHz)<ul>
+<li>50% faster than the Raspberry Pi 3B+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>ARM核对比：<a href="https://en.wikipedia.org/wiki/List_of_ARM_processors">List of ARM processors - Wikipedia</a><ul>
+<li>Cortex-A7: 1.9 DMIPS/MHz per core</li>
+<li>A53: 2.3 DMIPS/MHz</li>
+<li>A72: 6.3-7.3 DMIPS/MHz</li>
+</ul>
+</li>
+<li>MIPS核：<a href="https://www.mips.com/products/classic/">MIPS Classic Processor Cores - Imagination Technologies</a><ul>
+<li>1004K: 1.6 DMIPS/MHz</li>
+</ul>
+</li>
+<li>74k: 1.93 DMIPS/MHz：CSAC路由器：71</li>
+</ul>
+<ul>
+<li><a href="https://github.com/sawaYch/newifi3-d2-firmware/blob/master/README.md">newifi3-d2-firmware/README.md at master · sawaYch/newifi3-d2-firmware (github.com)</a></li>
+</ul>
+<h4 id="小米系列产品">小米系列产品<a class="headerlink" href="#小米系列产品" title="Permanent link">&para;</a></h4>
+<ul>
+<li>红米 AX5，小米 AX1800 换皮<ul>
+<li>IPQ6000, 4 核 <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#65;&#53;&#51;&#64;&#49;&#46;&#50;&#71;&#104;&#122;">&#65;&#53;&#51;&#64;&#49;&#46;&#50;&#71;&#104;&#122;</a>：[<a href="https://openwrt.org/inbox/toh/xiaomi/xiaomi_ax1800">OpenWrt Wiki] Xiaomi AX1800 (AX5/RA67)</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><strong>红米AX6</strong>，小米AX3600换皮<ul>
+<li>AX6, <strong>IPQ8071A</strong>@1.4GHz, 512(ram) + 128：<a href="https://openwrt.org/inbox/toh/xiaomi/xiaomi_redmi_ax6_ax3000">[OpenWrt Wiki] Xiaomi Redmi AX6 Wi-Fi 6 Mesh Router</a></li>
+<li>AX3600, IPQ8071A, 512 + 256：<a href="https://openwrt.org/inbox/toh/xiaomi/xiaomi_ax3600">[OpenWrt Wiki] Xiaomi AX3600</a></li>
+<li>对比：<a href="https://www.acwifi.net/11176.html">红米AX6拆机，旧款WIFI6无线路由器-路由器交流 (acwifi.net)</a></li>
+</ul>
+</li>
+<li>AX3000<ul>
+<li><strong>红米AX3000（比较常见）</strong>，IPQ5000：双核<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#65;&#53;&#51;&#64;&#49;&#46;&#48;&#71;&#72;&#122;">&#65;&#53;&#51;&#64;&#49;&#46;&#48;&#71;&#72;&#122;</a>, 256(ram) + 128：<a href="https://www.mi.com/shop/buy/detail?product_id=14538">Redmi路由器AX3000立即购买-小米商城</a></li>
+<li>小米AX3000：IPQ5000：双核<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#65;&#53;&#51;&#64;&#49;&#46;&#48;&#71;&#72;&#122;">&#65;&#53;&#51;&#64;&#49;&#46;&#48;&#71;&#72;&#122;</a>, 256(ram) + 128：<a href="https://www.mi.com/shop/buy/detail?product_id=14790">小米路由器AX3000立即购买-小米商城 (mi.com)</a></li>
+<li>红米AX3000模具和AX6S一样，为白色。小米AX3000为黑色四棱柱。</li>
+</ul>
+</li>
+<li>AX5400<ul>
+<li>红米AX5400，IPQ5018：双核<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#65;&#53;&#51;&#64;&#49;&#46;&#48;&#71;&#72;&#122;">&#65;&#53;&#51;&#64;&#49;&#46;&#48;&#71;&#72;&#122;</a>，512(ram) + 128：<a href="https://www.acwifi.net/19451.html">红米AX5400千兆版拆机，看看与电竞版有什么差别-路由器交流 (acwifi.net)</a></li>
+</ul>
+</li>
+<li>AX6000<ul>
+<li>小米AX6000<ul>
+<li>IPQ5018, 2核<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#65;&#53;&#51;&#64;&#49;&#46;&#48;&#71;&#104;&#122;">&#65;&#53;&#51;&#64;&#49;&#46;&#48;&#71;&#104;&#122;</a>, 512(ram) + 128</li>
+<li>使用的SoC IPQ5018为高通沉浸式家庭联网平台，不如高通专业联网平台的IPQ8071A（AX3600上的）</li>
+</ul>
+</li>
+<li><strong>红米AX6000（很强）</strong><ul>
+<li><strong>MT7986A</strong>, 4核<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#65;&#53;&#51;&#64;&#50;&#46;&#48;&#71;&#104;&#122;">&#65;&#53;&#51;&#64;&#50;&#46;&#48;&#71;&#104;&#122;</a>, 512(ram) + 128：[<a href="https://openwrt.org/toh/xiaomi/redmi_ax6000">OpenWrt Wiki] Xiaomi Redmi AX6000</a></li>
+<li><a href="https://www.acwifi.net/19676.html">红米AX6000拆机，最便宜的四核2.0GHz-路由器交流 (acwifi.net)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><img alt="image-20221029213022447" src="https://imagebed.yfycloud.site/2025/12/73bd4747fb2efd24c0c32705b18acf87.png" /></p>
+<p>参考</p>
+<ul>
+<li><a href="https://www.zhihu.com/question/474579126">(33 封私信 / 71 条消息) 路由器红米ax3000和红米ax6选择哪个? - 知乎 (zhihu.com)</a></li>
+<li>小米openwrt页面：<a href="https://openwrt.org/toh/hwdata/xiaomi/start">[OpenWrt Wiki] Xiaomi</a></li>
+<li>常见MediaTek SoC：<a href="https://wikidevi.wi-cat.ru/MediaTek">MediaTek - WikiDevi.Wi-Cat.RU</a></li>
+</ul>
+<h2 id="2023-wifi6产品">2023 wifi6产品<a class="headerlink" href="#2023-wifi6产品" title="Permanent link">&para;</a></h2>
+<p>现在需求wifi6，且信号覆盖广</p>
+<ul>
+<li>小米wr30u：运营商定制版</li>
+<li>360 T7：和上者硬件一摸一样。12v 1A</li>
+</ul>
+<p>wr30u: wifi6: <a href="https://www.acwifi.net/23700.html">小米WR30U无线路由器拆机 AX3000联通定制版-路由器交流 (acwifi.net)</a>
+<a href="https://zhuanlan.zhihu.com/p/640643641">2023年支持刷机的路由器大全（建议收藏） - 知乎 (zhihu.com)</a></p>
+<ul>
+<li>AX1800：cr660x</li>
+<li>AX3000：cr880x：135</li>
+</ul>
+<p><a href="https://www.v2ex.com/t/948845">618 想买台路由器求推荐 - V2EX</a>
+150的T7 512改：<a href="https://www.saraba1st.com/2b/thread-2141173-1-1.html">WR30U路由到了随手测测 - ＰＣ数码 - Stage1st - stage1/s1 游戏动漫论坛 (saraba1st.com)</a></p>
+<h2 id="2024-新需求">2024 新需求<a class="headerlink" href="#2024-新需求" title="Permanent link">&para;</a></h2>
+<p>家里搭建的软路由 + 多 AP 在一次断电后上不了网。无法远程访问无法修复。由于设置了桥接 + 路由器拨号。所以也无法指导父母换回原来的腾达路由器。</p>
+<p>平时和父母通话时，父亲老是抱怨说网络不好。应该是他总是连接到位置不对的 AP，让他断开 wifi 重新连接一下往往能解决问题。</p>
+<p>于是这次决定换一个无线信号好的路由器，采用单个路由器的方案。然后让宽带师傅帮忙安装一下。</p>
+<div class="admonition note">
+<p class="admonition-title">据说维修很曲折</p>
+<p>由于不是移动的路由器，是自己的路由器的问题，收了 30 元的维修费。中午 1 点 打 10086，下午 4 点就来维修了这点不错。据说搞了很久，可能是我设置了桥接的原因，宽带师傅搞了半天没搞定，最后把光猫换了个新的（好像说挺好的，适用于千兆宽带）我也让他帮忙把一楼原本的 AP 接上了。好在 AP 不需要额外设置，插上网线就能用。猜测现在网络应该是光猫拨号，主路由器 dhcp，也就是有两次 NAT</p>
+</div>
+<h3 id="软路由做旁路由">软路由做旁路由<a class="headerlink" href="#软路由做旁路由" title="Permanent link">&para;</a></h3>
+<p>经过这次事件后，意识到网络还是需要简单稳定。软路由做主路由这种方案不适合家里，因为出了问题，根本无法远程指导父母修复。甚至宽带师傅也不知道怎么修复。而且只要问题出在光猫上，运营商就可以免费给我修。因此考虑将软路由作为旁路由。方案如下</p>
+<p><img alt="image.png" src="https://imagebed.yfycloud.site/2025/12/717dc1c1eba161c5fb3f3f28bf2a5cb0.png" /></p>
+<p><img alt="image.png" src="https://imagebed.yfycloud.site/2025/12/486901223b4990a9cf239e5308647524.png" /></p>
+<p>需求</p>
+<ul>
+<li>以后能够刷 openwrt</li>
+<li><strong>无线信号好</strong>，能够覆盖 100 平农村自建房。光纤入户在二楼，因此路由器需要能够覆盖 1 楼 和 2 楼。</li>
+<li>有 2.5 G 接口<ul>
+<li>因为想到既然都升级了，需要把我软路由 2.5 G 口利用起来</li>
+<li>单 2.5 G 和双 2.5 G 选择<ul>
+<li>突然意识到，在我的软路由有 4 口 2.5 G 的情况下。单 2.5 G 够用了，并且还便宜很多。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>发现直接看这里，就有推荐的性价比路由器：<a href="https://www.acwifi.net/0-wifi">特价路由汇总-路由器交流 (acwifi.net)</a></p>
+<p>xdr 4288<a href="https://www.acwifi.net/22095.html">TP-LINK轻舟XDR4288拆机，双频不对称空间流-路由器交流 (acwifi.net)</a></p>
+<blockquote>
+<p>两三台组网用的话，这一台做主路由，也不需要多强的无线。如果要一台全能形的，就在6088和6086之间选择吧。都是低温低热的，相对高通IPQ5000系列方案的机型！京东价格669元，按需选择吧。</p>
+</blockquote>
+<p>xdr 6088：<a href="https://www.acwifi.net/20864.html">轻舟XDR6088拆机，双2.5G网口的无线路由器-路由器交流 (acwifi.net)</a>
+<img alt="image.png" src="https://imagebed.yfycloud.site/2025/12/7615dfe974664a82100a3fa8b13c8a94.png" /></p>
+<p>xdr 5480: <a href="https://www.acwifi.net/14090.html">TP-LINK XDR5480拆机，为啥没有1G瓶颈？-路由器交流 (acwifi.net)</a>
+<img alt="image.png" src="https://imagebed.yfycloud.site/2025/12/73f4ddb4788deda71b2a82f05485e741.png" /></p>
+<ul>
+<li>都说 xdr 5480 信号好。咸鱼价格 265 （2024/09/11）。但是不能刷 op， 有一个 SPF 2.5G 口（SPF 模块大概 50-100元）。适合做 AP。<ul>
+<li>IPQ5018，双核A53 1GHz<ul>
+<li>IPQ5018不集成内存，可以扩展内存，支持eMMC，阉割一下，不可扩展内存，且把256MB内存集成进去，也把EMMC去掉，就变成了IPQ5010了，再把一条PCIe和USB3.0去掉，再减去蓝牙和音频功能，就成了IPQ5000。</li>
+</ul>
+</li>
+<li>256(ram) + 16M</li>
+</ul>
+</li>
+<li>xdr6088。咸鱼价格 419（2024/09/11）。某个版本可以免拆刷 op。双 2.5G<ul>
+<li><strong>7986A</strong> (4 x <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#65;&#53;&#51;&#64;&#50;&#46;&#48;&#71;">&#65;&#53;&#51;&#64;&#50;&#46;&#48;&#71;</a>), 512(ram)+128</li>
+</ul>
+</li>
+</ul>
+<p><img alt="image.png" src="https://imagebed.yfycloud.site/2025/12/ff1168b0277436f05f6ec67b71e43569.png" /></p>
+<p>参考资料</p>
+<p><a href="https://www.chiphell.com/forum.php?mod=viewthread&amp;tid=2537251&amp;extra=&amp;highlight=XDR&amp;page=1">无线信号达到XDR5480/6088同级或以上的可魔改路由 - 电脑讨论(新) - Chiphell - 分享与交流用户体验</a></p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+  
+
+
+
+      
+    </article>
+  </div>
+
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+        
+      
+      <nav class="md-footer__inner md-grid" aria-label="页脚" >
+        
+          
+          <a href="../2022-02-13-openwrt%E9%85%8D%E7%BD%AE/" class="md-footer__link md-footer__link--prev" aria-label="上一页: openwrt 配置">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                上一页
+              </span>
+              <div class="md-ellipsis">
+                openwrt 配置
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../2022-02-13-openwrt%E7%BC%96%E8%AF%91/" class="md-footer__link md-footer__link--next" aria-label="下一页: openwrt 编译">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                下一页
+              </span>
+              <div class="md-ellipsis">
+                openwrt 编译
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/TheRainstorm" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../../..", "features": ["navigation.instant", "navigation.instant.progress", "navigation.tracking", "navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.footer", "content.code.copy", "toc.follow", "toc.integrate"], "search": "../../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../../../../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

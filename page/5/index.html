@@ -1,0 +1,2771 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="记录一些关于数学、计算机的知识，以及一些日常。">
+      
+      
+      
+        <link rel="canonical" href="https://yfy.cqu.ai/page/5/">
+      
+      
+      
+        <link rel="next" href="../../about/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.3">
+    
+    
+      
+        <title>博客 - Rain 的随笔</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#博客" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../.." title="Rain 的随笔" class="md-header__button md-logo" aria-label="Rain 的随笔" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Rain 的随笔
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              博客
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  博客
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../about/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  关于
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../tags/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  标签
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../series/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  系列
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../tools/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  工具
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../archive/2026/" class="md-tabs__link">
+          
+  
+  
+  归档
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../category/%E4%B8%AA%E4%BA%BA/" class="md-tabs__link">
+          
+  
+  
+  分类
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Rain 的随笔" class="md-nav__button md-logo" aria-label="Rain 的随笔" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Rain 的随笔
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+    
+      
+    
+  
+  
+    <li class="md-nav__item">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    博客
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="../.." class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    博客
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#嵌入式技术基础与实践-第五版" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        嵌入式技术基础与实践 第五版
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#非对齐指令总结" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        非对齐指令总结
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#write-blog-in-pc-through-sshing-to-a-mobile-phone" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        write blog in PC through sshing to a mobile phone
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#操作系统第-7-章-作业-死锁" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        操作系统第 7 章 作业 死锁
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#操作系统第六章作业-进程同步" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        操作系统第六章作业 进程同步
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#操作系统第五章作业-cpu-调度" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        操作系统第五章作业 CPU 调度
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#罗小黑战记" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        罗小黑战记
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#操作系统第三章-作业" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        操作系统第三章 作业
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#操作系统第三章-作业" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        操作系统第三章 作业
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#操作系统第二章-作业" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        操作系统第二章 作业
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#操作系统第一章-作业" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        操作系统第一章 作业
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#计算机组成原理-第一章作业" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        计算机组成原理 第一章作业
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#序章" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        序章
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    关于
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tags/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    标签
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../series/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    系列
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    工具
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    归档
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    归档
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../archive/2026/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2026
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../archive/2025/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2025
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../archive/2024/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2024
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../archive/2023/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2023
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../archive/2022/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2022
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../archive/2021/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2021
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../archive/2020/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2020
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../archive/2019/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2019
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    分类
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    分类
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../category/%E4%B8%AA%E4%BA%BA/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    个人
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../category/%E5%8D%9A%E5%AE%A2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    博客
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../category/%E5%8D%9A%E5%AE%A2--%E7%BD%91%E7%BB%9C/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    博客 &amp; 网络
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../category/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    学习笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../category/%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    折腾记录
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../category/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    课程笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../category/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%85%B7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    软件工具
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../category/%E9%98%85%E8%AF%BB/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    阅读
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+  <div class="md-content" data-md-component="content">
+    <div class="md-content__inner">
+      <header class="md-typeset">
+        <h1 id="博客">博客<a class="headerlink" href="#博客" title="Permanent link">&para;</a></h1>
+      </header>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
+          <time datetime="2020-01-01 00:00:00+00:00">2020年1月1日</time></li>
+        
+          <li class="md-meta__item">
+            分类于
+            
+              <a href="../../category/%E9%98%85%E8%AF%BB/" class="md-meta__link">阅读</a></li>
+        
+        
+          
+          <li class="md-meta__item">
+            
+              需要 2 分钟阅读时间
+            
+          </li>
+        
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="嵌入式技术基础与实践-第五版"><a class="toclink" href="../../%E9%98%85%E8%AF%BB/2020/01/01/2020-01-01-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%8A%80%E6%9C%AF%E4%B8%8E%E5%AE%9E%E8%B7%B5/">嵌入式技术基础与实践 第五版</a></h2>
+<h3 id="心得"><a class="toclink" href="../../%E9%98%85%E8%AF%BB/2020/01/01/2020-01-01-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%8A%80%E6%9C%AF%E4%B8%8E%E5%AE%9E%E8%B7%B5/#心得">心得</a></h3>
+<ol>
+<li>
+<p>为什么单片机可以控制灯的亮灭，通用 PC 却没办法控制灯呢？（因为没有 CPU 到 LED 的接口也没有驱动程序）</p>
+</li>
+<li>
+<p>中断向量机制和 MIPS 采用的统一入口地址不太一样。中断向量机制硬件产生中断请求时，中断号是确定了的（通过中断控制器发送中断号），软件可以配置对应中断服务程序。而 MIPS 没有中断号的概念，通过软件检查 Stastus 寄存器，来确定是哪一个中断，跳转到对应中断服务程序。</p>
+<p>中断向量机制的 CPU 通常需要一个中断控制器，连接在总线上。中断控制器会给 CPU 提供中断号。</p>
+</li>
+<li>
+<p>MCU 本质就是一个微型计算机，包含 CPU，存储器，I/O 接口（控制器模块）。嵌入式开发就是要基于 MCU 搭建一个硬件系统（通过 MCU 的 I/O 接口连接各种需要被控制的外设），并逐层向上编写构件（驱动），最后基于构件编写嵌入式应用，从而完成需要的功能。</p>
+</li>
+<li>
+<p>MCU 由于需要通用性，使得用户可以基于 MCU 去搭建自己的系统，驱动自己的外设，因此每个引脚都复用多个功能。通过配置 MCU 内对应控制器的寄存器来配置引脚的功能。</p>
+<p>比如 MSP432 100 个引脚中有 84 个可以配置成 GPIO 引脚。只需要将 MSP432 分配的 GPIO 寄存器中的 PxSEL0, PxSEL1 寄存器（x 表示端口号，有 11 个端口 P1~P10 和 PJ）都置为 0 时，该端口的引脚即为 GPIO 功能。同样可以通过配置 GPIO 寄存器控制引脚方向作为输入还是输出，用于点亮 LED 灯或者接受开关输入。</p>
+<p>再比如 MSP432 有 4 个增强型通用串行通信接口模块 (eUSCI)，也分配了若干寄存器。通过配置寄存器可以将对应引脚配置为 UART 的引脚或 SPI 的引脚。</p>
+<p>但是我们在 FPGA 上搭建 SoC 时，开发板上的灯、拨码开关和 FGPA 芯片的引脚是连好了的（由开发板的提供商基于 FPGA 芯片搭建），也就是说每个引脚作为输入还是输出是已经确定了的。我们能改变的只是——是否使用该外设。当然，不排除保留了一些引脚被接到扩展插口上（那一排排的黑色插孔）。因此在 FPGA 上搭建 SoC 后，实现外设驱动需要对外设的控制器进行配置。而嵌入式开发还多出了配置 MCU 内用于复用的模块寄存器。</p>
+</li>
+</ol>
+
+    
+      <nav class="md-post__action">
+        <a href="../../%E9%98%85%E8%AF%BB/2020/01/01/2020-01-01-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%8A%80%E6%9C%AF%E4%B8%8E%E5%AE%9E%E8%B7%B5/">
+          继续阅读
+        </a>
+      </nav>
+    
+    
+  </div>
+</article>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
+          <time datetime="2019-12-21 02:51:12+00:00">2019年12月21日</time></li>
+        
+          <li class="md-meta__item">
+            分类于
+            
+              <a href="../../category/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/" class="md-meta__link">课程笔记</a></li>
+        
+        
+          
+          <li class="md-meta__item">
+            
+              需要 1 分钟阅读时间
+            
+          </li>
+        
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="非对齐指令总结"><a class="toclink" href="../../%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/2019/12/21/2019-12-21-mips%E9%9D%9E%E5%AF%B9%E9%BD%90%E6%8C%87%E4%BB%A4%E4%B8%8E%E5%A4%A7%E5%B0%8F%E7%AB%AF/">非对齐指令总结</a></h2>
+<h3 id="1-大端与小端"><a class="toclink" href="../../%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/2019/12/21/2019-12-21-mips%E9%9D%9E%E5%AF%B9%E9%BD%90%E6%8C%87%E4%BB%A4%E4%B8%8E%E5%A4%A7%E5%B0%8F%E7%AB%AF/#1-大端与小端">1 大端与小端</a></h3>
+<ul>
+<li>大端：数据的高位位于内存的低地址，数据的地位位于内存的高地址。</li>
+<li>小端：与大端相反。</li>
+</ul>
+<p>事实上大端更符合人的思维，因为在写一个数字时人们更习惯从高位写到低位，且高位是写在左边的。而这可以直接和内存的“图像”对应，而小端则需要把每个字的字节地址颠倒一下才可以。
+例如，一个 32 位的整数 0xffeeddcc，在内存里的存储情况如下。<em>（非对齐，起始地址为 0x01）</em></p>
+<p><strong>大端</strong>:
+           0  1  2  3
+0x00    00ffeedd
+0x01    cc556677
+<strong>小端</strong>:
+           3  2  1  0
+0x00    eeddcc00
+0x01    776655ff
+<em>ps.假设除去该整数存储的空间，字节地址与存储的十六进制数对应，即地址为 0x01 存 11，0x05 存 55，这点用来突出字节地址是多少。</em></p>
+<h3 id="2-非对齐指令"><a class="toclink" href="../../%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/2019/12/21/2019-12-21-mips%E9%9D%9E%E5%AF%B9%E9%BD%90%E6%8C%87%E4%BB%A4%E4%B8%8E%E5%A4%A7%E5%B0%8F%E7%AB%AF/#2-非对齐指令">2 非对齐指令</a></h3>
+<p>instruction
+lwl/swl, lwr/swr
+usage
+lwl t0, offset(s0)</p>
+<p><em>其中的 left，与 shift left 的“左”都表示数据的高位。right 则表示数据的低位。</em></p>
+<p>lwl 表示将内存对应地址所在的字（align_address，即抹掉地址低两位对应地址）的数据低位复制到寄存器数据的高位。寄存器其它部分不变。</p>
+<p>swl 则表示将寄存器的数据高位复制到内存对应数据低位。其它部分不变。
+即
+lwl/swl
+寄存器数据高位↹内存数据低位
+lwr/swr
+寄存器数据低位↹内存数据高位</p>
+<h4 id="1-从1-中读取该整数实例"><a class="toclink" href="../../%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/2019/12/21/2019-12-21-mips%E9%9D%9E%E5%AF%B9%E9%BD%90%E6%8C%87%E4%BB%A4%E4%B8%8E%E5%A4%A7%E5%B0%8F%E7%AB%AF/#1-从1-中读取该整数实例">1 从#1 中读取该整数实例</a></h4>
+<p>大端
+lwl s0, 0(1)
+lwr s0, 3(1)
+小端
+lwr s0, 0(1)
+lwl s0, 3(1)</p>
+<p><em>将整数以图中所示存储到内存中只需将 lw*改为 sw*。</em></p>
+<p>可以以此定义非对齐加载、存储伪指令，
+如 uld(rd, rb) 表示非对齐 load，加载内存[rb+3:rb]的数据，
+uld(rd, rb)=&gt;
+lwl rd, 0(rb)
+lwr rd, 3(rb)
+<em>（可能 uld 是加载 8 字节，待确认）</em></p>
+<h4 id="2-关于-loadstore-多少字节"><a class="toclink" href="../../%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/2019/12/21/2019-12-21-mips%E9%9D%9E%E5%AF%B9%E9%BD%90%E6%8C%87%E4%BB%A4%E4%B8%8E%E5%A4%A7%E5%B0%8F%E7%AB%AF/#2-关于-loadstore-多少字节">2 关于 load/store 多少字节</a></h4>
+<p>n 为地址低 2 位，n=addr[1:0]
+大端
+lwl/swl  4-n
+lwr/swr   n+1
+小端
+lwr/swr 4-n
+lwl/swl n+1</p>
+    
+    
+  </div>
+</article>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
+          <time datetime="2019-12-21 02:38:02+00:00">2019年12月21日</time></li>
+        
+          <li class="md-meta__item">
+            分类于
+            
+              <a href="../../category/%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/" class="md-meta__link">折腾记录</a></li>
+        
+        
+          
+          <li class="md-meta__item">
+            
+              需要 1 分钟阅读时间
+            
+          </li>
+        
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="write-blog-in-pc-through-sshing-to-a-mobile-phone"><a class="toclink" href="../../%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/2019/12/21/2019-12-21-write-blog-in-PC-through-sshing-to-a-mobile-phone/">write blog in PC through sshing to a mobile phone</a></h2>
+<p>这是一篇文章。</p>
+    
+    
+  </div>
+</article>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
+          <time datetime="2019-10-21 20:42:13+00:00">2019年10月21日</time></li>
+        
+          <li class="md-meta__item">
+            分类于
+            
+              <a href="../../category/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/" class="md-meta__link">课程笔记</a></li>
+        
+        
+          
+          <li class="md-meta__item">
+            
+              需要 3 分钟阅读时间
+            
+          </li>
+        
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="操作系统第-7-章-作业-死锁"><a class="toclink" href="../../%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/2019/10/21/2019-10-21-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%AC%E4%B8%83%E7%AB%A0%E4%BD%9C%E4%B8%9A-%E6%AD%BB%E9%94%81/">操作系统第 7 章 作业 死锁</a></h2>
+<hr />
+<h3 id="1"><a class="toclink" href="../../%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/2019/10/21/2019-10-21-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%AC%E4%B8%83%E7%AB%A0%E4%BD%9C%E4%B8%9A-%E6%AD%BB%E9%94%81/#1">1、</a></h3>
+<p>Consider the traffic deadlock depicted in follow figure.</p>
+<p><img alt="deadlock car" src="../../images/2019-10-21-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%AC%E4%B8%83%E7%AB%A0%E4%BD%9C%E4%B8%9A-%E6%AD%BB%E9%94%81/deadlock_car.png" /></p>
+<p>a. Show that the four necessary conditions for deadlock indeed hold in this example.
+b. State a simple rule for avoiding deadlocks in this system.</p>
+<ul>
+<li>a.
+    1. mutual exclusion: 每条道路都只能让一个方向的车通行，且车之间不可能<strong>穿透而过</strong>。
+    2. hold and wait: 四个方向的车辆都占有一条道路，并等待另一方向的车露出空隙。
+    3. no preemption: 每个方向的车都必须等待另一个方向的车主动倒车，无法强迫。
+    4. circular wait：每个方向的车互相等待，形成一个环。</li>
+<li>b. 安排一位交警选择并指挥一个方向的车让出道路。</li>
+</ul>
+<h3 id="2"><a class="toclink" href="../../%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/2019/10/21/2019-10-21-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%AC%E4%B8%83%E7%AB%A0%E4%BD%9C%E4%B8%9A-%E6%AD%BB%E9%94%81/#2">2、</a></h3>
+<p>Consider a system consisting of four resources of the same type that are shared by three processes, each of which needs at most two resources. Show that the system is deadlock free.</p>
+<p>答：反证法，假设形成了死锁。则由每个进程最多需求 2 个资源实例，和死锁必要条件中的 3，4 点可知，唯一的情形是：三个进程各自占有一个资源且等待另一个资源，并形成了一个环。而在该情况下，剩余的一个资源导致死锁不会发生。</p>
+<h3 id="3"><a class="toclink" href="../../%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/2019/10/21/2019-10-21-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%AC%E4%B8%83%E7%AB%A0%E4%BD%9C%E4%B8%9A-%E6%AD%BB%E9%94%81/#3">3、</a></h3>
+<p>Consider a system consisting of m resources of the same type being shared by n processes. Resources can be requested and released by processes only one at a time. Show that the system is deadlock free if the following two conditions hold:</p>
+<ul>
+<li>a. The maximum need of each process is between 1 and m resources.</li>
+<li>b. The sum of all maximum needs is less than m + n.</li>
+</ul>
+<p>$ a. \sum_{i=1}^n Max_i &lt; m+n $
+$ b. Max_i \geq 1 for all i $
+$ c. Need_i = Max_i − Allocation_i $</p>
+<p>If there exists a deadlock state then:
+$ d. \sum_{i=1}^n Allocation_i = m $</p>
+<p>$ a,b,c,d \Rightarrow \sum_{i=1}^n Need_i &lt; n $</p>
+<p>This implies that there exists a process $ P_i $ such that $ Need_i = 0 $. Since $ Max_i &gt;= 1 $, it follows that $ P_i $ has at least one resource, the deadlock can't maintain.</p>
+<h3 id="4"><a class="toclink" href="../../%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/2019/10/21/2019-10-21-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%AC%E4%B8%83%E7%AB%A0%E4%BD%9C%E4%B8%9A-%E6%AD%BB%E9%94%81/#4">4、</a></h3>
+<p>Consider the following snapshot of a system:</p>
+<table>
+<thead>
+<tr>
+<th>PID</th>
+<th>AL.</th>
+<th></th>
+<th></th>
+<th></th>
+<th>MAX</th>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td>A</td>
+<td>B</td>
+<td>C</td>
+<td>D</td>
+<td>A</td>
+<td>B</td>
+<td>C</td>
+<td>D</td>
+</tr>
+<tr>
+<td>P0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>2</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>2</td>
+</tr>
+<tr>
+<td>P1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>7</td>
+<td>5</td>
+<td>0</td>
+</tr>
+<tr>
+<td>P2</td>
+<td>1</td>
+<td>3</td>
+<td>5</td>
+<td>4</td>
+<td>2</td>
+<td>3</td>
+<td>5</td>
+<td>6</td>
+</tr>
+<tr>
+<td>P3</td>
+<td>0</td>
+<td>6</td>
+<td>3</td>
+<td>2</td>
+<td>0</td>
+<td>6</td>
+<td>5</td>
+<td>2</td>
+</tr>
+<tr>
+<td>P4</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>4</td>
+<td>0</td>
+<td>6</td>
+<td>5</td>
+<td>6</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>AV.</th>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A</td>
+<td>B</td>
+<td>C</td>
+<td>D</td>
+</tr>
+<tr>
+<td>1</td>
+<td>5</td>
+<td>2</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<p><em>(p.s. AL.= Allocated:, AV.= Available)</em></p>
+<p>Answer the following questions using the banker's algorithm:
+a. What is the content of the matrix Need?
+b. Is the system in a safe state?
+c. If a request from process $ P_1 $ arrives for (0,4,2,0), can the request be granted immediately?</p>
+<ul>
+<li>a<table>
+<thead>
+<tr>
+<th>PID</th>
+<th>need</th>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td>A</td>
+<td>B</td>
+<td>C</td>
+<td>D</td>
+</tr>
+<tr>
+<td>P0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>P1</td>
+<td>0</td>
+<td>7</td>
+<td>5</td>
+<td>0</td>
+</tr>
+<tr>
+<td>P2</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>2</td>
+</tr>
+<tr>
+<td>P3</td>
+<td>0</td>
+<td>0</td>
+<td>2</td>
+<td>0</td>
+</tr>
+<tr>
+<td>P4</td>
+<td>0</td>
+<td>6</td>
+<td>4</td>
+<td>2</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+<ul>
+<li>b 由银行家算法可知是安全的，序列<span class="arithmatex">\(&lt;0,2,1,3,4&gt;\)</span>为安全序列。</li>
+<li>c 假设满足，则$ Need_{P_1} =(0,11,7,0) <span class="arithmatex">\(，序列\)</span> &lt;0,2,3,4,1&gt; $为安全序列，故可立即满足。</li>
+</ul>
+<h3 id="5"><a class="toclink" href="../../%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/2019/10/21/2019-10-21-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%AC%E4%B8%83%E7%AB%A0%E4%BD%9C%E4%B8%9A-%E6%AD%BB%E9%94%81/#5">5、</a></h3>
+<p>Consider a system with four processes$ P_1, P_2, P_3$ and $ P_4 $, and two resources, $ R_1, R_2 $ respectively. Each resource has two instances. Furthermore:</p>
+<p>$ P_1 $ allocates an instance of $ R_2 $  , and requests an instance of $ R_1 $ ;
+$ P_2 $  allocates an instance of $ R_1 $ , and doesn’t need any other resource;
+$ P_3 $  allocates an instance of $ R_1 $ and requires an instance of $ R_2 $ ;
+$ P_4 $  allocates an instance of $ R_2 $ , and doesn’t need any other resource.
+Answer the following questions:</p>
+<p>a. Draw the resource allocation graph.
+b. Is there a cycle in the graph? If yes name it.
+c. Is the system in deadlock? If yes, explain why. If not, give a possible sequence of executions after which every process completes.</p>
+<ul>
+<li>a. 略</li>
+<li>b. 存在</li>
+<li>c. 不是，$ <P_1, P_4, P_2, P_3,> $</li>
+</ul>
+    
+    
+  </div>
+</article>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
+          <time datetime="2019-10-16 15:19:21+00:00">2019年10月16日</time></li>
+        
+          <li class="md-meta__item">
+            分类于
+            
+              <a href="../../category/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/" class="md-meta__link">课程笔记</a></li>
+        
+        
+          
+          <li class="md-meta__item">
+            
+              需要 2 分钟阅读时间
+            
+          </li>
+        
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="操作系统第六章作业-进程同步"><a class="toclink" href="../../%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/2019/10/16/2019-10-16-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%AC%E5%85%AD%E7%AB%A0%E4%BD%9C%E4%B8%9A-%E8%BF%9B%E7%A8%8B%E5%90%8C%E6%AD%A5/">操作系统第六章作业 进程同步</a></h2>
+<h4 id="1-what-is-the-meaning-of-the-term-busy-waiting"><a class="toclink" href="../../%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/2019/10/16/2019-10-16-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%AC%E5%85%AD%E7%AB%A0%E4%BD%9C%E4%B8%9A-%E8%BF%9B%E7%A8%8B%E5%90%8C%E6%AD%A5/#1-what-is-the-meaning-of-the-term-busy-waiting">1. What is the meaning of the term busy waiting?</a></h4>
+<p>当一个进程位于临界区时，任何其它试图进入临界区的进程都必须在代码中不断地循环。</p>
+<h4 id="2-what-is-the-meaning-of-the-term-spinlocks"><a class="toclink" href="../../%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/2019/10/16/2019-10-16-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%AC%E5%85%AD%E7%AB%A0%E4%BD%9C%E4%B8%9A-%E8%BF%9B%E7%A8%8B%E5%90%8C%E6%AD%A5/#2-what-is-the-meaning-of-the-term-spinlocks">2. What is the meaning of the term spinlocks?</a></h4>
+<p>自旋锁是一种会造成忙等的信号量，在进程等待锁时还需不断运行，占用 cpu 资源。</p>
+<h4 id="3-explain-the-deadlock-and-give-an-example"><a class="toclink" href="../../%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/2019/10/16/2019-10-16-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%AC%E5%85%AD%E7%AB%A0%E4%BD%9C%E4%B8%9A-%E8%BF%9B%E7%A8%8B%E5%90%8C%E6%AD%A5/#3-explain-the-deadlock-and-give-an-example">3. Explain the deadlock and give an example</a></h4>
+<p>若干个进程竞争系统资源，最后每个进程都必须得在其它进程释放资源时才能改变状态，因而无法改变状态，造成死锁。
+如以下程序在 A，B 同时运行时造成死锁。
+A:</p>
+<div class="language-c highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="n">wait</span><span class="p">(</span><span class="n">S</span><span class="p">)</span>
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="n">wait</span><span class="p">(</span><span class="n">Q</span><span class="p">)</span>
+</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a><span class="p">...</span>
+</span><span id="__span-18-4"><a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a><span class="n">signal</span><span class="p">(</span><span class="n">S</span><span class="p">)</span>
+</span><span id="__span-18-5"><a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a><span class="n">signal</span><span class="p">(</span><span class="n">Q</span><span class="p">)</span>
+</span></code></pre></div>
+<p>B:</p>
+<div class="language-c highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="n">wait</span><span class="p">(</span><span class="n">Q</span><span class="p">)</span>
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a><span class="n">wait</span><span class="p">(</span><span class="n">S</span><span class="p">)</span>
+</span><span id="__span-19-3"><a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a><span class="p">...</span>
+</span><span id="__span-19-4"><a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a><span class="n">signal</span><span class="p">(</span><span class="n">S</span><span class="p">)</span>
+</span><span id="__span-19-5"><a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a><span class="n">signal</span><span class="p">(</span><span class="n">Q</span><span class="p">)</span>
+</span></code></pre></div>
+<h4 id="4"><a class="toclink" href="../../%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/2019/10/16/2019-10-16-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%AC%E5%85%AD%E7%AB%A0%E4%BD%9C%E4%B8%9A-%E8%BF%9B%E7%A8%8B%E5%90%8C%E6%AD%A5/#4">4</a></h4>
+<p>Servers can be designed to limit the number of open connections. For example, a server may wish to have only N socket connections at any point in time. As soon as N connections are made, the server will not accept another incoming connection until an existing connection is released. Explain how semaphores can be used by a server to limit the number of concurrent connections. (6.8)</p>
+<p>初始化计数型信号量 connection=N</p>
+<div class="language-C highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="n">wait</span><span class="p">(</span><span class="n">connection</span><span class="p">)</span>
+</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a><span class="c1">//do something</span>
+</span><span id="__span-20-3"><a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a><span class="n">signal</span><span class="p">(</span><span class="n">connection</span><span class="p">)</span>
+</span></code></pre></div>
+<h4 id="5-what-operations-can-be-performed-on-a-semaphore-list-them-and-explain-the-means-of-semaphore-values"><a class="toclink" href="../../%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/2019/10/16/2019-10-16-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%AC%E5%85%AD%E7%AB%A0%E4%BD%9C%E4%B8%9A-%E8%BF%9B%E7%A8%8B%E5%90%8C%E6%AD%A5/#5-what-operations-can-be-performed-on-a-semaphore-list-them-and-explain-the-means-of-semaphore-values">5. What operations can be performed on a semaphore? List them and explain the means of semaphore values</a></h4>
+<p>wait() 和 signal() 操作。
+信号量可分为计数信号量与二进制信号量。计数信号量值域不受限制，代表系统受限资源的数量。
+二进制信号量的值只能为 0 或 1，可表示对临界区的访问权（只能有一个进程位于临界区）。</p>
+<h4 id="6-how-does-the-signal-operation-associated-with-monitors-differ-from-the-corresponding-operation-defined-for-semaphores-616"><a class="toclink" href="../../%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/2019/10/16/2019-10-16-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%AC%E5%85%AD%E7%AB%A0%E4%BD%9C%E4%B8%9A-%E8%BF%9B%E7%A8%8B%E5%90%8C%E6%AD%A5/#6-how-does-the-signal-operation-associated-with-monitors-differ-from-the-corresponding-operation-defined-for-semaphores-616">6. How does the signal() operation associated with monitors differ from the corresponding operation defined for semaphores? (6.16)</a></h4>
+<p>当没有进程等待时，信号量的 signal() 会对信号量的值加一，而管程里的 signal() 则不会进行任何操作。</p>
+<h4 id="7"><a class="toclink" href="../../%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/2019/10/16/2019-10-16-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%AC%E5%85%AD%E7%AB%A0%E4%BD%9C%E4%B8%9A-%E8%BF%9B%E7%A8%8B%E5%90%8C%E6%AD%A5/#7">7</a></h4>
+<p>A uniprocessor system concurrently executes 2 processes ($ P_A, P_B $). Two Semaphores $ Mutex_R_a $ and $ Mutex_R_b $ are added in mutual accessing the critical section and synchronizing between $ P_A $ and $ P_B $ . Please read following program segment carefully and answer the questions:</p>
+<p>(1) What are initial values for $ Mutex_R_a $ and $ Mutex_R_b $ .
+(2) Is it possible to cause deadlock? Please state your reason.
+Semaphore $ Mutex_R_a $, $ Mutex_R_b $ ;</p>
+<div class="language-C highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="n">Void</span><span class="w"> </span><span class="nf">P_A</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="p">){</span>
+</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a><span class="w">    </span><span class="k">while</span><span class="p">(</span><span class="nb">true</span><span class="p">){</span>
+</span><span id="__span-21-3"><a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a><span class="w">        </span><span class="n">Wait</span><span class="p">(</span><span class="n">Mutex_Ra</span><span class="w"> </span><span class="p">);</span>
+</span><span id="__span-21-4"><a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a><span class="w">        </span><span class="p">......</span>
+</span><span id="__span-21-5"><a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a><span class="w">        </span><span class="n">Wait</span><span class="p">(</span><span class="n">Mutex_Rb</span><span class="w"> </span><span class="p">);</span>
+</span><span id="__span-21-6"><a id="__codelineno-21-6" name="__codelineno-21-6" href="#__codelineno-21-6"></a><span class="w">        </span><span class="p">......</span>
+</span><span id="__span-21-7"><a id="__codelineno-21-7" name="__codelineno-21-7" href="#__codelineno-21-7"></a><span class="w">        </span><span class="n">Signal</span><span class="p">(</span><span class="n">Mutex_Ra</span><span class="w"> </span><span class="p">);</span>
+</span><span id="__span-21-8"><a id="__codelineno-21-8" name="__codelineno-21-8" href="#__codelineno-21-8"></a><span class="w">        </span><span class="p">......</span>
+</span><span id="__span-21-9"><a id="__codelineno-21-9" name="__codelineno-21-9" href="#__codelineno-21-9"></a><span class="w">        </span><span class="n">Signal</span><span class="p">(</span><span class="n">Mutex_Rb</span><span class="w"> </span><span class="p">);</span>
+</span><span id="__span-21-10"><a id="__codelineno-21-10" name="__codelineno-21-10" href="#__codelineno-21-10"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-21-11"><a id="__codelineno-21-11" name="__codelineno-21-11" href="#__codelineno-21-11"></a><span class="p">}</span>
+</span></code></pre></div>
+<div class="language-C highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="n">Void</span><span class="w"> </span><span class="nf">P_B</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="p">){</span>
+</span><span id="__span-22-2"><a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a><span class="w">    </span><span class="k">while</span><span class="p">(</span><span class="nb">true</span><span class="p">){</span>
+</span><span id="__span-22-3"><a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a><span class="w">        </span><span class="n">Wait</span><span class="p">(</span><span class="n">Mutex_Rb</span><span class="w"> </span><span class="p">);</span>
+</span><span id="__span-22-4"><a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a><span class="w">        </span><span class="p">......</span>
+</span><span id="__span-22-5"><a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a><span class="w">        </span><span class="n">Wait</span><span class="p">(</span><span class="n">Mutex_Ra</span><span class="w"> </span><span class="p">);</span>
+</span><span id="__span-22-6"><a id="__codelineno-22-6" name="__codelineno-22-6" href="#__codelineno-22-6"></a><span class="w">        </span><span class="p">......</span>
+</span><span id="__span-22-7"><a id="__codelineno-22-7" name="__codelineno-22-7" href="#__codelineno-22-7"></a><span class="w">        </span><span class="n">Signal</span><span class="p">(</span><span class="n">Mutex_Rb</span><span class="w"> </span><span class="p">);</span>
+</span><span id="__span-22-8"><a id="__codelineno-22-8" name="__codelineno-22-8" href="#__codelineno-22-8"></a><span class="w">        </span><span class="p">......</span>
+</span><span id="__span-22-9"><a id="__codelineno-22-9" name="__codelineno-22-9" href="#__codelineno-22-9"></a><span class="w">        </span><span class="n">Signal</span><span class="p">(</span><span class="n">Mutex_Ra</span><span class="w"> </span><span class="p">);</span>
+</span><span id="__span-22-10"><a id="__codelineno-22-10" name="__codelineno-22-10" href="#__codelineno-22-10"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-22-11"><a id="__codelineno-22-11" name="__codelineno-22-11" href="#__codelineno-22-11"></a><span class="p">}</span>
+</span></code></pre></div>
+<p>答：
+(1) $ Mutex_R_a = Mutex_R_b = 1$
+(2) 当 P_A 和 P_B 同时到达时，两个进程都会执行第一句，接着便会由于$ Mutex_R_a = Mutex_R_b = 0$而陷入死锁。</p>
+<h4 id="8"><a class="toclink" href="../../%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/2019/10/16/2019-10-16-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%AC%E5%85%AD%E7%AB%A0%E4%BD%9C%E4%B8%9A-%E8%BF%9B%E7%A8%8B%E5%90%8C%E6%AD%A5/#8">8</a></h4>
+<p>设有一个可以装 A、B 两种物品的仓库，其容量有限 (为 N),但要求仓库中 A、B 两 种物品的数量满足下述不等式：
+$$
+   -M≤A 物品数量-B 物品数量≤N
+$$
+其中 M 和 N 为正整数。另外，还有一个进程消费 A 和 B，一次取一个 A 与 B 组装成 C。
+试用信号量和 P、V 操作描述 A、B 两种物品的入库和出库 (组装成 C) 过程。</p>
+<p>答：
+设 nA, nB 分别为 A 物品，B 物品数量，二进制信号量 mutex，<strong>初始值</strong>为 1。</p>
+<p>A 入库进程：</p>
+<div class="language-C highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="n">wait</span><span class="p">(</span><span class="n">mutex</span><span class="p">)</span>
+</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a><span class="n">nA</span><span class="o">++</span>
+</span><span id="__span-23-3"><a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a><span class="k">if</span><span class="p">(</span><span class="n">nA</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">N</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="o">-</span><span class="n">M</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">nA</span><span class="o">-</span><span class="n">nB</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">N</span><span class="p">)</span>
+</span><span id="__span-23-4"><a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a><span class="w">    </span><span class="n">A入库</span>
+</span><span id="__span-23-5"><a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a><span class="k">else</span>
+</span><span id="__span-23-6"><a id="__codelineno-23-6" name="__codelineno-23-6" href="#__codelineno-23-6"></a><span class="w">    </span><span class="n">nA</span><span class="o">--</span>
+</span><span id="__span-23-7"><a id="__codelineno-23-7" name="__codelineno-23-7" href="#__codelineno-23-7"></a><span class="n">signal</span><span class="p">(</span><span class="n">mutex</span><span class="p">)</span>
+</span></code></pre></div>
+<p>B 入库进程：</p>
+<div class="language-C highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="n">wait</span><span class="p">(</span><span class="n">mutex</span><span class="p">)</span>
+</span><span id="__span-24-2"><a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a><span class="n">nB</span><span class="o">++</span>
+</span><span id="__span-24-3"><a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a><span class="k">if</span><span class="p">(</span><span class="n">nB</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">N</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="o">-</span><span class="n">M</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">nA</span><span class="o">-</span><span class="n">nB</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">N</span><span class="p">)</span>
+</span><span id="__span-24-4"><a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a><span class="w">    </span><span class="n">B入库</span>
+</span><span id="__span-24-5"><a id="__codelineno-24-5" name="__codelineno-24-5" href="#__codelineno-24-5"></a><span class="k">else</span>
+</span><span id="__span-24-6"><a id="__codelineno-24-6" name="__codelineno-24-6" href="#__codelineno-24-6"></a><span class="w">    </span><span class="n">nB</span><span class="o">--</span>
+</span><span id="__span-24-7"><a id="__codelineno-24-7" name="__codelineno-24-7" href="#__codelineno-24-7"></a><span class="n">signal</span><span class="p">(</span><span class="n">mutex</span><span class="p">)</span>
+</span></code></pre></div>
+<p>C 出库进程：</p>
+<div class="language-C highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a><span class="n">wait</span><span class="p">(</span><span class="n">mutex</span><span class="p">)</span>
+</span><span id="__span-25-2"><a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a><span class="k">if</span><span class="p">(</span><span class="n">nA</span><span class="o">&gt;</span><span class="mi">0</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">nB</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">)</span>
+</span><span id="__span-25-3"><a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a><span class="w">    </span><span class="n">nA</span><span class="o">--</span><span class="p">;</span><span class="n">nB</span><span class="o">--</span>
+</span><span id="__span-25-4"><a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a><span class="w">    </span><span class="n">C出库</span>
+</span><span id="__span-25-5"><a id="__codelineno-25-5" name="__codelineno-25-5" href="#__codelineno-25-5"></a><span class="n">signal</span><span class="p">(</span><span class="n">mutex</span><span class="p">)</span>
+</span></code></pre></div>
+<p>changed:</p>
+<div class="language-c highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a><span class="n">semaphore</span><span class="w"> </span><span class="n">initiation</span><span class="o">:</span>
+</span><span id="__span-26-2"><a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a><span class="w">    </span><span class="n">muxtex</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span>
+</span><span id="__span-26-3"><a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a><span class="w">    </span><span class="n">empty</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">N</span>
+</span><span id="__span-26-4"><a id="__codelineno-26-4" name="__codelineno-26-4" href="#__codelineno-26-4"></a><span class="w">    </span><span class="n">delta</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">M</span>
+</span><span id="__span-26-5"><a id="__codelineno-26-5" name="__codelineno-26-5" href="#__codelineno-26-5"></a><span class="w">    </span><span class="n">nA</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nB</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
+</span><span id="__span-26-6"><a id="__codelineno-26-6" name="__codelineno-26-6" href="#__codelineno-26-6"></a><span class="n">progress</span><span class="w"> </span><span class="n">A</span><span class="o">:</span>
+</span><span id="__span-26-7"><a id="__codelineno-26-7" name="__codelineno-26-7" href="#__codelineno-26-7"></a><span class="k">do</span><span class="p">{</span>
+</span><span id="__span-26-8"><a id="__codelineno-26-8" name="__codelineno-26-8" href="#__codelineno-26-8"></a><span class="w">    </span><span class="n">P</span><span class="p">(</span><span class="n">empty</span><span class="p">)</span>
+</span><span id="__span-26-9"><a id="__codelineno-26-9" name="__codelineno-26-9" href="#__codelineno-26-9"></a><span class="w">    </span><span class="n">P</span><span class="p">(</span><span class="n">mutex</span><span class="p">)</span>
+</span><span id="__span-26-10"><a id="__codelineno-26-10" name="__codelineno-26-10" href="#__codelineno-26-10"></a><span class="w">        </span><span class="n">A</span><span class="w"> </span><span class="n">in</span>
+</span><span id="__span-26-11"><a id="__codelineno-26-11" name="__codelineno-26-11" href="#__codelineno-26-11"></a><span class="w">    </span><span class="n">V</span><span class="p">(</span><span class="n">mutex</span><span class="p">)</span>
+</span><span id="__span-26-12"><a id="__codelineno-26-12" name="__codelineno-26-12" href="#__codelineno-26-12"></a><span class="w">    </span><span class="n">V</span><span class="p">(</span><span class="n">nA</span><span class="p">)</span>
+</span><span id="__span-26-13"><a id="__codelineno-26-13" name="__codelineno-26-13" href="#__codelineno-26-13"></a><span class="w">    </span><span class="n">V</span><span class="p">(</span><span class="n">delta</span><span class="p">)</span>
+</span><span id="__span-26-14"><a id="__codelineno-26-14" name="__codelineno-26-14" href="#__codelineno-26-14"></a><span class="p">}</span><span class="k">while</span><span class="p">(</span><span class="nb">true</span><span class="p">)</span>
+</span><span id="__span-26-15"><a id="__codelineno-26-15" name="__codelineno-26-15" href="#__codelineno-26-15"></a>
+</span><span id="__span-26-16"><a id="__codelineno-26-16" name="__codelineno-26-16" href="#__codelineno-26-16"></a><span class="n">progress</span><span class="w"> </span><span class="n">B</span><span class="o">:</span>
+</span><span id="__span-26-17"><a id="__codelineno-26-17" name="__codelineno-26-17" href="#__codelineno-26-17"></a><span class="k">do</span><span class="p">{</span>
+</span><span id="__span-26-18"><a id="__codelineno-26-18" name="__codelineno-26-18" href="#__codelineno-26-18"></a><span class="w">    </span><span class="n">P</span><span class="p">(</span><span class="n">empty</span><span class="p">)</span>
+</span><span id="__span-26-19"><a id="__codelineno-26-19" name="__codelineno-26-19" href="#__codelineno-26-19"></a><span class="w">    </span><span class="n">P</span><span class="p">(</span><span class="n">delta</span><span class="p">)</span>
+</span><span id="__span-26-20"><a id="__codelineno-26-20" name="__codelineno-26-20" href="#__codelineno-26-20"></a><span class="w">    </span><span class="n">P</span><span class="p">(</span><span class="n">mutex</span><span class="p">)</span>
+</span><span id="__span-26-21"><a id="__codelineno-26-21" name="__codelineno-26-21" href="#__codelineno-26-21"></a><span class="w">        </span><span class="n">B</span><span class="w"> </span><span class="n">in</span>
+</span><span id="__span-26-22"><a id="__codelineno-26-22" name="__codelineno-26-22" href="#__codelineno-26-22"></a><span class="w">    </span><span class="n">V</span><span class="p">(</span><span class="n">mutex</span><span class="p">)</span>
+</span><span id="__span-26-23"><a id="__codelineno-26-23" name="__codelineno-26-23" href="#__codelineno-26-23"></a><span class="w">    </span><span class="n">V</span><span class="p">(</span><span class="n">nB</span><span class="p">)</span>
+</span><span id="__span-26-24"><a id="__codelineno-26-24" name="__codelineno-26-24" href="#__codelineno-26-24"></a><span class="p">}</span><span class="k">while</span><span class="p">(</span><span class="nb">true</span><span class="p">)</span>
+</span><span id="__span-26-25"><a id="__codelineno-26-25" name="__codelineno-26-25" href="#__codelineno-26-25"></a>
+</span><span id="__span-26-26"><a id="__codelineno-26-26" name="__codelineno-26-26" href="#__codelineno-26-26"></a><span class="n">progress</span><span class="w"> </span><span class="n">C</span><span class="o">:</span>
+</span><span id="__span-26-27"><a id="__codelineno-26-27" name="__codelineno-26-27" href="#__codelineno-26-27"></a><span class="k">do</span><span class="p">{</span>
+</span><span id="__span-26-28"><a id="__codelineno-26-28" name="__codelineno-26-28" href="#__codelineno-26-28"></a><span class="w">    </span><span class="n">P</span><span class="p">(</span><span class="n">nA</span><span class="p">)</span>
+</span><span id="__span-26-29"><a id="__codelineno-26-29" name="__codelineno-26-29" href="#__codelineno-26-29"></a><span class="w">    </span><span class="n">P</span><span class="p">(</span><span class="n">nB</span><span class="p">)</span>
+</span><span id="__span-26-30"><a id="__codelineno-26-30" name="__codelineno-26-30" href="#__codelineno-26-30"></a><span class="w">    </span><span class="n">P</span><span class="p">(</span><span class="n">mutex</span><span class="p">)</span>
+</span><span id="__span-26-31"><a id="__codelineno-26-31" name="__codelineno-26-31" href="#__codelineno-26-31"></a><span class="w">        </span><span class="n">C</span><span class="w"> </span><span class="n">out</span>
+</span><span id="__span-26-32"><a id="__codelineno-26-32" name="__codelineno-26-32" href="#__codelineno-26-32"></a><span class="w">    </span><span class="n">V</span><span class="p">(</span><span class="n">mutex</span><span class="p">)</span>
+</span><span id="__span-26-33"><a id="__codelineno-26-33" name="__codelineno-26-33" href="#__codelineno-26-33"></a><span class="w">    </span><span class="n">V</span><span class="p">(</span><span class="n">empty</span><span class="p">)</span>
+</span><span id="__span-26-34"><a id="__codelineno-26-34" name="__codelineno-26-34" href="#__codelineno-26-34"></a><span class="w">    </span><span class="n">V</span><span class="p">(</span><span class="n">empty</span><span class="p">)</span>
+</span><span id="__span-26-35"><a id="__codelineno-26-35" name="__codelineno-26-35" href="#__codelineno-26-35"></a><span class="p">}</span><span class="k">while</span><span class="p">(</span><span class="nb">true</span><span class="p">)</span>
+</span></code></pre></div>
+    
+    
+  </div>
+</article>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
+          <time datetime="2019-10-08 09:53:42+00:00">2019年10月8日</time></li>
+        
+          <li class="md-meta__item">
+            分类于
+            
+              <a href="../../category/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/" class="md-meta__link">课程笔记</a></li>
+        
+        
+          
+          <li class="md-meta__item">
+            
+              需要 3 分钟阅读时间
+            
+          </li>
+        
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="操作系统第五章作业-cpu-调度"><a class="toclink" href="../../%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/2019/10/08/2019-10-08-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-%E7%AC%AC%E4%BA%94%E7%AB%A0%E4%BD%9C%E4%B8%9A-CPU%E8%B0%83%E5%BA%A6/">操作系统第五章作业 CPU 调度</a></h2>
+<hr />
+<h4 id="51-why-is-it-important-for-the-scheduler-to-distinguish-io-bound-programs-from-cpu-bound-programs"><a class="toclink" href="../../%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/2019/10/08/2019-10-08-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-%E7%AC%AC%E4%BA%94%E7%AB%A0%E4%BD%9C%E4%B8%9A-CPU%E8%B0%83%E5%BA%A6/#51-why-is-it-important-for-the-scheduler-to-distinguish-io-bound-programs-from-cpu-bound-programs">5.1. Why is it important for the scheduler to distinguish I/O-bound programs from CPU-bound programs?</a></h4>
+<p>对于长期调度程序，知道进程是 IO 约束的还是 CPU 约束的之后，便可以按照一定比例组合被调度的进程，使得 CPU 和 IO 设备都会一直处于负载状态，从而提高资源的使用率。
+对于短期调度（CPU 调度），IO 约束的进程 CPU 区间都比较短，而 CPU 越苏进程则比较长，因而根据最短作业优先准则，可以优先调度 IO 约束进程。</p>
+<h4 id="52-discuss-how-the-following-pairs-of-scheduling-criteria-conflict-in-certain-settings"><a class="toclink" href="../../%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/2019/10/08/2019-10-08-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-%E7%AC%AC%E4%BA%94%E7%AB%A0%E4%BD%9C%E4%B8%9A-CPU%E8%B0%83%E5%BA%A6/#52-discuss-how-the-following-pairs-of-scheduling-criteria-conflict-in-certain-settings">5.2. Discuss how the following pairs of scheduling criteria conflict in certain settings</a></h4>
+<ul>
+<li>a. CPU utilization and response time
+CPU 利用率与上下文交换频率成负相关，而响应时间与之成正相关，故冲突。</li>
+</ul>
+<ul>
+<li>b. Average turnaround time and maximum waiting time
+为了减小平均周转时间，通常会采用短作业优先算法，而这会令长作业的等待时间增大。</li>
+</ul>
+<ul>
+<li>c. I/O device utilization and CPU utilization
+为了提高 I/O 设备的利用率，需要优先执行 IO bound 进程，因为 IO 约束的进程 CPU 区间短，因而导致频繁的上下文交换，因而降低 CPU 效率。</li>
+</ul>
+<h4 id="54-consider-the-following-set-of-processes-with-the-length-of-the-cpu-burst-time-given-in-milliseconds"><a class="toclink" href="../../%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/2019/10/08/2019-10-08-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-%E7%AC%AC%E4%BA%94%E7%AB%A0%E4%BD%9C%E4%B8%9A-CPU%E8%B0%83%E5%BA%A6/#54-consider-the-following-set-of-processes-with-the-length-of-the-cpu-burst-time-given-in-milliseconds">5.4 Consider the following set of processes, with the length of the CPU-burst time given in milliseconds</a></h4>
+<table>
+<thead>
+<tr>
+<th>Process</th>
+<th>Burst Time</th>
+<th>Priority</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$ P_1 $</td>
+<td>10</td>
+<td>3</td>
+</tr>
+<tr>
+<td>$ P_2 $</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>$ P_3 $</td>
+<td>2</td>
+<td>3</td>
+</tr>
+<tr>
+<td>$ P_4 $</td>
+<td>1</td>
+<td>4</td>
+</tr>
+<tr>
+<td>$ P_5 $</td>
+<td>5</td>
+<td>2</td>
+</tr>
+</tbody>
+</table>
+<p>The processes are assumed to have arrived in the order $ P_1,P_2,P_3,P_4,P_5 $, all at time 0.</p>
+<ul>
+<li>a. Draw four Gantt charts illustrating the execution of these processes using FCFS , SJF , a nonpreemptive priority (a smaller priority number implies a higher priority), and RR (quantum = 1) scheduling.
+    1. FCFS<div class="language-text highlight"><pre><span></span><code>  $ P_1 $ (10) &amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp; | $ P_2 $(1) &amp;ensp; | $ P_3 $(2) &amp;emsp; | $ P_4 $(1) &amp;ensp; |$ P_5 $  (5) &amp;emsp;&amp;emsp;&amp;ensp;
+  --- | --- | --- | --- | ---
+</code></pre></div>
+<p>2. SJF</p>
+<div class="language-text highlight"><pre><span></span><code>  $ P_2 $(1) &amp;ensp;  | $ P_4 $(1) &amp;ensp; | $ P_3 $(2) &amp;emsp; | $ P_5 $  (5) &amp;emsp;&amp;emsp;&amp;ensp; | $ P_1 $ (10) &amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;
+  --- | --- | --- | --- | ---
+</code></pre></div>
+<p>3. nopreemptive priority</p>
+<div class="language-text highlight"><pre><span></span><code>  $ P_2 $(1) &amp;ensp;  | $ P_5 $  (5) &amp;emsp;&amp;emsp;&amp;ensp; | $ P_1 $ (10) &amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp; | $ P_3 $(2) &amp;emsp; | $ P_4 $(1) &amp;ensp;
+  --- | --- | --- | --- | ---
+</code></pre></div>
+<p>4. Round Robin</p>
+<div class="language-text highlight"><pre><span></span><code>  $ P_1 $| $ P_2 $ | $ P_3 $ | $ P_4 $ |$ P_5 $ | $ P_1 $| $ P_3 $ | $ P_5 $ | $ P_1 $ |$ P_5 $ | $ P_1 $ | $ P_5 $ | $ P_1 $ | $ P_5 $ | $ P_1 $ | $ P_1 $ | $ P_1 $ | $ P_1 $ | $ P_1 $ |
+  --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+</code></pre></div>
+</li>
+</ul>
+<ul>
+<li>b. What is the turnaround time of each process for each of the scheduling algorithms in part a?<table>
+<thead>
+<tr>
+<th>&ensp;</th>
+<th>FCFS</th>
+<th>SJF</th>
+<th>nopreemptive priority</th>
+<th>RR</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$ P_1 $</td>
+<td>10</td>
+<td>19</td>
+<td>16</td>
+<td>19</td>
+</tr>
+<tr>
+<td>$ P_2 $</td>
+<td>11</td>
+<td>1</td>
+<td>1</td>
+<td>2</td>
+</tr>
+<tr>
+<td>$ P_3 $</td>
+<td>13</td>
+<td>4</td>
+<td>18</td>
+<td>7</td>
+</tr>
+<tr>
+<td>$ P_4 $</td>
+<td>14</td>
+<td>2</td>
+<td>19</td>
+<td>4</td>
+</tr>
+<tr>
+<td>$ P_5 $</td>
+<td>19</td>
+<td>9</td>
+<td>6</td>
+<td>14</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+<ul>
+<li>c. What is the waiting time of each process for each of the scheduling algorithms in part a?<table>
+<thead>
+<tr>
+<th>&ensp;</th>
+<th>FCFS</th>
+<th>SJF</th>
+<th>nopreemptive priority</th>
+<th>RR</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$ P_1 $</td>
+<td>0</td>
+<td>9</td>
+<td>6</td>
+<td>9</td>
+</tr>
+<tr>
+<td>$ P_2 $</td>
+<td>10</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>$ P_3 $</td>
+<td>11</td>
+<td>2</td>
+<td>16</td>
+<td>5</td>
+</tr>
+<tr>
+<td>$ P_4 $</td>
+<td>13</td>
+<td>1</td>
+<td>18</td>
+<td>3</td>
+</tr>
+<tr>
+<td>$ P_5 $</td>
+<td>14</td>
+<td>4</td>
+<td>1</td>
+<td>9</td>
+</tr>
+<tr>
+<td>sum</td>
+<td>48</td>
+<td>16</td>
+<td>41</td>
+<td>27</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+<ul>
+<li>d. Which of the schedules in part a results in the minimal average waiting time (over all processes)?<p>答：SJF with 3.2 ms</p>
+</li>
+</ul>
+<h4 id="510-explain-the-differences-in-the-degree-to-which-the-following-scheduling-algorithms-discriminate-in-favor-of-short-processes"><a class="toclink" href="../../%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/2019/10/08/2019-10-08-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-%E7%AC%AC%E4%BA%94%E7%AB%A0%E4%BD%9C%E4%B8%9A-CPU%E8%B0%83%E5%BA%A6/#510-explain-the-differences-in-the-degree-to-which-the-following-scheduling-algorithms-discriminate-in-favor-of-short-processes">5.10 Explain the differences in the degree to which the following scheduling algorithms discriminate in favor of short processes</a></h4>
+<ul>
+<li>a. FCFS</li>
+<li>b. RR</li>
+<li>c. Multilevel feedback queues</li>
+</ul>
+<p>答：</p>
+<ul>
+<li>FCFS 哪个先到哪个优先，因此对待短进程和长进程是平等的。</li>
+<li>RR 给每个进程分配相同的时间片，因此也是平等的。</li>
+<li>对于一种典型的多级反馈队列算法（有三个队列，前两个使用 RR 算法，时间片分别为 8ms，16ms，第三个使用 FCFS 算法，队列间使用抢占式优先级算法），短作业都会处于前面的队列，以此短作业的优先级更高。</li>
+</ul>
+<h4 id="5-please-prove-sjf-gives-the-minimum-average-waiting-time-for-a-given-set-of-processes-to-arrive-at-the-same-time"><a class="toclink" href="../../%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/2019/10/08/2019-10-08-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-%E7%AC%AC%E4%BA%94%E7%AB%A0%E4%BD%9C%E4%B8%9A-CPU%E8%B0%83%E5%BA%A6/#5-please-prove-sjf-gives-the-minimum-average-waiting-time-for-a-given-set-of-processes-to-arrive-at-the-same-time">5. Please prove: SJF gives the minimum average waiting time for a given set of processes to arrive at the same time</a></h4>
+<p>假设 CPU 按照一定顺序执行这些进程，每个进程 CPU 区间分别为$ t_1,t_2,\dots,t_n $。（非抢占）
+则平均等待时间为：
+$$
+    \overline t = \frac{1}{n}\sum_{i=1}^n{(i-1)t_i}
+$$
+由排序不等式知$ t_1,t_2,\dots,t_n $降序时最短，即 SJF 算法。</p>
+<h4 id="6-what-is-processor-affinity-what-is-load-balancing-what-is-the-relationship-between-the-two"><a class="toclink" href="../../%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/2019/10/08/2019-10-08-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-%E7%AC%AC%E4%BA%94%E7%AB%A0%E4%BD%9C%E4%B8%9A-CPU%E8%B0%83%E5%BA%A6/#6-what-is-processor-affinity-what-is-load-balancing-what-is-the-relationship-between-the-two">6. What is Processor Affinity? What is load balancing? What is the relationship between the two?</a></h4>
+<p>处理器亲和性指在多处理器调度算法中，由于 cache miss 的代价比较高，应该努力让一个进程在一个处理器上运行。
+而负载平衡指将工作负载平均分配到每个处理器上，从而保持每个处理器使用率都比较高。
+因此当一个处理器负载较高时，负载平平衡策略会倾向让负载分配到多个处理器上，而处理器亲和则倾向保持该状态。
+因此这两种策略有矛盾的关系。</p>
+    
+    
+  </div>
+</article>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
+          <time datetime="2019-09-30 01:41:06+00:00">2019年9月30日</time></li>
+        
+          <li class="md-meta__item">
+            分类于
+            
+              <a href="../../category/%E4%B8%AA%E4%BA%BA/" class="md-meta__link">个人</a></li>
+        
+        
+          
+          <li class="md-meta__item">
+            
+              需要 1 分钟阅读时间
+            
+          </li>
+        
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="罗小黑战记"><a class="toclink" href="../../%E4%B8%AA%E4%BA%BA/2019/09/30/2019-09-30-%E7%BD%97%E5%B0%8F%E9%BB%91%E6%88%98%E8%AE%B0%EF%BC%8C%E7%A5%A8%E6%88%BF%E5%86%B2%E9%B8%AD%EF%BC%81/">罗小黑战记</a></h2>
+<p>今天去看小黑电影了，发生了许多有趣的事情。</p>
+<p>14:20 出门时遇到 lfy 了，他什么都不带要去朝天门玩。我们刚好顺路，都要去三峡广场（sb 地图，推荐我坐半个小时公交车绕路去，幸好 fy 提醒了我走路去，只走了不到 10 分钟就到了）。</p>
+<p>到了电影院后，发现电影院其实挺小的，大厅就是等候室，几排火车站的那种椅子。由于我早了 40 多分钟，便坐在那儿等。</p>
+<p>入场了，果然来的人很少。我前边只有一对情侣，我右边没人，左边是三个妹纸（怎么感觉有点幸运，“自动变色”），后面我只注意到了一对男生，以及一位年纪好像还挺大的阿姨（难道是真爱？感觉大人看动画电影的只会是一家人的情况呀）。</p>
+<p>电影开始了（之前都是黑屏，在开始前 2 分钟开始放广告，如果黑屏的时间里放和小黑有关的宣传片多好呀，不知道首映的时候会不会放）。</p>
+<p>播放没几分钟，突然黑屏了。台下开始只言片语起来，只听见左边的三个女生中两个外向点女生调侃第一次出来就运气这么不好，还说还不如去吃东西，接着说要不要去退票。不过中间的女生说她还想看看，她们可以去问问能不能退票（这才是真爱呀，推断应该是她安利她们两个过来看的）。然后最左边的女生便主动出去叫工作人员了。几分钟后设备弄好了，电影继续。</p>
+<h5 id="观感"><a class="toclink" href="../../%E4%B8%AA%E4%BA%BA/2019/09/30/2019-09-30-%E7%BD%97%E5%B0%8F%E9%BB%91%E6%88%98%E8%AE%B0%EF%BC%8C%E7%A5%A8%E6%88%BF%E5%86%B2%E9%B8%AD%EF%BC%81/#观感">观感</a></h5>
+<p>只要你吹罗小黑，我们就是好朋友。
+剧情十分紧凑，基本没有什么废话。剧情衔接流畅自然。电影从中间开始，一路炫酷打斗，高潮不断。结尾也不拖沓，风息化作森林，小黑认无限为师父继续流浪，一切都释然了。结尾的也有彩蛋，山新对小白说（山新）说：“早晚有一天你会遇到你生命中的那只猫的”，衔接了 TV 版。</p>
+<h5 id="总结"><a class="toclink" href="../../%E4%B8%AA%E4%BA%BA/2019/09/30/2019-09-30-%E7%BD%97%E5%B0%8F%E9%BB%91%E6%88%98%E8%AE%B0%EF%BC%8C%E7%A5%A8%E6%88%BF%E5%86%B2%E9%B8%AD%EF%BC%81/#总结">总结</a></h5>
+<p>我喜欢小黑的原因就是因为他里面一切都很纯粹，没有坏人，没有阴谋诡计。所以看得十分舒服。电影有丰富有趣的笑点。意境也很美——茂密的森林，鸡犬相闻的乡村，农田，夜晚，星星，大海，繁华的都市，一切都是那么的平衡，都让人感叹世界真美。人物性格鲜活分明。</p>
+<p><em>p.s. 今天晚上 b 站刷小黑的各种周边视频，发现原来这种风格的动画用“治愈”来描述比较合适。</em></p>
+    
+    
+  </div>
+</article>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
+          <time datetime="2019-09-23 21:53:24+00:00">2019年9月23日</time></li>
+        
+          <li class="md-meta__item">
+            分类于
+            
+              <a href="../../category/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/" class="md-meta__link">课程笔记</a></li>
+        
+        
+          
+          <li class="md-meta__item">
+            
+              需要 1 分钟阅读时间
+            
+          </li>
+        
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="操作系统第三章-作业"><a class="toclink" href="../../%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/2019/09/23/2019-09-23-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%A6%82%E5%BF%B5-chapter4-%E4%BD%9C%E4%B8%9A/">操作系统第三章 作业</a></h2>
+<h4 id="41"><a class="toclink" href="../../%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/2019/09/23/2019-09-23-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%A6%82%E5%BF%B5-chapter4-%E4%BD%9C%E4%B8%9A/#41">4.1</a></h4>
+<p>Provide two programming examples in which multithreading does not provide better performance than a single-threaded solution.</p>
+<p>1) 任何“线性”执行的程序（后面的程序严重依赖前面执行的结果），这类程序即使使用多线程，每个线程都会阻塞其它线程的执行，因此并不会有更好的性能。</p>
+<p>2) 只执行单一任务的程序。多线程对于浏览器，字处理软件等多任务软件是有用的。如浏览器可以在接收网络数据时同时刷新页面。但对于只执行单个任务的程序，便没有必要。</p>
+<h4 id="42"><a class="toclink" href="../../%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/2019/09/23/2019-09-23-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%A6%82%E5%BF%B5-chapter4-%E4%BD%9C%E4%B8%9A/#42">4.2</a></h4>
+<p>Describe the actions taken by a thread library to context switch between user-level threads.</p>
+<p>用户级线程库的代码都存在于用户空间，因此调用库中的函数会导致一个本地调用而不是系统调用。因为线程主要包括寄存器的值和栈，因此上下文切换会涉到寄存器和栈状态的保存和恢复。</p>
+<h4 id="43"><a class="toclink" href="../../%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/2019/09/23/2019-09-23-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%A6%82%E5%BF%B5-chapter4-%E4%BD%9C%E4%B8%9A/#43">4.3</a></h4>
+<p>Under what circumstances does a multithreaded solution using multiple kernel threads provide better performance than a single-threaded solution on a single-processor system?</p>
+<p>1）一个应用程序分为许多不同的部分。如网页浏览器有一个线程用于显示图像和文本，另一个用于从网络接收数据。
+2）一个应用程序需要执行多个相似的任务。如网页服务器可能要处理上千个客户并发请求网页。</p>
+<h4 id="44"><a class="toclink" href="../../%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/2019/09/23/2019-09-23-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%A6%82%E5%BF%B5-chapter4-%E4%BD%9C%E4%B8%9A/#44">4.4</a></h4>
+<p>Which of the following components of program state are shared across threads in a multithreaded process?</p>
+<ul>
+<li>a. Register values</li>
+<li>b. Heap memory</li>
+<li>c. Global variables</li>
+<li>d. Stack memory</li>
+</ul>
+<p>答：b,c</p>
+<h4 id="48"><a class="toclink" href="../../%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/2019/09/23/2019-09-23-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%A6%82%E5%BF%B5-chapter4-%E4%BD%9C%E4%B8%9A/#48">4.8</a></h4>
+<p>Consider a multiprocessor system and a multithreaded program written using the
+many-to-many threading model. Let the number of user-level threads in the program be more
+than the number of processors in the system. Discuss the performance implications of the
+following scenarios.</p>
+<p><strong>a.</strong> The number of kernel threads allocated to the program is less than the number of
+processors.</p>
+<p><strong>b.</strong> The number of kernel threads allocated to the program is equal to the number of
+processors.</p>
+<p><strong>c.</strong> The number of kernel threads allocated to the program is greater than the number of
+processors but less than the number of user-level threads.</p>
+<p>答：当内核线程小于处理器数目时，因为用户线程只能通过内核线程访问处理器，因此会有一些处理器处于“围观”状态。当内核线程刚好等于处理器时，处理器的效率相对于 a 会提高，然而当一个线程执行了阻塞系统调用时，其它用户线程就无法使用该内核进程，c 的情况则弥补了这一点，当一个用户线程阻塞时可以被其它用户线程替换，因此处理器效率最高。</p>
+    
+    
+  </div>
+</article>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
+          <time datetime="2019-09-23 21:52:51+00:00">2019年9月23日</time></li>
+        
+          <li class="md-meta__item">
+            分类于
+            
+              <a href="../../category/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/" class="md-meta__link">课程笔记</a></li>
+        
+        
+          
+          <li class="md-meta__item">
+            
+              需要 1 分钟阅读时间
+            
+          </li>
+        
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="操作系统第三章-作业"><a class="toclink" href="../../%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/2019/09/23/2019-09-23-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%A6%82%E5%BF%B5-chapter3-%E4%BD%9C%E4%B8%9A/">操作系统第三章 作业</a></h2>
+<h4 id="31"><a class="toclink" href="../../%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/2019/09/23/2019-09-23-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%A6%82%E5%BF%B5-chapter3-%E4%BD%9C%E4%B8%9A/#31">3.1</a></h4>
+<p>Describe the differences among short-term, medium-term, and long-term scheduling.</p>
+<ul>
+<li>短期调度
+从内存中的就绪队列里选择一个进程执行。执行最为频繁，为保证执行时间短，因而调度算法不能太复杂。</li>
+<li>长期调度
+也称为工作调度，决定从磁盘中将哪些进程放入内存。因为执行很不频繁，所以可以使用更复杂的调度算法，从而使内存中进程的 CPU 使用和 I/O 使用更均衡，资源利用率更高。</li>
+<li>中期调度
+有交换的机制，即将进程从内存中移除，并在适当时间再次将其调入内存。这有助于动态改善进程组合，使 CPU 和 I/O 使用更均衡。</li>
+</ul>
+<h4 id="32"><a class="toclink" href="../../%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/2019/09/23/2019-09-23-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%A6%82%E5%BF%B5-chapter3-%E4%BD%9C%E4%B8%9A/#32">3.2</a></h4>
+<p>Describe the actions taken by a kernel to context-switch between processes.</p>
+<p>进程间的上下文切换，即切换到另一个进程时需要保留当前进程的状态并恢复另一进程的状态。这些状态可以用 PCB 即进程控制块表示，包含进程状态，程序计数器，CPU 寄存器等信息。上下文切换时，主要执行一个状态保存和状态恢复过程，可能还要执行一些体系结构有关的操作比如清除 cache 等。</p>
+<h4 id="3a"><a class="toclink" href="../../%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/2019/09/23/2019-09-23-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%A6%82%E5%BF%B5-chapter3-%E4%BD%9C%E4%B8%9A/#3a">3.A</a></h4>
+<p>Consider a computer with N processors in a multiprocessor configuration.</p>
+<p><strong>a.</strong> How many processes can be in each of the Ready, Running, and Waiting states at one time?
+答：若干个就绪阶段，不超过 N 个执行阶段，若干个等待阶段。
+<strong>b.</strong> What is the minimum number of processes that can be in each of the Ready, Running, and Waiting states at one time?
+答：<strong>最少当然都是 0 个？</strong></p>
+<h4 id="3b"><a class="toclink" href="../../%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/2019/09/23/2019-09-23-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%A6%82%E5%BF%B5-chapter3-%E4%BD%9C%E4%B8%9A/#3b">3.B</a></h4>
+<p>Please explain the five states of a process.</p>
+<ul>
+<li>new: 进程刚被创建时，处于此阶段。如 linux 中 fork 系统调用创建新进程时。</li>
+</ul>
+<ul>
+<li>ready: 进程执行等待被分配到 CPU 中执行。</li>
+</ul>
+<ul>
+<li>run: 进程正在被执行。</li>
+</ul>
+<ul>
+<li>waiting: 进程由于需要等待 I/O 等设备的数据，而不能执行，被放置对应设备的等待队列中。</li>
+</ul>
+<ul>
+<li>terminated: 进程执行结束，正在释放进程的 PCB。</li>
+</ul>
+<h4 id="3c"><a class="toclink" href="../../%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/2019/09/23/2019-09-23-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%A6%82%E5%BF%B5-chapter3-%E4%BD%9C%E4%B8%9A/#3c">3.C</a></h4>
+<p>what is the role of PCB in OS? What information is contained in PCB?
+操作系统对进程的创建、删除、调度都是通过对 PCB 的操作来完成的。
+PCB 包含：</p>
+<ul>
+<li>进程状态</li>
+<li>程序计数器</li>
+<li>cpu 寄存器</li>
+<li>cpu 调度信息：如进程优先级，调度队列指针等。</li>
+<li>内存管理信息：基址，页表或段表等。</li>
+<li>accounting info: cpu 时间时间，时间界限，进程数等。</li>
+<li>I/O 状态信息：分配的 I/O 列表，打开的文件列表等待。</li>
+</ul>
+<h4 id="3d"><a class="toclink" href="../../%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/2019/09/23/2019-09-23-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%A6%82%E5%BF%B5-chapter3-%E4%BD%9C%E4%B8%9A/#3d">3.D</a></h4>
+<p>When a process is created, the operating system needs to be done?</p>
+<ul>
+<li>给新进程分配物理和逻辑资源（CPU 时间，内存，文件，I/O 设备，可来自操作系统或继承父进程资源）</li>
+<li>传递初始化数据</li>
+</ul>
+<h4 id="3e"><a class="toclink" href="../../%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/2019/09/23/2019-09-23-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%A6%82%E5%BF%B5-chapter3-%E4%BD%9C%E4%B8%9A/#3e">3.E</a></h4>
+<p>Please list the differences between message passing system and shared memory system.</p>
+<ul>
+<li>共享内存系统基本只能在同一台计算机（可多核）两进程传递信息，而信息传递系统既可以是同一台计算机也可以是通过网络连接的不同计算机间进程传递信息。</li>
+<li>共享内存系统只需为进程分配共享内存，通信由进程负责，而信息传递系统需要操作系统参与进行进程间的信息传递。</li>
+</ul>
+    
+    
+  </div>
+</article>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
+          <time datetime="2019-09-17 14:59:19+00:00">2019年9月17日</time></li>
+        
+          <li class="md-meta__item">
+            分类于
+            
+              <a href="../../category/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/" class="md-meta__link">课程笔记</a></li>
+        
+        
+          
+          <li class="md-meta__item">
+            
+              需要 1 分钟阅读时间
+            
+          </li>
+        
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="操作系统第二章-作业"><a class="toclink" href="../../%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/2019/09/17/2019-09-17-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%A6%82%E5%BF%B5-chapter2-%E4%BD%9C%E4%B8%9A.md/">操作系统第二章 作业</a></h2>
+<h3 id="22"><a class="toclink" href="../../%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/2019/09/17/2019-09-17-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%A6%82%E5%BF%B5-chapter2-%E4%BD%9C%E4%B8%9A.md/#22">2.2</a></h3>
+<p>List five services provided by an operating system that are designed to
+make it more convenient for users to use the computer system. In what
+cases it would be impossible for user-level programs to provide these
+services? Explain.</p>
+<p><strong>1 程序执行</strong>
+服务：操作系统将程序装载入内存并执行程序。
+若使用用户程序提供该服务，则很有可能带来安全隐患，因为应用程序可能会装载非法程序。</p>
+<p><strong>2 I/O 操作</strong>
+服务：系统提供方便操作 I/O 设备的方法。
+若使用用户程序提供该服务，在多用户系统中，应用程序可能会窃取其它用户存储在硬盘里的数据。</p>
+<p><strong>3 文件系统操作</strong>
+服务：提供文件的，创建、删除、搜索、获取信息方法，并提供访问权限管理。
+同样，应用程序可能会非法访问文件。</p>
+<p><strong>4 通信</strong>
+服务：提供进程间的相互通信。（同一计算机内的不同进程或通过网络链接的不同计算机的进程）
+同样，应用程序可能会非法窃听其它应用的信息。</p>
+<p><strong>5 错误检测</strong>
+服务：对于发生在硬件上或用户程序中的错误，操作系统采取适当的处理措施。
+若使用应用程序提供该服务，则应用程序在编写时需要考虑所有可能的错误，这是不现实的。</p>
+<h3 id="25"><a class="toclink" href="../../%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/2019/09/17/2019-09-17-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%A6%82%E5%BF%B5-chapter2-%E4%BD%9C%E4%B8%9A.md/#25">2.5</a></h3>
+<p>What are the five major activities of an operating system in regard to file management?</p>
+<ul>
+<li>文件的创建和删除</li>
+<li>文件的打开和关闭</li>
+<li>文件的读、写、重定位</li>
+<li>读取文件属性和设置文件属性</li>
+<li>文件的权限管理</li>
+</ul>
+<h3 id="28"><a class="toclink" href="../../%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/2019/09/17/2019-09-17-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%A6%82%E5%BF%B5-chapter2-%E4%BD%9C%E4%B8%9A.md/#28">2.8</a></h3>
+<p>What are the two models of interprocess communication? What are the strengths and
+weaknesses of the two approaches?</p>
+<p><strong>1 共享内存 (shared-memory model)</strong>
+优点：</p>
+<ul>
+<li>速度快</li>
+<li>访问数据方便</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>不易进行数据的保护和同步</li>
+</ul>
+<p><strong>2 消息 (message-passing model)</strong>
+优点：</p>
+<ul>
+<li>不必避免冲突</li>
+<li>计算机间通信时，更容易实现</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>大量数据传输时，速度慢</li>
+</ul>
+    
+    
+  </div>
+</article>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
+          <time datetime="2019-09-17 14:47:08+00:00">2019年9月17日</time></li>
+        
+          <li class="md-meta__item">
+            分类于
+            
+              <a href="../../category/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/" class="md-meta__link">课程笔记</a></li>
+        
+        
+          
+          <li class="md-meta__item">
+            
+              需要 1 分钟阅读时间
+            
+          </li>
+        
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="操作系统第一章-作业"><a class="toclink" href="../../%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/2019/09/17/2019-09-17-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%A6%82%E5%BF%B5-chapter1-%E4%BD%9C%E4%B8%9A/">操作系统第一章 作业</a></h2>
+<h4 id="13"><a class="toclink" href="../../%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/2019/09/17/2019-09-17-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%A6%82%E5%BF%B5-chapter1-%E4%BD%9C%E4%B8%9A/#13">1.3</a></h4>
+<p>Under what circumstances would a user be better off using a timesharing system rather than a PC or single-user workstation?
+答：当计算机性能足够强大的时候，采用分时系统可以让计算机同时地，快速地，为许多用户解决复杂的问题，并使得计算资源得到充分的利用。此时若让每个用户使用 pc 机去解决问题会需要很久，而给使用工作站成本又太高。</p>
+<h4 id="15"><a class="toclink" href="../../%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/2019/09/17/2019-09-17-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%A6%82%E5%BF%B5-chapter1-%E4%BD%9C%E4%B8%9A/#15">1.5</a></h4>
+<p>Describe the differences between symmetric and asymmetric multiprocessing. What are three advantages and one disadvantage of multiprocessor systems?
+答：</p>
+<ol>
+<li>区别：</li>
+</ol>
+<ul>
+<li>对称多处理器中的每个核对于程序来讲是完全相同的，而非对称多处理的每个核都有自己擅长处理的特定的计算任务，是不同的。</li>
+<li>对称多处理器中的每个核都可以进行 I/O 操作，而非堆成中多处理中，有一个主核控制其它从核，通常只有主核执行 I/O 操作。</li>
+</ul>
+<ol>
+<li>优缺点：</li>
+</ol>
+<ul>
+<li>
+<p>优点：</p>
+<ol>
+<li>利用了并行性，增加了系统的吞吐量。</li>
+<li>因为不同 cpu 共享外设，大容量存储和电源等资源，因此更加经济。</li>
+<li>因为即使一个 cpu 出了问题，整个系统仍可以正常工作，因此更加可靠。</li>
+</ol>
+</li>
+</ul>
+<ul>
+<li>
+<p>缺点：</p>
+<ol>
+<li>需要编程人员编写并行性的程序才能发挥效果，增加编程工作量。</li>
+</ol>
+</li>
+</ul>
+<h4 id="110"><a class="toclink" href="../../%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/2019/09/17/2019-09-17-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%A6%82%E5%BF%B5-chapter1-%E4%BD%9C%E4%B8%9A/#110">1.10</a></h4>
+<p>What is the purpose of interrupts? What are the differences between a trap and an interrupt? Can traps be generated intentionally by a user program? If so, for what purpose?
+答：</p>
+<ol>
+<li>中断的目的：</li>
+</ol>
+<ul>
+<li>使用中断访问 I/O 机制，可以消除 cpu 对 I/O 设备的轮询，减少 cpu 的等待时间。</li>
+<li>通过中断更容易对外设进行响应，如按下键盘会产生一个中断，计算机处理这个中断便会跳转到响应处理程序。</li>
+</ul>
+<ol>
+<li>中断是硬件产生的，陷阱（trap）是软件产生的。</li>
+<li>可以，如软件需要进行系统调用时。</li>
+</ol>
+    
+    
+  </div>
+</article>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
+          <time datetime="2019-09-12 10:20:58+00:00">2019年9月12日</time></li>
+        
+          <li class="md-meta__item">
+            分类于
+            
+              <a href="../../category/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/" class="md-meta__link">课程笔记</a></li>
+        
+        
+          
+          <li class="md-meta__item">
+            
+              需要 3 分钟阅读时间
+            
+          </li>
+        
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="计算机组成原理-第一章作业"><a class="toclink" href="../../%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/2019/09/12/2019-09-12-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-%E7%AC%AC%E4%B8%80%E7%AB%A0%E4%BD%9C%E4%B8%9A/">计算机组成原理 第一章作业</a></h2>
+<blockquote>
+<p>教材：计算机组成原理：软硬件接口 第 5 版 (mips 版)
+时间：2019/09/08</p>
+</blockquote>
+<h3 id="exercise-12"><a class="toclink" href="../../%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/2019/09/12/2019-09-12-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-%E7%AC%AC%E4%B8%80%E7%AB%A0%E4%BD%9C%E4%B8%9A/#exercise-12">Exercise 1.2</a></h3>
+<ol>
+<li>a: "Assembly lines in automobile manufacturing" -&gt; "Performance via Pipelining"</li>
+<li>b: "Suspension bridge cables" -&gt; “Dependability via Redundancy”</li>
+<li>c: "Aircraft and marine navigation systems that incorporate wind information" -&gt; “Performance via Prediction”</li>
+<li>d: "Express elevators in buildings" -&gt; “Performance via Parallelism”</li>
+<li>e: "Library reserve desk" -&gt; “Hierarchy of Memories”</li>
+<li>f: "Increasing the gate area on a CMOS transistor to decrease its switching time" -&gt; “Make the Common Case Fast”</li>
+<li>g: "Adding electromagnetic aircraft catapults (which are electrically-powered as opposed to current steam-powered models), allowed by the increased power generation off ered by the new reactor technology" -&gt; “Design for Moore’s Law”</li>
+<li>h: "Building self-driving cars whose control systems partially rely on existing sensor systems already installed into the base veh icle, such as lane departure systems and smart cruise control systems" -&gt; “Use Abstraction to Simplify Design”</li>
+</ol>
+<h3 id="exercise-13"><a class="toclink" href="../../%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/2019/09/12/2019-09-12-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-%E7%AC%AC%E4%B8%80%E7%AB%A0%E4%BD%9C%E4%B8%9A/#exercise-13">Exercise 1.3</a></h3>
+<p>以 C 语言为例：
+&emsp;&emsp;&emsp;&emsp;编译&emsp;&emsp;&emsp;&emsp;&emsp;汇编&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;链接
+$ 源代码 \Longrightarrow 汇编语言 \Longrightarrow 目标代码 \Longrightarrow 机器代码$</p>
+<ul>
+<li>编译：通过编译器，读取源程序（字符流），对之进行词法和语法的分析，将高级语言指令转换为功能等效的汇编代码的过程。</li>
+<li>汇编：通过汇编器将汇编语言代码翻译成目标机器指令的过程。</li>
+<li>链接：将有关的目标文件彼此相连接，也即将在一个文件中引用的符号同该符号在另外一个文件中的定义连接起来，使得所有的这些目标文件成为一个能够被操作系统装入执行的统一整体。</li>
+</ul>
+<h3 id="exercise-14"><a class="toclink" href="../../%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/2019/09/12/2019-09-12-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-%E7%AC%AC%E4%B8%80%E7%AB%A0%E4%BD%9C%E4%B8%9A/#exercise-14">Exercise 1.4</a></h3>
+<p>a) $ frame size = 1280 \times 1024 \times 3 \times 8bit = 3.75MB $
+b) $ time = \frac{ 1280 \times 1024 \times 3 \times 8bit }{100 \times 10^{6} bit} \approx 0.31s $</p>
+<h3 id="exercise-15"><a class="toclink" href="../../%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/2019/09/12/2019-09-12-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-%E7%AC%AC%E4%B8%80%E7%AB%A0%E4%BD%9C%E4%B8%9A/#exercise-15">Exercise 1.5</a></h3>
+<h4 id="151"><a class="toclink" href="../../%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/2019/09/12/2019-09-12-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-%E7%AC%AC%E4%B8%80%E7%AB%A0%E4%BD%9C%E4%B8%9A/#151">1.5.1</a></h4>
+<p>设<span class="arithmatex">\(I\)</span>为指令数，<span class="arithmatex">\(t\)</span>为 cpu 执行时间，<span class="arithmatex">\(f\)</span>为时钟频率，则：
+$$
+    I = \frac{t \cdot f}{CPI}
+$$
+$ I_{p1} = {1 \times 3 \over 1.5} = 2G 条$
+$ I_{p2} = {1 \times 2.5 \over 1} = 2.5G 条$
+$ I_{p3} = {1 \times 4 \over 2.2} \approx 1.82G 条$</p>
+<h4 id="152"><a class="toclink" href="../../%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/2019/09/12/2019-09-12-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-%E7%AC%AC%E4%B8%80%E7%AB%A0%E4%BD%9C%E4%B8%9A/#152">1.5.2</a></h4>
+<p>设$ C $为时钟数，则：</p>
+<p>$ C_{p1} = 10 \times 3 = 30G $
+$ I_{p1} = {30 \over 1.5} = 20G $</p>
+<p>$ C_{p2} = 10 \times 2.5 = 25G $
+$ I_{p2} = {25 \over 1} = 25G $</p>
+<p>$ C_{p3} = 10 \times 4 = 40G $
+$ I_{p3} = {40 \over 2.2} \approx 18.2G $</p>
+<h4 id="153"><a class="toclink" href="../../%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/2019/09/12/2019-09-12-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-%E7%AC%AC%E4%B8%80%E7%AB%A0%E4%BD%9C%E4%B8%9A/#153">1.5.3</a></h4>
+<p>(1) $ t = \frac{I \cdot CPI}{f} $
+(2) $ (1-0.3)t = \frac{I \cdot (1+0.2)CPI}{f'} $</p>
+<p>$ 由\frac{(1)}{(2)} \Rightarrow \frac{clock rate'}{clock rate} = {(1+0.2) \over (1-0.3)} = 1.71$</p>
+<h3 id="exercise-16"><a class="toclink" href="../../%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/2019/09/12/2019-09-12-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-%E7%AC%AC%E4%B8%80%E7%AB%A0%E4%BD%9C%E4%B8%9A/#exercise-16">Exercise 1.6</a></h3>
+<h4 id="161"><a class="toclink" href="../../%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/2019/09/12/2019-09-12-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-%E7%AC%AC%E4%B8%80%E7%AB%A0%E4%BD%9C%E4%B8%9A/#161">1.6.1</a></h4>
+<p>令$ p_i $为一条指令占总指令的比例，则对于平均 CPI，有：
+$$
+    \overline {CPI} = \sum_{i=1}^nCPI_i \cdot p_i
+$$
+对于 P1：$ \overline {CPI} = 0.1\times 1 + 0.2\times 2 + 0.5\times 3 + 0.2\times 3 = 2.5 $
+对于 P2：$ \overline {CPI} = 2 $</p>
+<h4 id="162"><a class="toclink" href="../../%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/2019/09/12/2019-09-12-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-%E7%AC%AC%E4%B8%80%E7%AB%A0%E4%BD%9C%E4%B8%9A/#162">1.6.2</a></h4>
+<p>对于 P1，时钟数：$ C = \frac{1.0 \times 10^6}{2.5} = 4\times 10^5 $
+对于 P2，时钟数：$ C = \frac{1.0 \times 10^6}{2} = 5\times 10^5 $</p>
+<h3 id="exercise-17"><a class="toclink" href="../../%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/2019/09/12/2019-09-12-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-%E7%AC%AC%E4%B8%80%E7%AB%A0%E4%BD%9C%E4%B8%9A/#exercise-17">Exercise 1.7</a></h3>
+<h6 id="a"><a class="toclink" href="../../%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/2019/09/12/2019-09-12-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-%E7%AC%AC%E4%B8%80%E7%AB%A0%E4%BD%9C%E4%B8%9A/#a">a)</a></h6>
+<p>设$ T <span class="arithmatex">\(为时钟周期，\)</span> t <span class="arithmatex">\(为程序执行时间，\)</span> I $为指令数，则：
+$$
+    CPI = \frac{t}{I \cdot T}
+$$
+$ \overline {CPI_A} = \frac{1.1s}{1.0 \times 10^9 \times 1 ns} = 1.1$
+$ \overline {CPI_B} = \frac{1.5s}{1.2 \times 10^9 \times 1 ns} = 1.25$</p>
+<h6 id="b"><a class="toclink" href="../../%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/2019/09/12/2019-09-12-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-%E7%AC%AC%E4%B8%80%E7%AB%A0%E4%BD%9C%E4%B8%9A/#b">b)</a></h6>
+<p>设$ f = \frac{1}{T} $，利用上述公式，得：
+$$
+\frac{CPI_A}{CPI_B} = \frac{I_B \cdot T_{PB}}{I_A \cdot T_{PA}}\
+    \Rightarrow \frac{1.1}{1.25} = \frac{1.2 f_{PA}}{1.0 f_{PB}}\
+    \Rightarrow \frac{f_{PA}}{f_{PB}} = 0.733
+$$
+答：处理器 A 的时钟频率为处理器 B 的 0.733 倍</p>
+<h6 id="c"><a class="toclink" href="../../%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/2019/09/12/2019-09-12-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-%E7%AC%AC%E4%B8%80%E7%AB%A0%E4%BD%9C%E4%B8%9A/#c">c)</a></h6>
+<p>仍假设 cpu 时钟周期为 1ns，$ t_{new} = 6.0 \times 10^8 \times 1.1 \times 1ns = 0.66s $</p>
+<p>对于 A: $ 加速比 = (1.1 - 0.66)/1.1 = 40\% $
+对于 B：$ 加速比 = (1.5 - 0.66)/1.5 = 29.3\% $</p>
+<h3 id="exercise-18"><a class="toclink" href="../../%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/2019/09/12/2019-09-12-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-%E7%AC%AC%E4%B8%80%E7%AB%A0%E4%BD%9C%E4%B8%9A/#exercise-18">Exercise 1.8</a></h3>
+<h4 id="181"><a class="toclink" href="../../%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/2019/09/12/2019-09-12-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-%E7%AC%AC%E4%B8%80%E7%AB%A0%E4%BD%9C%E4%B8%9A/#181">1.8.1</a></h4>
+<p>设 P 为功耗，C 为负载电容，V 为电压，f 为开关频率，动态功耗公式：
+$$
+    P = C \cdot U^2 \cdot f
+$$
+$ C_{Pentium 4} = \frac{90}{1.25^2 \times 3.6 \times 10^6} = 16 \mu F$
+$ C_{Core i5} = \frac{40}{0.9^2 \times 3.4 \times 10^6} \approx  14.5 \mu F$</p>
+<h4 id="182"><a class="toclink" href="../../%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/2019/09/12/2019-09-12-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-%E7%AC%AC%E4%B8%80%E7%AB%A0%E4%BD%9C%E4%B8%9A/#182">1.8.2</a></h4>
+<p>$ 设 p1 为静态功耗占总功耗的比例，p2 为静态功耗相对于动态功耗的比例。 $</p>
+<p>$ Pentium 4: p1 = 10/100 = 10\%, p2 = 10/90 = 11.1\%$
+$ Core i5: p1 = 30/70 =  42.9\%, p2 = 30/40 = 75\%$</p>
+<h4 id="183"><a class="toclink" href="../../%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/2019/09/12/2019-09-12-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-%E7%AC%AC%E4%B8%80%E7%AB%A0%E4%BD%9C%E4%B8%9A/#183">1.8.3</a></h4>
+<div class="arithmatex">\[ P_总 = P_动 + P_静  =  C \cdot U^2 \cdot f + I \cdot U$$
+$ 因为 I 不变，设变化后的电压为 U'，t = \frac{U'}{U},则： $
+$$ P_总' = P_动 \cdot \left( \frac{U'}{U} \right)^2 + P_静 \cdot \left( \frac{U'}{U} \right) \\
+\Rightarrow P_总' = P_动 \cdot t^2 + P_静 \cdot t
+\]</div>
+<p>对于 P4：
+$ 90 = 90t^2 + 10t \Rightarrow t \approx  0.946 $
+对于 i5:
+$ 63 = 40t^2 + 30t \Rightarrow t \approx  0.935$
+答：对于 P4，电压降为原来的$ 94.6\% <span class="arithmatex">\(，对于 i5，电压降为原来的\)</span> 93.5\% $</p>
+    
+    
+  </div>
+</article>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
+          <time datetime="2019-09-11 02:38:02+00:00">2019年9月11日</time></li>
+        
+          <li class="md-meta__item">
+            分类于
+            
+              <a href="../../category/%E4%B8%AA%E4%BA%BA/" class="md-meta__link">个人</a></li>
+        
+        
+          
+          <li class="md-meta__item">
+            
+              需要 1 分钟阅读时间
+            
+          </li>
+        
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="序章"><a class="toclink" href="../../%E4%B8%AA%E4%BA%BA/2019/09/11/hello-world/">序章</a></h2>
+<p>写博客在我看来就犹如创建一个属于自己的秘密基地，
+那是一个属于自己内心的场所。</p>
+<p>偶尔期待着有人误入这里，
+通过文字向他们表达真实的自己。</p>
+    
+    
+  </div>
+</article>
+      
+      
+        
+          
+
+
+
+<nav class="md-pagination">
+  <a class="md-pagination__link" href="../..">1</a> <span class="md-pagination__dots">..</span> <a class="md-pagination__link" href="../3/">3</a> <a class="md-pagination__link" href="../4/">4</a> <span class="md-pagination__current">5</span>
+</nav>
+        
+      
+    </div>
+  </div>
+
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="页脚" >
+        
+        
+          
+          <a href="../../about/" class="md-footer__link md-footer__link--next" aria-label="下一页: 关于">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                下一页
+              </span>
+              <div class="md-ellipsis">
+                关于
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/TheRainstorm" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.instant.progress", "navigation.tracking", "navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.footer", "content.code.copy", "toc.follow", "toc.integrate"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

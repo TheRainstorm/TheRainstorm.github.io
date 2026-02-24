@@ -1,0 +1,1744 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="记录一些关于数学、计算机的知识，以及一些日常。">
+      
+      
+      
+        <link rel="canonical" href="https://yfy.cqu.ai/%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/2022/02/14/2022-02-14-%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E7%BD%91%E7%BB%9C%E8%87%AA%E7%94%B1/">
+      
+      
+        <link rel="prev" href="../../13/2022-02-13-openwrt%E5%88%B7%E6%9C%BA/">
+      
+      
+        <link rel="next" href="../../../../../%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%85%B7/2022/03/29/2022-03-29-iptables/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.3">
+    
+    
+      
+        <title>如何实现网络自由 - Rain 的随笔</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#如何实现网络自由-" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../../../../.." title="Rain 的随笔" class="md-header__button md-logo" aria-label="Rain 的随笔" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Rain 的随笔
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              如何实现网络自由
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    
+  
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="../../../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  博客
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../about/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  关于
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../tags/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  标签
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../series/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  系列
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../tools/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  工具
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../archive/2026/" class="md-tabs__link">
+          
+  
+  
+  归档
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../category/%E4%B8%AA%E4%BA%BA/" class="md-tabs__link">
+          
+  
+  
+  分类
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" hidden>
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../../.." title="Rain 的随笔" class="md-nav__button md-logo" aria-label="Rain 的随笔" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Rain 的随笔
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+    
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      <a href="../../../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    博客
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    关于
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../tags/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    标签
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../series/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    系列
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../tools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    工具
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    归档
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    归档
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2026/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2026
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2025/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2025
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2024/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2024
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2023/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2023
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2022/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2022
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2021/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2021
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2020/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2020
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2019/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2019
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    分类
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    分类
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E4%B8%AA%E4%BA%BA/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    个人
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E5%8D%9A%E5%AE%A2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    博客
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E5%8D%9A%E5%AE%A2--%E7%BD%91%E7%BB%9C/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    博客 &amp; 网络
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    学习笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    折腾记录
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    课程笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%85%B7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    软件工具
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E9%98%85%E8%AF%BB/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    阅读
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+  <div class="md-content md-content--post" data-md-component="content">
+    <div class="md-sidebar md-sidebar--post" data-md-component="sidebar" data-md-type="navigation">
+      <div class="md-sidebar__scrollwrap">
+        <div class="md-sidebar__inner md-post">
+          <nav class="md-nav md-nav--primary">
+            <div class="md-post__back">
+              <div class="md-nav__title md-nav__container">
+                <a href="../../../../.." class="md-nav__link">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+                  <span class="md-ellipsis">
+                    回到主页
+                  </span>
+                </a>
+              </div>
+            </div>
+            
+            <ul class="md-post__meta md-nav__list">
+              <li class="md-nav__item md-nav__item--section">
+                <div class="md-post__title">
+                  <span class="md-ellipsis">
+                    元数据
+                  </span>
+                </div>
+                <nav class="md-nav">
+                  <ul class="md-nav__list">
+                    <li class="md-nav__item">
+                      <div class="md-nav__link">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 19H5V8h14m-3-7v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1V1m-1 11h-5v5h5z"/></svg>
+                        <time datetime="2022-02-14 01:18:16+00:00" class="md-ellipsis">2022年2月14日</time>
+                      </div>
+                    </li>
+                    
+                    
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 3v15h3V3zm3 2 4 13 3-1-4-13zM5 5v13h3V5zM3 19v2h18v-2z"/></svg>
+                          <span class="md-ellipsis">
+                            分类于
+                            
+                              <a href="../../../../../category/%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/">折腾记录</a></span>
+                        </div>
+                      </li>
+                    
+                    
+                      
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20a8 8 0 0 0 8-8 8 8 0 0 0-8-8 8 8 0 0 0-8 8 8 8 0 0 0 8 8m0-18a10 10 0 0 1 10 10 10 10 0 0 1-10 10C6.47 22 2 17.5 2 12A10 10 0 0 1 12 2m.5 5v5.25l4.5 2.67-.75 1.23L11 13V7z"/></svg>
+                          <span class="md-ellipsis">
+                            
+                              需要 3 分钟阅读时间
+                            
+                          </span>
+                        </div>
+                      </li>
+                    
+                  </ul>
+                </nav>
+              </li>
+            </ul>
+            
+          </nav>
+          
+            
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#如何实现网络自由-" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        如何实现网络自由:-)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="如何实现网络自由:-)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#基础知识" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        基础知识
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#基础" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        基础
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="基础">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#开启-ipv6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        开启 ipv6
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ddns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DDNS
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#玩法" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        玩法
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="玩法">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#远程桌面" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        远程桌面
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#云游戏" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        云游戏
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#家庭影院" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        家庭影院
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#iscsi-网络挂载磁盘" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        iSCSI 网络挂载磁盘
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#路由器玩法" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        路由器玩法
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="路由器玩法">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#openwrt-刷机" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        openwrt 刷机
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#远程开机" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        远程开机
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#定时脚本" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        定时脚本
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vpn" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        VPN
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#内网穿透" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        内网穿透
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#透明代理" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        透明代理
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#小型-nas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        小型 NAS
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#其他网络工具" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        其他网络工具
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="其他网络工具">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#barrier" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        barrier
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+          
+        </div>
+      </div>
+    </div>
+    <article class="md-content__inner md-typeset">
+      
+        
+  
+
+
+  <nav class="md-tags" >
+    
+      
+      
+      
+      
+        <a href="../../../../../tags/#tag:如何实现网络自由" class="md-tag">如何实现网络自由</a>
+      
+    
+  </nav>
+
+
+
+  <h1>如何实现网络自由</h1>
+
+<h2 id="如何实现网络自由-">如何实现网络自由:-)<a class="headerlink" href="#如何实现网络自由-" title="Permanent link">&para;</a></h2>
+<p>这里说的网络自由，是指通过网络工具极大地便利生活的某些方面。这篇文章是我自己对折腾路由器刷机、openwrt、ipv6 的总结，并尽量说明了各种玩法的实际用途。其中有些操作确实给我带来了极大便利，比如其中使用 iSCSI 通过网络挂载其它设备的硬盘，这充分解放了我只有 500GB 的轻薄本。在上面安装游戏后，又可以实现在不同设备上无缝玩同一个游戏的体验。</p>
+<!-- more -->
+<h3 id="基础知识">基础知识<a class="headerlink" href="#基础知识" title="Permanent link">&para;</a></h3>
+<ul>
+<li>
+<p>光纤宽带上网</p>
+<p>对于光纤接入的宽带，会有一个设备叫做光猫（猫，modem，调制解调器），用于将光信号转换为电信号。光猫后面除了光纤接入，还有一排 LAN 口作为输出。我们会将其中一个 LAN 口连接到自己买的路由器背后的 WAN 口上（只有一个，并且一般颜色不一样）</p>
+<p>此时有两种配置方法可以上网：</p>
+<ul>
+<li>
+<p>光猫中设置拨号上网，路由器 WAN 设置为 DHCP 协议</p>
+<p>一般情况下装宽带的师傅会设置成这种方式，这种情况下光猫也相作为一个路由器，自己买的路由器则相当于一个二级路由器</p>
+<p><em>ps. 这种情况下，光猫和路由器处于两个不同的网段 (局域网)，中间经过一层 NAT，比如光猫为 192.168.0.1，路由器为 192.168.1.1</em></p>
+<p><em>ps. 光猫中一般也可以开启一个无线网络，名字是固定的。因此甚至可以不用路由器而只使用光猫</em></p>
+<p><em>ps. </em><em>存在性能问题</em><em>：一般来说，光猫的硬件配置相对于自己买的路由器都比较低，作为路由器的话可能造成性能瓶颈，因此更推荐下面的配置方式</em></p>
+</li>
+</ul>
+<ul>
+<li>
+<p><strong>光猫设置为桥接模式，路由器 WAN 设置为拨号上网</strong></p>
+<p>这种方式，光猫只作为一个光电转换设备，路由器负责路由、转发。因此光猫不会造成性能瓶颈。</p>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>
+<p>公网 ip</p>
+<ul>
+<li>计算机之间要想相互通信，需要使用 ip 地址来进行标识。如果每台计算机的 ip 都不同，那么情况最简单。这种 ip 称为公网 ip</li>
+</ul>
+<ul>
+<li>
+<p>但是由于 ipv4 数量有限，无法给每台计算机都分配一个唯一的 ip，因此产生了 NAT 技术。大致过程：连接到同一个路由器上的设备（即一个局域网）被分配给一个内网地址。当其中某个设备上网时（如访问 B 站），路由器转发该设备的网络包，并将其中的 ip 转换成自己的公网 ip。之后当路由器接收到 B 站服务器的响应时，同样将网络包中 ip 转换回设备的内网 ip。</p>
+<p>因此，整个过程中，B 站的服务器认为在和路由器进行通信。</p>
+</li>
+</ul>
+<ul>
+<li><strong>NAT 使得一个局域网内的设备共用一个公网 ip 上网，甚至还可以多层 NAT 套娃，大大节约了 ip 地址。但是同时也使得局域网外的设备无法访问局域网内的设备，带来了需要内网穿透的问题</strong>。</li>
+</ul>
+<ul>
+<li>目前家用宽带，分配的 ip 基本是内网 ip，上网时需要经过运营商路由器的 NAT 转换。</li>
+</ul>
+<ul>
+<li><strong>但是！随着 ipv6 的普及，目前家用宽带均可以获得公网的 ipv6 地址！</strong>有了 ipv6 后，每个设备都可以获得唯一的 ipv6 地址，<strong>万物均可互联，终于回归到了互联网本来的样子！</strong></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>
+<p>内网穿透</p>
+<p>使得局域网外的设备访问局域网内的设备便叫做内网穿透。内网穿透很复杂，况且有了 ipv6 后便可以把这些都丢掉了，因此这里仅简单说明一下常见的内网穿透方式：</p>
+<ul>
+<li>
+<p>最简单的情况，使用一个公网服务器作为跳板。设备 A 要想访问内网中的设备 B，先访问服务器 C，C 再将数据转发给 B。</p>
+<p>缺点：这种方式 A 访问 B 的带宽受限于购买的服务器 C 的上传下载带宽。一般的服务器可能只有 1~2M 的带宽，很小。</p>
+<p><em>ps. 使用过的工具有 Frp</em></p>
+</li>
+</ul>
+<ul>
+<li>
+<p>udp 打洞，这种比较高级，涉及到 NAT 的原理。采用这种方式需要其中一个设备有公网 ip。没有的话，则需要服务器 C 进行初始化连接，打洞成功后，A 直接访问 B 不需要 C 的转发，因此访问带宽不会被 C 的带宽限制</p>
+<p>缺点：udp 打洞对 NAT 类型有要求，并非所有 NAT 类型都能打洞成功</p>
+<p><em>ps. 许多 P2P 工具，联机游戏，都会使用该技术</em></p>
+</li>
+</ul>
+<p>这里梳理了一下不同网络情况下内网穿透方式{% post_link 不同情况下的内网穿透 %}</p>
+</li>
+</ul>
+<h3 id="基础">基础<a class="headerlink" href="#基础" title="Permanent link">&para;</a></h3>
+<p>实现网络自由的基础便是每台设备都能获得一个公网的 ip，ipv6 使我们能做到这一点</p>
+<h4 id="开启-ipv6">开启 ipv6<a class="headerlink" href="#开启-ipv6" title="Permanent link">&para;</a></h4>
+<ul>
+<li>对于家里接入了宽带的情况，各大运营商基本都支持 ipv6，但不一定开启了。需要在光猫里设置<ul>
+<li>移动光猫开启 ipv6 教程{% post_link 移动光猫开启 ipv6 %}</li>
+</ul>
+</li>
+<li>对于学校连接校园网的情况，校园网除了接入几大运营商，还可能接入教育网，一般都支持 ipv6。此时在路由器相关选项里打开 ipv6 即可。</li>
+<li>对于路由器为 openwrt 的情况，配置 ipv6 教程<a href="../../13/2022-02-13-openwrt%E9%85%8D%E7%BD%AE/#ipv6">openwrt 配置#ipv6</a></li>
+</ul>
+<h4 id="ddns">DDNS<a class="headerlink" href="#ddns" title="Permanent link">&para;</a></h4>
+<p>虽然 ipv6 是得每个设备有了公网 ip，但是有两个问题：</p>
+<ul>
+<li>目前 ipv6 有有状态的分配协议 DHCP，也有无状态的 SLAAC 协议，分配的 ip 地址可能发生变化。</li>
+<li>ipv6 地址有 128bit，太长了不容易记忆</li>
+</ul>
+<p>解决以上问题的方式便是将 ipv6 绑定到一个域名上。</p>
+<p>FreeDNS 和 openwrt 配置介绍<a href="../../13/2022-02-13-openwrt%E9%85%8D%E7%BD%AE/#DDNS">openwrt 配置#DDNS</a></p>
+<h3 id="玩法">玩法<a class="headerlink" href="#玩法" title="Permanent link">&para;</a></h3>
+<h4 id="远程桌面">远程桌面<a class="headerlink" href="#远程桌面" title="Permanent link">&para;</a></h4>
+<p>使用 windows 自带的“远程桌面连接”，便可以远程连接到其他 windows 计算机。不只是电脑，手机平板等平台也均可下载 rdp 软件连接到 windows。</p>
+<p><em>ps. 1. 服务端需要开启远程连接服务，需要 windows 专业版，但是 github 上有家庭版开启的方法。2. linux 和 windows 也可通过 rdp 协议相互连接</em></p>
+<p>用例：</p>
+<ul>
+<li>计算机专业去机房做实验时，直接在机房电脑上远程连接到寝室/实验室电脑</li>
+</ul>
+<ul>
+<li>回家时台式机搬不回家？将台式搬到实验室（不会断电），在家远程开机，再通过远程桌面连接办公。</li>
+<li>（亲身经历）某次英语做 presentation 时，教室的电脑识别不了自己的 U 盘，直接远程连接宿舍的电脑，将文件复制到教室的电脑中。（有点 cool）</li>
+</ul>
+<h4 id="云游戏">云游戏<a class="headerlink" href="#云游戏" title="Permanent link">&para;</a></h4>
+<p>几个串流软件</p>
+<ul>
+<li>SteamLink：只要有 steam 就可以串流，效果不错</li>
+<li>AMD Link：试过内网串流，感觉差不多。没实现成功外网串流</li>
+<li>moonlight(NV)：基于 NV 的 Sheild 实现的开源版本，据说效果很好</li>
+</ul>
+<p>亲身经历，老家江西乐平（100M 移动宽带），台式机位于安徽合肥学校实验室（1000M 教育网），使用 ipv6 连接 (使用了 wireguard VPN 连接到学校)，使用 SteamLink 绚丽模式（最好画质），玩怪物猎人世界，延迟可以稳定在 20-30ms 之间，完全不卡（如果波动到 60ms 就会卡，20-30ms 属于效果很好的情况）</p>
+<p>不过也有一些小问题：</p>
+<ul>
+<li>画面有时会出现许多马赛克，或者有时整体像是加上了一个滤镜，偏紫。感觉是 udp 数据传输错误导致的。或者是 steamLink 的问题？</li>
+<li>steamlink 只有手机平板端支持 HEVC 编码，其余均只支持 h264 编码。不知道换用编码能不能解决上面的画面问题。（平板的 typec 经转接后是可以连接网线的，再次尝试后仍然出现了上面问题，不过感觉好像 SteamLink 并没有开启 h265 编码，信息栏仍显示台式机在使用 x264 进行编码）</li>
+<li>台式机使用的显卡为 RX550，性能很弱。串流时，编码使用了 CPU 编码，因此对性能稍稍造成了一点影响。</li>
+<li>总之，感觉用英伟达的硬件+moonlight 可能效果会更好。</li>
+</ul>
+<h4 id="家庭影院">家庭影院<a class="headerlink" href="#家庭影院" title="Permanent link">&para;</a></h4>
+<p>在电脑上下载好高清视频，开启 SMB 共享，在安卓电视上安装 kodi 软件，通过 ipv6 添加电脑。电视就可以直接播放电脑视频了，而且 Kodi 作为一个前端软件，还有许多功能，比如自动扫描文件，添加电影封面、简介之类的。</p>
+<p>实际操作{% post_link 小米电视访问电脑视频 %}</p>
+<h4 id="iscsi-网络挂载磁盘">iSCSI 网络挂载磁盘<a class="headerlink" href="#iscsi-网络挂载磁盘" title="Permanent link">&para;</a></h4>
+<p>可以通过网络将某个设备上的磁盘挂载到别的电脑上</p>
+<p>对于客户端来说，挂载的盘和其他盘一样，可以安装软件。经测试，虽然游戏加载延迟确实受到网络带宽影响。但是是真的可以打游戏的，即使是运行 50GB 的 MHW 效果也非常的好，甚至没有感觉到加载延迟。</p>
+<p>用例：</p>
+<ul>
+<li>老笔记本不怎么用了，但是不想浪费上面的 1TB 磁盘？装上 Linux，将磁盘作为 iSCSI server 分享出去。</li>
+<li>轻薄本仅有 500G 固态且无法扩展？挂载上其他设备上的 1TB 磁盘，直接解放。</li>
+<li>在一个磁盘上安装好游戏，自己的设备带不动，下次蹭一下别人的电脑，用别人的电脑来玩</li>
+</ul>
+<p>设置方法参考{% post_link 网络挂载磁盘 (iSCSi) %}</p>
+<h3 id="路由器玩法">路由器玩法<a class="headerlink" href="#路由器玩法" title="Permanent link">&para;</a></h3>
+<h4 id="openwrt-刷机">openwrt 刷机<a class="headerlink" href="#openwrt-刷机" title="Permanent link">&para;</a></h4>
+<p>以下路由器玩法均需要有一个路由器，并且需要刷成第三方系统，推荐 openwrt 系统。</p>
+<ul>
+<li>刷 openwrt 参考：{% post_link openwrt 刷机 %}</li>
+</ul>
+<ul>
+<li>如果有需要，还可以参考如何自己编译 openwrt 固件：{% post_link openwrt 编译 %}</li>
+</ul>
+<h4 id="远程开机">远程开机<a class="headerlink" href="#远程开机" title="Permanent link">&para;</a></h4>
+<p>使用网络唤醒 WOL(wake on LAN) 方式对电脑进行开机。比如远程将实验室的台式机开机，然后进行远程桌面连接。</p>
+<h4 id="定时脚本">定时脚本<a class="headerlink" href="#定时脚本" title="Permanent link">&para;</a></h4>
+<p>在路由器上使用 crontab 定时运行脚本，比如使用 python 自动进行签到、抢课。</p>
+<h4 id="vpn">VPN<a class="headerlink" href="#vpn" title="Permanent link">&para;</a></h4>
+<p>使用 VPN 可以在外地访问内网。比如放假回家，通过 VPN 连接到学校的路由器，然后可以访问校内资源。</p>
+<ul>
+<li>openwrt 配置 wiregurad 方法参考：<a href="../../13/2022-02-13-openwrt%E9%85%8D%E7%BD%AE/#Wireguard">openwrt 配置#Wireguard</a></li>
+</ul>
+<h4 id="内网穿透">内网穿透<a class="headerlink" href="#内网穿透" title="Permanent link">&para;</a></h4>
+<p>外网访问路由器内网设备</p>
+<ul>
+<li>zerotier：最简单的内网穿透工具，需要注册 zerotier 账号，zerotier 会尝试使设备间直接连接，不行则使用 zerotier 服务器转发（给的带宽也很高）。<ul>
+<li>openwrt 配置 zerotier 方法参考：<a href="../../13/2022-02-13-openwrt%E9%85%8D%E7%BD%AE/#ZeroTier">openwrt 配置#ZeroTier</a></li>
+</ul>
+</li>
+<li>wiregurad 做 VPN 同时，也可以进行内网穿透</li>
+</ul>
+<h4 id="透明代理">透明代理<a class="headerlink" href="#透明代理" title="Permanent link">&para;</a></h4>
+<p>在路由器上运行代理软件，如 ssr, clash。从而实现连接到该路由器上的设备均可科学上网，而不用进行任何额外设置。</p>
+<ul>
+<li>openwrt 配置透明代理方法参考：<a href="../../13/2022-02-13-openwrt%E9%85%8D%E7%BD%AE/#透明代理">openwrt 配置#透明代理</a></li>
+</ul>
+<h4 id="小型-nas">小型 NAS<a class="headerlink" href="#小型-nas" title="Permanent link">&para;</a></h4>
+<p>对于有 USB 接口的路由器，可以接上一块移动硬盘（或者充分利用你的 U 盘:-)）来作为一个文件存储器。</p>
+<h3 id="其他网络工具">其他网络工具<a class="headerlink" href="#其他网络工具" title="Permanent link">&para;</a></h3>
+<h4 id="barrier">barrier<a class="headerlink" href="#barrier" title="Permanent link">&para;</a></h4>
+<ul>
+<li><a href="https://github.com/debauchee/barrier">debauchee/barrier: Open-source KVM software (github.com)</a></li>
+</ul>
+<p>一款开源免费的键鼠共享工具，通过网络使一套键鼠可以控制多个设备，并且还支持剪切板，文件拖动等功能。在 windows 和 linux 上均可使用。</p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+  
+
+
+
+      
+    </article>
+  </div>
+
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+        
+      
+      <nav class="md-footer__inner md-grid" aria-label="页脚" >
+        
+          
+          <a href="../../13/2022-02-13-openwrt%E5%88%B7%E6%9C%BA/" class="md-footer__link md-footer__link--prev" aria-label="上一页: openwrt 刷机">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                上一页
+              </span>
+              <div class="md-ellipsis">
+                openwrt 刷机
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../../../../../%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%85%B7/2022/03/29/2022-03-29-iptables/" class="md-footer__link md-footer__link--next" aria-label="下一页: iptables">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                下一页
+              </span>
+              <div class="md-ellipsis">
+                iptables
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/TheRainstorm" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../../..", "features": ["navigation.instant", "navigation.instant.progress", "navigation.tracking", "navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.footer", "content.code.copy", "toc.follow", "toc.integrate"], "search": "../../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../../../../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

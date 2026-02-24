@@ -1,0 +1,1711 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="记录一些关于数学、计算机的知识，以及一些日常。">
+      
+      
+      
+        <link rel="canonical" href="https://yfy.cqu.ai/%E5%8D%9A%E5%AE%A2/2024/05/25/VR%20%E5%A4%9A%E4%BA%BA%E8%A7%82%E5%BD%B1%E6%96%B9%E6%A1%88%E6%8E%A2%E7%A9%B6/">
+      
+      
+        <link rel="prev" href="../../../../../%E5%8D%9A%E5%AE%A2--%E7%BD%91%E7%BB%9C/2024/04/21/%E4%BE%BF%E6%90%BA%E8%B7%AF%E7%94%B1%E5%99%A8/">
+      
+      
+        <link rel="next" href="../../../../../%E4%B8%AA%E4%BA%BA/2024/08/10/%E7%9C%8B%E5%A5%A5%E8%BF%90%E4%BC%9A%E7%9A%84%E5%90%84%E7%A7%8D%E5%A7%BF%E5%8A%BF/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.3">
+    
+    
+      
+        <title>VR 多人观影 - Rain 的随笔</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#现有方案总结" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../../../../.." title="Rain 的随笔" class="md-header__button md-logo" aria-label="Rain 的随笔" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Rain 的随笔
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              VR 多人观影
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    
+  
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="../../../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  博客
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../about/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  关于
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../tags/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  标签
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../series/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  系列
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../tools/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  工具
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../archive/2026/" class="md-tabs__link">
+          
+  
+  
+  归档
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../category/%E4%B8%AA%E4%BA%BA/" class="md-tabs__link">
+          
+  
+  
+  分类
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" hidden>
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../../.." title="Rain 的随笔" class="md-nav__button md-logo" aria-label="Rain 的随笔" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Rain 的随笔
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+    
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      <a href="../../../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    博客
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    关于
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../tags/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    标签
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../series/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    系列
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../tools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    工具
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    归档
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    归档
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2026/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2026
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2025/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2025
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2024/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2024
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2023/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2023
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2022/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2022
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2021/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2021
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2020/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2020
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2019/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2019
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    分类
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    分类
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E4%B8%AA%E4%BA%BA/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    个人
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E5%8D%9A%E5%AE%A2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    博客
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E5%8D%9A%E5%AE%A2--%E7%BD%91%E7%BB%9C/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    博客 &amp; 网络
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    学习笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    折腾记录
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    课程笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%85%B7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    软件工具
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E9%98%85%E8%AF%BB/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    阅读
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+  <div class="md-content md-content--post" data-md-component="content">
+    <div class="md-sidebar md-sidebar--post" data-md-component="sidebar" data-md-type="navigation">
+      <div class="md-sidebar__scrollwrap">
+        <div class="md-sidebar__inner md-post">
+          <nav class="md-nav md-nav--primary">
+            <div class="md-post__back">
+              <div class="md-nav__title md-nav__container">
+                <a href="../../../../.." class="md-nav__link">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+                  <span class="md-ellipsis">
+                    回到主页
+                  </span>
+                </a>
+              </div>
+            </div>
+            
+            <ul class="md-post__meta md-nav__list">
+              <li class="md-nav__item md-nav__item--section">
+                <div class="md-post__title">
+                  <span class="md-ellipsis">
+                    元数据
+                  </span>
+                </div>
+                <nav class="md-nav">
+                  <ul class="md-nav__list">
+                    <li class="md-nav__item">
+                      <div class="md-nav__link">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 19H5V8h14m-3-7v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1V1m-1 11h-5v5h5z"/></svg>
+                        <time datetime="2024-05-25 18:49:05+00:00" class="md-ellipsis">2024年5月25日</time>
+                      </div>
+                    </li>
+                    
+                    
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 3v15h3V3zm3 2 4 13 3-1-4-13zM5 5v13h3V5zM3 19v2h18v-2z"/></svg>
+                          <span class="md-ellipsis">
+                            分类于
+                            
+                              <a href="../../../../../category/%E5%8D%9A%E5%AE%A2/">博客</a></span>
+                        </div>
+                      </li>
+                    
+                    
+                      
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20a8 8 0 0 0 8-8 8 8 0 0 0-8-8 8 8 0 0 0-8 8 8 8 0 0 0 8 8m0-18a10 10 0 0 1 10 10 10 10 0 0 1-10 10C6.47 22 2 17.5 2 12A10 10 0 0 1 12 2m.5 5v5.25l4.5 2.67-.75 1.23L11 13V7z"/></svg>
+                          <span class="md-ellipsis">
+                            
+                              需要 4 分钟阅读时间
+                            
+                          </span>
+                        </div>
+                      </li>
+                    
+                  </ul>
+                </nav>
+              </li>
+            </ul>
+            
+          </nav>
+          
+            
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#现有方案总结" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        现有方案总结
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#方案介绍" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        方案介绍
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#obs--hls-服务器--vrc-方案" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OBS + HLS 服务器 + VRC 方案
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="OBS + HLS 服务器 + VRC 方案">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#h264_nvenc-模式选择" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        h264_nvenc 模式选择
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#码率设置" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        码率设置
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vrc-地图" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        VRC 地图
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="VRC 地图">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#movie--chill" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Movie &amp; Chill
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#yet-another-movie-theater-renewed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Yet Another Movie Theater: Renewed
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sovrens-chill-home" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sovren’s Chill Home
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#campsite-movie-night" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Campsite Movie Night
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#参考资料" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        参考资料
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+          
+        </div>
+      </div>
+    </div>
+    <article class="md-content__inner md-typeset">
+      
+        
+  
+
+
+  <nav class="md-tags" >
+    
+      
+      
+      
+      
+        <a href="../../../../../tags/#tag:hls" class="md-tag">hls</a>
+      
+    
+      
+      
+      
+      
+        <a href="../../../../../tags/#tag:vr" class="md-tag">vr</a>
+      
+    
+      
+      
+      
+      
+        <a href="../../../../../tags/#tag:vrchat" class="md-tag">vrchat</a>
+      
+    
+  </nav>
+
+
+
+  <h1>VR 多人观影</h1>
+
+<p>VR 比较常见的一个功能便是拿来看看视频，巨大的屏幕以及可以切换的各种拟真场景，都可以带来非常高的沉浸感。而多人观影，则使得这个功能更近一步。在多人观影应用中，玩家可以创建虚拟房间，别人可以加入这个房间观看同一部电影。在虚拟场景中，玩家可以看到对面的虚拟形象做出的各种动作，也可以听到对面带有方位感的立体的声音，让人感觉对方仿佛就在眼前一样。</p>
+<p>对我来说，VR 多人观影的最大优点可能是可以突破时间空间的限制，加强人与人之间的连接。毕竟现实中想要和好友特别是异地的好友一起看电影实在太难了，而在 VR 中却可以轻易做到。
+我相信，这种加强人与人的链接，必然是 VR 未来发展的很重要的一个方向。（比如在 VRChat 中，玩家能做到的不仅是一起观影，还能一起玩游戏、一起逛图甚至一起陪伴睡觉。确实能瞥见一点元宇宙的影子）</p>
+<p>回到正题，由于目前 VR 还处于一个开拓区，许多应用都没有完全明确的形态。针对 VR 多人观影，并没有非常成熟的应用，不同软件侧重的功能不同。以下是我对试过的一些方案的总结</p>
+<h2 id="现有方案总结">现有方案总结<a class="headerlink" href="#现有方案总结" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Pico 视频多人观影<ul>
+<li>播放内容<ul>
+<li>Pico 视频内的资源</li>
+<li>各类支持 tv 投屏的应用。特别的，支持网盘（因此可以投用户下载的资源）</li>
+</ul>
+</li>
+<li>优点<ul>
+<li><del>有简易的 avatar</del>（2024/06 Pico 更新 Avatar SDK v2.0.0 后，社区可以上传自定义的模型，数量非常丰富。比如全员使用假面骑士形象看特摄）</li>
+<li>支持若干场景切换：电影院、沙滩等</li>
+<li>投屏支持 4K，<strong>清晰度比较高</strong></li>
+<li><strong>头戴端应用，不需要 PC</strong></li>
+<li>支持 3d 视频</li>
+</ul>
+</li>
+<li>缺点<ul>
+<li>只能 DLNA 投屏少数白名单网站：B 站、爱奇艺（目前不支持，之后会支持），百度、<del>阿里（别用了，会被永久封号）</del>、夸克网盘等。<strong>并且官方没有将其公布在网上</strong>。</li>
+<li>有内容审查（虽然也算不上缺点，但确实自由度没有那么高）</li>
+<li><strong>需要网盘会员才有好体验</strong>：网盘投屏方式不充对应软件会员，基本只能 720p 投屏</li>
+<li><strong>不支持字幕</strong>，视频必须提前将字幕烧录到画面中</li>
+<li>没测：不知道是否支持音轨切换</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>VRChat<ul>
+<li>播放内容<ul>
+<li>视频直链（类似于<code>http://something.com/video.mp4</code>）</li>
+<li>各种流媒体网站（如<code>https://youtube.com/watch?v=VIDEOID</code>，原理是使用 yt-dlp 工具解析出视频直链）：包含 B 站、youtube、twitch直播等</li>
+</ul>
+</li>
+<li>优点<ul>
+<li>不只是看电影；无数的 avatar 和 无数的 world（场景）可以选择，在场景中可以有丰富的交互</li>
+<li>直链意味着可以自己使用服务器 host 想要分享的视频</li>
+<li><strong>没有审查</strong>。默认有白名单机制，非<a href="https://creators.vrchat.com/worlds/udon/video-players/www-whitelist/">白名单的域名</a>默认不会播放，但是用户可以手动关闭白名单</li>
+</ul>
+</li>
+<li>缺点<ul>
+<li>观感不太清晰<ul>
+<li>VRChat 本身渲染分辨率的缘故，需要很高端的显卡才能提高分辨率</li>
+<li><del>播放器貌似本身也限制分辨率，只有 480p, 720p, 1080p 可选</del>（感觉可能只是一个外观按钮，毕竟自己服务器 streaming 的内容，码率等都是服务端控制的，播放器端不应该会再转码一次）</li>
+</ul>
+</li>
+<li>播放器不完善<ul>
+<li>不支持外挂字幕，只支持将字幕烧录到视频中。（有项目支持了，但是我没成功）</li>
+<li>不支持切换音轨</li>
+<li><em>p.s. VLC 播放器使用同样的 url 是均支持的</em>，说明问题是可以解决的，所以未来可期</li>
+</ul>
+</li>
+<li>目前没有 3d 的播放器，只能分享 2d 视频</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>bigscreen：一个专门用于多人观影的软件<a href="https://store.steampowered.com/app/457550/Bigscreen_Beta/">Steam 上的 Bigscreen Beta (steampowered.com)</a><ul>
+<li>播放内容<ul>
+<li>电脑屏幕</li>
+<li>电脑本地视频</li>
+<li>youtube，twitch 等内容</li>
+</ul>
+</li>
+<li>优点<ul>
+<li>播放内容很开放，<strong>很容易播放自己下载的内容</strong>。甚至分享电脑屏幕</li>
+<li>场景很丰富：有付费场景和免费场景（其中一个教室场景观感很不错）</li>
+<li>支持 3d 视频</li>
+</ul>
+</li>
+<li>缺点<ul>
+<li>清晰度还是低了点，最高码率为 5m</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>其实从原理上，上面应用可以分为两类。</p>
+<ul>
+<li>一类是应用厂商提供串流服务器的。bigscreen 就属于这种，它的最大优势是用户可以分享自己的屏幕。过程其实是房主将自己的画面推流到 bigscreen 服务器，其它用户再从 bigscreen 获得画面。这本质上是一种<strong>直播</strong>。</li>
+<li>另一类就是像 Pico 视频和 VRChat 这种不提供串流服务器的。它们本身不需要服务器存储视频，用户都是通过视频链接访问<strong>已有的视频网站</strong>，因此成本更低些。</li>
+</ul>
+<p>理论上最方便最强大的肯定是 bigscreen 这种，但是由于串流服务器存储和带宽的高昂成本，免费用户必然会受到许多限制。因此我觉得更实际的还是后者。其实对于观看大部分正规正版资源，pico 视频已经没什么问题（要么观看 Pico 视频自带的资源，要么使用其它软件投屏）。然而因为国内的审查政策，导致很多即使正规的内容国内平台不一定引进，引进了也可能删减。因此 VRChat 更加开放这一点还是不可缺少的。</p>
+<p>视频链接又可以分为两类</p>
+<ul>
+<li>一类是<strong>视频直链</strong>，也就是链接直接指向 .mp4 或者 .webm视频文件。而要取得这样的链接有许多方法<ul>
+<li>自己购买服务器存放视频，并创建 HTTP 服务器提供访问（比如使用 nginx）</li>
+<li>使用 youtube，bilibili 等流媒体平台的链接。这些链接虽然不指向视频文件，但是 VRC 播放器内部会使用 yt-dlp 工具解析出其中的视频直链。</li>
+<li>使用云盘存储视频，并获得直链。虽然云盘通常不提供视频直链，甚至会打击获取直链的插件（比如百度网盘）。但是还是有一些云服务商提供了直链的功能，比如 googledrive</li>
+<li>使用一些视频托管网站比如 Vimeo（VRC 官方支持的网站）。用户上传视频到网站，网站提供视频链接。同样，免费用户一般有存储空间限制。</li>
+</ul>
+</li>
+<li>另一类是<strong>直播链接</strong>。直播链接通常采用 HLS 协议，链接指向一个 m3u8 文件，文件存储了切片后的视频直链（通常封装成 ts 格式）。VRC 播放器（如 USharpVideo）都支持 m3u8 链接的播放，需要在界面选择为 <strong>Streaming</strong>。<ul>
+<li>直播链接和视频直链的区别在于，视频直链的文件内容是固定的，而直播链接中 m3u8 内容是动态生成的。</li>
+<li>以 B 站直播为例，直播者通过 OBS 等软件将画面编码后，通过 RTMP 协议<strong>推流</strong>到 B 站的服务器（ <code>rtmp://dl.live-send.acg.tv/live-dl</code>），B 站可以对视频进行存储（也就是直播回放功能），同时提供 HLS 访问。观看者使用浏览器通过 HLS 协议从 B 站服务器获取直播内容。</li>
+</ul>
+</li>
+</ul>
+<p>以下是它们优缺点的介绍</p>
+<p>视频直链</p>
+<ul>
+<li>优点<ul>
+<li>简单直接</li>
+<li>自己 host 简单，只需要搭建一个 HTTP 服务器即可</li>
+</ul>
+</li>
+<li>缺点<ul>
+<li>为了获得最好的兼容性，对视频格式有许多要求。封装格式建议使用 mp4，编码格式建议使用 h264。字幕建议直接烧录到画面中。</li>
+<li>无法随时调节视频码率。由于播放器是直接请求视频文件，因此对网络带宽有很高要求。对于下载的码率很高的电影文件，直接播放基本上是不可能的。这也是为什么如今各种云盘为了提供在线播放功能，<strong>会对用户上传的视频进行转码</strong>，保存 480p, 720p, 1080p 等不同分辨率清晰度的版本。而直播不同，直播源可以随时调节码率</li>
+</ul>
+</li>
+</ul>
+<p>直播链接</p>
+<ul>
+<li>优点<ul>
+<li>兼容性最好，由于直接串流电脑画面，因此使用电脑上的播放器基本可以播放任意视频文件，字幕切换、多音轨都不是问题。</li>
+<li>按需调节码率</li>
+</ul>
+</li>
+<li>缺点<ul>
+<li>VRC 中无法随时调节播放进度，需要电脑上操作</li>
+<li>画质不如原始视频文件。直播其实是在对画面进行实时编码，通常使用核显或者独显加速。而压制组压制的视频资源是使用 CPU 花费大量时间压出来的，会对各种参数进行调节，二者质量上肯定是后者更高。而且直播通常采用 CBR（固定码率） 或者 VBR（可变码率）编码方式。优化的是码率，而不是画质，因此画质也是不如使用 CRF（Constant Rate Factor）压出来的高码率视频。<ul>
+<li>但是其实只要抛弃画质有损失这样的想法，直播编码出来的画面是足够观看电影的。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="方案介绍">方案介绍<a class="headerlink" href="#方案介绍" title="Permanent link">&para;</a></h2>
+<p>最后经过研究，围绕 VRChat 确实有许多方案。最简单的，使用 twitch 直播电脑画面，当然同样会遇到码率限制等问题。所以最好的还是利用自己的上传带宽，因此可以<strong>在家宽上搭建一个 HLS 的服务器</strong>。绑定域名，提供给外网访问。可以使用 <strong>OBS</strong> 将电脑屏幕、视频播放器等画面推流到自己的 HLS 服务器上。</p>
+<ul>
+<li>优点<ul>
+<li>能够播放自己下载的内容，不需要经过网盘</li>
+<li>基本不会存在视频兼容性问题，因为推流的是电脑画面</li>
+</ul>
+</li>
+<li>缺点<ul>
+<li><strong>国内可能有法律问题</strong>？相当于在家宽上搭建直播服务器</li>
+<li><strong>上传带宽受限</strong>（国内家宽目前上行普遍只有20-40Mbps 水平），按照 2.5Mbps 的码率，最多只能 10 人同时观看。想要 8Mbps 码率，就只能 4 人观看了。</li>
+<li>没有 cdn 优化，不一定每个地方都有很好的播放体验</li>
+</ul>
+</li>
+</ul>
+<!-- more -->
+
+<h2 id="obs--hls-服务器--vrc-方案">OBS + HLS 服务器 + VRC 方案<a class="headerlink" href="#obs--hls-服务器--vrc-方案" title="Permanent link">&para;</a></h2>
+<div class="admonition note">
+<p class="admonition-title">方案变化</p>
+<p>其实我原本想的是使用 ffmpeg 将视频转码后推送到 HLS 服务器。并且在克服一大堆问题如音频格式、字幕问题后终于实现了可用的 ffmpeg 命令行参数。然后在写这篇博客时突然在 github 上找到了一个 2019 年的仓库介绍使用 VRC 基于 HLS 来观看视频的方案。方案里用的 OBS 进行推流，我才意识到 OBS “火箭”都造好了，我为啥要用 ffmpeg 在这造自行车呢:)</p>
+</div>
+<p>由于 <a href="https://github.com/mekanoe/VRC_HLS">mekanoe/VRC_HLS: Solution &amp; guide for streaming anything into VRChat. (github.com)</a> 解释的很详细了，因此这里就不再详细解释了。</p>
+<h3 id="h264_nvenc-模式选择">h264_nvenc 模式选择<a class="headerlink" href="#h264_nvenc-模式选择" title="Permanent link">&para;</a></h3>
+<ul>
+<li>CBR (Constant Bit Rate)<ul>
+<li>恒定比特率：在整个视频编码过程中，码率保持恒定。</li>
+<li>特点<ul>
+<li>保持稳定的码率，带宽利用率可预测。</li>
+<li>适用于带宽限制严格的环境，如直播。</li>
+<li>可能导致在复杂场景中画质下降，因为码率不会动态调整。</li>
+</ul>
+</li>
+<li>使用场景：<ul>
+<li><strong>直播</strong>：由于直播通常需要稳定的码率来保证流畅传输，CBR 是最佳选择。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>CQP (Constant QP)：恒定量化参数：不控制比特率，而是控制量化参数（QP），以保持恒定的视觉质量。<ul>
+<li>特点：<ul>
+<li>质量恒定，码率根据内容复杂度变化。</li>
+<li>高质量编码，但无法预测输出文件大小或带宽需求。</li>
+<li>不适合实时传输或带宽受限场景。</li>
+</ul>
+</li>
+<li>使用场景：<ul>
+<li><strong>本地存储</strong>：适用于需要高质量编码的场景，如视频存档或后期处理。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>VBR (Variable Bit Rate)<ul>
+<li>可变比特率：允许比特率根据视频内容的复杂度动态调整，在简单场景中降低码率，在复杂场景中增加码率。</li>
+<li>特点：<ul>
+<li>质量与文件大小之间的平衡。</li>
+<li>提高视频复杂场景的画质，同时在简单场景中节省带宽。</li>
+<li>适合带宽相对宽松但希望优化传输质量的场景。</li>
+</ul>
+</li>
+<li>使用场景：<ul>
+<li>预录视频：适用于希望优化文件大小和画质的视频录制。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="码率设置">码率设置<a class="headerlink" href="#码率设置" title="Permanent link">&para;</a></h3>
+<p><a href="https://support.google.com/youtube/answer/2853702?hl=en">Choose live encoder settings, bitrates, and resolutions - YouTube Help (google.com)</a></p>
+<p><img alt="" src="https://imagebed.yfycloud.site/2025/12/311fcc0f07b1c1d78d16f79fba280d29.png" /></p>
+<p>1080p@60 推荐 12 Mbps</p>
+<h3 id="vrc-地图">VRC 地图<a class="headerlink" href="#vrc-地图" title="Permanent link">&para;</a></h3>
+<p>推荐来自<a href="https://www.vr-wave.store/blogs/virtual-reality-prescription-lenses/how-to-watch-movies-in-vr-with-friends-draft">The Best Ways To Watch Movies in VR (with friends) for Free! – VR Wave (vr-wave.store)</a></p>
+<h4 id="movie--chill">Movie &amp; Chill<a class="headerlink" href="#movie--chill" title="Permanent link">&para;</a></h4>
+<p><img alt="Movie &amp; Chill" src="https://imagebed.yfycloud.site/2025/12/795cceb6dd63a5060cd0c224ae524d20.png" /></p>
+<h4 id="yet-another-movie-theater-renewed">Yet Another Movie Theater: Renewed<a class="headerlink" href="#yet-another-movie-theater-renewed" title="Permanent link">&para;</a></h4>
+<p><img alt="" src="https://imagebed.yfycloud.site/2025/12/989e86c31da8cb2a0d98e0b47e7c867e.png" /></p>
+<h4 id="sovrens-chill-home">Sovren’s Chill Home<a class="headerlink" href="#sovrens-chill-home" title="Permanent link">&para;</a></h4>
+<p><img alt="Sovren’s Chill Home" src="https://imagebed.yfycloud.site/2025/12/b6b977248fc8d78f3ed028642d8782b0.png" /></p>
+<h4 id="campsite-movie-night">Campsite Movie Night<a class="headerlink" href="#campsite-movie-night" title="Permanent link">&para;</a></h4>
+<p><img alt="Campsite Movie Night" src="https://imagebed.yfycloud.site/2025/12/c98c4585efff64dfb769dc24739ba329.png" /></p>
+<h2 id="参考资料">参考资料<a class="headerlink" href="#参考资料" title="Permanent link">&para;</a></h2>
+<ul>
+<li>VRC player allowlist： <a href="https://creators.vrchat.com/worlds/udon/video-players/www-whitelist/">Video Player Allowlist | VRChat Creation</a></li>
+<li>Fluid，可以在各个地方打开浏览器，也支持多人模式: <a href="https://fluid.so/">Fluid</a></li>
+<li>推荐了各种 VR 观影方案，以及 VRC 地图：<a href="https://www.vr-wave.store/blogs/virtual-reality-prescription-lenses/how-to-watch-movies-in-vr-with-friends-draft">The Best Ways To Watch Movies in VR (with friends) for Free! – VR Wave (vr-wave.store)</a><ul>
+<li>其它方案<ul>
+<li>Horizon Words</li>
+<li>Watch Party - Meta Horizon Home</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>VRC + HLS 教程：<a href="https://github.com/mekanoe/VRC_HLS">mekanoe/VRC_HLS: Solution &amp; guide for streaming anything into VRChat. (github.com)</a></li>
+<li>streaming 友好 ffmpeg 编码选项<ul>
+<li>faststart：视频可以立即播放，而不是等到文件下载结束。<a href="https://stackoverflow.com/questions/50914503/fastest-way-to-add-movflags-faststart-to-an-mp4-using-ffmpeg-leaving-everythi">Fastest way to add -movflags +faststart to an MP4 using FFMPEG, leaving everything else as-is - Stack Overflow</a></li>
+<li>其它工具还支持 interlaving audio and video: <a href="https://github.com/gpac/gpac/wiki/Fragmentation,-segmentation,-splitting-and-interleaving">Fragmentation, segmentation, splitting and interleaving · gpac/gpac Wiki (github.com)</a></li>
+</ul>
+</li>
+<li>支持 3d 视频的播放器？：<a href="https://architechvr.gumroad.com/l/protv">ProTV 2.3 for VRChat (Udon Video Player) [Free DL available] (gumroad.com)</a></li>
+<li><a href="https://github.com/MerlinVR/USharpVideo">USharpVideo</a>是前端，后端基于 AVPro ?<a href="https://github.com/MerlinVR/USharpVideo/wiki/avpro-only">AVPro Only · MerlinVR/USharpVideo Wiki (github.com)</a></li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>public VRCUnityVideoPlayer unityVideo;
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>public VRCAVProVideoPlayer avProVideo;
+</span></code></pre></div>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+  
+
+
+
+      
+    </article>
+  </div>
+
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+        
+      
+      <nav class="md-footer__inner md-grid" aria-label="页脚" >
+        
+          
+          <a href="../../../../../%E5%8D%9A%E5%AE%A2--%E7%BD%91%E7%BB%9C/2024/04/21/%E4%BE%BF%E6%90%BA%E8%B7%AF%E7%94%B1%E5%99%A8/" class="md-footer__link md-footer__link--prev" aria-label="上一页: 便携路由器">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                上一页
+              </span>
+              <div class="md-ellipsis">
+                便携路由器
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../../../../../%E4%B8%AA%E4%BA%BA/2024/08/10/%E7%9C%8B%E5%A5%A5%E8%BF%90%E4%BC%9A%E7%9A%84%E5%90%84%E7%A7%8D%E5%A7%BF%E5%8A%BF/" class="md-footer__link md-footer__link--next" aria-label="下一页: 看奥运会的各种姿势">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                下一页
+              </span>
+              <div class="md-ellipsis">
+                看奥运会的各种姿势
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/TheRainstorm" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../../..", "features": ["navigation.instant", "navigation.instant.progress", "navigation.tracking", "navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.footer", "content.code.copy", "toc.follow", "toc.integrate"], "search": "../../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../../../../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

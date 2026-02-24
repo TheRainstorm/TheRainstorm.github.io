@@ -1,0 +1,3944 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="记录一些关于数学、计算机的知识，以及一些日常。">
+      
+      
+      
+        <link rel="canonical" href="https://yfy.cqu.ai/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/2023/04/20/2023-04-20-%E5%85%B7%E4%BD%93%E6%95%B0%E5%AD%A6/">
+      
+      
+        <link rel="prev" href="../../../../../%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/2023/04/20/2023-04-20-C%26C%2B%2B/">
+      
+      
+        <link rel="next" href="../../../../../%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/2023/07/23/2023-07-23-%E6%8D%A1%E5%9E%83%E5%9C%BE-rk3399%20DIY%20KVM/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.3">
+    
+    
+      
+        <title>具体数学 - Rain 的随笔</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#具体数学公式小册子" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../../../../.." title="Rain 的随笔" class="md-header__button md-logo" aria-label="Rain 的随笔" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Rain 的随笔
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              具体数学
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    
+  
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="../../../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  博客
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../about/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  关于
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../tags/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  标签
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../series/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  系列
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../tools/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  工具
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../archive/2026/" class="md-tabs__link">
+          
+  
+  
+  归档
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../category/%E4%B8%AA%E4%BA%BA/" class="md-tabs__link">
+          
+  
+  
+  分类
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" hidden>
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../../.." title="Rain 的随笔" class="md-nav__button md-logo" aria-label="Rain 的随笔" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Rain 的随笔
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+    
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      <a href="../../../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    博客
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    关于
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../tags/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    标签
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../series/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    系列
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../tools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    工具
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    归档
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    归档
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2026/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2026
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2025/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2025
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2024/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2024
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2023/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2023
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2022/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2022
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2021/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2021
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2020/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2020
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2019/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2019
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    分类
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    分类
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E4%B8%AA%E4%BA%BA/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    个人
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E5%8D%9A%E5%AE%A2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    博客
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E5%8D%9A%E5%AE%A2--%E7%BD%91%E7%BB%9C/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    博客 &amp; 网络
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    学习笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    折腾记录
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    课程笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%85%B7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    软件工具
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E9%98%85%E8%AF%BB/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    阅读
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+  <div class="md-content md-content--post" data-md-component="content">
+    <div class="md-sidebar md-sidebar--post" data-md-component="sidebar" data-md-type="navigation">
+      <div class="md-sidebar__scrollwrap">
+        <div class="md-sidebar__inner md-post">
+          <nav class="md-nav md-nav--primary">
+            <div class="md-post__back">
+              <div class="md-nav__title md-nav__container">
+                <a href="../../../../.." class="md-nav__link">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+                  <span class="md-ellipsis">
+                    回到主页
+                  </span>
+                </a>
+              </div>
+            </div>
+            
+            <ul class="md-post__meta md-nav__list">
+              <li class="md-nav__item md-nav__item--section">
+                <div class="md-post__title">
+                  <span class="md-ellipsis">
+                    元数据
+                  </span>
+                </div>
+                <nav class="md-nav">
+                  <ul class="md-nav__list">
+                    <li class="md-nav__item">
+                      <div class="md-nav__link">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 19H5V8h14m-3-7v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1V1m-1 11h-5v5h5z"/></svg>
+                        <time datetime="2023-04-20 16:22:00+00:00" class="md-ellipsis">2023年4月20日</time>
+                      </div>
+                    </li>
+                    
+                    
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 3v15h3V3zm3 2 4 13 3-1-4-13zM5 5v13h3V5zM3 19v2h18v-2z"/></svg>
+                          <span class="md-ellipsis">
+                            分类于
+                            
+                              <a href="../../../../../category/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/">课程笔记</a></span>
+                        </div>
+                      </li>
+                    
+                    
+                      
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20a8 8 0 0 0 8-8 8 8 0 0 0-8-8 8 8 0 0 0-8 8 8 8 0 0 0 8 8m0-18a10 10 0 0 1 10 10 10 10 0 0 1-10 10C6.47 22 2 17.5 2 12A10 10 0 0 1 12 2m.5 5v5.25l4.5 2.67-.75 1.23L11 13V7z"/></svg>
+                          <span class="md-ellipsis">
+                            
+                              需要 32 分钟阅读时间
+                            
+                          </span>
+                        </div>
+                      </li>
+                    
+                  </ul>
+                </nav>
+              </li>
+            </ul>
+            
+          </nav>
+          
+            
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#具体数学公式小册子" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        具体数学公式小册子
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#成套方法" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        成套方法
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="成套方法">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#应用" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        应用
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#测试-mathjax-和-katex" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        测试 MathJax 和 KaTex
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="测试 MathJax 和 KaTex">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#block" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        block
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aligned" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        aligned
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#math-in-list" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        math in list
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#和式" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        和式
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="和式">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#差分" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        差分
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#底和顶函数模" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        底和顶函数、模
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#同余" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        同余
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="同余">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#同余除法" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        同余除法
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#中国剩余定理" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        中国剩余定理
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="中国剩余定理">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#剩余系--独立剩余" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        剩余系 &amp; 独立剩余
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#使用" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        使用
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#一些定理" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        一些定理
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="一些定理">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#费马小定理" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        费马小定理
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#威尔逊定理" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        威尔逊定理
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#varphi函数和mu函数" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        \(\varphi\)函数和\(\mu\)函数
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="\(\varphi\)函数和\(\mu\)函数">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#欧拉函数" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        欧拉函数
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#积性" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        积性
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#莫比乌斯函数" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        莫比乌斯函数
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#反演定理" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        反演定理
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phi-函数" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        \(\Phi 函数\)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#珠子项链" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        珠子项链
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#一些变换" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        一些变换
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-二项式系数" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5 二项式系数
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5 二项式系数">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#吸收-absorption-恒等式" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        吸收 (absorption) 恒等式
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#加法公式" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        加法公式
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#二项式定理" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        二项式定理
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#反转上指标" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        反转上指标
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#二项式系数求和" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        二项式系数求和
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="二项式系数求和">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#范德蒙卷积" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        范德蒙卷积
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#最重要的-12-个恒等式" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        最重要的 12 个恒等式
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#基本练习" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        基本练习
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#处理的技巧" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        处理的技巧
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="处理的技巧">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#取一半" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        取一半
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#高阶差分" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        高阶差分
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#牛顿级数" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        牛顿级数
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#反演" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        反演
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#生成函数" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        生成函数
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="生成函数">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#广义二项级数和广义指数级数" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        广义二项级数和广义指数级数
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#一般卷积公式" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        一般卷积公式
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#特殊级数sqrt1pm4z" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        特殊级数\(\sqrt{1\pm4z}\)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="特殊级数\(\sqrt{1\pm4z}\)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#b_2-封闭形式-568书上没有证明" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        B_2 封闭形式 (5.68)（书上没有证明）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#超几何函数" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        超几何函数
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="超几何函数">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#超几何函数表示" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        超几何函数表示
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#平行求和表示为超几何函数" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        平行求和表示为超几何函数
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="平行求和表示为超几何函数">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#两个限制" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        两个限制
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#阶乘推广" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        阶乘推广
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="阶乘推广">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#欧拉" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        欧拉
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gamma-函数" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        \(\Gamma 函数\)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#牛顿级数_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        牛顿级数
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#范德蒙卷积_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        范德蒙卷积
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#求极限" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        求极限
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#超几何变换" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        超几何变换
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gosper-算法-求差分原函数" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Gosper 算法 (求差分原函数)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gosper-zeilberger-算法" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Gosper-Zeilberger 算法
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-特殊的数" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6 特殊的数
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6 特殊的数">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#欧拉数" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        欧拉数
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-生成函数" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7 生成函数
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#有理函数分解" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        有理函数分解
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="有理函数分解">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#卡塔兰数" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        卡塔兰数
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#指数生成函数" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        指数生成函数
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-离散概率" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8 离散概率
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-渐进式" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9 渐进式
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9 渐进式">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#两个渐进技巧" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        两个渐进技巧
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#欧拉求和公式" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        欧拉求和公式
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#困难的证明题" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        困难的证明题
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+          
+        </div>
+      </div>
+    </div>
+    <article class="md-content__inner md-typeset">
+      
+        
+  
+
+
+  <nav class="md-tags" >
+    
+      
+      
+      
+      
+        <a href="../../../../../tags/#tag:math" class="md-tag">math</a>
+      
+    
+      
+      
+      
+      
+        <a href="../../../../../tags/#tag:具体数学" class="md-tag">具体数学</a>
+      
+    
+  </nav>
+
+
+
+  <h1>具体数学</h1>
+
+<h2 id="具体数学公式小册子">具体数学公式小册子<a class="headerlink" href="#具体数学公式小册子" title="Permanent link">&para;</a></h2>
+<p>推广一个自己的 github 仓库，期望共同完善。
+阅读具体数学电子书籍时，由于经常需要查看某个编号的公式因此产生了这个项目，用于阅读时查阅公式
+<a href="https://github.com/TheRainstorm/concrete_math_formulas">https://github.com/TheRainstorm/concrete_math_formulas</a></p>
+<h2 id="成套方法">成套方法<a class="headerlink" href="#成套方法" title="Permanent link">&para;</a></h2>
+<p>在具体数学 (Concrete Mathematics) 课本中，在解约瑟夫递推方程时，第一次介绍了成套方法 (repertoire method)。之后也使用这种方式求解各种递推方程。相信很多人第一次看到这种方法时都会感觉到不可思议——还能这样？虽然每一步都能看懂，但是就是不知道这种方法是怎么想到的。在查阅了一点资料后，我对该方法有了更多的认识。先说明一点，该方法并不是一种万能方法，实际上要求问题要有线性结构。</p>
+<p>参考：<a href="https://math.stackexchange.com/questions/1017498/mathematical-explanation-for-the-repertoire-method">linear algebra - Mathematical explanation for the Repertoire Method - Mathematics Stack Exchange</a></p>
+<!-- more -->
+
+<ul>
+<li>主要思路是由特解构造一般解<ul>
+<li>简单的，以$$ x_n = a_n + x_{n-1}$$
+  则对于
+  $$
+  z_n = \alpha a_n + \beta b_n + z_{n-1}
+  $$
+  <span class="arithmatex">\(z_n\)</span>的解为
+  $$
+  z_n = \alpha x_n + \beta y_n
+  $$</li>
+</ul>
+</li>
+<li>推广后
+    对于以下求解<span class="arithmatex">\(x_n\)</span>的问题
+    $$
+    x_n = f(n) + g(x_{n-1}, x_{n-2}, ..., x_1)
+    $$
+    其中<span class="arithmatex">\(g()\)</span>是一个线性函数<p>构造出<span class="arithmatex">\(k\)</span>个 repertoire（可以理解为特解）
+  $$
+  x_n^l = f^l(n) + g(x^l_{n-1}, x^l_{n-2}, ..., x^l_1), 0\le l \lt k
+  $$
+  使得可以
+  $$
+  f(n) = \sum_{0\le l \lt k} \lambda_l f^l(n)
+  $$
+  从而
+  $$
+  x_n = \sum_{0\le l \lt k} \lambda_l x_n^l
+  $$
+- 对于原本的约瑟夫问题
+  $$
+  \left{\begin{array}{l}
+  f(1) = a \
+  f(2n) = 2f(n) + b\
+  f(2n+1) = 2f(n) + c\
+  \end{array}\right.
+  $$
+  有
+  $$
+  f(n) = aA(n) + bB(n) + cC(n)
+  $$
+  因此，对于不同的 a, b, c 的线性组合，可以得到新的递推方程，其解也是不同特解 f(n) 的线性组合</p>
+</li>
+</ul>
+<h3 id="应用">应用<a class="headerlink" href="#应用" title="Permanent link">&para;</a></h3>
+<p>求解三数取中位数版本的快速排序，比较次数。递推公式很复杂，但是却可以应用成套方法：<a href="https://math.stackexchange.com/questions/1017498/mathematical-explanation-for-the-repertoire-method">linear algebra - Mathematical explanation for the Repertoire Method - Mathematics Stack Exchange</a>
+$$
+x_{n}=n+1+\frac{1}{\left(\begin{array}{c}
+n \
+3
+\end{array}\right)} \sum_{1 \leq k \leq n}(k-1)(n-k)\left(x_{k-1}+x_{n-k}\right)
+$$</p>
+<h2 id="测试-mathjax-和-katex">测试 MathJax 和 KaTex<a class="headerlink" href="#测试-mathjax-和-katex" title="Permanent link">&para;</a></h2>
+<h3 id="block">block<a class="headerlink" href="#block" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>$$
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>    x_n = a_n + x_{n-1} \\
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>    y_n = b_n + y_{n-1} \\
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>$$
+</span></code></pre></div>
+<div class="arithmatex">\[
+    x_n = a_n + x_{n-1} \\
+    y_n = b_n + y_{n-1} \\
+\]</div>
+<h3 id="aligned">aligned<a class="headerlink" href="#aligned" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>$$
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>\begin{align*}
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>    \sum_{k=1}^{n} k2^k &amp;= \sum_{1\le j\le k \le n} 2^k \\
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>        &amp;= \sum_{1\le j\le n} \sum_{j \le k \le n} 2^k  &amp;&amp; \text{//考虑j, k 范围构成的三角形}\\
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>        &amp;= \sum_{1\le j\le n} 2^j(2^{n-j+1} - 1) \\
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>        &amp;= \sum_{1\le j\le n} 2^{n+1} - 2^j \\
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>        &amp;= n2^{n+1} - 2(2^n - 1) \\
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>        &amp;= (n-1)2^{n+1}+2 \\
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>\end{align*}
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>$$
+</span></code></pre></div>
+<div class="arithmatex">\[
+\begin{align*}
+    \sum_{k=1}^{n} k2^k &amp;= \sum_{1\le j\le k \le n} 2^k \\
+        &amp;= \sum_{1\le j\le n} \sum_{j \le k \le n} 2^k  &amp;&amp; \text{//考虑 j, k 范围构成的三角形}\\
+        &amp;= \sum_{1\le j\le n} 2^j(2^{n-j+1} - 1) \\
+        &amp;= \sum_{1\le j\le n} 2^{n+1} - 2^j \\
+        &amp;= n2^{n+1} - 2(2^n - 1) \\
+        &amp;= (n-1)2^{n+1}+2 \\
+\end{align*}
+\]</div>
+<h3 id="math-in-list">math in list<a class="headerlink" href="#math-in-list" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>- list $$ z_n = \alpha a_n + \beta b_n + z_{n-1} $$
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>- list
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>    $$ z_n = \alpha a_n + \beta b_n + z_{n-1} $$
+</span></code></pre></div>
+<ul>
+<li>list $$ z_n = \alpha a_n + \beta b_n + z_{n-1} $$</li>
+<li>list
+    $$ z_n = \alpha a_n + \beta b_n + z_{n-1} $$</li>
+</ul>
+<h2 id="和式">和式<a class="headerlink" href="#和式" title="Permanent link">&para;</a></h2>
+<ul>
+<li>将一重和式变为二重和式的例子
+  $$
+  \begin{align<em>}
+      \sum_{k=1}^{n} k2^k &amp;= \sum_{1\le j\le k \le n} 2^k \
+          &amp;= \sum_{1\le j\le n} \sum_{j \le k \le n} 2^k  &amp;&amp; \text{//考虑 j, k 范围构成的三角形}\
+          &amp;= \sum_{1\le j\le n} 2<sup n-j_1="n-j+1">j(2</sup> - 1) \
+          &amp;= \sum_{1\le j\le n} 2^{n+1} - 2^j \
+          &amp;= n2^{n+1} - 2(2^n - 1) \
+          &amp;= (n-1)2^{n+1}+2 \
+  \end{align</em>}
+  $$
+    p39
+  $$
+  \begin{aligned}
+  S_{n} &amp;=\sum_{1 \leqslant k \leqslant n} k^{2}=\sum_{1 \leqslant j \leqslant k \leqslant n} k \
+  &amp;=\sum_{1 \leqslant j \leqslant n} \sum_{j \leqslant k \leqslant n} k \
+  &amp;=\sum_{1 \leqslant j \leqslant n}\left(\frac{j+n}{2}\right)(n-j+1) \
+  &amp;=\frac{1}{2} \sum_{1 \leqslant j \leqslant n}\left(n(n+1)+j-j^{2}\right) \
+  &amp;=\frac{1}{2} n^{2}(n+1)+\frac{1}{4} n(n+1)-\frac{1}{2} S_{n}=\frac{1}{2} n\left(n+\frac{1}{2}\right)(n+1)-\frac{1}{2} S_{n}
+  \end{aligned}
+  $$</li>
+</ul>
+<ul>
+<li>
+<p>p33
+  $$
+  S_{n}=\sum_{1 \leqslant j&lt;k \leqslant n} \frac{1}{k-j}
+  $$
+  无论是先对 j 求和，还是先对 k 求和，最终都只能导出<span class="arithmatex">\(S_n = \sum_{1\le j&lt;n} H_j\)</span></p>
+<p>先用 k 替换 k-j，然后对 j 先求和可以导出<span class="arithmatex">\(S_n = nH_n - n\)</span></p>
+</li>
+</ul>
+<ul>
+<li>aa<ul>
+<li>a
+  $$
+  \sum_{\substack{j \in J \ k \in K}} a_{j} b_{k}=\left(\sum_{j \in J} a_{j}\right)\left(\sum_{k \in K} b_{k}\right)
+  $$</li>
+<li>b
+  $$
+  S \nabla=\sum_{1 \leqslant j \leqslant k \leqslant n} a_{j} a_{k}=\frac{1}{2}\left(\left(\sum_{k=1}^{n} a_{k}\right)<sup n="n">{2}+\sum_{k=1}</sup>\right)
+  $$} a_{k}^{2</li>
+<li>c
+  $$
+  \left(\sum_{k=1}^{n} a_{k}\right)\left(\sum_{k=1}^{n} b_{k}\right)=n \sum_{k=1}^{n} a_{k} b_{k}-\sum_{1 \leqslant j&lt;k \leqslant n}\left(a_{k}-a_{j}\right)\left(b_{k}-b_{j}\right)
+  $$</li>
+</ul>
+</li>
+</ul>
+<h3 id="差分">差分<a class="headerlink" href="#差分" title="Permanent link">&para;</a></h3>
+<ul>
+<li>
+<p>微分 vs 差分
+  $$
+  Df(x) = \lim_{h\rightarrow0}{f(x+h) - f(x) \over h}
+  $$</p>
+<div class="arithmatex">\[
+\Delta f(x) = f(x+1) - f(x)
+\]</div>
+</li>
+</ul>
+<ul>
+<li>有限定积分含义
+  $$
+  \sum_a^b f(x)\delta x = \sum_{a\le x&lt;b}f(x) = g(x)|_a^b
+  $$
+  其中
+  $$
+  \Delta g(x) =  f(x)
+  $$</li>
+</ul>
+<ul>
+<li>下降幂的推广
+  $$
+  \begin{array}\
+  x^2 &amp;= x(x-1) \
+  x^1 &amp;= x \
+  x^0 &amp;= 1 \
+  x^{-1} &amp;= {1 \over x+1} \
+  x^{-2} &amp;= \frac{1}{(x+1)(x+2)}
+  \end{array}
+  $$
+  满足指数加法
+  $$
+  x<sup _underline_m="\underline{m">{\underline{m+n}}=x</sup>
+  $$}}(x-m)^{\underline{n}</li>
+</ul>
+<ul>
+<li>
+<p>几个函数积分</p>
+<p>下降幂
+$$
+\sum x^{\underline{m}}\delta x =  \left{\begin{array} \
+ {x^{\underline{m+1}} \over m+1} &amp;m \ne -1 \
+ H(x) &amp;m=-1 \
+ \end{array}\right.
+$$
+指数
+$$
+\sum c^x\delta x = {c^x \over c-1}
+$$</p>
+</li>
+</ul>
+<ul>
+<li>分布积分
+  $$
+  \sum u\Delta v = uv - \sum E v \Delta u
+  $$
+  其中 E 为移位算子，<span class="arithmatex">\(Ef(x) = f(x+1)\)</span></li>
+</ul>
+<ul>
+<li>分布积分例子
+  $$
+  \begin{aligned}
+  \sum x H_{x} \delta x &amp;=\frac{x^{2}}{2} H_{x}-\sum \frac{(x+1)^{\underline{2}}}{2} x^{\underline{-1}} \delta x \
+  &amp;=\frac{x^{2}}{2} H_{x}-\frac{1}{2} \sum x \delta x \
+  &amp;=\frac{x^{2}}{2} H_{x}-\frac{x^{2}}{4}+C
+  \end{aligned}
+  $$</li>
+</ul>
+<div class="arithmatex">\[
+\sum_{0 \leq k&lt;n} k H_{k}=\sum_{0}^{n} x H_{x} \delta x=\frac{n^{2}}{2}\left(H_{n}-\frac{1}{2}\right)
+\]</div>
+<h2 id="底和顶函数模">底和顶函数、模<a class="headerlink" href="#底和顶函数模" title="Permanent link">&para;</a></h2>
+<ul>
+<li>
+<p>a
+  $$
+  n=\left\lfloor\frac{n}{m}\right\rfloor+\left\lfloor\frac{n+1}{m}\right\rfloor+\cdots+\left\lfloor\frac{n+m-1}{m}\right\rfloor
+  $$</p>
+<div class="arithmatex">\[
+\lfloor m x\rfloor=\lfloor x\rfloor+\left\lfloor x+\frac{1}{m}\right\rfloor+\cdots+\left\lfloor x+\frac{m-1}{m}\right\rfloor
+\]</div>
+</li>
+</ul>
+<ul>
+<li>
+<p>b
+  $$
+  \sum_{0 \leq k&lt;m}\left\lfloor\frac{n k+x}{m}\right\rfloor=d\left\lfloor\frac{x}{d}\right\rfloor+\frac{m-1}{2} n+\frac{d-m}{2}
+  $$</p>
+<p>证明：
+$$
+\sum_{0 \leq k&lt;m} \left\lfloor\frac{n k}{m}\right\rfloor + \sum_{0 \leq k&lt;m} \left\lfloor\frac{r_k + x}{m}\right\rfloor
+$$</p>
+</li>
+</ul>
+<h2 id="同余">同余<a class="headerlink" href="#同余" title="Permanent link">&para;</a></h2>
+<h3 id="同余除法">同余除法<a class="headerlink" href="#同余除法" title="Permanent link">&para;</a></h3>
+<p>同余是一种等价关系（自反、对称、传递）。满足加减乘，在某些条件下满足同余除法
+$$
+ad \equiv bd (\mod m) \
+\Leftrightarrow a \equiv b (\mod m) \
+其中，(d, m)=1
+$$
+证明时，一种简单的方法是等号两边同时乘与<span class="arithmatex">\(d'\)</span>，即 d 的逆元，<span class="arithmatex">\(dd'\equiv1 (\mod m)\)</span></p>
+<h3 id="中国剩余定理">中国剩余定理<a class="headerlink" href="#中国剩余定理" title="Permanent link">&para;</a></h3>
+<p>特例
+$$
+\left{\begin{array}{l}
+x \equiv b \mod m \
+x \equiv b \mod n
+\end{array}\right. \quad \Leftrightarrow x \equiv b \mod mn \</p>
+<p>其中 (m, n)=1
+$$
+一般情况，对于以下同余方程，可以找到其解<span class="arithmatex">\(x \equiv x_0 \mod mn\)</span>
+$$
+\left{\begin{array}{l}
+x \equiv a \mod m \
+x \equiv b \mod n
+\end{array}\right. \quad 其中 (m, n)=1
+$$</p>
+<h4 id="剩余系--独立剩余">剩余系 &amp; 独立剩余<a class="headerlink" href="#剩余系--独立剩余" title="Permanent link">&para;</a></h4>
+<p>剩余系 (residues number system)：
+$$
+res(x) = (x \bmod m_1, x \bmod m_2, ..., x \bmod m_r), \quad (m_i, m_j) = 1, m=m_1\cdot m_2 \dots m_r
+$$
+逆过程，知道了 x 在不同分量上的信息后，可以确定<span class="arithmatex">\(x \bmod m\)</span>。（如果还知道 x 的范围，那么就能确定 x 的值）</p>
+<p>如二维情况：可以先求解<span class="arithmatex">\((1, 0) = a, (0, 1)=b\)</span>，则<span class="arithmatex">\((x, y) = ax + by \mod m\)</span></p>
+<p>若<span class="arithmatex">\(m_1 m_1' + m_2 m_2' = 1\)</span>，则<span class="arithmatex">\(a = m_2 m_2', b= m_1 m_1'\)</span></p>
+<h4 id="使用">使用<a class="headerlink" href="#使用" title="Permanent link">&para;</a></h4>
+<p><span class="arithmatex">\(x^2 \equiv 1 \mod m\)</span>有多少解？</p>
+<p>原方程等价于对任意<span class="arithmatex">\(m_p &gt; 0\)</span>
+$$
+x^2 \equiv 1 \mod p^{m_p}
+$$
+<strong>因此，问题转化为在 m 的不同分量上进行求解 x</strong>，求解完后便可得到 x 的剩余系。</p>
+<p>而对于该方程，当 p 不为 2 时，仅有两个解<span class="arithmatex">\(x = \pm1\)</span></p>
+<p>当 p=2 时，有 4 个解<span class="arithmatex">\(x = \pm1, 1 \pm p^{m_p - 1}\)</span></p>
+<p>x 在不同分量上的可能性的乘积即是所有可能</p>
+<h3 id="一些定理">一些定理<a class="headerlink" href="#一些定理" title="Permanent link">&para;</a></h3>
+<h4 id="费马小定理">费马小定理<a class="headerlink" href="#费马小定理" title="Permanent link">&para;</a></h4>
+<p><span class="arithmatex">\(n^p \equiv n \mod p\)</span>或<span class="arithmatex">\(n^{p-1} \equiv 1 \mod p, p \nmid n\)</span></p>
+<h4 id="威尔逊定理">威尔逊定理<a class="headerlink" href="#威尔逊定理" title="Permanent link">&para;</a></h4>
+<p><span class="arithmatex">\((p-1)! \equiv -1 \mod p\)</span></p>
+<p>关键在于 1, 2, ..., p-1 的数中</p>
+<ul>
+<li><span class="arithmatex">\(nn' \equiv 1\)</span>总存在</li>
+<li><span class="arithmatex">\(x^2 \equiv 1\)</span>，仅当 x 为 1, p-1 时</li>
+</ul>
+<p>因此 2, ... p-2 中两两互逆，剩余 1 和 p-1 和自己互逆</p>
+<h3 id="varphi函数和mu函数"><span class="arithmatex">\(\varphi\)</span>函数和<span class="arithmatex">\(\mu\)</span>函数<a class="headerlink" href="#varphi函数和mu函数" title="Permanent link">&para;</a></h3>
+<h4 id="欧拉函数">欧拉函数<a class="headerlink" href="#欧拉函数" title="Permanent link">&para;</a></h4>
+<p>欧拉函数<span class="arithmatex">\(\varphi(n)\)</span>：1, 2, ... n-1 中和 n 互素的数的个数。另外<span class="arithmatex">\(\varphi(1) = 1\)</span></p>
+<h4 id="积性">积性<a class="headerlink" href="#积性" title="Permanent link">&para;</a></h4>
+<p>欧拉函数是积性 (multiplicative) 的：</p>
+<p><span class="arithmatex">\(\varphi(mn) = \varphi(m) \varphi(n), 其中 (m,n)=1\)</span></p>
+<p>原因：<span class="arithmatex">\((n, m) = 1 \Leftrightarrow (n, m_1) = 1, (n, m_2) = 1\)</span></p>
+<p>积性一般定义：
+$$
+\begin{array}{l}
+f(1) &amp;= 1 \
+f(m_1 m_2) &amp;= f(m_1) f(m_2), m_1 \perp m_2
+\end{array}
+$$
+<strong>积性引理</strong></p>
+<p><span class="arithmatex">\(g(m) = \sum_{d|m} f(d)\)</span>是积性的 <span class="arithmatex">\(\Leftrightarrow\)</span> 那么 f(m) 也是积性的</p>
+<p>从右往左很容易，从左往右可以使用数学归纳法。<span class="arithmatex">\(g(m_1m_2) = g(m_1)g(m_2)= \sum_{d_1|m_1} \sum_{d_2|m_2} f(d_1 d_2) = \sum_{d_1|m_1} \sum_{d_2|m_2} f(d_1)f(d_2) + f(m_1m_2) - f(m_1)f(m_2)\)</span>（其中讨论了 d1 = m_1, d2=m2 的情况）</p>
+<p><strong>应用</strong></p>
+<p>因为欧拉函数是积性的，因此只需要考虑<span class="arithmatex">\(m=p^k\)</span>的情况（对所有的积性函数都是这个套路）</p>
+<p>易得<span class="arithmatex">\(\varphi(p^k) = p^k - p^{k-1} = p^k(1-1/p)\)</span></p>
+<p>最后得：<span class="arithmatex">\(\varphi(m)=m\prod_{p} (1 - 1/p)\)</span></p>
+<h4 id="莫比乌斯函数">莫比乌斯函数<a class="headerlink" href="#莫比乌斯函数" title="Permanent link">&para;</a></h4>
+<p><span class="arithmatex">\(\mu(m)\)</span>由下式确定（实质是一个递归式，后一项需要由前面的算出）</p>
+<p><span class="arithmatex">\(\sum_{d|m} \mu(d) = [m=1]\)</span></p>
+<p>由前面的积性引理，可知莫比乌斯函数也是一个积性函数。故只需要考虑素数情况</p>
+<p><span class="arithmatex">\(\mu(p^k) = \left\{\begin{array}. -1 \quad k = 1\\ 0 \quad k&gt; 1\end{array}\right.\)</span></p>
+<p>所以
+$$
+\mu(m) = \left{\begin{array}.
+ (-1)^r &amp; m = p_1p_2...p_r\
+ 0  &amp; \exists m_p &gt; 1 \end{array}\right.
+$$</p>
+<h4 id="反演定理">反演定理<a class="headerlink" href="#反演定理" title="Permanent link">&para;</a></h4>
+<p><strong>反演定理</strong>(inversion principle)
+$$
+g(m) = \sum_{d|m} f(d) \Leftrightarrow f(m) = \sum_{d|m}\mu(d)g(m/d)
+$$
+证明
+$$
+\begin{align}
+\sum_{d|m}\mu(d)g(m/d) &amp;= \sum_{d|m}g(d)\mu(m/d)\
+ &amp; = \sum_{d|m}\mu(m/d)\sum_{k|d} f(k) \
+ 令 d = kl \
+ &amp; = \sum_{k|m}\sum_{l | m/k} f(k)\mu(m/kl) \
+ &amp; = \sum_{k|m}f<a href="m/k = 1">k</a> \
+ &amp; = f(m)
+\end{align}
+$$</p>
+<p><strong>应用</strong></p>
+<p>有<strong>欧拉函数和</strong><span class="arithmatex">\(\sum_{d|m} \varphi(d) = m, 1\le d \le m\)</span></p>
+<p>说明：考虑写出 1/m, 2/m, ... m/m，的所有分数，经过化简后，不同分母的分数个数和正好是 m。</p>
+<p>因此由反演定理，可得欧拉函数的另一种表示</p>
+<p><span class="arithmatex">\(\varphi(m) = \sum_{d|m}\mu(d)m/d\)</span>，其中有大量 0 项。可以仅考虑<span class="arithmatex">\(d | p_1p_2...p_r\)</span>的情况，共有 2^r 个非零项。对应<span class="arithmatex">\(m\prod_{p|m} (1 - 1/p)\)</span>展开后的每一项（刚好 2^r) 项。</p>
+<p><strong>更强的反演定理</strong>
+$$
+g(x)=\sum_{d \geqslant 1} f(x / d) \Leftrightarrow f(x)=\sum_{d \geqslant 1} \mu(d) g(x / d) .
+$$
+这个反演法则对所有满足 <span class="arithmatex">\(\sum_{k, d \geqslant}|f(x / k d)|&lt;\infty\)</span> 的函数 <span class="arithmatex">\(f\)</span> 都成立</p>
+<p><em>证明变换有点巧妙，其中的 m 替换没看懂有什么好的证明方法</em>
+$$
+\begin{aligned}
+\sum_{d \geqslant 1} \mu(d) g(x / d) &amp;=\sum_{d \geqslant 1} \mu(d) \sum_{k \geqslant 1} f(x / k d) \
+&amp;=\sum_{m \geqslant 1} f(x / m) \sum_{d, k \geqslant 1} \mu<a href="m=k d">d</a> \
+&amp;=\sum_{m \geqslant 1} f(x / m) \sum_{d \backslash m} \mu(d)=\sum_{m \geqslant 1} f<a href="m=1">x / m</a>=f(x) .
+\end{aligned}
+$$</p>
+<h4 id="phi-函数"><span class="arithmatex">\(\Phi 函数\)</span><a class="headerlink" href="#phi-函数" title="Permanent link">&para;</a></h4>
+<p><span class="arithmatex">\(\Phi(x) = \sum_{1\le k\le x}\varphi(k)\)</span>，表示分母小于 x 的所有最简分数个数。</p>
+<p>有
+$$
+\sum_{d\ge1}\Phi(x/d) = 1/2\lfloor x \rfloor \lfloor x+1 \rfloor
+$$
+证明：计数</p>
+<p>对分子分母小于 x 的所有分数进行计数，即<span class="arithmatex">\(S = \{n/m| 1\le n,m \le \lfloor x \rfloor\}\)</span>，易知<span class="arithmatex">\(\# S = 右式\)</span></p>
+<p>而 S 中的分数可以按照<span class="arithmatex">\(gcd(m, n) = d\)</span>进行分类，其中每一类的个数即是<span class="arithmatex">\(\Phi(x/d)\)</span></p>
+<h4 id="珠子项链">珠子项链<a class="headerlink" href="#珠子项链" title="Permanent link">&para;</a></h4>
+<p>有 n 种颜色的珠子，将其串成长度 m 的圆形项链，有多少种方法。
+$$
+\begin{aligned}
+m N(m, n) &amp;=\sum_{a_{0}, \cdots, a_{m-1} \in S_{n}} \sum_{0 \leq k&lt;m}\left[a_{0} \cdots a_{m-1}=a_{k} \cdots a_{m-1} a_{0} \cdots a_{k-1}\right] \
+&amp;=\sum_{0 \leq k&lt;m} \sum_{a_{0}, \cdots, a_{m-1} \in S_{n}}\left[a_{0} \cdots a_{m-1}=a_{k} \cdots a_{m-1} a_{0} \cdots a_{k-1}\right] \</p>
+<p>&amp; = \sum_{0\le k &lt;m} n^{gcd(k, m)}
+\end{aligned}
+$$
+一步巧妙的变换
+$$
+\begin{aligned}
+N(m, n) &amp;=\frac{1}{m} \sum_{d \backslash m} n^{d} \sum_{0 \leqslant k&lt;m}[d=\operatorname{gcd}(k, m)] \
+\end{aligned}
+$$
+问题变成了，<span class="arithmatex">\(0\le k &lt; m\)</span>中有多少使得 gcd(k, m)=d 的 k（已知 d|m）。可知为<span class="arithmatex">\(\varphi(m/d)\)</span></p>
+<p>麦克马洪公式
+$$
+N(m, n) = \frac{1}{m} \sum_{d \backslash m} n^{d}\varphi(m/d)
+$$
+其中可得，该公式并不明显，书上也给出了 1 页半的证明。
+$$
+\sum_{d \backslash m} \varphi(d) n^{m / d} \equiv 0(\bmod m)
+$$</p>
+<h3 id="一些变换">一些变换<a class="headerlink" href="#一些变换" title="Permanent link">&para;</a></h3>
+<div class="arithmatex">\[
+\begin{aligned}
+\sum_{0 \leqslant k&lt;m} f(k) &amp;=\sum_{d \backslash m} \sum_{0 \leqslant k&lt;m} f[k](d=\operatorname{gcd}(k, m)) \\
+&amp;=\sum_{d \backslash m} \sum_{0 \leqslant k&lt;m} f[k](k / d \perp m / d) \\
+&amp;=\sum_{d \backslash m} \sum_{0 \leqslant k&lt;m / d} f[k d](k \perp m / d) \\
+&amp;=\sum_{d \backslash m} \sum_{0 \leqslant k&lt;d} f[k m / d](k \perp d)
+\end{aligned}
+\]</div>
+<h2 id="5-二项式系数">5 二项式系数<a class="headerlink" href="#5-二项式系数" title="Permanent link">&para;</a></h2>
+<p><strong>定义</strong>
+$$
+{r \choose k} = \left{\begin{array}\
+ {r^{\underline k} \over k!} &amp;k\ge0\
+    0 &amp;k&lt;0\end{array}\right.
+$$</p>
+<ul>
+<li>r 可以为实数</li>
+</ul>
+<ul>
+<li><span class="arithmatex">\(r \choose k\)</span>可以看作 r 的一个 k 次多项式</li>
+</ul>
+<ul>
+<li>一般情况使用阶层改写
+  $$
+  {n \choose k} = \frac{n!}{k!(n-k)!}
+  $$</li>
+</ul>
+<p><strong>对称性</strong>
+$$
+{n \choose k} = {n \choose n-k}
+$$
+对<span class="arithmatex">\(n \le 0\)</span>不成立，（貌似对 n 非整数也不成立）</p>
+<p>组合解释</p>
+<h3 id="吸收-absorption-恒等式"><strong>吸收 (absorption) 恒等式</strong><a class="headerlink" href="#吸收-absorption-恒等式" title="Permanent link">&para;</a></h3>
+<p>组合解释</p>
+<p>记忆：左右关于 r 齐次
+$$
+k{r \choose k} = r{r-1 \choose k-1}
+$$
+伴随恒等式（保持下指标不变）
+$$
+(r-k){r \choose k} = r{r-1 \choose k}
+$$
+<strong>上式可以看作是 r 的 k 次多项式的恒等式</strong>，（推导中 r 必须是正整数，但实际上<strong>对所有 r 都成立</strong>）书上称为多项式推理法 (polynomial argument)</p>
+<h3 id="加法公式"><strong>加法公式</strong><a class="headerlink" href="#加法公式" title="Permanent link">&para;</a></h3>
+<p>记忆：直角坐标系版的杨辉三角形中，一个数等于其上方和左上方的数的和
+$$
+{r \choose k} = {r-1 \choose k-1} + {r-1 \choose k}
+$$</p>
+<ul>
+<li>组合解释：分类讨论元素 n 是否被选中</li>
+<li>可以按照定义，也可以通过两个吸收恒等式相加得到</li>
+<li>加法公式可以看作是一个递推式</li>
+</ul>
+<p>推论，关于上指标求和（summation on the upper index），其中上下指标相差为一个定值的和也很重要
+$$
+\begin{align}
+    \sum_{k=0}^{n} {k \choose m} &amp;= \sum_{k=m}^{n} {k \choose k-m}\
+        &amp;= \sum_{l=0}^{r} {m+l \choose l} &amp;\text{<span class="arithmatex">\(r = n-m\)</span>}\
+        &amp;= {m+r+1 \choose r+1} \
+        &amp;= {n+1 \choose m+1}
+\end{align}
+$$</p>
+<ul>
+<li>组合解释：如果我们想要从一个有 1 + n 张票（标号从 0 直到 n）的集合中选取 m +1 张票，当选取的最大号码是数 k 时就有<span class="arithmatex">\(k \choose m\)</span>种取法</li>
+</ul>
+<ul>
+<li>和下降幂公式的联系（将下式两边除以 m!）
+  $$
+  \sum_{0\le k \le n} k^{\underline m} = {(n+1)^{\underline{m+1}} \over m+1}
+  $$</li>
+</ul>
+<h3 id="二项式定理">二项式定理<a class="headerlink" href="#二项式定理" title="Permanent link">&para;</a></h3>
+<ul>
+<li>binomial theorem
+  $$
+  (x+y)^r = \sum_k {r \choose k} x^k y^{r-k} \text{整数<span class="arithmatex">\(r\ge0\)</span>或者<span class="arithmatex">\(|x/y|&lt;1\)</span>}
+  $$</li>
+</ul>
+<ul>
+<li>r 不是非负整数时
+  $$
+  (1+z)^r = \sum_k {r \choose k} z^k, |z|&lt;1
+  $$</li>
+</ul>
+<ul>
+<li>使用泰勒级数在 0 处展开，可以证明该公式（组合解释只说明了 r 是非负整数的情况）</li>
+</ul>
+<h3 id="反转上指标">反转上指标<a class="headerlink" href="#反转上指标" title="Permanent link">&para;</a></h3>
+<p>negating the upper index
+$$
+{r \choose k} = (-1)^k {k-r-1 \choose k} \
+r^{\underline{k}} = r(r-1)...(r-k+1) =\
+ (-1)^k (-r)(1-r)..(k-1-r) = (-1)^k (k-1-r)^{\underline{k}}\</p>
+<p>$$</p>
+<h3 id="二项式系数求和">二项式系数求和<a class="headerlink" href="#二项式系数求和" title="Permanent link">&para;</a></h3>
+<p>二项式系数的恒等式非常多，记不完的。见表 5-3 二项式系数乘积和。</p>
+<p>其中重要的，见书上 p143 页表 5-4 的 12 个最重要的二项式系数恒等式</p>
+<p>在证明一些恒等式时，<strong>加法公式和数学归纳法结合的很好</strong></p>
+<h4 id="范德蒙卷积">范德蒙卷积<a class="headerlink" href="#范德蒙卷积" title="Permanent link">&para;</a></h4>
+<div class="arithmatex">\[
+\sum_k {r \choose m+k}{s \choose n-k} = {r+s \choose m+n} \\
+\sum_k {r \choose k}{s \choose n-k} = {r +s\choose n}
+\]</div>
+<p>组合解释：r+s 集合分为 r 和 s 两类</p>
+<h3 id="最重要的-12-个恒等式">最重要的 12 个恒等式<a class="headerlink" href="#最重要的-12-个恒等式" title="Permanent link">&para;</a></h3>
+<p><img alt="image-20220425142249324" src="../../../../../images/%E5%85%B7%E4%BD%93%E6%95%B0%E5%AD%A6/image-20220425142249324.png" /></p>
+<h3 id="基本练习">基本练习<a class="headerlink" href="#基本练习" title="Permanent link">&para;</a></h3>
+<p>问题 1：比值的和式
+$$
+\begin{align}
+ \sum_{k=0}^{m} {m \choose k}/{n \choose k} &amp; = \sum_{k \ge 0} {n - k \choose m - k}/{n \choose m}\
+  &amp;= 1/{n \choose m}\sum_{k \le m} {n - m + k \choose k}\
+  &amp;= {n+1 \choose m} /{n \choose m} \
+  &amp;= \frac{n+1}{n+1-m}
+\end{align}
+$$
+问题 2：
+$$
+\begin{align}
+ \sum_{k=0}^{n} k{m -k - 1 \choose m - n - 1} &amp; = \sum_{k=0}^{n} (m - (m-k)){m -k - 1 \choose m - n - 1}\
+  &amp;= \sum_{k=0}^{n} m{m -k - 1 \choose m - n - 1} - \sum_{k=0}^{n} (m-k){m -k - 1 \choose m - n - 1}\
+\end{align}
+$$
+问题 6：</p>
+<p><span class="arithmatex">\(n \ge 0\)</span>
+$$
+\begin{align}
+ \sum_{k\ge0} {n+k \choose 2k}{2k \choose k}\frac{(-1)^k}{k+1} &amp; = \sum_{k\ge0}{n+k \choose k}{n \choose k}\frac{(-1)^k}{k+1}\
+  &amp;= \sum_{k\ge0}{n+k \choose k}{n+1 \choose k+1}\frac{(-1)^k}{n+1}\
+\end{align}
+$$
+对称性
+$$
+\begin{align}
+ \sum_{k\ge0}{n+k \choose k}{n+1 \choose k+1}\frac{(-1)^k}{n+1} &amp;= \sum_{k}{n+k \choose k}{n+1 \choose k+1}\frac{(-1)^k}{n+1}\
+  &amp;= \sum_{k}{n+k \choose n}{n+1 \choose k+1}\frac{(-1)^k}{n+1}\
+  &amp;= 0
+\end{align}
+$$
+从<span class="arithmatex">\({n+k \choose k}变为{n+k \choose n}\)</span>，当<span class="arithmatex">\(k&lt;-n\)</span>时，会从一个零值变为一个非零值。但是由于另一项<span class="arithmatex">\({n+1 \choose k+1}\)</span>在<span class="arithmatex">\(k&lt;-n\)</span>时为 0，除了<span class="arithmatex">\(n=0\)</span>时<span class="arithmatex">\(k=-1\)</span>的情况为 1，因此答案为<span class="arithmatex">\(0 - {-1 \choose 0}(-1)^{-1} = 1\)</span></p>
+<p>或则直接利用反转上指标</p>
+<h3 id="处理的技巧">处理的技巧<a class="headerlink" href="#处理的技巧" title="Permanent link">&para;</a></h3>
+<h5 id="取一半">取一半<a class="headerlink" href="#取一半" title="Permanent link">&para;</a></h5>
+<div class="arithmatex">\[
+\begin{equation}
+    r^{\underline{k}}(r-\frac{1}{2})^{\underline{k}}=(2 r)^{\underline{2k}} / 2^{2 k} \text {, 整数 } k \geqslant 0
+\end{equation}
+\]</div>
+<div class="arithmatex">\[
+\begin{equation}
+    {r \choose k}{r-1 / 2 \choose k}={2 r \choose 2 k}{2 k \choose k} / 2^{2 k}, k \text { 是整数。}
+\end{equation}
+\]</div>
+<div class="arithmatex">\[
+\begin{equation}
+    {n-1 / 2 \choose n}={2 n \choose n} / 2^{2 n}, n \text { 是整数。}
+\end{equation}
+\]</div>
+<div class="arithmatex">\[
+\begin{equation}
+    {-1 / 2 \choose n}=\left(\frac{-1}{4}\right)^{n}{2 n \choose n}, n \text { 是整数。}
+\end{equation}
+\]</div>
+<div class="arithmatex">\[
+(2n-1)!! 2^nn!= (2n)!
+\]</div>
+<p>可以知道，当上指标非整数时，取值很特别。</p>
+<h4 id="高阶差分">高阶差分<a class="headerlink" href="#高阶差分" title="Permanent link">&para;</a></h4>
+<div class="arithmatex">\[
+\begin{equation}
+\Delta^{n}=(\mathrm{E}-1)^{n}=\sum_{k}{n \choose k} \mathrm{E}^{k}(-1)^{n-k}
+\end{equation}
+\]</div>
+<p>即
+$$
+\sum_{k} {n \choose k}(-1)^{n-k}f(x+k) = \Delta^{n}f(x)
+$$
+或<span class="arithmatex">\(\sum_{0}^{n} {n \choose k}(-1)^{k}f(x+k) = (-1)^n \Delta^{n}f(x)\)</span></p>
+<p>或<span class="arithmatex">\(\sum_{0}^{n} {n \choose k}(-1)^{k}f(k) = (-1)^n \Delta^{n}f(0)\)</span></p>
+<h4 id="牛顿级数">牛顿级数<a class="headerlink" href="#牛顿级数" title="Permanent link">&para;</a></h4>
+<p>假如 f(x) 是一个 d 次多项式，则 f(x) 可以写成下降幂的和式
+$$
+f(x) = b_dx^{\underline{d}} + b_{d-1}x<sup _underline_1="\underline{1">{\underline{d-1}}+...+b_1x</sup>
+$$
+更进一步，可以写成二项式系数的和
+$$
+f(x) = c_d{x \choose d} + c_{d-1}{x \choose d-1}+...+c_{0}{x \choose 0}
+$$}} + b_0x^{\underline{0}</p>
+<p>可以通过计算高阶差分，求解这些系数。类似于泰勒展开。
+$$
+\Delta^{n} {x \choose d} = {x \choose d-n}
+$$</p>
+<div class="arithmatex">\[
+\begin{equation}
+f(x)=\Delta^{d} f(0){x \choose d}+\Delta^{d-1} f(0){x \choose d-1}+\cdots+\Delta f(0){x \choose 1}+f(0){x \choose 0}
+\end{equation}
+\]</div>
+<div class="arithmatex">\[
+\begin{equation}
+    g(a+x)=\frac{g(a)}{0 !} x^{\underline{0}}+\frac{\Delta g(a)}{1 !} x^{\underline{1}}+\frac{\Delta^{2} g(a)}{2 !} x^{\underline{2}}+\frac{\Delta^{3} g(a)}{3 !} x^{\underline{3}}+\cdots
+\end{equation}
+\]</div>
+<p>比如要计算<span class="arithmatex">\(f(x) = x^3\)</span>的牛顿级数
+$$
+f(0) = 0, f(1) = 1, f(2) = 8, f(3) = 27\
+\Delta f(0) = 1, \Delta f(1) = 7, \Delta f(2) = 19,\
+\Delta^2 f(0) = 6, \Delta f(1) = 12,\
+\Delta^3 f(0) = 6,
+$$
+因此<span class="arithmatex">\(x^3 = 6{x \choose 3} + 6{x \choose 2} + {x \choose 1}\)</span></p>
+<p>因此<span class="arithmatex">\(\sum_{k=0}^{n-1} k^3 = 6{n \choose 4} + 6{n \choose 3} + {n \choose 2}\)</span></p>
+<h4 id="反演">反演<a class="headerlink" href="#反演" title="Permanent link">&para;</a></h4>
+<div class="arithmatex">\[
+\begin{equation}
+    g(n)=\sum_{k}{n \choose k}(-1)^{k} f(k) \Leftrightarrow f(n)=\sum_{k}{n \choose k}(-1)^{k} g(k)
+\end{equation}
+\]</div>
+<p>书本 p159 处<span class="arithmatex">\(f(k) = {r - sk \choose n} = \frac{1}{n!}(-n)^n...\)</span>中的<span class="arithmatex">\((-n)^n\)</span>应该是<span class="arithmatex">\((-1)^n\)</span>，印刷错误。</p>
+<h3 id="生成函数">生成函数<a class="headerlink" href="#生成函数" title="Permanent link">&para;</a></h3>
+<p>卷积</p>
+<p>生成函数计算</p>
+<p>B_2(z) 的系数为卡塔兰数 Catalan number C_n</p>
+<h4 id="广义二项级数和广义指数级数">广义二项级数和广义指数级数<a class="headerlink" href="#广义二项级数和广义指数级数" title="Permanent link">&para;</a></h4>
+<div class="arithmatex">\[
+\begin{equation}
+    \mathcal{B}_{t}(z)=\sum_{k \geqslant 0}(t k)^{\frac{k-1}{}} \frac{z^{k}}{k !} ; \quad \mathcal{E}_{t}(z)=\sum_{k \geqslant 0}(t k+1)^{k-1} \frac{z^{k}}{k !}
+\end{equation}
+\]</div>
+<h4 id="一般卷积公式">一般卷积公式<a class="headerlink" href="#一般卷积公式" title="Permanent link">&para;</a></h4>
+<ul>
+<li>有（5.60）</li>
+</ul>
+<div class="arithmatex">\[
+\begin{aligned}
+    \mathcal{B}_{t}(z)^{r}=\sum_{k \geqslant 0}{t k+r \choose k} \frac{r}{t k+r} z^{k} ; \\
+    &amp; \mathcal{E}_{t}(z)^{r}=\sum_{k \geqslant 0} r \frac{(t k+r)^{k-1}}{k !} z^{k} ;
+    \end{aligned}
+$$
+可记其中的系数：
+$$
+C_{k}^{(t,r)} = {tk+r \choose k}\frac{1}{tk+r}
+\]</div>
+<p>如
+$$
+(t k)^{\underline{k-1}}\frac{1}{k!} = (tk+1)^{\underline{k}}/(tk+1)\frac{1}{k!} = C_k^{(t, 1)}
+$$
+之后会证明：
+$$
+[z^k]\mathcal{B}_t(z) = [z<sup>{k-1}]\mathcal{B}_t(z)</sup>t
+$$</p>
+<ul>
+<li>又有 (5.61)</li>
+</ul>
+<div class="arithmatex">\[
+\begin{aligned}
+    \frac{\mathcal{B}_{t}(z)^{r}}{1-t+t \mathcal{B}_{t}(z)^{-1}}=\sum_{k \geqslant 0}{t k+r \choose k} z^{k} ; \\
+    &amp; \frac{\mathcal{E}_{t}(z)^{r}}{1-z t \mathcal{E}_{t}(z)^{t}}=\sum_{k \geqslant 0} \frac{(t k+r)^{k}}{k !} z^{k} .
+    \end{aligned}
+\]</div>
+<p>构造生成函数<span class="arithmatex">\(\mathcal{B}_{t}(z)^{r}  \frac{\mathcal{B}_{t}(z)^{s}}{1-t+t \mathcal{B}_{t}(z)^{-1}}\)</span>，得一般卷积公式 (5.62)：
+$$
+\begin{equation}
+    \sum_{k}{t k+r \choose k}{t n-t k+s \choose n-k} \frac{r}{t k+r}={t n+r+s \choose n}
+\end{equation}
+$$</p>
+<h4 id="特殊级数sqrt1pm4z">特殊级数<span class="arithmatex">\(\sqrt{1\pm4z}\)</span><a class="headerlink" href="#特殊级数sqrt1pm4z" title="Permanent link">&para;</a></h4>
+<h6 id="b_2-封闭形式-568书上没有证明">B_2 封闭形式 (5.68)（书上没有证明）<a class="headerlink" href="#b_2-封闭形式-568书上没有证明" title="Permanent link">&para;</a></h6>
+<div class="arithmatex">\[
+\mathcal{B}_{2}(z)=\sum_{k}{2 k \choose k} \frac{z^{k}}{1+k}=\sum_{k}{2 k+1 \choose k} \frac{z^{k}}{1+2 k}=\frac{1-\sqrt{1-4 z}}{2 z}
+$$
+证明：
+$$
+\begin{align}
+\sqrt{1-4z} &amp;= (1-4z)^{1/2}\\
+ &amp;=\sum_{k\ge 0}{1/2 \choose k}(-4z)^k \\
+ &amp;{\text{有${-1/2 \choose k} = (-1/4)^k{2k \choose k}$}}\\
+ &amp;= \sum_{k\ge 0}\frac{1/2(1/2-1)...}{k!}(-4z)^k \\
+ &amp;= 1+\sum_{k\ge 1}\frac{1}{2k}\frac{(-1/2)^{\underline{k-1}}}{(k-1)!}(-4z)^k \\
+ &amp;= 1 + \sum_{k\ge 1}{-1/2 \choose k-1}(-4z)^k \\
+ &amp;= 1 + \sum_{k\ge 0}{-1/2 \choose k}(-4z)^{k+1} \\
+ &amp;= 1 - 2z\sum_{k\ge 0}{2 k \choose k}\frac{1}{k+1}z^k
+ &amp;= 1 - 2zB_2(z)
+\end{align}
+\]</div>
+<p><strong>证明 (5.72)</strong>
+$$
+\begin{equation}
+    \frac{\mathcal{B}<em k="k">{2}(z)^{r}}{\sqrt{1-4 z}}=\sum</em>
+\end{equation}
+$$
+证明：}{2 k+r \choose k} z^{k</p>
+<p>有（类似于上面证明）
+$$
+\frac{1}{\sqrt{1-4z}} = \sum_{k}{2k \choose k} z^k
+$$
+构造生成函数<span class="arithmatex">\(\mathcal{B}_{2}(z)^{r} \frac{1}{\sqrt{1-4z}}\)</span>，再由一般卷积公式可得。</p>
+<p>类似可得 (5.73)
+$$
+\begin{equation}
+    \frac{\mathcal{B}<em k="k">{-1}(z)^{r+1}}{\sqrt{1+4 z}}=\sum</em>
+\end{equation}
+$$
+}{r-k \choose k} z^{k<strong>证明 (5.74)</strong>
+$$
+\begin{equation}
+    \sum_{k \leqslant n}{n-k \choose k} z^{k}=\frac{1}{\sqrt{1+4 z}}\left(\left(\frac{1+\sqrt{1+4 z}}{2}\right)^{n+1}-\left(\frac{1-\sqrt{1+4 z}}{2}\right)^{n+1}\right) \text {, 整数 } n \geqslant 0
+\end{equation}
+$$
+证明：</p>
+<p>可证明 k&gt;n 时
+$$
+[z<sup n_1="n+1">k]\frac{(-z)</sup>}\mathcal{B<em -1="-1">{2}(-z)^{n+1}}{\sqrt{1+4 z}} = {n-k \choose k}
+$$
+，故
+$$
+\begin{equation}
+\frac{\mathcal{B}</em>(z)<sup n_1="n+1">{n+1}-(-z)</sup>} \mathcal{B<em _leqslant="\leqslant" k="k" n="n">{2}(-z)^{n+1}}{\sqrt{1+4 z}}=\sum</em>
+n-k \
+k
+\end{array}\right) z^{k}
+\end{equation}
+$$}\left(\begin{array}{c</p>
+<h3 id="超几何函数">超几何函数<a class="headerlink" href="#超几何函数" title="Permanent link">&para;</a></h3>
+<div class="arithmatex">\[
+\begin{equation}
+    F\left(\left.\begin{array}{c}
+    a_{1}, \cdots, a_{m} \\
+    b_{1}, \cdots, b_{n}
+    \end{array}\right| z\right)=\sum_{k \geqslant 0} \frac{a_{1}^{\bar{k}} \cdots a_{m}^{\bar{k}} z^{k}}{b_{1}^{\bar{k}} \cdots b_{n}^{\bar{k}} k !}
+\end{equation}
+\]</div>
+<ul>
+<li>带有 m 个上参数，n 个下参数。对于参数个数为 0 的情况，可以上下添加一个常数 1 而不会影响（参数个数仍然是 0 个）。</li>
+</ul>
+<ul>
+<li>如 m=1, n=0 的情况对应</li>
+</ul>
+<div class="arithmatex">\[
+\begin{equation}
+    F\left(\begin{array}{c}
+    a, 1 \\
+    1
+    \end{array} \mid z\right)=\sum_{k \geqslant 0} a^{\bar{k}} \frac{z^{k}}{k !}=\sum_{k}{a+k-1 \choose k} z^{k}=\frac{1}{(1-z)^{a}}
+\end{equation}
+\]</div>
+<ul>
+<li>m=0, n=1 为修正贝塞尔函数（modified Bessel function）</li>
+</ul>
+<div class="arithmatex">\[
+\begin{equation}
+    F\left(\begin{array}{c}
+    1 \\
+    b, 1
+    \end{array} \mid z\right)=\sum_{k \geqslant 0} \frac{(b-1) !}{(b-1+k) !} \frac{z^{k}}{k !}=I_{b-1}(2 \sqrt{z}) \frac{(b-1) !}{z^{(b-1) / 2}}
+\end{equation}
+\]</div>
+<ul>
+<li>m=1, n=1 为合流超几何级数（confluent hypergeometric series）</li>
+</ul>
+<div class="arithmatex">\[
+\begin{equation}
+    F\left(\begin{array}{l}
+    a \\
+    b
+    \end{array} \mid z\right)=\sum_{k \geqslant 0} \frac{a^{\bar{k}}}{b^{\bar{k}}} \frac{z^{k}}{k !}=M(a, b, z) .
+\end{equation}
+\]</div>
+<ul>
+<li>而 m=2, n=1 被称为高斯超几何函数</li>
+</ul>
+<blockquote>
+<p>今天，在许多大学 的物理学、工程学甚 至数学专业的学生 所学习的函数中，即 使不是 100% ，也必定 有 95% 的函数被这单 个的符号 F ( a , b ; c ; x ) 所涵盖．”   —— W.W. 索耶 [318]</p>
+</blockquote>
+<div class="arithmatex">\[
+\begin{equation}
+    \left.F\left(\begin{array}{c}
+    a, b \\
+    c
+    \end{array}\right| z\right)=\sum_{k \geqslant 0} \frac{a^{\bar{k}} b^{\bar{k}} z^{k}}{c^{\bar{k}} k !} .
+\end{equation}
+\]</div>
+<p>​ 有非常多的性质，如
+$$
+\begin{align<em>}
+    \ln (1+z)=z F\left(\begin{array}{c}
+    1,1 \
+    2
+    \end{array} \mid-z\right) &amp;=z \sum_{k \geqslant 0} \frac{k ! k !}{(k+1) !} \frac{(-z)^{k}}{k !} \
+    &amp;=z-\frac{z<sup 3="3">{2}}{2}+\frac{z</sup>+\cdots
+\end{align}}{3}-\frac{z^{4}}{4</em>}
+$$</p>
+<h4 id="超几何函数表示">超几何函数表示<a class="headerlink" href="#超几何函数表示" title="Permanent link">&para;</a></h4>
+<p>超几何级数恰好就是首项为 1 且项的比值 t k+1 /t k 是 k 的有理函数的那些级数
+$$
+\begin{equation}
+    \begin{aligned}
+    \frac{t_{k+1}}{t_{k}} &amp;=\frac{a_{1}^{\overline{k+1}} \cdots a_{m}<sup _bar_k="\bar{k">{\overline{k+1}}}{a_{1}</sup>}} \cdots a_{m}^{\bar{k}}} \frac{b_{1}^{\bar{k}} \cdots b_{n<sup _overline_k_1="\overline{k+1">{\bar{k}}}{b_{1}</sup> \frac{z}} \cdots b_{n}^{\overline{k+1}}} \frac{k !}{(k+1) !<sup k="k">{k+1}}{z</sup> \
+    &amp;=\frac{\left(k+a_{1}\right) \ldots\left(k+a_{m}\right) z}{\left(k+b_{1}\right) \ldots\left(k+b_{n}\right)(k+1)}
+    \end{aligned}
+\end{equation}
+$$}</p>
+<h4 id="平行求和表示为超几何函数">平行求和表示为超几何函数<a class="headerlink" href="#平行求和表示为超几何函数" title="Permanent link">&para;</a></h4>
+<p>平行求和：
+$$
+\sum_{k\le n} {r+k \choose k} = \sum_{k\ge 0}{r +n -k \choose n-k} = {r+n+1 \choose n}
+$$
+而
+$$
+\frac{t_{k+1}}{t_k}= \frac{(k+1)(k-n)(1)}{(k-n-r)(k+1)} \
+t_0 = {r+n \choose n}
+$$
+故
+$$
+{r+n \choose n} F(1, -n; -n-r; 1) = {r+n+1 \choose n}
+$$
+即
+$$
+F(1, -n; -n-r; 1)=\frac{r+n+1}{r+1}
+$$
+类似的另一个求和也可以表示为超几何函数：
+$$
+\sum_{k\le m} {r \choose k}(-1)^k = F(1, -m; -m+r+1; 1)
+$$
+这两个超几何级数均 m=1, n=1，可以相互推出。</p>
+<h6 id="两个限制">两个限制<a class="headerlink" href="#两个限制" title="Permanent link">&para;</a></h6>
+<ul>
+<li>
+<p>下参数不能为 0 或者负整数</p>
+<blockquote>
+<p>原来我们是对整 数 r 证明了这些恒等 式，并用多项式推理 法指出它们在一般 情形也成立． 现在我 们是首先证明它们 对无理数 r 成立，并 利用极限方法指出 它 们 对 整 数 也 成立</p>
+</blockquote>
+</li>
+</ul>
+<ul>
+<li>使用阶乘将<span class="arithmatex">\({r+n-k \choose n-k}\)</span>展开了，而阶乘原本对负整数时没定义。</li>
+</ul>
+<h4 id="阶乘推广">阶乘推广<a class="headerlink" href="#阶乘推广" title="Permanent link">&para;</a></h4>
+<h6 id="欧拉">欧拉<a class="headerlink" href="#欧拉" title="Permanent link">&para;</a></h6>
+<p>所有复数 z
+$$
+\frac{1}{z!} = \lim_{n\rightarrow \infin} {n+z \choose n}n^{-z}
+$$</p>
+<h6 id="gamma-函数"><span class="arithmatex">\(\Gamma 函数\)</span><a class="headerlink" href="#gamma-函数" title="Permanent link">&para;</a></h6>
+<div class="arithmatex">\[
+z! = \int_0^{\infin}t^ze^{-t}dt, R_z&gt;-1
+\]</div>
+<p>通过
+$$
+z! = z(z-1)!
+$$
+将该定义延拓到<span class="arithmatex">\(C - Z^-\)</span>（除了负整数外的复数）</p>
+<p>阶乘和伽马函数可以相互替换使用。
+$$
+\Gamma(z+1) = z!\
+(-z)!\Gamma(z) = \frac{\pi}{\sin{\pi z}}
+$$
+广义阶乘幂
+$$
+z^{\underline{w}} = \frac{z!}{(z-w)!}\
+z^{\bar{w}} = \frac{\Gamma(z+w)}{\Gamma(z)}\
+$$
+二项式系数
+$$
+\left(\begin{array}{c}
+z \
+w
+\end{array}\right)=\lim <em _omega="\omega" _rightarrow="\rightarrow" w="w">{\zeta \rightarrow z} \lim </em>
+$$} \frac{\zeta !}{\omega !(\zeta-\omega) !</p>
+<h6 id="牛顿级数_1">牛顿级数<a class="headerlink" href="#牛顿级数_1" title="Permanent link">&para;</a></h6>
+<div class="arithmatex">\[
+\ln(x!) = \sum_k a_k x^k
+\]</div>
+<h4 id="范德蒙卷积_1">范德蒙卷积<a class="headerlink" href="#范德蒙卷积_1" title="Permanent link">&para;</a></h4>
+<div class="arithmatex">\[
+\left(\begin{array}{c}
+s \\
+n
+\end{array}\right) F\left(\begin{array}{c}
+-r,-n \\
+s-n+1
+\end{array}\right)=\left(\begin{array}{c}
+r+s \\
+n
+\end{array}\right)
+\]</div>
+<p>得
+$$
+\begin{equation}
+    F\left(\begin{array}{c}
+    a, b \
+    c
+    \end{array} \mid 1\right)=\frac{\Gamma(c-a-b) \Gamma(c)}{\Gamma(c-a) \Gamma(c-b)} ; \text { 整数 } b \leqslant 0 \text {, 或者 } \mathfrak{c} c&gt;\Re a+\Re b .
+\end{equation}
+$$
+特殊情形
+$$
+\begin{equation}
+F\left(\begin{array}{c}
+a,-n \
+c
+\end{array} \mid 1\right)=\frac{(c-a)<sup _bar_n="\bar{n">{\bar{n}}}{c</sup>=\frac{(a-c)}}<sup n="n">{\frac{n}{n}}}{(-c)</sup> n \geqslant 0
+\end{equation}
+$$
+因此基本所有之前的求和公式，都可以用这条公式查表的方式得到。}}, \quad \text { 整数 </p>
+<h4 id="求极限">求极限<a class="headerlink" href="#求极限" title="Permanent link">&para;</a></h4>
+<p>已知有（见 p177）
+$$
+(-1)^{n} \frac{(2 n) !}{n !}=\lim <em _rightarrow-n="\rightarrow-n" x="x">{b \rightarrow-2 n} \frac{(b / 2) !}{b !}=\lim </em>
+$$
+因此} \frac{x !}{(2 x) !<span class="arithmatex">\(-6!/3!=\lim_{x-&gt;-3}x!/(2x)!\)</span></p>
+<ul>
+<li>如果认为 (-3) = (-3)(-4)(-5)(-6)!，然后消掉就会得到错误答案</li>
+</ul>
+<ul>
+<li>
+<p>使用 (5.87) 将负变量阶乘和正的伽马函数联系起来</p>
+<p>最后一步使用洛必达
+$$
+\lim_{r \to 0}\frac{(-n-r)!\Gamma(n+r)}{(-2n - 2r)!\Gamma(2n+2r)} = \lim_{r \to 0}\frac{\sin(2n+2r)\pi}{\sin(n+r)\pi} = 2(-1)^n
+$$
+得
+$$
+\lim_{x \to -n} \frac{x!}{(2x)!} = \lim_{r \to 0}\frac{(-n-r)!}{(-2n - 2r)!} = 2(-1)^n \frac{\Gamma(2n)}{\Gamma(n)} = (-1)^n\frac{(2n)!}{n!}
+$$</p>
+</li>
+</ul>
+<p><strong>不同极限</strong></p>
+<p>由 (5.20)<span class="arithmatex">\(\sum_{k \leqslant m}{m+k \choose k} 2^{-k}=2^{m} \to \sum_{k\ge 0}{2m-k \choose m-k}2^k = 2^{2m}\)</span></p>
+<p>应该表示为
+$$
+\begin{equation}
+\left(\begin{array}{c}
+2 m \
+m
+\end{array}\right) \lim <em 0="0" _rightarrow="\rightarrow" _varepsilon="\varepsilon">{\varepsilon \rightarrow \infty} F\left(\begin{array}{c}
+1,-m \
+-2 m+\varepsilon
+\end{array} \mid 2\right)=2^{2 m}
+\end{equation}
+$$
+不同极限是不同的
+$$
+\begin{equation}
+\begin{aligned}
+\lim </em>
+-1+\varepsilon,-3 \
+-2+\varepsilon
+\end{array} \mid 1\right)=\lim } F\left(\begin{array}{c<em 0="0" _rightarrow="\rightarrow" _varepsilon="\varepsilon">{\varepsilon \rightarrow 0}\left(1+\frac{(-1+\varepsilon)(-3)}{(-2+\varepsilon) 1 !}+\frac{(-1+\varepsilon)(\varepsilon)(-3)(-2)}{(-2+\varepsilon)(-1+\varepsilon) 2 !}\right.\
+\left.+\frac{(-1+\varepsilon)(\varepsilon)(1+\varepsilon)(-3)(-2)(-1)}{(-2+\varepsilon)(-1+\varepsilon)(\varepsilon) 3 !}\right) \
+=1-\frac{3}{2}+0+\frac{1}{2}=0 ; \
+\lim </em>
+-1,-3 \
+-2+\varepsilon
+\end{array}\right) =\lim _{\varepsilon \rightarrow 0}\left(1+\frac{(-1)(-3)}{(-2+\varepsilon) 1 !}+0+0\right) \
+=1-\frac{3}{2}+0+0=-\frac{1}{2} .
+\end{aligned}
+\end{equation}
+$$} F\left(\begin{array}{l</p>
+<h3 id="超几何变换">超几何变换<a class="headerlink" href="#超几何变换" title="Permanent link">&para;</a></h3>
+<p>已知的超几何级数封闭形式是计算二项式系数和的有用工具。</p>
+<p>而超几何变换研究如何将一个超几何级数变换成另一个类似但不同参数的超几何级数。</p>
+<p>1797 年，J. F. 普法夫 [292] 发现了一个惊人的反射定律（reflection law）
+$$
+\frac{1}{(1-z)^{a}} F\left(\begin{array}{c|c}
+a, b &amp; -z \
+c &amp; 1-z
+\end{array}\right)=F\left(\left.\begin{array}{c}
+a, c-b \
+c
+\end{array}\right| z\right)
+$$</p>
+<p>微分方式得到
+$$
+\begin{equation}
+    \begin{aligned}
+    &amp;\frac{d}{d z} F\left(\begin{array}{l}
+    a_{1}, \cdots, a_{m} \
+    b_{1}, \cdots, b_{n}
+    \end{array} \mid z\right)=\sum_{k \geqslant 1} \frac{a_{1}^{\bar{k}} \cdots a_{m}^{\bar{k}} z<sup _bar_k="\bar{k">{k-1}}{b_{1}</sup>\
+    &amp;=\sum_{k+1 \geqslant 1} \frac{a_{1}^{\overline{k+1}} \cdots a_{m}^{\overline{k+1}} z}} \cdots b_{n}^{\bar{k}}(k-1) !<sup _overline_k_1="\overline{k+1">{k}}{b_{1}</sup>\
+    &amp;=\sum_{k \geqslant 0} \frac{a_{1}\left(a_{1}+1\right)^{\bar{k}} \cdots a_{m}\left(a_{m}+1\right)^{\bar{k}} z}} \cdots b_{n}^{\overline{k+1}} k !<sup _bar_k="\bar{k">{k}}{b_{1}\left(b_{1}+1\right)</sup>\
+    &amp;=\frac{a_{1} \ldots a_{m}}{b_{1} \ldots b_{n}} F\left(\begin{array}{ll}
+    a_{1}+1, \ldots, &amp; a_{m}+1 \
+    b_{1}+1, \ldots, &amp; b_{n}+1
+    \end{array} \mid z\right) \text {. }
+    \end{aligned}
+\end{equation}
+$$}} \cdots b_{n}\left(b_{n}+1\right)^{\bar{k}} k !</p>
+<p>另一个算子
+$$
+\vartheta = z\frac{d}{d z}
+$$</p>
+<div class="arithmatex">\[
+\begin{equation}
+\begin{aligned}
+\left(\vartheta+a_{1}\right) F\left(\begin{array}{c}
+a_{1}, \cdots, a_{m} \\
+b_{1}, \cdots, b_{n}
+\end{array} \mid z\right) &amp;=\sum_{k \geqslant 0} \frac{\left(k+a_{1}\right) a_{1}^{\bar{k}} \cdots a_{m}^{\bar{k}} z^{k}}{b_{1}^{\bar{k}} \cdots b_{n}^{\bar{k}} k !} \\
+&amp;=\sum_{k \geqslant 0} \frac{a_{1}\left(a_{1}+1\right)^{\bar{k}} a_{2}^{\bar{k}} \cdots a_{m}^{\bar{k}} z^{k}}{b_{1}^{\bar{k}} \cdots b_{n}^{\bar{k}} k !} \\
+&amp;=a_{1} F\left(\left.\begin{array}{c}
+a_{1}+1, a_{2}, \cdots, a_{m} \\
+b_{1}, \cdots, b_{n}
+\end{array}\right| z \right)
+\end{aligned}
+\end{equation}
+\]</div>
+<div class="arithmatex">\[
+\begin{equation}
+\begin{aligned}
+\left(\vartheta+b_{1}-1\right) F\left(\begin{array}{c}
+a_{1}, \cdots, a_{m} \\
+b_{1}, \cdots, b_{n}
+\end{array} \mid z\right) &amp;=\sum_{k \geqslant 0} \frac{\left(k+b_{1}-1\right) a_{1}^{\bar{k}} \cdots a_{m}^{\bar{k}} z^{k}}{b_{1}^{\bar{k}} \cdots b_{n}^{\bar{k}} k !} \\
+&amp;=\sum_{k \geqslant 0} \frac{\left(b_{1}-1\right) a_{1}^{\bar{k}} \cdots a_{m}^{\vec{k}} z^{k}}{\left(b_{1}-1\right)^{\bar{k}} b_{2}^{\bar{k}} \cdots b_{n}^{\bar{k}} k !} \\
+&amp;\left.=\left(b_{1}-1\right) F\left(\begin{array}{c}
+a_{1}, \cdots, a_{m} \\
+b_{1}-1, b_{2}, \cdots, b_{n}
+\end{array}\right| z\right)
+\end{aligned}
+\end{equation}
+\]</div>
+<p>于是超几何函数满足微分方程，且是仅有的满足该微分方程常数项为 1 的形式幂级数
+$$
+\begin{equation}
+\mathrm{D}\left(\vartheta+b_{1}-1\right) \cdots\left(\vartheta+b_{n}-1\right) F=\left(\vartheta+a_{1}\right) \cdots\left(\vartheta+a_{m}\right) F,
+\end{equation}
+$$</p>
+<p>F(a, b; c; z) 满足
+$$
+\begin{equation}
+z(1-z) F^{\prime \prime}(z)+(c-z(a+b+1)) F^{\prime}(z)-a b F(z)=0
+\end{equation}
+$$
+微分理论的一个用途是发现并证明新的变换，如高斯恒等式，均满足相同的微分方程。
+$$
+\begin{equation}
+    \left.\left.F\left(\begin{array}{c}
+    2 a, 2 b \
+    a+b+\frac{1}{2}
+    \end{array}\right| z\right)=F\left(\begin{array}{c}
+    a, b \
+    a+b+\frac{1}{2}
+    \end{array}\right| 4 z(1-z)\right)
+\end{equation}
+$$</p>
+<p>超几何级数对于理解二项式系数 和式提供了一个高水平的方法．更多的信息可以在 Bailey 所写的经典著作 [18] 以及其后由 Gasper 和 Rahman 合著的书 [141] 中找到</p>
+<h3 id="gosper-算法-求差分原函数">Gosper 算法 (求差分原函数)<a class="headerlink" href="#gosper-算法-求差分原函数" title="Permanent link">&para;</a></h3>
+<p>1977 年，R. W. Gosper <span class="arithmatex">\({ }^{[154]}\)</span> 发现了一个优美的方法，只要 <span class="arithmatex">\(f\)</span> 和 <span class="arithmatex">\(g\)</span> 属于称为超几何项的一般 函数类，就能用此法求出不定和式 <span class="arithmatex">\(\sum f(k) \delta k=g(k)+C\)</span>. 我们记
+$$
+F\left(\begin{array}{c}
+a_{1}, \cdots, a_{m} \
+b_{1}, \cdots, b_{n}
+\end{array} \mid z\right)<em 1="1">{k}=\frac{a</em>}^{\bar{k}} \cdots a_{m<sup _bar_k="\bar{k">{\bar{k}}}{b_{1}</sup>
+$$
+为超几何级数 }} \cdots b_{n}^{\bar{k}}} \frac{z^{k}}{k !<span class="arithmatex">\(F\left(a_{1}, \cdots, a_{m} ; b_{1}, \cdots, b_{n} ; z\right)\)</span> 的第 <span class="arithmatex">\(k\)</span> 项。我们将把 <span class="arithmatex">\(\left.F\left(a_{1}, \cdots, a_{m} ; b_{1}, \cdots, b_{n} ; z\right)\right._{k}\)</span> 看成是 <span class="arithmatex">\(k\)</span> 而 不是 <span class="arithmatex">\(z\)</span> 的一个函数。在许多情形下都表明，对给定的 <span class="arithmatex">\(a_{1}, \cdots, a_{m}, b_{1}, \cdots, b_{n}\)</span> 以及 <span class="arithmatex">\(z\)</span>, 存在参数 <span class="arithmatex">\(c\)</span>, <span class="arithmatex">\(A_{1}, \cdots, A_{M}, B_{1}, \cdots, B_{N}\)</span> 以及 <span class="arithmatex">\(Z\)</span>, 使得
+$$
+\sum F\left(\begin{array}{l}
+a_{1}, \cdots, a_{m} \
+b_{1}, \cdots, b_{n}
+\end{array} \mid z\right)<em 1="1">{k} \delta k=c F\left(\begin{array}{l}
+A</em> \
+B_{1}, \cdots, B_{N}
+\end{array} \mid Z\right)_{k}+C .
+$$
+存在称为是可用超几何项求和的 (summable in hypergeometric terms )}, \cdots, A_{M</p>
+<h3 id="gosper-zeilberger-算法">Gosper-Zeilberger 算法<a class="headerlink" href="#gosper-zeilberger-算法" title="Permanent link">&para;</a></h3>
+<p><span class="arithmatex">\(t(n, k)\)</span>. 当 <span class="arithmatex">\(t(n, k)\)</span> 给定时，Gosper-Zeilberger 算法可以总结如下：
+0 置 <span class="arithmatex">\(l:=0\)</span>. ( 我们将寻求关于 <span class="arithmatex">\(n\)</span> 的 <span class="arithmatex">\(l\)</span> 阶递归式。)
+1 令 <span class="arithmatex">\(\hat{t}(n, k)=\beta_{0}(n) t(n, k)+\cdots+\beta_{l}(n) t(n+l, k)\)</span>, 其中 <span class="arithmatex">\(\beta_{0}(n), \cdots, \beta_{l}(n)\)</span> 是末知的函数。利用 <span class="arithmatex">\(t(n, k)\)</span> 的性质寻求 <span class="arithmatex">\(\beta_{0}(n), \cdots, \beta_{l}(n)\)</span> 的一个线性组合 <span class="arithmatex">\(p(n, k)\)</span>, 其系数是关于 <span class="arithmatex">\(n\)</span> 和 <span class="arithmatex">\(k\)</span> 的多项式，使 得 <span class="arithmatex">\(\hat{t}(n, k)\)</span> 可以写成形式 <span class="arithmatex">\(p(n, k) \bar{t}(n, k)\)</span>, 其中 <span class="arithmatex">\(\bar{t}(n, k)\)</span> 是关于 <span class="arithmatex">\(k\)</span> 的超几何项。求多项式 <span class="arithmatex">\(\bar{p}(n, k)\)</span> 、 <span class="arithmatex">\(q(n, k)\)</span> 和 <span class="arithmatex">\(r(n, k)\)</span>, 使得 <span class="arithmatex">\(\bar{t}(n, k)\)</span> 的项的比值表示成 <span class="arithmatex">\((5.128)\)</span> 的形式，其中 <span class="arithmatex">\(q(n, k)\)</span> 和 <span class="arithmatex">\(r(n, k)\)</span> 满足 Gosper 条件 ( <span class="arithmatex">\(5.118)\)</span>. 置 <span class="arithmatex">\(\hat{p}(n, k)=p(n, k) \bar{p}(n, k)\)</span>.
+2a 置 <span class="arithmatex">\(d_{Q}:=\operatorname{deg}(q-r), d_{R}:=\operatorname{deg}(q+r)\)</span>, 以及
+$$
+d:= \begin{cases}\operatorname{deg}(\hat{p})-d_{Q}, &amp; d_{Q} \geqslant d_{R} \ \operatorname{deg}(\hat{p})-d_{R}+1, &amp; d_{Q}&lt;d_{R}\end{cases}
+$$
+<span class="arithmatex">\(2 \mathrm{~b}\)</span> 如果 <span class="arithmatex">\(d \geqslant 0\)</span>, 用 <span class="arithmatex">\((5.130)\)</span> 定义 <span class="arithmatex">\(s(n, k)\)</span>, 并考虑关于 <span class="arithmatex">\(\alpha_{0}, \cdots, \alpha_{d}, \beta_{0}, \cdots, \beta_{l}\)</span> 的诸个线性方 程，这些方程是在基本方程 ( 5.129) 中令 <span class="arithmatex">\(k\)</span> 的幂的系数相等而得到的。如果这些方程有一个 使得 <span class="arithmatex">\(\beta_{0}, \cdots, \beta_{l}\)</span> 不全为零的解，就转到第 4 步。如若不然，当 <span class="arithmatex">\(d_{Q}&lt;d_{R}\)</span> 且 <span class="arithmatex">\(-2 \lambda^{\prime} / \lambda\)</span> 是一个大于 <span class="arithmatex">\(d\)</span> 的 整数时 (其中 <span class="arithmatex">\(\lambda\)</span> 是 <span class="arithmatex">\(q+r\)</span> 中 <span class="arithmatex">\(k^{d_{R}}\)</span> 的系数，而 <span class="arithmatex">\(\lambda^{\prime}\)</span> 则是 <span class="arithmatex">\(q-r\)</span> 中 <span class="arithmatex">\(k^{d_{R}-1}\)</span> 的系数 ), 就置 <span class="arithmatex">\(d:=-2 \lambda^{\prime} / \lambda\)</span> 并 重复第 <span class="arithmatex">\(2 \mathrm{~b}\)</span> 步。
+3 ( 项 <span class="arithmatex">\(\hat{t}(n, k)\)</span> 不是超几何可求和的。) 将 <span class="arithmatex">\(l\)</span> 增加 1 并回到第 1 步。
+4（成功。) 置 <span class="arithmatex">\(T(n, k):=r(n, k) s(n, k) \bar{t}(n, k) / \bar{p}(n, k)\)</span>. 由该算法，就得到了 <span class="arithmatex">\(\hat{t}(n, k)=T(n\)</span>, <span class="arithmatex">\(k+1)-T(n, k) .\)</span>
+以后我们将要证明，只要 <span class="arithmatex">\(t(n, k)\)</span> 属于称为正常项（proper term）的一个大类，这个算法 就能成功地终止。</p>
+<h2 id="6-特殊的数">6 特殊的数<a class="headerlink" href="#6-特殊的数" title="Permanent link">&para;</a></h2>
+<ul>
+<li>
+<p>第二类斯特林数（n 真子集 k）</p>
+<p>$$
+  {n \brace k} = {n - 1 \brace k-1} + k{n-1 \brace k}
+  $$</p>
+<p>分别讨论第一个数：1）单独成为一个子集。2）从<span class="arithmatex">\({n-1 \brace k}\)</span>中选择一个，有 k 种可能</p>
+<ul>
+<li>特值<p><span class="arithmatex">\({n \brace 2} = 2^{n-1}-1\)</span></p>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>
+<p>第一类 stirling 数（n 轮换 k）（在 n 子集 k 的每个子集上，乘上轮换的种类）</p>
+<p>$$
+  {n \brack k} = {n - 1 \brack k-1} + (n-1){n-1 \brack k}
+  $$</p>
+<p>分别讨论第一个数：1）单独成为一个子集。2）从<span class="arithmatex">\({n-1 \brack k}\)</span>中选择一个，<span class="arithmatex">\(t_1 +t_2+...+t_k = n-1\)</span>，加入<span class="arithmatex">\(t_i\)</span>个元素的轮换时，种数为<span class="arithmatex">\(t_i{n-1 \brack k}\)</span></p>
+<ul>
+<li>特殊值<p><span class="arithmatex">\({n \brack 1} = (n-1)![n&gt;0]\)</span></p>
+<p><span class="arithmatex">\({n \brack 2} = (n-1)!H_{n-1}[n&gt;0]\)</span></p>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>
+<p>第一类 stirling 数和排列关系</p>
+<ul>
+<li>
+<p>一个排列对应一个轮换</p>
+<ul>
+<li>排列<span class="arithmatex">\(\pi_1\pi_2...\pi_n\)</span>，表示将<span class="arithmatex">\(i \to \pi_i\)</span>。从任一个元素出发，映射可以构成一个环。<span class="arithmatex">\(m_0 = m, m_k = \pi_{m_{k-1}}\)</span></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>一个轮换也可以构造一个排列，因此
+  $$
+  \sum_k {n \brack k} = n!
+  $$</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>stirling 数与下降幂
+  $$
+  x^n = \sum_k {n \brace k}x^{\underline{k}}, n\ge 0
+  $$</li>
+</ul>
+<ul>
+<li>第二类 stirling 数与上升幂
+  $$
+  x^{\bar{n}} = \sum_k {n \brack k}x^k, n\ge 0
+  $$</li>
+</ul>
+<ul>
+<li>
+<p>对偶性</p>
+<p>将 stirling 数对 n,k 不做任何限制后 (加上条件<span class="arithmatex">\({0 \brace k} = [k=0], {n\brace 0} = [n=0]\)</span>) 可得
+$$
+{n \brack k} = {-k \brace -n}
+$$</p>
+</li>
+</ul>
+<ul>
+<li><img src="images/具体数学/image-20220605185439038.png" alt="image-20220605185439038" style="zoom:67%;" /></li>
+</ul>
+<h3 id="欧拉数">欧拉数<a class="headerlink" href="#欧拉数" title="Permanent link">&para;</a></h3>
+<ul>
+<li><span class="arithmatex">\({n }\)</span></li>
+</ul>
+<h2 id="7-生成函数">7 生成函数<a class="headerlink" href="#7-生成函数" title="Permanent link">&para;</a></h2>
+<p>从之后来看，生成函数就是一个和式，包含关于研究问题的全部信息（贴瓷砖，概率分布。。。）</p>
+<ul>
+<li>多米诺铺设，生成函数设置为所有铺设<ul>
+<li>忽略铺设方式（打散成零件），只考虑使用的行列多米诺数量</li>
+<li>只考虑多米诺骨牌的数量：每一项系数为 3xn(或 2xn) 铺设在指定数量骨牌时的方式总数。</li>
+</ul>
+</li>
+<li>找硬币<ul>
+<li><span class="arithmatex">\([z^n]\frac{1}{1-z}\frac{1}{1-z^5}...\frac{1}{1-z^{50}}\)</span></li>
+<li>书上通过转换成递归式求解</li>
+</ul>
+</li>
+<li>7.2 生成函数变换<ul>
+<li><span class="arithmatex">\(F(z) = \sum_n f_nz^n\)</span>，延拓到<span class="arithmatex">\(n \in Z, n&lt;0 \to f_n=0\)</span></li>
+<li>生成函数变换<ul>
+<li><span class="arithmatex">\(&lt;\alpha f_n+\beta g_n&gt; \to \alpha F(z) + \beta G(z)\)</span></li>
+<li><span class="arithmatex">\(&lt;0, 0,...,0_m, g_0, g_1,..&gt;\)</span>  或<span class="arithmatex">\(&lt;g_{n-m}&gt;\)</span></li>
+<li><span class="arithmatex">\(&lt;g_{n+m}&gt;\)</span></li>
+<li><span class="arithmatex">\(&lt;ng_n&gt;\)</span>，求导，<span class="arithmatex">\(zG'(z)\)</span><ul>
+<li><span class="arithmatex">\(n^2 g_n\)</span>?</li>
+</ul>
+</li>
+<li><span class="arithmatex">\(&lt;\frac{1}{n}g_n&gt;\)</span>，求积分</li>
+<li>卷积：<span class="arithmatex">\(F(z)G(z) = \sum_n(\sum_k g_k f_{n-k})z^n\)</span></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>生成函数求斐波那契数列<ul>
+<li><span class="arithmatex">\(f_0=0,f_1=1, f_n = f_{n-1} +f_{n-2}, n\ge 1\)</span></li>
+<li><span class="arithmatex">\(f_n = f_{n-1} +f_{n-2} + [n=1], n\in Z\)</span></li>
+<li><span class="arithmatex">\(G(z) = \frac{z}{1-z-z^2} = \frac{1}{\sqrt{5}}(\frac{1}{1-\alpha z} - \frac{1}{1-\beta z})\)</span></li>
+<li>涉及到有理函数分解</li>
+</ul>
+</li>
+<li>7.3 解递推式<ul>
+<li>有理函数分解</li>
+<li>相互递推数列 -&gt; 二元一次方程组</li>
+<li><span class="arithmatex">\(g_0 = 1, g_n = ng_{n-1}, n\ge 1\)</span><ul>
+<li><span class="arithmatex">\(G(z) = z^2G'(z) + zG(z) + 1\)</span></li>
+<li>超几何级数，是满足 xxxx，且是唯一满足该方程且常数项为 1 的幂级数。</li>
+</ul>
+</li>
+<li>二重求和<ul>
+<li><span class="arithmatex">\(f_n = f_{n-1} + \sum_{k&lt;n}f_k + 1\)</span></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="有理函数分解">有理函数分解<a class="headerlink" href="#有理函数分解" title="Permanent link">&para;</a></h2>
+<ul>
+<li>
+<p>特殊的生成函数</p>
+<ul>
+<li>aa
+  <img alt="image-20220518165116230" src="../../../../../images/%E5%85%B7%E4%BD%93%E6%95%B0%E5%AD%A6/image-20220518165116230.png" /></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>
+<p>卷积</p>
+<ul>
+<li>bb
+  <img alt="image-20220518165058967" src="../../../../../images/%E5%85%B7%E4%BD%93%E6%95%B0%E5%AD%A6/image-20220518165058967.png" /></li>
+</ul>
+<ul>
+<li>aa
+  <img alt="image-20220518165041696" src="../../../../../images/%E5%85%B7%E4%BD%93%E6%95%B0%E5%AD%A6/image-20220518165041696.png" /></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>生成函数解生成树问题</li>
+<li>卡塔兰数</li>
+</ul>
+<h3 id="卡塔兰数">卡塔兰数<a class="headerlink" href="#卡塔兰数" title="Permanent link">&para;</a></h3>
+<p>证明 1：</p>
+<ul>
+<li>
+<p>ranny 引理</p>
+<p>&lt;<span class="arithmatex">\(x_1, x_2, ..., x_n\)</span>&gt;和为 1 的整数数列，则只有一个循环移位满足所有前部分和为正。</p>
+</li>
+</ul>
+<ul>
+<li>
+<p>问题：从 0 走到 n 的走法</p>
+<p><img alt="image-20220525142636887" src="../../../../../images/%E5%85%B7%E4%BD%93%E6%95%B0%E5%AD%A6/image-20220525142636887.png" /></p>
+</li>
+</ul>
+<ul>
+<li>
+<p>转换为：</p>
+<ul>
+<li>&lt;<span class="arithmatex">\(x_1, x_2, ..., x_{2n}\)</span>&gt;, <span class="arithmatex">\(x_i = \pm 1\)</span></li>
+<li><span class="arithmatex">\(\sum x_i = 0\)</span></li>
+<li>部分和非负</li>
+<li>构造</li>
+<li><img alt="image-20220525143353644" src="../../../../../images/%E5%85%B7%E4%BD%93%E6%95%B0%E5%AD%A6/image-20220525143353644.png" /></li>
+</ul>
+</li>
+</ul>
+<p>证明 2：</p>
+<p>从 0 到 n，需要 n 次右上，n 次右下移动，有<span class="arithmatex">\({2n \choose n}\)</span>种走法，减去其中出现部分和为负的情形</p>
+<p>部分和为负的情形，可以构造一个反射的走法，<span class="arithmatex">\({2n \choose n-1}\)</span></p>
+<p><span class="arithmatex">\(C_n = {2n \choose n} - {2n \choose n-1}\)</span></p>
+<p>证明 3：</p>
+<p>引理：<span class="arithmatex">\(C_k^{(t, 1)} = (\sum_{k_1 + k_2 +...k_t = k-1}C_{k_1}^{(t,1)}...) + [k=0]\)</span></p>
+<p>其中<span class="arithmatex">\(C_k^{(t, r)} = {tk + r \choose k} \frac{r}{tk + r}\)</span></p>
+<p>证明</p>
+<p>考虑由 1 和 (1-m) 构成的部分和为正的，总和为 1 的数列，称为 m-Ranmy 数列</p>
+<p>考虑长度为 mn+1 的 m-Ranny 数列有多少个？</p>
+<p>n 个 1-m, L 个 1，则长度 n+L = nm + 1</p>
+<p>可说明（利用 Ranny 定理）</p>
+<p>个数=<span class="arithmatex">\({nm + 1 \choose n}\frac{1}{nm+1} = C_n^{(m, 1)}\)</span></p>
+<p>由引理，有：</p>
+<p>G(z) 为<span class="arithmatex">\(&lt;C_n^{(m, 1)}&gt;\)</span>的生成函数</p>
+<p><span class="arithmatex">\(G(z) = zG(z)^m  +1\)</span></p>
+<ul>
+<li>
+<p>ranny 引理推广</p>
+<p><span class="arithmatex">\(x_1, x_2, ..., x_m\)</span>序列和为 r，则其 m 个循环移位中有 r 个满足部分和为正。</p>
+</li>
+</ul>
+<h2 id="指数生成函数">指数生成函数<a class="headerlink" href="#指数生成函数" title="Permanent link">&para;</a></h2>
+<ul>
+<li>运算<ul>
+<li>求导：向左移</li>
+<li>积分：向右移</li>
+<li>乘积</li>
+</ul>
+</li>
+</ul>
+<h2 id="8-离散概率">8 离散概率<a class="headerlink" href="#8-离散概率" title="Permanent link">&para;</a></h2>
+<ul>
+<li>概率空间 (probability space)</li>
+<li>基本事件 (elementary event) <span class="arithmatex">\(\omega \in \Omega\)</span></li>
+<li>赋予基本事件一个概率<span class="arithmatex">\(Pr(\omega)\)</span>，满足非负，和为 1</li>
+<li>概率分布 (probability distribution)</li>
+<li>事件 (event)A 是概率空间的一个子集，概率定义为基本事件概率之和</li>
+<li>随机变量（random variable），是定义在概率空间的基本事件<span class="arithmatex">\(\omega\)</span>上的函数。比如骰子点数之和。<ul>
+<li><span class="arithmatex">\(X: \Omega \to set of value\)</span></li>
+<li>随机变量使得我们不用研究整个概率空间，而只用研究我们关心的量。</li>
+</ul>
+</li>
+<li>独立 (independent)<ul>
+<li>事件独立？</li>
+<li>随机变量独立：<span class="arithmatex">\(P(X=x, Y = y) = P(X=x) P(Y= y)\)</span></li>
+</ul>
+</li>
+<li>均值，期望值 (expected value)：<span class="arithmatex">\(EX = \sum_{\omega}X(\omega)Pr(\omega) = \sum_{x \in X(\omega)}xPr(X=x)\)</span></li>
+<li>中位数：<span class="arithmatex">\(P(X\le x)\ge 1/2\)</span>且<span class="arithmatex">\(P(X\ge x) \ge 1/2\)</span></li>
+<li>众数：<span class="arithmatex">\(P(X=x) \ge P(X=x'), \forall x' \in X(\Omega)\)</span></li>
+</ul>
+<ul>
+<li>
+<p>期望</p>
+<ul>
+<li>可加（定义在同一个概率空间上，或独立）:<span class="arithmatex">\(E(X+Y) = \sum_{\omega} (X(\omega) + Y(\omega))P(\omega) = EX + EY\)</span></li>
+</ul>
+<ul>
+<li>乘积（独立）：
+  $$
+  \begin{aligned}
+  &amp;\mathrm{E}(X Y)=\sum_{\omega \in \Omega} X(\omega) Y(\omega) \cdot \operatorname{Pr}(\omega)\
+  &amp;=\sum_{\substack{x \in X(\Omega) \ y \in Y(\Omega)}} x y \cdot \operatorname{Pr}(X=x \text { 且 } Y=y)\
+  &amp;=\sum_{\substack{x \in X(\Omega) \ y \in Y(\Omega)}} x y \cdot \operatorname{Pr}(X=x) \operatorname{Pr}(Y=y)
+  \end{aligned}
+  $$</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>方差：<span class="arithmatex">\(DX = E(X^2) - (EX)^2\)</span></li>
+</ul>
+<ul>
+<li>
+<p>切比雪夫不等式：<span class="arithmatex">\(Pr((X-EX)^2 \ge \alpha)\le \frac{Var(X)}{\alpha}\)</span></p>
+<ul>
+<li><span class="arithmatex">\(\operatorname{Pr}(|X-\mu| \geqslant c \sigma) \leqslant 1 / c^{2}\)</span></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>
+<p>Markov 不等式：<span class="arithmatex">\(X\ge 0, \lambda&gt;0\)</span>，有<span class="arithmatex">\(Pr(X\ge\lambda) \le \frac{EX}{\lambda}\)</span></p>
+<ul>
+<li>直接导出切比雪夫不等式</li>
+</ul>
+<ul>
+<li>还有：<span class="arithmatex">\(Pr(f(X)\ge f(\lambda)) \le \frac{Ef(X)}{f(\lambda)}\)</span>, f(x) &gt; 0，单调增。</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>
+<p>用样本估计期望，方差</p>
+<ul>
+<li><span class="arithmatex">\(\hat{E} = \frac{1}{n}\sum_{k}X_k\)</span></li>
+<li><span class="arithmatex">\(\hat{V} = \frac{1}{n-1}\sum_k (X_k - \hat{E})^2 = \frac{1}{n-1} \sum_k X_k^2 - \frac{1}{n(n-1)}(\sum_k E_k)^2\)</span><ul>
+<li>因为<span class="arithmatex">\(E\hat{V} = DX\)</span></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>考虑第 5 章的“足球胜利问题”，在该问题中有 n 顶帽子被抛向空中，有 k 个人得到自己的帽子。<ul>
+<li>可以在不计算概率分布的情况下，计算均值和方差</li>
+<li><span class="arithmatex">\(F_n = F_{n,1}+F_{n,2}+\dots + F_{n,n}\)</span>，<span class="arithmatex">\(F_{n, k}\)</span>表示第 k 个人是否拿到自己帽子</li>
+<li><span class="arithmatex">\(EF_{n,k} = 1/n\)</span>, <span class="arithmatex">\(EF_n = 1\)</span></li>
+<li>$EF_n^2 = $</li>
+</ul>
+</li>
+</ul>
+<p>概率生成函数</p>
+<ul>
+<li>pgf 乘积对应随机变量和的分布</li>
+</ul>
+<ul>
+<li>
+<p>累积量（cumulant）</p>
+<ul>
+<li>累积量独立可加</li>
+<li><img alt="image-20220607210045721" src="../../../../../images/%E5%85%B7%E4%BD%93%E6%95%B0%E5%AD%A6/image-20220607210045721.png" /></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>
+<p>m 阶矩（m th moment）</p>
+<p><img alt="image-20220607210143382" src="../../../../../images/%E5%85%B7%E4%BD%93%E6%95%B0%E5%AD%A6/image-20220607210143382.png" /></p>
+<p><img alt="image-20220607210154076" src="../../../../../images/%E5%85%B7%E4%BD%93%E6%95%B0%E5%AD%A6/image-20220607210154076.png" /></p>
+</li>
+</ul>
+<ul>
+<li>
+<p>“阶乘矩”，（<span class="arithmatex">\(\alpha_m = G^{(m)}(1)\)</span></p>
+<p><img alt="image-20220607210219673" src="../../../../../images/%E5%85%B7%E4%BD%93%E6%95%B0%E5%AD%A6/image-20220607210219673.png" /></p>
+<p><img alt="image-20220607210233171" src="../../../../../images/%E5%85%B7%E4%BD%93%E6%95%B0%E5%AD%A6/image-20220607210233171.png" /></p>
+</li>
+</ul>
+<p>抛硬币</p>
+<ul>
+<li>二项分布</li>
+</ul>
+<ul>
+<li>
+<p>负二项分布（和帕斯卡分布类似）：抛出 n 次正面时，反面的次数</p>
+<ul>
+<li>倒数生成函数，方便计算方差</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>有限状态机</li>
+</ul>
+<ul>
+<li>
+<p>马尔可夫过程</p>
+<p>状态间转移都引导出一组联立线性方程，它们的解就是在出现 n 次转移之后状态概率的生成函
+数．这种系统称为马尔可夫过程</p>
+</li>
+</ul>
+<ul>
+<li>
+<p>考虑不出现模式的的和式</p>
+<p><span class="arithmatex">\(1 + N(H + T) = N + S\)</span></p>
+<p>其中的 1 考虑了一次不抛的情况。即 N = 1 + H + T + ... 。如果不考虑这种情况，则</p>
+<p><span class="arithmatex">\(H + T + N(H + T) = N + S\)</span></p>
+</li>
+</ul>
+<ul>
+<li>
+<p>公式 (8.73)</p>
+<p><span class="arithmatex">\(NA = S(1 + A^{(1)}[A^{(1)}=A_{(1)}] + A^{(2)}[A^{(2)}=A_{(2)}] + ...)\)</span></p>
+</li>
+</ul>
+<ul>
+<li>公式 (8.74) (8.75) 直接计算期望与方差</li>
+</ul>
+<ul>
+<li>自我不重叠的模式要比自我有重叠的模式出现得更早</li>
+</ul>
+<ul>
+<li>
+<p>Penney 赌注游戏</p>
+<ul>
+<li><img src="images/具体数学/image-20220606123020884.png" alt="image-20220606123020884" style="zoom:67%;" /></li>
+</ul>
+<ul>
+<li>带入 H= T + 1/2，可直接得<span class="arithmatex">\(S_A = 2/3, S_B = 1/3\)</span></li>
+</ul>
+<ul>
+<li>
+<p>漂亮的公式</p>
+<p><img src="images/具体数学/image-20220606123239481.png" alt="image-20220606123239481" style="zoom:67%;" /></p>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>散列（没讲）</li>
+</ul>
+<h2 id="9-渐进式">9 渐进式<a class="headerlink" href="#9-渐进式" title="Permanent link">&para;</a></h2>
+<ul>
+<li>
+<p>渐进</p>
+<p><img alt="image-20220606124543460" src="../../../../../images/%E5%85%B7%E4%BD%93%E6%95%B0%E5%AD%A6/image-20220606124543460.png" /></p>
+</li>
+</ul>
+<ul>
+<li>
+<p>量的等级</p>
+<p><img alt="image-20220606124613002" src="../../../../../images/%E5%85%B7%E4%BD%93%E6%95%B0%E5%AD%A6/image-20220606124613002.png" /></p>
+</li>
+</ul>
+<p>大 O 记号</p>
+<ul>
+<li>
+<p>$f(n) = O(g(n)) <span class="arithmatex">\(，则存在常数\)</span>C$</p>
+<p><span class="arithmatex">\(|f(n)| \le C|g(n)|, n\ge n_0\)</span></p>
+</li>
+</ul>
+<ul>
+<li>单向等号：等于号实际上表示集合包含于</li>
+</ul>
+<p>O 运算规则</p>
+<ul>
+<li><span class="arithmatex">\(O(O(f)) = O(f)\)</span></li>
+</ul>
+<ul>
+<li><span class="arithmatex">\(O(f)O(g) = O(fg) = fO(g)\)</span></li>
+</ul>
+<ul>
+<li>
+<p>幂级数截断原理（只需要 S(z) 对某个非 0 z 绝对收敛）</p>
+<p><img alt="image-20220606130133663" src="../../../../../images/%E5%85%B7%E4%BD%93%E6%95%B0%E5%AD%A6/image-20220606130133663.png" /></p>
+<p>狄利克雷级数截断</p>
+<p><img alt="image-20220606130511922" src="../../../../../images/%E5%85%B7%E4%BD%93%E6%95%B0%E5%AD%A6/image-20220606130511922.png" /></p>
+<p>应用</p>
+<p><img alt="image-20220606130557141" src="../../../../../images/%E5%85%B7%E4%BD%93%E6%95%B0%E5%AD%A6/image-20220606130557141.png" /></p>
+</li>
+</ul>
+<ul>
+<li>截断发散级数所得到的近似公式是有用的</li>
+</ul>
+<ul>
+<li>
+<p>表 9-1</p>
+<p><img alt="image-20220606151038755" src="../../../../../images/%E5%85%B7%E4%BD%93%E6%95%B0%E5%AD%A6/image-20220606151038755.png" /></p>
+<ul>
+<li>
+<p>对于</p>
+<p><span class="arithmatex">\(\sqrt{x+1} = 1 + 1/2x -1/8x^2 + 1/16x^3 + O(x^4)\)</span></p>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>
+<p>绝对误差，相对误差</p>
+<p><span class="arithmatex">\(f + O(g)\)</span>, <span class="arithmatex">\(f(1+O(g))\)</span></p>
+<ul>
+<li>绝对误差与小数点右边正确的十进制数字的个数有关，而相对误差则对应于正确的“有效数字”的个数</li>
+<li>斯特林公式的绝对误差为<span class="arithmatex">\(O(n^{n-3.5}e^n)\)</span></li>
+<li>相对误差形式为<img alt="image-20220606151535263" src="../../../../../images/%E5%85%B7%E4%BD%93%E6%95%B0%E5%AD%A6/image-20220606151535263.png" /></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><img alt="image-20220606135745081" src="../../../../../images/%E5%85%B7%E4%BD%93%E6%95%B0%E5%AD%A6/image-20220606135745081.png" /></li>
+</ul>
+<ul>
+<li><img alt="image-20220606135937030" src="../../../../../images/%E5%85%B7%E4%BD%93%E6%95%B0%E5%AD%A6/image-20220606135937030.png" /></li>
+</ul>
+<ul>
+<li>抽出最大的部分</li>
+</ul>
+<ul>
+<li>
+<p>问题 2：斯特林公式的扰动法</p>
+<p><img alt="image-20220606152639279" src="../../../../../images/%E5%85%B7%E4%BD%93%E6%95%B0%E5%AD%A6/image-20220606152639279.png" /></p>
+<p><img alt="image-20220606152649432" src="../../../../../images/%E5%85%B7%E4%BD%93%E6%95%B0%E5%AD%A6/image-20220606152649432.png" /></p>
+<p><img alt="image-20220606152701106" src="../../../../../images/%E5%85%B7%E4%BD%93%E6%95%B0%E5%AD%A6/image-20220606152701106.png" /></p>
+<p><img alt="image-20220606152723582" src="../../../../../images/%E5%85%B7%E4%BD%93%E6%95%B0%E5%AD%A6/image-20220606152723582.png" /></p>
+<p><img alt="image-20220606152746697" src="../../../../../images/%E5%85%B7%E4%BD%93%E6%95%B0%E5%AD%A6/image-20220606152746697.png" /></p>
+</li>
+</ul>
+<ul>
+<li>
+<p>问题 3：第 n 个素数</p>
+<p><img alt="image-20220606155446120" src="../../../../../images/%E5%85%B7%E4%BD%93%E6%95%B0%E5%AD%A6/image-20220606155446120.png" /></p>
+<p><img alt="image-20220606155642824" src="../../../../../images/%E5%85%B7%E4%BD%93%E6%95%B0%E5%AD%A6/image-20220606155642824.png" /></p>
+<p>（9.44）</p>
+<p><img alt="image-20220606155704356" src="../../../../../images/%E5%85%B7%E4%BD%93%E6%95%B0%E5%AD%A6/image-20220606155704356.png" /></p>
+<p>(9.45)</p>
+<p><img alt="image-20220606160402974" src="../../../../../images/%E5%85%B7%E4%BD%93%E6%95%B0%E5%AD%A6/image-20220606160402974.png" /></p>
+<p>接下来去除 (9.45) 右侧的 p，利用<span class="arithmatex">\(p = O(n^2)\)</span></p>
+<p><img alt="image-20220606160439360" src="../../../../../images/%E5%85%B7%E4%BD%93%E6%95%B0%E5%AD%A6/image-20220606160439360.png" /></p>
+<p>再由 (9.45)</p>
+<p><img alt="image-20220606160459136" src="../../../../../images/%E5%85%B7%E4%BD%93%E6%95%B0%E5%AD%A6/image-20220606160459136.png" /></p>
+<p>带入 (9.44)</p>
+<p><img alt="image-20220606160536214" src="../../../../../images/%E5%85%B7%E4%BD%93%E6%95%B0%E5%AD%A6/image-20220606160536214.png" /></p>
+</li>
+</ul>
+<ul>
+<li>
+<p>问题 4：以前期末考试中的和式</p>
+<p><img alt="image-20220606160948411" src="../../../../../images/%E5%85%B7%E4%BD%93%E6%95%B0%E5%AD%A6/image-20220606160948411.png" /></p>
+<p>方式一：</p>
+<p><img alt="image-20220606161005444" src="../../../../../images/%E5%85%B7%E4%BD%93%E6%95%B0%E5%AD%A6/image-20220606161005444.png" /></p>
+<p>方式二：</p>
+<p><img alt="image-20220606161018586" src="../../../../../images/%E5%85%B7%E4%BD%93%E6%95%B0%E5%AD%A6/image-20220606161018586.png" /></p>
+</li>
+</ul>
+<ul>
+<li>
+<p>问题 5：无限和式</p>
+<p><img alt="image-20220606162329747" src="../../../../../images/%E5%85%B7%E4%BD%93%E6%95%B0%E5%AD%A6/image-20220606162329747.png" /></p>
+<p>精妙的转换</p>
+<p><img alt="image-20220606162405973" src="../../../../../images/%E5%85%B7%E4%BD%93%E6%95%B0%E5%AD%A6/image-20220606162405973.png" /></p>
+<p>分组</p>
+<p><img alt="image-20220606162427153" src="../../../../../images/%E5%85%B7%E4%BD%93%E6%95%B0%E5%AD%A6/image-20220606162427153.png" /></p>
+<p><img alt="image-20220606162445832" src="../../../../../images/%E5%85%B7%E4%BD%93%E6%95%B0%E5%AD%A6/image-20220606162445832.png" /></p>
+<p><img alt="image-20220606162455904" src="../../../../../images/%E5%85%B7%E4%BD%93%E6%95%B0%E5%AD%A6/image-20220606162455904.png" /></p>
+<p><img alt="image-20220606163105343" src="../../../../../images/%E5%85%B7%E4%BD%93%E6%95%B0%E5%AD%A6/image-20220606163105343.png" /></p>
+<p>可以截断</p>
+<p><img alt="image-20220606162514697" src="../../../../../images/%E5%85%B7%E4%BD%93%E6%95%B0%E5%AD%A6/image-20220606162514697.png" /></p>
+</li>
+</ul>
+<ul>
+<li>
+<p>问题 6：大 <span class="arithmatex">\(\Phi\)</span></p>
+<p><img alt="image-20220606165538503" src="../../../../../images/%E5%85%B7%E4%BD%93%E6%95%B0%E5%AD%A6/image-20220606165538503.png" /></p>
+<p><img alt="image-20220606165549707" src="../../../../../images/%E5%85%B7%E4%BD%93%E6%95%B0%E5%AD%A6/image-20220606165549707.png" /></p>
+<p>计算<img alt="image-20220606165637121" src="../../../../../images/%E5%85%B7%E4%BD%93%E6%95%B0%E5%AD%A6/image-20220606165637121.png" />时，</p>
+<p><img alt="image-20220606165851292" src="../../../../../images/%E5%85%B7%E4%BD%93%E6%95%B0%E5%AD%A6/image-20220606165851292.png" /></p>
+<p>新加的项</p>
+<p><img alt="image-20220606165834859" src="../../../../../images/%E5%85%B7%E4%BD%93%E6%95%B0%E5%AD%A6/image-20220606165834859.png" /></p>
+</li>
+</ul>
+<h3 id="两个渐进技巧">两个渐进技巧<a class="headerlink" href="#两个渐进技巧" title="Permanent link">&para;</a></h3>
+<ul>
+<li>
+<p>自助法</p>
+<ul>
+<li>
+<p>生成函数求导，得到递推式</p>
+<p><img alt="image-20220606170036130" src="../../../../../images/%E5%85%B7%E4%BD%93%E6%95%B0%E5%AD%A6/image-20220606170036130.png" /></p>
+<p><img alt="image-20220606170046001" src="../../../../../images/%E5%85%B7%E4%BD%93%E6%95%B0%E5%AD%A6/image-20220606170046001.png" /></p>
+<p><img alt="image-20220606170054352" src="../../../../../images/%E5%85%B7%E4%BD%93%E6%95%B0%E5%AD%A6/image-20220606170054352.png" /></p>
+</li>
+</ul>
+<ul>
+<li>一个不等式</li>
+</ul>
+<p><img alt="image-20220606164919514" src="../../../../../images/%E5%85%B7%E4%BD%93%E6%95%B0%E5%AD%A6/image-20220606164919514.png" /></p>
+</li>
+</ul>
+<h3 id="欧拉求和公式">欧拉求和公式<a class="headerlink" href="#欧拉求和公式" title="Permanent link">&para;</a></h3>
+<ul>
+<li><img alt="image-20220606173729634" src="../../../../../images/%E5%85%B7%E4%BD%93%E6%95%B0%E5%AD%A6/image-20220606173729634.png" /></li>
+</ul>
+<ul>
+<li>
+<p>形式上的证明</p>
+<p><span class="arithmatex">\(\Delta = e^D - 1\)</span></p>
+<p><span class="arithmatex">\(\Sigma = \frac{1}{\Delta} = \frac{1}{e^D - 1} = \frac{1}{D} \hat{B}(D)\)</span></p>
+<p><img alt="image-20220606174010742" src="../../../../../images/%E5%85%B7%E4%BD%93%E6%95%B0%E5%AD%A6/image-20220606174010742.png" /></p>
+</li>
+</ul>
+<ul>
+<li>
+<p>归纳法证明</p>
+<ul>
+<li>
+<p>只需证明 a=0, b= 1 时成立</p>
+<p><img alt="image-20220606174552973" src="../../../../../images/%E5%85%B7%E4%BD%93%E6%95%B0%E5%AD%A6/image-20220606174552973.png" /></p>
+<ul>
+<li>
+<p>则 L 时，有</p>
+<p><img alt="image-20220606174617225" src="../../../../../images/%E5%85%B7%E4%BD%93%E6%95%B0%E5%AD%A6/image-20220606174617225.png" /></p>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>
+<p>伯努利多项式<img alt="image-20220606174509861" src="../../../../../images/%E5%85%B7%E4%BD%93%E6%95%B0%E5%AD%A6/image-20220606174509861.png" /></p>
+<ul>
+<li><img alt="image-20220606174924068" src="../../../../../images/%E5%85%B7%E4%BD%93%E6%95%B0%E5%AD%A6/image-20220606174924068.png" /></li>
+<li><img alt="image-20220606175529261" src="../../../../../images/%E5%85%B7%E4%BD%93%E6%95%B0%E5%AD%A6/image-20220606175529261.png" /></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>
+<p>对 m 进行归纳</p>
+<ul>
+<li>
+<p>m = 0</p>
+<p><img alt="image-20220606174735478" src="../../../../../images/%E5%85%B7%E4%BD%93%E6%95%B0%E5%AD%A6/image-20220606174735478.png" /></p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>
+<p>伯努利多项式总结</p>
+<ul>
+<li>
+<p>可以分析出单调性，正负性以 4 为周期。</p>
+<ul>
+<li>0，1 上积分为 0</li>
+<li><img alt="image-20220607163456244" src="../../../../../images/%E5%85%B7%E4%BD%93%E6%95%B0%E5%AD%A6/image-20220607163456244.png" /></li>
+<li><span class="arithmatex">\(B_{4k+1}\)</span>的积分对应<span class="arithmatex">\(B_{4k+2}/4k+2\)</span>，可以分析出<span class="arithmatex">\(B_{4k+2}\)</span>的单调性</li>
+<li>有<img alt="image-20220607163609704" src="../../../../../images/%E5%85%B7%E4%BD%93%E6%95%B0%E5%AD%A6/image-20220607163609704.png" /></li>
+<li><img alt="image-20220607163624152" src="../../../../../images/%E5%85%B7%E4%BD%93%E6%95%B0%E5%AD%A6/image-20220607163624152.png" /></li>
+<li>从而<span class="arithmatex">\(B_{2m}\)</span>在 0，1 上最大值在 0 或 1/2 处取得</li>
+<li><img alt="image-20220607163650416" src="../../../../../images/%E5%85%B7%E4%BD%93%E6%95%B0%E5%AD%A6/image-20220607163650416.png" /></li>
+</ul>
+<p><img alt="image-20220607163415056" src="../../../../../images/%E5%85%B7%E4%BD%93%E6%95%B0%E5%AD%A6/image-20220607163415056.png" /></p>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>
+<p>欧拉求和公式</p>
+<ul>
+<li>9.78<img alt="image-20220607163821068" src="../../../../../images/%E5%85%B7%E4%BD%93%E6%95%B0%E5%AD%A6/image-20220607163821068.png" /></li>
+</ul>
+<ul>
+<li><img alt="image-20220607163803892" src="../../../../../images/%E5%85%B7%E4%BD%93%E6%95%B0%E5%AD%A6/image-20220607163803892.png" /></li>
+</ul>
+<ul>
+<li>
+<p>再次改进</p>
+<ul>
+<li>余项将位于 0 第一个被抛弃的项之间</li>
+<li>好像有前提条件<ul>
+<li><img alt="image-20220607164420430" src="../../../../../images/%E5%85%B7%E4%BD%93%E6%95%B0%E5%AD%A6/image-20220607164420430.png" /></li>
+<li><img alt="image-20220607164440436" src="../../../../../images/%E5%85%B7%E4%BD%93%E6%95%B0%E5%AD%A6/image-20220607164440436.png" /></li>
+</ul>
+</li>
+</ul>
+<p><img alt="image-20220607164341544" src="../../../../../images/%E5%85%B7%E4%BD%93%E6%95%B0%E5%AD%A6/image-20220607164341544.png" /></p>
+</li>
+</ul>
+<ul>
+<li>
+<p>简单的常数项版欧拉求和公式</p>
+<ul>
+<li><img alt="image-20220607171606520" src="../../../../../images/%E5%85%B7%E4%BD%93%E6%95%B0%E5%AD%A6/image-20220607171606520.png" /></li>
+</ul>
+<p><img alt="image-20220607171500766" src="../../../../../images/%E5%85%B7%E4%BD%93%E6%95%B0%E5%AD%A6/image-20220607171500766.png" /></p>
+</li>
+</ul>
+<ul>
+<li>
+<p>调和级数</p>
+<p><img alt="image-20220607171824185" src="../../../../../images/%E5%85%B7%E4%BD%93%E6%95%B0%E5%AD%A6/image-20220607171824185.png" /></p>
+</li>
+</ul>
+<ul>
+<li>
+<p>斯特林公式</p>
+<ul>
+<li>斯特林常数</li>
+<li><img alt="image-20220607172724218" src="../../../../../images/%E5%85%B7%E4%BD%93%E6%95%B0%E5%AD%A6/image-20220607172724218.png" /></li>
+<li><img alt="image-20220607172420779" src="../../../../../images/%E5%85%B7%E4%BD%93%E6%95%B0%E5%AD%A6/image-20220607172420779.png" /></li>
+<li><img alt="image-20220607172709242" src="../../../../../images/%E5%85%B7%E4%BD%93%E6%95%B0%E5%AD%A6/image-20220607172709242.png" /></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="困难的证明题">困难的证明题<a class="headerlink" href="#困难的证明题" title="Permanent link">&para;</a></h2>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+  
+
+
+
+      
+    </article>
+  </div>
+
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+        
+      
+      <nav class="md-footer__inner md-grid" aria-label="页脚" >
+        
+          
+          <a href="../../../../../%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/2023/04/20/2023-04-20-C%26C%2B%2B/" class="md-footer__link md-footer__link--prev" aria-label="上一页: C&amp;C++">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                上一页
+              </span>
+              <div class="md-ellipsis">
+                C&C++
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../../../../../%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/2023/07/23/2023-07-23-%E6%8D%A1%E5%9E%83%E5%9C%BE-rk3399%20DIY%20KVM/" class="md-footer__link md-footer__link--next" aria-label="下一页: 捡垃圾-rk3399 DIY KVM">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                下一页
+              </span>
+              <div class="md-ellipsis">
+                捡垃圾-rk3399 DIY KVM
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/TheRainstorm" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../../..", "features": ["navigation.instant", "navigation.instant.progress", "navigation.tracking", "navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.footer", "content.code.copy", "toc.follow", "toc.integrate"], "search": "../../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../../../../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

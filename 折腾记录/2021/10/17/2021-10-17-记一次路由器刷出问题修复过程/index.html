@@ -1,0 +1,1703 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="记录一些关于数学、计算机的知识，以及一些日常。">
+      
+      
+      
+        <link rel="canonical" href="https://yfy.cqu.ai/%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/2021/10/17/2021-10-17-%E8%AE%B0%E4%B8%80%E6%AC%A1%E8%B7%AF%E7%94%B1%E5%99%A8%E5%88%B7%E5%87%BA%E9%97%AE%E9%A2%98%E4%BF%AE%E5%A4%8D%E8%BF%87%E7%A8%8B/">
+      
+      
+        <link rel="prev" href="../../../09/17/2021-09-17-Openwrt%E6%8A%98%E8%85%BE/">
+      
+      
+        <link rel="next" href="../../../../../%E5%8D%9A%E5%AE%A2/2022/02/05/2022-02-05-%E4%BD%BF%E7%94%A8%E6%95%B4%E6%95%B0%E4%BD%8D%E8%BF%90%E7%AE%97%E8%AE%A1%E7%AE%97div10/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.3">
+    
+    
+      
+        <title>记一次路由器刷出问题修复过程 - Rain 的随笔</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#前言" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../../../../.." title="Rain 的随笔" class="md-header__button md-logo" aria-label="Rain 的随笔" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Rain 的随笔
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              记一次路由器刷出问题修复过程
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    
+  
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="../../../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  博客
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../about/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  关于
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../tags/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  标签
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../series/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  系列
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../tools/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  工具
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../archive/2026/" class="md-tabs__link">
+          
+  
+  
+  归档
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../category/%E4%B8%AA%E4%BA%BA/" class="md-tabs__link">
+          
+  
+  
+  分类
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" hidden>
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../../.." title="Rain 的随笔" class="md-nav__button md-logo" aria-label="Rain 的随笔" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Rain 的随笔
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+    
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      <a href="../../../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    博客
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    关于
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../tags/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    标签
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../series/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    系列
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../tools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    工具
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    归档
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    归档
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2026/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2026
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2025/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2025
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2024/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2024
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2023/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2023
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2022/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2022
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2021/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2021
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2020/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2020
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2019/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2019
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    分类
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    分类
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E4%B8%AA%E4%BA%BA/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    个人
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E5%8D%9A%E5%AE%A2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    博客
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E5%8D%9A%E5%AE%A2--%E7%BD%91%E7%BB%9C/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    博客 &amp; 网络
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    学习笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    折腾记录
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    课程笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%85%B7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    软件工具
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E9%98%85%E8%AF%BB/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    阅读
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+  <div class="md-content md-content--post" data-md-component="content">
+    <div class="md-sidebar md-sidebar--post" data-md-component="sidebar" data-md-type="navigation">
+      <div class="md-sidebar__scrollwrap">
+        <div class="md-sidebar__inner md-post">
+          <nav class="md-nav md-nav--primary">
+            <div class="md-post__back">
+              <div class="md-nav__title md-nav__container">
+                <a href="../../../../.." class="md-nav__link">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+                  <span class="md-ellipsis">
+                    回到主页
+                  </span>
+                </a>
+              </div>
+            </div>
+            
+            <ul class="md-post__meta md-nav__list">
+              <li class="md-nav__item md-nav__item--section">
+                <div class="md-post__title">
+                  <span class="md-ellipsis">
+                    元数据
+                  </span>
+                </div>
+                <nav class="md-nav">
+                  <ul class="md-nav__list">
+                    <li class="md-nav__item">
+                      <div class="md-nav__link">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 19H5V8h14m-3-7v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1V1m-1 11h-5v5h5z"/></svg>
+                        <time datetime="2021-10-17 01:03:03+00:00" class="md-ellipsis">2021年10月17日</time>
+                      </div>
+                    </li>
+                    
+                    
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 3v15h3V3zm3 2 4 13 3-1-4-13zM5 5v13h3V5zM3 19v2h18v-2z"/></svg>
+                          <span class="md-ellipsis">
+                            分类于
+                            
+                              <a href="../../../../../category/%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/">折腾记录</a></span>
+                        </div>
+                      </li>
+                    
+                    
+                      
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20a8 8 0 0 0 8-8 8 8 0 0 0-8-8 8 8 0 0 0-8 8 8 8 0 0 0 8 8m0-18a10 10 0 0 1 10 10 10 10 0 0 1-10 10C6.47 22 2 17.5 2 12A10 10 0 0 1 12 2m.5 5v5.25l4.5 2.67-.75 1.23L11 13V7z"/></svg>
+                          <span class="md-ellipsis">
+                            
+                              需要 8 分钟阅读时间
+                            
+                          </span>
+                        </div>
+                      </li>
+                    
+                  </ul>
+                </nav>
+              </li>
+            </ul>
+            
+          </nav>
+          
+            
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#前言" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        前言
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#说明" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        说明
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#过程" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        过程
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="过程">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#第一次尝试" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        第一次尝试
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#第二次尝试" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        第二次尝试
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="第二次尝试">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#理论" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        理论
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#explanations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Explanations
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Explanations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mount-points" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mount Points
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Mount Points">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#实践" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        实践
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#后记" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        后记
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#后记-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        后记 2
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+          
+        </div>
+      </div>
+    </div>
+    <article class="md-content__inner md-typeset">
+      
+        
+  
+
+
+  <nav class="md-tags" >
+    
+      
+      
+      
+      
+        <a href="../../../../../tags/#tag:eeprom" class="md-tag">EEPROM</a>
+      
+    
+      
+      
+      
+      
+        <a href="../../../../../tags/#tag:breed" class="md-tag">breed</a>
+      
+    
+      
+      
+      
+      
+        <a href="../../../../../tags/#tag:flash-分区" class="md-tag">flash 分区</a>
+      
+    
+      
+      
+      
+      
+        <a href="../../../../../tags/#tag:openwrt" class="md-tag">openwrt</a>
+      
+    
+  </nav>
+
+
+
+  <h1>记一次路由器刷出问题修复过程</h1>
+
+<h3 id="前言">前言<a class="headerlink" href="#前言" title="Permanent link">&para;</a></h3>
+<p>起因是想在 openwrt 上装上<strong>openclash</strong>插件，但路由器空间不够了（路由器为 mi4a 千兆版，有一个 16M 的 NOR flash。通过在编译时设置块大小为 512KB，成功安装了<code>zerotier</code>,<code>wireguard</code>,<code>python</code>等软件，编译的镜像大小为 13,894,754 B），因此参考官方教程：[<a href="https://openwrt.org/docs/guide-user/additional-software/saving_space">OpenWrt Wiki] Saving firmware space and RAM</a>，在编译时关闭了一些内核相关的选项，并将块大小设置为了 1MB。最后成功生成镜像，大小为 14,943,330 B。</p>
+<p>可没想到在更新系统后路由器无法正确启动，于是需要先使用小米官方工具恢复，然后再重刷 openwrt 系统。但考虑到之后如果要多次尝试的话，每次失败都需要先恢复官方系统然后重新刷比较麻烦。于是这一次重装，我选择了刷<strong>breed</strong>引导程序。这样，下次刷失败后便可以通过 breed 直接重刷固件。</p>
+<p>然而，不知是否是因为操作过程中的一个失误，我使用 breed 刷 openwrt 会失败，路由器会无限重启。并且在刷回官方固件后，甚至无法上网。最后，我从原厂固件直接刷回了 openwrt，但是却发现 openwrt 中的<strong>5GHz 的无线最大发射功率 (Maximum transmit power) 居然变为了 1mW(3dBm)</strong>，这导致路由器的 5G 信号非常弱，即使是 1m 的距离，信号也很弱。于是我各种尝试去修复这个问题，以下是记录的过程。</p>
+<!-- more -->
+
+<h3 id="说明">说明<a class="headerlink" href="#说明" title="Permanent link">&para;</a></h3>
+<p>可能需要了解 mi4a 的刷机过程，官方救砖工具</p>
+<h3 id="过程">过程<a class="headerlink" href="#过程" title="Permanent link">&para;</a></h3>
+<h4 id="第一次尝试">第一次尝试<a class="headerlink" href="#第一次尝试" title="Permanent link">&para;</a></h4>
+<p>在某次运行<code>OpenWRTInvasion</code>脚本时，切换了下网络，导致该次运行失败，可能导致从本地下载 busybox-mipsel 出错，从而导致了后来的错误。在后面的每一次通过官方工具重刷后，初始设置时的自动检测上网环境无法检测成功。并且，路由器网络出现问题，测速结果也很不正常。如图所示。</p>
+<p><img alt="image-20211016225643521" src="../../../../../images/2021-10-17-%E8%AE%B0%E4%B8%80%E6%AC%A1%E8%B7%AF%E7%94%B1%E5%99%A8%E5%88%B7%E5%87%BA%E9%97%AE%E9%A2%98%E4%BF%AE%E5%A4%8D%E8%BF%87%E7%A8%8B/image-20211016225643521.png" /></p>
+<p><img alt="image-20211016225745960" src="../../../../../images/2021-10-17-%E8%AE%B0%E4%B8%80%E6%AC%A1%E8%B7%AF%E7%94%B1%E5%99%A8%E5%88%B7%E5%87%BA%E9%97%AE%E9%A2%98%E4%BF%AE%E5%A4%8D%E8%BF%87%E7%A8%8B/image-20211016225745960.png" /></p>
+<p>此时我在网上也搜索到 EEPROM 错误可能导致无线网络的问题。</p>
+<blockquote>
+<p>注意：点击 EEPROM 后，浏览器会自动下载 eeprom 备份，默认文件名 eeprom.bin，文件大小一般 64K，这个文件中一般包含路由器 MAC 地址、无线校准参数等。丢失该文件，无线路由器可能 WAN 因为没有 MAC 无法从上级路由器获取 IP；无线路由器没有无线信号或信号极弱。编程器固件就是闪存全部备份，相当于电脑硬盘的全盘镜像。<a href="https://www.sohu.com/a/304140654_120096961">无线路由器刷机中，Breed 详细使用教程，一些注意事项_备份 (sohu.com)</a></p>
+</blockquote>
+<p>幸好我第一次刷 breed 时，在 breed 中选择保存了 EEPROM 以及编程器固件。于是我进行了以下操作：</p>
+<ol>
+<li>使用 breed 恢复 EEPROM 后，同时刷入 openwrt 官方 21.02 版本 initramfs-kernel.bin，结果没有无线网络。</li>
+<li>在 openwrt 中更新为官方 21.02 版本 sysupgrade.bin 后，变砖</li>
+<li>使用 breed 恢复官方 bootloader，恢复官方固件，仍然有上面问题</li>
+<li>再次刷 breed，恢复编程器固件 full.bin</li>
+<li>刷 openwrt sysupgrade.bin，反复重启（黄灯不亮）</li>
+<li>刷自己编译的 squashfs-sysupgrade.bin，反复重启</li>
+<li>发现 MAC 地址发生了改变，恢复 full.bin</li>
+<li>再次刷自己编译的 squashfs-sysupgrade.bin，同时勾选 EEPROM，反复重启</li>
+<li>
+<p>刷了网上教程提供的标明为 mir3g 的固件（<strong>这里可能导致后面的 factory 分区前移的问题</strong>），可以启动，但是貌似没有网速。分区如下：（记住这里的 factory offset 为 0x40000）
+   <img alt="image-20211014150520013" src="../../../../../images/2021-10-17-%E8%AE%B0%E4%B8%80%E6%AC%A1%E8%B7%AF%E7%94%B1%E5%99%A8%E5%88%B7%E5%87%BA%E9%97%AE%E9%A2%98%E4%BF%AE%E5%A4%8D%E8%BF%87%E7%A8%8B/image-20211014150520013.png" /></p>
+</li>
+<li>
+<p>最后还是不通过 breed 刷回了我的系统。需要注意的是：官方固件 OS1 分区为 13M（但加上官方固件里多出的 disk 分区，大小为 14.5M），而我自己编译的镜像超过了 13M，因此直接刷会报错。于是我先刷官方镜像，再升级为我的镜像，成功。然而还是没有解决问题。</p>
+</li>
+</ol>
+<h4 id="第二次尝试">第二次尝试<a class="headerlink" href="#第二次尝试" title="Permanent link">&para;</a></h4>
+<p>我还是认为是 EEPROM 丢失导致的问题，想到我之前保存了完整的 flash 内容，因此我考虑直接在 openwrt 中将 flash 内容 dump 下来，和之前保存的进行对比。</p>
+<h5 id="理论">理论<a class="headerlink" href="#理论" title="Permanent link">&para;</a></h5>
+<p>这次我仔细阅读了 openwrt 官方关于 Flash Layout 的文档（[<a href="https://openwrt.org/docs/techref/flash.layout">OpenWrt Wiki] The OpenWrt Flash Layout</a>），其中的内容非常丰富，介绍了：</p>
+<ul>
+<li>flash 可能会因为<a href="https://en.wikipedia.org/wiki/electromigration">electromigration</a>,  <a href="https://en.wikipedia.org/wiki/Whisker (metallurgy)">whisker growth</a>而"磨损"。</li>
+<li>raw flash 和 FTL (Flash Translation Layer) flash 的区别<ul>
+<li>一个直接接入 SoC（spi 控制器也算？），需要通过软件来处理坏块和磨损均衡</li>
+<li>而另一个则在 flash 上包含一个硬件模块，来处理坏块和磨损均衡</li>
+<li>嵌入式中基本都是 raw flash</li>
+</ul>
+</li>
+<li>NOR 和 NAND 的区别<ul>
+<li>NOR flash 一般比较小（如 4MB-16MB），可以保证是<em>error-free</em>的</li>
+<li>NAND flash 通常更大些（32MB-256MB），不是<em>error-free</em>的，需要处理坏块<blockquote>
+<ol>
+<li>the manufacturer of the “raw NAND flash” has to guarantee that certain erase blocks are error-free:<ul>
+<li>namely the one(s) which the bootloader is to be written to</li>
+<li>but also the ones which the Linux kernel and the SquashFS are to be written to, because the firmware image file is generated on some desktop computer, that cannot know which erase blocks of the “raw NAND flash” of the device are bad.</li>
+</ul>
+</li>
+<li>the <a href="https://openwrt.org/docs/guide-user/additional-software/imagebuilder">Image Generator</a> has be constrained to build only file sizes that are equal or smaller than the size of the area of the “raw NAND flash”, that consists of guaranteed error-free erase blocks.</li>
+<li>OpenWrt would replace JFFS2 with <a href="https://openwrt.org/docs/techref/filesystems#ubifs">UBIFS</a>, and the entire area of the “raw NAND flash”, that consists of potentially bad erase blocks, would be written to exclusively from an installed OpenWrt system through UBIFS.</li>
+</ol>
+</blockquote>
+</li>
+</ul>
+</li>
+<li>flash 的分区<blockquote>
+<p>The available storage is not partitioned in the traditional way, where you store the data about the partitions in the <a href="&lt;https://en.wikipedia.org/wiki/Master&gt; boot record">MBR</a> and <a href="&lt;https://en.wikipedia.org/wiki/Volume&gt; boot record">PBR</a>s, but it is done in the Linux Kernel (and sometimes independently in the <a href="https://openwrt.org/docs/techref/bootloader">bootloader</a> as well!). It's simply defined, that “<em>partition </em><em><code>kernel</code></em><em> starts at offset <code>x</code> and ends at offset <code>y</code></em>”. Using names allows convenient addressing of partitions by name instead of giving the start offset over and over again.</p>
+</blockquote>
+</li>
+<li>什么是 MTD：<a href="https://en.wikipedia.org/wiki/Memory_Technology_Device">Memory Technology Device - Wikipedia</a></li>
+<li>
+<p>openwrt 文件系统例子
+  <img alt="image-20211016233520062" src="../../../../../images/2021-10-17-%E8%AE%B0%E4%B8%80%E6%AC%A1%E8%B7%AF%E7%94%B1%E5%99%A8%E5%88%B7%E5%87%BA%E9%97%AE%E9%A2%98%E4%BF%AE%E5%A4%8D%E8%BF%87%E7%A8%8B/image-20211016233520062.png" /></p>
+<blockquote>
+<h3 id="explanations">Explanations<a class="headerlink" href="#explanations" title="Permanent link">&para;</a></h3>
+<p>The Linux kernel treats “raw flash memory” (no matter whether NOR or NAND) chips as an <a href="https://openwrt.org/docs/techref/mtd">MTD (Memory Technology Device)</a> and employs <a href="https://openwrt.org/docs/techref/filesystems">filesystems</a> developed for this purpose on top of the MTD layer.</p>
+<p>Since the partitions are nested we look at this whole thing in layers:</p>
+<ol>
+<li>Layer0: So we have the Flashchip, 8 MiB in size, which is soldered to the PCB and connected to the <a href="https://openwrt.org/docs/techref/hardware/soc">soc</a> over <a href="&lt;https://en.wikipedia.org/wiki/Serial&gt; Peripheral Interface Bus">SPI (Serial Peripheral Interface Bus)</a>.</li>
+<li>Layer1: We “partition” the space into mtd0 for the bootloader, mtd5 for OpenWrt and, in this case, mtd4 for the ART (Atheros Radio Test) - it contains calibration data for the wifi (EEPROM). If it is missing or corrupt, <code>ath9k</code> (wireless driver) won't come up anymore. The bootloader (128 KiB) contains of the u-boot 64KiB block AND a data section which contains the MAC, WPS-PIN and type description. If no MAC is configured ath9k will not work correctly due to a faulty MAC.</li>
+<li>Layer2: we subdivide mtd5 (firmware) into mtd1 (kernel) and mtd2 (rootfs); In the generation process of the firmware (see <a href="https://openwrt.org/docs/guide-user/additional-software/imagebuilder">imagebuilder</a>) the Kernel binary file is first packed with <a href="&lt;https://en.wikipedia.org/wiki/Lempel–Ziv–Markov&gt; chain algorithm">LZMA</a>, then the obtained file is packed with <a href="https://en.wikipedia.org/wiki/gzip">gzip</a> and then this file will be written onto the raw flash (mtd1) without being part of any filesystem! During boot, u-boot copies this entire section into RAM and executes it. From there on, the Linux kernel bootstraps itself…</li>
+<li>Layer3: we subdivide rootfs even further into mtd3 for rootfs_data and the rest for an unnamed partition which will accommodate the SquashFS-partition.</li>
+</ol>
+<h4 id="mount-points">Mount Points<a class="headerlink" href="#mount-points" title="Permanent link">&para;</a></h4>
+<ul>
+<li><code>/</code> this is your entire root filesystem, it comprises <code>/rom</code> and <code>/overlay</code>. Please ignore <code>/rom</code> and <code>/overlay</code> and use exclusively <code>/</code> for your daily routines!</li>
+<li><code>/rom</code> contains all the basic files, like <code>busybox</code>, <code>dropbear</code> or <code>iptables</code>. It also includes default configuration files used when booting into <a href="https://openwrt.org/docs/guide-user/troubleshooting/failsafe_and_factory_reset">OpenWrt Failsafe mode</a>. It does not contain the Linux kernel. All files in this directory are located on the SqashFS partition, and thus cannot be altered or deleted. But, because we use overlay_fs filesystem, <em>overlay-whiteout</em>-symlinks can be created on the JFFS2 partition.</li>
+<li><code>/overlay</code> is the writable part of the file system that gets merged with <code>/rom</code> to create a uniform <code>/</code>-tree. It contains anything that was written to the router after <a href="https://openwrt.org/docs/guide-user/installation/generic.flashing">installation</a>, e.g. changed configuration files, additional packages installed with <code>opkg</code>, etc. It is formated with JFFS2.</li>
+</ul>
+<p>Whenever the system is asked to look for an existing file in <code>/</code>, it first looks in <code>/overlay</code>, and if not there, then in <code>/rom</code>. In this way <code>/overlay</code> overrides <code>/rom</code> and creates the effect of a writable <code>/</code> while much of the content is safely and efficiently stored in the read-only <code>/rom</code>.</p>
+</blockquote>
+</li>
+</ul>
+<h5 id="实践">实践<a class="headerlink" href="#实践" title="Permanent link">&para;</a></h5>
+<p>Windows 下我使用了<a href="https://www.hhdsoftware.com/free-hex-editor">Free Hex Editor: Fastest Binary File Editing Software. Freeware. Windows (hhdsoftware.com)</a>来查看二进制文件信息</p>
+<ol>
+<li>
+<p>首先查看 flash 分区信息
+   可以通过<code>cat /proc/mtd</code>来查看 mtd 分区，不过其中有些分区是重叠的。因此可以通过<code>dmsg</code>来查看系统的启动信息，找到其中的 mtd 信息，如下：</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="o">[</span><span class="w">    </span><span class="m">0</span>.615097<span class="o">]</span><span class="w"> </span>Creating<span class="w"> </span><span class="m">8</span><span class="w"> </span>MTD<span class="w"> </span>partitions<span class="w"> </span>on<span class="w"> </span><span class="s2">&quot;spi0.0&quot;</span>:
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="o">[</span><span class="w">    </span><span class="m">0</span>.619893<span class="o">]</span><span class="w"> </span>0x000000000000-0x000000030000<span class="w"> </span>:<span class="w"> </span><span class="s2">&quot;u-boot&quot;</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="o">[</span><span class="w">    </span><span class="m">0</span>.626143<span class="o">]</span><span class="w"> </span>0x000000030000-0x000000040000<span class="w"> </span>:<span class="w"> </span><span class="s2">&quot;u-boot-env&quot;</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="o">[</span><span class="w">    </span><span class="m">0</span>.632722<span class="o">]</span><span class="w"> </span>0x000000040000-0x000000050000<span class="w"> </span>:<span class="w"> </span><span class="s2">&quot;Bdata&quot;</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="o">[</span><span class="w">    </span><span class="m">0</span>.638791<span class="o">]</span><span class="w"> </span>0x000000050000-0x000000060000<span class="w"> </span>:<span class="w"> </span><span class="s2">&quot;factory&quot;</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="o">[</span><span class="w">    </span><span class="m">0</span>.645206<span class="o">]</span><span class="w"> </span>0x000000060000-0x000000070000<span class="w"> </span>:<span class="w"> </span><span class="s2">&quot;crash&quot;</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="o">[</span><span class="w">    </span><span class="m">0</span>.651386<span class="o">]</span><span class="w"> </span>0x000000070000-0x000000080000<span class="w"> </span>:<span class="w"> </span><span class="s2">&quot;cfg_bak&quot;</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="o">[</span><span class="w">    </span><span class="m">0</span>.657804<span class="o">]</span><span class="w"> </span>0x000000080000-0x000000180000<span class="w"> </span>:<span class="w"> </span><span class="s2">&quot;overlay&quot;</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="o">[</span><span class="w">    </span><span class="m">0</span>.664113<span class="o">]</span><span class="w"> </span>0x000000180000-0x000001000000<span class="w"> </span>:<span class="w"> </span><span class="s2">&quot;firmware&quot;</span>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="o">[</span><span class="w">    </span><span class="m">0</span>.670710<span class="o">]</span><span class="w"> </span><span class="m">2</span><span class="w"> </span>uimage-fw<span class="w"> </span>partitions<span class="w"> </span>found<span class="w"> </span>on<span class="w"> </span>MTD<span class="w"> </span>device<span class="w"> </span>firmware
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="o">[</span><span class="w">    </span><span class="m">0</span>.676656<span class="o">]</span><span class="w"> </span>Creating<span class="w"> </span><span class="m">2</span><span class="w"> </span>MTD<span class="w"> </span>partitions<span class="w"> </span>on<span class="w"> </span><span class="s2">&quot;firmware&quot;</span>:
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="o">[</span><span class="w">    </span><span class="m">0</span>.681625<span class="o">]</span><span class="w"> </span>0x000000000000-0x00000024d580<span class="w"> </span>:<span class="w"> </span><span class="s2">&quot;kernel&quot;</span>
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="o">[</span><span class="w">    </span><span class="m">0</span>.687745<span class="o">]</span><span class="w"> </span>0x00000024d580-0x000000e80000<span class="w"> </span>:<span class="w"> </span><span class="s2">&quot;rootfs&quot;</span>
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="o">[</span><span class="w">    </span><span class="m">0</span>.693746<span class="o">]</span><span class="w"> </span>mtd:<span class="w"> </span>device<span class="w"> </span><span class="m">9</span><span class="w"> </span><span class="o">(</span>rootfs<span class="o">)</span><span class="w"> </span><span class="nb">set</span><span class="w"> </span>to<span class="w"> </span>be<span class="w"> </span>root<span class="w"> </span>filesystem
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="o">[</span><span class="w">    </span><span class="m">0</span>.699502<span class="o">]</span><span class="w"> </span><span class="m">1</span><span class="w"> </span>squashfs-split<span class="w"> </span>partitions<span class="w"> </span>found<span class="w"> </span>on<span class="w"> </span>MTD<span class="w"> </span>device<span class="w"> </span>rootfs
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="o">[</span><span class="w">    </span><span class="m">0</span>.705684<span class="o">]</span><span class="w"> </span>0x000000d30000-0x000000e80000<span class="w"> </span>:<span class="w"> </span><span class="s2">&quot;rootfs_data&quot;</span>
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="o">[</span><span class="w">    </span><span class="m">0</span>.713298<span class="o">]</span><span class="w"> </span>libphy:<span class="w"> </span>Fixed<span class="w"> </span>MDIO<span class="w"> </span>Bus:<span class="w"> </span>probed
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="o">[</span><span class="w">    </span><span class="m">0</span>.743012<span class="o">]</span><span class="w"> </span>libphy:<span class="w"> </span>mdio:<span class="w"> </span>probed
+</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="o">[</span><span class="w">    </span><span class="m">0</span>.746455<span class="o">]</span><span class="w"> </span>mt7530<span class="w"> </span>mdio-bus:1f:<span class="w"> </span>MT7530<span class="w"> </span>adapts<span class="w"> </span>as<span class="w"> </span>multi-chip<span class="w"> </span>module
+</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="o">[</span><span class="w">    </span><span class="m">0</span>.755279<span class="o">]</span><span class="w"> </span>mtk_soc_eth<span class="w"> </span>1e100000.ethernet:<span class="w"> </span>generated<span class="w"> </span>random<span class="w"> </span>MAC<span class="w"> </span>address<span class="w"> </span>aa:f9:37:65:6e:50
+</span><span id="__span-0-21"><a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a><span class="o">[</span><span class="w">    </span><span class="m">0</span>.764330<span class="o">]</span><span class="w"> </span>mtk_soc_eth<span class="w"> </span>1e100000.ethernet<span class="w"> </span>eth0:<span class="w"> </span>mediatek<span class="w"> </span>frame<span class="w"> </span>engine<span class="w"> </span>at<span class="w"> </span>0xbe100000,<span class="w"> </span>irq<span class="w"> </span><span class="m">21</span>
+</span><span id="__span-0-22"><a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a><span class="o">[</span><span class="w">    </span><span class="m">0</span>.774735<span class="o">]</span><span class="w"> </span>mt7621-pci<span class="w"> </span>1e140000.pcie:<span class="w"> </span>Parsing<span class="w"> </span>DT<span class="w"> </span>failed
+</span></code></pre></div>
+<p>可和官方固件作对比（启动信息从 openwrt 对应设备页面获得）：</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="o">[</span><span class="w">    </span><span class="m">2</span>.280000<span class="o">]</span><span class="w"> </span>flash<span class="w"> </span>manufacture<span class="w"> </span>id:<span class="w"> </span>c8,<span class="w"> </span>device<span class="w"> </span>id<span class="w"> </span><span class="m">40</span><span class="w"> </span><span class="m">18</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="o">[</span><span class="w">    </span><span class="m">2</span>.280000<span class="o">]</span><span class="w"> </span>GD25Q128C<span class="o">(</span>c8<span class="w"> </span><span class="m">40180000</span><span class="o">)</span><span class="w"> </span><span class="o">(</span><span class="m">16384</span><span class="w"> </span>Kbytes<span class="o">)</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="o">[</span><span class="w">    </span><span class="m">2</span>.280000<span class="o">]</span><span class="w"> </span>mtd<span class="w"> </span>.name<span class="w"> </span><span class="o">=</span><span class="w"> </span>raspi,<span class="w"> </span>.size<span class="w"> </span><span class="o">=</span><span class="w"> </span>0x01000000<span class="w"> </span><span class="o">(</span>16M<span class="o">)</span><span class="w"> </span>.erasesize<span class="w"> </span><span class="o">=</span><span class="w"> </span>0x00010000<span class="w"> </span><span class="o">(</span>64K<span class="o">)</span><span class="w"> </span>.numeraseregions<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="o">[</span><span class="w">    </span><span class="m">2</span>.280000<span class="o">]</span><span class="w"> </span>Creating<span class="w"> </span><span class="m">10</span><span class="w"> </span>MTD<span class="w"> </span>partitions<span class="w"> </span>on<span class="w"> </span><span class="s2">&quot;raspi&quot;</span>:
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="o">[</span><span class="w">    </span><span class="m">2</span>.280000<span class="o">]</span><span class="w"> </span>0x000000000000-0x000001000000<span class="w"> </span>:<span class="w"> </span><span class="s2">&quot;ALL&quot;</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="o">[</span><span class="w">    </span><span class="m">2</span>.280000<span class="o">]</span><span class="w"> </span>0x000000000000-0x000000030000<span class="w"> </span>:<span class="w"> </span><span class="s2">&quot;Bootloader&quot;</span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="o">[</span><span class="w">    </span><span class="m">2</span>.280000<span class="o">]</span><span class="w"> </span>0x000000030000-0x000000040000<span class="w"> </span>:<span class="w"> </span><span class="s2">&quot;Config&quot;</span>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="o">[</span><span class="w">    </span><span class="m">2</span>.280000<span class="o">]</span><span class="w"> </span>0x000000040000-0x000000050000<span class="w"> </span>:<span class="w"> </span><span class="s2">&quot;Bdata&quot;</span>
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="o">[</span><span class="w">    </span><span class="m">2</span>.280000<span class="o">]</span><span class="w"> </span>0x000000050000-0x000000060000<span class="w"> </span>:<span class="w"> </span><span class="s2">&quot;Factory&quot;</span>
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="o">[</span><span class="w">    </span><span class="m">2</span>.290000<span class="o">]</span><span class="w"> </span>0x000000060000-0x000000070000<span class="w"> </span>:<span class="w"> </span><span class="s2">&quot;crash&quot;</span>
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="o">[</span><span class="w">    </span><span class="m">2</span>.290000<span class="o">]</span><span class="w"> </span>0x000000070000-0x000000080000<span class="w"> </span>:<span class="w"> </span><span class="s2">&quot;cfg_bak&quot;</span>
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="o">[</span><span class="w">    </span><span class="m">2</span>.290000<span class="o">]</span><span class="w"> </span>0x000000080000-0x000000180000<span class="w"> </span>:<span class="w"> </span><span class="s2">&quot;overlay&quot;</span>
+</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="o">[</span><span class="w">    </span><span class="m">2</span>.290000<span class="o">]</span><span class="w"> </span>0x000000180000-0x000000e80000<span class="w"> </span>:<span class="w"> </span><span class="s2">&quot;OS1&quot;</span>
+</span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="o">[</span><span class="w">    </span><span class="m">2</span>.290000<span class="o">]</span><span class="w"> </span>mtd:<span class="w"> </span>try<span class="w"> </span>split<span class="w"> </span>OS1<span class="w"> </span>partition
+</span><span id="__span-1-15"><a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a><span class="o">[</span><span class="w">    </span><span class="m">2</span>.290000<span class="o">]</span><span class="w"> </span>mtd:<span class="w"> </span>split_firmware
+</span><span id="__span-1-16"><a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a><span class="o">[</span><span class="w">    </span><span class="m">2</span>.290000<span class="o">]</span><span class="w"> </span>mtd:<span class="w"> </span>firmware_partition-&gt;size<span class="w">   </span>0xd00000
+</span><span id="__span-1-17"><a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a><span class="o">[</span><span class="w">    </span><span class="m">2</span>.290000<span class="o">]</span><span class="w"> </span>mtd:<span class="w"> </span>firmware_partition-&gt;offset<span class="w"> </span>0x180000
+</span><span id="__span-1-18"><a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a><span class="o">[</span><span class="w">    </span><span class="m">2</span>.290000<span class="o">]</span><span class="w"> </span>mtd:<span class="w"> </span>uimage_len<span class="w"> </span><span class="m">1855601</span>
+</span><span id="__span-1-19"><a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a><span class="o">[</span><span class="w">    </span><span class="m">2</span>.290000<span class="o">]</span><span class="w"> </span>mtd:<span class="w"> </span>uimage_len<span class="w"> </span><span class="m">1900544</span>
+</span><span id="__span-1-20"><a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a><span class="o">[</span><span class="w">    </span><span class="m">2</span>.290000<span class="o">]</span><span class="w"> </span>mtd:<span class="w"> </span>rootfs_partition-&gt;size<span class="w">   </span>0xb30000
+</span><span id="__span-1-21"><a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a><span class="o">[</span><span class="w">    </span><span class="m">2</span>.290000<span class="o">]</span><span class="w"> </span>mtd:<span class="w"> </span>rootfs_partition-&gt;offset<span class="w"> </span>0x350000
+</span><span id="__span-1-22"><a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a><span class="o">[</span><span class="w">    </span><span class="m">2</span>.290000<span class="o">]</span><span class="w"> </span>mtd:<span class="w"> </span>partition<span class="w"> </span><span class="s2">&quot;rootfs&quot;</span><span class="w"> </span>created<span class="w"> </span>automatically,<span class="w"> </span><span class="nv">ofs</span><span class="o">=</span><span class="m">350000</span>,<span class="w"> </span><span class="nv">len</span><span class="o">=</span>B30000
+</span><span id="__span-1-23"><a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a><span class="o">[</span><span class="w">    </span><span class="m">2</span>.290000<span class="o">]</span><span class="w"> </span>0x000000350000-0x000000e80000<span class="w"> </span>:<span class="w"> </span><span class="s2">&quot;rootfs&quot;</span>
+</span><span id="__span-1-24"><a id="__codelineno-1-24" name="__codelineno-1-24" href="#__codelineno-1-24"></a><span class="o">[</span><span class="w">    </span><span class="m">2</span>.290000<span class="o">]</span><span class="w"> </span>0x000000e80000-0x000001000000<span class="w"> </span>:<span class="w"> </span><span class="s2">&quot;disk&quot;</span>
+</span></code></pre></div>
+</li>
+<li>
+<p>然后 dump 完整的 flash（之前通过 breed 保存的 EEPROM 为 eeprom.bin，完整 flash 为 full.bin）</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>cat /dev/mtd0 &gt; dump.bin
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>cat /dev/mtd1 &gt;&gt; dump.bin
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>cat /dev/mtd2 &gt;&gt; dump.bin
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>cat /dev/mtd3 &gt;&gt; dump.bin
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>cat /dev/mtd4 &gt;&gt; dump.bin
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>cat /dev/mtd5 &gt;&gt; dump.bin
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>cat /dev/mtd6 &gt;&gt; dump.bin
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>cat /dev/mtd7 &gt;&gt; dump.bin
+</span></code></pre></div>
+</li>
+<li>
+<p>发现 eeprom.bin 的大小为 64KB，刚好对应 0x10000 的大小。通过在 full.bin 中查找 eeprom.bin 内容，容易定位到 Factory(0x50000) 这个分区。发现 Factory 分区中即存储了 EEPROM 内容。
+   <img alt="image-20211016194415806" src="../../../../../images/2021-10-17-%E8%AE%B0%E4%B8%80%E6%AC%A1%E8%B7%AF%E7%94%B1%E5%99%A8%E5%88%B7%E5%87%BA%E9%97%AE%E9%A2%98%E4%BF%AE%E5%A4%8D%E8%BF%87%E7%A8%8B/image-20211016194415806.png" /></p>
+</li>
+<li>
+<p>然而 openwrt 直接 dump 下来的文件中，相同的内容，位置却定位到了 Bdata(0x40000) 这个分区
+   <img alt="image-20211016235247436" src="../../../../../images/2021-10-17-%E8%AE%B0%E4%B8%80%E6%AC%A1%E8%B7%AF%E7%94%B1%E5%99%A8%E5%88%B7%E5%87%BA%E9%97%AE%E9%A2%98%E4%BF%AE%E5%A4%8D%E8%BF%87%E7%A8%8B/image-20211016235247436.png" /></p>
+</li>
+<li>对比其他分区，可以发现：<ul>
+<li>(0x00000-0x30000)Bootloader 对应 u-boot
+   <img alt="image-20211016235954775" src="../../../../../images/2021-10-17-%E8%AE%B0%E4%B8%80%E6%AC%A1%E8%B7%AF%E7%94%B1%E5%99%A8%E5%88%B7%E5%87%BA%E9%97%AE%E9%A2%98%E4%BF%AE%E5%A4%8D%E8%BF%87%E7%A8%8B/image-20211016235954775.png" /></li>
+<li>(0x30000-0x40000)Config 对应 u-boot-env
+   <img alt="image-20211016235726924" src="../../../../../images/2021-10-17-%E8%AE%B0%E4%B8%80%E6%AC%A1%E8%B7%AF%E7%94%B1%E5%99%A8%E5%88%B7%E5%87%BA%E9%97%AE%E9%A2%98%E4%BF%AE%E5%A4%8D%E8%BF%87%E7%A8%8B/image-20211016235726924.png" /></li>
+<li>(0x80000-0x180000)overlay 和 overlay 相对应
+   <img alt="image-20211016235835586" src="../../../../../images/2021-10-17-%E8%AE%B0%E4%B8%80%E6%AC%A1%E8%B7%AF%E7%94%B1%E5%99%A8%E5%88%B7%E5%87%BA%E9%97%AE%E9%A2%98%E4%BF%AE%E5%A4%8D%E8%BF%87%E7%A8%8B/image-20211016235835586.png" /></li>
+<li>中间的内容两边都不同，比较明显的是 dump.bin 中 Bdata 存储了 Factory 内容，而 Factory 的内容未知。</li>
+</ul>
+</li>
+<li>
+<p>因此考虑将 eeprom.bin 内容在 openwrt 中重新写入到 Factory 中
+   然而直接 mtd write 会报以下错误
+   <img alt="image-20211017000149003" src="../../../../../images/2021-10-17-%E8%AE%B0%E4%B8%80%E6%AC%A1%E8%B7%AF%E7%94%B1%E5%99%A8%E5%88%B7%E5%87%BA%E9%97%AE%E9%A2%98%E4%BF%AE%E5%A4%8D%E8%BF%87%E7%A8%8B/image-20211017000149003.png" />
+   搜索后发现需要安装内核模块<code>kmod-mtd-rw</code>，由于自己编译的内核 hash 值和官方版本不一致，于是我重新编译了 openwrt 镜像
+   然后运行命令 I WANT A BRICK!!!</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>insmod<span class="w"> </span>mtd-rw<span class="w"> </span><span class="nv">i_want_a_brick</span><span class="o">=</span><span class="m">1</span>
+</span></code></pre></div>
+<p>于是我们便可以愉快地解锁分区了，写入 eeprom 即可</p>
+</li>
+</ol>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>mtd -r write eeprom.bin factory
+</span></code></pre></div>
+<ol>
+<li>结束，写完后，我的 5GHz 无线终于恢复正常了！</li>
+</ol>
+<h3 id="后记">后记<a class="headerlink" href="#后记" title="Permanent link">&para;</a></h3>
+<p>虽然解决了问题，但其实还有一些疑问：</p>
+<ol>
+<li>使用 breed 无法成功刷 breed。使用的 breed 有两个版本，看别人的教程说 r3g 和 mi4a 百兆版使用下面的版本，mi4a 千兆版本使用上面的版本。
+   <img alt="image-20211017001124130" src="../../../../../images/2021-10-17-%E8%AE%B0%E4%B8%80%E6%AC%A1%E8%B7%AF%E7%94%B1%E5%99%A8%E5%88%B7%E5%87%BA%E9%97%AE%E9%A2%98%E4%BF%AE%E5%A4%8D%E8%BF%87%E7%A8%8B/image-20211017001124130.png" />
+   然而使用 breed 时，可以看到，上面标的闪存布局 0x50000 并不对应 OS1 的地址，所以感觉不应该使用这个版本的 breed！（所以上面发生的问题会不会是用错版本 breed 导致的？）breed 上也没有说明是否支持 mi4a<a href="https://breed.hackpascal.net/">Index of / (hackpascal.net)</a>
+   <img alt="image-20211014133720106" src="../../../../../images/2021-10-17-%E8%AE%B0%E4%B8%80%E6%AC%A1%E8%B7%AF%E7%94%B1%E5%99%A8%E5%88%B7%E5%87%BA%E9%97%AE%E9%A2%98%E4%BF%AE%E5%A4%8D%E8%BF%87%E7%A8%8B/image-20211014133720106.png" /></li>
+<li>印象中原本台式插上路由器测网速是能跑上 1000M 的，但是现在台式直插寝室网口下载速率可以跑到 960M，而插上路由器却只有 600M 左右，感觉损失挺大的。不知是不是路由器还有潜在问题。（难道是 block 设置为 512KB 拖慢了速度？）</li>
+<li>可以看到路由分区中除了 u-boot, u-boot-env, Factory, firmware，其他部分感觉都是没用的，这部分是否能利用起来？比如那个紧挨 firmware 的 overlay 分区感觉是没起作用的，但是占了 1M 的大小。crash 和 cfg_back 也可以获得 128KB 的空间。</li>
+</ol>
+<h2 id="后记-2">后记 2<a class="headerlink" href="#后记-2" title="Permanent link">&para;</a></h2>
+<p>之前折腾 vlan 时，一不注意就导致无法访问到设备了。需要反复刷 op，因此想使用 breed 来简化刷 op 过程。但其实 breed 官方根本没有对 mi4a 千兆版做支持，只是因为其 flash 分区和 WR1200JS 一样，所以网上都使用那个版本的 breed，当时我觉得 mi4a 的硬件和 r3g 一摸一样，因此觉得刷 r3g 的应该也可以。结果刷完后就变砖了，官方恢复工具也无法恢复。后面才意识到上面的问题，breed 的 flash 分区和 openwrt 的不一样。</p>
+<p>过了半学期，我买了 ch341a 编程器，可以直接刷 flash，因此可以把 mi4a 救回来了。但是发现之前备份的 eeprom 被我删了，然后使用编程器的时候，在意识到需要先备份时已经点了擦除。所以无奈只能在网上找了别人提供的 eeprom。想到 mi4a 是我第一个 openwrt 的设备，我对它 SLAAC 的 ipv6 地址印象深刻（123d 结尾），而现在没办法恢复了，不免有点感伤。</p>
+<p>如果要用 breed 刷 openwrt 的话，需要修改 op 的 flash 分区：</p>
+<ul>
+<li>这里提供了别人编译好的：<a href="https://www.right.com.cn/forum/thread-4054821-1-1.html">[20210919 更新]小米路由 4A 千兆版 LEDE 固件_集成快乐上网、内网穿透、KMS、网络加速 - 小米无线路由器以及小米无线相关的设备 - 恩山无线论坛 - Powered by Discuz! (right.com.cn)</a></li>
+<li>这里是如何自己修改：<a href="https://www.right.com.cn/forum/thread-4052254-1-1.html">分享小米 R4A 千兆版编译 OPENWRT(Breed 直刷版)-OPENWRT 专版 - 恩山无线论坛 - Powered by Discuz! (right.com.cn)</a></li>
+</ul>
+<p>但是想想还是算了，为什么要想办法去用一个官方不支持的东西呢？（造成这一切悲剧的源头）</p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+  
+
+
+
+      
+    </article>
+  </div>
+
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+        
+      
+      <nav class="md-footer__inner md-grid" aria-label="页脚" >
+        
+          
+          <a href="../../../09/17/2021-09-17-Openwrt%E6%8A%98%E8%85%BE/" class="md-footer__link md-footer__link--prev" aria-label="上一页: Openwrt 折腾">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                上一页
+              </span>
+              <div class="md-ellipsis">
+                Openwrt 折腾
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../../../../../%E5%8D%9A%E5%AE%A2/2022/02/05/2022-02-05-%E4%BD%BF%E7%94%A8%E6%95%B4%E6%95%B0%E4%BD%8D%E8%BF%90%E7%AE%97%E8%AE%A1%E7%AE%97div10/" class="md-footer__link md-footer__link--next" aria-label="下一页: 使用整数位运算计算 div10">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                下一页
+              </span>
+              <div class="md-ellipsis">
+                使用整数位运算计算 div10
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/TheRainstorm" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../../..", "features": ["navigation.instant", "navigation.instant.progress", "navigation.tracking", "navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.footer", "content.code.copy", "toc.follow", "toc.integrate"], "search": "../../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../../../../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

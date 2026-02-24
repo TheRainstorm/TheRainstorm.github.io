@@ -1,0 +1,2481 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="记录一些关于数学、计算机的知识，以及一些日常。">
+      
+      
+      
+        <link rel="canonical" href="https://yfy.cqu.ai/%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/2024/04/05/%E5%8F%B0%E5%BC%8F%E6%9C%BA%E5%8D%87%E7%BA%A7-%E7%A1%AC%E4%BB%B6%E7%AF%87/">
+      
+      
+        <link rel="prev" href="../../../../../%E5%8D%9A%E5%AE%A2--%E7%BD%91%E7%BB%9C/2024/03/15/MTU%E7%9A%84%E9%82%A3%E4%BA%9B%E5%9D%91%28%E4%BA%8C%E5%B1%82%E9%9A%A7%E9%81%93%E7%BB%84%E7%BD%91%29/">
+      
+      
+        <link rel="next" href="../../../../../%E5%8D%9A%E5%AE%A2--%E7%BD%91%E7%BB%9C/2024/04/21/%E4%BE%BF%E6%90%BA%E8%B7%AF%E7%94%B1%E5%99%A8/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.3">
+    
+    
+      
+        <title>台式机升级-硬件篇 - Rain 的随笔</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#前后硬件对比" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../../../../.." title="Rain 的随笔" class="md-header__button md-logo" aria-label="Rain 的随笔" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Rain 的随笔
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              台式机升级-硬件篇
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    
+  
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="../../../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  博客
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../about/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  关于
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../tags/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  标签
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../series/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  系列
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../tools/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  工具
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../archive/2026/" class="md-tabs__link">
+          
+  
+  
+  归档
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../category/%E4%B8%AA%E4%BA%BA/" class="md-tabs__link">
+          
+  
+  
+  分类
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" hidden>
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../../.." title="Rain 的随笔" class="md-nav__button md-logo" aria-label="Rain 的随笔" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Rain 的随笔
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+    
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      <a href="../../../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    博客
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    关于
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../tags/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    标签
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../series/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    系列
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../tools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    工具
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    归档
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    归档
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2026/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2026
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2025/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2025
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2024/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2024
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2023/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2023
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2022/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2022
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2021/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2021
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2020/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2020
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2019/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2019
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    分类
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    分类
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E4%B8%AA%E4%BA%BA/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    个人
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E5%8D%9A%E5%AE%A2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    博客
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E5%8D%9A%E5%AE%A2--%E7%BD%91%E7%BB%9C/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    博客 &amp; 网络
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    学习笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    折腾记录
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    课程笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%85%B7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    软件工具
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E9%98%85%E8%AF%BB/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    阅读
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+  <div class="md-content md-content--post" data-md-component="content">
+    <div class="md-sidebar md-sidebar--post" data-md-component="sidebar" data-md-type="navigation">
+      <div class="md-sidebar__scrollwrap">
+        <div class="md-sidebar__inner md-post">
+          <nav class="md-nav md-nav--primary">
+            <div class="md-post__back">
+              <div class="md-nav__title md-nav__container">
+                <a href="../../../../.." class="md-nav__link">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+                  <span class="md-ellipsis">
+                    回到主页
+                  </span>
+                </a>
+              </div>
+            </div>
+            
+            <ul class="md-post__meta md-nav__list">
+              <li class="md-nav__item md-nav__item--section">
+                <div class="md-post__title">
+                  <span class="md-ellipsis">
+                    元数据
+                  </span>
+                </div>
+                <nav class="md-nav">
+                  <ul class="md-nav__list">
+                    <li class="md-nav__item">
+                      <div class="md-nav__link">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 19H5V8h14m-3-7v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1V1m-1 11h-5v5h5z"/></svg>
+                        <time datetime="2024-04-05 21:56:48+00:00" class="md-ellipsis">2024年4月5日</time>
+                      </div>
+                    </li>
+                    
+                    
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 3v15h3V3zm3 2 4 13 3-1-4-13zM5 5v13h3V5zM3 19v2h18v-2z"/></svg>
+                          <span class="md-ellipsis">
+                            分类于
+                            
+                              <a href="../../../../../category/%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/">折腾记录</a></span>
+                        </div>
+                      </li>
+                    
+                    
+                      
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20a8 8 0 0 0 8-8 8 8 0 0 0-8-8 8 8 0 0 0-8 8 8 8 0 0 0 8 8m0-18a10 10 0 0 1 10 10 10 10 0 0 1-10 10C6.47 22 2 17.5 2 12A10 10 0 0 1 12 2m.5 5v5.25l4.5 2.67-.75 1.23L11 13V7z"/></svg>
+                          <span class="md-ellipsis">
+                            
+                              需要 13 分钟阅读时间
+                            
+                          </span>
+                        </div>
+                      </li>
+                    
+                  </ul>
+                </nav>
+              </li>
+            </ul>
+            
+          </nav>
+          
+            
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#前后硬件对比" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        前后硬件对比
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#硬件购买" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        硬件购买
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="硬件购买">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#实际开销" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        实际开销
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#华硕rog-x570-e-主板详情" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        华硕ROG x570-E 主板详情
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="华硕ROG x570-E 主板详情">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#升级的地方总结" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        升级的地方总结
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#x570-pci-e-通道分配" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        x570 PCI-E 通道分配
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#主板-manual" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        主板 manual
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="主板 manual">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#尾部-io" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        尾部 I/O
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#装机经验" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        装机经验
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="装机经验">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#准备的工具" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        准备的工具
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#装机经验_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        装机经验
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="装机经验">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#清灰经验" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        清灰经验
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#螺丝类型" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        螺丝类型
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#主板注意" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        主板注意
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#多硬盘标号" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        多硬盘标号
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cpu和显卡供电注意" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CPU和显卡供电注意
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#电源瓦数选择" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        电源瓦数选择
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="电源瓦数选择">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#硬盘功耗表" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        硬盘功耗表
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#装机顺序" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        装机顺序
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#常见调试操作" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        常见调试操作
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="常见调试操作">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#清cmos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        清CMOS
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#刷bios" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        刷BIOS
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#最少外接设备测试开机" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        最少外接设备测试开机
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#遇到的问题" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        遇到的问题
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#调整" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        调整
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="调整">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bios参数" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        BIOS参数
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="BIOS参数">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Summary
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pbo-相关" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PBO 相关
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#机箱风扇太吵" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        机箱风扇太吵
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="机箱风扇太吵">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#对应-fanctrl" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        对应 fanctrl
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="对应 fanctrl">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#hwmon-会发生变化" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        hwmon 会发生变化
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#chipset温度69摄氏度" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        chipset温度69摄氏度
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+          
+        </div>
+      </div>
+    </div>
+    <article class="md-content__inner md-typeset">
+      
+        
+  
+
+
+  <nav class="md-tags" >
+    
+      
+      
+      
+      
+        <a href="../../../../../tags/#tag:raid10" class="md-tag">raid10</a>
+      
+    
+      
+      
+      
+      
+        <a href="../../../../../tags/#tag:x570" class="md-tag">x570</a>
+      
+    
+      
+      
+      
+      
+        <a href="../../../../../tags/#tag:二手硬盘" class="md-tag">二手硬盘</a>
+      
+    
+      
+      
+      
+      
+        <a href="../../../../../tags/#tag:装机" class="md-tag">装机</a>
+      
+    
+  </nav>
+
+
+
+  <h1>台式机升级-硬件篇</h1>
+
+<p>随着做种资源原来越多，原本 4T + 2T 的机械硬盘配置不够用了。即使已经做了很多缓解措施，比如将比较大的视频文件转成 av1 编码（4k h264可以达到30G -&gt; 6G的效果），仍然是捉襟见肘。随着最近想要下载一些 VR 游戏资源，硬盘不够用了越来越明显，看来添加硬盘是必须做的了。</p>
+<p>同时我也觉得现有的数据管理有点不安全。目前只对一些文档数据做了备份，然而一些虚拟机磁盘镜像，比如主力使用的 windows 虚拟机的磁盘镜像，由于数据量太大，只存了一份。这些都是单点故障点，一旦硬盘坏了，对我的影响是非常大的。</p>
+<p>为了解决容量和安全性的问题，决定在台式机上添加一些机械硬盘组 raid10。</p>
+<div class="admonition note">
+<p class="admonition-title">为什么是 raid10</p>
+<p>有两个原因，一个是 raid 10 重建时更安全。不像 raid 5 重建时存在 URE 问题（指需要读取阵列全部的数据，数据量大，有很大概率遇到 URE 错误导致重建失败），raid 10 只需要读取一个 mirror 中另一块盘的数据，数据量很小。第二是 raid 10 远比其它 raid 灵活。raid 10 两块硬盘为 1 组，只需要保证两块硬盘容量相同即可。而其它 raid 均需要所有盘容量相同，这意味着我得一次性把所有的盘都买来，而一块 14T 的企业盘需要一千多，3-4 块一次购入显然成本太高。另外，raid 10 后续扩容也非常容易，插入即可扩容。而其它 raid 则需要重建整个阵列，非常费时。</p>
+</div>
+<p>这篇文章主要记录下硬件的升级点，以及<strong>人生第二次装机总结的一些经验</strong>。</p>
+<p>epilogue</p>
+<p>经过 1 周的规划与实践，台式机终于升级完成。现在它真的成了一个 all in one 完全体了</p>
+<ul>
+<li>AMD 5800x + 96 GB 内存，PVE 系统</li>
+<li>拥有 1G, 2.5G 双网卡，搭建了 openwrt 软路由</li>
+<li>拥有 zotac GTX 1063, 公版 GTX 1070 双显卡，分别直通给 linux 和 windows 两个虚拟机系统。</li>
+<li>插满 8 块机械硬盘，提供 6T + 8T (6 盘 zfs raid 10) 的存储空间</li>
+</ul>
+<p>然而也有一些之前没有考虑到的：</p>
+<ul>
+<li>没想到换主板、机箱是一件非常费时费力的事情，从下午 3 点搞到了晚上 11 点。遇到问题有：清洗总共 9 把风扇太费时。插电开机没有一次点亮，差点以为主板翻车。进 BIOS 后系统还要修复引导，zfs 作为 root 分区不太熟悉等。</li>
+<li>功耗高了 70 w，从 130 w -&gt; 200 w，从每日 3.3 度涨到 4.4 度。购买硬盘时没有考虑到硬盘的功耗，没想到硬盘功耗可以有 1 倍的差距（最低 4.4 w，最高 8.0 w）。当有 8 块硬盘时，总的差距就可以相差 20-30 w。<ul>
+<li>AMD PBO2 的降压功能非常重要，开与不开功耗相差可能 50 w</li>
+</ul>
+</li>
+</ul>
+<p>Update 2024/10/31</p>
+<ul>
+<li>突然觉得硬盘位不是越多越好了，其实 HC520 这种 12 T 的盘，单位容量价格是一样的（甚至更低）。那么<strong>组少数几块大容量的盘和组多块盘小容量的盘总价格是一样的</strong>。<ul>
+<li>组小容量盘<ul>
+<li>优点：<ul>
+<li>单次购入价格低。增加 4 T 空间，需要 400 元，能够承受</li>
+<li>盘更多，RAID 速度更快。单块机械盘可能只有 200-300MB。6 盘 RAID10 可以达到 600-700MB。</li>
+</ul>
+</li>
+<li>缺点：<ul>
+<li>部件越多，越容易坏，维护成本上升</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>组大容量盘<ul>
+<li>优点：<ul>
+<li>维护更容易，比如 4 块 12T 盘，容量有 24T，却只需要 4 块盘。</li>
+<li>捡垃圾更好捡？毕竟服务器总有退役下来的盘</li>
+</ul>
+</li>
+<li>缺点<ul>
+<li>单笔花费巨大。组 raid10 起码 4 块盘，10 T 起步，开销达到 4 x 550 = 2200 级别，相当于买张新显卡了。学生党基本承受不起，工作了作为一次性投入倒是适合。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>所以感觉 8 盘位已经是家用最适合的数目了，扩展会遇到很多问题</li>
+<li><strong>SATA 数据接口不够</strong>：我的 X570 有 8 个 SATA 口，这也是家用主板基本上最高的数目了。虽然可以通过 PCIeX1 转 SATA，但是这存在一些问题：<ul>
+<li>PCIeX1 转接卡价格并不便宜，转 4 个 SATA 需要 80-100 元</li>
+<li>很多 mATX 主板 PCIeX1 槽不多：PCIeX1 可能和第二个显卡槽共享通道，插了显卡就要降速（比如变成 x2 通道数）。另外 PCIe 还可能用于：接无线网卡、接万兆网卡。因此 <strong>PCIe 槽往往是不够用的</strong></li>
+</ul>
+</li>
+<li><strong>机箱显卡限长问题</strong>：半岛铁盒F20 正面有 8 个硬盘仓，背面还有 2 个。对于<strong>显卡限长</strong>的问题，还可以通过移除前面的硬盘笼解决。而插满的情况下话就麻烦了。</li>
+<li><strong>SATA 供电接口数量</strong>：我的安钛克 650 W 电源，提供了 2 条 P6 转 4 个 SATA 的电源线。插 8 个盘正好，插 10 个则另需购入 SATA 1 分多 电源线，有点麻烦。（不过价格只要10 元，另外我的电源还有 P6 是 IDE 的电源线，也可以购买 IDE 转 SATA 电源线。因此电源接口方面，<strong>极限硬盘数为 12 个</strong>）</li>
+<li><strong>电源 12v 功率问题</strong>：机械硬盘启动时需要使用 12v，电流可以达到 2A，因此单盘有 24W，<strong>8 块盘就是 192 W</strong>，12 块 288 W，16 块 384 W，20 块 480 W，这还不包括 CPU 和显卡功率（虽然开机时显卡功率可能不高）。因此多块硬盘需要考虑电源 12v 功率（电源功率是分开的，有 3.3v, 5v, 12v）是否达标，硬盘是不能无限叠加的。<ul>
+<li>使用 1 分多的线时还要考虑单条线承载的电流，因此也不能分太多（参考后面显卡 6 pin 供电只能承载 12A，感觉 1 分 4 是比较稳妥的，<strong>1 分 6 感觉就有点风险了</strong>）</li>
+</ul>
+</li>
+<li>所以我现在的策略是，维持 8 块盘不变，逐步把小盘换成大盘。<ul>
+<li>目前结构 4+3+(2+3+3)x2，RAID 中 1 块 3T 有报错。由于盘还没坏，坏了可以立马用外面的 3 T 替换，因此不太担心，还可以苟一苟。</li>
+<li>等坏了之后，就空出了 1 个硬盘位。此时可以再购入 1 块 4 T 的，和原本单独的 4T 构成一个组，然后替换原来的 2T 的组，替换出来的 2 T 放在外面。<ul>
+<li>(4+3+3)x2 + 2 + 2</li>
+</ul>
+</li>
+<li>希望下次坏就是 2 T 的了，这样又可以购入大盘</li>
+</ul>
+</li>
+<li>上面的<strong>升级策略</strong>感觉还挺巧妙的，当我们想要升级 RAID10 组的容量时：<ul>
+<li>如果使用朴素的升级策略<ul>
+<li>一次性购入两块大盘，替换掉原来的一组 RAID，这样就会多出两块盘，需要有额外的空闲硬盘位。而二手出机械硬盘感觉还是挺麻烦的。</li>
+</ul>
+</li>
+<li>而使用我的策略：<ul>
+<li>维护若干非 RAID 盘位 （比如 采用 6 raid + 2 非 raid，或者 8 + 4 布局）</li>
+<li>非 RAID 盘位可以维护一个大盘，用于平时非关键数据存储。这样就能用一半的价格享受大容量存储</li>
+<li>当 RAID 盘位有盘损坏时，此时再购入一块大盘组成一组，替换 RAID 有损坏的组，小盘就放到外面继续工作。可以发现上述操作不需要额外的硬盘位，相当于原地升级。而且小盘由于工作时间更长，因此下次更有可能坏掉，而坏掉就又可以空出一个空闲盘位了。还想要升级的话，可以继续购入比 RAID10 组中最小盘大的盘，等待下次升级即可。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<!-- more -->
+
+<h2 id="前后硬件对比">前后硬件对比<a class="headerlink" href="#前后硬件对比" title="Permanent link">&para;</a></h2>
+<p>before
+<img alt="image.png" src="https://imagebed.yfycloud.site/2025/12/58f420d0081e62e1d13471ccd8f18f1f.png" /></p>
+<p>later
+<img alt="image.png" src="https://imagebed.yfycloud.site/2025/12/1aa038d90a621edb2a4acdd46b04549b.png" /></p>
+<h2 id="硬件购买">硬件购买<a class="headerlink" href="#硬件购买" title="Permanent link">&para;</a></h2>
+<h3 id="实际开销">实际开销<a class="headerlink" href="#实际开销" title="Permanent link">&para;</a></h3>
+<ul>
+<li>机箱：F20 半岛铁盒机箱：190</li>
+<li>主板：ROG x570-E: 770 (20运费)<ul>
+<li>华硕 b550m plus wifi二手出掉：480</li>
+</ul>
+</li>
+<li>硬盘（买了 6 块，原本有 2 T + 4 T 两块）<ul>
+<li>3T: 150<ul>
+<li>ST3000DM001-1CH166, date: 15274, 45736h, 836次</li>
+</ul>
+</li>
+<li>2x3T: 330<ul>
+<li>st3000dm001, DOM: 140CT2016, 10537h, 237次,</li>
+<li>st3000dm001, DOM: 140CT2016, 12438h, 238次</li>
+</ul>
+</li>
+<li>2x3T: 326<ul>
+<li>st3000dm008, DOM: 09APR2018, 37764h, 5353次</li>
+<li>st3000dm008, DOM: 09APR2018, 38368h, 7024次</li>
+</ul>
+</li>
+<li>1x2T: 110<ul>
+<li>WD20EJRX, 2018-05-12</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>合计</p>
+<ul>
+<li>主板机箱：190 + (770 - 480) = 480</li>
+<li>硬盘：330 + 436 + 150 = 916</li>
+<li>总共：1396</li>
+</ul>
+<h2 id="华硕rog-x570-e-主板详情">华硕ROG x570-E 主板详情<a class="headerlink" href="#华硕rog-x570-e-主板详情" title="Permanent link">&para;</a></h2>
+<h3 id="升级的地方总结">升级的地方总结<a class="headerlink" href="#升级的地方总结" title="Permanent link">&para;</a></h3>
+<p>从 B550m 换成 X570 总结</p>
+<ol>
+<li>双显卡变友好了</li>
+</ol>
+<ul>
+<li>原本两个 x16 <strong>槽的间距</strong>只有 2 个 slot，两个显卡刚好贴在了一起（很极限，有的 2 槽宽显卡可能就无法插进去了），影响了散热。现在隔了 3 个 slot，就很合适了。</li>
+<li>原本的主板有两个 x16 槽，第一个通道数来自 CPU， 固定是 4.0 x 16 严重浪费。而第二个 x16 来自芯片组只有 3.0 x 4 又不太够。现在将的两个 x16 槽的通道数都来自 CPU， x8 的通道数就比较合适。虽然 N 卡从 30 系，A 卡从 5000xt才开始支持 4.0，不过 3.0 x 8 对我的 1070 来说还是够用的
+1. <strong>SATA 接口</strong>从 4 个变为 8 个。对于搭建能够组 RAID 的 NAS 来说够用了
+2. 所有 chipset 连接的 PCIE 都变成了 4.0。比如 <strong>第二条 m.2</strong>，第三条 x16 slot等<ul>
+<li>全部都是高速接口，比如背面有 8 个 10GB 的USB3.2 Gen2接口
+3. 自带一个 1G 的网卡，和一个 2.5 G 的网卡 (RTL8125)，组软路由变方便了</li>
+</ul>
+</li>
+</ul>
+<h3 id="x570-pci-e-通道分配">x570 PCI-E 通道分配<a class="headerlink" href="#x570-pci-e-通道分配" title="Permanent link">&para;</a></h3>
+<p><a href="https://www.guru3d.com/review/amd-ryzen-7-5800x3d-review/page-3/#:~:text=X570%20PCH%20actually%20includes%20sixteen,%2C%20x1%2C%20and%20SATA%20modes.">AMD Ryzen 7 5800X3D review (Page 3) (guru3d.com)</a></p>
+<ul>
+<li>这个图目前还是有一些不太理解的地方，根据我多方整合的消息，以下情况是更符合实际的<ul>
+<li>AMD 5000系 CPU 有 20 条pcie 4.0 通道，16 条给显卡，4 条给m.2 （还有 4 条连接 chipset 不算）。CPU 还集成了 4 个 10GB USB3.2</li>
+<li>X570 芯片组的部分就很难理解了，图中感觉标了 8 + 4 + 4 = 16 条通道。但是我的 X570-E gaming 主板只有 9 条。</li>
+</ul>
+</li>
+</ul>
+<p><img alt="image.png" src="https://imagebed.yfycloud.site/2025/12/5c18e92a7941351dd5838c0a1063c499.png" /></p>
+<p>!!! note “一些冷门知识"</p>
+<div class="language-text highlight"><pre><span></span><code>  x570 芯片组和 5000系CPU中的io die基本一样，都是AMD设计的。不同的是CPU中的采用12nm，而芯片组为14nm。
+</code></pre></div>
+<p>X570-E 主板 pcie 扩展槽数量和位置</p>
+<ul>
+<li>3 个 pciex16 + 2 个 pciex1
+<img alt="image.png" src="https://imagebed.yfycloud.site/2025/12/d910e187ae07c0a8518eed15a0447587.png" /></li>
+</ul>
+<p>通道分配
+参考：<a href="https://www.reddit.com/r/ASUS/comments/ikzxrc/support_rog_strix_x570ef_pcie_lane_assignment/">[SUPPORT] ROG STRIX X570-E/F PCIe lane assignment : r/ASUS</a></p>
+<ul>
+<li>PCIeX16_1 和 PCIeX16_2 都来自 CPU 的 16 通道，同时使用时拆分成两个 x8</li>
+<li>M.2_1 来自 CPU 的 4 通道</li>
+<li>x570 有 9 条 pcie 4.0 通道（连接 CPU 的 4 条不算）， x570-E 主板的分配是，4 条给 PCIeX16_3，4 条给 M.2_2，1 条 给 PCIeX1_1。PCIeX1_2 和 PCIeX16_3 共享，同时使用时 PCIeX16_3 变为 x2，因此会损失 1 个通道</li>
+</ul>
+<p><img alt="image.png" src="https://imagebed.yfycloud.site/2025/12/ef8db15d31b25d6b66380120ecac3fe2.png" /></p>
+<h3 id="主板-manual">主板 manual<a class="headerlink" href="#主板-manual" title="Permanent link">&para;</a></h3>
+<p>B550M: <a href="https://dlcdnets.asus.com.cn/pub/ASUS/mb/SocketAM4/TUF_GAMING_B550M-PLUS_(WI-FI)/E17266_TUF_GAMING_B550M-PLUS_WI-FI_UM_v2_WEB.pdf?model=TUF%20GAMING%20B550M-PLUS%20(WI-FI)">E17266_TUF_GAMING_B550M-PLUS_WI-FI_UM_v2_WEB.pdf (asus.com.cn)</a></p>
+<p>x570：<a href="https://dlcdnets.asus.com.cn/pub/ASUS/mb/SocketAM4/ROG_STRIX_X570-E_GAMING/E15826_ROG_STRIX_X570-E_GAMING_UM_v2_WEB.pdf?model=rog%20strix%20x570-e%20gaming">E15826_ROG_STRIX_X570-E_GAMING_UM_v2_WEB.pdf (asus.com.cn)</a>
+<a href="https://rog.asus.com/motherboards/rog-strix/rog-strix-x570-e-gaming-model/spec/">ROG Strix X570-E Gaming | Motherboards | ROG Global (asus.com)</a></p>
+<p><img alt="249D2FDB-BD4E-4DB4-A000-15237DAC1406 (2000×2000) (asus.com)" src="https://imagebed.yfycloud.site/2025/12/61f65337d8c16b0959186636bbb5d5fd." /></p>
+<p><img alt="image.png" src="https://imagebed.yfycloud.site/2025/12/cfe8614ba47199afa04f374e6ec8ab11.png" /></p>
+<h4 id="尾部-io">尾部 I/O<a class="headerlink" href="#尾部-io" title="Permanent link">&para;</a></h4>
+<p><img alt="image.png" src="https://imagebed.yfycloud.site/2025/12/eb065e9827f78f8d4e3857740aea3a5d.png" /></p>
+<ul>
+<li>2.5G 以太网：Realtek RTL8125-CG</li>
+<li>WiFi 6：intel i211AT, bluetooth 5.0</li>
+<li>视频<ul>
+<li>hdmi <strong>2.0</strong>b: 4K@60 （可惜不是 2.1 的 8K@60）</li>
+<li>dp 1.2: 4K@60</li>
+</ul>
+</li>
+<li>音频<ul>
+<li>7：一种高保真的音频接口。<a href="https://en.wikipedia.org/wiki/S/PDIF">S/PDIF - 维基百科 --- S/PDIF - Wikipedia</a></li>
+<li>5.1 通道连接方式，需要3个扬声器
+<img alt="image.png" src="https://imagebed.yfycloud.site/2025/12/41d5f5159488afede90a92c1258d4663.png" /></li>
+</ul>
+</li>
+</ul>
+<h2 id="装机经验">装机经验<a class="headerlink" href="#装机经验" title="Permanent link">&para;</a></h2>
+<h3 id="准备的工具">准备的工具<a class="headerlink" href="#准备的工具" title="Permanent link">&para;</a></h3>
+<ul>
+<li>螺丝刀</li>
+<li>细铁丝，扎带或魔术贴，用于理线</li>
+<li>m.2导热贴</li>
+<li>硅脂</li>
+<li>sata 线（如果二手盘没有线的话）</li>
+<li>便利贴（给硬盘做标记）</li>
+</ul>
+<p>升级旧机器清灰</p>
+<ul>
+<li>刷子</li>
+<li>抹布</li>
+<li>吹风机（吹干CPU散热器）</li>
+</ul>
+<h3 id="装机经验_1">装机经验<a class="headerlink" href="#装机经验_1" title="Permanent link">&para;</a></h3>
+<h4 id="清灰经验">清灰经验<a class="headerlink" href="#清灰经验" title="Permanent link">&para;</a></h4>
+<ul>
+<li>风扇直接水洗，刷子刷太慢了</li>
+<li>装机时先将CPU散热器拆下来水洗，否则晾干要等挺久</li>
+</ul>
+<h4 id="螺丝类型">螺丝类型<a class="headerlink" href="#螺丝类型" title="Permanent link">&para;</a></h4>
+<ul>
+<li>机箱螺丝：固定主板，电源</li>
+<li>风扇螺丝：自攻型，有很大的螺纹</li>
+<li>机械硬盘：固定机械硬盘到硬盘笼上</li>
+<li>m.2螺丝：另外主板可能m.2是2210的，那么需要一个6边形的螺柱。</li>
+</ul>
+<h4 id="主板注意">主板注意<a class="headerlink" href="#主板注意" title="Permanent link">&para;</a></h4>
+<p>主板装到机箱上有一些固定孔位</p>
+<ul>
+<li>ATX, E-ATX 主板有 9 个<strong>孔</strong>，对应机箱螺柱。如果没找到9个，看看是不是某些挡板挡住了，比如ROG 570-E就需要把两个m.2的盖板取下才能看到。</li>
+<li>m-ATX主板有8个。</li>
+</ul>
+<h4 id="多硬盘标号">多硬盘标号<a class="headerlink" href="#多硬盘标号" title="Permanent link">&para;</a></h4>
+<p><em>p.s 实际是给 sata 线标号。</em></p>
+<p>主板sata口的顺序决定了机器内识别的sda,sdb的编号。接sata数据线时，有意识地将顺序对应硬盘笼的顺序（比如从底向上依次编号1, 2, 3...）。这样坏掉一块盘时根据sdx就可以知道是第几块盘坏了。</p>
+<p>UPDATE 感觉没必要了</p>
+<ul>
+<li>可以使用<code>/dev/disk/by-id</code>的方式进行挂载，这样子可以知道坏掉盘的型号和SN码。我的半岛铁盒是<strong>能够看到硬盘侧面</strong>的，并且，硬盘侧面一般都贴了标签，包含SN号。因此我可以立刻知道是哪块盘。</li>
+<li>并且实际操作中，sata线主板那端不太好插。一般都是先插满主板，再理线和插硬盘。此时已经无法区分sata线的顺序了（除非给每条sata线编号）</li>
+</ul>
+<h4 id="cpu和显卡供电注意">CPU和显卡供电注意<a class="headerlink" href="#cpu和显卡供电注意" title="Permanent link">&para;</a></h4>
+<ul>
+<li>主板24pin供电，电源那头可能是拆开的，如 18+10P 转24 pin</li>
+<li>升级x570后，CPU供电从 8pin 变为 4+8pin。我的电源提供了 2 条 1 拖 2 的 P8 转 (4+4)P 模组线 。理论上我可以只用一条模组线，将 1 拖 2 的两个接口都插上。但是查阅资料发现这样做似乎没有意义。</li>
+</ul>
+<p><a href="https://www.fcpowerup.com/cpu-8pin-4pin-connector/">CPU的8+4Pin接口需不需要插满？没插满会怎么样 – FCPOWERUP极电魔方</a></p>
+<blockquote>
+<p>1拖2的CPU模组线能不能用？  答： 就是P5、P6这种接法，上面说了，更多的端子是为了分流，是为了同时降低电源模组接口端和主板电源接口的压力。这种脱裤子放屁的接法只能满足强迫症为了插满而插满，没有增加分流的端子数量，增加插头插座对于降低电源模组接口端子的压力并无意义。要接就接2条模组线。</p>
+</blockquote>
+<p>!!! note <strong>不过5800x的功耗也不需要插满4 + 8pin，单 8 pin 已经很够用了</strong>。</p>
+<div class="language-text highlight"><pre><span></span><code>一条线材承载电流最小也最容易发生意外的部分是金属端子部分，存在于模组接口的两端。如下图金属部分即为所谓的“端子”。一个常见的Molex Mini-Fit Jr.5556 端子能承载的电流约为6~8A。
+
+- CPU 4Pin ：2组有效回路，可承载16A / 192W  
+- CPU 8Pin ：4组有效回路，可承载28A / 336W  
+- CPU 8+4Pin ：6组有效回路，可承载36A / 432W  
+- CPU 双8Pin ：8组有效回路，可承载48A / 576W
+</code></pre></div>
+<p>关于显卡的情况</p>
+<p>显卡的 6+2Pin 接口实际上里面有 3 个 Pin 是 12V，3 个 Pin 是 GND，剩余 2 个 Pin 是检测 Sense，用于显卡检测插头，并不承载电流。所以 8Pin 的 PCIE 模组线只有 3 组有效 12V，承载能力 216W。平均最大功耗在 225W 以上即有 8+6Pin 和双8Pin 及以上的显卡，必须要接2条及以上单独的模组线才不会使端子过载熔毁。</p>
+<p><img alt="image.png" src="https://imagebed.yfycloud.site/2025/12/030850e0f202c2b11d962b3dbdca8ab5.png" /></p>
+<p>我的安钛克 650NE 电源的输出接口</p>
+<p><img alt="image.png" src="https://imagebed.yfycloud.site/2025/12/e51a37a29117572659959ffebbf6af73.png" />
+<img alt="image.png" src="https://imagebed.yfycloud.site/2025/12/0b48f556cc6c91fcf14a563bf7338c26.png" /></p>
+<p>IDE 电源接口：下图是硬盘的IDE接口，左边是电源接口，通过电源线与机箱内的电源线相连。右边是数据线，通过数据线与计算机主板相连。中间是跳线，如果您的计算机中，有不止一块硬盘，需要通过跳线来设置主/从盘。
+<img alt="image.png" src="https://imagebed.yfycloud.site/2025/12/2752fcccbcc6dbe47cfdf303ff725fa3.png" /></p>
+<p>SATA 电源线如果不够，可以</p>
+<ul>
+<li>购买 SATA 母转多 SATA 线，1 转 3 价格 8.63</li>
+<li>购买 IDE 转 SATA，1 转 4 价格 9.8</li>
+</ul>
+<p>SATA 数据接口不够</p>
+<ul>
+<li>pcie 3.0x1 转 4 个 SATA<ul>
+<li>免驱（marvell 9215）：99</li>
+<li>免驱便宜：86</li>
+</ul>
+</li>
+<li>pcie 3.0x1 转 2个 SATA<ul>
+<li>免驱：39</li>
+</ul>
+</li>
+</ul>
+<p>108 + 800 -&gt; 8T</p>
+<p>即使接口形状相似，不同品牌的电源线序（即针脚功能定义）可能完全不同。例如，某厂商的6Pin接口中针脚可能定义为12V供电和接地，而另一厂商的同接口可能包含5V或3.3V信号线。混用会导致电压错位，轻则设备无法工作，重则烧毁硬件。</p>
+<h4 id="电源瓦数选择">电源瓦数选择<a class="headerlink" href="#电源瓦数选择" title="Permanent link">&para;</a></h4>
+<p><a href="https://www.bilibili.com/video/BV1Pc411x7ku/">现在的电脑到底要用多大电源？尝试用最新设备深入测量一下主流电脑平台的功耗情况【翼王】_哔哩哔哩_bilibili</a></p>
+<p><em>发现机械硬盘启动几秒内的功耗高达20-30w，那我 8 块硬盘就高达 200w。好在开机时，CPU 和显卡没有负载，因此总功耗是够的。</em>
+<img alt="image.png" src="https://imagebed.yfycloud.site/2025/12/36fcc0147f99463de246c990e47335ff.png" /></p>
+<p><a href="https://post.smzdm.com/p/adwgqn4z/">硬盘功耗要多少及配套电源选择依据_硬盘_什么值得买 (smzdm.com)</a></p>
+<p>机械硬盘功率包含12 v 和 5 v 供电功率之和。</p>
+<ul>
+<li>希捷酷鱼ST8000DM004，5400 rpm，标签上写着 +5V 0.55 A, + 12V 0.37 A。因此总功率 7.19 W。</li>
+<li>我的希捷酷鱼ST3000DM008，7200 rpm，写着+5V 0.75 A, + 12V 0.75 A。总功率 12.75 W。8 块粗略估计 102 W。</li>
+</ul>
+<blockquote>
+<p>启动时+12V所需电流是2A，那就是24W的功耗。以8盘位NAS插满为例，在机器启动时光硬盘就需要24W*8=192W的功率。
+可见硬盘在不同工作状态对电源需求是不同的。启动时只需要+12V的供电，其他诸如空闲、读写、待机、休眠时除+12V以外还需+5V供电，但这些状态所需电流都较启动电流要小好多。</p>
+<p>如果你要组4U24盘位的机架<a href="https://www.smzdm.com/fenlei/fuwuqi/">服务器</a>的话，就需要选择+5V供电能力超过1.4W*24=33.6W的电源，+12V供电能力》24W*24=576W的电源。这还只是硬盘部分，算上其他板卡、<a href="https://www.smzdm.com/fenlei/cpu/">CPU</a>后对电源供电能力的要求就更高了。</p>
+</blockquote>
+<p><a href="https://manuals.plus/antec/antec-neoeco-ne650c-power-supply-unit#axzz8Waw5iffd">Antec NeoECO NE650C Power Supply Unit User Manual (manuals.plus)</a>
+<img alt="image.png" src="https://imagebed.yfycloud.site/2025/12/ad33a71dd2940f44bb09307cb9575c8c.png" /></p>
+<h5 id="硬盘功耗表">硬盘功耗表<a class="headerlink" href="#硬盘功耗表" title="Permanent link">&para;</a></h5>
+<p>WD20EJRX: <a href="https://tvtdigital.kz/assets/uploads/124/1lzuy4.pdf">Western Digital WD Purple Series (China only) data sheet (tvtdigital.kz)</a></p>
+<ul>
+<li>4.4w, 4.1w, 0.4w</li>
+</ul>
+<p>st3000dm008/001</p>
+<ul>
+<li><a href="https://www.seagate.com/files/staticfiles/docs/pdf/datasheet/disc/barracuda-ds1737-1-1111us.pdf">Barracuda Data Sheet (seagate.com)</a></li>
+<li><a href="https://www.seagate.com/www-content/datasheets/pdfs/3-5-barracuda-3tbDS1900-10-1710US-en_US.pdf">Data Sheet (seagate.com)</a></li>
+<li>Operating Mode: 8.0w</li>
+<li>Idle Mode: 5.4w,</li>
+<li>Standby Mode, Sleep Mode: 0.75w</li>
+</ul>
+<p>ST4000VX000</p>
+<ul>
+<li><a href="https://www.seagate.com/files/www-content/datasheets/pdfs/skyhawk-3-5-hdd-DS1902-15M-2103US-en_US.pdf">3.5 HARD DRIVE DATA SHEET (seagate.com)</a></li>
+<li>5.5w, 3.2w, 0.25w</li>
+</ul>
+<h4 id="装机顺序">装机顺序<a class="headerlink" href="#装机顺序" title="Permanent link">&para;</a></h4>
+<ul>
+<li>装主板：<ul>
+<li>CPU<ul>
+<li><strong>拆CPU</strong>时，CPU是会自动弹出来的，否则就是拉杆没拨到位。</li>
+</ul>
+</li>
+<li>散热器<ul>
+<li>压散热器时不需要那么精确。左右晃动下还能起到抹匀效果</li>
+<li>有弹簧的螺丝是可以转到底的</li>
+</ul>
+</li>
+<li>内存，m.2固态</li>
+</ul>
+</li>
+<li>装电源：把可能用得到的线<strong>全部接上</strong>，方便以后接设备，理一下线</li>
+<li>将主板固定到机箱上。如果CPU供电线位置很狭窄，建议<strong>先插上线再固定到机箱</strong>上。类似的还有风扇线。</li>
+<li>连接主板CPU供电，机箱面板各种I/O线</li>
+<li>根据主板上的风扇位置，考虑如何走线。</li>
+<li>完毕，装上显卡和显卡供电，开机</li>
+</ul>
+<h3 id="常见调试操作">常见调试操作<a class="headerlink" href="#常见调试操作" title="Permanent link">&para;</a></h3>
+<ul>
+<li>华硕普通主板上有Q-LED，高端主板有Q-Code</li>
+<li>内存出问题时，插上单根试试。（插的位置有讲究，最好看看说明书，一般是A2，即第二或第四槽）</li>
+</ul>
+<p><img alt="image.png" src="https://imagebed.yfycloud.site/2025/12/9cb467abe53b5cf059507d285b3b43c3.png" /></p>
+<h4 id="清cmos">清CMOS<a class="headerlink" href="#清cmos" title="Permanent link">&para;</a></h4>
+<p>清CMOS的几种方法<a href="https://www.asus.com.cn/support/faq/1040820/">[主板]请问Clear CMOS步骤为何? | 官方支持 | ASUS 中国</a></p>
+<ul>
+<li>关闭计算机电源，<strong>拔掉电源线</strong>。用金属短接CLR RTC两根跳线插针5-10秒<ul>
+<li>若上述的步骤没有作用，请将主板上的电池移除，并且再次将跳线帽依照上面的步骤来清除 CMOS RTC RAM 的数据。当完成清除的动作后，请再将电池装回主板上。</li>
+</ul>
+</li>
+<li>水银电池短路法：a.先将计算机关机，再将总电源关掉或将电源线拔掉。  b.打开计算机机壳。  c.在主板上，找出电池位置。  d.将主板上的电池拔起，然后将电池座的正/负极短路约1分钟，再将电池装回。</li>
+</ul>
+<div class="admonition note cmos是什么">
+<p class="admonition-title">Note</p>
+<p>CMOS 还指代了一种特定的电池供电的半导体芯片，用于存储计算机的基本设置和配置信息。这个芯片通常称为 CMOS 存储器或 CMOS RAM。CMOS 存储器通常位于计算机主板上，它包含一个小型的电池，以保持存储的信息在计算机关闭时仍然有效。
+1. <strong>基本输入/输出系统（BIOS）设置</strong>：例如启动顺序、日期和时间、CPU 和内存配置等。
+2. <strong>实时时钟（RTC）设置</strong>：用于跟踪日期和时间。
+3. <strong>其他系统配置</strong>：可能包括硬盘驱动器和其他设备的配置信息。</p>
+</div>
+<h4 id="刷bios">刷BIOS<a class="headerlink" href="#刷bios" title="Permanent link">&para;</a></h4>
+<p><a href="https://www.asus.com.cn/support/faq/1038568/">[主板] 如何使用USB BIOS FlashBack™ 功能? | 官方支持 | ASUS 中国</a></p>
+<p>华硕主板的<strong>FlashBack</strong>功能可以在<strong>进不了BIOS</strong>的情况下，仍然更新主板BIOS。<strong>EZ Flash</strong>则是在BIOS中，而不用进入操作系统中更新BIOS。<a href="https://www.asus.com.cn/support/faq/1012815/">[Motherboard/Desktop] 华硕主板如何通过EZ Flash更新BIOS | 官方支持 | ASUS 中国</a></p>
+<ul>
+<li>在使用USB BIOS FlashBack™工具之前，请关机，但<strong>电源勿拔除</strong>。</li>
+<li>按住BIOS FlashBack™按钮3秒钟，直到Flashback指示灯闪烁三次后，代表BIOS FlashBack™ 功能已经开始执行。<ul>
+<li>*BIOS档案大小会影响更新时间，预估可在8分钟内完成。执行过程中请勿移除U盘、电源拔除、开机或按下CLR_CMOS按钮，这样会导致更新中断，造成无法开机现象。</li>
+</ul>
+</li>
+<li>等待直到指示灯熄灭，代表主板的BIOS已经更新完成。</li>
+</ul>
+<h4 id="最少外接设备测试开机">最少外接设备测试开机<a class="headerlink" href="#最少外接设备测试开机" title="Permanent link">&para;</a></h4>
+<p>请按照如下说明移除所有的外接设备并再次确认。</p>
+<ul>
+<li>a. 保留接在主板上的CPU, CPU散热风扇和一根内存。</li>
+<li>b. 从主板上移除所有的USB设备和外接卡，包括鼠标，键盘，USB随身碟，固态硬盘，外接PCI-E卡等等。</li>
+<li>c. 移除连接到主板上的所有线，包括网线，音频线，只留下显示线来确保显示。</li>
+<li>d. 然后尝试开启计算机，如果可以正常开机，也许问题来源于被移除的外接设备或线材。逐一尝试插入外接设备或线材，直到你发现哪个外接设备或线材引起这个问题。</li>
+</ul>
+<h3 id="遇到的问题">遇到的问题<a class="headerlink" href="#遇到的问题" title="Permanent link">&para;</a></h3>
+<p>买来的 x570 开机后，显示Q-LED 显示橙灯，对应DRAM。Q-Code LED显示 0x0d</p>
+<p><a href="https://www.reddit.com/r/pcmasterrace/comments/sj7axl/asus_rog_strix_x570e_code_0d_help/">ASUS Rog Strix X570-E code 0d help : r/pcmasterrace (reddit.com)</a></p>
+<ul>
+<li>尝试换单根插拔内存条不行</li>
+<li>尝试清除CMOS不行（试了短接跳线，和扣电池10分钟方法）</li>
+<li>使用U盘重新刷写BIOS就好了</li>
+</ul>
+<h2 id="调整">调整<a class="headerlink" href="#调整" title="Permanent link">&para;</a></h2>
+<h3 id="bios参数">BIOS参数<a class="headerlink" href="#bios参数" title="Permanent link">&para;</a></h3>
+<h4 id="summary">Summary<a class="headerlink" href="#summary" title="Permanent link">&para;</a></h4>
+<p>降压超频<strong>Curve Optimizer</strong>:</p>
+<ul>
+<li>all cores</li>
+<li>All core curve optimizer sign: negative</li>
+<li>All core curve optimizer magnitude: 30（适用于5800x，不同cpu不一样）</li>
+</ul>
+<p>Memory Frequency: DDR4-2666MHz（可以很容易超到 3200MHz）。但是自动却给我协商到 2400Mhz</p>
+<p>Advanced\APM Configuration</p>
+<ul>
+<li>Restore AC Power Loss: Power On</li>
+<li>Power On By PCI-E: Enabled</li>
+</ul>
+<p>虚拟化相关</p>
+<ul>
+<li>SVM Mode: enabled</li>
+<li>IOMMU: Enabled</li>
+<li>Advanced\PCI subsystem Settings<ul>
+<li>Above 4G Decoding: Enabled</li>
+<li>Resize BAR Support: Auto</li>
+<li>SR-IOV Support: Enabled</li>
+</ul>
+</li>
+</ul>
+<h4 id="pbo-相关">PBO 相关<a class="headerlink" href="#pbo-相关" title="Permanent link">&para;</a></h4>
+<p>PBO2</p>
+<p>Ai Tweaker</p>
+<p>Target CPU Speed: 3800MHz
+Target DRAM Frequency: 2666MHz
+Target FCLK Frequency: 1333MHz</p>
+<ul>
+<li>Ai Overclock Tuner: Select the target CPU frequency, and the relevant parameters will be auto-adjusted. When you install XMP memory modules, We provide you the optimal frequency to ensure the system stablility; For higer-freq alternatives, you may find the related settings under <code>[Memory Frequency]</code> item.<ul>
+<li>Auto</li>
+<li>Manual</li>
+<li><strong>D.O.C.P</strong><ul>
+<li>DDR4-2667 19-19-19-43-1.20 V</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>BCLK Frequency</li>
+<li>SB Clock Spread Spectrum: Enable/Disable CG1_PLL Spread Spectrum</li>
+<li><strong>Performance Enhancer</strong>: Allows the CPU to maintain boost freqencies longer, resulting in higher performance</li>
+<li>FCLK Frequency: Auto, 800MHz,3000Mhz, step 1333Mhz</li>
+<li><strong>Memory Frequency</strong>: Forces a DDR4 frequency slower than the common tCK detected via SPD</li>
+<li>CPU Core Ratio (/Per CCX)</li>
+<li><strong>TPU</strong>: The TPU automatically overclocks the frequency and voltage of the CPU to enhance the system performance<ul>
+<li>Keep Current Settings without changing anything</li>
+<li>TPU I, II</li>
+</ul>
+</li>
+<li>Performance Bias: different values may help different software's performance<ul>
+<li>Auto, None</li>
+<li>CBR15 Gentle, Aida/Geekbench, CBR15 Aggressive</li>
+</ul>
+</li>
+<li><strong>Precision Boost Overdrive</strong><ul>
+<li>PBO Fmax Enhancer: <strong>Auto</strong>, Enabled, Disabled</li>
+<li>Precision Boost Overdrive: <strong>Auto</strong>, Diskabled, <strong>Enabled</strong>, Manual<ul>
+<li>Manual<ul>
+<li>PPT Limit: (Watt)</li>
+<li>TDC Limit</li>
+<li>EDC Limit</li>
+</ul>
+</li>
+<li>Enabled：感觉比 Auto 性能有所提升</li>
+</ul>
+</li>
+<li>PBO Scalar: <strong>Auto</strong>, Manual<ul>
+<li>Manual: Customized Precision Boost Overdrive Scalar: 1-10 x</li>
+</ul>
+</li>
+<li><strong>Curve Optimizer</strong>:<ul>
+<li>all cores</li>
+<li>All core curve optimizer sign: negative</li>
+<li>All core curve optimizer magnitude: 30（适用于5800x，不同cpu不一样）</li>
+</ul>
+</li>
+<li>Platform Thermal Throttle Limit: Auto, Manual<ul>
+<li>Manual, 填数字</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>DRAM Timing Control</strong> &gt;</li>
+<li>DIGI+ VRAM</li>
+<li>VDDCR CPU Voltage: 1.456V<ul>
+<li>Manual</li>
+<li>Offset mode<ul>
+<li>Sign</li>
+<li>Voltage</li>
+</ul>
+</li>
+<li>VDDCR SOC Voltage: 0.975V</li>
+<li>DRAM Voltage: 1.2V</li>
+</ul>
+</li>
+</ul>
+<p>Boot 相关</p>
+<ul>
+<li>Boot/CSM: 开启 Above Resize BAR 需要关闭<ul>
+<li>Enable to support the non-UEFI driver add-on devices or the Windows UEFI mode</li>
+<li><strong>Disable</strong> to fully support the Windows secure update and secure boot</li>
+</ul>
+</li>
+<li><strong>Fast Boot</strong>: enables or disables boot with initialization of a minimal set of devices required to launch active boot option. Has no effect for BBS boot options<ul>
+<li>Next Boot after AC Power Loss，默认 Normal Boot</li>
+</ul>
+</li>
+<li>Bootup NumLock State：这也是为什么计算机正常开机可以通过观察键盘 NumLock 状态知道</li>
+</ul>
+<h3 id="机箱风扇太吵">机箱风扇太吵<a class="headerlink" href="#机箱风扇太吵" title="Permanent link">&para;</a></h3>
+<ul>
+<li>CPU双塔散热器两个风扇通过2合一线连接在CPU_FAN上（CPU_OPT没有使用）</li>
+<li>机箱顶部两个白色风扇和前面板三个风扇装在 AIO_PUMP上（主要噪音来源）</li>
+<li>尾部风扇接在 CHA_FAN1，所以CHA_FAN2（三个）没有使用</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">CHA_FAN含义</p>
+<p>CHA是chassis的缩写，表示机箱。合起来即表示机箱风扇</p>
+</div>
+<p>在主板BIOS中调整风扇曲线即可（简单模式EZ Mode首页就能看到QFAN Control）。</p>
+<p>返现原因是<strong>插在 AIO_PUMP 上的风扇默认是满速的</strong>
+<img alt="image.png" src="https://imagebed.yfycloud.site/2025/12/94fb287c5f495933d507a600c8a4e30a.png" /></p>
+<h4 id="对应-fanctrl">对应 fanctrl<a class="headerlink" href="#对应-fanctrl" title="Permanent link">&para;</a></h4>
+<p>linux 下可以通过 fanctrl 调节风扇速度</p>
+<p>glances 中看到的 nct6798 <strong>1-6</strong> 对应 hwmon2/pwm<strong>X</strong>， 配置文件示例。</p>
+<ul>
+<li>主要需要知道<strong>控制风扇的设备（如 nct6798）位于 hwmonX 多少</strong>。这个更改了硬件，比如插入一个 pcie 的 sata 扩展卡，可能会导致变化。比如从 hwmon2 变为 hwmon4。</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>$ pwmconfig
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>Found the following devices:
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>   hwmon0 is nvme
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>   hwmon1 is nvme
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>   hwmon2 is asus
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>   hwmon3 is asusec
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>   hwmon4 is nct6798
+</span></code></pre></div>
+<ul>
+<li>第二就是知道 CPU FAN，机箱 FAN，水冷 FAN 对应 pwmX, 和 fanX_input。前者是 output，控制风扇转速，后者是输入，从中可以读取到风扇转速。</li>
+<li>最后是知道根据什么传感器的温度进行控制，示例中使用的是 hwmon3/temp2_input。知道编号的方式是，运行 <code>pwmconfig</code>，它在确定了上两步后，会让你配置每个风扇，此时会显示所有传感器当前的数值。根据这些数字和 glances 中对应（比如 AMD 的温度可能是 ccd, cctrl）</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>INTERVAL=10
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>DEVPATH=hwmon2=devices/platform/nct6775.656 hwmon3=devices/platform/asus-ec-sensors
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>DEVNAME=hwmon2=nct6798 hwmon3=asusec
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>FCTEMPS=hwmon2/pwm5=hwmon3/temp2_input hwmon2/pwm1=hwmon3/temp2_input hwmon2/pwm2=hwmon3/temp2_input
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>#
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>FCFANS= hwmon2/pwm5=hwmon2/fan5_input hwmon2/pwm1=hwmon2/fan1_input hwmon2/pwm2=hwmon2/fan2_input
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>#MINTEMP=hwmon2/pwm5=40 hwmon2/pwm1=40 hwmon2/pwm2=40
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>MINTEMP=hwmon2/pwm5=45 hwmon2/pwm1=45 hwmon2/pwm2=45
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>#MAXTEMP=hwmon2/pwm5=60 hwmon2/pwm1=60 hwmon2/pwm2=70
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>MAXTEMP=hwmon2/pwm5=95 hwmon2/pwm1=95 hwmon2/pwm2=95
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>
+</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>MINSTART=hwmon2/pwm5=36 hwmon2/pwm1=36 hwmon2/pwm2=36
+</span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>MINSTOP=hwmon2/pwm5=60 hwmon2/pwm1=60 hwmon2/pwm2=60
+</span><span id="__span-1-15"><a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>
+</span><span id="__span-1-16"><a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a>#MAXPWM=hwmon2/pwm5=120 hwmon2/pwm1=150 hwmon2/pwm2=255
+</span><span id="__span-1-17"><a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a>MAXPWM=hwmon2/pwm5=255 hwmon2/pwm1=255 hwmon2/pwm2=255
+</span></code></pre></div>
+<p>转速调节</p>
+<ul>
+<li>风扇低于 1000 转，基本上声音都很小</li>
+<li>MINPWN 表示风扇的停转 pwm</li>
+<li>MAXPWM 最好不要修改，默认 255 即可。否则遇到负载很大，可能导致解热能力不够（遇到过一次温度过高电脑重启进入 BIOS 情况）</li>
+<li>调节 MINTEMP 和 MINSTOP 即可。简单起见，可以把 MINPWM（MINSTART）和MINSTOP 设置成一样的，设置成一个噪音比较小的水平即可。</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>    PWM ^
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>    255 +
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>        |
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>        |
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>        |                             ,-------------- MAXPWM
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>        |                           ,&#39;.
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>        |                         ,&#39;  .
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>        |                       ,&#39;    .
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>        |                     ,&#39;      .
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>        |                   ,&#39;        .
+</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>        |                 ,&#39;          .
+</span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>        |       MINSTOP .&#39;            .
+</span><span id="__span-2-13"><a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>        |               |             .
+</span><span id="__span-2-14"><a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a>        |               |             .
+</span><span id="__span-2-15"><a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a>        |               |             .
+</span><span id="__span-2-16"><a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a>   MINPWM |---------------&#39;             .
+</span><span id="__span-2-17"><a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a>        |               .             .
+</span><span id="__span-2-18"><a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a>        |               .             .
+</span><span id="__span-2-19"><a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a>        |               .             .
+</span><span id="__span-2-20"><a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a>      0 +---------------+-------------+----------------&gt;
+</span><span id="__span-2-21"><a id="__codelineno-2-21" name="__codelineno-2-21" href="#__codelineno-2-21"></a>                     MINTEMP       MAXTEMP            t (degree C)
+</span></code></pre></div>
+<h5 id="hwmon-会发生变化">hwmon 会发生变化<a class="headerlink" href="#hwmon-会发生变化" title="Permanent link">&para;</a></h5>
+<p>遇到 fancontrol 服务报错</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>Oct 27 16:48:31 ryzen-pve fancontrol[19734]: Device path of hwmon2 has changed
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>Oct 27 16:48:31 ryzen-pve fancontrol[19734]: Device name of hwmon2 has changed
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>Oct 27 16:48:31 ryzen-pve fancontrol[19734]: Configuration appears to be outdated, please run pwmconfig again
+</span></code></pre></div>
+<p>现在确实变成 hwmon4 了</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>Found the following devices:
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>   hwmon0 is nvme
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>   hwmon1 is nvme
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>   hwmon2 is asus
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>   hwmon3 is asusec
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>   hwmon4 is nct6798
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>Found the following PWM controls:
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>   hwmon4/pwm1           current value: 255
+</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>   hwmon4/pwm2           current value: 255
+</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>   hwmon4/pwm3           current value: 255
+</span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>   hwmon4/pwm4           current value: 255
+</span><span id="__span-4-13"><a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>   hwmon4/pwm5           current value: 255
+</span><span id="__span-4-14"><a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a>   hwmon4/pwm6           current value: 255
+</span><span id="__span-4-15"><a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a>
+</span><span id="__span-4-16"><a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a>Giving the fans some time to reach full speed...
+</span><span id="__span-4-17"><a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a>Found the following fan sensors:
+</span><span id="__span-4-18"><a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a>   hwmon3/fan1_input     current speed: 3101 RPM
+</span><span id="__span-4-19"><a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a>   hwmon4/fan1_input     current speed: 1872 RPM
+</span><span id="__span-4-20"><a id="__codelineno-4-20" name="__codelineno-4-20" href="#__codelineno-4-20"></a>   hwmon4/fan2_input     current speed: 1558 RPM
+</span><span id="__span-4-21"><a id="__codelineno-4-21" name="__codelineno-4-21" href="#__codelineno-4-21"></a>   hwmon4/fan3_input     current speed: 0 ... skipping!
+</span><span id="__span-4-22"><a id="__codelineno-4-22" name="__codelineno-4-22" href="#__codelineno-4-22"></a>   hwmon4/fan4_input     current speed: 0 ... skipping!
+</span><span id="__span-4-23"><a id="__codelineno-4-23" name="__codelineno-4-23" href="#__codelineno-4-23"></a>   hwmon4/fan5_input     current speed: 1614 RPM
+</span><span id="__span-4-24"><a id="__codelineno-4-24" name="__codelineno-4-24" href="#__codelineno-4-24"></a>   hwmon4/fan6_input     current speed: 0 ... skipping!
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>It appears that fan hwmon4/fan1_input
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>    is controlled by pwm hwmon4/pwm1
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>Would you like to generate a detailed correlation (y)?
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>    PWM 255 FAN 1846
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>    PWM 240 FAN 1797
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>    PWM 225 FAN 1728
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>    PWM 210 FAN 1650
+</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>    PWM 195 FAN 1573
+</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>    PWM 180 FAN 1500
+</span><span id="__span-5-11"><a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>    PWM 165 FAN 1388
+</span><span id="__span-5-12"><a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>    PWM 150 FAN 1308
+</span><span id="__span-5-13"><a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a>    PWM 135 FAN 1198
+</span><span id="__span-5-14"><a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a>    PWM 120 FAN 1112
+</span><span id="__span-5-15"><a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a>    PWM 105 FAN 976
+</span><span id="__span-5-16"><a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a>    PWM 90 FAN 880
+</span><span id="__span-5-17"><a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a>    PWM 75 FAN 751
+</span><span id="__span-5-18"><a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a>    PWM 60 FAN 694
+</span><span id="__span-5-19"><a id="__codelineno-5-19" name="__codelineno-5-19" href="#__codelineno-5-19"></a>    PWM 45 FAN 687
+</span><span id="__span-5-20"><a id="__codelineno-5-20" name="__codelineno-5-20" href="#__codelineno-5-20"></a>    PWM 30 FAN 685
+</span><span id="__span-5-21"><a id="__codelineno-5-21" name="__codelineno-5-21" href="#__codelineno-5-21"></a>    PWM 28 FAN 685
+</span><span id="__span-5-22"><a id="__codelineno-5-22" name="__codelineno-5-22" href="#__codelineno-5-22"></a>    PWM 26 FAN 684
+</span><span id="__span-5-23"><a id="__codelineno-5-23" name="__codelineno-5-23" href="#__codelineno-5-23"></a>    PWM 24 FAN 686
+</span><span id="__span-5-24"><a id="__codelineno-5-24" name="__codelineno-5-24" href="#__codelineno-5-24"></a>    PWM 22 FAN 686
+</span><span id="__span-5-25"><a id="__codelineno-5-25" name="__codelineno-5-25" href="#__codelineno-5-25"></a>    PWM 20 FAN 686
+</span><span id="__span-5-26"><a id="__codelineno-5-26" name="__codelineno-5-26" href="#__codelineno-5-26"></a>    PWM 18 FAN 685
+</span><span id="__span-5-27"><a id="__codelineno-5-27" name="__codelineno-5-27" href="#__codelineno-5-27"></a>    PWM 16 FAN 684
+</span><span id="__span-5-28"><a id="__codelineno-5-28" name="__codelineno-5-28" href="#__codelineno-5-28"></a>    PWM 14 FAN 685
+</span><span id="__span-5-29"><a id="__codelineno-5-29" name="__codelineno-5-29" href="#__codelineno-5-29"></a>    PWM 12 FAN 685
+</span><span id="__span-5-30"><a id="__codelineno-5-30" name="__codelineno-5-30" href="#__codelineno-5-30"></a>    PWM 10 FAN 685
+</span><span id="__span-5-31"><a id="__codelineno-5-31" name="__codelineno-5-31" href="#__codelineno-5-31"></a>    PWM 8 FAN 683
+</span><span id="__span-5-32"><a id="__codelineno-5-32" name="__codelineno-5-32" href="#__codelineno-5-32"></a>    PWM 6 FAN 683
+</span><span id="__span-5-33"><a id="__codelineno-5-33" name="__codelineno-5-33" href="#__codelineno-5-33"></a>    PWM 4 FAN 686
+</span><span id="__span-5-34"><a id="__codelineno-5-34" name="__codelineno-5-34" href="#__codelineno-5-34"></a>    PWM 2 FAN 684
+</span><span id="__span-5-35"><a id="__codelineno-5-35" name="__codelineno-5-35" href="#__codelineno-5-35"></a>    PWM 0 FAN 682
+</span><span id="__span-5-36"><a id="__codelineno-5-36" name="__codelineno-5-36" href="#__codelineno-5-36"></a>
+</span><span id="__span-5-37"><a id="__codelineno-5-37" name="__codelineno-5-37" href="#__codelineno-5-37"></a>It appears that fan hwmon4/fan2_input
+</span><span id="__span-5-38"><a id="__codelineno-5-38" name="__codelineno-5-38" href="#__codelineno-5-38"></a>    is controlled by pwm hwmon4/pwm2
+</span><span id="__span-5-39"><a id="__codelineno-5-39" name="__codelineno-5-39" href="#__codelineno-5-39"></a>Would you like to generate a detailed correlation (y)?
+</span><span id="__span-5-40"><a id="__codelineno-5-40" name="__codelineno-5-40" href="#__codelineno-5-40"></a>    PWM 255 FAN 1551
+</span><span id="__span-5-41"><a id="__codelineno-5-41" name="__codelineno-5-41" href="#__codelineno-5-41"></a>    PWM 240 FAN 1496
+</span><span id="__span-5-42"><a id="__codelineno-5-42" name="__codelineno-5-42" href="#__codelineno-5-42"></a>    PWM 225 FAN 1433
+</span><span id="__span-5-43"><a id="__codelineno-5-43" name="__codelineno-5-43" href="#__codelineno-5-43"></a>    PWM 210 FAN 1377
+</span><span id="__span-5-44"><a id="__codelineno-5-44" name="__codelineno-5-44" href="#__codelineno-5-44"></a>    PWM 195 FAN 1300
+</span><span id="__span-5-45"><a id="__codelineno-5-45" name="__codelineno-5-45" href="#__codelineno-5-45"></a>    PWM 180 FAN 1267
+</span><span id="__span-5-46"><a id="__codelineno-5-46" name="__codelineno-5-46" href="#__codelineno-5-46"></a>    PWM 165 FAN 1212
+</span><span id="__span-5-47"><a id="__codelineno-5-47" name="__codelineno-5-47" href="#__codelineno-5-47"></a>    PWM 150 FAN 1136
+</span><span id="__span-5-48"><a id="__codelineno-5-48" name="__codelineno-5-48" href="#__codelineno-5-48"></a>    PWM 135 FAN 1086
+</span><span id="__span-5-49"><a id="__codelineno-5-49" name="__codelineno-5-49" href="#__codelineno-5-49"></a>    PWM 120 FAN 1023
+</span><span id="__span-5-50"><a id="__codelineno-5-50" name="__codelineno-5-50" href="#__codelineno-5-50"></a>    PWM 105 FAN 951
+</span><span id="__span-5-51"><a id="__codelineno-5-51" name="__codelineno-5-51" href="#__codelineno-5-51"></a>    PWM 90 FAN 904
+</span><span id="__span-5-52"><a id="__codelineno-5-52" name="__codelineno-5-52" href="#__codelineno-5-52"></a>    PWM 75 FAN 836
+</span><span id="__span-5-53"><a id="__codelineno-5-53" name="__codelineno-5-53" href="#__codelineno-5-53"></a>    PWM 60 FAN 750
+</span><span id="__span-5-54"><a id="__codelineno-5-54" name="__codelineno-5-54" href="#__codelineno-5-54"></a>    PWM 45 FAN 683
+</span><span id="__span-5-55"><a id="__codelineno-5-55" name="__codelineno-5-55" href="#__codelineno-5-55"></a>    PWM 30 FAN 605
+</span><span id="__span-5-56"><a id="__codelineno-5-56" name="__codelineno-5-56" href="#__codelineno-5-56"></a>    PWM 28 FAN 580
+</span><span id="__span-5-57"><a id="__codelineno-5-57" name="__codelineno-5-57" href="#__codelineno-5-57"></a>    PWM 26 FAN 558
+</span><span id="__span-5-58"><a id="__codelineno-5-58" name="__codelineno-5-58" href="#__codelineno-5-58"></a>    PWM 24 FAN 549
+</span><span id="__span-5-59"><a id="__codelineno-5-59" name="__codelineno-5-59" href="#__codelineno-5-59"></a>    PWM 22 FAN 538
+</span><span id="__span-5-60"><a id="__codelineno-5-60" name="__codelineno-5-60" href="#__codelineno-5-60"></a>    PWM 20 FAN 524
+</span><span id="__span-5-61"><a id="__codelineno-5-61" name="__codelineno-5-61" href="#__codelineno-5-61"></a>    PWM 18 FAN 508
+</span><span id="__span-5-62"><a id="__codelineno-5-62" name="__codelineno-5-62" href="#__codelineno-5-62"></a>    PWM 16 FAN 504
+</span><span id="__span-5-63"><a id="__codelineno-5-63" name="__codelineno-5-63" href="#__codelineno-5-63"></a>    PWM 14 FAN 486
+</span><span id="__span-5-64"><a id="__codelineno-5-64" name="__codelineno-5-64" href="#__codelineno-5-64"></a>    PWM 12 FAN 478
+</span><span id="__span-5-65"><a id="__codelineno-5-65" name="__codelineno-5-65" href="#__codelineno-5-65"></a>    PWM 10 FAN 458
+</span><span id="__span-5-66"><a id="__codelineno-5-66" name="__codelineno-5-66" href="#__codelineno-5-66"></a>    PWM 8 FAN 448
+</span><span id="__span-5-67"><a id="__codelineno-5-67" name="__codelineno-5-67" href="#__codelineno-5-67"></a>    PWM 6 FAN 436
+</span><span id="__span-5-68"><a id="__codelineno-5-68" name="__codelineno-5-68" href="#__codelineno-5-68"></a>    PWM 4 FAN 425
+</span><span id="__span-5-69"><a id="__codelineno-5-69" name="__codelineno-5-69" href="#__codelineno-5-69"></a>    PWM 2 FAN 409
+</span><span id="__span-5-70"><a id="__codelineno-5-70" name="__codelineno-5-70" href="#__codelineno-5-70"></a>    PWM 0 FAN 389
+</span><span id="__span-5-71"><a id="__codelineno-5-71" name="__codelineno-5-71" href="#__codelineno-5-71"></a>
+</span><span id="__span-5-72"><a id="__codelineno-5-72" name="__codelineno-5-72" href="#__codelineno-5-72"></a># 最吵的
+</span><span id="__span-5-73"><a id="__codelineno-5-73" name="__codelineno-5-73" href="#__codelineno-5-73"></a>It appears that fan hwmon4/fan5_input
+</span><span id="__span-5-74"><a id="__codelineno-5-74" name="__codelineno-5-74" href="#__codelineno-5-74"></a>    is controlled by pwm hwmon4/pwm5
+</span><span id="__span-5-75"><a id="__codelineno-5-75" name="__codelineno-5-75" href="#__codelineno-5-75"></a>Would you like to generate a detailed correlation (y)?
+</span><span id="__span-5-76"><a id="__codelineno-5-76" name="__codelineno-5-76" href="#__codelineno-5-76"></a>    PWM 255 FAN 1582
+</span><span id="__span-5-77"><a id="__codelineno-5-77" name="__codelineno-5-77" href="#__codelineno-5-77"></a>    PWM 240 FAN 1551
+</span><span id="__span-5-78"><a id="__codelineno-5-78" name="__codelineno-5-78" href="#__codelineno-5-78"></a>    PWM 225 FAN 1493
+</span><span id="__span-5-79"><a id="__codelineno-5-79" name="__codelineno-5-79" href="#__codelineno-5-79"></a>    PWM 210 FAN 1398
+</span><span id="__span-5-80"><a id="__codelineno-5-80" name="__codelineno-5-80" href="#__codelineno-5-80"></a>    PWM 195 FAN 1335
+</span><span id="__span-5-81"><a id="__codelineno-5-81" name="__codelineno-5-81" href="#__codelineno-5-81"></a>    PWM 180 FAN 1275
+</span><span id="__span-5-82"><a id="__codelineno-5-82" name="__codelineno-5-82" href="#__codelineno-5-82"></a>    PWM 165 FAN 1201
+</span><span id="__span-5-83"><a id="__codelineno-5-83" name="__codelineno-5-83" href="#__codelineno-5-83"></a>    PWM 150 FAN 1150
+</span><span id="__span-5-84"><a id="__codelineno-5-84" name="__codelineno-5-84" href="#__codelineno-5-84"></a>    PWM 135 FAN 1073
+</span><span id="__span-5-85"><a id="__codelineno-5-85" name="__codelineno-5-85" href="#__codelineno-5-85"></a>    PWM 120 FAN 993
+</span><span id="__span-5-86"><a id="__codelineno-5-86" name="__codelineno-5-86" href="#__codelineno-5-86"></a>    PWM 105 FAN 893
+</span><span id="__span-5-87"><a id="__codelineno-5-87" name="__codelineno-5-87" href="#__codelineno-5-87"></a>    PWM 90 FAN 796
+</span><span id="__span-5-88"><a id="__codelineno-5-88" name="__codelineno-5-88" href="#__codelineno-5-88"></a>    PWM 75 FAN 680
+</span><span id="__span-5-89"><a id="__codelineno-5-89" name="__codelineno-5-89" href="#__codelineno-5-89"></a>    PWM 60 FAN 579
+</span><span id="__span-5-90"><a id="__codelineno-5-90" name="__codelineno-5-90" href="#__codelineno-5-90"></a>    PWM 45 FAN 448
+</span><span id="__span-5-91"><a id="__codelineno-5-91" name="__codelineno-5-91" href="#__codelineno-5-91"></a>    PWM 30 FAN 318
+</span><span id="__span-5-92"><a id="__codelineno-5-92" name="__codelineno-5-92" href="#__codelineno-5-92"></a>    PWM 28 FAN 245
+</span><span id="__span-5-93"><a id="__codelineno-5-93" name="__codelineno-5-93" href="#__codelineno-5-93"></a>    PWM 26 FAN 224
+</span><span id="__span-5-94"><a id="__codelineno-5-94" name="__codelineno-5-94" href="#__codelineno-5-94"></a>    PWM 24 FAN 194
+</span><span id="__span-5-95"><a id="__codelineno-5-95" name="__codelineno-5-95" href="#__codelineno-5-95"></a>    PWM 22 FAN 0
+</span><span id="__span-5-96"><a id="__codelineno-5-96" name="__codelineno-5-96" href="#__codelineno-5-96"></a>    Fan Stopped at PWM = 22
+</span></code></pre></div>
+<h3 id="chipset温度69摄氏度">chipset温度69摄氏度<a class="headerlink" href="#chipset温度69摄氏度" title="Permanent link">&para;</a></h3>
+<p>chipset 温度基本一直维持在69 度。观察传感器数据，Chipset 风扇貌似一直是一个满转的状态 3149R，不过并没有噪音。</p>
+<p>了解到是正常现象
+<a href="https://www.reddit.com/r/Amd/comments/cd6ze1/what_are_normal_x570_chipset_temperatures/">What are normal X570 chipset temperatures? : r/Amd (reddit.com)</a></p>
+<div class="admonition note">
+<p class="admonition-title">chipset风扇</p>
+<p>chipset也有风扇，接在4pin PCH_FAN 上
+<img alt="image.png" src="https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/20240405163213.png" /></p>
+</div>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+  
+
+
+
+      
+    </article>
+  </div>
+
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+        
+      
+      <nav class="md-footer__inner md-grid" aria-label="页脚" >
+        
+          
+          <a href="../../../../../%E5%8D%9A%E5%AE%A2--%E7%BD%91%E7%BB%9C/2024/03/15/MTU%E7%9A%84%E9%82%A3%E4%BA%9B%E5%9D%91%28%E4%BA%8C%E5%B1%82%E9%9A%A7%E9%81%93%E7%BB%84%E7%BD%91%29/" class="md-footer__link md-footer__link--prev" aria-label="上一页: MTU 的那些坑(二层隧道组网)">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                上一页
+              </span>
+              <div class="md-ellipsis">
+                MTU 的那些坑(二层隧道组网)
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../../../../../%E5%8D%9A%E5%AE%A2--%E7%BD%91%E7%BB%9C/2024/04/21/%E4%BE%BF%E6%90%BA%E8%B7%AF%E7%94%B1%E5%99%A8/" class="md-footer__link md-footer__link--next" aria-label="下一页: 便携路由器">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                下一页
+              </span>
+              <div class="md-ellipsis">
+                便携路由器
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/TheRainstorm" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../../..", "features": ["navigation.instant", "navigation.instant.progress", "navigation.tracking", "navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.footer", "content.code.copy", "toc.follow", "toc.integrate"], "search": "../../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../../../../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

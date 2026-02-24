@@ -1,0 +1,1834 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="记录一些关于数学、计算机的知识，以及一些日常。">
+      
+      
+      
+        <link rel="canonical" href="https://yfy.cqu.ai/%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/2024/10/07/%E4%BD%93%E9%AA%8C%E7%BA%AF%20IPv6%20%E7%BD%91%E7%BB%9C/">
+      
+      
+        <link rel="prev" href="../../../../../%E5%8D%9A%E5%AE%A2--%E7%BD%91%E7%BB%9C/2024/10/03/linux%20%E5%88%9B%E5%BB%BA%E4%BB%A3%E7%90%86%E6%9C%8D%E5%8A%A1%E5%99%A8/">
+      
+      
+        <link rel="next" href="../../15/%E4%BD%BF%E7%94%A8%E5%85%B6%E5%AE%83%E8%AE%BE%E5%A4%87%E4%BD%9C%E4%B8%BA%E6%89%A9%E5%B1%95%E5%B1%8F%E5%B9%95/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.3">
+    
+    
+      
+        <title>体验纯 IPv6 网络 - Rain 的随笔</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#纯-ipv6-网站体验排行榜" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../../../../.." title="Rain 的随笔" class="md-header__button md-logo" aria-label="Rain 的随笔" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Rain 的随笔
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              体验纯 IPv6 网络
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    
+  
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="../../../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  博客
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../about/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  关于
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../tags/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  标签
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../series/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  系列
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../tools/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  工具
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../archive/2026/" class="md-tabs__link">
+          
+  
+  
+  归档
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../category/%E4%B8%AA%E4%BA%BA/" class="md-tabs__link">
+          
+  
+  
+  分类
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" hidden>
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../../.." title="Rain 的随笔" class="md-nav__button md-logo" aria-label="Rain 的随笔" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Rain 的随笔
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+    
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      <a href="../../../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    博客
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    关于
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../tags/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    标签
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../series/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    系列
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../tools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    工具
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    归档
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    归档
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2026/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2026
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2025/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2025
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2024/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2024
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2023/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2023
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2022/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2022
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2021/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2021
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2020/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2020
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2019/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2019
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    分类
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    分类
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E4%B8%AA%E4%BA%BA/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    个人
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E5%8D%9A%E5%AE%A2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    博客
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E5%8D%9A%E5%AE%A2--%E7%BD%91%E7%BB%9C/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    博客 &amp; 网络
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    学习笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    折腾记录
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    课程笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%85%B7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    软件工具
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E9%98%85%E8%AF%BB/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    阅读
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+  <div class="md-content md-content--post" data-md-component="content">
+    <div class="md-sidebar md-sidebar--post" data-md-component="sidebar" data-md-type="navigation">
+      <div class="md-sidebar__scrollwrap">
+        <div class="md-sidebar__inner md-post">
+          <nav class="md-nav md-nav--primary">
+            <div class="md-post__back">
+              <div class="md-nav__title md-nav__container">
+                <a href="../../../../.." class="md-nav__link">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+                  <span class="md-ellipsis">
+                    回到主页
+                  </span>
+                </a>
+              </div>
+            </div>
+            
+            <ul class="md-post__meta md-nav__list">
+              <li class="md-nav__item md-nav__item--section">
+                <div class="md-post__title">
+                  <span class="md-ellipsis">
+                    元数据
+                  </span>
+                </div>
+                <nav class="md-nav">
+                  <ul class="md-nav__list">
+                    <li class="md-nav__item">
+                      <div class="md-nav__link">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 19H5V8h14m-3-7v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1V1m-1 11h-5v5h5z"/></svg>
+                        <time datetime="2024-10-07 19:26:22+00:00" class="md-ellipsis">2024年10月7日</time>
+                      </div>
+                    </li>
+                    
+                    
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 3v15h3V3zm3 2 4 13 3-1-4-13zM5 5v13h3V5zM3 19v2h18v-2z"/></svg>
+                          <span class="md-ellipsis">
+                            分类于
+                            
+                              <a href="../../../../../category/%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/">折腾记录</a></span>
+                        </div>
+                      </li>
+                    
+                    
+                      
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20a8 8 0 0 0 8-8 8 8 0 0 0-8-8 8 8 0 0 0-8 8 8 8 0 0 0 8 8m0-18a10 10 0 0 1 10 10 10 10 0 0 1-10 10C6.47 22 2 17.5 2 12A10 10 0 0 1 12 2m.5 5v5.25l4.5 2.67-.75 1.23L11 13V7z"/></svg>
+                          <span class="md-ellipsis">
+                            
+                              需要 8 分钟阅读时间
+                            
+                          </span>
+                        </div>
+                      </li>
+                    
+                  </ul>
+                </nav>
+              </li>
+            </ul>
+            
+          </nav>
+          
+            
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#纯-ipv6-网站体验排行榜" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        纯 IPv6 网站体验排行榜
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="纯 IPv6 网站体验排行榜">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#国外" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        国外
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#国内" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        国内
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#openwrt-he-tunnel-配置" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OpenWRT HE tunnel 配置
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="OpenWRT HE tunnel 配置">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#参考资料" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        参考资料
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#安装依赖" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        安装依赖
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6in4-接口配置" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6in4 接口配置
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lan-接口设置" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        lan 接口设置
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#路由问题" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        路由问题
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#防火墙问题rs-ra-不通" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        防火墙问题：RS, RA 不通
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dns-问题" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DNS 问题
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="DNS 问题">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#dns-下发" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        dns 下发
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dns-劫持" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        dns 劫持
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dot-doh" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DoT, DoH?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dns-污染" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        dns 污染
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#二层组网" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        二层组网
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="二层组网">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#vxlan-本来就可以复用链路" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        vxlan 本来就可以复用链路
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ap-节点" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AP 节点
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#遇到的问题" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        遇到的问题
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+          
+        </div>
+      </div>
+    </div>
+    <article class="md-content__inner md-typeset">
+      
+        
+  
+
+
+  <nav class="md-tags" >
+    
+      
+      
+      
+      
+        <a href="../../../../../tags/#tag:ipv6" class="md-tag">ipv6</a>
+      
+    
+  </nav>
+
+
+
+  <h1>体验纯 IPv6 网络</h1>
+
+<p>起因是给 wolf 的开发者提建议时，涉及到了通过 HE(Hurricane Electric) 提供的 6in4 服务接入 ipv6 网络 。既然给别人介绍了，感觉自己不能没有实操过，因此就尝试在自己的网络连入 HE。</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>I want to streaming over ipv6 network. However wolf only listen on ipv4 for now.
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>ABeltramo — 2024/10/06 23:42
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>Probably not, I don&#39;t have IPv6 in my LAN/WAN so not sure how to implement it.. Might be worth opening up an issue in Github!
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>TheRainstorm — 2024/10/06 23:49
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>Doesn&#39;t your ISP provide IPv6? Otherwise, enabling IPv6 should only require enabling it on the home router.
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>ABeltramo — 昨天00:59
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>Nope, no IPv6 over here..
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>TheRainstorm — 昨天14:56
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>If you want to try out IPv6, there&#39;s another way to get the full IPv6 experience, which is through a 6in4 tunnel. Some free services, like Hurricane Electric, allow you to connect to the IPv6 network. However, this requires you to have a public IPv4 address and a router that supports 6in4 functionality (if you&#39;re using open-source router firmware like OpenWRT, it is supported by default).
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>I can provide you with some useful links:
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>https://www.youtube.com/watch?v=LJPXz8eA3b8&amp;t=64s
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>https://openwrt.org/docs/guide-user/network/ipv6/ipv6tunnel-luci
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>
+</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>ABeltramo — 昨天15:02
+</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>Thanks, that&#39;s probably my best bet on trying IPv6. I have a WAN IPv4 IP and I use OPNSense in my custom router so it should be possible.
+</span><span id="__span-0-21"><a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>I&#39;m working on a few other bits at the moment, not sure when I&#39;ll have the time to look properly into this
+</span></code></pre></div>
+<p>接着意识到到，既然我可以 6in4 到国外，岂不是可以直接访问国外 v6 网站？不过由于只有 v6 地址，因此只能访问纯 ipv6 网站。于是我就好奇，在 2024 年纯 ipv6 的体验是怎么样的，因此就有了这篇博客。</p>
+<p>秀下最后大大的 <strong>No IPv4 address detected</strong></p>
+<p><img alt="image.png" src="https://imagebed.yfycloud.site/2025/12/a41d966b21f47bca911ecf592dc98568.png" /></p>
+<p>并且 /48 的前缀，我可以划分 65536 个子网！</p>
+<!-- more -->
+
+<p>有用链接</p>
+<ul>
+<li>ipw.cn</li>
+<li>ipv6.test-ipv6.com</li>
+</ul>
+<h2 id="纯-ipv6-网站体验排行榜">纯 IPv6 网站体验排行榜<a class="headerlink" href="#纯-ipv6-网站体验排行榜" title="Permanent link">&para;</a></h2>
+<p>这里是最后使用手机接入一个纯 ipv6 网络后的体验</p>
+<h3 id="国外">国外<a class="headerlink" href="#国外" title="Permanent link">&para;</a></h3>
+<p>google 是真 nb，google 搜索，youtube 都支持 ipv6，并且体验还不错，搜索响应很快，能够提示推荐词，youtube 能观看 1080p 视频（跳转大概缓冲 4s）。</p>
+<p>其中 youtube 刚开始图标显示有问题，后来就完全正常了。</p>
+<p><img alt="image.png" src="https://imagebed.yfycloud.site/2025/12/22d279dc0b3870bd5d02854fb51e1cad.png" /></p>
+<p>支持</p>
+<ul>
+<li>google 系（google 搜索，YouTube.com）</li>
+<li>telegram</li>
+</ul>
+<p>不支持</p>
+<ul>
+<li>discord</li>
+<li>x.com</li>
+<li>reddit</li>
+<li>twitch</li>
+<li>instagram</li>
+</ul>
+<h3 id="国内">国内<a class="headerlink" href="#国内" title="Permanent link">&para;</a></h3>
+<p>淘宝系也是真 nb，手机 app 流畅的一笔，基本用不出区别。并且软件甚至会检测你的 ip 让你切换到全球地区</p>
+<p><img alt="image.png" src="https://imagebed.yfycloud.site/2025/12/32cd01e4e4660fa652c569e9580f0fca.png" /></p>
+<p>视频网站</p>
+<ul>
+<li>youku.com：优酷牛逼，国内唯一一个能够使用的视频网站</li>
+<li>B 站不支持（网页手机 app 都不行），网上好像说 CDN 支持</li>
+<li>爱奇艺、西瓜视频、抖音都不支持</li>
+</ul>
+<p>聊天软件</p>
+<ul>
+<li>微信，qq 都支持</li>
+</ul>
+<p>购物</p>
+<ul>
+<li>支付宝也支持<ul>
+<li>淘票票小程序支持，但是有点卡</li>
+</ul>
+</li>
+<li>微信</li>
+</ul>
+<p>资讯</p>
+<ul>
+<li>支持<ul>
+<li>知乎</li>
+<li>微博</li>
+</ul>
+</li>
+<li>不支持<ul>
+<li>贴吧</li>
+<li>小红书</li>
+<li>豆瓣</li>
+</ul>
+</li>
+</ul>
+<h2 id="openwrt-he-tunnel-配置">OpenWRT HE tunnel 配置<a class="headerlink" href="#openwrt-he-tunnel-配置" title="Permanent link">&para;</a></h2>
+<p>计划是通过 HE tunnel 获得一个 IPv6 的 PD 前缀（HE 默认给一个 64，可以申请一个 48），然后创建一个新的 LAN，作为 RA server 和 DHCPv6 server，为 lan 内所有设备分配 ipv6 地址。</p>
+<p><img alt="image.png" src="https://imagebed.yfycloud.site/2025/12/84915f035cb8029d7563321e30200678.png" /></p>
+<p>最后效果
+<img alt="image.png" src="https://imagebed.yfycloud.site/2025/12/ef119dcf41154b2f1a48f89ad40cc0a8.png" /></p>
+<h3 id="参考资料">参考资料<a class="headerlink" href="#参考资料" title="Permanent link">&para;</a></h3>
+<p><a href="https://www.youtube.com/watch?v=LJPXz8eA3b8">https://www.youtube.com/watch?v=LJPXz8eA3b8</a>
+<a href="https://openwrt.org/docs/guide-user/network/ipv6/ipv6tunnel-luci">[OpenWrt Wiki] IPv6 with Hurricane Electric using LuCI</a></p>
+<h3 id="安装依赖">安装依赖<a class="headerlink" href="#安装依赖" title="Permanent link">&para;</a></h3>
+<p>6in4 需要</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>opkg install 6in4
+</span></code></pre></div>
+<p>如果使用 PVE LXC 容器搭建的 openwrt，pve 中还需要另外 modprobe <code>sit, ip_tunnel</code> 模块</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>root@ryzen-pve ➜  ~ lsmod | grep -E &#39;ipv6|sit|ip_tunnel|nf_conntrack_ipv6&#39;
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>sit                    36864  0
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>tunnel4                12288  1 sit
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>nf_reject_ipv6         24576  1 nft_reject_inet
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>nf_defrag_ipv6         24576  1 nf_conntrack
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>ip_tunnel              32768  2 ip_gre,sit
+</span></code></pre></div>
+<h3 id="6in4-接口配置">6in4 接口配置<a class="headerlink" href="#6in4-接口配置" title="Permanent link">&para;</a></h3>
+<p><img alt="image.png" src="https://imagebed.yfycloud.site/2025/12/7cb3b1d9b7954c3a6b3bc5bab188cffd.png" /></p>
+<p>Advanced Setting 中不勾选使用默认路由，避免覆盖掉 WAN6 口的默认路由。</p>
+<blockquote>
+<p>Use default gateway: If unchecked, no default route is configured</p>
+</blockquote>
+<h3 id="lan-接口设置">lan 接口设置<a class="headerlink" href="#lan-接口设置" title="Permanent link">&para;</a></h3>
+<p>tunnel 起来后，需要创建一个 lan2 接口，作为 ra server 和 dhcpv6 server</p>
+<p>协议选择静态地址，和正常 lan 不同的是，我们不需要指定 ipv4 地址，因为我们要打造一个存 ipv4 环境。因此 ipv4 server 啥的都不需要勾选。</p>
+<p>分配 ipv6 prefix 长度选择 48（全部用掉），prefix filter 选择从 HE tunnel 接口获得
+<img alt="image.png" src="https://imagebed.yfycloud.site/2025/12/4f7b3638b075c3a4f807f8de4a3d6638.png" /></p>
+<p>不要开启 ipv4 dhcp server，选择 ignore
+<img alt="image.png" src="https://imagebed.yfycloud.site/2025/12/3030b516e0573fee41da85a042aa3493.png" /></p>
+<p>启用 ipv6 ra, dhcpv6 server
+<img alt="image.png" src="https://imagebed.yfycloud.site/2025/12/401d6e07b7d552798886e4d42024b6e6.png" /></p>
+<h3 id="路由问题">路由问题<a class="headerlink" href="#路由问题" title="Permanent link">&para;</a></h3>
+<p>6in4 tunnel 本质还是一个三层隧道。<strong>openwrt 对其配置也中少了一个叫做 source routing 的选项</strong>（dhcpv6 和 pppoe 都有该选项），作用是会根据源地址匹配默认路由。这样在有多个上游 v6 地址时，可以根据包的源地址选择不同上游接口出去。</p>
+<blockquote>
+<p>IPv6 Sourcing routing: Automatically handle multiple uplink interfaces using source-based policy routing.</p>
+</blockquote>
+<p>没有这个选项，加上我们关闭了默认路由，因此<strong>此时没有 ipv6 包会从隧道路由出去</strong>。</p>
+<p>由于 HE tunnel 的 prefix 是不会变的，因此手动设置即可</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>root@op1 ➜  ~ ip6 ro
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>default from 2001:470:fab1::/48 dev 6in4-HE_tunnel metric 1024 pref medium
+</span></code></pre></div>
+<p>因为这个 v6 <strong>前缀是可路由的</strong>，因此我可以在我的 op2 移动家宽网络测试 op1 lan2 接口的 v6 是否能通。</p>
+<p>果然是能通的，不过延迟来到了 569ms，感觉来回了两下美国。神奇的是 op2 lan 下设备延迟反而更低</p>
+<p>op2 路由器上测试</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>root@op2 ➜  ping 2001:470:fab1:0:be24:11ff:fec1:6c9d
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>PING 2001:470:fab1:0:be24:11ff:fec1:6c9d (2001:470:fab1:0:be24:11ff:fec1:6c9d): 56 data bytes
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>--- 2001:470:fab1:0:be24:11ff:fec1:6c9d ping statistics ---
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>5 packets transmitted, 5 packets received, 0% packet loss
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>round-trip min/avg/max = 562.041/569.224/594.678 ms
+</span></code></pre></div>
+<p>op2 lan 下设备测试，延迟只有 338 ms</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>$ ping 2001:470:fab1:0:be24:11ff:fec1:6c9d -t
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>正在 Ping 2001:470:fab1:0:be24:11ff:fec1:6c9d 具有 32 字节的数据:
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>2001:470:fab1:0:be24:11ff:fec1:6c9d 的 Ping 统计信息:
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>    数据包: 已发送 = 15，已接收 = 15，丢失 = 0 (0% 丢失)，
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>往返行程的估计时间(以毫秒为单位):
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>    最短 = 334ms，最长 = 369ms，平均 = 338ms
+</span></code></pre></div>
+<p>抓包都是从 pppoe-wan 口出去的，感觉唯一区别就是 src ip 不同。暂不清楚为何延迟有区别。</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>root@op2 ➜  ~ tcpdump -ni any icmp6 and host 2001:470:fab1:0:be24:11ff:fec1:6c9d
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>18:19:59.885930 pppoe-wan In  IP6 2001:470:fab1:0:be24:11ff:fec1:6c9d &gt; 2409:8a30:4ad:d140::10: ICMP6, echo reply, id 41070, seq 18, length 64
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>18:20:00.324036 pppoe-wan Out IP6 2409:8a30:4ad:d140::10 &gt; 2001:470:fab1:0:be24:11ff:fec1:6c9d: ICMP6, echo request, id 41070, seq 19, length 64
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>18:20:06.662907 eth1  In  IP6 2409:8a30:4ad:d140:5dfe:907a:ae21:23e8 &gt; 2001:470:fab1:0:be24:11ff:fec1:6c9d: ICMP6, echo request, id 1, seq 129, length 40
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>18:20:06.662958 pppoe-wan Out IP6 2409:8a30:4ad:d140:5dfe:907a:ae21:23e8 &gt; 2001:470:fab1:0:be24:11ff:fec1:6c9d: ICMP6, echo request, id 1, seq 129, length 40
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>18:20:06.996932 pppoe-wan In  IP6 2001:470:fab1:0:be24:11ff:fec1:6c9d &gt; 2409:8a30:4ad:d140:5dfe:907a:ae21:23e8: ICMP6, echo reply, id 1, seq 129, length 40
+</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>18:20:06.996975 eth1  Out IP6 2001:470:fab1:0:be24:11ff:fec1:6c9d &gt; 2409:8a30:4ad:d140:5dfe:907a:ae21:23e8: ICMP6, echo reply, id 1, seq 129, length 40
+</span></code></pre></div>
+<h3 id="防火墙问题rs-ra-不通">防火墙问题：RS, RA 不通<a class="headerlink" href="#防火墙问题rs-ra-不通" title="Permanent link">&para;</a></h3>
+<p>刚开始给创建的 lan 分配的一个单独的防火墙 zone，结果发现 op1 <strong>lan 下设备都无法获得 ipv6 地址</strong>。但是 op1 上 lan 接口有 ipv6 地址（并且测试是能够通过 HE tunnel 访问网络的）</p>
+<p>op1 上抓包是能看到 lan 下设备发送了 RS 请求的，但是路由器没有返回 RA。因此怀疑是防火墙问题。</p>
+<p>发现我创建的防火墙 input 默认是 reject，这导致 lan 下设备无法访问路由器自身。可能这使得路由器接收不到来自设备的所有 icmp6 包，而 ipv6 大量依赖 icmp6 进行工作，因此这可能就是原因。</p>
+<p>设置成 accept 后，果然 lan 下的设备就能获得获得 ipv6 地址了。</p>
+<p>思考后，发现我这里创建的 lan2 和我 原本的 lan 的行为基本是一摸一样的。我对原本 lan 的控制也适用于 lan2，因此简单起见，<strong>我将 HE_tunnel 划分为 WAN，lan2 划分为 LAN</strong>。</p>
+<h3 id="dns-问题">DNS 问题<a class="headerlink" href="#dns-问题" title="Permanent link">&para;</a></h3>
+<p>现在 lan 下设备能获得 ipv6 地址，但是还是不能上网。原因有这些</p>
+<ul>
+<li>默认 dns 为 op1 路由器 lan2 接口 ipv6 地址，使用该接口解析（国外域名）会得到 fake-ip</li>
+<li>手动改用其它 dns，仍然会被劫持</li>
+</ul>
+<h4 id="dns-下发">dns 下发<a class="headerlink" href="#dns-下发" title="Permanent link">&para;</a></h4>
+<p>openwrt 下发了本地接口作为 dns，我的本地 dns 使用了 fake ip 技术，没法直接使用</p>
+<p>解决：openwrt lan 接口添加自定义的 dns</p>
+<p>效果</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>无线局域网适配器 WLAN:
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>   连接特定的 DNS 后缀 . . . . . . . :
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>   描述. . . . . . . . . . . . . . . : Intel(R) Wi-Fi 6 AX201 160MHz
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>   物理地址. . . . . . . . . . . . . : 28-11-A8-27-40-3E
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>   DHCP 已启用 . . . . . . . . . . . : 是
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>   自动配置已启用. . . . . . . . . . : 是
+</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>   IPv6 地址 . . . . . . . . . . . . : 2001:470:fabxxxx:9b56(首选)
+</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>   临时 IPv6 地址. . . . . . . . . . : 2001:470:fabxxxx:f4ba(首选)
+</span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a>   本地链接 IPv6 地址. . . . . . . . : fe80::47f7:23bf:d0d9:506%3(首选)
+</span><span id="__span-7-11"><a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a>   自动配置 IPv4 地址  . . . . . . . : 169.254.23.70(首选)
+</span><span id="__span-7-12"><a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a>   子网掩码  . . . . . . . . . . . . : 255.255.0.0
+</span><span id="__span-7-13"><a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a>   默认网关. . . . . . . . . . . . . : fe80::9cc5:xxxx:8c2c%3
+</span><span id="__span-7-14"><a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a>   DHCPv6 IAID . . . . . . . . . . . : 69734824
+</span><span id="__span-7-15"><a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a>   DHCPv6 客户端 DUID  . . . . . . . : 00-01-00-01-29-89-29-F7-28-11-A8-27-40-3E
+</span><span id="__span-7-16"><a id="__codelineno-7-16" name="__codelineno-7-16" href="#__codelineno-7-16"></a>   DNS 服务器  . . . . . . . . . . . : 2001:4860:4860::8888
+</span><span id="__span-7-17"><a id="__codelineno-7-17" name="__codelineno-7-17" href="#__codelineno-7-17"></a>   TCPIP 上的 NetBIOS  . . . . . . . : 已启用
+</span></code></pre></div>
+<h4 id="dns-劫持">dns 劫持<a class="headerlink" href="#dns-劫持" title="Permanent link">&para;</a></h4>
+<p>我的 openwrt 使用了透明代理，劫持了 udp 53 的 dns</p>
+<p>解决：添加绕过 openclash 的 nft 规则</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>nft insert rule inet fw4 dstnat udp dport 53 ip daddr {223.5.5.5, 119.29.29.29, 8.8.8.8} return comment &quot;Disable_OpenClash_DNS_Hijack&quot;
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>nft insert rule inet fw4 dstnat udp dport 53 ip6 daddr {2001:4860:4860::8888} return comment &quot;IPv6_Disable_OpenClash_DNS_Hijack&quot;
+</span></code></pre></div>
+<h4 id="dot-doh">DoT, DoH?<a class="headerlink" href="#dot-doh" title="Permanent link">&para;</a></h4>
+<p>另一种避免 dns 污染的方式是不使用明文的 dns 请求。如 DoH，现代浏览器都支持设置。</p>
+<p>但是设置了后发现还是不行，问题貌似在于解析 DoH 域名也需要 dns 请求。因此还是需要使用上面方法。</p>
+<p><a href="https://developers.google.com/speed/public-dns/docs/dns-over-tls">DNS-over-TLS  |  Public DNS  |  Google for Developers</a>
+<a href="https://developers.google.com/speed/public-dns/docs/doh">DNS-over-HTTPS (DoH)  |  Public DNS  |  Google for Developers</a>
+<a href="https://support.mozilla.org/en-US/kb/firefox-dns-over-https">Firefox DNS-over-HTTPS | Firefox Help (mozilla.org)</a></p>
+<h4 id="dns-污染">dns 污染<a class="headerlink" href="#dns-污染" title="Permanent link">&para;</a></h4>
+<p>解决劫持后不知为何解析 youtube 解析不到 ipv6 地址。</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>yfy@kali:~$ nslookup www.youtube.com
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>Server:         2001:4860:4860::8888
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>Address:        2001:4860:4860::8888#53
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>Non-authoritative answer:
+</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>Name:   www.youtube.com
+</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>Address: 31.13.68.169
+</span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>Name:   www.youtube.com
+</span><span id="__span-9-9"><a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a>Address: 2001::1
+</span></code></pre></div>
+<p>但是手机连接后，却能够正常访问 <code>www.youtube.com</code>（自动跳转到 <code>m.youtube.com</code>），暂不清楚原因</p>
+<p>理论上由于我已经设置让所有流量走隧道，而且 DNS 使用的是 google 的，因此虽然是明文也不会产生污染？</p>
+<h2 id="二层组网">二层组网<a class="headerlink" href="#二层组网" title="Permanent link">&para;</a></h2>
+<p>由于 HE 需要有公网 ipv4，而我目前只有学校的教育网有公网 ipv4。因此必须在 op1 上才能搭建，但是我想要在 op2（出租屋）也能使用。于是再次需要以前用过的 L2 组网技术。</p>
+<p>令人吃惊的事，由于 vlan 的隔离性，使得 L2 这么底层的技术，要让让流量从学校精确到我的出租屋，再到我的无线路由器，不能对其它网络造成干扰，<strong>居然只需要添加 1 个 vid，点点点就行了</strong>。简单到令人感觉到 vlan 真神奇</p>
+<h3 id="vxlan-本来就可以复用链路">vxlan 本来就可以复用链路<a class="headerlink" href="#vxlan-本来就可以复用链路" title="Permanent link">&para;</a></h3>
+<p>本来还在思考能否复用已有的 L2 隧道（原本已经基于 wg 两端搭建了一个 vxlan0 接口），比如<strong>在隧道上运行 vlan</strong> 是否支持。然后才意识到 vxlan 本来就是 vlan，有一个 vid，因此完全可以在两端再创建一个 vxlan1，指定不同的 vid 即可。</p>
+<p>op2 添加 eth3，分配 vlan id 30</p>
+<p><img alt="image.png" src="https://imagebed.yfycloud.site/2025/12/2a1fd9902ae2c877efc2b52ce2bc92fa.png" /></p>
+<p>op2 需要增加一个 eth3 设备，和 vxlan 设备桥接在一起</p>
+<p><img alt="image.png" src="https://imagebed.yfycloud.site/2025/12/676deef342bce1908ae4b10c6b46ef56.png" /></p>
+<div class="admonition note">
+<p class="admonition-title">openwrt 创建的 bridge 起不来</p>
+<p>现象为 ip a 看不到 br-lan3。eth3 也看不到 master 标记。解决办法为 ip link 手动创建。
+<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>ip link add name br-lan3 type bridge
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>ip link set br-lan3 up              
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>ip link set eth3 master br-lan3     
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>ip link set vxlan1 master br-lan3 
+</span></code></pre></div></p>
+</div>
+<h3 id="ap-节点">AP 节点<a class="headerlink" href="#ap-节点" title="Permanent link">&para;</a></h3>
+<p>trunk 接口（刚好使用了原本的 WAN 口，这样接线时容易记起来）增加一个 vid 即可接入 vlan</p>
+<p><img alt="image.png" src="https://imagebed.yfycloud.site/2025/12/526b80c2e227cad241a8618726a666a1.png" /></p>
+<p>创建一个 interface，然后将 SSID 绑定到这个 interface 上，一切就完成了。连接该 SSID 即可连入 ipv6 only 的网络！</p>
+<p><img alt="image.png" src="https://imagebed.yfycloud.site/2025/12/b7380eaa724d2470791b2d37eeed8684.png" /></p>
+<p><img alt="image.png" src="https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/20241007222617.png" /></p>
+<h3 id="遇到的问题">遇到的问题<a class="headerlink" href="#遇到的问题" title="Permanent link">&para;</a></h3>
+<p>刚开始连接 wifi 后还是不通，排查方法</p>
+<ul>
+<li>op1 上 kali 虚拟机是否能够获得地址<ul>
+<li>不能 -》op1 检查防火墙</li>
+<li>还是不行，重启 lan2 接口</li>
+<li>能，继续下一步</li>
+</ul>
+</li>
+<li>op2 上能否通过 vxlan 隧道 ping 通 op1 br-lan2 的 ipv6 链路地址<ul>
+<li>能</li>
+</ul>
+</li>
+<li>op2 下设备能否 ping 通op1 br-lan2 ipv6 链路地址<ul>
+<li>不能 -》检查 AP 的 vlan 设置，发现没问题</li>
+<li>op2 上创建 lan3 接口，使用 dhcpv6 client 协议<ul>
+<li>能否获得 v6 地址</li>
+</ul>
+</li>
+<li>AP 上创建 lan3 接口，使用 dhcpv6 client 协议<ul>
+<li>也可以获得 v6 地址</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>此时设备突然可以通过 wifi 获得 v6 地址了</li>
+<li>后面发现，重点检查 vxlan 和 eth 接口的 master 是否确实是 br-lan。后面又遇到一次不通网，便是该问题。可以手动设置。</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>ip link set dev vxlan1 master br-lan3
+</span></code></pre></div>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+  
+
+
+
+      
+    </article>
+  </div>
+
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+        
+      
+      <nav class="md-footer__inner md-grid" aria-label="页脚" >
+        
+          
+          <a href="../../../../../%E5%8D%9A%E5%AE%A2--%E7%BD%91%E7%BB%9C/2024/10/03/linux%20%E5%88%9B%E5%BB%BA%E4%BB%A3%E7%90%86%E6%9C%8D%E5%8A%A1%E5%99%A8/" class="md-footer__link md-footer__link--prev" aria-label="上一页: linux 创建代理">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                上一页
+              </span>
+              <div class="md-ellipsis">
+                linux 创建代理
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../../15/%E4%BD%BF%E7%94%A8%E5%85%B6%E5%AE%83%E8%AE%BE%E5%A4%87%E4%BD%9C%E4%B8%BA%E6%89%A9%E5%B1%95%E5%B1%8F%E5%B9%95/" class="md-footer__link md-footer__link--next" aria-label="下一页: 使用其它设备作为扩展屏幕">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                下一页
+              </span>
+              <div class="md-ellipsis">
+                使用其它设备作为扩展屏幕
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/TheRainstorm" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../../..", "features": ["navigation.instant", "navigation.instant.progress", "navigation.tracking", "navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.footer", "content.code.copy", "toc.follow", "toc.integrate"], "search": "../../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../../../../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

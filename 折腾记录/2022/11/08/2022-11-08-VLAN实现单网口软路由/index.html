@@ -1,0 +1,2070 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="记录一些关于数学、计算机的知识，以及一些日常。">
+      
+      
+      
+        <link rel="canonical" href="https://yfy.cqu.ai/%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/2022/11/08/2022-11-08-VLAN%E5%AE%9E%E7%8E%B0%E5%8D%95%E7%BD%91%E5%8F%A3%E8%BD%AF%E8%B7%AF%E7%94%B1/">
+      
+      
+        <link rel="prev" href="../../../../../%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/2022/11/06/2022-11-06-linux%E7%9B%B8%E5%85%B3-linux%E4%BD%BF%E7%94%A8/">
+      
+      
+        <link rel="next" href="../../../../../%E4%B8%AA%E4%BA%BA/2022/11/10/2022-11-10-%E8%99%9A%E6%8B%9F%E6%B8%B8%E6%88%8F%E6%88%BF/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.3">
+    
+    
+      
+        <title>VLAN 实现单网口软路由 - Rain 的随笔</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#参考" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../../../../.." title="Rain 的随笔" class="md-header__button md-logo" aria-label="Rain 的随笔" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Rain 的随笔
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              VLAN 实现单网口软路由
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    
+  
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="../../../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  博客
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../about/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  关于
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../tags/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  标签
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../series/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  系列
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../tools/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  工具
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../archive/2026/" class="md-tabs__link">
+          
+  
+  
+  归档
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../category/%E4%B8%AA%E4%BA%BA/" class="md-tabs__link">
+          
+  
+  
+  分类
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" hidden>
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../../.." title="Rain 的随笔" class="md-nav__button md-logo" aria-label="Rain 的随笔" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Rain 的随笔
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+    
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      <a href="../../../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    博客
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    关于
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../tags/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    标签
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../series/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    系列
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../tools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    工具
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    归档
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    归档
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2026/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2026
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2025/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2025
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2024/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2024
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2023/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2023
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2022/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2022
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2021/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2021
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2020/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2020
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2019/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2019
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    分类
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    分类
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E4%B8%AA%E4%BA%BA/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    个人
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E5%8D%9A%E5%AE%A2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    博客
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E5%8D%9A%E5%AE%A2--%E7%BD%91%E7%BB%9C/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    博客 &amp; 网络
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    学习笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    折腾记录
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    课程笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%85%B7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    软件工具
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E9%98%85%E8%AF%BB/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    阅读
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+  <div class="md-content md-content--post" data-md-component="content">
+    <div class="md-sidebar md-sidebar--post" data-md-component="sidebar" data-md-type="navigation">
+      <div class="md-sidebar__scrollwrap">
+        <div class="md-sidebar__inner md-post">
+          <nav class="md-nav md-nav--primary">
+            <div class="md-post__back">
+              <div class="md-nav__title md-nav__container">
+                <a href="../../../../.." class="md-nav__link">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+                  <span class="md-ellipsis">
+                    回到主页
+                  </span>
+                </a>
+              </div>
+            </div>
+            
+            <ul class="md-post__meta md-nav__list">
+              <li class="md-nav__item md-nav__item--section">
+                <div class="md-post__title">
+                  <span class="md-ellipsis">
+                    元数据
+                  </span>
+                </div>
+                <nav class="md-nav">
+                  <ul class="md-nav__list">
+                    <li class="md-nav__item">
+                      <div class="md-nav__link">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 19H5V8h14m-3-7v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1V1m-1 11h-5v5h5z"/></svg>
+                        <time datetime="2022-11-08 00:45:20+00:00" class="md-ellipsis">2022年11月8日</time>
+                      </div>
+                    </li>
+                    
+                    
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 3v15h3V3zm3 2 4 13 3-1-4-13zM5 5v13h3V5zM3 19v2h18v-2z"/></svg>
+                          <span class="md-ellipsis">
+                            分类于
+                            
+                              <a href="../../../../../category/%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/">折腾记录</a></span>
+                        </div>
+                      </li>
+                    
+                    
+                      
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20a8 8 0 0 0 8-8 8 8 0 0 0-8-8 8 8 0 0 0-8 8 8 8 0 0 0 8 8m0-18a10 10 0 0 1 10 10 10 10 0 0 1-10 10C6.47 22 2 17.5 2 12A10 10 0 0 1 12 2m.5 5v5.25l4.5 2.67-.75 1.23L11 13V7z"/></svg>
+                          <span class="md-ellipsis">
+                            
+                              需要 11 分钟阅读时间
+                            
+                          </span>
+                        </div>
+                      </li>
+                    
+                  </ul>
+                </nav>
+              </li>
+            </ul>
+            
+          </nav>
+          
+            
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#参考" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        参考
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#单网口实现软路由" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        单网口实现软路由
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="单网口实现软路由">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#架构图" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        架构图
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1-设置-host" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 设置 host
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. 设置 host">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#lxc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        lxc
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bridge-vlan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        bridge, vlan
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-路由器-vlan-设置" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 路由器 vlan 设置
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#性能测试" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        性能测试
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#创建-bridge-vlan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        创建 bridge, vlan
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="创建 bridge, vlan">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#iproute2临时设置" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        iproute2(临时设置)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#netplannetworkmanager" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        netplan/networkmanager
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#netplannetworkd推荐" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        netplan/networkd(推荐)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="netplan/networkd(推荐)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#设置网卡固定名称" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        设置网卡固定名称
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#openwrt-vlan-设置" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Openwrt VLAN 设置
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Openwrt VLAN 设置">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#vlan-q--a" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        vlan Q &amp; A
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tag-untag" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tag, untag
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#硬件-switch-vlan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        硬件 switch vlan
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#软件-vlan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        软件 vlan
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dsa-设置" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DSA 设置
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="DSA 设置">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#dsa-vs-swconfig" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DSA vs swconfig
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ingress-vs-egress-tagged-vs-untagged-含义" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ingress vs egress, tagged vs untagged 含义
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#swconfig-配置实例-p2w" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        swconfig 配置实例 (p2w)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dsa-配置实例-ax6s" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DSA 配置实例 (ax6s)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#遇到的问题" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        遇到的问题
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="遇到的问题">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#lxc-openwrt-dnsmasq" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        lxc openwrt dnsmasq
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#p2w-的-wan-口坑" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        p2w 的 wan 口坑
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#wifi-挂载到网桥上才能获得-dhcp-地址" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        wifi 挂载到网桥上才能获得 dhcp 地址
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#guest-wifi-无法上网" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        guest wifi 无法上网
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+          
+        </div>
+      </div>
+    </div>
+    <article class="md-content__inner md-typeset">
+      
+        
+  
+
+
+  <nav class="md-tags" >
+    
+      
+      
+      
+      
+        <a href="../../../../../tags/#tag:bridge" class="md-tag">bridge</a>
+      
+    
+      
+      
+      
+      
+        <a href="../../../../../tags/#tag:openwrt" class="md-tag">openwrt</a>
+      
+    
+      
+      
+      
+      
+        <a href="../../../../../tags/#tag:vlan" class="md-tag">vlan</a>
+      
+    
+      
+      
+      
+      
+        <a href="../../../../../tags/#tag:如何实现网络自由" class="md-tag">如何实现网络自由</a>
+      
+    
+      
+      
+      
+      
+        <a href="../../../../../tags/#tag:软路由" class="md-tag">软路由</a>
+      
+    
+  </nav>
+
+
+
+  <h1>VLAN 实现单网口软路由</h1>
+
+<p>起因是发现在原本的两个路由器间架设 wireguard 隧道，其中一个路由器 (小米 4A 千兆版) 遇到了 CPU 瓶颈，导致带宽只能达到 100-200 左右。后面研究了市面上的各种路由器的 CPU 型号，包括矿渣路由器。购买了一个 100 元的可以刷 openwrt 的竞斗云 2.0，带宽可以达到 200-300M，但仍远低于理想的千兆。目前即便是 500 元以上的高端路由器，其配置仍然只有 4 核 Cortex <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#65;&#53;&#51;&#64;&#50;&#46;&#48;&#71;&#72;&#122;">&#65;&#53;&#51;&#64;&#50;&#46;&#48;&#71;&#72;&#122;</a> 的水平。</p>
+<p>偶然看到用旧笔记本做软路由的视频，遂萌生了折腾软路由的想法。仔细研究其方案后发现为 pppoe 拨号上网的方式，不适用于 dhcp 上网的情况。后偶然发现所购买路由器支持 vlan 功能（其实后面发现所有 openwrt 路由器都支持），于是自己独立构思了后面的架构图。并尝试成功 (11/5)，最终在红米 AX6S+ 软路由的情况下，达到了 500M 的带宽，此时 AX6S 的双核 Cortex <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#65;&#53;&#51;&#64;&#49;&#46;&#50;&#71;&#72;&#122;">&#65;&#53;&#51;&#64;&#49;&#46;&#50;&#71;&#72;&#122;</a> CPU 占用率也达到了 100%。</p>
+<p>之后再接再励，将 AX6S 也配置了 vlan，并在旧笔记本实现软路由。最终带宽达到了 880Mbps，scp 文件达到 98MB/s 的速率。并且之后还成功配置了 Guest WIFI，将其和主网络隔离开来，更加保证了安全性。</p>
+<p>通过本次项目，学会了：</p>
+<ul>
+<li>linux 下，ip, netplan 创建 bridge 和 vlan</li>
+<li>lxc 容器的使用</li>
+<li>openwrt DSA 架构配置 vlan</li>
+</ul>
+<!-- more -->
+
+<p>弄完后，在网上搜索了一下相关实现，发现提到单网口软路由，有几种情况：</p>
+<ul>
+<li>默认是 pppoe 上网方式，该方式比较简单，不涉及 vlan 的设置，但是不适用于 dhcp 上网的情况。</li>
+<li>旁路由，之前我也写过使用树莓派实现透明代理。该方式需要修改上网设备的网关为旁路设备。<ul>
+<li>网上争论比较多的是是否会有两次 NAT，其实不论怎样，主路由必然要起到一次 NAT。这样的话，主路由的性能至少不能太弱。当然如果家里只有 100M 的宽带，这种方式也许足够。但是如果旁路设备的性能很强的话，性能还是白白浪费了。不如这里介绍的 vlan 方式。</li>
+</ul>
+</li>
+<li>也看到了使用 vlan 实现我这种软路由的玩法，但是需要一个硬件交换机。知道使用普通 openwrt 设备就可以实现 vlan 的还是不多。</li>
+</ul>
+<h2 id="参考">参考<a class="headerlink" href="#参考" title="Permanent link">&para;</a></h2>
+<ul>
+<li>司波图：使用笔记本 + PVE，单网口实现软路由：<a href="https://www.youtube.com/watch?v=eqmOnCHM-kc">一个网口也能做软路由？闲置电脑再利用！ - YouTube</a><ul>
+<li>不过这里的结构只适用于 pppoe 上网方式，对于 dhcp 上网方式则不适用（此结构中只有软路由一个 dhcp 服务器，不用考虑 dhcp 冲突。对于 dhcp 上网方式则需要使用 vlan 隔离 ISP 的 dhcp 和软路由的 dhcp 服务）</li>
+<li>结构：<img alt="pppoe 单口软路由" src="https://imagebed.yfycloud.site/2025/12/dfa7677e47f44ed5c048d0aa5876f592.png" /></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>利用树莓派 + LXC 运行多个服务，并使用 Openwrt 作为防火墙管理：<a href="http://www.makikiweb.com/Pi/lxc_openwrt.html">www.makikiweb.com/Pi/lxc_openwrt.html</a><ul>
+<li>新版教程：<a href="http://www.makikiweb.com/Pi/virtual_openwrt_on_lxd.html">www.makikiweb.com/Pi/virtual_openwrt_on_lxd.html</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="单网口实现软路由">单网口实现软路由<a class="headerlink" href="#单网口实现软路由" title="Permanent link">&para;</a></h2>
+<h3 id="架构图">架构图<a class="headerlink" href="#架构图" title="Permanent link">&para;</a></h3>
+<p>switch:</p>
+<ul>
+<li>绿：端口  </li>
+<li>橙：设备  </li>
+<li>虚线：虚拟设备  </li>
+<li>蓝：网桥  </li>
+<li>灰：网络接口
+<img alt="单网口软路由架构图" src="https://imagebed.yfycloud.site/2025/12/694ce9d6e11d8f8bf732312dad1a0436.png" /></li>
+</ul>
+<p>DSA</p>
+<ul>
+<li>橙：设备  </li>
+<li>虚线：虚拟设备  </li>
+<li>蓝：网桥  </li>
+<li>绿：网络接口
+<img alt="" src="https://imagebed.yfycloud.site/2025/12/2c7eb2c2c4e01db24063b26f754b9337.png" /></li>
+</ul>
+<h3 id="1-设置-host">1. 设置 host<a class="headerlink" href="#1-设置-host" title="Permanent link">&para;</a></h3>
+<h4 id="lxc">lxc<a class="headerlink" href="#lxc" title="Permanent link">&para;</a></h4>
+<p>安装 lxd</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>sudo apt install lxd   # 安装lxd
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>lxd init  # 会设置存储池，网络bridge，全部默认即可
+</span></code></pre></div>
+<p>创建一个包含两个网络接口的 profile，用于 openwrt。（还可以创建一个只包含 br1 的 profile，用于其余 lxc 容器）</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>lxc profile create twointf
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>lxc profile edit twointf
+</span></code></pre></div>
+<p>内容</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>config: {}
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>description: 2 interfaces
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>devices:
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>  eth0:
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>    name: eth0
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>    nictype: bridged
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>    parent: br1
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>    type: nic
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>  eth1:
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>    name: eth1
+</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>    nictype: bridged
+</span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>    parent: br0
+</span><span id="__span-2-13"><a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>    type: nic
+</span><span id="__span-2-14"><a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a>  root:
+</span><span id="__span-2-15"><a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a>    path: /
+</span><span id="__span-2-16"><a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a>    pool: default
+</span><span id="__span-2-17"><a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a>    type: disk
+</span><span id="__span-2-18"><a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a>name: twointf
+</span></code></pre></div>
+<p>拉取 openwrt 镜像</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>lxc image copy images:openwrt/22.03 local: --copy-aliases --auto-update
+</span></code></pre></div>
+<h4 id="bridge-vlan">bridge, vlan<a class="headerlink" href="#bridge-vlan" title="Permanent link">&para;</a></h4>
+<p>设置 netplan，按照 bridge, vlan 节，创建两个 vlan 和 br0, br1。</p>
+<h3 id="2-路由器-vlan-设置">2. 路由器 vlan 设置<a class="headerlink" href="#2-路由器-vlan-设置" title="Permanent link">&para;</a></h3>
+<p>见后面 DSA 设置节</p>
+<h3 id="性能测试">性能测试<a class="headerlink" href="#性能测试" title="Permanent link">&para;</a></h3>
+<p>从实验室到寝室的 wireguard 隧道可以达到 500Mbs 的速率，将两核 Cortex <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#65;&#53;&#51;&#64;&#49;&#46;&#50;&#71;&#72;&#122;">&#65;&#53;&#51;&#64;&#49;&#46;&#50;&#71;&#72;&#122;</a> 几乎跑满。而原本通过路由器 (4 核 MIPS 1004kc@880MHz) 则仅能跑到 200Mbs。
+<img alt="" src="https://imagebed.yfycloud.site/2025/12/058e7d21f8de500b39b96ef5ec55b852.png" /></p>
+<p>两边均使用软路由后达到千兆水平，scp 可以达到 98MB/s 的速率。</p>
+<p><img alt="" src="https://imagebed.yfycloud.site/2025/12/cc5f0b056131a7345f5198173716f40f.png" /></p>
+<h2 id="创建-bridge-vlan">创建 bridge, vlan<a class="headerlink" href="#创建-bridge-vlan" title="Permanent link">&para;</a></h2>
+<h3 id="iproute2临时设置">iproute2(临时设置)<a class="headerlink" href="#iproute2临时设置" title="Permanent link">&para;</a></h3>
+<ul>
+<li>bridge：<a href="https://wiki.archlinux.org/title/network_bridge">Network bridge - ArchWiki (archlinux.org)</a></li>
+<li>vlan: <a href="https://wiki.archlinux.org/title/VLAN#Create_the_VLAN_device">VLAN - ArchWiki (archlinux.org)</a></li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>lsmod |grep 802
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>#添加vlan和bridge
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>sudo ip link add link enp7s0 eth0.1 type vlan id 1
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>sudo ip link add link enp7s0 eth0.2 type vlan id 2
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>sudo ip link add name br0 type bridge
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>sudo ip link add name br1 type bridge
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>#set up
+</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>sudo ip link set dev br0 up
+</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>sudo ip link set dev br1 up
+</span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>sudo ip link set dev eth0.1 up
+</span><span id="__span-4-13"><a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>sudo ip link set dev eth0.2 up
+</span><span id="__span-4-14"><a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a>
+</span><span id="__span-4-15"><a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a>#设置bridge master
+</span><span id="__span-4-16"><a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a>sudo ip link set eth0.2 master br1 
+</span><span id="__span-4-17"><a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a>sudo ip link set eth0.1 master br0
+</span></code></pre></div>
+<h3 id="netplannetworkmanager">netplan/networkmanager<a class="headerlink" href="#netplannetworkmanager" title="Permanent link">&para;</a></h3>
+<p>nmcli 命令还行，不过配置复杂网络时还是使用 netplan 配置文件的方式更加适合</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>nmcli con add ifname br0 type bridge con-name br0
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>nmcli con add type bridge-slave ifname enp7s0 master br0
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>nmcli con up br0
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>nmcli con add type vlan con-name vlan1 dev enp7s0 id 1
+</span></code></pre></div>
+<h3 id="netplannetworkd推荐">netplan/networkd(推荐)<a class="headerlink" href="#netplannetworkd推荐" title="Permanent link">&para;</a></h3>
+<p>ubuntu 桌面版，netplan 底层使用的默认时 NetworkManger。服务器版则是 networkd，networkd 的配置文件使用起来更简单些。</p>
+<p>配置文档：<a href="https://netplan.io/examples#configuring-network-bridges">Canonical Netplan</a></p>
+<p>配置：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>network:
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>  version: 2
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>  renderer: networkd
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>  ethernets:
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>    eth0:
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>      dhcp4: false
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>      dhcp6: false
+</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>  vlans:
+</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>    eth0.1:
+</span><span id="__span-6-10"><a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a>      link: eth0
+</span><span id="__span-6-11"><a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a>      id: 1
+</span><span id="__span-6-12"><a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a>    eth0.2:
+</span><span id="__span-6-13"><a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a>      link: eth0
+</span><span id="__span-6-14"><a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a>      id: 2
+</span><span id="__span-6-15"><a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a>  bridges:
+</span><span id="__span-6-16"><a id="__codelineno-6-16" name="__codelineno-6-16" href="#__codelineno-6-16"></a>    br0:
+</span><span id="__span-6-17"><a id="__codelineno-6-17" name="__codelineno-6-17" href="#__codelineno-6-17"></a>      interfaces:
+</span><span id="__span-6-18"><a id="__codelineno-6-18" name="__codelineno-6-18" href="#__codelineno-6-18"></a>        - eth0.1
+</span><span id="__span-6-19"><a id="__codelineno-6-19" name="__codelineno-6-19" href="#__codelineno-6-19"></a>    br1:
+</span><span id="__span-6-20"><a id="__codelineno-6-20" name="__codelineno-6-20" href="#__codelineno-6-20"></a>      dhcp4: true
+</span><span id="__span-6-21"><a id="__codelineno-6-21" name="__codelineno-6-21" href="#__codelineno-6-21"></a>      interfaces:
+</span><span id="__span-6-22"><a id="__codelineno-6-22" name="__codelineno-6-22" href="#__codelineno-6-22"></a>        - eth0.2
+</span></code></pre></div>
+<p>配置完成后，需要应用修改</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>netplan apply
+</span></code></pre></div>
+<h5 id="设置网卡固定名称">设置网卡固定名称<a class="headerlink" href="#设置网卡固定名称" title="Permanent link">&para;</a></h5>
+<p>默认情况下，当机器 PCIE 设备变化时，网络接口名字可能会发生变化（比如拔插显卡）。解决办法</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>vim /etc/udev/rules.d/80-net.rules
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a># 80-net.rules
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>SUBSYSTEM==&quot;net&quot;, ACTION==&quot;add&quot;, DRIVERS==&quot;?*&quot;, ATTR{address}==&quot;7c:10:c9:a2:53:d8&quot;, NAME=&quot;eth0&quot;
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>SUBSYSTEM==&quot;net&quot;, ACTION==&quot;add&quot;, DRIVERS==&quot;?*&quot;, ATTR{address}==&quot;38:fc:98:8d:f8:7e&quot;, NAME=&quot;wlan0&quot;
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>
+</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>update-initramfs -u -k all    # -u (updates initramfs), -k all(specific all kernel version)
+</span></code></pre></div>
+<h2 id="openwrt-vlan-设置">Openwrt VLAN 设置<a class="headerlink" href="#openwrt-vlan-设置" title="Permanent link">&para;</a></h2>
+<ul>
+<li>官方文档：<a href="https://openwrt.org/docs/guide-user/network/vlan/switch_configuration">[OpenWrt Wiki] VLAN</a></li>
+</ul>
+<h3 id="vlan-q--a">vlan Q &amp; A<a class="headerlink" href="#vlan-q--a" title="Permanent link">&para;</a></h3>
+<ul>
+<li>vlan 作用是什么？：分离不同设备（位于同一个 LAN）。优点：不用设置子网段和路由。</li>
+<li>vlan 标准：<strong>IEEE 802.1Q</strong>。vlan 会在以太网帧中添加 4 字节，因此通信双方必须要都能识别 vlan<ul>
+<li><img alt="" src="https://imagebed.yfycloud.site/2025/12/3374daac9615624ecc2fa33d98010be5.png" /></li>
+</ul>
+</li>
+<li>哪些设备支持 vlan？：基本上所有设备都支持 vlan（软件的或者硬件交换机）。<ul>
+<li>对于有多个端口的嵌入式设备，内部通常会包含一个<strong>VLAN-capable switch</strong>，或者称 managed switch。管理交换机和设备内部的一个 ethernet 接口连接在一起。管理交换机可以为每个端口设置 vlan id，并且<strong>可以独立于 CPU 工作</strong>。</li>
+<li>对于 PC 或则单板计算机，每个端口都有一个独立的以太网控制器 (nic)，<strong>vlan 通过操作系统驱动实现</strong>。</li>
+</ul>
+</li>
+<li>如何查看自己设备是否有硬件 switch？<ul>
+<li>通过<code>ls -l /sys/class/net</code>可以查看物理的网络接口</li>
+<li>用过的小米路由器均没有专门的 switch 页面，后面才知道是采用了 DSA 架构，每个端口都显式为一个设备，如 lan1, lan2, wan。实际上均是位于 eth0 下。</li>
+</ul>
+</li>
+</ul>
+<h3 id="tag-untag">tag, untag<a class="headerlink" href="#tag-untag" title="Permanent link">&para;</a></h3>
+<p>可以创建一个或多个 vlan id，不同 vlan 对应一个广播域</p>
+<p>port membership：每个端口可以属于一个或多个 vlan</p>
+<ul>
+<li>tag: 该端口的包都带有 vlan id。端口连接的对面必须是 vlan awareness 的</li>
+<li>untag: 从该端口<strong>出去</strong>的包被删除掉 vlan id。用于和非 vlan 系统交互
+port PVID
+从该端口<strong>进入</strong>的 untagged 的包，被划分为哪个 vlan。（如果该端口有 untag 的 VLAN id，则必然就是等于该 vlan id。如果该端口全部都是 tag 的，则需要额外指定）</li>
+</ul>
+<p><img alt="image.png" src="https://imagebed.yfycloud.site/2025/12/a624e55d367e76d654564978c038203f.png" /></p>
+<p>在 Cisco 术语中，untag 端口叫做 vlan port，tag 叫做 trunk port。</p>
+<ul>
+<li>PVID 即 untagged VLAN，每个端口只能指定一个 PVID。这样当该端口<strong>收到</strong>untagged 包时，便将其归为某个 VLAN 域。</li>
+<li>untag 接口：用于连接非 vlan 网络</li>
+<li>trunk 接口：感觉指的是该端口上全是 tagged，用于一根线传输多个子网。</li>
+<li>tag 和 untag 混合：目前不知道有什么作用</li>
+</ul>
+<p><a href="https://forum.openwrt.org/t/vlans-and-cpu-eth0-cpu-eth1/30230/8">VLANs and CPU(eth0), CPU(eth1) - Installing and Using OpenWrt / Network and Wireless Configuration - OpenWrt Forum</a></p>
+<ul>
+<li>eth0，eth1 含义：switch 自身有若干端口（路由器外侧的端口），内部到 cpu 有两个端口</li>
+<li>中间解释了 VLAN 的工作过程，其中 PVID 用于处理 untagged 情况</li>
+<li>接着解释了 cpu 端 接口 tag 的作用，通过指定 tag，会创建“子接口”(如 eth0.1)，这样每个子接口都可以有独立的地址。</li>
+</ul>
+<blockquote>
+<p>There are two places that tagging is important, leaving out "one-armed" configurations; in the switch and on the interface itself.
+The switch works by "wiring" all ports that have the same VLAN together. When a packet arrives at a port, if it is untagged, it is given the PVID as a tag. If it is already tagged and it is a "permitted" VLAN tag, it retains the tag. Depending on the specifics of the switch and its driver, if it is not a permitted tag, the packet may be dropped (I haven't seen config parameters for this behavior nor looked for it in detail). Inside the switch, if the destination MAC address is on a port that permits the VLAN, then it is sent out that port. For broadcast packets, it is sent out all ports that permit that VLAN. If the port is tagged for that VLAN, the tag is retained. If the port is untagged for that VLAN, the tag is dropped.
+The interface can also have tags, each of which creates a "sub-interface" that can be accessed by the kernel, and through the kernel user-space applications. Each sub-interface "filters" to that specific VLAN, and tags outgoing packets with the VLAN. Each sub-interface (or bridge over that sub-interface) typically has its own IPv4 address, and its own set of IPv6 addresses. This allows "trunking" where one physical wire (which may be inside of the SoC or on the PCB) handles multiple subnets or streams of data. If you're only carrying one stream of data to/from a physical interface, you don't really need to use tagging as the switch's use of PVID is sufficient. Personally, when I can, I <em>always</em> use VLAN tags for clarity and future extensibility. That said, my network infrastructure uses many VLANs for segregation of traffic, monitoring, and firewalling.
+If you tag both eth0 and eth1 to the same VLAN, that should be OK, as long as they don't have the same IP address. It's like plugging them both into the same Ethernet cable.
+Most of what you describe will "work" if both the interfaces and the switch are configured properly, if you only have one stream of data to/from each of the physical interfaces.
+</p>
+</blockquote>
+<h3 id="硬件-switch-vlan">硬件 switch vlan<a class="headerlink" href="#硬件-switch-vlan" title="Permanent link">&para;</a></h3>
+<p>下图为一个常见的 5 端口路由器的 vlan 设置，该路由器只有一个网络接口 (eth0)，包含一个内置的交换机，通过 vlan 将 WAN 和 LAN 隔离。
+<img alt="" src="https://imagebed.yfycloud.site/2025/12/aaa3db41f9e8d04d1d910b4bbdb406a3.png" /></p>
+<p>对于 swtich 实现的 vlan，openwrt 有一个页面用于图形化地设置 vlan。（使用 DSA 架构后就没了，见后 DSA 节）</p>
+<p><img alt="" src="https://imagebed.yfycloud.site/2025/12/70c559a6330f8dc128cf2f5ae88fc4d6.png" /></p>
+<ul>
+<li>tagged:  The <em>tagged</em> port (<code>t</code> is appended to the port number) is the one that forces usage of VLAN tags, i.e. when the packet is outgoing, the VLAN ID tag with <code>vlan</code> value is added to the packet, and when the packet is incoming, the VLAN ID tag has to be present and match the configured <code>vlan</code> value(s).</li>
+<li>untagged:  The <em>untagged</em> port is removing the VLAN ID tag when leaving the port – this is used for communication with ordinary devices that does not have any clue about VLANs. When the untagged packet arrives to the port, the default port VLAN ID (called <code>pvid</code>) is assigned to the packet automatically. The <code>pvid</code> value can be selected by the <code>switch_port</code> section.</li>
+</ul>
+<h3 id="软件-vlan">软件 vlan<a class="headerlink" href="#软件-vlan" title="Permanent link">&para;</a></h3>
+<p>每个物理接口 (nic) 可以通过 vlan id 虚拟出多个虚拟接口（如 eth0.1, eth0.2）。当包路由到对应虚拟接口时，包离开物理接口时会打上对应 tag。当物理接口接收到对应 tag 的包时，则会路由到对应虚拟接口（不存在则会 drop）。</p>
+<blockquote>
+<p>A driver-level VLAN could be created in the <code>interface</code> section by adding a dot (<code>.</code>) and the respective VLAN ID after the interface name (in the <code>ifname</code> option), like <code>eth1.2</code> for VLAN ID 2 on <code>eth1</code>. When any internal software routing decision sends the packet to the software VLAN, it leaves the respective interface (<code>eth1</code> in our example) with the VLAN tag present and VLAN ID set to the number corresponding to the interface name (<code>2</code> in our example on <code>eth1.2</code>).
+if the incoming packet arrives to the interface with software VLANs (incoming packet to <code>eth1</code>) and has a VLAN ID tag set, it appears on the respective software-VLAN-interface instead (VLAN ID 2 tag arrives on <code>eth1.2</code>) – if it exists in the configuration! Otherwise the packet is dropped. Non-tagged packets are delivered to non-VLAN interface (<code>eth1</code>) as usual.</p>
+</blockquote>
+<p>当把 non-VLAN 接口和 VLAN 接口桥接时，操作系统负责增加和删除 tag</p>
+<blockquote>
+<p>When you bridge non-VLAN and VLAN interfaces together, the system takes care about adding VLAN ID when sending packet from non-VLAN to VLAN interface, and it automatically removes the VLAN ID when sending packet from VLAN interface to non-VLAN one.</p>
+</blockquote>
+<h3 id="dsa-设置">DSA 设置<a class="headerlink" href="#dsa-设置" title="Permanent link">&para;</a></h3>
+<p><strong>Distributed Switch Architecture(DSA)</strong> 是 linux kernel 对网络架构的一个调整，openwrt 从 21 的版本开始使用该架构。
+参考：</p>
+<ul>
+<li><strong>推荐仔细观看</strong>：<a href="https://www.youtube.com/watch?v=qeuZqRqH-ug">VLANs in OpenWrt 21 - YouTube</a></li>
+<li>官方 wiki：<a href="https://openwrt.org/docs/guide-user/network/dsa/dsa-mini-tutorial">[OpenWrt Wiki] DSA Mini-Tutorial</a></li>
+</ul>
+<h4 id="dsa-vs-swconfig">DSA vs swconfig<a class="headerlink" href="#dsa-vs-swconfig" title="Permanent link">&para;</a></h4>
+<p>openwrt 19 以前版本使用 swconfig，从 21 的版本开始使用 DSA。</p>
+<p>区别总结：</p>
+<ul>
+<li>21 可以显式定义 vlan device（802.1q），19 则是在 interface 通过选择 device 时手动添加后缀，隐式配置。</li>
+<li>指定端口标签方式<ul>
+<li>19 中，专门的 switch 页面，指定不同端口如何打标签</li>
+<li>21 中，每个 port 变成单独一个 device（如 lan1, lan2, wan）。可以创建一个 bridge 添加 lan1, lan2, wan，然后通过 bridge vlan filtering 来指定不同端口的打标签方式。</li>
+</ul>
+</li>
+</ul>
+<p>21 总结</p>
+<ul>
+<li>define VLAN on the bridge</li>
+<li>tag and untag on the bridge</li>
+<li>attach wifi to the interface</li>
+</ul>
+<h4 id="ingress-vs-egress-tagged-vs-untagged-含义">ingress vs egress, tagged vs untagged 含义<a class="headerlink" href="#ingress-vs-egress-tagged-vs-untagged-含义" title="Permanent link">&para;</a></h4>
+<ul>
+<li>egress tagged：发往 VLAN 100 的包，会从指定端口发出，并且在以太网帧中插入 tag。适用于对面也是 vlan-aware 设备</li>
+<li>egress untagged: 发往 VLAN 100 的包，会从指定端口发出，并且在以太网帧中移除 tag。适用于连接普通设备，一个端口只能对应一个 untagged vlan。</li>
+<li>对于入站的情况，如果包有 tag，则直接发往对应的 vlan。如果是 untagged 的，则添加 PVID，发往对应 vlan。</li>
+</ul>
+<h4 id="swconfig-配置实例-p2w">swconfig 配置实例 (p2w)<a class="headerlink" href="#swconfig-配置实例-p2w" title="Permanent link">&para;</a></h4>
+<p>并非 21 后的版本都使用了 DSA，这里 p2w 使用的 op 版本为 22.03，仍然有 switch 页面。</p>
+<p>设置 vlan 的过程为</p>
+<ul>
+<li>在 switch 中设置端口 tagged, untagged，见图 1<ul>
+<li>图中 vlan100 的 CPU 设置了 off，这是因为我们不需要处理该部分流量（该部分是学校到软路由虚拟链路）。这样设置<strong>不会</strong>产生 eth0.100 的设备。</li>
+</ul>
+</li>
+<li>图 2 为隐式产生的 vlan device</li>
+<li>添加 interface，指定使用的 vlan。图 3 mgr 指定了 eth0.99，而 lan 指定的 br-lan 连接了 eth0.200
+图 1
+<img alt="" src="https://imagebed.yfycloud.site/2025/12/faa4f6096a6bda0e3d41fa271d43e95a.png" />
+图 2
+<img alt="" src="https://imagebed.yfycloud.site/2025/12/401d8892c09220d32fe3630fa7dd94f0.png" />
+图 3
+<img alt="" src="https://imagebed.yfycloud.site/2025/12/9a90642373e45631819db85033cd99e5.png" />
+图 4
+<img alt="" src="https://imagebed.yfycloud.site/2025/12/3d2b8e7dc4011e17c564cdd88c3830ca.png" /></li>
+</ul>
+<p>从配置文件来看，通过 switch_vlan 指定了不同端口如何打上 tag</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>config switch
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>        option name &#39;switch0&#39;
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>        option reset &#39;1&#39;
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>        option enable_vlan &#39;1&#39;
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>
+</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>config switch_vlan
+</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>        option device &#39;switch0&#39;
+</span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>        option vlan &#39;1&#39;
+</span><span id="__span-9-9"><a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a>        option vid &#39;100&#39;
+</span><span id="__span-9-10"><a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a>        option ports &#39;4 1t&#39;
+</span><span id="__span-9-11"><a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a>        option description &#39;学校到单口软路由&#39;
+</span><span id="__span-9-12"><a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a>
+</span><span id="__span-9-13"><a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a>config switch_vlan
+</span><span id="__span-9-14"><a id="__codelineno-9-14" name="__codelineno-9-14" href="#__codelineno-9-14"></a>        option device &#39;switch0&#39;
+</span><span id="__span-9-15"><a id="__codelineno-9-15" name="__codelineno-9-15" href="#__codelineno-9-15"></a>        option vlan &#39;2&#39;
+</span><span id="__span-9-16"><a id="__codelineno-9-16" name="__codelineno-9-16" href="#__codelineno-9-16"></a>        option vid &#39;200&#39;
+</span><span id="__span-9-17"><a id="__codelineno-9-17" name="__codelineno-9-17" href="#__codelineno-9-17"></a>        option ports &#39;0t 3 1t&#39;
+</span><span id="__span-9-18"><a id="__codelineno-9-18" name="__codelineno-9-18" href="#__codelineno-9-18"></a>        option description &#39;软路由到LAN&#39;
+</span><span id="__span-9-19"><a id="__codelineno-9-19" name="__codelineno-9-19" href="#__codelineno-9-19"></a>
+</span><span id="__span-9-20"><a id="__codelineno-9-20" name="__codelineno-9-20" href="#__codelineno-9-20"></a>config switch_vlan
+</span><span id="__span-9-21"><a id="__codelineno-9-21" name="__codelineno-9-21" href="#__codelineno-9-21"></a>        option device &#39;switch0&#39;
+</span><span id="__span-9-22"><a id="__codelineno-9-22" name="__codelineno-9-22" href="#__codelineno-9-22"></a>        option vlan &#39;3&#39;
+</span><span id="__span-9-23"><a id="__codelineno-9-23" name="__codelineno-9-23" href="#__codelineno-9-23"></a>        option vid &#39;99&#39;
+</span><span id="__span-9-24"><a id="__codelineno-9-24" name="__codelineno-9-24" href="#__codelineno-9-24"></a>        option description &#39;LAN3用于管理&#39;
+</span><span id="__span-9-25"><a id="__codelineno-9-25" name="__codelineno-9-25" href="#__codelineno-9-25"></a>        option ports &#39;0t 2&#39;
+</span></code></pre></div>
+<h4 id="dsa-配置实例-ax6s">DSA 配置实例 (ax6s)<a class="headerlink" href="#dsa-配置实例-ax6s" title="Permanent link">&para;</a></h4>
+<p>ax6s 有四个端口</p>
+<ul>
+<li>图 1，将所有 lan 口添加到 br-lan（这里其实 wan 也可以添加进来）</li>
+<li>图 2，设置端口标签</li>
+<li>图 3，自动生成了 vlan 设备，但这次是在 br-lan 上生成的</li>
+<li>图 4，创建接口，指定不同 vlan 设备<ul>
+<li>这里 wan 口专门用于管理
+<img alt="" src="https://imagebed.yfycloud.site/2025/12/475a9415fc1d0e2a617d5aec2f596490.png" /></li>
+</ul>
+</li>
+</ul>
+<p><img alt="" src="https://imagebed.yfycloud.site/2025/12/bab81a8b3c496dcd3f3e5ff16a206fc7.png" /></p>
+<p><img alt="" src="https://imagebed.yfycloud.site/2025/12/37cb6d6a40861cfb9927874df152c3df.png" /></p>
+<p><img alt="" src="https://imagebed.yfycloud.site/2025/12/ee51dd85827735ee571e9e299b8a3c56.png" /></p>
+<h2 id="遇到的问题">遇到的问题<a class="headerlink" href="#遇到的问题" title="Permanent link">&para;</a></h2>
+<h3 id="lxc-openwrt-dnsmasq">lxc openwrt dnsmasq<a class="headerlink" href="#lxc-openwrt-dnsmasq" title="Permanent link">&para;</a></h3>
+<ul>
+<li>lxc 创建 openwrt 容器，刚开始为手动创建镜像。结果启动容器后发现 openwrt 内无发上网，进一步发现是 dnsmasq 没有启动导致域名解析不了。<ul>
+<li>按照 openwrt 论坛中的方法注释掉 dnsmasq 的启动脚本中的部分行，问题解决。<a href="https://forum.openwrt.org/t/procd-jail-not-work-in-lxc-dnsmasq-fail-to-start/127407/2">Procd jail not work in lxc, dnsmasq fail to start - For Developers - OpenWrt Forum</a></li>
+<li>现在 lxc 有 openwrt 官方镜像，没这个问题，但是其 lan interface 配置用的还是 ifname，openwrt luci 会提示更新。</li>
+</ul>
+</li>
+</ul>
+<p>log 是不是相关</p>
+<blockquote>
+<p>[Tue Jul 25 17:55:09 2023] audit: type=1400 audit(1690278912.535:306): apparmor="DENIED" operation="mount" info="failed type match" error=-13 profile="lxd-op1_</var/snap/lxd/common/lxd>" name="/tmp/ujail-LFABnj/bin/sh" pid=920178 comm="ntpd" flags="ro, remount, bind"</p>
+</blockquote>
+<h3 id="p2w-的-wan-口坑">p2w 的 wan 口坑<a class="headerlink" href="#p2w-的-wan-口坑" title="Permanent link">&para;</a></h3>
+<p>wan 口用于管理怎么都不行。一修改 swtich 菜单，马上失联。使用 lan 口管理成功</p>
+<h3 id="wifi-挂载到网桥上才能获得-dhcp-地址">wifi 挂载到网桥上才能获得 dhcp 地址<a class="headerlink" href="#wifi-挂载到网桥上才能获得-dhcp-地址" title="Permanent link">&para;</a></h3>
+<ul>
+<li>eth0.200 用于 lan，lan 设置 dhcp client，但是 p2w 获得到了 ip，连接 wifi 的笔记本获得不了。创建一个网桥 br-lan，然后添加 eth0.200 后成功。</li>
+</ul>
+<h3 id="guest-wifi-无法上网">guest wifi 无法上网<a class="headerlink" href="#guest-wifi-无法上网" title="Permanent link">&para;</a></h3>
+<p>在 ax6s 上创建了一个 guest wifi，使用单独的 vlan。最终效果如下：</p>
+<p><img alt="" src="https://imagebed.yfycloud.site/2025/12/fb2c32fd87f0a77b7ab0bca43b975ddd.png" /></p>
+<p><img alt="" src="https://imagebed.yfycloud.site/2025/12/21ed8b2b0f3507b78158f0f9e0e94e7d.png" /></p>
+<p>但是创建过程中不知为何 guest 显式设备不存在，于是手动添加了 802.1q 设备，vlan id 手动指定为 201。貌似没有和 br-lan 中 bridge vlan filtering 自动创建的 802.1q 产生冲突。于是设备不存在的问题解决了。</p>
+<p>但是 guest 仍然无法通过 dhcp 获得 ip。tianyi 的 br-guest 也无法获得 ip 地址（其中 215 是手动添加的，234 是后面成功后自动获得的），tcpdump -i br-guest 可以看到有来自 ax6s guest 接口的 dhcp request。</p>
+<p><img alt="" src="https://imagebed.yfycloud.site/2025/12/91479115ed6411be96b7b4d967b0c9a1.png" /></p>
+<p>进入 op2，发现也没有生成对应路由，而是全部走 192.168.36.1（图中的 default 和 192.168.37.1 是后面自动生成的），于是手动添加了一条 192.168.37.0/24 的规则。</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>default via 192.168.36.1 dev br1 proto dhcp src 192.168.36.215 metric 100
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>default via 192.168.37.1 dev br-guest proto dhcp src 192.168.37.234 metric 100
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>192.168.37.0/24 dev br-guest proto kernel scope link src 192.168.37.215
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>192.168.37.1 dev br-guest proto dhcp scope link src 192.168.37.234 metric 100
+</span></code></pre></div>
+<p>但是此时 ax6s 还是无法 dhcp 获得 ip，于是手动添加了一个 37.180 的地址，发现仍然 ping 不通 37.1
+检查 op2，发现 guest 无法访问路由器自身因此无法 ping。于是开启了 input（之后又关闭了，没问题）
+<img alt="" src="https://imagebed.yfycloud.site/2025/12/ad14ed3cf7895dfae22a673886605090.png" /></p>
+<p>此时发现 guest 已经可以上网了。不知道上面步骤中哪一步导致的。</p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+  
+
+
+
+      
+    </article>
+  </div>
+
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+        
+      
+      <nav class="md-footer__inner md-grid" aria-label="页脚" >
+        
+          
+          <a href="../../../../../%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/2022/11/06/2022-11-06-linux%E7%9B%B8%E5%85%B3-linux%E4%BD%BF%E7%94%A8/" class="md-footer__link md-footer__link--prev" aria-label="上一页: linux 相关-linux 使用">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                上一页
+              </span>
+              <div class="md-ellipsis">
+                linux 相关-linux 使用
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../../../../../%E4%B8%AA%E4%BA%BA/2022/11/10/2022-11-10-%E8%99%9A%E6%8B%9F%E6%B8%B8%E6%88%8F%E6%88%BF/" class="md-footer__link md-footer__link--next" aria-label="下一页: 虚拟游戏房">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                下一页
+              </span>
+              <div class="md-ellipsis">
+                虚拟游戏房
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/TheRainstorm" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../../..", "features": ["navigation.instant", "navigation.instant.progress", "navigation.tracking", "navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.footer", "content.code.copy", "toc.follow", "toc.integrate"], "search": "../../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../../../../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

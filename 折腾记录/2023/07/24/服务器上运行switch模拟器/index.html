@@ -1,0 +1,2443 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="记录一些关于数学、计算机的知识，以及一些日常。">
+      
+      
+      
+        <link rel="canonical" href="https://yfy.cqu.ai/%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/2023/07/24/%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E8%BF%90%E8%A1%8Cswitch%E6%A8%A1%E6%8B%9F%E5%99%A8/">
+      
+      
+        <link rel="prev" href="../../23/2023-07-23-%E6%8D%A1%E5%9E%83%E5%9C%BE-rk3399%20DIY%20KVM/">
+      
+      
+        <link rel="next" href="../../../../../%E5%8D%9A%E5%AE%A2--%E7%BD%91%E7%BB%9C/2023/08/02/IPv6%20%E7%9F%A5%E8%AF%86%E5%92%8C%20%20openwrt%20relay%20%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%9D%91/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.3">
+    
+    
+      
+        <title>服务器上运行switch模拟器（linux 云游戏） - Rain 的随笔</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#计算卡性能对比" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../../../../.." title="Rain 的随笔" class="md-header__button md-logo" aria-label="Rain 的随笔" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Rain 的随笔
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              服务器上运行switch模拟器（linux 云游戏）
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    
+  
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="../../../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  博客
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../about/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  关于
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../tags/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  标签
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../series/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  系列
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../tools/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  工具
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../archive/2026/" class="md-tabs__link">
+          
+  
+  
+  归档
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../category/%E4%B8%AA%E4%BA%BA/" class="md-tabs__link">
+          
+  
+  
+  分类
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" hidden>
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../../.." title="Rain 的随笔" class="md-nav__button md-logo" aria-label="Rain 的随笔" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Rain 的随笔
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+    
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      <a href="../../../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    博客
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    关于
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../tags/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    标签
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../series/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    系列
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../tools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    工具
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    归档
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    归档
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2026/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2026
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2025/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2025
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2024/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2024
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2023/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2023
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2022/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2022
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2021/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2021
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2020/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2020
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2019/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2019
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    分类
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    分类
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E4%B8%AA%E4%BA%BA/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    个人
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E5%8D%9A%E5%AE%A2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    博客
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E5%8D%9A%E5%AE%A2--%E7%BD%91%E7%BB%9C/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    博客 &amp; 网络
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    学习笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    折腾记录
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    课程笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%85%B7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    软件工具
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E9%98%85%E8%AF%BB/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    阅读
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+  <div class="md-content md-content--post" data-md-component="content">
+    <div class="md-sidebar md-sidebar--post" data-md-component="sidebar" data-md-type="navigation">
+      <div class="md-sidebar__scrollwrap">
+        <div class="md-sidebar__inner md-post">
+          <nav class="md-nav md-nav--primary">
+            <div class="md-post__back">
+              <div class="md-nav__title md-nav__container">
+                <a href="../../../../.." class="md-nav__link">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+                  <span class="md-ellipsis">
+                    回到主页
+                  </span>
+                </a>
+              </div>
+            </div>
+            
+            <ul class="md-post__meta md-nav__list">
+              <li class="md-nav__item md-nav__item--section">
+                <div class="md-post__title">
+                  <span class="md-ellipsis">
+                    元数据
+                  </span>
+                </div>
+                <nav class="md-nav">
+                  <ul class="md-nav__list">
+                    <li class="md-nav__item">
+                      <div class="md-nav__link">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 19H5V8h14m-3-7v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1V1m-1 11h-5v5h5z"/></svg>
+                        <time datetime="2023-07-24 15:49:07+00:00" class="md-ellipsis">2023年7月24日</time>
+                      </div>
+                    </li>
+                    
+                    
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 3v15h3V3zm3 2 4 13 3-1-4-13zM5 5v13h3V5zM3 19v2h18v-2z"/></svg>
+                          <span class="md-ellipsis">
+                            分类于
+                            
+                              <a href="../../../../../category/%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/">折腾记录</a></span>
+                        </div>
+                      </li>
+                    
+                    
+                      
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20a8 8 0 0 0 8-8 8 8 0 0 0-8-8 8 8 0 0 0-8 8 8 8 0 0 0 8 8m0-18a10 10 0 0 1 10 10 10 10 0 0 1-10 10C6.47 22 2 17.5 2 12A10 10 0 0 1 12 2m.5 5v5.25l4.5 2.67-.75 1.23L11 13V7z"/></svg>
+                          <span class="md-ellipsis">
+                            
+                              需要 13 分钟阅读时间
+                            
+                          </span>
+                        </div>
+                      </li>
+                    
+                  </ul>
+                </nav>
+              </li>
+            </ul>
+            
+          </nav>
+          
+            
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#计算卡性能对比" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        “计算卡”性能对比
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lxd-虚拟机方案不用了" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        LXD 虚拟机方案（不用了）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="LXD 虚拟机方案（不用了）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#steam-安装" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        steam 安装
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#steam-link-使用" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        steam link 使用
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sunshine-配置" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        sunshine 配置
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="sunshine 配置">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        setup
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#遇到的问题" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        遇到的问题
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="遇到的问题">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#use-nvidia-runtime" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        use nvidia runtime
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lxd-手柄" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        lxd 手柄
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#docker方案--game-on-whale-被-wolf-升级替代" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Docker方案--Game on Whale (被 wolf 升级替代)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Docker方案--Game on Whale (被 wolf 升级替代)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#组件分析" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        组件分析
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="组件分析">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#xorg" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        xorg
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pulse" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        pulse
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#udev" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        udev
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#额外设置" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        额外设置
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="额外设置">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#headless-display" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        headless display
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#使用闭源gpu驱动" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        使用闭源gpu驱动
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#multi-gpu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        multi gpu
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#添加自定义app" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        添加自定义app
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#遇到的问题_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        遇到的问题
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="遇到的问题">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#dbus-not-found" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        dbus not found
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#docker-compse需要更新到2x" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        docker-compse需要更新到2.x
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sunshine非局域网无法连接" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        sunshine非局域网无法连接
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sunshine无法挂载路径闪退" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        sunshine无法挂载路径闪退
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#docker-compose改为相对路径后sunshine-exit2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        docker-compose改为相对路径后sunshine exit2
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#moonlight连接后直接退出" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        moonlight连接后直接退出
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#docker方案--wolf" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Docker方案--Wolf
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Docker方案--Wolf">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#设置" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        设置
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="设置">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#前提" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        前提
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#docker-参数" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        docker 参数
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#遇到的问题_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        遇到的问题
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="遇到的问题">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#黑屏" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        黑屏
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#steam-大屏幕启动卡在网络设置" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        steam 大屏幕启动卡在网络设置
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#不同moonlight-session-共享应用数据" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        不同moonlight session 共享应用数据
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#为-steam-添加单独映射的游戏路径" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        为 steam 添加单独映射的游戏路径
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#windows-compositor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        windows compositor
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="windows compositor">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#实现细节非常好的科普" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        实现细节（非常好的科普）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#其它方案" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        其它方案
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#使用多gpu提升性能" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        使用多GPU提升性能？
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="使用多GPU提升性能？">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sli" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SLI
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#x11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        X11
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#drm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DRM
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="DRM">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#架构api" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        架构/API
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#两大部分" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        两大部分
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#硬件支持" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        硬件支持
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+          
+        </div>
+      </div>
+    </div>
+    <article class="md-content__inner md-typeset">
+      
+        
+  
+
+
+  <nav class="md-tags" >
+    
+      
+      
+      
+      
+        <a href="../../../../../tags/#tag:docker" class="md-tag">docker</a>
+      
+    
+      
+      
+      
+      
+        <a href="../../../../../tags/#tag:gaming" class="md-tag">gaming</a>
+      
+    
+      
+      
+      
+      
+        <a href="../../../../../tags/#tag:gow" class="md-tag">gow</a>
+      
+    
+      
+      
+      
+      
+        <a href="../../../../../tags/#tag:linux" class="md-tag">linux</a>
+      
+    
+      
+      
+      
+      
+        <a href="../../../../../tags/#tag:wolf" class="md-tag">wolf</a>
+      
+    
+      
+      
+      
+      
+        <a href="../../../../../tags/#tag:虚拟游戏房" class="md-tag">虚拟游戏房</a>
+      
+    
+  </nav>
+
+
+
+  <h1>服务器上运行switch模拟器（linux 云游戏）</h1>
+
+<p>服务器有一些老计算卡如 P40，TitanV 都是有图形能力的，并且貌似性能还不错（比如 TitanV 有 3070 的性能）。还有一些老卡如 1080Ti 很少有人用，闲置太浪费了。</p>
+<p>因此本着科学求实的精神，想探究下实验室这些卡的性能水平，为之后科研做铺垫。。。好吧，我编不下去了，就是想白嫖实验室显卡玩游戏。加上最近塞尔达王国之泪出了，之前捡垃圾时，见过用 P106 这种 100 块的 “1060” linux 下玩 switch 模拟器效果不错。而自己的显卡 rx550 根本带不动，流下了没钱买卡的泪水。</p>
+<p>声明</p>
+<ul>
+<li>所有配置都是在 docker 等隔离的虚拟化环境中，不会对系统环境造成污染，影响其它人使用</li>
+<li>只在使用人数不多的机器上实验，不会在 A100 等主力机器上实验</li>
+<li>只在没人用时实验</li>
+</ul>
+<p>各种方案，现在直接看 wolf 方案即可（gow 已经不再维护了）</p>
+<p>效果</p>
+<ul>
+<li>docker gow</li>
+</ul>
+<p><img alt="" src="https://imagebed.yfycloud.site/2025/12/f3c56521a11c7c10773dc9d3ae09f178.jpg" />
+<img alt="Snipaste_2023-05-16_15-08-25.jpg" src="https://imagebed.yfycloud.site/2025/12/816dadcd634d17199eeea1f86123f6e0.jpg" /></p>
+<p><img alt="" src="https://imagebed.yfycloud.site/2025/12/8343ff2a8a36c9bddda169dece2e7e9b.jpg" /></p>
+<p><img alt="" src="https://imagebed.yfycloud.site/2025/12/c22ac18ed457fdc1bff4d93f5b37960d.jpg" /></p>
+<p>wolf 即插即用效果</p>
+<p><img alt="image.png" src="https://imagebed.yfycloud.site/2025/12/c047ebc2ed05b0036da1588cb4f09e8e.png" /></p>
+<p><img alt="image.png" src="https://imagebed.yfycloud.site/2025/12/1b781cc82e29df0f1d04cb1ac4251562.png" /></p>
+<!-- more -->
+
+<h2 id="计算卡性能对比">“计算卡”性能对比<a class="headerlink" href="#计算卡性能对比" title="Permanent link">&para;</a></h2>
+<p><a href="https://www.techpowerup.com/gpu-specs/tesla-p40.c2878">NVIDIA Tesla P40 Specs | TechPowerUp GPU Database</a>
+<a href="https://www.techpowerup.com/gpu-specs/tesla-p100-pcie-16-gb.c2888">NVIDIA Tesla P100 PCIe 16 GB Specs | TechPowerUp GPU Database</a></p>
+<p><img alt="" src="https://imagebed.yfycloud.site/2025/12/d8e9ac96040e256239dc3cf2d0448239.png" />
+<img alt="" src="https://imagebed.yfycloud.site/2025/12/dff329b5928a6cfb1bca4a04bd0d5e44.png" /></p>
+<p>P100(0.84)&lt; 1080 Ti(1) &lt; P40(1.04) &lt; Titan V(1.32) &lt; 3070Ti(1.46)</p>
+<h2 id="lxd-虚拟机方案不用了">LXD 虚拟机方案（不用了）<a class="headerlink" href="#lxd-虚拟机方案不用了" title="Permanent link">&para;</a></h2>
+<p><em>p.s. lxd 必须使用本地用户，服务器现在已经没有本地 home 目录了，因此这个方案不再适用。</em></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>Sorry, home directories outside of /home needs configuration.
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>See https://forum.snapcraft.io/t/11209 for details.
+</span></code></pre></div>
+<h3 id="steam-安装">steam 安装<a class="headerlink" href="#steam-安装" title="Permanent link">&para;</a></h3>
+<p><a href="https://www.wikihow.com/Install-Steam-on-Linux">5 Simple Ways to Install Steam on Linux - wikiHow</a>
+<a href="https://developer.valvesoftware.com/wiki/Steam_under_Linux">Steam under Linux - Valve Developer Community (valvesoftware.com)</a>
+dpkg i386</p>
+<p>steam play(proton)
+<a href="https://ubuntu.com/blog/linux-gaming-with-ubuntu-desktop-steam-and-proton">Linux Gaming with Ubuntu Desktop Part 1: Steam &amp; Proton | Ubuntu</a></p>
+<h3 id="steam-link-使用">steam link 使用<a class="headerlink" href="#steam-link-使用" title="Permanent link">&para;</a></h3>
+<p>steam link流式传输错误 无法连接以中继</p>
+<ul>
+<li>刚开始手机steam link无法连接。在lxd容器内开启wg全部流量走op2后可以。</li>
+<li>但是笔记本steam link不行，甚至可以测得速率。<ul>
+<li>笔记本也开启wg全部流量走op2。居然就可以连接了</li>
+<li>看到日志是@LAN两边的ipv6地址</li>
+</ul>
+</li>
+</ul>
+<p>steam link有声音，延迟红线是60。
+可以玩星露谷，但是无法使用手柄操作。</p>
+<p><img alt="" src="https://imagebed.yfycloud.site/2025/12/dae83e05802b523822e349acfd71b827.jpg" /></p>
+<h3 id="sunshine-配置">sunshine 配置<a class="headerlink" href="#sunshine-配置" title="Permanent link">&para;</a></h3>
+<p>parsec althernative</p>
+<ul>
+<li>moonlight + sunshine
+<a href="https://www.reddit.com/r/linux_gaming/comments/tz36bs/parsec_alternative_for_linux/">(6) Parsec alternative for Linux : linux_gaming (reddit.com)</a></li>
+</ul>
+<h4 id="setup">setup<a class="headerlink" href="#setup" title="Permanent link">&para;</a></h4>
+<p><a href="https://arstechnica.com/gaming/2023/04/nvidias-gamestream-is-dead-sunshine-and-moonlight-are-better-replacements/">Nvidia’s GameStream is dead. Sunshine and Moonlight are great replacements. | Ars Technica</a>
+<a href="https://docs.lizardbyte.dev/projects/sunshine/en/latest/about/usage.html#setup">Usage - Sunshine documentation (lizardbyte.dev)</a></p>
+<h4 id="遇到的问题">遇到的问题<a class="headerlink" href="#遇到的问题" title="Permanent link">&para;</a></h4>
+<h5 id="use-nvidia-runtime">use nvidia runtime<a class="headerlink" href="#use-nvidia-runtime" title="Permanent link">&para;</a></h5>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>Error: Failed to create session: Version mismatch between NvFBC and the X driver interface
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>[2023:05:15:02:38:46]: Error: Couldn&#39;t expose some/all drm planes for card: /dev/dri/card8
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>Error: Could not open codec [h264_nvenc]: Function not implemented
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>Error: Failed to create a CUDA device: Operation not supported
+</span></code></pre></div>
+<p>手动安装nvida driver会包含x driver，因此导致broken</p>
+<blockquote>
+<p>Did you build from source, and if so, does the build include CUDA support and how was CUDA installed in that case?
+I've seen the 'version mismatch between NvFBC and X driver' error when the NVidia driver installation is broken and multiple versions of driver &amp; nvidia library versions exist on the system at build time. One source of this is manually installing CUDA by using the NVidia installer from their website instead of using only distro packages. The reason is that the CUDA installer from NVidia includes the full X driver as well so if you install the distro drivers then install the NVidia CUDA manually, your driver config will be broken and building with CUDA support enabled will get you this error.</p>
+</blockquote>
+<p>卸载nvida驱动后，使用nvidia runtime</p>
+<ul>
+<li><a href="https://github.com/LizardByte/Sunshine/issues/514">Error: Couldn't import RGB Image: 00003009 &amp; Error: Unknown status &amp; Error: Failed to create session: Version mismatch between NvFBC and the X driver interface · Issue #514 · LizardByte/Sunshine (github.com)</a></li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>Error: Couldn&#39;t find any of the following libraries: [libnvidia-fbc.so.1, libnvidia-fbc.so]
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>[2023:05:15:14:01:19]: Error: Couldn&#39;t expose some/all drm planes for card: /dev/dri/card8
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>Error: Could not open codec [h264_nvenc]: Operation not permitted
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>Error: Failed to create a CUDA device: Operation not supported
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>apt install libnvidia-fbc1-530
+</span></code></pre></div>
+<h3 id="lxd-手柄">lxd 手柄<a class="headerlink" href="#lxd-手柄" title="Permanent link">&para;</a></h3>
+<p>moonlight连接sunshine后，没有手柄。尝试在lxd中添加/dev/uinput，结果moonlight连接后连键鼠都无法操作了。</p>
+<p>但是steam link是可以的，发现steam link连接后，/dev/input下会出现js0和对应evet。将这些都lxc add后（也就是说需要steam link连接后再手动添加），容器内确实可以手柄操作了。但是要想让yuzu检测到手柄，还需要通过steam启动yuzu才行。</p>
+<p>后面发现可以直接直通/dev/input（当然为了避免权限问题，lxd可以以特权容器运行，这样就不需要经过uid和gid映射），然后moonlight连接后，键鼠没有出现问题。但是手柄还是不行，报错。感觉可以解决，但是发现帧数和docker方案差不多，因此就没去尝试解决了。</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>Error: Could not create Sunshine Gamepad: Permission denied
+</span></code></pre></div>
+<p>lxd直通手柄
+<a href="https://discuss.linuxcontainers.org/t/joystick-passthrough/14383/6">Joystick Passthrough - LXD - Linux Containers Forum</a>
+<a href="https://discuss.linuxcontainers.org/t/unable-to-get-input-in-container/13609/4">Unable to get input in container - LXD - Linux Containers Forum</a>
+<a href="https://docs.kernel.org/input/uinput.html">7. uinput module — The Linux Kernel documentation</a></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a> lxc config device add ubuntu20 event unix-char path=/dev/input/event uid=1001 gid=1001 mode=0777
+</span></code></pre></div>
+<ul>
+<li>在host运行xorg，将unix socket暴露给容器。运行steam的方法<a href="https://discuss.linuxcontainers.org/t/unable-to-get-input-in-container/13609">Unable to get input in container - LXD - Linux Containers Forum</a></li>
+</ul>
+<blockquote>
+<p>I suspect it may have to do with Xorg trying to list things through udev and udev not having database entries for those devices.
+You could maybe cheat by copying the /run/udev data across to the container prior to starting Xorg, though I wonder if it wouldn’t be cleaner to run Xorg outside of the container, leaving all the input stuff handled there and then just expose the X11 socket to the container for it to run kodi against.
+That’d be closer to other setups described on this forum before for running things like steam inside of a container.</p>
+</blockquote>
+<p>新发现：</p>
+<ul>
+<li>/run/udev无法直通到lxd容器内（tmpfs的原因？）</li>
+<li>以普通用户启动tigervnc，启动sunshine，/dev/input目录下并没有出现键盘设备和js设备（docker方案出现了mouse0-2, js0-1）</li>
+<li>以root用户启动tigervnc，普通用户启动sunshine，/dev/input出现了键鼠。但是无法操作键鼠了。</li>
+</ul>
+<h2 id="docker方案--game-on-whale-被-wolf-升级替代">Docker方案--Game on Whale (被 wolf 升级替代)<a class="headerlink" href="#docker方案--game-on-whale-被-wolf-升级替代" title="Permanent link">&para;</a></h2>
+<p>在docker容器里跑x11应用。可以直接在host上显示，也可以运行在headless服务器上，通过sunshine串流到本地。</p>
+<ul>
+<li>支持声音</li>
+<li>支持手柄</li>
+<li>串流支持硬件加速（nvec, vaapi, libx264）</li>
+</ul>
+<ul>
+<li>组件介绍：<a href="https://games-on-whales.github.io/gow/components-overview.html">Components Overview :: Games On Whales (games-on-whales.github.io)</a></li>
+<li>效果展示：<a href="https://blog.jessfraz.com/post/docker-containers-on-the-desktop/#guis">Ramblings from Jessie: Docker Containers on the Desktop (jessfraz.com)</a></li>
+</ul>
+<h3 id="组件分析">组件分析<a class="headerlink" href="#组件分析" title="Permanent link">&para;</a></h3>
+<p><img alt="" src="https://imagebed.yfycloud.site/2025/12/cee275b20018defdb38b70bcc1abcc61.png" /></p>
+<h4 id="xorg">xorg<a class="headerlink" href="#xorg" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a># host desktop模式下，容器使用host的xorg socket
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>XORG_SOCKET=/tmp/.X11-unix/X0
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>XORG_DISPLAY=:0
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a># headless模式
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>XORG_SOCKET=xorg
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>XORG_DISPLAY=:99
+</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>
+</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a># headless模式下，启用xorg容器。该容器使用xorg volume，用于和其它容器共享。
+</span><span id="__span-6-10"><a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a>- ${XORG_SOCKET}:/tmp/.X11-unix
+</span><span id="__span-6-11"><a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a>
+</span><span id="__span-6-12"><a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a>XORG_IPC=shareable
+</span><span id="__span-6-13"><a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a>ipc: ${XORG_IPC}  # xorg容器设置ipc为可共享
+</span><span id="__span-6-14"><a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a>
+</span><span id="__span-6-15"><a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a>SHARED_IPC=service:xorg
+</span><span id="__span-6-16"><a id="__codelineno-6-16" name="__codelineno-6-16" href="#__codelineno-6-16"></a>ipc: ${SHARED_IPC} # 其它容器设置ipc为xorg容器
+</span></code></pre></div>
+<h4 id="pulse">pulse<a class="headerlink" href="#pulse" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>PULSE_SOCKET_HOST=pulse
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>PULSE_SOCKET_GUEST=/tmp/pulse/
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a># headless模式下，启用pulse容器。该容器使用pulse volume，用于和其它容器共享。
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a># 所有容器将volume pulse映射到该路径下
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>- ${PULSE_SOCKET_HOST}:${PULSE_SOCKET_GUEST}
+</span></code></pre></div>
+<h4 id="udev">udev<a class="headerlink" href="#udev" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>UDEVD_NETWORK=service:udevd
+</span></code></pre></div>
+<h3 id="额外设置">额外设置<a class="headerlink" href="#额外设置" title="Permanent link">&para;</a></h3>
+<h4 id="headless-display">headless display<a class="headerlink" href="#headless-display" title="Permanent link">&para;</a></h4>
+<p><a href="https://games-on-whales.github.io/gow/monitor.html">Monitor requirements :: Games On Whales (games-on-whales.github.io)</a></p>
+<ul>
+<li>Edid.txt</li>
+<li>xorg-screen.conf</li>
+</ul>
+<h4 id="使用闭源gpu驱动">使用闭源gpu驱动<a class="headerlink" href="#使用闭源gpu驱动" title="Permanent link">&para;</a></h4>
+<p><a href="https://games-on-whales.github.io/gow/nvidia.html">NVIDIA GPUs :: Games On Whales (games-on-whales.github.io)</a></p>
+<ul>
+<li>设置nvidia container toolkit：<code>sudo nvidia-ctk runtime configure</code></li>
+<li>env/nvidia.env：GUID选择显卡：<code>sudo nvidia-container-cli --load-kmods info</code></li>
+<li>运行时添加--gpu nvidia选项</li>
+</ul>
+<h4 id="multi-gpu">multi gpu<a class="headerlink" href="#multi-gpu" title="Permanent link">&para;</a></h4>
+<p>xorg-primary</p>
+<h3 id="添加自定义app">添加自定义app<a class="headerlink" href="#添加自定义app" title="Permanent link">&para;</a></h3>
+<p>需要基于base_app_image</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>docker build -t yfy/gow-yuzu \
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>  --build-arg BASE_APP_IMAGE=gameonwhales/base-app:sha-b51c691 \
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>  .
+</span></code></pre></div>
+<h3 id="遇到的问题_1">遇到的问题<a class="headerlink" href="#遇到的问题_1" title="Permanent link">&para;</a></h3>
+<h4 id="dbus-not-found">dbus not found<a class="headerlink" href="#dbus-not-found" title="Permanent link">&para;</a></h4>
+<p>sunshine中需要使用dbus</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>Failed to connect to system bus: Failed to connect to socket /run/dbus/system_bus_socket
+</span></code></pre></div>
+<p>host安装</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>apt install avahi-daemon
+</span></code></pre></div>
+<h4 id="docker-compse需要更新到2x">docker-compse需要更新到2.x<a class="headerlink" href="#docker-compse需要更新到2x" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>fyyuan@snode6 ➜  gow git:(master) ✗ ./run-gow --platform headless --app firefox pull
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>Your docker-compose is too old; please install v2.6.0 or later.
+</span></code></pre></div>
+<p>新的版本换了命令</p>
+<blockquote>
+<p>Note that Compose standalone uses the <code>-compose</code> syntax instead of the current standard syntax <code>compose</code>.<br />
+For example type <code>docker-compose up</code> when using Compose standalone, instead of <code>docker compose up</code>.</p>
+</blockquote>
+<p>需要卸载老版本，然后安装docker-compose-pulgin（需要apt添加了docker给仓库）</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>apt purge docker-compose
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>apt install docker-compose-pulgin
+</span></code></pre></div>
+<p>但是直接运行docker-compose会找不到命令
+apt-file search docker-compose可以发现docker-compose-pulgin提供了该程序，使用软连接即可</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a> sudo ln -s /usr/libexec/docker/cli-plugins/docker-compose /bin/docker-compose
+</span></code></pre></div>
+<h4 id="sunshine非局域网无法连接">sunshine非局域网无法连接<a class="headerlink" href="#sunshine非局域网无法连接" title="Permanent link">&para;</a></h4>
+<p>打开网页显示403</p>
+<p>sunshine log</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>[2023:05:15:14:16:33]: Error: Failed to create session: This hardware does not support NvFBC
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>[2023:05:15:14:16:33]: Error: Couldn&#39;t expose some/all drm planes for card: /dev/dri/card1
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>
+</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a>[2023:05:15:14:16:33]: Info: Trying encoder [nvenc]
+</span><span id="__span-15-5"><a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a>[2023:05:15:14:16:33]: Info: Screencasting with X11
+</span><span id="__span-15-6"><a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a>
+</span><span id="__span-15-7"><a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a>[2023:05:15:14:16:34]: Error: Could not open codec [libx264]: Invalid argument
+</span></code></pre></div>
+<p>发现log和在自己台式机上差不多，最后都是libx264无效参数。但是台式机是可以打开网页的，因此觉得是不是其它问题。尝试在台式机上设置配置文件为只能pc访问，发现网页一样报403错误。</p>
+<p>因为sunshine默认的设置是只允许lan内访问。而我的情况是服务器有公网ip，虽然docker监听的是0.0.0.0的地址。但是容器内发现src地址不是lan就丢弃了。</p>
+<p>尝试编辑配置文件，位于<code>$local_state/sunshine/sunshine.conf</code>（<code>local_state</code>定义于<code>user.env</code>），可以访问web了。但是moonlight无法连接。让检查udp 47999端口。查看sunshine日志发现，它直接尝试访问我这边NAT后的公网地址。</p>
+<p>因此这样解决很麻烦。此时wireguard又排上用场了。可以使用wireguard让服务器和我这边直接位于一个LAN内！</p>
+<p>解决后成功使用moonlight连接。由于app是firefox，因此可以打开网页，播放音乐有声音！</p>
+<ul>
+<li>但是仍然无法播放b站视频。现象为一直加载视频</li>
+<li>浏览器中文字体缺失。</li>
+</ul>
+<p><img alt="" src="https://imagebed.yfycloud.site/2025/12/2e25b5161d6bf166a05fb5140c2ff76d.png" /></p>
+<h4 id="sunshine无法挂载路径闪退">sunshine无法挂载路径闪退<a class="headerlink" href="#sunshine无法挂载路径闪退" title="Permanent link">&para;</a></h4>
+<p>尝试在A100 80g机器上跑。</p>
+<p>莫名奇妙退出了</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>gow-sunshine-1  | chown: changing ownership of &#39;/home/retro&#39;: Operation not permitted
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>gow-steam-1     | chown: changing ownership of &#39;/home/retro&#39;: Operation not permitted
+</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>gow-steam-1 exited with code 1
+</span><span id="__span-16-4"><a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a>gow-sunshine-1 exited with code 1
+</span><span id="__span-16-5"><a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a>
+</span><span id="__span-16-6"><a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a>gow-xorg-1      | Setting DP-0 output to: 1920x1080@60
+</span><span id="__span-16-7"><a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a>gow-xorg-1      | warning: output DP-0 not found; ignoring
+</span></code></pre></div>
+<p>发现是home目录权限导致的。（nfs挂载导致root无法写nfs下目录）</p>
+<p>取消local_state挂载后，firefox可以跑。（但是感觉是CPU渲染？鼠标很卡。而且不知道什么原因，移动几下鼠标后就画面就卡住了。播放b站视频也会卡住）</p>
+<p>多搞几下，最后直接闪退了</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>[2023:05:16:03:58:59]: Info: CLIENT CONNECTED
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>[2023:05:16:03:58:59]: Info: Detecting connected monitors
+</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>[2023:05:16:03:58:59]: Info: Screencasting with X11
+</span><span id="__span-17-4"><a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a>[2023:05:16:03:58:59]: Info: Configuring selected monitor (0) to stream
+</span><span id="__span-17-5"><a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a>[2023:05:16:03:58:59]: Info: Streaming display: DVI-D-0 with res 2560x1600 offset by 0x0
+</span><span id="__span-17-6"><a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a>[2023:05:16:03:58:59]: Info: SDR color coding [Rec. 601]
+</span><span id="__span-17-7"><a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a>[2023:05:16:03:58:59]: Info: Color range: [MPEG]
+</span><span id="__span-17-8"><a id="__codelineno-17-8" name="__codelineno-17-8" href="#__codelineno-17-8"></a>[2023:05:16:03:59:00]: Info: Setting default sink to: [sink-sunshine-stereo]
+</span><span id="__span-17-9"><a id="__codelineno-17-9" name="__codelineno-17-9" href="#__codelineno-17-9"></a>[2023:05:16:03:59:00]: Info: Found default monitor by name: sink-sunshine-stereo.monitor
+</span><span id="__span-17-10"><a id="__codelineno-17-10" name="__codelineno-17-10" href="#__codelineno-17-10"></a>[2023:05:16:03:59:52]: Info: CLIENT DISCONNECTED
+</span><span id="__span-17-11"><a id="__codelineno-17-11" name="__codelineno-17-11" href="#__codelineno-17-11"></a>[2023:05:16:03:59:52]: Info: Setting default sink to: [null]
+</span><span id="__span-17-12"><a id="__codelineno-17-12" name="__codelineno-17-12" href="#__codelineno-17-12"></a>[2023:05:16:03:59:52]: Info: /CN=NVIDIA GameStream Client -- verified
+</span><span id="__span-17-13"><a id="__codelineno-17-13" name="__codelineno-17-13" href="#__codelineno-17-13"></a>[2023:05:16:03:59:52]: Info: /CN=NVIDIA GameStream Client -- verified
+</span><span id="__span-17-14"><a id="__codelineno-17-14" name="__codelineno-17-14" href="#__codelineno-17-14"></a>[2023:05:16:03:59:55]: Info: /CN=NVIDIA GameStream Client -- verified
+</span><span id="__span-17-15"><a id="__codelineno-17-15" name="__codelineno-17-15" href="#__codelineno-17-15"></a>[2023:05:16:03:59:55]: Info: /CN=NVIDIA GameStream Client -- verified
+</span><span id="__span-17-16"><a id="__codelineno-17-16" name="__codelineno-17-16" href="#__codelineno-17-16"></a>[2023:05:16:04:00:17]: Fatal: Hang detected! Session failed to terminate in 10 seconds.
+</span><span id="__span-17-17"><a id="__codelineno-17-17" name="__codelineno-17-17" href="#__codelineno-17-17"></a>
+</span><span id="__span-17-18"><a id="__codelineno-17-18" name="__codelineno-17-18" href="#__codelineno-17-18"></a>
+</span><span id="__span-17-19"><a id="__codelineno-17-19" name="__codelineno-17-19" href="#__codelineno-17-19"></a>gow-firefox-1   | [Child 359, MediaDecoderStateMachine #1] WARNING: Decoder=7ff8e3e17d00 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - Error no decoder found for video/avc: file /build/firefox-HNs9Ru/firefox-113.0.1+build1/dom/media/MediaDecoderStateMachineBase.cpp:164
+</span></code></pre></div>
+<h4 id="docker-compose改为相对路径后sunshine-exit2">docker-compose改为相对路径后sunshine exit2<a class="headerlink" href="#docker-compose改为相对路径后sunshine-exit2" title="Permanent link">&para;</a></h4>
+<p>将gow复制到root目录，然后修改docker-compose中关于edid等文件为相对路径。结果一运行，sunshine就exit 2。貌似是没有显示器？</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>gow-sunshine-1  | [2023:05:16:03:40:37]: Error: Missing extension: [EGL_EXT_image_dma_buf_import]
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>gow-sunshine-1  | [2023:05:16:03:40:37]: Info: Encoder [software] failed
+</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>gow-sunshine-1  | [2023:05:16:03:40:37]: Fatal: Couldn&#39;t find any working encoder
+</span><span id="__span-18-4"><a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a>gow-sunshine-1 exited with code 2
+</span><span id="__span-18-5"><a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a>
+</span><span id="__span-18-6"><a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a>
+</span><span id="__span-18-7"><a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a>[2023:05:16:03:43:41]: Info: Screencasting with KMS
+</span><span id="__span-18-8"><a id="__codelineno-18-8" name="__codelineno-18-8" href="#__codelineno-18-8"></a>[2023:05:16:03:43:41]: Error: Couldn&#39;t get primary file descriptor for Framebuffer [39]: Function not implemented
+</span><span id="__span-18-9"><a id="__codelineno-18-9" name="__codelineno-18-9" href="#__codelineno-18-9"></a>[2023:05:16:03:43:41]: Info: Found monitor for DRM screencasting
+</span><span id="__span-18-10"><a id="__codelineno-18-10" name="__codelineno-18-10" href="#__codelineno-18-10"></a>[2023:05:16:03:43:41]: Error: Failed to determine panel orientation, defaulting to landscape.
+</span><span id="__span-18-11"><a id="__codelineno-18-11" name="__codelineno-18-11" href="#__codelineno-18-11"></a>[2023:05:16:03:43:41]: Error: Missing extension: [EGL_EXT_image_dma_buf_import]
+</span></code></pre></div>
+<p>重新改为绝对路径后正常。screencasting确实不一样。KMS-&gt;X11</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>[2023:05:16:03:51:33]: Error: Environment variable WAYLAND_DISPLAY has not been defined
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>[2023:05:16:03:51:33]: Info: Detecting connected monitors
+</span><span id="__span-19-3"><a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>[2023:05:16:03:51:33]: Info: // Testing for available encoders, this may generate errors. You can safely ignore those errors. //
+</span><span id="__span-19-4"><a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a>[2023:05:16:03:51:33]: Info: Trying encoder [nvenc]
+</span><span id="__span-19-5"><a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a>[2023:05:16:03:51:33]: Info: Screencasting with NvFBC
+</span><span id="__span-19-6"><a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a>[2023:05:16:03:51:35]: Error: Failed to create session:
+</span><span id="__span-19-7"><a id="__codelineno-19-7" name="__codelineno-19-7" href="#__codelineno-19-7"></a>[2023:05:16:03:51:48]: Info: Encoder [nvenc] failed
+</span><span id="__span-19-8"><a id="__codelineno-19-8" name="__codelineno-19-8" href="#__codelineno-19-8"></a>[2023:05:16:03:51:48]: Info: Trying encoder [vaapi]
+</span><span id="__span-19-9"><a id="__codelineno-19-9" name="__codelineno-19-9" href="#__codelineno-19-9"></a>[2023:05:16:03:51:48]: Info: Screencasting with X11
+</span></code></pre></div>
+<h4 id="moonlight连接后直接退出">moonlight连接后直接退出<a class="headerlink" href="#moonlight连接后直接退出" title="Permanent link">&para;</a></h4>
+<p>发现TITAN V也有显示输出，并且性能和RTX 3070差不多（3070 104%, 3070Ti 110%），遂尝试。</p>
+<p>对比了log，<strong>xorg连接DP-0是没问题的。sunshine中也没有明显不同的log</strong>。</p>
+<p>最后发现是系统内核版本为4.15，照理来说ubuntu20.04默认是5.4。更新重启后成功。</p>
+<p>进入后发现vulkan画面渲染有问题（黑屏），opengl没问题。更新到nvidia-drive-530后解决。</p>
+<h2 id="docker方案--wolf">Docker方案--Wolf<a class="headerlink" href="#docker方案--wolf" title="Permanent link">&para;</a></h2>
+<p>GoW 的替代升级版本，仅使用单个镜像包含 moonlight server、PulseAudio、wayland、uinput等多个组件。一条命令 docker 命令就可以把服务起起来。</p>
+<p>总结</p>
+<ul>
+<li>优点<ul>
+<li>配置简单，单条命令</li>
+</ul>
+</li>
+<li>缺点<ul>
+<li>4K 串流会将 5800x 单个线程跑满，导致非常 laggy（确实是使用 NVENC 编码 h265），使用 1080p 就正常了。</li>
+</ul>
+</li>
+</ul>
+<h3 id="设置">设置<a class="headerlink" href="#设置" title="Permanent link">&para;</a></h3>
+<p><a href="https://github.com/games-on-whales/wolf">games-on-whales/wolf: Stream virtual desktops and games running in Docker (github.com)</a></p>
+<h4 id="前提">前提<a class="headerlink" href="#前提" title="Permanent link">&para;</a></h4>
+<p>1 安装配置 <code>nvidia-container-toolkit</code>
+ <a href="https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html">Installing the NVIDIA Container Toolkit — NVIDIA Container Toolkit 1.17.0 documentation</a></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>sudo apt install nvidia-container-toolkit
+</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>sudo nvidia-ctk runtime configure --runtime=docker
+</span><span id="__span-20-3"><a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a>
+</span><span id="__span-20-4"><a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a>systemctl restart docker
+</span></code></pre></div>
+<p>2 启用 nvidia_drm</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>sudo cat /sys/module/nvidia_drm/parameters/modeset
+</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>Y  # 输出 Y
+</span></code></pre></div>
+<ul>
+<li>nvidia-drm 和 DRM 有关，wolf 基于 wayland 需要使用 DRM</li>
+<li>没有开启的话需要更改模块参数，重新加载。由于 nvidia 模块通常被占用，因此一般无法直接重新加载 模块，需要修改参数，然后重启。</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>sudo vim /etc/modprobe.d/nvidia-drm.conf
+</span><span id="__span-22-2"><a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>options nvidia-drm modeset=1
+</span><span id="__span-22-3"><a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a>sudo update-initramfs -u
+</span></code></pre></div>
+<h4 id="docker-参数">docker 参数<a class="headerlink" href="#docker-参数" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>docker run \
+</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>    --name wolf \
+</span><span id="__span-23-3"><a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a>    --network=host \
+</span><span id="__span-23-4"><a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a>    -e XDG_RUNTIME_DIR=/tmp/sockets \
+</span><span id="__span-23-5"><a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a>    -v /tmp/sockets:/tmp/sockets:rw \
+</span><span id="__span-23-6"><a id="__codelineno-23-6" name="__codelineno-23-6" href="#__codelineno-23-6"></a>    -e HOST_APPS_STATE_FOLDER=/extra/wolf \
+</span><span id="__span-23-7"><a id="__codelineno-23-7" name="__codelineno-23-7" href="#__codelineno-23-7"></a>    -v /extra/wolf:/extra/wolf:rw \
+</span><span id="__span-23-8"><a id="__codelineno-23-8" name="__codelineno-23-8" href="#__codelineno-23-8"></a>    -v /extra/wolf/cfg:/etc/wolf/cfg:rw \
+</span><span id="__span-23-9"><a id="__codelineno-23-9" name="__codelineno-23-9" href="#__codelineno-23-9"></a>    -v /var/run/docker.sock:/var/run/docker.sock:rw \
+</span><span id="__span-23-10"><a id="__codelineno-23-10" name="__codelineno-23-10" href="#__codelineno-23-10"></a>    -e NVIDIA_DRIVER_CAPABILITIES=all \
+</span><span id="__span-23-11"><a id="__codelineno-23-11" name="__codelineno-23-11" href="#__codelineno-23-11"></a>    -e NVIDIA_VISIBLE_DEVICES=all \
+</span><span id="__span-23-12"><a id="__codelineno-23-12" name="__codelineno-23-12" href="#__codelineno-23-12"></a>    --gpus=all \
+</span><span id="__span-23-13"><a id="__codelineno-23-13" name="__codelineno-23-13" href="#__codelineno-23-13"></a>    --device /dev/dri/ \
+</span><span id="__span-23-14"><a id="__codelineno-23-14" name="__codelineno-23-14" href="#__codelineno-23-14"></a>    --device /dev/uinput \
+</span><span id="__span-23-15"><a id="__codelineno-23-15" name="__codelineno-23-15" href="#__codelineno-23-15"></a>    --device /dev/uhid \
+</span><span id="__span-23-16"><a id="__codelineno-23-16" name="__codelineno-23-16" href="#__codelineno-23-16"></a>    -v /dev/:/dev/:rw \
+</span><span id="__span-23-17"><a id="__codelineno-23-17" name="__codelineno-23-17" href="#__codelineno-23-17"></a>    -v /run/udev:/run/udev:rw \
+</span><span id="__span-23-18"><a id="__codelineno-23-18" name="__codelineno-23-18" href="#__codelineno-23-18"></a>    --device-cgroup-rule &quot;c 13:* rmw&quot; \
+</span><span id="__span-23-19"><a id="__codelineno-23-19" name="__codelineno-23-19" href="#__codelineno-23-19"></a>    ghcr.io/games-on-whales/wolf:stable
+</span></code></pre></div>
+<ul>
+<li><code>HOST_APPS_STATE_FOLDER</code>: defaults to <code>/etc/wolf</code>, 存储所有 app 的数据</li>
+<li><code>app_state_folder</code>: defaults to a unique identifier for <strong>each client</strong> so that every Moonlight session will have its own folder. Can be changed in the <code>config.toml</code> file.<ul>
+<li>默认是每个客户端采用独立的目录，因此<strong>数据不共享</strong></li>
+<li>可以在 app toml 中单独配置，实现客户端共享</li>
+</ul>
+</li>
+<li><code>app_title</code>: the title of the app as defined in the <code>config.toml</code> file. 和应用程序存储数据路径有关，可以在 toml 中单独配置</li>
+</ul>
+<p>原理：打开每个应用时，wolf 容器 <strong>动态</strong>创建一个 应用 app 容器，并添加映射</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>HOST_APPS_STATE_FOLDER/app_state_folder/app_title:/home/wolf
+</span></code></pre></div>
+<p>因此修改 HOST_APPS_STATE_FOLDER 时，需要额外增加一个映射将 host 中的 HOST_APPS_STATE_FOLDER 映射到容器内的 HOST_APPS_STATE_FOLDER。否则创建的 app 找不到 HOST_APPS_STATE_FOLDER 指向的 host 目录。</p>
+<h3 id="遇到的问题_2">遇到的问题<a class="headerlink" href="#遇到的问题_2" title="Permanent link">&para;</a></h3>
+<h4 id="黑屏">黑屏<a class="headerlink" href="#黑屏" title="Permanent link">&para;</a></h4>
+<p>官方文档说刚开时黑屏是因为在下载镜像和 update。我在实验室服务器上始终是黑屏，ryzen 上测试，第一次黑屏，关闭应用，然后连接就正常了。</p>
+<p>另一台服务器上却能够正常运行</p>
+<p>发现问题在于 nvidia-drm 没有启用，启用后就好了</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>sudo vim /etc/modprobe.d/nvidia-drm.conf
+</span><span id="__span-25-2"><a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a>options nvidia-drm modeset=1
+</span><span id="__span-25-3"><a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a>sudo update-initramfs -u
+</span></code></pre></div>
+<h4 id="steam-大屏幕启动卡在网络设置">steam 大屏幕启动卡在网络设置<a class="headerlink" href="#steam-大屏幕启动卡在网络设置" title="Permanent link">&para;</a></h4>
+<p>提示 电量低，无法进行下一步操作</p>
+<p><a href="https://github.com/games-on-whales/wolf/issues/120">无法启动 Steam - 网络问题 ·问题 #120 ·鲸鱼/狼的游戏 --- Unable to start Steam - network issues · Issue #120 · games-on-whales/wolf (github.com)</a></p>
+<p>解决办法</p>
+<ul>
+<li>关闭大屏幕模式，在 config 中添加额外的环境变量 <code>STEAM_STARTUP_FLAGS=-steamos3</code></li>
+<li>我自己发现连点两下有线连接，就能跳过这里的设置，直接进入 steam 了</li>
+</ul>
+<h3 id="不同moonlight-session-共享应用数据">不同moonlight session 共享应用数据<a class="headerlink" href="#不同moonlight-session-共享应用数据" title="Permanent link">&para;</a></h3>
+<p>如下所示，手动修改<code>/opt/opt/wolf/cfg/config.toml</code>，将配对的 client 的 <code>app_state_folder</code> 设置成一样的（这里我已经将原本的 client 目录重命名为 <code>common</code>）</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>paired_clients = [
+</span><span id="__span-26-2"><a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a>{run_gid = 1000, run_uid = 1000, app_state_folder = &quot;common&quot;, client_cert =&quot;...&quot;},
+</span><span id="__span-26-3"><a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a>]
+</span></code></pre></div>
+<p>wolf HOST_APPS_STATE_FOLDER 典型结构</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>/opt/opt/wolf
+</span><span id="__span-27-2"><a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a>├── 16963924829778730322
+</span><span id="__span-27-3"><a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a>│   ├── RetroArch
+</span><span id="__span-27-4"><a id="__codelineno-27-4" name="__codelineno-27-4" href="#__codelineno-27-4"></a>│   └── Steam
+</span><span id="__span-27-5"><a id="__codelineno-27-5" name="__codelineno-27-5" href="#__codelineno-27-5"></a>├── 4674202571325744356
+</span><span id="__span-27-6"><a id="__codelineno-27-6" name="__codelineno-27-6" href="#__codelineno-27-6"></a>│   ├── Firefox
+</span><span id="__span-27-7"><a id="__codelineno-27-7" name="__codelineno-27-7" href="#__codelineno-27-7"></a>│   ├── RetroArch
+</span><span id="__span-27-8"><a id="__codelineno-27-8" name="__codelineno-27-8" href="#__codelineno-27-8"></a>│   ├── Steam
+</span><span id="__span-27-9"><a id="__codelineno-27-9" name="__codelineno-27-9" href="#__codelineno-27-9"></a>│   └── Test ball
+</span><span id="__span-27-10"><a id="__codelineno-27-10" name="__codelineno-27-10" href="#__codelineno-27-10"></a>├── 9429283158619851144
+</span><span id="__span-27-11"><a id="__codelineno-27-11" name="__codelineno-27-11" href="#__codelineno-27-11"></a>│   └── RetroArch
+</span><span id="__span-27-12"><a id="__codelineno-27-12" name="__codelineno-27-12" href="#__codelineno-27-12"></a>│       └── udev
+</span><span id="__span-27-13"><a id="__codelineno-27-13" name="__codelineno-27-13" href="#__codelineno-27-13"></a>│           ├── control
+</span><span id="__span-27-14"><a id="__codelineno-27-14" name="__codelineno-27-14" href="#__codelineno-27-14"></a>│           └── data
+</span><span id="__span-27-15"><a id="__codelineno-27-15" name="__codelineno-27-15" href="#__codelineno-27-15"></a>│               └── c13:76
+</span><span id="__span-27-16"><a id="__codelineno-27-16" name="__codelineno-27-16" href="#__codelineno-27-16"></a>├── cfg
+</span><span id="__span-27-17"><a id="__codelineno-27-17" name="__codelineno-27-17" href="#__codelineno-27-17"></a>│   ├── backtrace.2024-10-11-08-54-29.207356030.dump
+</span><span id="__span-27-18"><a id="__codelineno-27-18" name="__codelineno-27-18" href="#__codelineno-27-18"></a>│   ├── backtrace.2025-04-20-05-00-26.273162500.dump
+</span><span id="__span-27-19"><a id="__codelineno-27-19" name="__codelineno-27-19" href="#__codelineno-27-19"></a>│   ├── cert.pem
+</span><span id="__span-27-20"><a id="__codelineno-27-20" name="__codelineno-27-20" href="#__codelineno-27-20"></a>│   ├── config.toml
+</span><span id="__span-27-21"><a id="__codelineno-27-21" name="__codelineno-27-21" href="#__codelineno-27-21"></a>│   └── key.pem
+</span><span id="__span-27-22"><a id="__codelineno-27-22" name="__codelineno-27-22" href="#__codelineno-27-22"></a>├── common
+</span><span id="__span-27-23"><a id="__codelineno-27-23" name="__codelineno-27-23" href="#__codelineno-27-23"></a>│   ├── Firefox
+</span><span id="__span-27-24"><a id="__codelineno-27-24" name="__codelineno-27-24" href="#__codelineno-27-24"></a>│   ├── RetroArch
+</span><span id="__span-27-25"><a id="__codelineno-27-25" name="__codelineno-27-25" href="#__codelineno-27-25"></a>│   │   └── retroarch.cfg
+</span><span id="__span-27-26"><a id="__codelineno-27-26" name="__codelineno-27-26" href="#__codelineno-27-26"></a>│   └── Steam
+</span><span id="__span-27-27"><a id="__codelineno-27-27" name="__codelineno-27-27" href="#__codelineno-27-27"></a>│       ├── Desktop
+</span><span id="__span-27-28"><a id="__codelineno-27-28" name="__codelineno-27-28" href="#__codelineno-27-28"></a>│       │   ├── Finding Paradise.desktop
+</span><span id="__span-27-29"><a id="__codelineno-27-29" name="__codelineno-27-29" href="#__codelineno-27-29"></a>│       │   ├── Proton Experimental.desktop
+</span><span id="__span-27-30"><a id="__codelineno-27-30" name="__codelineno-27-30" href="#__codelineno-27-30"></a>│       │   └── Steam Linux Runtime 3.0 (sniper).desktop
+</span><span id="__span-27-31"><a id="__codelineno-27-31" name="__codelineno-27-31" href="#__codelineno-27-31"></a>│       └── steam-2273430.log
+</span><span id="__span-27-32"><a id="__codelineno-27-32" name="__codelineno-27-32" href="#__codelineno-27-32"></a>└── fake-udev
+</span></code></pre></div>
+<h3 id="为-steam-添加单独映射的游戏路径">为 steam 添加单独映射的游戏路径<a class="headerlink" href="#为-steam-添加单独映射的游戏路径" title="Permanent link">&para;</a></h3>
+<h3 id="windows-compositor">windows compositor<a class="headerlink" href="#windows-compositor" title="Permanent link">&para;</a></h3>
+<p>成功串流 firefox 后，注意到除了浏览器，就只能看到顶上系统的任务条。有按钮可以打开终端，终端以分屏形式展示。但是窗口都没有关闭按钮。感觉可能是类似 iw3 那种窗口管理器？</p>
+<p>Wolf support both <a href="https://swaywm.org/">Sway</a> and <a href="https://github.com/ValveSoftware/gamescope">Gamescope</a> compositor.
+Sway is used by default, but some game may work better with one or the other.
+Usage is controlled by environment variables on <code>[apps.runner]</code> configs:</p>
+<ul>
+<li><code>RUN_SWAY=1</code> - enable Sway (Default for newer Wolf installation)</li>
+<li><code>RUN_GAMESCOPE=1</code> - enable Gamescope</li>
+</ul>
+<h4 id="实现细节非常好的科普">实现细节（非常好的科普）<a class="headerlink" href="#实现细节非常好的科普" title="Permanent link">&para;</a></h4>
+<p><a href="https://games-on-whales.github.io/wolf/stable/dev/wayland.html">Headless Wayland :: Games On Whales (games-on-whales.github.io)</a></p>
+<p>已经知道了使用 Gstreamer 将图像串流到 Moonlight，问题是如<strong>何从 upstream 获得图像</strong>。</p>
+<p>使用 X11 可以容易做到，但是有很多缺点</p>
+<ul>
+<li>
+<ul>
+<li>Xorg has to be up and running; we can run it via Docker in GOW but that’s not without its challenges.</li>
+</ul>
+</li>
+<li>You need a physical monitor or a dummy plugged into your GPU (or some esoteric <a href="https://games-on-whales.github.io/gow/monitor.html#_force_xorg_to_use_a_custom_edid">EDID trick</a> which works only when also performing a human sacrifice).</li>
+<li>It doesn’t scale well with multiple remote clients when sharing a single host</li>
+</ul>
+<p>有没有一个办法可以直接从应用读取图像？
+<img alt="" src="https://imagebed.yfycloud.site/2025/12/f084ef6552e1e9530357e0e788591948." /></p>
+<p>总结</p>
+<p>通过自定义个一个 Wayland Compositor 实现了该功能。得益于 linux DRM，compositor 和 app 间可以通过 EGL 共享 GPU memory，避免需要在 CPU 和 GPU 间复制 2 次。目前存在的问题是从 compositor 到 Gstreamer 需要一次复制，使用 DMA buffer 也许可以解决该问题，但是目前存在一些问题，和 modifier 有关。</p>
+<blockquote>
+<p>What are modifiers? Modifiers add additional vendor specific properties to the internal pixel layout of a buffer. These modifiers are usually internally used by the GPU to speed up certain operations depending on characteristics of the hardware.</p>
+</blockquote>
+<p><img alt="" src="https://imagebed.yfycloud.site/2025/12/1780bb51198f5ab36ae041dfff75d9b0." /></p>
+<h2 id="其它方案">其它方案<a class="headerlink" href="#其它方案" title="Permanent link">&para;</a></h2>
+<p>docker steam：<a href="https://github.com/mikenye/docker-steam">mikenye/docker-steam: Valve's Steam, on Linux, in Docker. Perfect for gaming via Remote Play. (github.com)</a></p>
+<h2 id="使用多gpu提升性能">使用多GPU提升性能？<a class="headerlink" href="#使用多gpu提升性能" title="Permanent link">&para;</a></h2>
+<h3 id="sli">SLI<a class="headerlink" href="#sli" title="Permanent link">&para;</a></h3>
+<p><a href="https://www.gpumag.com/best-games-that-support-sli/">Best Games With SLI Support 2023 [Complete List] - GPU Mag</a>
+<a href="https://developer.download.nvidia.com/whitepapers/2011/SLI_Best_Practices_2011_Feb.pdf">SLI_Best_Practices_2011_Feb.pdf (nvidia.com)</a></p>
+<p>老
+<a href="https://download.nvidia.com/XFree86/Linux-x86_64/396.51/README/sli.html">Chapter 28. Configuring SLI and Multi-GPU FrameRendering (nvidia.com)</a>
+新
+<a href="https://download.nvidia.com/XFree86/Linux-x86_64/530.30.02/README/sli.html">Chapter 31. Configuring SLI and Multi-GPU Mosaic (nvidia.com)</a>
+<a href="https://download.nvidia.com/XFree86/Linux-x86_64/530.30.02/README/editxconfig.html">Chapter 6. Configuring X for the NVIDIA Driver</a></p>
+<p>科普
+<a href="https://www.bilibili.com/video/BV1sA411E7a2/?spm_id_from=333.788.recommend_more_video.5&amp;vd_source=b01257db06b1514b2fb50663dd339833">【官方双语】多显卡的历史 #电子速谈_哔哩哔哩_bilibili</a>
+<a href="https://www.bilibili.com/video/BV1dW411z7Zu/?vd_source=b01257db06b1514b2fb50663dd339833">【官方双语】跑得比SLI还快？NVLink#linus谈科技_哔哩哔哩_bilibili</a>
+<a href="https://www.bilibili.com/video/BV1Zz4y1d7Mr/?spm_id_from=333.337.search-card.all.click&amp;vd_source=b01257db06b1514b2fb50663dd339833">【官方双语】SLI真的已死#linus谈科技_哔哩哔哩_bilibili</a></p>
+<h2 id="x11">X11<a class="headerlink" href="#x11" title="Permanent link">&para;</a></h2>
+<p><a href="https://en.wikipedia.org/wiki/Windowing_system#Display_server">Windowing system - Wikipedia</a>
+<a href="https://en.wikipedia.org/wiki/Direct_Rendering_Manager#Kernel_mode_setting">Direct Rendering Manager - Wikipedia</a></p>
+<p>display server</p>
+<ul>
+<li>任何需要显示GUI的应用都是client</li>
+<li>server和client间通过协议通信。</li>
+<li>从内核获得input（键盘、鼠标、触控板），并将其发送给不同的client</li>
+<li>声音通常不负责</li>
+</ul>
+<p>X11</p>
+<ul>
+<li>需要第二个程序(composting window manager)，负责窗口的组合(composting)。</li>
+<li>常见实现：x.org, xfree86
+<img alt="" src="https://imagebed.yfycloud.site/2025/12/8f842889cb240ee7f67f124687fa0491.png" /></li>
+</ul>
+<p>wayland不同</p>
+<ul>
+<li>包含了compositing</li>
+<li>client可以直接访问framebuffer。Wayland compositors communicate with Wayland clients over the <a href="https://en.wikipedia.org/wiki/Wayland_(display_server_protocol)" title="Wayland (display server protocol)">Wayland display server protocol</a>. This protocol defines that clients can directly write data into the framebuffer using the <a href="https://en.wikipedia.org/wiki/EGL_(OpenGL)" title="EGL (OpenGL)">EGL</a> <a href="https://en.wikipedia.org/wiki/Rendering_API" title="Rendering API">rendering API</a>.
+<img alt="" src="https://imagebed.yfycloud.site/2025/12/53a454acf45dd4c54f2b8d0fbfbe9d40.png" /></li>
+</ul>
+<h2 id="drm">DRM<a class="headerlink" href="#drm" title="Permanent link">&para;</a></h2>
+<p>linux内核模块</p>
+<p>The <a href="https://en.wikipedia.org/wiki/Linux_kernel" title="Linux kernel">Linux kernel</a> already had an <a href="https://en.wikipedia.org/wiki/Application_programming_interface" title="Application programming interface">API</a> called <a href="https://en.wikipedia.org/wiki/Linux_framebuffer" title="Linux framebuffer">fbdev</a>, used to manage the <a href="https://en.wikipedia.org/wiki/Framebuffer" title="Framebuffer">framebuffer</a> of a <a href="https://en.wikipedia.org/wiki/Graphics_adapter" title="Graphics adapter">graphics adapter</a>,but it couldn't be used to handle the needs of modern 3D-accelerated <a href="https://en.wikipedia.org/wiki/GPU" title="GPU">GPU</a>-based video hardware.</p>
+<ul>
+<li>需要队列
+These devices usually require setting and managing a command queue in <a href="https://en.wikipedia.org/wiki/Video_RAM" title="Video RAM">their own memory</a> to dispatch commands to the GPU and also require management of buffers and free space within that memory</li>
+<li>避免了不同设备同时设置gpu导致冲突。</li>
+</ul>
+<h3 id="架构api">架构/API<a class="headerlink" href="#架构api" title="Permanent link">&para;</a></h3>
+<p>用户需要使用的话，需要通过系统调用。但是DRM没有定义新的系统调用，而是遵从了unix万物即文件的想法，通过文件命令空间将GPU暴露出来。位于/dev/层次下的device文件（在/dev/dri/cardX）。用户进程打开dev文件，并通过ioctl调用DRM。</p>
+<p>用户空间库libdrm将DRM ioctl API包装为C函数。</p>
+<p>DRM包含通用的DRM core和硬件专用的DRM driver两部分。DRM core provides the basic framework where different DRM drivers can register and also provides to user space a minimal set of ioctls with common, hardware-independent functionality。当DRM driver提供了增强的API时，用户空间的libdrm也需要额外的libdrm-<em>driver</em>进行扩展。</p>
+<p><img alt="" src="https://imagebed.yfycloud.site/2025/12/62830dce56d8278cec31672e94061a03.png" /></p>
+<h3 id="两大部分">两大部分<a class="headerlink" href="#两大部分" title="Permanent link">&para;</a></h3>
+<ul>
+<li>GEM（Graphics Execution Manager）：<ul>
+<li>管理显卡memory。Due to the increasing size of <a href="https://en.wikipedia.org/wiki/Video_memory" title="Video memory">video memory</a> and the growing complexity of graphics APIs such as <a href="https://en.wikipedia.org/wiki/OpenGL" title="OpenGL">OpenGL</a>, the strategy of reinitializing the graphics card state at each <a href="https://en.wikipedia.org/wiki/Context_switch" title="Context switch">context switch</a> was too expensive, performance-wise. Also, modern <a href="https://en.wikipedia.org/wiki/Linux_desktop" title="Linux desktop">Linux desktops</a> needed an optimal way to share off-screen buffers with the <a href="https://en.wikipedia.org/wiki/Compositing_manager" title="Compositing manager">compositing manager</a>. These requirements led to the development of new methods to manage graphics <a href="https://en.wikipedia.org/wiki/Data_buffer" title="Data buffer">buffers</a> inside the kernel. T</li>
+</ul>
+</li>
+<li>KMS（Kernel Mode Setting）<ul>
+<li>用于设置显卡输出分辨率，In order to work properly, a video card or graphics adapter must set a <em><a href="https://en.wikipedia.org/wiki/Framebuffer#Display_modes" title="Framebuffer">mode</a></em>—a combination of <a href="https://en.wikipedia.org/wiki/Screen_resolution" title="Screen resolution">screen resolution</a>, <a href="https://en.wikipedia.org/wiki/Color_depth" title="Color depth">color depth</a> and <a href="https://en.wikipedia.org/wiki/Refresh_rate" title="Refresh rate">refresh rate</a>—that is within the range of values supported by itself and the attached <a href="https://en.wikipedia.org/wiki/Computer_monitor" title="Computer monitor">display screen</a>.</li>
+<li>KMS has been adopted to such an extent that certain drivers which lack 3D acceleration (or for which the hardware vendor doesn't want to expose or implement it) nevertheless implement the KMS API without the rest of the DRM API, allowing display servers (like <a href="https://en.wikipedia.org/wiki/Wayland_(protocol)" title="Wayland (protocol)">Wayland</a>) to run with ease.<a href="https://en.wikipedia.org/wiki/Direct_Rendering_Manager#cite_note-47">[47]</a></li>
+</ul>
+</li>
+</ul>
+<p>render node：将计算和渲染的部分剥离开来，避免只有特权用户才能访问gpu。
+The "render nodes" concept tries to solve these scenarios by splitting the DRM user space API into two interfaces – one privileged and one non-privileged – and using separate device files (or "nodes") for each one. For every GPU found, its corresponding DRM driver—if it supports the render nodes feature—creates a device file <code>/dev/dri/renderD_X_</code>, called the <em>render node</em>, in addition to the primary node <code>/dev/dri/card_X_</code></p>
+<h3 id="硬件支持">硬件支持<a class="headerlink" href="#硬件支持" title="Permanent link">&para;</a></h3>
+<p>展示了AMD的两套驱动：Mesa和AMD自身的
+<img alt="" src="https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/20230516214345.png" /></p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+  
+
+
+
+      
+    </article>
+  </div>
+
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+        
+      
+      <nav class="md-footer__inner md-grid" aria-label="页脚" >
+        
+          
+          <a href="../../23/2023-07-23-%E6%8D%A1%E5%9E%83%E5%9C%BE-rk3399%20DIY%20KVM/" class="md-footer__link md-footer__link--prev" aria-label="上一页: 捡垃圾-rk3399 DIY KVM">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                上一页
+              </span>
+              <div class="md-ellipsis">
+                捡垃圾-rk3399 DIY KVM
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../../../../../%E5%8D%9A%E5%AE%A2--%E7%BD%91%E7%BB%9C/2023/08/02/IPv6%20%E7%9F%A5%E8%AF%86%E5%92%8C%20%20openwrt%20relay%20%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%9D%91/" class="md-footer__link md-footer__link--next" aria-label="下一页: IPv6 知识和  openwrt relay 模式的坑">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                下一页
+              </span>
+              <div class="md-ellipsis">
+                IPv6 知识和  openwrt relay 模式的坑
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/TheRainstorm" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../../..", "features": ["navigation.instant", "navigation.instant.progress", "navigation.tracking", "navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.footer", "content.code.copy", "toc.follow", "toc.integrate"], "search": "../../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../../../../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

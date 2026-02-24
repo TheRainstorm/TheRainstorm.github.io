@@ -1,0 +1,2270 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="记录一些关于数学、计算机的知识，以及一些日常。">
+      
+      
+      
+        <link rel="canonical" href="https://yfy.cqu.ai/%E5%8D%9A%E5%AE%A2--%E7%BD%91%E7%BB%9C/2024/10/03/linux%20%E5%88%9B%E5%BB%BA%E4%BB%A3%E7%90%86%E6%9C%8D%E5%8A%A1%E5%99%A8/">
+      
+      
+        <link rel="prev" href="../../../../../%E4%B8%AA%E4%BA%BA/2024/08/10/%E7%9C%8B%E5%A5%A5%E8%BF%90%E4%BC%9A%E7%9A%84%E5%90%84%E7%A7%8D%E5%A7%BF%E5%8A%BF/">
+      
+      
+        <link rel="next" href="../../../../../%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/2024/10/07/%E4%BD%93%E9%AA%8C%E7%BA%AF%20IPv6%20%E7%BD%91%E7%BB%9C/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.3">
+    
+    
+      
+        <title>linux 创建代理 - Rain 的随笔</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#基础知识" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../../../../.." title="Rain 的随笔" class="md-header__button md-logo" aria-label="Rain 的随笔" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Rain 的随笔
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              linux 创建代理
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    
+  
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="../../../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  博客
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../about/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  关于
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../tags/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  标签
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../series/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  系列
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../tools/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  工具
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../archive/2026/" class="md-tabs__link">
+          
+  
+  
+  归档
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../category/%E4%B8%AA%E4%BA%BA/" class="md-tabs__link">
+          
+  
+  
+  分类
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" hidden>
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../../.." title="Rain 的随笔" class="md-nav__button md-logo" aria-label="Rain 的随笔" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Rain 的随笔
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+    
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      <a href="../../../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    博客
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    关于
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../tags/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    标签
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../series/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    系列
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../tools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    工具
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    归档
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    归档
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2026/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2026
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2025/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2025
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2024/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2024
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2023/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2023
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2022/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2022
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2021/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2021
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2020/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2020
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2019/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2019
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    分类
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    分类
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E4%B8%AA%E4%BA%BA/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    个人
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E5%8D%9A%E5%AE%A2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    博客
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E5%8D%9A%E5%AE%A2--%E7%BD%91%E7%BB%9C/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    博客 &amp; 网络
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    学习笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    折腾记录
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    课程笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%85%B7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    软件工具
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E9%98%85%E8%AF%BB/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    阅读
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+  <div class="md-content md-content--post" data-md-component="content">
+    <div class="md-sidebar md-sidebar--post" data-md-component="sidebar" data-md-type="navigation">
+      <div class="md-sidebar__scrollwrap">
+        <div class="md-sidebar__inner md-post">
+          <nav class="md-nav md-nav--primary">
+            <div class="md-post__back">
+              <div class="md-nav__title md-nav__container">
+                <a href="../../../../.." class="md-nav__link">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+                  <span class="md-ellipsis">
+                    回到主页
+                  </span>
+                </a>
+              </div>
+            </div>
+            
+            <ul class="md-post__meta md-nav__list">
+              <li class="md-nav__item md-nav__item--section">
+                <div class="md-post__title">
+                  <span class="md-ellipsis">
+                    元数据
+                  </span>
+                </div>
+                <nav class="md-nav">
+                  <ul class="md-nav__list">
+                    <li class="md-nav__item">
+                      <div class="md-nav__link">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 19H5V8h14m-3-7v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1V1m-1 11h-5v5h5z"/></svg>
+                        <time datetime="2024-10-03 20:43:19+00:00" class="md-ellipsis">2024年10月3日</time>
+                      </div>
+                    </li>
+                    
+                    
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 3v15h3V3zm3 2 4 13 3-1-4-13zM5 5v13h3V5zM3 19v2h18v-2z"/></svg>
+                          <span class="md-ellipsis">
+                            分类于
+                            
+                              <a href="../../../../../category/%E5%8D%9A%E5%AE%A2--%E7%BD%91%E7%BB%9C/">博客 &amp; 网络</a></span>
+                        </div>
+                      </li>
+                    
+                    
+                      
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20a8 8 0 0 0 8-8 8 8 0 0 0-8-8 8 8 0 0 0-8 8 8 8 0 0 0 8 8m0-18a10 10 0 0 1 10 10 10 10 0 0 1-10 10C6.47 22 2 17.5 2 12A10 10 0 0 1 12 2m.5 5v5.25l4.5 2.67-.75 1.23L11 13V7z"/></svg>
+                          <span class="md-ellipsis">
+                            
+                              需要 13 分钟阅读时间
+                            
+                          </span>
+                        </div>
+                      </li>
+                    
+                  </ul>
+                </nav>
+              </li>
+            </ul>
+            
+          </nav>
+          
+            
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#基础知识" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        基础知识
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="基础知识">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#http代理" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        HTTP代理
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#socks-代理" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Socks 代理
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#client-软件设置代理" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        client 软件设置代理
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#all-in-one-proxy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        All in One proxy
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="All in One proxy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pproxy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        pproxy
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="pproxy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#认证" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        认证
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#访问控制" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        访问控制
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#http-代理服务器" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        HTTP 代理服务器
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="HTTP 代理服务器">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#privoxy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        privoxy
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="privoxy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#我的访问控制" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        我的访问控制
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#访问控制文档" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        访问控制文档
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="访问控制文档">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pattern-格式" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        pattern 格式
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#action" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Action
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#squid-失败" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        squid (失败)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="squid (失败)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#报错" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        报错
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#socks5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Socks5
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Socks5">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#dante" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        dante
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="dante">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#配置" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        配置
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#man-手册" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        man 手册
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="man 手册">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#authentication-methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        authentication methods
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rule" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        rule
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#其它功能" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        其它功能
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ss-local--ss-server" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ss-local + ss-server
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#代理应用" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        代理应用
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="代理应用">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#github-git-clone-ssh-协议" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        github git clone ssh 协议
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+          
+        </div>
+      </div>
+    </div>
+    <article class="md-content__inner md-typeset">
+      
+        
+  
+
+
+  <nav class="md-tags" >
+    
+      
+      
+      
+      
+        <a href="../../../../../tags/#tag:http" class="md-tag">http</a>
+      
+    
+      
+      
+      
+      
+        <a href="../../../../../tags/#tag:linux" class="md-tag">linux</a>
+      
+    
+      
+      
+      
+      
+        <a href="../../../../../tags/#tag:proxy" class="md-tag">proxy</a>
+      
+    
+      
+      
+      
+      
+        <a href="../../../../../tags/#tag:socks" class="md-tag">socks</a>
+      
+    
+  </nav>
+
+
+
+  <h1>linux 创建代理</h1>
+
+<p>我自己的机器配置了透明代理，因此配置开发环境等非常方便。但是实验室服务器等其它机器则通常没有自由的网络环境。因此如果能够让其它机器通过我内网的一台 linux 机器（通常是 VM）上网就很方便了。</p>
+<p>由于并不需要绕过 GFW，传统的代理协议如 HTTP 代理和 Socks 即可，并且许多软件都对这两种协议有支持。比如 linux 命令行下的软件大部分支持通过环境变量启用代理，如 curl, wget, git。浏览器甚至 windows 操作系统自身通常也支持设置系统代理（也是对浏览器生效）。因此本片文章主要总结了搭建这两种<strong>代理服务器</strong>的常见软件。</p>
+<p>总结：调研下来，虽然这两种协议历史悠久，有成熟的软件工具。但是目前大部分软件功能都太多了，这导致配置很复杂（比如 squid 9000 行的配置文件）这对简单使用代理功能有点 overkill 了。不过虽然配置复杂，学习后至少能用，因此就先不纠结了。**要我说感觉可以使用 python 简单糊一个单文件脚本，支持 1）密码认证 2）基于 ip 的访问控制 3）并且端口复用，同时支持 http 和 socks。可以放在 TODO list 里。</p>
+<p>update 20260110：发现已经有 gost 这个项目了（在问 gemini ssh 正反向代理时提到的），支持 HTTP/HTTPS/HTTP2/SOCKS4(A)/SOCKS5 代理协议、支持代理链、支持反向代理。并且由于是 go 编写的，支持 arm,mips 等平台，软件只有 4M 可以轻松在路由器上跑起来。见后续文章 <em>ssh 代理的妙用</em></p>
+<!-- more -->
+<h2 id="基础知识">基础知识<a class="headerlink" href="#基础知识" title="Permanent link">&para;</a></h2>
+<h3 id="http代理">HTTP代理<a class="headerlink" href="#http代理" title="Permanent link">&para;</a></h3>
+<p>首先复习下 HTTP 代理，这个协议很简单。第一种模式直接转发 HTTP 报文即可。第二种模式仅是使用了 HTTP 方法建立连接，打开 TCP 连接后就和 HTTP 报文没啥关系了，可以代理各种基于 TCP 的协议。（因此不支持 UDP）</p>
+<p>两种模式：</p>
+<ul>
+<li>中间人模式<ul>
+<li>无法代理HTTPS，因为HTTPS需要证书，而代理服务器无法提供。</li>
+</ul>
+</li>
+<li>隧道模式</li>
+</ul>
+<p><img alt="" src="https://imagebed.yfycloud.site/2025/12/ae57fbfbafab0f071f860c57106b4c53.awebp" /></p>
+<p><img alt="" src="https://imagebed.yfycloud.site/2025/12/cd4c60923c8f1732fb8a085bbf372cc5.awebp" />
+<a href="https://juejin.cn/post/6998351770871152653">HTTP 代理原理及实现 - 掘金 (juejin.cn)</a></p>
+<h3 id="socks-代理">Socks 代理<a class="headerlink" href="#socks-代理" title="Permanent link">&para;</a></h3>
+<p>支持 UDP（主要区别是阶段三是直接转发 UDP packet，还是建立 TCP 连接后 relay 数据）  ，并且协商阶段可以支持多种认证方法。</p>
+<p><a href="https://wiyi.org/socks5-protocol-in-deep.html">理解socks5协议的工作过程和协议细节 | Bigbyto (wiyi.org)</a></p>
+<p><img alt="socks5 协议过程" src="https://imagebed.yfycloud.site/2025/12/8870bf9feafd15d029345e127c1f0c08.jpg" /></p>
+<h3 id="client-软件设置代理">client 软件设置代理<a class="headerlink" href="#client-软件设置代理" title="Permanent link">&para;</a></h3>
+<p>通过查看 curl 和 wget 软件的 man 手册，我们可以发现这些工具有一节 ENVIRONMENT 介绍支持的代理环境变量。通常支持以下环境变量。</p>
+<ul>
+<li><code>http_proxy</code>, <code>https_proxy</code><ul>
+<li>If set, the http_proxy and https_proxy variables should contain the URLs of the proxies for HTTP and HTTPS connections respectively.</li>
+</ul>
+</li>
+<li><code>ftp_proxy</code><ul>
+<li>This variable should contain the URL of the proxy for FTP connections.  It is quite common that http_proxy and ftp_proxy are set to the same URL.</li>
+</ul>
+</li>
+<li><code>all_proxy</code><ul>
+<li>Sets the proxy server to use if no protocol-specific proxy is set.</li>
+</ul>
+</li>
+<li><code>no_proxy</code><ul>
+<li>This variable should contain a comma-separated list of domain extensions proxy should not be used for.  For instance, if the value of no_proxy is .mit.edu, proxy will not be used to retrieve documents from MIT.</li>
+</ul>
+</li>
+</ul>
+<p>可以发现</p>
+<ul>
+<li>可以针对不同协议设置不同代理。<strong>仅设置 http_proxy 的话，不会对 https 网站生效</strong></li>
+<li><strong>建议使用小写</strong>。The environment variables can be specified in l<strong>ower case or upper case</strong>. The lower case version has precedence. http_proxy is an exception as it is only available in lower case.</li>
+<li>socks 协议家族<ul>
+<li><code>socks4://, socks4a://, socks5:// or socks5h://</code></li>
+<li><code>socks5h</code> 表示域名在代理服务器上解析<ul>
+<li>Since clients are allowed to use either resolved addresses or domain names, a convention from <a href="https://en.wikipedia.org/wiki/CURL" title="CURL">cURL</a> exists to label the domain name variant of SOCKS5 "socks5h", and the other simply "socks5". A similar convention exists between SOCKS4a and SOCKS4.<a href="https://en.wikipedia.org/wiki/SOCKS#cite_note-18">[18]</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>对于需要 authentication 的代理服务器，通常格式如下 <a href="https://github.com/git/git/blob/0ca365c2ed48084974c7081bdfe3189094a2b993/Documentation/config/http.txt#L8-L9">git/Documentation/config/http.txt at 0ca365c2ed48084974c7081bdfe3189094a2b993 · git/git (github.com)</a><ul>
+<li><code>[protocol://][user[:password]@]proxyhost[:port][/path]</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="all-in-one-proxy">All in One proxy<a class="headerlink" href="#all-in-one-proxy" title="Permanent link">&para;</a></h2>
+<p>发现真的有同时支持各种代理的应用，还支持端口复用。使用 python 配置简单，因此后面方案基本都被淘汰了。</p>
+<h3 id="pproxy">pproxy<a class="headerlink" href="#pproxy" title="Permanent link">&para;</a></h3>
+<p><a href="https://github.com/qwj/python-proxy">qwj/python-proxy: HTTP/HTTP2/HTTP3/Socks4/Socks5/Shadowsocks/ShadowsocksR/SSH/Redirect/Pf TCP/UDP asynchronous tunnel proxy implemented in Python 3 asyncio. (github.com)</a></p>
+<p>一条命令，支持 ipv4 和 ipv6</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>pproxy -l http+socks5://:11223
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>docker run --name pproxy -d --restart unless-stopped -p 11223:11223 mosajjal/pproxy:latest -l http+socks5://:11223
+</span></code></pre></div>
+<p><code>-l</code> 参数支持的格式</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>{scheme}://[{cipher}@]{netloc}/[@{localbind}][,{plugins}][?{rules}][#{auth}]
+</span></code></pre></div>
+<ul>
+<li>netloc<ul>
+<li>It can be "hostname:port" or "/unix_domain_socket". If the hostname is empty, server will listen on all interfaces.</li>
+<li>Valid netloc: localhost:8080, 0.0.0.0:8123, /tmp/domain_socket, :8123</li>
+</ul>
+</li>
+<li>localbind<ul>
+<li>It can be "@in" or @ipv4_address or @ipv6_address</li>
+<li>Valid localbind: @in, @192.168.1.15, @::1</li>
+</ul>
+</li>
+<li>The username, colon ':', and the password</li>
+</ul>
+<h4 id="认证">认证<a class="headerlink" href="#认证" title="Permanent link">&para;</a></h4>
+<p>认证只支持密码，<strong>不支持 ip 的方式</strong></p>
+<ul>
+<li>可以通过外部的防火墙实现只允许部分 ip</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>pproxy -l http://domain1.com:443#username:password
+</span></code></pre></div>
+<h4 id="访问控制">访问控制<a class="headerlink" href="#访问控制" title="Permanent link">&para;</a></h4>
+<p>访问控制通过正则表达式。貌似不能指定 ip</p>
+<p>创建 rules 文件</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>#google domains
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>(?:.+\.)?google.*\.com
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>(?:.+\.)?gstatic\.com
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>(?:.+\.)?gmail\.com
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>(?:.+\.)?ntp\.org
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>(?:.+\.)?glpals\.com
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>(?:.+\.)?akamai.*\.net
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>(?:.+\.)?ggpht\.com
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>(?:.+\.)?android\.com
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>(?:.+\.)?gvt1\.com
+</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>(?:.+\.)?youtube.*\.com
+</span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>(?:.+\.)?ytimg\.com
+</span><span id="__span-3-13"><a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a>(?:.+\.)?goo\.gl
+</span><span id="__span-3-14"><a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a>(?:.+\.)?youtu\.be
+</span><span id="__span-3-15"><a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a>(?:.+\.)?google\..+
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>pproxy -r http://aa.bb.cc.dd:8080?rules -vv
+</span></code></pre></div>
+<p><em>pproxy</em> will serve incoming traffic by http/socks4/socks5 auto-detect protocol, redirect all google traffic to http proxy aa.bb.cc.dd:8080, and visit all other traffic directly from local.</p>
+<ul>
+<li>-b BLOCK          block regex rules</li>
+</ul>
+<h2 id="http-代理服务器">HTTP 代理服务器<a class="headerlink" href="#http-代理服务器" title="Permanent link">&para;</a></h2>
+<h3 id="privoxy">privoxy<a class="headerlink" href="#privoxy" title="Permanent link">&para;</a></h3>
+<p><a href="https://help.ubuntu.com/community/Privoxy">Privoxy - Community Help Wiki (ubuntu.com)</a></p>
+<ul>
+<li>唯一一个只需要改下端口号就可以使用的</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>sudo apt install privoxy
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>vim /etc/privoxy/config
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>sudo systemctl start privoxy
+</span></code></pre></div>
+<h4 id="我的访问控制">我的访问控制<a class="headerlink" href="#我的访问控制" title="Permanent link">&para;</a></h4>
+<p>由于这个 HTTP 代理是公开的。目前我不希望有人通过这个代理入侵我的内网。因此添加了如下规则。（在结尾处，能够覆盖前面的规则）
+注意 privoxy 的匹配是基于字符串的，因此<strong>不支持 CIDR 地址</strong>。</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>{ +block{My network can only be access by VPN} }
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>192.168.*.*
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>10.*.*.*
+</span></code></pre></div>
+<h4 id="访问控制文档">访问控制文档<a class="headerlink" href="#访问控制文档" title="Permanent link">&para;</a></h4>
+<p>privoxy 使用 action 来进行访问控制</p>
+<blockquote>
+<p>The actions files are used to define what <em>actions</em> Privoxy takes for which URLs, and thus determines how ad images, cookies and various other aspects of HTTP content and transactions are handled, and on which sites (or even parts thereof).</p>
+</blockquote>
+<p>通过自定义配置 user.action 来覆盖默认配置 default.action（定义了许多预定义规则如拦截广告、拦截弹窗、Cookie 处理）</p>
+<blockquote>
+<p>The over-riding principle when applying actions, is that the last action that matches a given URL wins. The broadest, most general rules go first (defined in default.action), followed by any exceptions (typically also in default.action), which are then followed lastly by any local preferences (typically in <em>user</em>.action). Generally, user.action has the last word.</p>
+</blockquote>
+<p><strong>action 文件由一系列 section 组成，包含了 action 和要匹配的 pattern</strong></p>
+<ul>
+<li>Actions files are divided into sections.</li>
+<li>They have a <strong>heading line</strong> (often split up to multiple lines for readability) which consist of <strong>a list of actions</strong>, separated by whitespace and enclosed in curly braces.</li>
+<li>Below that, there is a list of URL and tag <strong>patterns</strong>, each on a separate line.</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>{ +handle-as-image  +block{Banner ads.} }
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a># Block these as if they were images. Send no block page.
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>banners.example.com
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>media.example.com/.*banners
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>.example.com/images/ads/
+</span></code></pre></div>
+<h5 id="pattern-格式"><strong>pattern 格式</strong><a class="headerlink" href="#pattern-格式" title="Permanent link">&para;</a></h5>
+<ul>
+<li>Generally, an URL pattern has the form <code>&lt;host&gt;&lt;port&gt;/&lt;path&gt;</code></li>
+<li>The host part uses a simple globbing type matching technique, while the path part uses more flexible <a href="https://en.wikipedia.org/wiki/Regular_expressions">"Regular Expressions"</a> (POSIX 1003.2).</li>
+<li>ipv6 地址需要使用 <code>&lt;&gt;</code> 包起来</li>
+</ul>
+<p>例子</p>
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="c1"># host pattern  (glob synatax)</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>ad*.example.com
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>.?pix.com
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>www<span class="o">[</span><span class="m">1</span>-9a-ez<span class="o">]</span>.example.c*
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>
+</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="c1"># path pattern (regular expression)</span>
+</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a>.example.com/.*/index.html$
+</span><span id="__span-8-9"><a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a>.example.com/<span class="o">(</span>.*/<span class="o">)</span>?index<span class="se">\.</span>html$<span class="w">  </span><span class="c1"># Will match any page in the domain of &quot;example.com&quot; that is named &quot;index.html&quot;</span>
+</span><span id="__span-8-10"><a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a>
+</span><span id="__span-8-11"><a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a>.example.com/<span class="o">(</span>.*/<span class="o">)(</span>ads<span class="p">|</span>banners?<span class="p">|</span>junk<span class="o">)</span>
+</span><span id="__span-8-12"><a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a><span class="c1">#This regular expression will match any path of &quot;example.com&quot; that contains any of the words &quot;ads&quot;, &quot;banner&quot;, &quot;banners&quot; (because of the &quot;?&quot;) or &quot;junk&quot;.</span>
+</span></code></pre></div>
+<p>!!!? note bouns</p>
+<div class="language-text highlight"><pre><span></span><code>request pattern：还可以根据 HTTP header 来匹配。以 `TAG:` 为开头
+</code></pre></div>
+<blockquote>
+<div class="language-text highlight"><pre><span></span><code>Request tag patterns are used to change the applying actions based on the request&#39;s tags. Tags can be created based on HTTP headers with either the [client-header-tagger](https://www.privoxy.org/user-manual/actions-file.html#CLIENT-HEADER-TAGGER) or the [server-header-tagger](https://www.privoxy.org/user-manual/actions-file.html#SERVER-HEADER-TAGGER) action.
+</code></pre></div>
+</blockquote>
+<h5 id="action"><strong>Action</strong><a class="headerlink" href="#action" title="Permanent link">&para;</a></h5>
+<p>默认是关闭的，除非在 action 文件中显示地打开（<em>So in this case Privoxy would just be a normal, non-blocking, non-filtering proxy.</em>）。使用 <code>+</code> 开启，<code>-</code> 关闭。</p>
+<p>action 可能是带有参数的。多值的参数多次匹配可以累加</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>+name{param}   # enable action and add param to the list of parameters
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>-name{param}   # remove the parameter param from the list of parameters
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>             # If it was the last one left, disable the action.
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>-name          # disable this action completely and remove all parameters from the list
+</span></code></pre></div>
+<p>action list：有数不过来的 action，参考<a href="https://www.privoxy.org/user-manual/actions-file.html#:~:text=8.5.-,Actions,-All%20actions%20are">manual</a>。我们主要关注 block 即可。
+代理也是一种中间人攻击，可以做到好多有趣的事（由于 HTTP 协议基础部分还是简单的，所以还是好理解的）</p>
+<ul>
+<li>add-header</li>
+<li><strong>block</strong>: Block ads or other unwanted content<ul>
+<li>A block reason that should be given to the user.</li>
+</ul>
+</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>{+block{No nasty stuff for you.}}
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a># Block and replace with &quot;blocked&quot; page
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>.nasty-stuff.example.com
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>{+block{Doubleclick banners.} +handle-as-image}
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a># Block and replace with image
+</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a>.ad.doubleclick.net
+</span><span id="__span-10-8"><a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a>.ads.r.us/banners/
+</span><span id="__span-10-9"><a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a>
+</span><span id="__span-10-10"><a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a>{+block{Layered ads.} +handle-as-empty-document}
+</span><span id="__span-10-11"><a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a># Block and then ignore
+</span><span id="__span-10-12"><a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a>adserver.example.net/.*\.js$
+</span></code></pre></div>
+<ul>
+<li>change-x-forwarded-for: Improve privacy by not forwarding the source of the request in the HTTP headers.<ul>
+<li>"block" to delete the header.</li>
+<li>"add" to create the header (or append the client's IP address to an already existing one).</li>
+</ul>
+</li>
+<li><strong>filter</strong>: 修改 html, js 内容<ul>
+<li>All instances of text-based type, most notably HTML and JavaScript, to which this action applies, can be filtered on-the-fly through the specified regular expression based substitutions. (Note: as of version 3.0.3 plain text documents are exempted from filtering, because web servers often use the text/plain MIME type for all files whose type they don't know.)</li>
+</ul>
+</li>
+<li>limit-connect</li>
+<li><strong>redirect</strong>: Redirect requests to other sites.</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a># Replace example.com&#39;s style sheet with another one
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>  { +redirect{http://localhost/css-replacements/example.com.css} }
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>  example.com/stylesheet\.css
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>
+</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>  # Create a short, easy to remember nickname for a favorite site
+</span><span id="__span-11-6"><a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>  # (relies on the browser to accept and forward invalid URLs to Privoxy)
+</span><span id="__span-11-7"><a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a>  { +redirect{https://www.privoxy.org/user-manual/actions-file.html} }
+</span><span id="__span-11-8"><a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a>  a
+</span><span id="__span-11-9"><a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a>
+</span><span id="__span-11-10"><a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a>  # Always use the expanded view for Undeadly.org articles
+</span><span id="__span-11-11"><a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a>  # (Note the $ at the end of the URL pattern to make sure
+</span><span id="__span-11-12"><a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a>  # the request for the rewritten URL isn&#39;t redirected as well)
+</span><span id="__span-11-13"><a id="__codelineno-11-13" name="__codelineno-11-13" href="#__codelineno-11-13"></a>  {+redirect{s@$@&amp;mode=expanded@}}
+</span><span id="__span-11-14"><a id="__codelineno-11-14" name="__codelineno-11-14" href="#__codelineno-11-14"></a>  undeadly.org/cgi\?action=article&amp;sid=\d*$
+</span><span id="__span-11-15"><a id="__codelineno-11-15" name="__codelineno-11-15" href="#__codelineno-11-15"></a>
+</span><span id="__span-11-16"><a id="__codelineno-11-16" name="__codelineno-11-16" href="#__codelineno-11-16"></a>  # Redirect Google search requests to MSN
+</span><span id="__span-11-17"><a id="__codelineno-11-17" name="__codelineno-11-17" href="#__codelineno-11-17"></a>  {+redirect{s@^http://[^/]*/search\?q=([^&amp;]*).*@http://search.msn.com/results.aspx?q=$1@}}
+</span><span id="__span-11-18"><a id="__codelineno-11-18" name="__codelineno-11-18" href="#__codelineno-11-18"></a>  .google.com/search
+</span><span id="__span-11-19"><a id="__codelineno-11-19" name="__codelineno-11-19" href="#__codelineno-11-19"></a>
+</span><span id="__span-11-20"><a id="__codelineno-11-20" name="__codelineno-11-20" href="#__codelineno-11-20"></a>  # Redirect MSN search requests to Yahoo
+</span><span id="__span-11-21"><a id="__codelineno-11-21" name="__codelineno-11-21" href="#__codelineno-11-21"></a>  {+redirect{s@^http://[^/]*/results\.aspx\?q=([^&amp;]*).*@http://search.yahoo.com/search?p=$1@}}
+</span><span id="__span-11-22"><a id="__codelineno-11-22" name="__codelineno-11-22" href="#__codelineno-11-22"></a>  search.msn.com//results\.aspx\?q=
+</span><span id="__span-11-23"><a id="__codelineno-11-23" name="__codelineno-11-23" href="#__codelineno-11-23"></a>
+</span><span id="__span-11-24"><a id="__codelineno-11-24" name="__codelineno-11-24" href="#__codelineno-11-24"></a>  # Redirect http://example.com/&amp;bla=fasel&amp;toChange=foo (and any other value but &quot;bar&quot;)
+</span><span id="__span-11-25"><a id="__codelineno-11-25" name="__codelineno-11-25" href="#__codelineno-11-25"></a>  # to       http://example.com/&amp;bla=fasel&amp;toChange=bar
+</span><span id="__span-11-26"><a id="__codelineno-11-26" name="__codelineno-11-26" href="#__codelineno-11-26"></a>  #
+</span><span id="__span-11-27"><a id="__codelineno-11-27" name="__codelineno-11-27" href="#__codelineno-11-27"></a>  # The URL pattern makes sure that the following request isn&#39;t redirected again.
+</span><span id="__span-11-28"><a id="__codelineno-11-28" name="__codelineno-11-28" href="#__codelineno-11-28"></a>  {+redirect{s@toChange=[^&amp;]+@toChange=bar@}}
+</span><span id="__span-11-29"><a id="__codelineno-11-29" name="__codelineno-11-29" href="#__codelineno-11-29"></a>  example.com/.*toChange=(?!bar)
+</span><span id="__span-11-30"><a id="__codelineno-11-30" name="__codelineno-11-30" href="#__codelineno-11-30"></a>
+</span><span id="__span-11-31"><a id="__codelineno-11-31" name="__codelineno-11-31" href="#__codelineno-11-31"></a>  # Add a shortcut to look up illumos bugs
+</span><span id="__span-11-32"><a id="__codelineno-11-32" name="__codelineno-11-32" href="#__codelineno-11-32"></a>  {+redirect{s@^http://i([0-9]+)/.*@https://www.illumos.org/issues/$1@}}
+</span><span id="__span-11-33"><a id="__codelineno-11-33" name="__codelineno-11-33" href="#__codelineno-11-33"></a>  # Redirected URL = http://i4974/
+</span><span id="__span-11-34"><a id="__codelineno-11-34" name="__codelineno-11-34" href="#__codelineno-11-34"></a>  # Redirect Destination = https://www.illumos.org/issues/4974
+</span><span id="__span-11-35"><a id="__codelineno-11-35" name="__codelineno-11-35" href="#__codelineno-11-35"></a>  i[0-9][0-9][0-9][0-9]*/
+</span><span id="__span-11-36"><a id="__codelineno-11-36" name="__codelineno-11-36" href="#__codelineno-11-36"></a>
+</span><span id="__span-11-37"><a id="__codelineno-11-37" name="__codelineno-11-37" href="#__codelineno-11-37"></a>  # Redirect requests for the old Tor Hidden Service of the Privoxy website to the new one
+</span><span id="__span-11-38"><a id="__codelineno-11-38" name="__codelineno-11-38" href="#__codelineno-11-38"></a>  {+redirect{s@^http://jvauzb4sb3bwlsnc.onion/@http://l3tczdiiwoo63iwxty4lhs6p7eaxop5micbn7vbliydgv63x5zrrrfyd.onion/@}}
+</span><span id="__span-11-39"><a id="__codelineno-11-39" name="__codelineno-11-39" href="#__codelineno-11-39"></a>  jvauzb4sb3bwlsnc.onion/
+</span><span id="__span-11-40"><a id="__codelineno-11-40" name="__codelineno-11-40" href="#__codelineno-11-40"></a>
+</span><span id="__span-11-41"><a id="__codelineno-11-41" name="__codelineno-11-41" href="#__codelineno-11-41"></a>  # Redirect remote requests for this manual
+</span><span id="__span-11-42"><a id="__codelineno-11-42" name="__codelineno-11-42" href="#__codelineno-11-42"></a>  # to the local version delivered by Privoxy
+</span><span id="__span-11-43"><a id="__codelineno-11-43" name="__codelineno-11-43" href="#__codelineno-11-43"></a>  {+redirect{s@^http://www@http://config@}}
+</span><span id="__span-11-44"><a id="__codelineno-11-44" name="__codelineno-11-44" href="#__codelineno-11-44"></a>  www.privoxy.org/user-manual/
+</span></code></pre></div>
+<h3 id="squid-失败">squid (失败)<a class="headerlink" href="#squid-失败" title="Permanent link">&para;</a></h3>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><em>p.s 没有搞定，就是代理不成功，不试了。</em></p>
+</div>
+<p><a href="https://ubuntu.com/server/docs/how-to-install-a-squid-server">How to install a Squid server | Ubuntu</a></p>
+<ul>
+<li>sudo systemctl restart squid.service 不知为何容易<strong>卡半天</strong></li>
+<li>配置 9000 行<ul>
+<li><strong>不过我们基本只需要关注两个配置</strong><ul>
+<li>http_port</li>
+<li>http_access</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>配置文件需要讲究顺序，我们在 <code>http_access deny all</code> 前面添加额外的规则，在配置文件结尾加没有用</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>acl ustc_net src 222.195.72.0/24
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>acl ustc_net2 src 202.38.72.0/24
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>http_access allow ustc_net ustc_net2
+</span></code></pre></div>
+<h4 id="报错">报错<a class="headerlink" href="#报错" title="Permanent link">&para;</a></h4>
+<p>不知为何，在 ryzen 上通过 localhost 设置可以访问，在其它机器上都不行。</p>
+<p>curl 报错</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>* Uses proxy env variable https_proxy == &#39;http://114.214.236.72:11223&#39;
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>* Trying 114.214.236.72:11223...
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>* TCP_NODELAY set 
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>* Connected to 114.214.236.72 (114.214.236.72) port 11223 (#0)
+</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>* allocate connect buffer!
+</span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>* Establish HTTP proxy tunnel to www.youtube.com:443
+</span><span id="__span-13-7"><a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a>&gt; CONNECT www.youtube.com:443 HTTP/1.1
+</span><span id="__span-13-8"><a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a>&gt; Host: www.youtube.com:443 
+</span><span id="__span-13-9"><a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a>&gt; User-Agent: curl/7.68.0 
+</span><span id="__span-13-10"><a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a>&gt; Proxy-Connection: Keep-Alive
+</span><span id="__span-13-11"><a id="__codelineno-13-11" name="__codelineno-13-11" href="#__codelineno-13-11"></a>&gt; 
+</span><span id="__span-13-12"><a id="__codelineno-13-12" name="__codelineno-13-12" href="#__codelineno-13-12"></a>&lt; HTTP/1.1 403 Forbidden
+</span><span id="__span-13-13"><a id="__codelineno-13-13" name="__codelineno-13-13" href="#__codelineno-13-13"></a>&lt; Server: squid/5.9 
+</span><span id="__span-13-14"><a id="__codelineno-13-14" name="__codelineno-13-14" href="#__codelineno-13-14"></a>&lt; Mime-Version: 1.0 
+</span><span id="__span-13-15"><a id="__codelineno-13-15" name="__codelineno-13-15" href="#__codelineno-13-15"></a>&lt; Date: Wed, 02 Oct 2024 06:52:32 GMT 
+</span><span id="__span-13-16"><a id="__codelineno-13-16" name="__codelineno-13-16" href="#__codelineno-13-16"></a>&lt; Content-Type: text/html;charset=utf-8 
+</span><span id="__span-13-17"><a id="__codelineno-13-17" name="__codelineno-13-17" href="#__codelineno-13-17"></a>&lt; Content-Length: 3496
+</span><span id="__span-13-18"><a id="__codelineno-13-18" name="__codelineno-13-18" href="#__codelineno-13-18"></a>&lt; X-Squid-Error: ERR_ACCESS_DENIED 0
+</span><span id="__span-13-19"><a id="__codelineno-13-19" name="__codelineno-13-19" href="#__codelineno-13-19"></a>&lt; Vary: Accept-Language 
+</span><span id="__span-13-20"><a id="__codelineno-13-20" name="__codelineno-13-20" href="#__codelineno-13-20"></a>&lt; Content-Language: en
+</span><span id="__span-13-21"><a id="__codelineno-13-21" name="__codelineno-13-21" href="#__codelineno-13-21"></a>&lt; X-Cache: MISS from ryzen
+</span><span id="__span-13-22"><a id="__codelineno-13-22" name="__codelineno-13-22" href="#__codelineno-13-22"></a>&lt; X-Cache-Lookup: NONE from ryzen:11223 
+</span><span id="__span-13-23"><a id="__codelineno-13-23" name="__codelineno-13-23" href="#__codelineno-13-23"></a>&lt; Via: 1.1 ryzen (squid/5.9)
+</span><span id="__span-13-24"><a id="__codelineno-13-24" name="__codelineno-13-24" href="#__codelineno-13-24"></a>&lt; Connection: keep-alive
+</span><span id="__span-13-25"><a id="__codelineno-13-25" name="__codelineno-13-25" href="#__codelineno-13-25"></a>&lt; 
+</span><span id="__span-13-26"><a id="__codelineno-13-26" name="__codelineno-13-26" href="#__codelineno-13-26"></a>* Received HTTP code 403 from proxy after CONNECT 
+</span><span id="__span-13-27"><a id="__codelineno-13-27" name="__codelineno-13-27" href="#__codelineno-13-27"></a>* CONNECT phase completed!
+</span><span id="__span-13-28"><a id="__codelineno-13-28" name="__codelineno-13-28" href="#__codelineno-13-28"></a>* Closing connection 0
+</span><span id="__span-13-29"><a id="__codelineno-13-29" name="__codelineno-13-29" href="#__codelineno-13-29"></a>curl: (56) Received HTTP code 403 from proxy after CONNECT 
+</span></code></pre></div>
+<p>squid 日志</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>1727852473.521    312 127.0.0.1 TCP_TUNNEL/200 534253 CONNECT www.youtube.com:443 - HIER_DIRECT/198.18.0.148 -
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>1727852480.354    488 127.0.0.1 TCP_TUNNEL/200 533027 CONNECT www.youtube.com:443 - HIER_DIRECT/198.18.0.148 -
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>1727852491.756   4547 127.0.0.1 TCP_TUNNEL/200 545250 CONNECT www.youtube.com:443 - HIER_DIRECT/198.18.0.148 -
+</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>1727852507.818    405 127.0.0.1 TCP_TUNNEL/200 531655 CONNECT www.youtube.com:443 - HIER_DIRECT/198.18.0.148 -
+</span><span id="__span-14-5"><a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a>1727852631.171      0 192.168.35.254 TCP_DENIED/403 3856 CONNECT www.youtube.com:443 - HIER_NONE/- text/html
+</span><span id="__span-14-6"><a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a>1727852697.691      0 192.168.35.254 NONE_NONE/000 0 - error:transaction-end-before-headers - HIER_NONE/- -
+</span><span id="__span-14-7"><a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a>1727853038.964      0 192.168.35.254 TCP_DENIED/403 3856 CONNECT www.youtube.com:443 - HIER_NONE/- text/html
+</span></code></pre></div>
+<h2 id="socks5">Socks5<a class="headerlink" href="#socks5" title="Permanent link">&para;</a></h2>
+<h3 id="dante">dante<a class="headerlink" href="#dante" title="Permanent link">&para;</a></h3>
+<ul>
+<li>优点<ul>
+<li>支持用户名密码验证</li>
+<li>支持访问控制：<strong>通过 rule 控制哪些客户端可以连接 server，以及客户端可以 request 哪些地址</strong></li>
+<li>文档、配置文件注释清晰易读</li>
+</ul>
+</li>
+<li>缺点<ul>
+<li>不支持 ipv6</li>
+<li>配置增加了很多东西，所以配置相对复杂</li>
+</ul>
+</li>
+</ul>
+<p><a href="https://gist.github.com/4faramita/431f92a0fca1b8f0239ac4947ea2122b">How To Setup SOCKS5 Proxy Server using Dante on Ubuntu 16.04 (github.com)</a></p>
+<p>安装</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>dante-server
+</span></code></pre></div>
+<h4 id="配置">配置<a class="headerlink" href="#配置" title="Permanent link">&para;</a></h4>
+<ul>
+<li>set socksmethod to 'none' instead of 'username' if you want to disable auth.</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>internal: 0.0.0.0 port = 11223
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>external: 192.168.35.2
+</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>
+</span><span id="__span-16-4"><a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a>#clientmethod: none
+</span><span id="__span-16-5"><a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a>socksmethod: none
+</span><span id="__span-16-6"><a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a>user.privileged: root
+</span><span id="__span-16-7"><a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a>user.unprivileged: nobody
+</span><span id="__span-16-8"><a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a>
+</span><span id="__span-16-9"><a id="__codelineno-16-9" name="__codelineno-16-9" href="#__codelineno-16-9"></a>user.libwrap: nobody
+</span><span id="__span-16-10"><a id="__codelineno-16-10" name="__codelineno-16-10" href="#__codelineno-16-10"></a>client pass {
+</span><span id="__span-16-11"><a id="__codelineno-16-11" name="__codelineno-16-11" href="#__codelineno-16-11"></a>    from: 0.0.0.0/0 to: 0.0.0.0/0
+</span><span id="__span-16-12"><a id="__codelineno-16-12" name="__codelineno-16-12" href="#__codelineno-16-12"></a>    log: error connect disconnect
+</span><span id="__span-16-13"><a id="__codelineno-16-13" name="__codelineno-16-13" href="#__codelineno-16-13"></a>}
+</span><span id="__span-16-14"><a id="__codelineno-16-14" name="__codelineno-16-14" href="#__codelineno-16-14"></a>socks pass {
+</span><span id="__span-16-15"><a id="__codelineno-16-15" name="__codelineno-16-15" href="#__codelineno-16-15"></a>    from: 0.0.0.0/0 to: 0.0.0.0/0
+</span><span id="__span-16-16"><a id="__codelineno-16-16" name="__codelineno-16-16" href="#__codelineno-16-16"></a>    log: error connect disconnect
+</span><span id="__span-16-17"><a id="__codelineno-16-17" name="__codelineno-16-17" href="#__codelineno-16-17"></a>}
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a># The config file is divided into three parts;
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>#    1) server settings
+</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>#    2) rules
+</span><span id="__span-17-4"><a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a>#    3) routes
+</span></code></pre></div>
+<p>server setting 部分可以配置：</p>
+<ul>
+<li>监听地址，出口地址</li>
+<li>验证方法</li>
+</ul>
+<ul>
+<li>clientmethod:<ul>
+<li>The  default  value  for this keyword is all methods that may be necessary for the later socks-based authentication methods, as specified as values to the global socksmethod keyword.  <strong>Normally you should not need to set this keyword, as Dante will set it to the correct value by it self.</strong></li>
+</ul>
+</li>
+<li>socksmethod<ul>
+<li>Supported values are bsdauth, gssapi, none, pam.any, pam.address, pam.username, rfc931, and username</li>
+</ul>
+</li>
+</ul>
+<p>设置 socksmethod 为 username 后，直接访问会报错。需要设置为 <code>socks5://user:password@proxyhost:port</code></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>curl: (7) No authentication method was acceptable. (It is quite likely that the SOCKS5 server wanted a username/password, since none was supplied to the server on this connection.)
+</span></code></pre></div>
+<p>rule 部分用于实现访问控制，决定哪些 client 可以连接 socks，也决定 client 能够访问哪些内容。</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a># 允许所有 client，后面的 to 并不是目标地址，而是 danted 接收到包的接口地址
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>client pass {
+</span><span id="__span-19-3"><a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>    from: 0.0.0.0/0 to: 0.0.0.0/0
+</span><span id="__span-19-4"><a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a>    log: error connect disconnect
+</span><span id="__span-19-5"><a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a>}
+</span><span id="__span-19-6"><a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a>
+</span><span id="__span-19-7"><a id="__codelineno-19-7" name="__codelineno-19-7" href="#__codelineno-19-7"></a># the people at the 172.16.0.0/12 are bad, no one should talk to them.
+</span><span id="__span-19-8"><a id="__codelineno-19-8" name="__codelineno-19-8" href="#__codelineno-19-8"></a># log the connect request and also provide an example on how to
+</span><span id="__span-19-9"><a id="__codelineno-19-9" name="__codelineno-19-9" href="#__codelineno-19-9"></a># interact with libwrap.
+</span><span id="__span-19-10"><a id="__codelineno-19-10" name="__codelineno-19-10" href="#__codelineno-19-10"></a>#socks block {
+</span><span id="__span-19-11"><a id="__codelineno-19-11" name="__codelineno-19-11" href="#__codelineno-19-11"></a>#        from: 0.0.0.0/0 to: 172.16.0.0/12
+</span><span id="__span-19-12"><a id="__codelineno-19-12" name="__codelineno-19-12" href="#__codelineno-19-12"></a>#        libwrap: spawn finger @%a
+</span><span id="__span-19-13"><a id="__codelineno-19-13" name="__codelineno-19-13" href="#__codelineno-19-13"></a>#        log: connect error
+</span><span id="__span-19-14"><a id="__codelineno-19-14" name="__codelineno-19-14" href="#__codelineno-19-14"></a>#}
+</span></code></pre></div>
+<p>man 中貌似没有关于 route 的介绍，但是实际上很简单，可以用于实现某些地址使用另一个 socks server 再次转发</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a># route all http connects via an upstream socks server, aka &quot;server-chaining&quot;.
+</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>#route {
+</span><span id="__span-20-3"><a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a># from: 10.0.0.0/8 to: 0.0.0.0/0 port = http via: socks.example.net port = socks
+</span><span id="__span-20-4"><a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a>#}
+</span></code></pre></div>
+<h4 id="man-手册">man 手册<a class="headerlink" href="#man-手册" title="Permanent link">&para;</a></h4>
+<p><code>man 5 danted.conf</code></p>
+<h5 id="authentication-methods">authentication methods<a class="headerlink" href="#authentication-methods" title="Permanent link">&para;</a></h5>
+<ul>
+<li>none<ul>
+<li>This method requires no form of authentication.</li>
+</ul>
+</li>
+<li><strong>username</strong><ul>
+<li>This method requires the client to provide a username and password.  This information must match the username and password given in the system password file.</li>
+</ul>
+</li>
+<li>gssapi<ul>
+<li>This method requires the setup of a Kerberos environment and can provide strong encryption and authentication, depending on the gssapi settings you choose.</li>
+</ul>
+</li>
+<li>rfc931<ul>
+<li>This method requires the host the socks client runs on to provide a rfc931 ("ident") username for the client.  This username match a username given in the system password file.</li>
+</ul>
+</li>
+<li><strong>pam.address</strong><ul>
+<li>IP-based (rhosts) PAM authentication.</li>
+</ul>
+</li>
+<li>pam.any<ul>
+<li>Will try to match against any type of PAM authentication, depending on the information that is currently available.  Normally of limited use, and you should instead set the pam-based method(s) you actually want.</li>
+</ul>
+</li>
+<li><strong>pam.username</strong><ul>
+<li>Username/password-based  PAM authentication.  Similar to the method username, but the information is passed to the PAM subsystem for authentication, rather than Dante using the system password file directly.  When using PAM, be wary of memory leakages and other bugs in the external PAM library Dante will have to use on your platform.</li>
+</ul>
+</li>
+<li>bsdauth<ul>
+<li>This method requires the available client data to be verified by the BSD Authentication system.  Similar to the method username, but passed to the BSD authentication system instead.</li>
+</ul>
+</li>
+</ul>
+<h5 id="rule">rule<a class="headerlink" href="#rule" title="Permanent link">&para;</a></h5>
+<p>有点像防火墙规则，决定哪些 client 可以连接 socks，也决定 client 能够访问哪些内容。</p>
+<p><strong>两种规则</strong></p>
+<ul>
+<li><strong>client rule</strong>: are used to see if the client is allowed to connect to the Dante server<ul>
+<li>These rules will start with <code>client pass</code> for a rule that allows the client, or <code>client block</code> for a rule that blocks the client</li>
+<li>It is recommended that the client-rules do not use hostnames but only IP-addresses, both for security and <strong>performance</strong> reasons.  These rules <strong>operate at the TCP level</strong>.</li>
+</ul>
+</li>
+<li>socks-rules: prefixed with socks and operate at the socks protocol level<ul>
+<li>These rules will start with <code>socks pass</code> for a rule that allows the client, or <code>socks block</code> for a rule that blocks the client.</li>
+<li>性能变得不那么重要，但是仍然推荐使用</li>
+</ul>
+</li>
+</ul>
+<p>rule 由 <code>client pass/block</code> 或者 <code>socks pass/block</code> 开始，内容主要是匹配的 condition 相关的关键词（不过也有 log 这种 action 做一些额外操作）</p>
+<p>示例</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>client pass {
+</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>    from: 0.0.0.0/0 to: 0.0.0.0/0
+</span><span id="__span-21-3"><a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>    log: error connect disconnect
+</span><span id="__span-21-4"><a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a>}
+</span></code></pre></div>
+<ul>
+<li>condition<ul>
+<li>clientcompatibility, clientmethod, command, <strong>from</strong>, group, socksmethod, protocol, proxyprotocol, <strong>to</strong>, user</li>
+<li><strong>port</strong>: Parameter to from, to and via.  Accepts the keywords eq/=, neq/!=, ge/&gt;=, le/&lt;=, gt/&gt;, lt/&lt; followed by a number.  A port range can also be given as "port <start #> - <end #>"</li>
+</ul>
+</li>
+<li>action<ul>
+<li>bandwidth, libwrap, log, session, <strong>redirect</strong>, timeout.connect, timeout.negotiate, timeout.io, timeout.tcp_fin_wait, and udp.portrange.</li>
+</ul>
+</li>
+</ul>
+<p>from, to 含义</p>
+<ul>
+<li><code>from</code> refers to the clients address<ul>
+<li>In the client-rule context, <code>to</code> means the address the request is accepted on, i.e., a address the Dante server listens on.</li>
+<li>In the socks-rule context, <code>to</code> means the client's destination address, as expressed in the client's socks request.  I.e., the address the Dante server should connect to (for TCP sessions) or send packets to (for UDP session) on behalf of the client.</li>
+</ul>
+</li>
+<li><strong>first match is best match</strong> basis.</li>
+</ul>
+<h5 id="其它功能">其它功能<a class="headerlink" href="#其它功能" title="Permanent link">&para;</a></h5>
+<ul>
+<li>SESSION<ul>
+<li>The session keyword can be used any any rule to limit the number of active sessions and the rate at which they are established.</li>
+</ul>
+</li>
+<li>TRAFFIC MONITORING<ul>
+<li>The Dante server can be configured to monitor the traffic passing through it, and trigger alarms based on the observed network traffic</li>
+</ul>
+</li>
+</ul>
+<h3 id="ss-local--ss-server">ss-local + ss-server<a class="headerlink" href="#ss-local--ss-server" title="Permanent link">&para;</a></h3>
+<p>自己最熟悉的工具，因此配置起来很容易。</p>
+<p>把 local 和 server 分别部署在 GFW 的两侧是正常用法，部署在同一台机器上则只是利用了 local 的 socks5 代理功能。</p>
+<ul>
+<li>优点<ul>
+<li>每个配置选项都知道含义</li>
+</ul>
+</li>
+<li>缺点<ul>
+<li>local 侧不支持用户密码验证，也不支持访问控制</li>
+<li>systemd service 默认只有 ss-server 的，没有 ss-local 的</li>
+</ul>
+</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>sudo vim /etc/shadowsocks-libev/server.json
+</span><span id="__span-22-2"><a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>{
+</span><span id="__span-22-3"><a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a>    &quot;server&quot;:[&quot;127.0.0.1&quot;],
+</span><span id="__span-22-4"><a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a>    &quot;mode&quot;:&quot;tcp_and_udp&quot;,
+</span><span id="__span-22-5"><a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a>    &quot;server_port&quot;: 1080,
+</span><span id="__span-22-6"><a id="__codelineno-22-6" name="__codelineno-22-6" href="#__codelineno-22-6"></a>    &quot;local_ipv4_address&quot;: &quot;192.168.35.2&quot;,
+</span><span id="__span-22-7"><a id="__codelineno-22-7" name="__codelineno-22-7" href="#__codelineno-22-7"></a>    &quot;nameserver&quot;: &quot;192.168.35.1&quot;,
+</span><span id="__span-22-8"><a id="__codelineno-22-8" name="__codelineno-22-8" href="#__codelineno-22-8"></a>    &quot;timeout&quot;:86400,
+</span><span id="__span-22-9"><a id="__codelineno-22-9" name="__codelineno-22-9" href="#__codelineno-22-9"></a>    &quot;method&quot;:&quot;aes-256-cfb&quot;,
+</span><span id="__span-22-10"><a id="__codelineno-22-10" name="__codelineno-22-10" href="#__codelineno-22-10"></a>    &quot;password&quot;: &quot;abcd4567&quot;,
+</span><span id="__span-22-11"><a id="__codelineno-22-11" name="__codelineno-22-11" href="#__codelineno-22-11"></a>    &quot;fast_open&quot;: true
+</span><span id="__span-22-12"><a id="__codelineno-22-12" name="__codelineno-22-12" href="#__codelineno-22-12"></a>}
+</span><span id="__span-22-13"><a id="__codelineno-22-13" name="__codelineno-22-13" href="#__codelineno-22-13"></a>
+</span><span id="__span-22-14"><a id="__codelineno-22-14" name="__codelineno-22-14" href="#__codelineno-22-14"></a># local
+</span><span id="__span-22-15"><a id="__codelineno-22-15" name="__codelineno-22-15" href="#__codelineno-22-15"></a>sudo vim /etc/shadowsocks-libev/local.json
+</span><span id="__span-22-16"><a id="__codelineno-22-16" name="__codelineno-22-16" href="#__codelineno-22-16"></a>{
+</span><span id="__span-22-17"><a id="__codelineno-22-17" name="__codelineno-22-17" href="#__codelineno-22-17"></a>    &quot;server&quot;:&quot;127.0.0.1&quot;,
+</span><span id="__span-22-18"><a id="__codelineno-22-18" name="__codelineno-22-18" href="#__codelineno-22-18"></a>    &quot;server_port&quot;:1080,
+</span><span id="__span-22-19"><a id="__codelineno-22-19" name="__codelineno-22-19" href="#__codelineno-22-19"></a>    &quot;local_address&quot;: &quot;0.0.0.0&quot;,
+</span><span id="__span-22-20"><a id="__codelineno-22-20" name="__codelineno-22-20" href="#__codelineno-22-20"></a>    &quot;local_port&quot;:11223,
+</span><span id="__span-22-21"><a id="__codelineno-22-21" name="__codelineno-22-21" href="#__codelineno-22-21"></a>    &quot;password&quot;:&quot;abcd4567&quot;,
+</span><span id="__span-22-22"><a id="__codelineno-22-22" name="__codelineno-22-22" href="#__codelineno-22-22"></a>    &quot;timeout&quot;:300,
+</span><span id="__span-22-23"><a id="__codelineno-22-23" name="__codelineno-22-23" href="#__codelineno-22-23"></a>    &quot;method&quot;:&quot;aes-256-cfb&quot;,
+</span><span id="__span-22-24"><a id="__codelineno-22-24" name="__codelineno-22-24" href="#__codelineno-22-24"></a>    &quot;fast_open&quot;: false
+</span><span id="__span-22-25"><a id="__codelineno-22-25" name="__codelineno-22-25" href="#__codelineno-22-25"></a>}
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>/usr/bin/ss-server -c /etc/shadowsocks-libev/server.json
+</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>/usr/bin/ss-local -c /etc/shadowsocks-libev/local.json
+</span></code></pre></div>
+<h2 id="代理应用">代理应用<a class="headerlink" href="#代理应用" title="Permanent link">&para;</a></h2>
+<h3 id="github-git-clone-ssh-协议">github git clone ssh 协议<a class="headerlink" href="#github-git-clone-ssh-协议" title="Permanent link">&para;</a></h3>
+<p>代理 git clone ssh 协议</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a># ~/.ssh/config
+</span><span id="__span-24-2"><a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>Host github.com
+</span><span id="__span-24-3"><a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a>  HostName github.com
+</span><span id="__span-24-4"><a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a>  User git
+</span><span id="__span-24-5"><a id="__codelineno-24-5" name="__codelineno-24-5" href="#__codelineno-24-5"></a>  IdentityFile ~/.ssh/id_ed25519
+</span><span id="__span-24-6"><a id="__codelineno-24-6" name="__codelineno-24-6" href="#__codelineno-24-6"></a>  ProxyCommand nc -X connect -x &#39;[2001:da8:xxx::xxx]:yyy&#39; %h %p
+</span></code></pre></div>
+<p>测试 github 密钥被添加到哪个<strong>仓库</strong>或者整个用户</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>(base) fyyuan@snode2 ➜  repo ssh -T -ai ~/.ssh/id_ed25519 git@github.com
+</span><span id="__span-25-2"><a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a>Hi TheRainstorm/gpu-interval-model! You&#39;ve successfully authenticated, but GitHub does not provide shell access.
+</span><span id="__span-25-3"><a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a>(base) fyyuan@snode2 ➜  repo vim ~/.ssh/config
+</span><span id="__span-25-4"><a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a>(base) fyyuan@snode2 ➜  repo ssh -T -ai ~/.ssh/id_ed25519 git@github.com
+</span><span id="__span-25-5"><a id="__codelineno-25-5" name="__codelineno-25-5" href="#__codelineno-25-5"></a>Hi TheRainstorm! You&#39;ve successfully authenticated, but GitHub does not provide shell access.
+</span></code></pre></div>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+  
+
+
+
+      
+    </article>
+  </div>
+
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+        
+      
+      <nav class="md-footer__inner md-grid" aria-label="页脚" >
+        
+          
+          <a href="../../../../../%E4%B8%AA%E4%BA%BA/2024/08/10/%E7%9C%8B%E5%A5%A5%E8%BF%90%E4%BC%9A%E7%9A%84%E5%90%84%E7%A7%8D%E5%A7%BF%E5%8A%BF/" class="md-footer__link md-footer__link--prev" aria-label="上一页: 看奥运会的各种姿势">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                上一页
+              </span>
+              <div class="md-ellipsis">
+                看奥运会的各种姿势
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../../../../../%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/2024/10/07/%E4%BD%93%E9%AA%8C%E7%BA%AF%20IPv6%20%E7%BD%91%E7%BB%9C/" class="md-footer__link md-footer__link--next" aria-label="下一页: 体验纯 IPv6 网络">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                下一页
+              </span>
+              <div class="md-ellipsis">
+                体验纯 IPv6 网络
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/TheRainstorm" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../../..", "features": ["navigation.instant", "navigation.instant.progress", "navigation.tracking", "navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.footer", "content.code.copy", "toc.follow", "toc.integrate"], "search": "../../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../../../../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

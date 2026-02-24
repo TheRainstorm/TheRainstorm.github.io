@@ -1,0 +1,2298 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="记录一些关于数学、计算机的知识，以及一些日常。">
+      
+      
+      
+        <link rel="canonical" href="https://yfy.cqu.ai/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%85%B7/2022/11/06/2022-11-06-LXC%E4%BD%BF%E7%94%A8/">
+      
+      
+        <link rel="prev" href="../../../../../%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/2022/10/31/2022-10-31-Wireguard%E7%BB%84%E7%BD%91/">
+      
+      
+        <link rel="next" href="../../../../../%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/2022/11/06/2022-11-06-linux%E7%9B%B8%E5%85%B3-%E7%B3%BB%E7%BB%9F%E8%BF%90%E7%BB%B4/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.3">
+    
+    
+      
+        <title>LXC 使用 - Rain 的随笔</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#1-说明" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../../../../.." title="Rain 的随笔" class="md-header__button md-logo" aria-label="Rain 的随笔" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Rain 的随笔
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              LXC 使用
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    
+  
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="../../../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  博客
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../about/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  关于
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../tags/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  标签
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../series/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  系列
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../tools/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  工具
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../archive/2026/" class="md-tabs__link">
+          
+  
+  
+  归档
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../category/%E4%B8%AA%E4%BA%BA/" class="md-tabs__link">
+          
+  
+  
+  分类
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" hidden>
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../../.." title="Rain 的随笔" class="md-nav__button md-logo" aria-label="Rain 的随笔" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Rain 的随笔
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+    
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      <a href="../../../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    博客
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    关于
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../tags/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    标签
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../series/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    系列
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../tools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    工具
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    归档
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    归档
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2026/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2026
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2025/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2025
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2024/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2024
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2023/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2023
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2022/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2022
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2021/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2021
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2020/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2020
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2019/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2019
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    分类
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    分类
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E4%B8%AA%E4%BA%BA/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    个人
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E5%8D%9A%E5%AE%A2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    博客
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E5%8D%9A%E5%AE%A2--%E7%BD%91%E7%BB%9C/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    博客 &amp; 网络
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    学习笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    折腾记录
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    课程笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%85%B7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    软件工具
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E9%98%85%E8%AF%BB/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    阅读
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+  <div class="md-content md-content--post" data-md-component="content">
+    <div class="md-sidebar md-sidebar--post" data-md-component="sidebar" data-md-type="navigation">
+      <div class="md-sidebar__scrollwrap">
+        <div class="md-sidebar__inner md-post">
+          <nav class="md-nav md-nav--primary">
+            <div class="md-post__back">
+              <div class="md-nav__title md-nav__container">
+                <a href="../../../../.." class="md-nav__link">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+                  <span class="md-ellipsis">
+                    回到主页
+                  </span>
+                </a>
+              </div>
+            </div>
+            
+            <ul class="md-post__meta md-nav__list">
+              <li class="md-nav__item md-nav__item--section">
+                <div class="md-post__title">
+                  <span class="md-ellipsis">
+                    元数据
+                  </span>
+                </div>
+                <nav class="md-nav">
+                  <ul class="md-nav__list">
+                    <li class="md-nav__item">
+                      <div class="md-nav__link">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 19H5V8h14m-3-7v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1V1m-1 11h-5v5h5z"/></svg>
+                        <time datetime="2022-11-06 16:28:50+00:00" class="md-ellipsis">2022年11月6日</time>
+                      </div>
+                    </li>
+                    
+                    
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 3v15h3V3zm3 2 4 13 3-1-4-13zM5 5v13h3V5zM3 19v2h18v-2z"/></svg>
+                          <span class="md-ellipsis">
+                            分类于
+                            
+                              <a href="../../../../../category/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%85%B7/">软件工具</a></span>
+                        </div>
+                      </li>
+                    
+                    
+                      
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20a8 8 0 0 0 8-8 8 8 0 0 0-8-8 8 8 0 0 0-8 8 8 8 0 0 0 8 8m0-18a10 10 0 0 1 10 10 10 10 0 0 1-10 10C6.47 22 2 17.5 2 12A10 10 0 0 1 12 2m.5 5v5.25l4.5 2.67-.75 1.23L11 13V7z"/></svg>
+                          <span class="md-ellipsis">
+                            
+                              需要 9 分钟阅读时间
+                            
+                          </span>
+                        </div>
+                      </li>
+                    
+                  </ul>
+                </nav>
+              </li>
+            </ul>
+            
+          </nav>
+          
+            
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-说明" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1 说明
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1 说明">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#lxc-vs-docker" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        lxc vs docker
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lxc-vs-lxd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        lxc vs lxd
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-get-started" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2 get started
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2 get started">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#安装" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        安装
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#镜像" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        镜像
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#容器管理" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        容器管理
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="容器管理">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#创建容器" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        创建容器
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#管理" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        管理
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#编辑" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        编辑
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#自启动" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        自启动
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#执行命令" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        执行命令
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#文件移动" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        文件移动
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-快照" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3 快照
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3 快照">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#stateful-快照" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        stateful 快照
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#快照大小" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        快照大小
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#批量删除快照" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        批量删除快照
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-storage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4 storage
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4 storage">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#storage-pool" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        storage pool
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="storage pool">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#存储位置" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        存储位置
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#创建" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        创建
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="创建">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#btrfs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        btrfs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#zfs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        zfs
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#volume" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        volume
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="volume">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#类型" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        类型
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="类型">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#按照功能分类" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        按照功能分类
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#内容分类" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        内容分类
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#创建-volume" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        创建 volume
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#备份-volume" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        备份 volume
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#移动复制-volume" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        移动复制 volume
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#高级" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        高级
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="高级">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#端口转发" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        端口转发
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#路径映射挂载" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        路径映射（挂载）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="路径映射（挂载）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#特权-vs-非特权" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        特权 vs 非特权
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#添加映射" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        添加映射
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#设置用户映射" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        设置用户映射
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#添加-gpu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        添加 gpu
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#profile" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        profile
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#其它" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        其它
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="其它">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#lxc-创建-openwrt-镜像" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        lxc 创建 openwrt 镜像
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lxd-dashboard" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        lxd-dashboard
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#备份" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        备份
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="备份">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#方法一压缩包方式" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        方法一：压缩包方式
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#方法二第二个-lxd-将第一个-lxd-server-作为源" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        方法二：第二个 lxd 将第一个 lxd server 作为源
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#遇到的问题" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        遇到的问题
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="遇到的问题">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#zfs-container-目录为空" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        zfs container 目录为空
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#参考" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        参考
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+          
+        </div>
+      </div>
+    </div>
+    <article class="md-content__inner md-typeset">
+      
+        
+  
+
+
+  <nav class="md-tags" >
+    
+      
+      
+      
+      
+        <a href="../../../../../tags/#tag:lxc" class="md-tag">lxc</a>
+      
+    
+      
+      
+      
+      
+        <a href="../../../../../tags/#tag:lxd" class="md-tag">lxd</a>
+      
+    
+  </nav>
+
+
+
+  <h1>LXC 使用</h1>
+
+<h2 id="1-说明">1 说明<a class="headerlink" href="#1-说明" title="Permanent link">&para;</a></h2>
+<h3 id="lxc-vs-docker">lxc vs docker<a class="headerlink" href="#lxc-vs-docker" title="Permanent link">&para;</a></h3>
+<p>LXC 是一种轻量虚拟机，复用 host 内核。与 docker 尽可能每个容器只跑一个应用不同，lxc 的思路更接近虚拟机。
+<img alt="image-20221102112404544" src="https://imagebed.yfycloud.site/2025/12/b299fbd5380ff4dd1a4475c3254ee800.png" /></p>
+<blockquote>
+<p>The key networking difference between Docker and LXC is that with LXC one can attach a <em>container</em> to any bridge on the Host. This includes a bridge on the outside interface. Via <strong>transparent bridging</strong> the <em>container</em> can have unfettered access to the existing IPv6 subnet, including picking up Global Unique Addresses (GUAs) without the host having to do router-like functions, such as adding routes, auto propagation of prefixes (with DHCPv6-PD), redistribution of routes, etc. Again, things which Docker doesn't support.</p>
+</blockquote>
+<h3 id="lxc-vs-lxd">lxc vs lxd<a class="headerlink" href="#lxc-vs-lxd" title="Permanent link">&para;</a></h3>
+<p>LXD is actually two parts, the <code>lxd</code> daemon, and the <code>lxc</code> CLI client which makes calls to the <code>lxd</code> daemon</p>
+<!-- more -->
+
+<h2 id="2-get-started">2 get started<a class="headerlink" href="#2-get-started" title="Permanent link">&para;</a></h2>
+<h3 id="安装">安装<a class="headerlink" href="#安装" title="Permanent link">&para;</a></h3>
+<p>ubuntu 安装 lxd 会使用 snap。</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>sudo apt install lxd
+</span></code></pre></div>
+<p>要想使用 lxd 时非管理员，需要将用户添加到 lxd 组
+<em>p.s 现在安装时已经自动添加到 lxd 组了</em></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>sudo adduser {USERNameHere} lxd
+</span></code></pre></div>
+<p>第一次使用 lxd，需要进行初始化：<code>sudo lxd init</code>。初始化会设置网络和存储
+<img alt="lxd init" src="https://imagebed.yfycloud.site/2025/12/49529234262e9b28d4af32426885cb94.png" />
+可以手动查看初始化结果</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>lxc<span class="w"> </span>profile<span class="w"> </span>list<span class="w">  </span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>lxc<span class="w"> </span>profile<span class="w"> </span>show<span class="w"> </span>default<span class="w">  </span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>lxc<span class="w"> </span>network<span class="w"> </span>list
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>lxc<span class="w"> </span>storage<span class="w"> </span>list
+</span></code></pre></div>
+<h3 id="镜像">镜像<a class="headerlink" href="#镜像" title="Permanent link">&para;</a></h3>
+<p>通过网站查看：<a href="https://images.linuxcontainers.org">Linux Containers - Image server</a>
+或命令行</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>lxc image list images: |grep ubuntu #查看官方lxc镜像
+</span></code></pre></div>
+<h3 id="容器管理">容器管理<a class="headerlink" href="#容器管理" title="Permanent link">&para;</a></h3>
+<h4 id="创建容器">创建容器<a class="headerlink" href="#创建容器" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>lxc launch images:{**distro**}/{**version**}/{**arch**} {**container-name-here**}  #创建容器
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>lxc launch -p default -p extbridge images:ubuntu/jammy ubuntu22
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>lxc launch -p default -p extbridge images:debian/10 debian10
+</span></code></pre></div>
+<p>或者</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>lxc init local:openwrt-x86 openwrt
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>lxc config edit openwrt #之后再进行修改，比如修改其中的profile
+</span></code></pre></div>
+<h4 id="管理">管理<a class="headerlink" href="#管理" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>lxc list/ls
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>lxc start/stop/restart/delete {container-name}
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>lxc info {container-name}
+</span></code></pre></div>
+<h4 id="编辑">编辑<a class="headerlink" href="#编辑" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>lxc config edit &lt;instance_name&gt;
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>lxc config show &lt;instance_name&gt; --expaned
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>lxc config device add &lt;instance_name&gt; &lt;device_name&gt; nic nictype=&lt;nic_type&gt; ...   #添加一个设备
+</span></code></pre></div>
+<h4 id="自启动">自启动<a class="headerlink" href="#自启动" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>lxc config set container_name boot.autostart true
+</span></code></pre></div>
+<h3 id="执行命令">执行命令<a class="headerlink" href="#执行命令" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>lxc exec containerName -- command  
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>lxc exec containerName -- /path/to/script  
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>lxc exec containerName --env EDITOR=/usr/bin/vim -- command
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>lxc exec {container-name} {shell-name}     #获得shell
+</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>
+</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>lxc exec {container-name} --su --login yfy
+</span></code></pre></div>
+<h3 id="文件移动">文件移动<a class="headerlink" href="#文件移动" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>lxc file pull {continer-nane}/{path/to/file} {/path/to/local/dest}
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>lxc file push {/path/to/file} {continer-nane}/path/to/dest/dir/
+</span></code></pre></div>
+<h2 id="3-快照">3 快照<a class="headerlink" href="#3-快照" title="Permanent link">&para;</a></h2>
+<p>lxc snapshot {container} {snapshot-name}
+lxc info {container}
+lxc restore {container} {snapshot-name}
+lxc delete {container}/{snapshot}</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>lxc snapshot debian docker_base_image
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>lxc publish debian/docker_base_image --alias docker_image       # publish image to local:
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a># start a lxc/docker container called docker1
+</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>lxc launch -p default -p extbridge local:docker_image docker1
+</span></code></pre></div>
+<h3 id="stateful-快照">stateful 快照<a class="headerlink" href="#stateful-快照" title="Permanent link">&para;</a></h3>
+<ul>
+<li>1：<a href="https://discuss.linuxcontainers.org/t/unable-to-create-a-stateful-snapshot-criu-isnt-installed-even-when-criu-enabled-true/6258/3">"Unable to create a stateful snapshot. CRIU isn't installed" even when criu.enabled = true - LXD - Linux Containers Forum</a></li>
+</ul>
+<h3 id="快照大小">快照大小<a class="headerlink" href="#快照大小" title="Permanent link">&para;</a></h3>
+<p>zfs 快照不是累加的_cumulative_，而是快照建立时和最新的文件系统差异：<a href="https://nocin.eu/zfs-destroy-snapshots/">[ZFS] Destroy snapshots – nocin.eu</a>
+还没有实现：<a href="https://discuss.linuxcontainers.org/t/calculating-snapshot-size/6951/5">Calculating snapshot size - LXD - Linux Containers Forum</a></p>
+<h3 id="批量删除快照">批量删除快照<a class="headerlink" href="#批量删除快照" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>lxc query &quot;/1.0/instances/op2/snapshots?recursion=1&quot; |jq -r &#39;.[].name&#39; | xargs -I SNAP echo lxc delete op2/SNAP
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a># 复制后手动执行
+</span></code></pre></div>
+<h2 id="4-storage">4 storage<a class="headerlink" href="#4-storage" title="Permanent link">&para;</a></h2>
+<p><a href="https://linuxcontainers.org/lxd/docs/latest/explanation/storage/">About storage pools, volumes and buckets - LXD documentation (linuxcontainers.org)</a></p>
+<h3 id="storage-pool">storage pool<a class="headerlink" href="#storage-pool" title="Permanent link">&para;</a></h3>
+<h4 id="存储位置">存储位置<a class="headerlink" href="#存储位置" title="Permanent link">&para;</a></h4>
+<p><img alt="" src="https://imagebed.yfycloud.site/2025/12/6cea83eb51fddd8bd06c7bb64b9da80c.png" /></p>
+<ul>
+<li>使用 host 文件系统：目录，btrfs（专门 sub-volume），zfs（专门 dataset）</li>
+<li>专门分区</li>
+<li>loop disk：This means that every write must go through the storage driver and your main drive’s file system, which leads to decreased performance.  <ul>
+<li>位于：<code>/var/snap/lxd/common/lxd/disks/</code>（snap）或者<code>/var/lib/lxd/disks/</code></li>
+</ul>
+</li>
+</ul>
+<h4 id="创建">创建<a class="headerlink" href="#创建" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>lxc storage create &lt;pool_name&gt; &lt;driver&gt; [configuration_options...]
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>lxc storage list
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>lxc storage show &lt;pool_name&gt;
+</span></code></pre></div>
+<h5 id="btrfs">btrfs<a class="headerlink" href="#btrfs" title="Permanent link">&para;</a></h5>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>lxc storage create pool1 btrfs    # loop-backed
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>lxc storage create pool2 btrfs source=/some/path  # Use the existing Btrfs file system at `/some/path` for `pool2`
+</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>
+</span><span id="__span-14-5"><a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a>lxc storage create pool3 btrfs source=/dev/sdX
+</span></code></pre></div>
+<h5 id="zfs">zfs<a class="headerlink" href="#zfs" title="Permanent link">&para;</a></h5>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>lxc storage create pool3 zfs source=my-tank   # use existing pool
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>lxc storage create pool4 zfs source=my-tank/slice # use existing dataset
+</span></code></pre></div>
+<p>均不支持自定义 loop back 文件位置</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>yfy@snode6 ➜  /extra lxc storage create pool0 zfs source=/extra/lxd_storage/zfs_lxd.img
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>Error: Custom loop file locations are not supported
+</span></code></pre></div>
+<h3 id="volume">volume<a class="headerlink" href="#volume" title="Permanent link">&para;</a></h3>
+<h4 id="类型">类型<a class="headerlink" href="#类型" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>lxc storage volume list zfs_lxd  # 查看volume
+</span></code></pre></div>
+<h5 id="按照功能分类">按照功能分类<a class="headerlink" href="#按照功能分类" title="Permanent link">&para;</a></h5>
+<p><code>container</code>/<code>vm</code>(i.e instance)</p>
+<ul>
+<li>创建 instance 时自动创建，作为 instance 根文件系统。</li>
+<li>删除 instance 时销毁
+image</li>
+<li>lxd 自动创建一个 image 卷，when it unpacks an image to launch one or more instances from it.</li>
+<li>存储自己创建的 image（包含文件系统和元信息）
+custom</li>
+<li>用于单独存储数据</li>
+</ul>
+<p>snapshot 和上面没有本质区别，list 的类型名为上述类型加上一个 (snapshot)</p>
+<h5 id="内容分类">内容分类<a class="headerlink" href="#内容分类" title="Permanent link">&para;</a></h5>
+<ul>
+<li>filesystem<ul>
+<li>用于容器和容器镜像</li>
+<li>可以添加到容器和虚拟机，可以共享</li>
+</ul>
+</li>
+<li>block<ul>
+<li>用于虚拟机和虚拟机镜像</li>
+<li>不能共享</li>
+</ul>
+</li>
+</ul>
+<h4 id="创建-volume">创建 volume<a class="headerlink" href="#创建-volume" title="Permanent link">&para;</a></h4>
+<p>instance volume 是自动创建的</p>
+<p>创建 custom volume</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>lxc storage volume create &lt;pool_name&gt; &lt;volume_name&gt; [configuration_options...]  # 默认filesystem类型
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>lxc storage volume create &lt;pool_name&gt; &lt;volume_name&gt; --type=block [configuration_options...]  # block类型
+</span></code></pre></div>
+<p>设置用于存储 backup 或 image tarball</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>lxc config set storage.backups_volume &lt;pool_name&gt;/&lt;volume_name&gt;
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>lxc config set storage.images_volume &lt;pool_name&gt;/&lt;volume_name&gt;
+</span></code></pre></div>
+<h4 id="备份-volume">备份 volume<a class="headerlink" href="#备份-volume" title="Permanent link">&para;</a></h4>
+<p>几种方式</p>
+<ul>
+<li>snapshot：存储在同一个 pool，因此可靠性不足。</li>
+<li>导出文件：可以存储在不同 disk 上。可以 import 到不同 pool 上</li>
+<li>copy 到远程：需要 network-connected LXD server</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>lxc storage volume snapshot &lt;pool_name&gt; &lt;volume_name&gt; [&lt;snapshot_name&gt;]   # 类型为custom (snapshot) 
+</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>lxc storage volume restore &lt;pool_name&gt; &lt;volume_name&gt; &lt;snapshot_name&gt;
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>lxc storage volume export &lt;pool_name&gt; &lt;volume_name&gt; [&lt;file_path&gt;]   # 默认为./backup.tar.gz
+</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>lxc storage volume import &lt;pool_name&gt; &lt;file_path&gt; [&lt;volume_name&gt;]  # 默认使用原本volume名字
+</span></code></pre></div>
+<h4 id="移动复制-volume">移动复制 volume<a class="headerlink" href="#移动复制-volume" title="Permanent link">&para;</a></h4>
+<ul>
+<li>custom volume：移动复制到另一个存储池，或者重命名<ul>
+<li><code>lxc storage volume copy &lt;source_pool_name&gt;/&lt;source_volume_name&gt; &lt;target_pool_name&gt;/&lt;target_volume_name&gt;</code></li>
+</ul>
+</li>
+<li>instance volume（自动生成的）:使用 move 命令，移动 instance 到另一个存储池</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>lxc move &lt;instance_name&gt; --storage &lt;target_pool_name&gt;
+</span></code></pre></div>
+<p>当移动或复制 volume 到使用不同 driver 的存储池中，lxc 会自动转换。</p>
+<h2 id="高级">高级<a class="headerlink" href="#高级" title="Permanent link">&para;</a></h2>
+<h3 id="端口转发">端口转发<a class="headerlink" href="#端口转发" title="Permanent link">&para;</a></h3>
+<p><a href="https://lxdware.com/forwarding-host-ports-to-lxd-instances/">https://lxdware.com/forwarding-host-ports-to-lxd-instances/</a></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>lxc profile create proxy
+</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>lxc profile edit proxy
+</span><span id="__span-23-3"><a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a>
+</span><span id="__span-23-4"><a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a>devices:
+</span><span id="__span-23-5"><a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a>  proxy8096:
+</span><span id="__span-23-6"><a id="__codelineno-23-6" name="__codelineno-23-6" href="#__codelineno-23-6"></a>    connect: tcp:127.0.0.1:8096
+</span><span id="__span-23-7"><a id="__codelineno-23-7" name="__codelineno-23-7" href="#__codelineno-23-7"></a>    listen: tcp:0.0.0.0:8097
+</span><span id="__span-23-8"><a id="__codelineno-23-8" name="__codelineno-23-8" href="#__codelineno-23-8"></a>    type: proxy
+</span><span id="__span-23-9"><a id="__codelineno-23-9" name="__codelineno-23-9" href="#__codelineno-23-9"></a>name: proxy-jellyfin
+</span></code></pre></div>
+<h3 id="路径映射挂载">路径映射（挂载）<a class="headerlink" href="#路径映射挂载" title="Permanent link">&para;</a></h3>
+<h4 id="特权-vs-非特权">特权 vs 非特权<a class="headerlink" href="#特权-vs-非特权" title="Permanent link">&para;</a></h4>
+<p>特权容器：</p>
+<ul>
+<li>特权容器的所有功能基本都可以使用非特权容器实现，并不是更高级。因此更推荐使用非特权容器，更安全</li>
+<li>容器内用户 id 和容器外用户 id 一样。因此创建挂载后，即可正常使用。</li>
+<li>容器内 root 用户对应 host root 用户</li>
+</ul>
+<p>非特权容器</p>
+<ul>
+<li>容器内 uid 和 host uid 存在一套一一映射。默认情况容器内 0 开始的 uid 被映射到 host 高 uid(10000)</li>
+<li>挂载后，容器内看 host 创建的文件一般为 nobody，host 看容器创建的文件为 10000+。</li>
+</ul>
+<ul>
+<li>Unprivileged containers are the safest containers. Those use a map of uid and gid to allocate a range of uids and gids to a container. That means that uid 0 (root) in the container is actually something like uid 100000 outside the container. So should something go very wrong and an attacker manages to escape the container, they'll find themselves with about as many rights as a nobody user.</li>
+</ul>
+<p>设置特权或非特权容器</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>lxc config set &lt;container_name&gt; security.privileged true
+</span></code></pre></div>
+<h4 id="添加映射">添加映射<a class="headerlink" href="#添加映射" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>lxc config device add {container-name} {name} disk source={/path/to/source/dir/} path={/path/to/dest/onto/container/}
+</span></code></pre></div>
+<p>移除 (unmount)</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>lxc config device remove  {container-name} {name}
+</span></code></pre></div>
+<p>或者直接编译配置文件</p>
+<h4 id="设置用户映射">设置用户映射<a class="headerlink" href="#设置用户映射" title="Permanent link">&para;</a></h4>
+<p><a href="https://github.com/lxc/lxd/blob/master/doc/userns-idmap.md">lxd/userns-idmap.md at master · lxc/lxd · GitHub</a></p>
+<ul>
+<li>User namespaces work by mapping a set of UIDs and GIDs on the host to a set of UIDs and GIDs in the container.</li>
+<li>For example, we can define that the host UIDs and GIDs from 100000 to 165535 may be used by LXD and should be mapped to UID/GID 0 through 65535 in the container.</li>
+<li>As a result a process running as UID 0 in the container will actually be running as UID 100000.</li>
+<li><strong>Allocations should always be of at least 65536 UIDs and GIDs to cover the POSIX range including root (0) and nobody (65534).</strong></li>
+</ul>
+<ul>
+<li>On most hosts, LXD will check <code>/etc/subuid</code> and <code>/etc/subgid</code> for allocations for the <code>lxd</code> user and on first start, set the default profile to use the first 65536 UIDs and GIDs from that range.</li>
+<li>If none of those files can be found, then LXD will assume a 1000000000 UID/GID range starting at a base UID/GID of 1000000.</li>
+</ul>
+<ul>
+<li>lxd 读取/etc/{subuid, subgid}选择 lxd 可以分配的段。没有该文件的话，默认从 1000000 开始分配<ul>
+<li>文件格式：user:x:len，表示用户可以使用的空间是 x-(x+len)。</li>
+</ul>
+</li>
+</ul>
+<p>将特定容器内用户映射到 host 用户</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>uid 50-60 500-510  # 50-60 in host, map to, 500-510 in container
+</span><span id="__span-27-2"><a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a>gid 100000-110000 10000-20000
+</span><span id="__span-27-3"><a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a>both 1000 1000  # both uid and gid
+</span><span id="__span-27-4"><a id="__codelineno-27-4" name="__codelineno-27-4" href="#__codelineno-27-4"></a>
+</span><span id="__span-27-5"><a id="__codelineno-27-5" name="__codelineno-27-5" href="#__codelineno-27-5"></a># 当前用户映射到容器内1001用户（ubuntu镜像有默认用户ubuntu(1000)，自己新建用户一般为1001）
+</span><span id="__span-27-6"><a id="__codelineno-27-6" name="__codelineno-27-6" href="#__codelineno-27-6"></a>echo -en &quot;uid $(id -u) 1001\ngid $(id -g) 1001&quot; | lxc config set ubuntu20 raw.idmap -
+</span></code></pre></div>
+<h3 id="添加-gpu">添加 gpu<a class="headerlink" href="#添加-gpu" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>lxc config device add ubuntu20 gtx1080 gpu
+</span></code></pre></div>
+<h3 id="profile">profile<a class="headerlink" href="#profile" title="Permanent link">&para;</a></h3>
+<p><strong>具体见 jellyfin 那篇文章</strong></p>
+<p>lxc 的端口映射没有那么直观，是通过在容器配置中添加 device 实现的。有两种方式给设备：1）通过<code>lxc config</code>给容器添加设备（也可以<code>lxc config edit</code>直接修改容器配置文件）2）创建 profile，并给容器添加 profile。
+为了以后知道设置了哪些端口映射，推荐使用 profile 方式。</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>lxc profile device add &lt;profile&gt; &lt;device name&gt; &lt;device type&gt; &lt;key=value&gt;*
+</span><span id="__span-29-2"><a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a>lxc profile add &lt;container&gt; &lt;profile&gt;
+</span><span id="__span-29-3"><a id="__codelineno-29-3" name="__codelineno-29-3" href="#__codelineno-29-3"></a>
+</span><span id="__span-29-4"><a id="__codelineno-29-4" name="__codelineno-29-4" href="#__codelineno-29-4"></a>lxc config device add &lt;container&gt; &lt;device name&gt; &lt;device type&gt; &lt;key=value&gt;*
+</span></code></pre></div>
+<p>例子：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>lxc profile create proxy-jellyfin
+</span><span id="__span-30-2"><a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a>lxc profile device add proxy-jellyfin proxy8096 proxy connect=&quot;tcp:127.0.0.1:8096&quot; listen=&quot;tcp:0.0.0.0:8096&quot;
+</span><span id="__span-30-3"><a id="__codelineno-30-3" name="__codelineno-30-3" href="#__codelineno-30-3"></a>lxc profile add ubuntu20 proxy-jellyfin
+</span></code></pre></div>
+<p>查看容器配置文件</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>lxc config show ubuntu20 --expanded
+</span><span id="__span-31-2"><a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a>
+</span><span id="__span-31-3"><a id="__codelineno-31-3" name="__codelineno-31-3" href="#__codelineno-31-3"></a>devices:
+</span><span id="__span-31-4"><a id="__codelineno-31-4" name="__codelineno-31-4" href="#__codelineno-31-4"></a>  proxy8096:
+</span><span id="__span-31-5"><a id="__codelineno-31-5" name="__codelineno-31-5" href="#__codelineno-31-5"></a>    connect: tcp:127.0.0.1:8096
+</span><span id="__span-31-6"><a id="__codelineno-31-6" name="__codelineno-31-6" href="#__codelineno-31-6"></a>    listen: tcp:0.0.0.0:8097
+</span><span id="__span-31-7"><a id="__codelineno-31-7" name="__codelineno-31-7" href="#__codelineno-31-7"></a>    type: proxy
+</span></code></pre></div>
+<h2 id="其它">其它<a class="headerlink" href="#其它" title="Permanent link">&para;</a></h2>
+<h3 id="lxc-创建-openwrt-镜像">lxc 创建 openwrt 镜像<a class="headerlink" href="#lxc-创建-openwrt-镜像" title="Permanent link">&para;</a></h3>
+<p><a href="http://www.makikiweb.com/Pi/lxc_openwrt.html">makikiweb.com/Pi/lxc_openwrt.html</a></p>
+<ol>
+<li>Download the OpenWrt rootfs tarball</li>
+<li>Create a metadata.yaml file, and place into a tar file</li>
+<li>Import the rootfs tarball and metadata tarball to create an image</li>
+</ol>
+<p>关于架构<a href="https://openwrt.org/docs/guide-user/installation/openwrt_x86">[OpenWrt Wiki] OpenWrt on x86 hardware (PC / VM / server)</a></p>
+<ul>
+<li><strong>64</strong> is for modern PC hardware (anything from around 2007 onward), it is built for 64-bit capable computers and has support for modern CPU features. Choose this unless you have good reasons not to.</li>
+<li><strong>Generic</strong> is for 32-bit-only hardware (either old hardware or some Atom processors), should be <strong>i686</strong> Linux architecture, will work on Pentium 4 and later. Use this only if your hardware can't run the 64-bit version.</li>
+<li><strong>Legacy</strong> is for very old PC hardware, Pentium MMX, what is called <strong>i586</strong> in Linux architecture support. It will miss a lot of features you want/need on modern hardware like multi-core support and support for more than 4GB of RAM, but will actually run on ancient hardware while other versions will not.</li>
+<li><strong>Geode</strong> is a custom Legacy target customized for Geode SoCs, which are still in use in many (aging) networking devices, like the older Alix boards from PCEngines.</li>
+</ul>
+<h3 id="lxd-dashboard">lxd-dashboard<a class="headerlink" href="#lxd-dashboard" title="Permanent link">&para;</a></h3>
+<ul>
+<li><a href="https://hub.docker.com/r/lxdware/dashboard">lxdware/dashboard - Docker Image | Docker Hub</a></li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a>---
+</span><span id="__span-32-2"><a id="__codelineno-32-2" name="__codelineno-32-2" href="#__codelineno-32-2"></a>version: &quot;2.1&quot;
+</span><span id="__span-32-3"><a id="__codelineno-32-3" name="__codelineno-32-3" href="#__codelineno-32-3"></a>services:
+</span><span id="__span-32-4"><a id="__codelineno-32-4" name="__codelineno-32-4" href="#__codelineno-32-4"></a>  lxd-dashboard:
+</span><span id="__span-32-5"><a id="__codelineno-32-5" name="__codelineno-32-5" href="#__codelineno-32-5"></a>    image: lxdware/dashboard:latest
+</span><span id="__span-32-6"><a id="__codelineno-32-6" name="__codelineno-32-6" href="#__codelineno-32-6"></a>    container_name: lxd-dashboard
+</span><span id="__span-32-7"><a id="__codelineno-32-7" name="__codelineno-32-7" href="#__codelineno-32-7"></a>    environment:
+</span><span id="__span-32-8"><a id="__codelineno-32-8" name="__codelineno-32-8" href="#__codelineno-32-8"></a>      - PUID=1000
+</span><span id="__span-32-9"><a id="__codelineno-32-9" name="__codelineno-32-9" href="#__codelineno-32-9"></a>      - PGID=1000
+</span><span id="__span-32-10"><a id="__codelineno-32-10" name="__codelineno-32-10" href="#__codelineno-32-10"></a>      - TZ=Asia/Shanghai
+</span><span id="__span-32-11"><a id="__codelineno-32-11" name="__codelineno-32-11" href="#__codelineno-32-11"></a>      - ADMIN_PASS=lxdware
+</span><span id="__span-32-12"><a id="__codelineno-32-12" name="__codelineno-32-12" href="#__codelineno-32-12"></a>    volumes:
+</span><span id="__span-32-13"><a id="__codelineno-32-13" name="__codelineno-32-13" href="#__codelineno-32-13"></a>      - /mnt/Disk2/lxdware:/var/lxdware
+</span><span id="__span-32-14"><a id="__codelineno-32-14" name="__codelineno-32-14" href="#__codelineno-32-14"></a>    ports:
+</span><span id="__span-32-15"><a id="__codelineno-32-15" name="__codelineno-32-15" href="#__codelineno-32-15"></a>      - 9002:80
+</span><span id="__span-32-16"><a id="__codelineno-32-16" name="__codelineno-32-16" href="#__codelineno-32-16"></a>    restart: unless-stopped
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-33-1"><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a>#lxd开启http API
+</span><span id="__span-33-2"><a id="__codelineno-33-2" name="__codelineno-33-2" href="#__codelineno-33-2"></a>lxc config set core.https_address [::]
+</span><span id="__span-33-3"><a id="__codelineno-33-3" name="__codelineno-33-3" href="#__codelineno-33-3"></a>
+</span><span id="__span-33-4"><a id="__codelineno-33-4" name="__codelineno-33-4" href="#__codelineno-33-4"></a>#从浏览器复制证书到lxc host
+</span><span id="__span-33-5"><a id="__codelineno-33-5" name="__codelineno-33-5" href="#__codelineno-33-5"></a>lxc config trust add lxdware.crt
+</span></code></pre></div>
+<h2 id="备份">备份<a class="headerlink" href="#备份" title="Permanent link">&para;</a></h2>
+<p><a href="https://discuss.linuxcontainers.org/t/backup-the-container-and-install-it-on-another-server/463/4">Backup the container and install it on another server - LXD - Linux Containers Forum</a></p>
+<ul>
+<li>将一个</li>
+</ul>
+<h3 id="方法一压缩包方式">方法一：压缩包方式<a class="headerlink" href="#方法一压缩包方式" title="Permanent link">&para;</a></h3>
+<p>容器导出为镜像文件</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-34-1"><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a>lxc<span class="w"> </span>snapshot<span class="w"> </span>blah<span class="w"> </span>backup
+</span><span id="__span-34-2"><a id="__codelineno-34-2" name="__codelineno-34-2" href="#__codelineno-34-2"></a>lxc<span class="w"> </span>publish<span class="w"> </span>blah/backup<span class="w"> </span>--alias<span class="w"> </span>blah-backup
+</span><span id="__span-34-3"><a id="__codelineno-34-3" name="__codelineno-34-3" href="#__codelineno-34-3"></a>lxc<span class="w"> </span>image<span class="w"> </span><span class="nb">export</span><span class="w"> </span>blah-backup<span class="w"> </span>.
+</span><span id="__span-34-4"><a id="__codelineno-34-4" name="__codelineno-34-4" href="#__codelineno-34-4"></a>lxc<span class="w"> </span>image<span class="w"> </span>delete<span class="w"> </span>blah-backup
+</span></code></pre></div>
+<p>恢复</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-35-1"><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a>lxc<span class="w"> </span>image<span class="w"> </span>import<span class="w"> </span>TARBALL-NAME<span class="w"> </span>--alias<span class="w"> </span>blah-backup
+</span><span id="__span-35-2"><a id="__codelineno-35-2" name="__codelineno-35-2" href="#__codelineno-35-2"></a>lxc<span class="w"> </span>launch<span class="w"> </span>blah-backup<span class="w"> </span>some-container-name
+</span><span id="__span-35-3"><a id="__codelineno-35-3" name="__codelineno-35-3" href="#__codelineno-35-3"></a>lxc<span class="w"> </span>image<span class="w"> </span>delete<span class="w"> </span>blah-backup
+</span></code></pre></div>
+<p>This is still pretty indirect and abusing the image mechanism to use it as a backup mechanism though. One alternative you could use is to just generate a tarball of /var/lib/lxd/containers/NAME and dump that on your NAS.</p>
+<p>Restoring that is a bit harder though. You’ll need to create a /var/lib/lxd/storage-pools/POOL-NAME/containers/NAME path matching the name of the backed up container. Then if the storage pool is zfs or btrfs or lvm, you’ll need to create the applicable dataset, subvolume or lv and mount it on /var/lib/lxd/storage-pools/POOL-NAME/containers/NAME and then unpack your backup tarball onto it. Lastly, you can call “lxd import NAME” to have LXD re-import the container in the database.</p>
+<p>I would add to this thread and suggest everyone to use by default no compression, especially if using ZFS compression. The images are fast.<br />
+<code>lxc publish xenial/snap0 --compression none --alias export-xenial-snap0</code></p>
+<p>自动备份所有容器脚本
+<a href="https://discuss.linuxcontainers.org/t/backup-the-container-and-install-it-on-another-server/463/14">https://discuss.linuxcontainers.org/t/backup-the-container-and-install-it-on-another-server/463/14</a></p>
+<h3 id="方法二第二个-lxd-将第一个-lxd-server-作为源">方法二：第二个 lxd 将第一个 lxd server 作为源<a class="headerlink" href="#方法二第二个-lxd-将第一个-lxd-server-作为源" title="Permanent link">&para;</a></h3>
+<p>如果仅是想在第二台机器上运行相同的容器，有更简洁的方法。</p>
+<p>The cleanest and possibly easiest way to do so would be to add your second server as a remote with “lxc remote add”. You’ll then be able to just do</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-36-1"><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a>lxc copy CONTAINER_NAME/SNAPSHOT_NAME target:CONTAINER_NAME&quot;
+</span></code></pre></div>
+<p>And the target LXD will download the snapshot from the source LXD and then re-created the container with the exact same settings it had on the source.</p>
+<h2 id="遇到的问题">遇到的问题<a class="headerlink" href="#遇到的问题" title="Permanent link">&para;</a></h2>
+<h3 id="zfs-container-目录为空">zfs container 目录为空<a class="headerlink" href="#zfs-container-目录为空" title="Permanent link">&para;</a></h3>
+<p>可以直接强行挂载，但是这样的话文件权限是错误的，需要手动修改。</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-37-1"><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a>mount -t zfs lxd/containers/mycontainer2 /xxx/mycontainer2
+</span></code></pre></div>
+<h2 id="参考">参考<a class="headerlink" href="#参考" title="Permanent link">&para;</a></h2>
+<p><a href="https://robinwinslow.uk/learning-lxd#sharing-folders">How to use Linux Containers with LXD, and why you might want to (robinwinslow.uk)</a></p>
+<ul>
+<li>ubuntu 安装 LXC 教程：<a href="https://www.cyberciti.biz/faq/install-lxd-on-ubuntu-20-04-lts-using-apt/">How To Install LXD on Ubuntu 20.04 LTS using apt - nixCraft (cyberciti.biz)</a></li>
+<li>在树莓派上使用 LXC: <a href="http://www.makikiweb.com/Pi/lxc_on_the_pi.html">www.makikiweb.com/Pi/lxc_on_the_pi.html</a></li>
+</ul>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+  
+
+
+
+      
+    </article>
+  </div>
+
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+        
+      
+      <nav class="md-footer__inner md-grid" aria-label="页脚" >
+        
+          
+          <a href="../../../../../%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/2022/10/31/2022-10-31-Wireguard%E7%BB%84%E7%BD%91/" class="md-footer__link md-footer__link--prev" aria-label="上一页: Wireguard 组网">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                上一页
+              </span>
+              <div class="md-ellipsis">
+                Wireguard 组网
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../../../../../%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/2022/11/06/2022-11-06-linux%E7%9B%B8%E5%85%B3-%E7%B3%BB%E7%BB%9F%E8%BF%90%E7%BB%B4/" class="md-footer__link md-footer__link--next" aria-label="下一页: linux 相关-系统运维">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                下一页
+              </span>
+              <div class="md-ellipsis">
+                linux 相关-系统运维
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/TheRainstorm" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../../..", "features": ["navigation.instant", "navigation.instant.progress", "navigation.tracking", "navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.footer", "content.code.copy", "toc.follow", "toc.integrate"], "search": "../../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../../../../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

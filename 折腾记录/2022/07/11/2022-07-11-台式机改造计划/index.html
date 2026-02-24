@@ -1,0 +1,2464 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="记录一些关于数学、计算机的知识，以及一些日常。">
+      
+      
+      
+        <link rel="canonical" href="https://yfy.cqu.ai/%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/2022/07/11/2022-07-11-%E5%8F%B0%E5%BC%8F%E6%9C%BA%E6%94%B9%E9%80%A0%E8%AE%A1%E5%88%92/">
+      
+      
+        <link rel="prev" href="../../../../../%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%85%B7/2022/05/29/2022-05-29-ffmpeg/">
+      
+      
+        <link rel="next" href="../../16/2022-07-16-Linux%E5%AE%89%E8%A3%85windows%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%B9%B6%E6%98%BE%E5%8D%A1%E7%9B%B4%E9%80%9A/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.3">
+    
+    
+      
+        <title>台式机改造计划 - Rain 的随笔</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#linux-挂载-ntfs-分区" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../../../../.." title="Rain 的随笔" class="md-header__button md-logo" aria-label="Rain 的随笔" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Rain 的随笔
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              台式机改造计划
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    
+  
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="../../../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  博客
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../about/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  关于
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../tags/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  标签
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../series/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  系列
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../tools/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  工具
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../archive/2026/" class="md-tabs__link">
+          
+  
+  
+  归档
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../category/%E4%B8%AA%E4%BA%BA/" class="md-tabs__link">
+          
+  
+  
+  分类
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" hidden>
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../../.." title="Rain 的随笔" class="md-nav__button md-logo" aria-label="Rain 的随笔" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Rain 的随笔
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+    
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      <a href="../../../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    博客
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    关于
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../tags/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    标签
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../series/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    系列
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../tools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    工具
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    归档
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    归档
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2026/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2026
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2025/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2025
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2024/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2024
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2023/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2023
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2022/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2022
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2021/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2021
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2020/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2020
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2019/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2019
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    分类
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    分类
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E4%B8%AA%E4%BA%BA/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    个人
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E5%8D%9A%E5%AE%A2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    博客
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E5%8D%9A%E5%AE%A2--%E7%BD%91%E7%BB%9C/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    博客 &amp; 网络
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    学习笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    折腾记录
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    课程笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%85%B7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    软件工具
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E9%98%85%E8%AF%BB/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    阅读
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+  <div class="md-content md-content--post" data-md-component="content">
+    <div class="md-sidebar md-sidebar--post" data-md-component="sidebar" data-md-type="navigation">
+      <div class="md-sidebar__scrollwrap">
+        <div class="md-sidebar__inner md-post">
+          <nav class="md-nav md-nav--primary">
+            <div class="md-post__back">
+              <div class="md-nav__title md-nav__container">
+                <a href="../../../../.." class="md-nav__link">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+                  <span class="md-ellipsis">
+                    回到主页
+                  </span>
+                </a>
+              </div>
+            </div>
+            
+            <ul class="md-post__meta md-nav__list">
+              <li class="md-nav__item md-nav__item--section">
+                <div class="md-post__title">
+                  <span class="md-ellipsis">
+                    元数据
+                  </span>
+                </div>
+                <nav class="md-nav">
+                  <ul class="md-nav__list">
+                    <li class="md-nav__item">
+                      <div class="md-nav__link">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 19H5V8h14m-3-7v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1V1m-1 11h-5v5h5z"/></svg>
+                        <time datetime="2022-07-11 19:08:52+00:00" class="md-ellipsis">2022年7月11日</time>
+                      </div>
+                    </li>
+                    
+                    
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 3v15h3V3zm3 2 4 13 3-1-4-13zM5 5v13h3V5zM3 19v2h18v-2z"/></svg>
+                          <span class="md-ellipsis">
+                            分类于
+                            
+                              <a href="../../../../../category/%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/">折腾记录</a></span>
+                        </div>
+                      </li>
+                    
+                    
+                      
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20a8 8 0 0 0 8-8 8 8 0 0 0-8-8 8 8 0 0 0-8 8 8 8 0 0 0 8 8m0-18a10 10 0 0 1 10 10 10 10 0 0 1-10 10C6.47 22 2 17.5 2 12A10 10 0 0 1 12 2m.5 5v5.25l4.5 2.67-.75 1.23L11 13V7z"/></svg>
+                          <span class="md-ellipsis">
+                            
+                              需要 9 分钟阅读时间
+                            
+                          </span>
+                        </div>
+                      </li>
+                    
+                  </ul>
+                </nav>
+              </li>
+            </ul>
+            
+          </nav>
+          
+            
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#linux-挂载-ntfs-分区" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        linux 挂载 ntfs 分区
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#linux-分享-samba" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        linux 分享 Samba
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#命令行分区" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        命令行分区
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dockerportainer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        docker,portainer
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="docker,portainer">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#安装-docker" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        安装 docker
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#安装-portainer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        安装 portainer
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#kvm-cockpit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        KVM, cockpit
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="KVM, cockpit">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#kvm-install" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        KVM install
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kvm-install-win10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        KVM install win10
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cli" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CLI
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="CLI">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#基本" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        基本
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#开启-vnc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        开启 VNC
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cockpit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cockpit
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lxd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        LXD
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="LXD">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#lxdui" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        LXDUI
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#其它" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        其它
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="其它">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#中文输入法" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        中文输入法
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#barrier" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        barrier
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aria2-下载服务器" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        aria2 下载服务器
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gui" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GUI
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="GUI">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#x-windows-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        X Windows System
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#切换桌面环境" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        切换桌面环境
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vnc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        VNC
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#docker-nodehexo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Docker node/hexo
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Docker node/hexo">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#直接安装" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        直接安装
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#docker-安装" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        docker 安装
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="docker 安装">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#dockerfile" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        dockerfile
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#build-镜像" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        build 镜像
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#运行" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        运行
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#docker" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Docker
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Docker">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#network" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        network
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="network">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#host" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        host
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bridge" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        bridge
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#自启动" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        自启动
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ipv6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ipv6
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#docker-应用" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Docker 应用
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Docker 应用">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#transmission-pt-下载" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        transmission PT 下载
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#jellyfin" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        jellyfin
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+          
+        </div>
+      </div>
+    </div>
+    <article class="md-content__inner md-typeset">
+      
+        
+  
+
+
+  <nav class="md-tags" >
+    
+      
+      
+      
+      
+        <a href="../../../../../tags/#tag:kvm" class="md-tag">KVM</a>
+      
+    
+      
+      
+      
+      
+        <a href="../../../../../tags/#tag:lxd" class="md-tag">LXD</a>
+      
+    
+      
+      
+      
+      
+        <a href="../../../../../tags/#tag:docker" class="md-tag">docker</a>
+      
+    
+      
+      
+      
+      
+        <a href="../../../../../tags/#tag:ntfs" class="md-tag">ntfs</a>
+      
+    
+      
+      
+      
+      
+        <a href="../../../../../tags/#tag:portainer" class="md-tag">portainer</a>
+      
+    
+      
+      
+      
+      
+        <a href="../../../../../tags/#tag:samba" class="md-tag">samba</a>
+      
+    
+  </nav>
+
+
+
+  <h1>台式机改造计划</h1>
+
+<p>记录了对将台式机从 windows 换位 linux 后折腾的各种内容</p>
+<!-- more -->
+
+<h3 id="linux-挂载-ntfs-分区">linux 挂载 ntfs 分区<a class="headerlink" href="#linux-挂载-ntfs-分区" title="Permanent link">&para;</a></h3>
+<ul>
+<li>
+<p>不考虑和 windows 兼容的话（在 linux 下创建的文件，在 windows 中会显示为其它用户导致无法访问）</p>
+<ul>
+<li>将 own 设置为指定用户和组</li>
+<li>umask 表示文件和目录权限哪些位为 0，0022 即 755</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>sudo mount -t ntfs-3g -o umask=0022,gid=1000,uid=1000 /dev/sda2 /home/yfy/D
+</span></code></pre></div>
+</li>
+</ul>
+<ul>
+<li>
+<p>考虑和 windows 兼容（双系统），需要手动设置 windows 和 linux 用户映射。参考：<a href="https://askubuntu.com/questions/11840/how-do-i-use-chmod-on-an-ntfs-or-fat32-partition/514870#514870">permissions - How do I use 'chmod' on an NTFS (or FAT32) partition? - Ask Ubuntu</a></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>sudo mount -t ntfs-3g -o usermapping=/home/yfy/UserMapping,umask=0022,utf8 /dev/sda2 /home/yfy/D
+</span></code></pre></div>
+</li>
+</ul>
+<ul>
+<li>
+<p>其它</p>
+<ul>
+<li>
+<p>umount 占用失败</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>umount -l ... #lazy umount
+</span></code></pre></div>
+</li>
+</ul>
+<ul>
+<li>
+<p><strong>添加到 fstab 自动挂载</strong></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>UUID=7E3AF70F3AF6C367  /home/yfy/D  ntfs  usermapping=/home/yfy/app/ntfs-3g/UserMapping,umask=0022 0 0
+</span></code></pre></div>
+<p>说明：</p>
+<ul>
+<li>
+<p>fstab 格式</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>[Device] [Mount Point] [File System Type] [Options] [Dump] [Pass]
+</span></code></pre></div>
+</li>
+</ul>
+<ul>
+<li>
+<p>device 域</p>
+<ul>
+<li>Label : LABEL=label</li>
+<li>Network ID<ul>
+<li>Samba : //server/share</li>
+<li>NFS : server:/share</li>
+<li>SSHFS : sshfs#user@server:/share</li>
+</ul>
+</li>
+<li>Device : /dev/sdxy (not recommended)</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>
+<p>获得 UUID</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>sudo blkid
+</span></code></pre></div>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>
+<p>参考：</p>
+<p>官方文档：<a href="http://manpages.ubuntu.com/manpages/xenial/en/man8/ntfs-3g.8.html">Ubuntu Manpage: ntfs-3g - Third Generation Read/Write NTFS Driver</a></p>
+<p>类似问题：<a href="https://askubuntu.com/a/514870">https://askubuntu.com/a/514870</a></p>
+<ul>
+<li>回答：<a href="https://askubuntu.com/posts/514870/edit">https://askubuntu.com/posts/514870/edit</a><ul>
+<li>回答中提到的网页（因为原网页不在了，使用了 webarchive）：<a href="https://web.archive.org/web/20200321035617/https://www.tuxera.com/community/ntfs-3g-advanced/ownership-and-permissions/">Ownership and Permissions (archive.org)</a></li>
+</ul>
+</li>
+</ul>
+<p>fstab: <a href="https://help.ubuntu.com/community/Fstab">Fstab - Community Help Wiki (ubuntu.com)</a></p>
+</li>
+</ul>
+<h3 id="linux-分享-samba">linux 分享 Samba<a class="headerlink" href="#linux-分享-samba" title="Permanent link">&para;</a></h3>
+<p><a href="https://ubuntu.com/tutorials/install-and-configure-samba#3-setting-up-samba">https://ubuntu.com/tutorials/install-and-configure-samba#3-setting-up-samba</a></p>
+<p><a href="https://kifarunix.com/easily-install-and-configure-samba-file-server-on-ubuntu-22-04/">Easily Install and Configure Samba File Server on Ubuntu 22.04 - kifarunix.com</a></p>
+<p>安装</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>sudo apt update
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>sudo apt install samba
+</span></code></pre></div>
+<p>设置共享目录</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>sudo vim /etc/samba/smb.conf
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>[sambashare]
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>    comment = Samba on Ubuntu
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>    path = /home/username/sambashare
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>    read only = no
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>    browsable = yes
+</span></code></pre></div>
+<p>运行</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>sudo service smbd restart
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>#sudo ufw allow samba
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>#添加用户并设置密码
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>sudo smbpasswd -a username
+</span></code></pre></div>
+<h3 id="命令行分区">命令行分区<a class="headerlink" href="#命令行分区" title="Permanent link">&para;</a></h3>
+<h3 id="dockerportainer">docker,portainer<a class="headerlink" href="#dockerportainer" title="Permanent link">&para;</a></h3>
+<h4 id="安装-docker">安装 docker<a class="headerlink" href="#安装-docker" title="Permanent link">&para;</a></h4>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="c1">#添加源</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="w">    </span>apt-transport-https<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="w">    </span>ca-certificates<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="w">    </span>curl<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="w">    </span>gnupg<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="w">    </span>lsb-release
+</span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>
+</span><span id="__span-9-9"><a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a>curl<span class="w"> </span>-fsSL<span class="w"> </span>https://download.docker.com/linux/ubuntu/gpg<span class="w"> </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>gpg<span class="w"> </span>--dearmor<span class="w"> </span>-o<span class="w"> </span>/usr/share/keyrings/docker-archive-keyring.gpg
+</span><span id="__span-9-10"><a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a>
+</span><span id="__span-9-11"><a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a><span class="nb">echo</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-9-12"><a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a><span class="w">   </span><span class="s2">&quot;deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \</span>
+</span><span id="__span-9-13"><a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a><span class="s2">   </span><span class="k">$(</span>lsb_release<span class="w"> </span>-cs<span class="k">)</span><span class="s2"> stable&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>tee<span class="w"> </span>/etc/apt/sources.list.d/docker.list<span class="w"> </span>&gt;<span class="w"> </span>/dev/null
+</span><span id="__span-9-14"><a id="__codelineno-9-14" name="__codelineno-9-14" href="#__codelineno-9-14"></a>
+</span><span id="__span-9-15"><a id="__codelineno-9-15" name="__codelineno-9-15" href="#__codelineno-9-15"></a><span class="c1">#安装</span>
+</span><span id="__span-9-16"><a id="__codelineno-9-16" name="__codelineno-9-16" href="#__codelineno-9-16"></a>sudo<span class="w"> </span>apt-get<span class="w"> </span>update
+</span><span id="__span-9-17"><a id="__codelineno-9-17" name="__codelineno-9-17" href="#__codelineno-9-17"></a>sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>docker-ce<span class="w"> </span>docker-ce-cli<span class="w"> </span>containerd.io
+</span><span id="__span-9-18"><a id="__codelineno-9-18" name="__codelineno-9-18" href="#__codelineno-9-18"></a>
+</span><span id="__span-9-19"><a id="__codelineno-9-19" name="__codelineno-9-19" href="#__codelineno-9-19"></a><span class="c1">#sudo groupadd docker</span>
+</span><span id="__span-9-20"><a id="__codelineno-9-20" name="__codelineno-9-20" href="#__codelineno-9-20"></a>sudo<span class="w"> </span>usermod<span class="w"> </span>-aG<span class="w"> </span>docker<span class="w"> </span><span class="nv">$USER</span>
+</span><span id="__span-9-21"><a id="__codelineno-9-21" name="__codelineno-9-21" href="#__codelineno-9-21"></a>
+</span><span id="__span-9-22"><a id="__codelineno-9-22" name="__codelineno-9-22" href="#__codelineno-9-22"></a><span class="c1">#启动</span>
+</span><span id="__span-9-23"><a id="__codelineno-9-23" name="__codelineno-9-23" href="#__codelineno-9-23"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>docker
+</span><span id="__span-9-24"><a id="__codelineno-9-24" name="__codelineno-9-24" href="#__codelineno-9-24"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span>start<span class="w"> </span>docker
+</span><span id="__span-9-25"><a id="__codelineno-9-25" name="__codelineno-9-25" href="#__codelineno-9-25"></a>
+</span><span id="__span-9-26"><a id="__codelineno-9-26" name="__codelineno-9-26" href="#__codelineno-9-26"></a><span class="c1">#测试</span>
+</span><span id="__span-9-27"><a id="__codelineno-9-27" name="__codelineno-9-27" href="#__codelineno-9-27"></a>docker<span class="w"> </span>info
+</span><span id="__span-9-28"><a id="__codelineno-9-28" name="__codelineno-9-28" href="#__codelineno-9-28"></a>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>hello-world
+</span></code></pre></div>
+<h4 id="安装-portainer">安装 portainer<a class="headerlink" href="#安装-portainer" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>docker volume create portainer_data
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>docker run -d -p 9001:8000 -p 9000:9000 --name portainer \
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>    --restart=always \
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>    -v /var/run/docker.sock:/var/run/docker.sock \
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>    -v portainer_data:/data \
+</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a>    portainer/portainer-ce
+</span></code></pre></div>
+<h3 id="kvm-cockpit">KVM, cockpit<a class="headerlink" href="#kvm-cockpit" title="Permanent link">&para;</a></h3>
+<h4 id="kvm-install">KVM install<a class="headerlink" href="#kvm-install" title="Permanent link">&para;</a></h4>
+<p>KVM: <a href="https://linuxize.com/post/how-to-install-kvm-on-ubuntu-20-04/">How to Install Kvm on Ubuntu 20.04 | Linuxize</a></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>sudo apt install qemu-kvm libvirt-daemon-system libvirt-clients bridge-utils virtinst virt-manager
+</span></code></pre></div>
+<ul>
+<li><code>qemu-kvm</code> - software that provides hardware emulation for the KVM hypervisor.</li>
+<li><code>libvirt-daemon-system</code> - configuration files to run the libvirt daemon as a system service.</li>
+<li><code>libvirt-clients</code> - software for managing virtualization platforms.</li>
+<li><code>bridge-utils</code> - a set of command-line tools for configuring ethernet bridges.</li>
+<li><code>virtinst</code> - a set of command-line tools for creating virtual machines.</li>
+<li><code>virt-manager</code> - an easy-to-use <strong>GUI interface</strong> and supporting command-line utilities for managing virtual machines through libvirt.</li>
+</ul>
+<p>brctl</p>
+<blockquote>
+<p>The “virbr0” bridge does not have any physical interfaces added. “virbr0-nic” is a virtual device with no traffic routed through it. The sole purpose of this device is to avoid changing the MAC address of the “virbr0” bridge.</p>
+</blockquote>
+<h4 id="kvm-install-win10">KVM install win10<a class="headerlink" href="#kvm-install-win10" title="Permanent link">&para;</a></h4>
+<p><a href="https://getlabsdone.com/install-windows-10-on-ubuntu-kvm/">How To Install Windows 10 on Ubuntu KVM? – GetLabsDone</a></p>
+<h4 id="cli">CLI<a class="headerlink" href="#cli" title="Permanent link">&para;</a></h4>
+<p>参考：</p>
+<ul>
+<li><a href="https://computingforgeeks.com/virsh-commands-cheatsheet/">Virsh commands cheatsheet to manage KVM guest virtual machines | ComputingForGeeks</a></li>
+<li><a href="https://kallesplayground.wordpress.com/useful-stuff/commands-for-kvm-management/">Commands for KVM hypervisor management | Kalle's playground (wordpress.com)</a></li>
+</ul>
+<h5 id="基本">基本<a class="headerlink" href="#基本" title="Permanent link">&para;</a></h5>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>#列出虚拟机(domain)
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>virsh list  #active
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>virsh list --all
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>
+</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>#查看虚拟机信息
+</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>virsh dominfo vm_name
+</span><span id="__span-12-7"><a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a>virsh edit vm_name  #XML格式
+</span><span id="__span-12-8"><a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a>
+</span><span id="__span-12-9"><a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a>#开启、关闭
+</span><span id="__span-12-10"><a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a>virsh start vm_name
+</span><span id="__span-12-11"><a id="__codelineno-12-11" name="__codelineno-12-11" href="#__codelineno-12-11"></a>virsh shutdown vm_name 
+</span><span id="__span-12-12"><a id="__codelineno-12-12" name="__codelineno-12-12" href="#__codelineno-12-12"></a>virsh reboot vm_name
+</span><span id="__span-12-13"><a id="__codelineno-12-13" name="__codelineno-12-13" href="#__codelineno-12-13"></a>virsh destroy test  #强制关闭
+</span><span id="__span-12-14"><a id="__codelineno-12-14" name="__codelineno-12-14" href="#__codelineno-12-14"></a>virsh autostart vm_name #设置自动启动
+</span><span id="__span-12-15"><a id="__codelineno-12-15" name="__codelineno-12-15" href="#__codelineno-12-15"></a>virsh autostart --disable vm_name #关闭设置自动启动
+</span><span id="__span-12-16"><a id="__codelineno-12-16" name="__codelineno-12-16" href="#__codelineno-12-16"></a>
+</span><span id="__span-12-17"><a id="__codelineno-12-17" name="__codelineno-12-17" href="#__codelineno-12-17"></a>#挂起
+</span><span id="__span-12-18"><a id="__codelineno-12-18" name="__codelineno-12-18" href="#__codelineno-12-18"></a>sudo virsh suspend test
+</span><span id="__span-12-19"><a id="__codelineno-12-19" name="__codelineno-12-19" href="#__codelineno-12-19"></a>sudo virsh resume test
+</span></code></pre></div>
+<h5 id="开启-vnc">开启 VNC<a class="headerlink" href="#开启-vnc" title="Permanent link">&para;</a></h5>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>virsh shutdown &lt;domain-name&gt;
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>virsh edit &lt;domain-name&gt;
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>#Add below XML contents within &lt;devices&gt; block
+</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>&lt;graphics type=&#39;vnc&#39; port=&#39;-1&#39; autoport=&#39;yes&#39; listen=&#39;0.0.0.0&#39;&gt;
+</span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>  &lt;listen type=&#39;address&#39; address=&#39;0.0.0.0&#39;/&gt;
+</span><span id="__span-13-7"><a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a>&lt;/graphics&gt;
+</span></code></pre></div>
+<h4 id="cockpit">Cockpit<a class="headerlink" href="#cockpit" title="Permanent link">&para;</a></h4>
+<p>Cockpit: <a href="https://www.linuxtechi.com/how-to-install-cockpit-on-ubuntu-20-04/">How to Install Cockpit Web Console on Ubuntu 20.04 Server (linuxtechi.com)</a></p>
+<p>仅需</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>sudo apt install cockpit
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>sudo systemctl start cockpit
+</span></code></pre></div>
+<p>端口为 9090</p>
+<p>要管理虚拟机需要安装</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>sudo apt install cockpit-machines
+</span></code></pre></div>
+<h3 id="lxd">LXD<a class="headerlink" href="#lxd" title="Permanent link">&para;</a></h3>
+<p><a href="https://linuxcontainers.org/lxd/getting-started-cli/">Linux Containers - LXD - Getting started</a></p>
+<h4 id="lxdui">LXDUI<a class="headerlink" href="#lxdui" title="Permanent link">&para;</a></h4>
+<p><a href="https://github.com/AdaptiveScale/lxdui">AdaptiveScale/lxdui: LXDUI is a web UI for the native Linux container technology LXD/LXC (github.com)</a></p>
+<ul>
+<li>仓库提供了 Dockerfile，但是 readme 中没有说</li>
+<li>目前安装有库依赖的问题，需要 patch 一个 pull request<ul>
+<li>将 pull request 地址添加一个.patch 后缀，便可以下载一个 patch 文件</li>
+<li>git am pathfiel</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>默认用户名密码：admin, admin</li>
+</ul>
+<h3 id="其它">其它<a class="headerlink" href="#其它" title="Permanent link">&para;</a></h3>
+<h4 id="中文输入法">中文输入法<a class="headerlink" href="#中文输入法" title="Permanent link">&para;</a></h4>
+<p>使用了默认 ibus 的中文输入法，ctrl-空格切换延迟有 500ms 有点大。</p>
+<h4 id="barrier">barrier<a class="headerlink" href="#barrier" title="Permanent link">&para;</a></h4>
+<ol>
+<li>
+<p>问题 1</p>
+<p>直接安装 barrier 后，连接时日志显示没有 SSL 相关的.pem 文件</p>
+<p>需要手动生成</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>aaa
+</span></code></pre></div>
+</li>
+<li>
+<p>问题 2</p>
+<p>barrier 目前只支持 xorg，因此需要关闭 ubuntu22.04 wayland</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>sudo vim /etc/gdm3/custom.conf
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>
+</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>#设置
+</span><span id="__span-17-4"><a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a>WaylandEnable=true --&gt; false
+</span><span id="__span-17-5"><a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a>
+</span><span id="__span-17-6"><a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a>sudo systemctl restart gdm3
+</span></code></pre></div>
+</li>
+</ol>
+<h4 id="aria2-下载服务器">aria2 下载服务器<a class="headerlink" href="#aria2-下载服务器" title="Permanent link">&para;</a></h4>
+<ul>
+<li>
+<p>下载 aria2：<a href="https://github.com/aria2/aria2">aria2/aria2(github.com)</a></p>
+<p>windows 官方 github 有编译版，linux 没有，可以从<a href="https://github.com/q3aql/aria2-static-builds">q3aql/aria2-static-builds: aria2 static builds for GNU/Linux &amp; Windows (with OpenSSL). (github.com)</a>下载</p>
+</li>
+</ul>
+<ul>
+<li>
+<p>service</p>
+<p><a href="https://gist.github.com/h0tw1r3/ccf7668552fae5d14148">Aria2c systemd service (github.com)</a></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>[Unit]
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>Description=Aria2c download manager
+</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>After=network.target
+</span><span id="__span-18-4"><a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a>
+</span><span id="__span-18-5"><a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a>[Service]
+</span><span id="__span-18-6"><a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a>Type=simple
+</span><span id="__span-18-7"><a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a>User=www-data
+</span><span id="__span-18-8"><a id="__codelineno-18-8" name="__codelineno-18-8" href="#__codelineno-18-8"></a>ExecStart=/usr/bin/aria2c --console-log-level=warn --enable-rpc --rpc-listen-all --conf-path=/etc/aria2.daemon
+</span><span id="__span-18-9"><a id="__codelineno-18-9" name="__codelineno-18-9" href="#__codelineno-18-9"></a>
+</span><span id="__span-18-10"><a id="__codelineno-18-10" name="__codelineno-18-10" href="#__codelineno-18-10"></a>[Install]
+</span><span id="__span-18-11"><a id="__codelineno-18-11" name="__codelineno-18-11" href="#__codelineno-18-11"></a>WantedBy=multi-user.target
+</span></code></pre></div>
+</li>
+</ul>
+<ul>
+<li>
+<p>web</p>
+<ul>
+<li>
+<p>AriaNg</p>
+<ul>
+<li>只有一个 html<a href="https://github.com/mayswind/AriaNg/releases">Releases · mayswind/AriaNg (github.com)</a></li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>[Unit]
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>Description=Aria2 webUI
+</span><span id="__span-19-3"><a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>After=syslog.target network.target
+</span><span id="__span-19-4"><a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a>
+</span><span id="__span-19-5"><a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a>[Service]
+</span><span id="__span-19-6"><a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a>Type=simple
+</span><span id="__span-19-7"><a id="__codelineno-19-7" name="__codelineno-19-7" href="#__codelineno-19-7"></a>WorkingDirectory=/home/yfy/app/aria2-1.36.0/AriaNg
+</span><span id="__span-19-8"><a id="__codelineno-19-8" name="__codelineno-19-8" href="#__codelineno-19-8"></a>
+</span><span id="__span-19-9"><a id="__codelineno-19-9" name="__codelineno-19-9" href="#__codelineno-19-9"></a>ExecStart=/usr/bin/python3 -m http.server 6801
+</span><span id="__span-19-10"><a id="__codelineno-19-10" name="__codelineno-19-10" href="#__codelineno-19-10"></a>
+</span><span id="__span-19-11"><a id="__codelineno-19-11" name="__codelineno-19-11" href="#__codelineno-19-11"></a>[Install]
+</span><span id="__span-19-12"><a id="__codelineno-19-12" name="__codelineno-19-12" href="#__codelineno-19-12"></a>WantedBy=multi-user.target
+</span></code></pre></div>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="gui">GUI<a class="headerlink" href="#gui" title="Permanent link">&para;</a></h4>
+<p>install alternative Desktop Environments: <a href="https://www.howtogeek.com/193129/how-to-install-and-use-another-desktop-environment-on-linux/">How to Install and Use Another Desktop Environment on Linux (howtogeek.com)</a></p>
+<p>关键词：</p>
+<ul>
+<li>X windows sytem</li>
+</ul>
+<ul>
+<li>
+<p>Desktop environments</p>
+<ul>
+<li>
+<p>window manager</p>
+<blockquote>
+<p>system software that controls the placement and appearance of windows within a windowing system in a graphical user interface (GUI). It can be part of a <a href="https://wiki.archlinux.org/title/Desktop_environment">desktop environment</a> (DE) or be used standalone.</p>
+<p>Window managers are <strong>X clients</strong> that control the appearance and behaviour of the frames ("windows") where the various graphical applications are drawn. They determine the border, title bar, size, and ability to resize windows</p>
+</blockquote>
+<ul>
+<li>Stacking</li>
+<li>Tiling<ul>
+<li>i3</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>applications</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>
+<p>Display manager(login manager)</p>
+<blockquote>
+<p>is typically a graphical user interface that is displayed at the end of the boot process in place of the default shell.</p>
+</blockquote>
+<ul>
+<li><strong><a href="https://wiki.archlinux.org/title/GDM">GDM</a></strong> — <a href="https://wiki.archlinux.org/title/GNOME">GNOME</a> display manager.</li>
+</ul>
+<ul>
+<li><strong><a href="https://wiki.archlinux.org/title/LightDM">LightDM</a></strong> — Cross-desktop display manager, can use various front-ends written in any toolkit.</li>
+</ul>
+<ul>
+<li>**[LXD — <a href="https://wiki.archlinux.org/title/LXDE">LXDE</a> display manager. Can be used independent of the LXDE desktop environment.</li>
+</ul>
+<ul>
+<li><strong><a href="https://wiki.archlinux.org/title/SDDM">SDDM</a></strong> — QML-based display manager and successor to KDM; recommended for <a href="https://wiki.archlinux.org/title/Plasma">Plasma</a> and <a href="https://wiki.archlinux.org/title/LXQt">LXQt</a>.</li>
+</ul>
+<blockquote>
+<p>The X server is usually started from the X Display Manager program xdm(1) or a  similar  display  manager        program.   This  utility  is run from the system boot files and takes care of keeping the server running,        prompting for usernames and passwords, and starting up the user sessions.</p>
+</blockquote>
+</li>
+</ul>
+<blockquote>
+<p>Desktop environments include basically everything you see after you log into your user account on your <a href="https://www.howtogeek.com/177213/linux-isnt-just-linux-8-pieces-of-software-that-make-up-linux-systems/">Linux</a> distribution’s sign-in screen. The desktop itself, desktop background, panels, menus, file manager, settings windows, and many other applications and utilities all come from a desktop environment. Even each window’s titlebar is provided by an application known as a window manager that comes with the desktop environment.</p>
+</blockquote>
+<h5 id="x-windows-system">X Windows System<a class="headerlink" href="#x-windows-system" title="Permanent link">&para;</a></h5>
+<p>man X(7)</p>
+<p>X server 有两种启动方式</p>
+<ul>
+<li>login manager</li>
+<li>Xinit：不是给用户使用的，而是用于启动 X server 的工具</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a> %  xrdb $HOME/.Xresources
+</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a> %  xmodmap -e &quot;keysym BackSpace = Delete&quot;
+</span><span id="__span-20-3"><a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a> %  mkfontdir /usr/local/lib/X11/otherfonts
+</span><span id="__span-20-4"><a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a> %  xset fp+ /usr/local/lib/X11/otherfonts
+</span><span id="__span-20-5"><a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a> %  xmodmap $HOME/.keymap.km
+</span><span id="__span-20-6"><a id="__codelineno-20-6" name="__codelineno-20-6" href="#__codelineno-20-6"></a> %  xsetroot -solid &#39;rgbi:.8/.8/.8&#39;
+</span><span id="__span-20-7"><a id="__codelineno-20-7" name="__codelineno-20-7" href="#__codelineno-20-7"></a> %  xset b 100 400 c 50 s 1800 r on
+</span><span id="__span-20-8"><a id="__codelineno-20-8" name="__codelineno-20-8" href="#__codelineno-20-8"></a> %  xset q
+</span><span id="__span-20-9"><a id="__codelineno-20-9" name="__codelineno-20-9" href="#__codelineno-20-9"></a> %  twm
+</span><span id="__span-20-10"><a id="__codelineno-20-10" name="__codelineno-20-10" href="#__codelineno-20-10"></a> %  xmag
+</span><span id="__span-20-11"><a id="__codelineno-20-11" name="__codelineno-20-11" href="#__codelineno-20-11"></a> %  xclock -geometry 48x48-0+0 -bg blue -fg white
+</span><span id="__span-20-12"><a id="__codelineno-20-12" name="__codelineno-20-12" href="#__codelineno-20-12"></a> %  xeyes -geometry 48x48-48+0
+</span><span id="__span-20-13"><a id="__codelineno-20-13" name="__codelineno-20-13" href="#__codelineno-20-13"></a> %  xbiff -update 20
+</span><span id="__span-20-14"><a id="__codelineno-20-14" name="__codelineno-20-14" href="#__codelineno-20-14"></a> %  xlsfonts &#39;*helvetica*&#39;
+</span><span id="__span-20-15"><a id="__codelineno-20-15" name="__codelineno-20-15" href="#__codelineno-20-15"></a> %  xwininfo -root
+</span><span id="__span-20-16"><a id="__codelineno-20-16" name="__codelineno-20-16" href="#__codelineno-20-16"></a> %  xdpyinfo -display joesworkstation:0
+</span><span id="__span-20-17"><a id="__codelineno-20-17" name="__codelineno-20-17" href="#__codelineno-20-17"></a> %  xhost -joesworkstation
+</span><span id="__span-20-18"><a id="__codelineno-20-18" name="__codelineno-20-18" href="#__codelineno-20-18"></a> %  xrefresh
+</span><span id="__span-20-19"><a id="__codelineno-20-19" name="__codelineno-20-19" href="#__codelineno-20-19"></a> %  xwd | xwud
+</span><span id="__span-20-20"><a id="__codelineno-20-20" name="__codelineno-20-20" href="#__codelineno-20-20"></a> %  bitmap companylogo.bm 32x32
+</span><span id="__span-20-21"><a id="__codelineno-20-21" name="__codelineno-20-21" href="#__codelineno-20-21"></a> %  xcalc -bg blue -fg magenta
+</span><span id="__span-20-22"><a id="__codelineno-20-22" name="__codelineno-20-22" href="#__codelineno-20-22"></a> %  xterm -geometry 80x66-0-0 -name myxterm $*
+</span></code></pre></div>
+<p>man Xserver(1)</p>
+<blockquote>
+<p>The X server is usually started from the X Display Manager program xdm(1) or a  similar  display  manager        program.   This  utility  is run from the system boot files and takes care of keeping the server running,        prompting for usernames and passwords, and starting up the user sessions.</p>
+<p>Installations that run more than one window system may need to use the xinit(1) utility instead of a dis‐        play manager.  However, xinit is to be considered a tool for building startup scripts and is not intended        for use by end users.  Site administrators are strongly urged to use a display manager,  or  build  other        interfaces for novice users.</p>
+</blockquote>
+<h5 id="切换桌面环境">切换桌面环境<a class="headerlink" href="#切换桌面环境" title="Permanent link">&para;</a></h5>
+<ul>
+<li><strong>xfce</strong>: [xfce:getting-started <a href="https://docs.xfce.org/xfce/getting-started">Xfce Docs]</a></li>
+<li><a href="https://www.howtogeek.com/193129/how-to-install-and-use-another-desktop-environment-on-linux/">How to Install and Use Another Desktop Environment on Linux (howtogeek.com)</a></li>
+</ul>
+<h5 id="vnc">VNC<a class="headerlink" href="#vnc" title="Permanent link">&para;</a></h5>
+<p>使用 VNC 并不需要使用到 login manager</p>
+<blockquote>
+<p>During installation, you may be prompted to choose a default display manager for Xfce. A display manager is a program that allows you to select and log in to a desktop environment through a graphical interface. You’ll only be using Xfce when you connect with a VNC client, and in these Xfce sessions you’ll already be logged in as your non-root Ubuntu user. So for the purposes of this tutorial, your choice of display manager isn’t pertinent. Select either one and press <code>ENTER</code>.</p>
+</blockquote>
+<h3 id="docker-nodehexo">Docker node/hexo<a class="headerlink" href="#docker-nodehexo" title="Permanent link">&para;</a></h3>
+<h4 id="直接安装">直接安装<a class="headerlink" href="#直接安装" title="Permanent link">&para;</a></h4>
+<p>教程：<a href="https://hexo.io/zh-cn/docs/index.html">https://hexo.io/zh-cn/docs/index.html</a></p>
+<p>首先需要安装 node.js 和 git，然后安装 hexo</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>npm install -g hexo-cli
+</span></code></pre></div>
+<p>常用 hexo 命令</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>hexo init
+</span><span id="__span-22-2"><a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>hexo new &quot;aaa&quot;
+</span><span id="__span-22-3"><a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a>
+</span><span id="__span-22-4"><a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a>hexo clean #删除public目录(html)
+</span><span id="__span-22-5"><a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a>hexo g  #生成html
+</span><span id="__span-22-6"><a id="__codelineno-22-6" name="__codelineno-22-6" href="#__codelineno-22-6"></a>hexo s -p PORT #本地server
+</span><span id="__span-22-7"><a id="__codelineno-22-7" name="__codelineno-22-7" href="#__codelineno-22-7"></a>hexo d  #部署
+</span></code></pre></div>
+<h4 id="docker-安装">docker 安装<a class="headerlink" href="#docker-安装" title="Permanent link">&para;</a></h4>
+<ol>
+<li>基于 node 基本镜像，创建一个包含 hexo 环境的 docker 镜像，入口点为 bash</li>
+<li>运行该镜像，将 blog 目录映射到 docker 容器中，然后进行 hexo 操作</li>
+<li>[可选]部署时为了避免输入 github 密码，可以将.ssh 和.gitconfig 映射到容器中</li>
+</ol>
+<h5 id="dockerfile">dockerfile<a class="headerlink" href="#dockerfile" title="Permanent link">&para;</a></h5>
+<p>参考</p>
+<ul>
+<li>别人的 dockerfile：<a href="https://wanf3ng.github.io/2021/01/29/使用docker搭建Hexo/">使用 docker 搭建 Hexo - wanf3ng's blog</a></li>
+</ul>
+<ul>
+<li>设置用户：<a href="https://blog.plusku.net/2020/08/08/docker-hexo/">在 docker 中執行 hexo | Plusku@blog</a></li>
+</ul>
+<p>说明：</p>
+<ul>
+<li>默认了用户 uid=1000。因此可以直接指定 User node 来避免容器内生成的文件为 root 所有问题。</li>
+<li>使用 node12.0，否则 hexo 运行会失败</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>FROM node:12.6.0-alpine
+</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>
+</span><span id="__span-23-3"><a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a># 切换中科大源
+</span><span id="__span-23-4"><a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a>RUN sed -i &#39;s/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g&#39; /etc/apk/repositories
+</span><span id="__span-23-5"><a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a># 安装bash git openssh
+</span><span id="__span-23-6"><a id="__codelineno-23-6" name="__codelineno-23-6" href="#__codelineno-23-6"></a>RUN apk add bash git openssh
+</span><span id="__span-23-7"><a id="__codelineno-23-7" name="__codelineno-23-7" href="#__codelineno-23-7"></a>
+</span><span id="__span-23-8"><a id="__codelineno-23-8" name="__codelineno-23-8" href="#__codelineno-23-8"></a># 设置容器时区为上海，不然发布文章的时间是国际时间，也就是比我们晚8个小时
+</span><span id="__span-23-9"><a id="__codelineno-23-9" name="__codelineno-23-9" href="#__codelineno-23-9"></a>RUN apk add tzdata &amp;&amp; cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
+</span><span id="__span-23-10"><a id="__codelineno-23-10" name="__codelineno-23-10" href="#__codelineno-23-10"></a>&amp;&amp; echo &quot;Asia/Shanghai&quot; &gt; /etc/timezone \
+</span><span id="__span-23-11"><a id="__codelineno-23-11" name="__codelineno-23-11" href="#__codelineno-23-11"></a>&amp;&amp; apk del tzdata
+</span><span id="__span-23-12"><a id="__codelineno-23-12" name="__codelineno-23-12" href="#__codelineno-23-12"></a>
+</span><span id="__span-23-13"><a id="__codelineno-23-13" name="__codelineno-23-13" href="#__codelineno-23-13"></a># 安装hexo
+</span><span id="__span-23-14"><a id="__codelineno-23-14" name="__codelineno-23-14" href="#__codelineno-23-14"></a>RUN \ 
+</span><span id="__span-23-15"><a id="__codelineno-23-15" name="__codelineno-23-15" href="#__codelineno-23-15"></a>npm config set registry https://registry.npm.taobao.org \
+</span><span id="__span-23-16"><a id="__codelineno-23-16" name="__codelineno-23-16" href="#__codelineno-23-16"></a>&amp;&amp;npm install \
+</span><span id="__span-23-17"><a id="__codelineno-23-17" name="__codelineno-23-17" href="#__codelineno-23-17"></a>&amp;&amp;npm install hexo-cli -g \
+</span><span id="__span-23-18"><a id="__codelineno-23-18" name="__codelineno-23-18" href="#__codelineno-23-18"></a>&amp;&amp; npm install hexo-server --save \
+</span><span id="__span-23-19"><a id="__codelineno-23-19" name="__codelineno-23-19" href="#__codelineno-23-19"></a>&amp;&amp; npm install hexo-asset-image --save \
+</span><span id="__span-23-20"><a id="__codelineno-23-20" name="__codelineno-23-20" href="#__codelineno-23-20"></a>&amp;&amp; npm install hexo-wordcount --save \
+</span><span id="__span-23-21"><a id="__codelineno-23-21" name="__codelineno-23-21" href="#__codelineno-23-21"></a>&amp;&amp; npm install hexo-generator-sitemap --save \
+</span><span id="__span-23-22"><a id="__codelineno-23-22" name="__codelineno-23-22" href="#__codelineno-23-22"></a>&amp;&amp; npm install hexo-generator-baidu-sitemap --save \
+</span><span id="__span-23-23"><a id="__codelineno-23-23" name="__codelineno-23-23" href="#__codelineno-23-23"></a>&amp;&amp; npm install hexo-deployer-git --save
+</span><span id="__span-23-24"><a id="__codelineno-23-24" name="__codelineno-23-24" href="#__codelineno-23-24"></a>
+</span><span id="__span-23-25"><a id="__codelineno-23-25" name="__codelineno-23-25" href="#__codelineno-23-25"></a>ARG GIT_NAME
+</span><span id="__span-23-26"><a id="__codelineno-23-26" name="__codelineno-23-26" href="#__codelineno-23-26"></a>ARG GIT_EMAIL
+</span><span id="__span-23-27"><a id="__codelineno-23-27" name="__codelineno-23-27" href="#__codelineno-23-27"></a>
+</span><span id="__span-23-28"><a id="__codelineno-23-28" name="__codelineno-23-28" href="#__codelineno-23-28"></a>User node
+</span><span id="__span-23-29"><a id="__codelineno-23-29" name="__codelineno-23-29" href="#__codelineno-23-29"></a>
+</span><span id="__span-23-30"><a id="__codelineno-23-30" name="__codelineno-23-30" href="#__codelineno-23-30"></a># 设置git push时的用户名和邮箱
+</span><span id="__span-23-31"><a id="__codelineno-23-31" name="__codelineno-23-31" href="#__codelineno-23-31"></a>RUN \
+</span><span id="__span-23-32"><a id="__codelineno-23-32" name="__codelineno-23-32" href="#__codelineno-23-32"></a> git config --global user.email &quot;$GIT_EMAIL&quot; \
+</span><span id="__span-23-33"><a id="__codelineno-23-33" name="__codelineno-23-33" href="#__codelineno-23-33"></a> &amp;&amp; git config --global user.name &quot;$GIT_NAME&quot;
+</span><span id="__span-23-34"><a id="__codelineno-23-34" name="__codelineno-23-34" href="#__codelineno-23-34"></a>
+</span><span id="__span-23-35"><a id="__codelineno-23-35" name="__codelineno-23-35" href="#__codelineno-23-35"></a>WORKDIR /home/node/blog
+</span><span id="__span-23-36"><a id="__codelineno-23-36" name="__codelineno-23-36" href="#__codelineno-23-36"></a>
+</span><span id="__span-23-37"><a id="__codelineno-23-37" name="__codelineno-23-37" href="#__codelineno-23-37"></a>EXPOSE 4000
+</span><span id="__span-23-38"><a id="__codelineno-23-38" name="__codelineno-23-38" href="#__codelineno-23-38"></a>
+</span><span id="__span-23-39"><a id="__codelineno-23-39" name="__codelineno-23-39" href="#__codelineno-23-39"></a>ENTRYPOINT [&quot;/bin/bash&quot;]
+</span></code></pre></div>
+<h5 id="build-镜像">build 镜像<a class="headerlink" href="#build-镜像" title="Permanent link">&para;</a></h5>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>docker build -t yfy/hexo-blog\
+</span><span id="__span-24-2"><a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a> --build-arg GIT_NAME=&quot;Fuyan Yuan&quot;\
+</span><span id="__span-24-3"><a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a> --build-arg GIT_EMAIL=&quot;33221728+TheRainstorm@users.noreply.github.com&quot;\
+</span><span id="__span-24-4"><a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a> .
+</span></code></pre></div>
+<h5 id="运行">运行<a class="headerlink" href="#运行" title="Permanent link">&para;</a></h5>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>docker run -it --name hexo-blog\
+</span><span id="__span-25-2"><a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a> -p 4000:4000 \
+</span><span id="__span-25-3"><a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a> -v /home/yfy/Documents/hexo-blog:/home/node/blog/ \
+</span><span id="__span-25-4"><a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a> -v /home/yfy/.ssh:/home/node/.ssh\
+</span><span id="__span-25-5"><a id="__codelineno-25-5" name="__codelineno-25-5" href="#__codelineno-25-5"></a> yfy/hexo-blog
+</span></code></pre></div>
+<p>如果 blog 下没有 node_modules，则需要</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>npm install
+</span></code></pre></div>
+<p>之后正常使用 hexo 即可</p>
+<blockquote>
+<p>docker 技巧：连接到已有容器。</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>docker attach CONTAINER
+</span><span id="__span-27-2"><a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a>docker exec -it CONTAINER CMD
+</span></code></pre></div>
+<p><code>attach</code>命令将终端的标准输入，标准输出，标准错误连接到正在运行的容器。如果容器正在运行的命令是 bash，则 exit 后，容器退出</p>
+<p><code>exec</code>命令在容器内启动新的进程。常见如 bash</p>
+</blockquote>
+<h3 id="docker">Docker<a class="headerlink" href="#docker" title="Permanent link">&para;</a></h3>
+<h4 id="network">network<a class="headerlink" href="#network" title="Permanent link">&para;</a></h4>
+<p><a href="https://docs.docker.com/network/">https://docs.docker.com/network/</a></p>
+<h5 id="host">host<a class="headerlink" href="#host" title="Permanent link">&para;</a></h5>
+<ul>
+<li>容器不会获得自己的 ip</li>
+<li>如果容器绑定在 80 端口，则访问主机 ip 的 80 端口即可</li>
+<li>有利于优化性能</li>
+<li>只在 linux 上支持</li>
+</ul>
+<p>设置方法</p>
+<ul>
+<li>
+<p>docker run</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>--network host
+</span></code></pre></div>
+</li>
+</ul>
+<ul>
+<li>
+<p>compose</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>network_mode: &quot;host&quot;
+</span></code></pre></div>
+</li>
+</ul>
+<h5 id="bridge">bridge<a class="headerlink" href="#bridge" title="Permanent link">&para;</a></h5>
+<ul>
+<li>
+<p>默认 bridge 缺点</p>
+<blockquote>
+<p>If you do not specify a network using the <code>--network</code> flag, and you do specify a network driver, your container is connected to the default <code>bridge</code> network by default. Containers connected to the default <code>bridge</code> network can communicate, but only by IP address, unless they are linked using the <a href="https://docs.docker.com/network/links/">legacy <code>--link</code> flag</a>.</p>
+</blockquote>
+</li>
+</ul>
+<ul>
+<li>
+<p>自己创建 network</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>docker network create my-net
+</span><span id="__span-30-2"><a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a>docker network rm my-net
+</span><span id="__span-30-3"><a id="__codelineno-30-3" name="__codelineno-30-3" href="#__codelineno-30-3"></a>
+</span><span id="__span-30-4"><a id="__codelineno-30-4" name="__codelineno-30-4" href="#__codelineno-30-4"></a>#创建容器时指定网络
+</span><span id="__span-30-5"><a id="__codelineno-30-5" name="__codelineno-30-5" href="#__codelineno-30-5"></a>docker create --network
+</span><span id="__span-30-6"><a id="__codelineno-30-6" name="__codelineno-30-6" href="#__codelineno-30-6"></a>
+</span><span id="__span-30-7"><a id="__codelineno-30-7" name="__codelineno-30-7" href="#__codelineno-30-7"></a>#连接已有容器
+</span><span id="__span-30-8"><a id="__codelineno-30-8" name="__codelineno-30-8" href="#__codelineno-30-8"></a>docker network connect my-net my-nginx
+</span><span id="__span-30-9"><a id="__codelineno-30-9" name="__codelineno-30-9" href="#__codelineno-30-9"></a>docker network disconnect my-net my-nginx
+</span></code></pre></div>
+</li>
+</ul>
+<ul>
+<li>
+<p>设置默认 bridge</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>#daemon.json
+</span><span id="__span-31-2"><a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a>{
+</span><span id="__span-31-3"><a id="__codelineno-31-3" name="__codelineno-31-3" href="#__codelineno-31-3"></a>  &quot;bip&quot;: &quot;192.168.1.1/24&quot;,
+</span><span id="__span-31-4"><a id="__codelineno-31-4" name="__codelineno-31-4" href="#__codelineno-31-4"></a>  &quot;fixed-cidr&quot;: &quot;192.168.1.0/25&quot;,
+</span><span id="__span-31-5"><a id="__codelineno-31-5" name="__codelineno-31-5" href="#__codelineno-31-5"></a>  &quot;fixed-cidr-v6&quot;: &quot;2001:db8::/64&quot;,
+</span><span id="__span-31-6"><a id="__codelineno-31-6" name="__codelineno-31-6" href="#__codelineno-31-6"></a>  &quot;mtu&quot;: 1500,
+</span><span id="__span-31-7"><a id="__codelineno-31-7" name="__codelineno-31-7" href="#__codelineno-31-7"></a>  &quot;default-gateway&quot;: &quot;192.168.1.254&quot;,
+</span><span id="__span-31-8"><a id="__codelineno-31-8" name="__codelineno-31-8" href="#__codelineno-31-8"></a>  &quot;default-gateway-v6&quot;: &quot;2001:db8:abcd::89&quot;,
+</span><span id="__span-31-9"><a id="__codelineno-31-9" name="__codelineno-31-9" href="#__codelineno-31-9"></a>  &quot;dns&quot;: [&quot;10.20.1.2&quot;,&quot;10.20.1.3&quot;]
+</span><span id="__span-31-10"><a id="__codelineno-31-10" name="__codelineno-31-10" href="#__codelineno-31-10"></a>}
+</span></code></pre></div>
+</li>
+</ul>
+<h4 id="自启动">自启动<a class="headerlink" href="#自启动" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a>docker update --restart=always
+</span></code></pre></div>
+<h4 id="ipv6">ipv6<a class="headerlink" href="#ipv6" title="Permanent link">&para;</a></h4>
+<p>参考：<a href="https://www.linode.com/community/questions/20842/how-do-i-enable-ipv6-support-for-docker-containers">How Do I Enable IPv6 Support for Docker Containers? | Linode Questions</a></p>
+<p>If you need IPv6 support for Docker containers, you need to <a href="https://docs.docker.com/config/daemon/ipv6/">enable the option</a> on the Docker daemon and reload its configuration, before creating any IPv6 networks or assigning containers IPv6 addresses.</p>
+<p>When you create your network, you can specify the <code>--ipv6</code> flag to enable IPv6. You can’t selectively disable IPv6 support on the default <code>bridge</code> network.</p>
+<p>开启 ipv6 后，默认 brdige 自动配置了 ipv6，无法关闭（自己创建的 bridge network 才可以不启用 ipv6）</p>
+<blockquote>
+<p>If you configure Docker for IPv6 support (see <a href="https://docs.docker.com/network/bridge/#use-ipv6">Use IPv6</a>), the default bridge network is also configured for IPv6 automatically. Unlike user-defined bridges, you can’t selectively disable IPv6 on the default bridge.</p>
+</blockquote>
+<p>我的路由器得到的 ipv6 是<code>2001:da8:d800:336:8e53:c3ff:fe86:123d/64</code>，应该是有一个 block 的。但是当我设置了 daemon.json 内<code>fixed-cidr-v6</code>为<code>2001:da8:d800:336::/64</code>后。默认的 bridge docker0 显示 ip 是<code>2001:da8:d800:336::1/64</code>。容器内确实获得了 ipv6 地址，但是无法 ping 通 host 物理网卡上的 ipv6 地址。也无法 ping 通路由器。</p>
+<ul>
+<li>所以感觉路由器得到的/64 的块并不属于我，没办法这样配置。</li>
+<li>可能还是得配置 nat。但是使用 ipv6 的还是少数（PT 下载需要），因此还是使用 host 网络类型吧。</li>
+</ul>
+<h3 id="docker-应用">Docker 应用<a class="headerlink" href="#docker-应用" title="Permanent link">&para;</a></h3>
+<h4 id="transmission-pt-下载">transmission PT 下载<a class="headerlink" href="#transmission-pt-下载" title="Permanent link">&para;</a></h4>
+<p>说明：transmission 是 linux 下的 BT 下载软件，可以通过网页控制，有 docker 版本。</p>
+<p>挑战：由于 PT 一般是只能 ipv6 访问的，因此要求 docker 容器能够 ipv6 访问。发现最简单的方式就是网络类型选择 host。</p>
+<p>以下 docker compose 是 transmission 官方提供的，主要修改了其中 network_mode。</p>
+<ul>
+<li>其中 TRANSMISSION_WEB_HOME 指定网页皮肤，使用<a href="https://github.com/ronggang/transmission-web-control">ronggang/transmission-web-control: 一个 Transmission 浏览器管理界面。Transmission Web Control is a custom web UI. (github.com)</a></li>
+<li>使用它的脚本安装有点问题，主要是网络下载不下来。<ul>
+<li>将 git 仓库中的 src 目录覆盖到容器中原本的 web 目录即可</li>
+<li>然后最好修改一下 TRANSMISSION_WEB_HOME 位置</li>
+</ul>
+</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-33-1"><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a>---
+</span><span id="__span-33-2"><a id="__codelineno-33-2" name="__codelineno-33-2" href="#__codelineno-33-2"></a>version: &quot;2.1&quot;
+</span><span id="__span-33-3"><a id="__codelineno-33-3" name="__codelineno-33-3" href="#__codelineno-33-3"></a>services:
+</span><span id="__span-33-4"><a id="__codelineno-33-4" name="__codelineno-33-4" href="#__codelineno-33-4"></a>  transmission:
+</span><span id="__span-33-5"><a id="__codelineno-33-5" name="__codelineno-33-5" href="#__codelineno-33-5"></a>    image: lscr.io/linuxserver/transmission:latest
+</span><span id="__span-33-6"><a id="__codelineno-33-6" name="__codelineno-33-6" href="#__codelineno-33-6"></a>    container_name: transmission
+</span><span id="__span-33-7"><a id="__codelineno-33-7" name="__codelineno-33-7" href="#__codelineno-33-7"></a>    environment:
+</span><span id="__span-33-8"><a id="__codelineno-33-8" name="__codelineno-33-8" href="#__codelineno-33-8"></a>      - PUID=1000
+</span><span id="__span-33-9"><a id="__codelineno-33-9" name="__codelineno-33-9" href="#__codelineno-33-9"></a>      - PGID=1000
+</span><span id="__span-33-10"><a id="__codelineno-33-10" name="__codelineno-33-10" href="#__codelineno-33-10"></a>      - TZ=ASIA/ShangHai
+</span><span id="__span-33-11"><a id="__codelineno-33-11" name="__codelineno-33-11" href="#__codelineno-33-11"></a>      - USER=yfy
+</span><span id="__span-33-12"><a id="__codelineno-33-12" name="__codelineno-33-12" href="#__codelineno-33-12"></a>      - PASS=abcd4567
+</span><span id="__span-33-13"><a id="__codelineno-33-13" name="__codelineno-33-13" href="#__codelineno-33-13"></a>      - PEERPORT=51413
+</span><span id="__span-33-14"><a id="__codelineno-33-14" name="__codelineno-33-14" href="#__codelineno-33-14"></a>      - TRANSMISSION_WEB_HOME=/downloads/transmission/web
+</span><span id="__span-33-15"><a id="__codelineno-33-15" name="__codelineno-33-15" href="#__codelineno-33-15"></a>    volumes:
+</span><span id="__span-33-16"><a id="__codelineno-33-16" name="__codelineno-33-16" href="#__codelineno-33-16"></a>      - /home/yfy/Disk/BT/config:/config
+</span><span id="__span-33-17"><a id="__codelineno-33-17" name="__codelineno-33-17" href="#__codelineno-33-17"></a>      - /home/yfy/Disk/BT/downloads:/downloads
+</span><span id="__span-33-18"><a id="__codelineno-33-18" name="__codelineno-33-18" href="#__codelineno-33-18"></a>      - /home/yfy/Disk/BT/watch:/watch
+</span><span id="__span-33-19"><a id="__codelineno-33-19" name="__codelineno-33-19" href="#__codelineno-33-19"></a>    network_mode: &quot;host&quot;
+</span><span id="__span-33-20"><a id="__codelineno-33-20" name="__codelineno-33-20" href="#__codelineno-33-20"></a>    restart: unless-stopped
+</span></code></pre></div>
+<h4 id="jellyfin">jellyfin<a class="headerlink" href="#jellyfin" title="Permanent link">&para;</a></h4>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+  
+
+
+
+      
+    </article>
+  </div>
+
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+        
+      
+      <nav class="md-footer__inner md-grid" aria-label="页脚" >
+        
+          
+          <a href="../../../../../%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%85%B7/2022/05/29/2022-05-29-ffmpeg/" class="md-footer__link md-footer__link--prev" aria-label="上一页: ffmpeg">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                上一页
+              </span>
+              <div class="md-ellipsis">
+                ffmpeg
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../../16/2022-07-16-Linux%E5%AE%89%E8%A3%85windows%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%B9%B6%E6%98%BE%E5%8D%A1%E7%9B%B4%E9%80%9A/" class="md-footer__link md-footer__link--next" aria-label="下一页: Linux 安装 windows 虚拟机并显卡直通">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                下一页
+              </span>
+              <div class="md-ellipsis">
+                Linux 安装 windows 虚拟机并显卡直通
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/TheRainstorm" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../../..", "features": ["navigation.instant", "navigation.instant.progress", "navigation.tracking", "navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.footer", "content.code.copy", "toc.follow", "toc.integrate"], "search": "../../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../../../../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

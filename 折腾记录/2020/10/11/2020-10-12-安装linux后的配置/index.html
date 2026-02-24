@@ -1,0 +1,3084 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="记录一些关于数学、计算机的知识，以及一些日常。">
+      
+      
+      
+        <link rel="canonical" href="https://yfy.cqu.ai/%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/2020/10/11/2020-10-12-%E5%AE%89%E8%A3%85linux%E5%90%8E%E7%9A%84%E9%85%8D%E7%BD%AE/">
+      
+      
+        <link rel="prev" href="../../../../../%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/2020/10/11/2020-10-11-WSL%E8%AE%B0%E5%BD%95/">
+      
+      
+        <link rel="next" href="../../../../../%E9%98%85%E8%AF%BB/2021/01/01/2021-01-01-linux%E5%86%85%E6%A0%B8%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%AE%9E%E7%8E%B0%E9%98%85%E8%AF%BB/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.3">
+    
+    
+      
+        <title>安装 linux 后的配置 - Rain 的随笔</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#概述" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../../../../.." title="Rain 的随笔" class="md-header__button md-logo" aria-label="Rain 的随笔" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Rain 的随笔
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              安装 linux 后的配置
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    
+  
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="../../../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  博客
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../about/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  关于
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../tags/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  标签
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../series/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  系列
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../tools/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  工具
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../archive/2026/" class="md-tabs__link">
+          
+  
+  
+  归档
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../category/%E4%B8%AA%E4%BA%BA/" class="md-tabs__link">
+          
+  
+  
+  分类
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" hidden>
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../../.." title="Rain 的随笔" class="md-nav__button md-logo" aria-label="Rain 的随笔" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Rain 的随笔
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+    
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      <a href="../../../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    博客
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    关于
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../tags/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    标签
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../series/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    系列
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../tools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    工具
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    归档
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    归档
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2026/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2026
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2025/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2025
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2024/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2024
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2023/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2023
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2022/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2022
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2021/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2021
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2020/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2020
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2019/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2019
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    分类
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    分类
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E4%B8%AA%E4%BA%BA/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    个人
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E5%8D%9A%E5%AE%A2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    博客
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E5%8D%9A%E5%AE%A2--%E7%BD%91%E7%BB%9C/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    博客 &amp; 网络
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    学习笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    折腾记录
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    课程笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%85%B7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    软件工具
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E9%98%85%E8%AF%BB/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    阅读
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+  <div class="md-content md-content--post" data-md-component="content">
+    <div class="md-sidebar md-sidebar--post" data-md-component="sidebar" data-md-type="navigation">
+      <div class="md-sidebar__scrollwrap">
+        <div class="md-sidebar__inner md-post">
+          <nav class="md-nav md-nav--primary">
+            <div class="md-post__back">
+              <div class="md-nav__title md-nav__container">
+                <a href="../../../../.." class="md-nav__link">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+                  <span class="md-ellipsis">
+                    回到主页
+                  </span>
+                </a>
+              </div>
+            </div>
+            
+            <ul class="md-post__meta md-nav__list">
+              <li class="md-nav__item md-nav__item--section">
+                <div class="md-post__title">
+                  <span class="md-ellipsis">
+                    元数据
+                  </span>
+                </div>
+                <nav class="md-nav">
+                  <ul class="md-nav__list">
+                    <li class="md-nav__item">
+                      <div class="md-nav__link">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 19H5V8h14m-3-7v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1V1m-1 11h-5v5h5z"/></svg>
+                        <time datetime="2020-10-11 23:05:13+00:00" class="md-ellipsis">2020年10月11日</time>
+                      </div>
+                    </li>
+                    
+                    
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 3v15h3V3zm3 2 4 13 3-1-4-13zM5 5v13h3V5zM3 19v2h18v-2z"/></svg>
+                          <span class="md-ellipsis">
+                            分类于
+                            
+                              <a href="../../../../../category/%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/">折腾记录</a></span>
+                        </div>
+                      </li>
+                    
+                    
+                      
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20a8 8 0 0 0 8-8 8 8 0 0 0-8-8 8 8 0 0 0-8 8 8 8 0 0 0 8 8m0-18a10 10 0 0 1 10 10 10 10 0 0 1-10 10C6.47 22 2 17.5 2 12A10 10 0 0 1 12 2m.5 5v5.25l4.5 2.67-.75 1.23L11 13V7z"/></svg>
+                          <span class="md-ellipsis">
+                            
+                              需要 13 分钟阅读时间
+                            
+                          </span>
+                        </div>
+                      </li>
+                    
+                  </ul>
+                </nav>
+              </li>
+            </ul>
+            
+          </nav>
+          
+            
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#概述" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        概述
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#系统配置" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        系统配置
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="系统配置">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#美化" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        美化
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="美化">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ubuntu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ubuntu
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shell-显示中文" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        shell 显示中文
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#常用软件" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        常用软件
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="常用软件">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#中文输入法" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        中文输入法
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="中文输入法">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#桌面改为desktop" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        "桌面"改为"Desktop"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#更改-xdg-user-dirs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        更改 xdg-user-dirs
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#代理" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        代理
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="代理">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#使用-qv2ray" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        使用 qv2ray
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#使用-clash-for-windows" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        使用 clash for windows
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#谷歌浏览器" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        谷歌浏览器
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="谷歌浏览器">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#chromium" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        chromium
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#chrome" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        chrome
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#wine" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        wine
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="wine">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#qq" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        qq
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vs-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        VS Code
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#其它工具" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        其它工具
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="其它工具">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#gparted" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        gparted
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#zerotier" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        zerotier
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#命令行" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        命令行
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="命令行">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#软件" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        软件
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#自动配置" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        自动配置
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bashrc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .bashrc
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vim" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        vim
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="vim">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#vim-粘贴时关闭自动空格" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        vim 粘贴时关闭自动空格
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#zsh" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        zsh
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="zsh">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#oh-my-zsh-手动安装" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        oh-my-zsh 手动安装
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#安装-oh-my-zsh-并安装插件" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        安装 oh-my-zsh 并安装插件
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="安装 oh-my-zsh 并安装插件">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#zsh-autosuggestions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        zsh-autosuggestions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#zsh-syntax-highlighting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        zsh-syntax-highlighting
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#autojump" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        autojump
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fzf" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        fzf
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="fzf">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#手动配置" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        手动配置
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#问题" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        问题
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#搜索不到时已经输入的命令白费" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        搜索不到时已经输入的命令白费
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tmuxtmuxoh-my-tmux" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tmux(.tmux(oh-my-tmux))
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="tmux(.tmux(oh-my-tmux))">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#修改" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        修改
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#zplug" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        zplug
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="zplug">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#使用" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        使用
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#寻找插件" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        寻找插件
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#自定义-prompt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        自定义 prompt
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="自定义 prompt">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bash" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        bash
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#zsh_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        zsh
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="zsh">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#customized" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Customized
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#locale" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        locale
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#服务" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        服务
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="服务">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sshd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        sshd
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vnc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        vnc
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#常用操作参考" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        常用操作参考
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="常用操作参考">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#apt-相关" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        apt 相关
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="apt 相关">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#apt-换源" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        apt 换源
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#apt-get-临时使用-sock-代理" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        apt-get 临时使用 sock 代理
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bash-设置代理" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        bash 设置代理
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#git-设置代理" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        git 设置代理
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#恢复默认bashrc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        恢复默认.bashrc
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vim-复制粘贴系统剪贴板" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        vim 复制粘贴（系统剪贴板）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="vim 复制粘贴（系统剪贴板）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#解释" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        解释
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vim-redo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        vim redo
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#退出终端后命令不退出" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        退出终端后命令不退出
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ssh-的有用功能" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ssh 的有用功能
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="ssh 的有用功能">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#jump" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        jump
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#正向转发" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        正向转发
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#远程机通过本地机代理上网反向代理" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        远程机通过本地机代理上网（反向代理）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+          
+        </div>
+      </div>
+    </div>
+    <article class="md-content__inner md-typeset">
+      
+        
+  
+
+
+  <nav class="md-tags" >
+    
+      
+      
+      
+      
+        <a href="../../../../../tags/#tag:fzf" class="md-tag">fzf</a>
+      
+    
+      
+      
+      
+      
+        <a href="../../../../../tags/#tag:linux" class="md-tag">linux</a>
+      
+    
+      
+      
+      
+      
+        <a href="../../../../../tags/#tag:tmux" class="md-tag">tmux</a>
+      
+    
+      
+      
+      
+      
+        <a href="../../../../../tags/#tag:vnc" class="md-tag">vnc</a>
+      
+    
+      
+      
+      
+      
+        <a href="../../../../../tags/#tag:zsh" class="md-tag">zsh</a>
+      
+    
+  </nav>
+
+
+
+  <h1>安装 linux 后的配置</h1>
+
+<div class="toc">
+<ul>
+<li><a href="#概述">概述</a></li>
+<li><a href="#系统配置">系统配置</a><ul>
+<li><a href="#美化">美化</a><ul>
+<li><a href="#ubuntu">Ubuntu</a></li>
+</ul>
+</li>
+<li><a href="#shell-显示中文">shell 显示中文</a></li>
+</ul>
+</li>
+<li><a href="#常用软件">常用软件</a><ul>
+<li><a href="#中文输入法">中文输入法</a><ul>
+<li><a href="#桌面改为desktop">"桌面"改为"Desktop"</a></li>
+<li><a href="#更改-xdg-user-dirs">更改 xdg-user-dirs</a></li>
+</ul>
+</li>
+<li><a href="#代理">代理</a><ul>
+<li><a href="#使用-qv2ray">使用 qv2ray</a></li>
+<li><a href="#使用-clash-for-windows">使用 clash for windows</a></li>
+</ul>
+</li>
+<li><a href="#谷歌浏览器">谷歌浏览器</a><ul>
+<li><a href="#chromium">chromium</a></li>
+<li><a href="#chrome">chrome</a></li>
+</ul>
+</li>
+<li><a href="#wine">wine</a><ul>
+<li><a href="#qq">qq</a></li>
+</ul>
+</li>
+<li><a href="#vs-code">VS Code</a></li>
+<li><a href="#其它工具">其它工具</a><ul>
+<li><a href="#gparted">gparted</a></li>
+<li><a href="#zerotier">zerotier</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#命令行">命令行</a><ul>
+<li><a href="#软件">软件</a></li>
+<li><a href="#自动配置">自动配置</a></li>
+<li><a href="#bashrc">.bashrc</a></li>
+<li><a href="#vim">vim</a><ul>
+<li><a href="#vim-粘贴时关闭自动空格">vim 粘贴时关闭自动空格</a></li>
+</ul>
+</li>
+<li><a href="#zsh">zsh</a><ul>
+<li><a href="#oh-my-zsh-手动安装">oh-my-zsh 手动安装</a></li>
+<li><a href="#安装-oh-my-zsh-并安装插件">安装 oh-my-zsh 并安装插件</a><ul>
+<li><a href="#zsh-autosuggestions">zsh-autosuggestions</a></li>
+<li><a href="#zsh-syntax-highlighting">zsh-syntax-highlighting</a></li>
+<li><a href="#autojump">autojump</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#fzf">fzf</a><ul>
+<li><a href="#手动配置">手动配置</a></li>
+<li><a href="#问题">问题</a></li>
+<li><a href="#搜索不到时已经输入的命令白费">搜索不到时已经输入的命令白费</a></li>
+</ul>
+</li>
+<li><a href="#tmuxtmuxoh-my-tmux">tmux(.tmux(oh-my-tmux))</a><ul>
+<li><a href="#修改">修改</a></li>
+</ul>
+</li>
+<li><a href="#zplug">zplug</a><ul>
+<li><a href="#使用">使用</a></li>
+<li><a href="#寻找插件">寻找插件</a></li>
+</ul>
+</li>
+<li><a href="#自定义-prompt">自定义 prompt</a><ul>
+<li><a href="#bash">bash</a></li>
+<li><a href="#zsh_1">zsh</a><ul>
+<li><a href="#customized">Customized</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#locale">locale</a></li>
+</ul>
+</li>
+<li><a href="#服务">服务</a><ul>
+<li><a href="#sshd">sshd</a></li>
+<li><a href="#vnc">vnc</a></li>
+</ul>
+</li>
+<li><a href="#常用操作参考">常用操作参考</a><ul>
+<li><a href="#apt-相关">apt 相关</a><ul>
+<li><a href="#apt-换源">apt 换源</a></li>
+<li><a href="#apt-get-临时使用-sock-代理">apt-get 临时使用 sock 代理</a></li>
+</ul>
+</li>
+<li><a href="#bash-设置代理">bash 设置代理</a></li>
+<li><a href="#git-设置代理">git 设置代理</a></li>
+<li><a href="#恢复默认bashrc">恢复默认.bashrc</a></li>
+<li><a href="#vim-复制粘贴系统剪贴板">vim 复制粘贴（系统剪贴板）</a><ul>
+<li><a href="#解释">解释</a></li>
+</ul>
+</li>
+<li><a href="#vim-redo">vim redo</a></li>
+<li><a href="#退出终端后命令不退出">退出终端后命令不退出</a></li>
+<li><a href="#ssh-的有用功能">ssh 的有用功能</a><ul>
+<li><a href="#jump">jump</a></li>
+<li><a href="#正向转发">正向转发</a></li>
+<li><a href="#远程机通过本地机代理上网反向代理">远程机通过本地机代理上网（反向代理）</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<h2 id="概述">概述<a class="headerlink" href="#概述" title="Permanent link">&para;</a></h2>
+<p>不想每次配置 linux 都需要重新去搜索，因此在自己平时折腾时顺便记录一下（长期更新）</p>
+<!-- more -->
+
+<h2 id="系统配置">系统配置<a class="headerlink" href="#系统配置" title="Permanent link">&para;</a></h2>
+<p>时区</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>timedatectl set-timezone Asia/Shanghai
+</span></code></pre></div>
+<h3 id="美化">美化<a class="headerlink" href="#美化" title="Permanent link">&para;</a></h3>
+<h4 id="ubuntu">Ubuntu<a class="headerlink" href="#ubuntu" title="Permanent link">&para;</a></h4>
+<ul>
+<li>dock 栏
+  在设置-&gt;外观中设置 dock 栏为<strong>底部</strong>、<strong>自动隐藏</strong>，并设置合适的大小。</li>
+<li>背景图
+  暂时还没有找到比较好的轮播图片的方法</li>
+<li>gnome-terminal
+  设置背景颜色和透明度</li>
+</ul>
+<h3 id="shell-显示中文">shell 显示中文<a class="headerlink" href="#shell-显示中文" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>apt install locales
+</span></code></pre></div>
+<p>通过交互式命令选择中文编码，<code>zh_CN.UTF-8 UTF-8</code>，​<strong>​按空格选中</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>dpkg-reconfigure<span class="w"> </span>locales
+</span></code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>/etc/default/locale
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="nv">LANG</span><span class="o">=</span>zh_CN.UTF-8
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="nv">LC_ALL</span><span class="o">=</span>zh_CN.UTF-8
+</span></code></pre></div>
+<p>source /etc/default/locale</p>
+<h2 id="常用软件">常用软件<a class="headerlink" href="#常用软件" title="Permanent link">&para;</a></h2>
+<h3 id="中文输入法">中文输入法<a class="headerlink" href="#中文输入法" title="Permanent link">&para;</a></h3>
+<p>参考：</p>
+<ul>
+<li>ubuntu22.04 <a href="https://muzing.top/posts/3fc249cf/#%E5%89%8D%E8%A8%80">https://muzing.top/posts/3fc249cf/#%E5%89%8D%E8%A8%80</a></li>
+</ul>
+<p>如果安装系统时选择了中文，则自带一个中文输入法。而如果选择了英文，后面想改成中文。可以：</p>
+<ol>
+<li>将设置中的<strong>区域和语言</strong>改为中文。</li>
+<li>打开<strong>language support</strong>，第一次打开会显示语言支持没有完全安装，会安装中文字体等。</li>
+</ol>
+<p>下载谷歌拼音输入法</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>fcitx-googlepinyin
+</span></code></pre></div>
+<p>然后在 language support 中将 Keyboard input method 从默认的 iBus 改成 fcitx，重启电脑。</p>
+<h4 id="桌面改为desktop">"桌面"改为"Desktop"<a class="headerlink" href="#桌面改为desktop" title="Permanent link">&para;</a></h4>
+<p><strong>ubuntu</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">LANG</span><span class="o">=</span>en_US
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>xdg-user-dirs-gtk-update
+</span></code></pre></div>
+<p>选择更新名称</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>export LANG=zh_CN
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>xdg-user-dirs-gtk-update
+</span></code></pre></div>
+<p>选择保留名称，并不再提醒</p>
+<h4 id="更改-xdg-user-dirs">更改 xdg-user-dirs<a class="headerlink" href="#更改-xdg-user-dirs" title="Permanent link">&para;</a></h4>
+<ul>
+<li>xdg 全局配置文件：<code>/etc/xdg/user-dirs.conf</code>和<code>/etc/xdg/user-dirs.defaults</code></li>
+<li>
+<p>修改用户配置文件<code>$HOME/.config/user-dirs.dirs</code></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="nv">XDG_DOWNLOAD_DIR</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/downloads/Downloads&quot;</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="nv">XDG_DESKTOP_DIR</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/downloads/Desktop&quot;</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="nv">XDG_TEMPLATES_DIR</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/downloads/Templates&quot;</span>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="nv">XDG_PUBLICSHARE_DIR</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/downloads/Public&quot;</span>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="nv">XDG_DOCUMENTS_DIR</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/downloads/Documents&quot;</span>
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="nv">XDG_MUSIC_DIR</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/downloads/Music&quot;</span>
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="nv">XDG_PICTURES_DIR</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/downloads/Pictures&quot;</span>
+</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="nv">XDG_VIDEOS_DIR</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/downloads/Videos&quot;</span>
+</span></code></pre></div>
+</li>
+</ul>
+<ul>
+<li>（重要）创建对应目录，否则重启后上述配置会指向<code>$HOME/</code></li>
+</ul>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="ch">#!env bash</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="nv">PREFIX</span><span class="o">=</span><span class="nv">$HOME</span>/downloads
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="nv">DIRs</span><span class="o">=</span><span class="s2">&quot;Downloads Desktop Templates Public Documents Music Pictures Videos&quot;</span>
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="k">for</span><span class="w"> </span>dir<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="nv">$DIRs</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="w">    </span>rm<span class="w"> </span>-d<span class="w"> </span><span class="nv">$HOME</span>/<span class="nv">$dir</span>
+</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="w">    </span>mkdir<span class="w"> </span><span class="nv">$PREFIX</span>/<span class="nv">$dir</span>
+</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="w">    </span>sed<span class="w"> </span>-i<span class="w"> </span><span class="nv">$HOME</span>/.config/user-dirs.dirs<span class="w"> </span><span class="s1">&#39;s/$HOME\/&#39;</span><span class="nv">$dir</span><span class="s1">&#39;/&#39;</span><span class="nv">$PREFIX</span><span class="s1">&#39;\/&#39;</span><span class="nv">$dir</span>
+</span><span id="__span-8-9"><a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="k">done</span>
+</span></code></pre></div>
+<h3 id="代理">代理<a class="headerlink" href="#代理" title="Permanent link">&para;</a></h3>
+<h4 id="使用-qv2ray">使用 qv2ray<a class="headerlink" href="#使用-qv2ray" title="Permanent link">&para;</a></h4>
+<p>1. 在 github 上下载 qv2ray, v2ray
+  2. 配置 qv2ray core
+  3. 导入链接</p>
+<p>具体参考<a href="https://qv2ray.net/getting-started/">https://qv2ray.net/getting-started/</a></p>
+<blockquote>
+<p>注：目前版本 (2.6.3)，在设置开机自启动后，右上角的 qv2ray 图标会消失，导致无法断开连接非常麻烦。解决办法为取消开机自启动并重新安装（数据仍然会保留，故不必担心。卸载后需要重启或注销一下账户，然后才能重装，否则仍然不显示）</p>
+</blockquote>
+<h4 id="使用-clash-for-windows">使用 clash for windows<a class="headerlink" href="#使用-clash-for-windows" title="Permanent link">&para;</a></h4>
+<ul>
+<li>使用 flatpak 安装即可<div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>flatpak<span class="w"> </span>install<span class="w"> </span>io.github.Fndroid.clash_for_windows
+</span></code></pre></div>
+</li>
+</ul>
+<ul>
+<li>
+<p>旧方法</p>
+<ol>
+<li>
+<p>下载<a href="https://github.com/Fndroid/clash_for_windows_pkg/releases">Releases · Fndroid/clash_for_windows_pkg · GitHub</a></p>
+</li>
+<li>
+<p>解压后命令行运行 cfw</p>
+<p>（不知道有什么办法把该程序固定到任务栏）</p>
+</li>
+</ol>
+</li>
+</ul>
+<h3 id="谷歌浏览器">谷歌浏览器<a class="headerlink" href="#谷歌浏览器" title="Permanent link">&para;</a></h3>
+<h4 id="chromium">chromium<a class="headerlink" href="#chromium" title="Permanent link">&para;</a></h4>
+<p>使用 chromium（chromium 也可以使用 google 帐号进行同步）</p>
+<p>这样安装会使用 snap 安装</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>chromium-browser
+</span></code></pre></div>
+<p><a href="https://askubuntu.com/questions/1204571/how-to-install-chromium-without-snap">package management - How to install Chromium without snap? - Ask Ubuntu</a></p>
+<p>几个解决方法</p>
+<ul>
+<li>使用 debian 的源</li>
+<li>使用 chrome 吧，wget 下载 deb 直接安装</li>
+</ul>
+<h4 id="chrome">chrome<a class="headerlink" href="#chrome" title="Permanent link">&para;</a></h4>
+<p>使用 google chrome</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>wget<span class="w"> </span>https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="nb">cd</span><span class="w"> </span>/path
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>./google-chrome-stable_current_amd64.deb
+</span></code></pre></div>
+<p>或者添加软件源安装 <a href="https://askubuntu.com/questions/1461513/help-with-installing-the-chrome-web-browser-22-04-2-lts">tar - Help with installing the Chrome web browser (22.04.2 LTS) - Ask Ubuntu</a></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>apt install -y curl gnupg --no-install-recommends
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>curl -sS -o - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>bash -c &quot;echo &#39;deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main&#39; &gt;&gt; /etc/apt/sources.list.d/google-chrome.list&quot;
+</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>
+</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>apt update
+</span><span id="__span-12-7"><a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a>apt install -y google-chrome-stable --no-install-recommends
+</span></code></pre></div>
+<h3 id="wine">wine<a class="headerlink" href="#wine" title="Permanent link">&para;</a></h3>
+<h4 id="qq">qq<a class="headerlink" href="#qq" title="Permanent link">&para;</a></h4>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>wget<span class="w"> </span>-O-<span class="w"> </span>https://deepin-wine.i-m.dev/setup.sh<span class="w"> </span><span class="p">|</span><span class="w"> </span>sh
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>deepin.com.qq.im
+</span></code></pre></div>
+<h3 id="vs-code">VS Code<a class="headerlink" href="#vs-code" title="Permanent link">&para;</a></h3>
+<p><a href="https://code.visualstudio.com/docs/setup/linux">https://code.visualstudio.com/docs/setup/linux</a></p>
+<ol>
+<li>
+<p>download deb</p>
+<p><a href="https://code.visualstudio.com/Download">Download Visual Studio Code - Mac, Linux, Windows</a></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>./&lt;file&gt;.deb
+</span></code></pre></div>
+</li>
+<li>
+<p>add apt repo</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>software-properties-common<span class="w"> </span>apt-transport-https<span class="w"> </span>wget
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>wget<span class="w"> </span>-q<span class="w"> </span>https://packages.microsoft.com/keys/microsoft.asc<span class="w"> </span>-O-<span class="w"> </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>apt-key<span class="w"> </span>add<span class="w"> </span>-
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>sudo<span class="w"> </span>add-apt-repository<span class="w"> </span><span class="s2">&quot;deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main&quot;</span>
+</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a>
+</span><span id="__span-15-5"><a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a>sudo<span class="w"> </span>apt<span class="w"> </span>update
+</span><span id="__span-15-6"><a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a>sudo<span class="w"> </span>apt-get<span class="w"> </span>-o<span class="w"> </span>Acquire::http::proxy<span class="o">=</span><span class="s2">&quot;socks5h://127.0.0.1:1089/&quot;</span><span class="w"> </span>install<span class="w"> </span>code<span class="w"> </span><span class="c1">#约 70MB</span>
+</span></code></pre></div>
+</li>
+<li>
+<p>snap or Ubuntu software</p>
+<p>软件占用空间更大</p>
+</li>
+</ol>
+<h3 id="其它工具">其它工具<a class="headerlink" href="#其它工具" title="Permanent link">&para;</a></h3>
+<h4 id="gparted">gparted<a class="headerlink" href="#gparted" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>sudo apt install gparted
+</span></code></pre></div>
+<p>使用该软件进行分区</p>
+<h4 id="zerotier">zerotier<a class="headerlink" href="#zerotier" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>curl -s https://install.zerotier.com | sudo bash
+</span></code></pre></div>
+<p>join network</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>% zerotier-cli info
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>200 info 8af72edda7 1.10.2 ONLINE
+</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>
+</span><span id="__span-18-4"><a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a>% zerotier-cli join d5e04297a16fa690
+</span><span id="__span-18-5"><a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a>200 join OK
+</span></code></pre></div>
+<h2 id="命令行">命令行<a class="headerlink" href="#命令行" title="Permanent link">&para;</a></h2>
+<h3 id="软件">软件<a class="headerlink" href="#软件" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>sudo cp /etc/apt/sources.list /etc/apt/sources.list.bak
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>sudo sed -i &#39;s@//.*archive.ubuntu.com@//mirrors.ustc.edu.cn@g&#39; /etc/apt/sources.list
+</span><span id="__span-19-3"><a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>sudo apt update
+</span><span id="__span-19-4"><a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a>
+</span><span id="__span-19-5"><a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a>sudo apt install vim git wget zsh htop net-tools
+</span></code></pre></div>
+<h3 id="自动配置">自动配置<a class="headerlink" href="#自动配置" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>apt install wget curl git zsh tmux mtr htop bind9-dnsutils
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>wget https://github.com/TheRainstorm/my-vim-config/raw/master/setup.sh 
+</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a># 或 https://raw.githubusercontent.com/TheRainstorm/my-vim-config/master/setup.sh
+</span><span id="__span-21-3"><a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>
+</span><span id="__span-21-4"><a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a>apt install zsh
+</span><span id="__span-21-5"><a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a>zsh
+</span><span id="__span-21-6"><a id="__codelineno-21-6" name="__codelineno-21-6" href="#__codelineno-21-6"></a>
+</span><span id="__span-21-7"><a id="__codelineno-21-7" name="__codelineno-21-7" href="#__codelineno-21-7"></a>source setup.sh
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>opkg install tar git-http wget curl git zsh tmux mtr htop
+</span></code></pre></div>
+<p>对于 openwrt，也支持，需要提前安装 tar，否则 fzf 无法配置。</p>
+<h3 id="bashrc">.bashrc<a class="headerlink" href="#bashrc" title="Permanent link">&para;</a></h3>
+<p>可以让 bash 和 zsh 共用同一个 alias 配置文件。在 zshrc 中添加</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>-f<span class="w"> </span>~/.bash_aliases<span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a><span class="w">    </span>.<span class="w"> </span>~/.bash_aliases
+</span><span id="__span-23-3"><a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a><span class="k">fi</span>
+</span></code></pre></div>
+<p>主要内容</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>alias t=&quot;tmux &quot;
+</span><span id="__span-24-2"><a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>alias ra=&quot;ranger&quot;
+</span><span id="__span-24-3"><a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a>alias ca=&quot;conda activate &quot;
+</span><span id="__span-24-4"><a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a>
+</span><span id="__span-24-5"><a id="__codelineno-24-5" name="__codelineno-24-5" href="#__codelineno-24-5"></a>export proxy_addr=localhost
+</span><span id="__span-24-6"><a id="__codelineno-24-6" name="__codelineno-24-6" href="#__codelineno-24-6"></a>export proxy_http_port=11223
+</span><span id="__span-24-7"><a id="__codelineno-24-7" name="__codelineno-24-7" href="#__codelineno-24-7"></a>export proxy_socks_port=11223
+</span><span id="__span-24-8"><a id="__codelineno-24-8" name="__codelineno-24-8" href="#__codelineno-24-8"></a>function set_proxy() {
+</span><span id="__span-24-9"><a id="__codelineno-24-9" name="__codelineno-24-9" href="#__codelineno-24-9"></a>    export http_proxy=http://$proxy_addr:$proxy_http_port #如果使用git 不行，这两个http和https改成socks5就行
+</span><span id="__span-24-10"><a id="__codelineno-24-10" name="__codelineno-24-10" href="#__codelineno-24-10"></a>    export https_proxy=http://$proxy_addr:$proxy_http_port
+</span><span id="__span-24-11"><a id="__codelineno-24-11" name="__codelineno-24-11" href="#__codelineno-24-11"></a>    export all_proxy=socks5://$proxy_addr:$proxy_socks_port
+</span><span id="__span-24-12"><a id="__codelineno-24-12" name="__codelineno-24-12" href="#__codelineno-24-12"></a>}
+</span><span id="__span-24-13"><a id="__codelineno-24-13" name="__codelineno-24-13" href="#__codelineno-24-13"></a>function unset_proxy() {
+</span><span id="__span-24-14"><a id="__codelineno-24-14" name="__codelineno-24-14" href="#__codelineno-24-14"></a>    unset http_proxy
+</span><span id="__span-24-15"><a id="__codelineno-24-15" name="__codelineno-24-15" href="#__codelineno-24-15"></a>    unset https_proxy
+</span><span id="__span-24-16"><a id="__codelineno-24-16" name="__codelineno-24-16" href="#__codelineno-24-16"></a>    unset all_proxy
+</span><span id="__span-24-17"><a id="__codelineno-24-17" name="__codelineno-24-17" href="#__codelineno-24-17"></a>}
+</span><span id="__span-24-18"><a id="__codelineno-24-18" name="__codelineno-24-18" href="#__codelineno-24-18"></a>function test_proxy() {
+</span><span id="__span-24-19"><a id="__codelineno-24-19" name="__codelineno-24-19" href="#__codelineno-24-19"></a>    curl -v https://www.google.com 2&gt;&amp;1 | egrep &#39;HTTP/(2|1.1) 200&#39;
+</span><span id="__span-24-20"><a id="__codelineno-24-20" name="__codelineno-24-20" href="#__codelineno-24-20"></a>}
+</span><span id="__span-24-21"><a id="__codelineno-24-21" name="__codelineno-24-21" href="#__codelineno-24-21"></a>
+</span><span id="__span-24-22"><a id="__codelineno-24-22" name="__codelineno-24-22" href="#__codelineno-24-22"></a># Prompt
+</span><span id="__span-24-23"><a id="__codelineno-24-23" name="__codelineno-24-23" href="#__codelineno-24-23"></a>export PROMPT=&quot;%B%n@%m $PROMPT&quot;
+</span></code></pre></div>
+<h3 id="vim">vim<a class="headerlink" href="#vim" title="Permanent link">&para;</a></h3>
+<ul>
+<li>我的配置：<a href="https://github.com/TheRainstorm/my-vim-config">https://github.com/TheRainstorm/my-vim-config</a></li>
+</ul>
+<h4 id="vim-粘贴时关闭自动空格">vim 粘贴时关闭自动空格<a class="headerlink" href="#vim-粘贴时关闭自动空格" title="Permanent link">&para;</a></h4>
+<ul>
+<li>参考：<a href="https://stackoverflow.com/questions/2514445/turning-off-auto-indent-when-pasting-text-into-vim">configuration - Turning off auto indent when pasting text into vim - Stack Overflow</a></li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>:set paste    #paste模式，临时关闭autoindent
+</span><span id="__span-25-2"><a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a>:set nopaste
+</span></code></pre></div>
+<h3 id="zsh">zsh<a class="headerlink" href="#zsh" title="Permanent link">&para;</a></h3>
+<p>安装 oh-my-zsh 时会自动将 zsh 设置为默认 shell</p>
+<h4 id="oh-my-zsh-手动安装">oh-my-zsh 手动安装<a class="headerlink" href="#oh-my-zsh-手动安装" title="Permanent link">&para;</a></h4>
+<p>通常来说 curl 获得 install 脚本时会卡住，git clone 仓库时也可能卡住，此时不如手动安装，查看<a href="https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh">install</a>脚本，会发现其实只做了几件事情：</p>
+<ul>
+<li>将 oh-my-zsh 仓库克隆到$HOME 下<code>.oh-my-zsh</code><ul>
+<li>可以从其他计算机 scp 到路由器里</li>
+</ul>
+</li>
+<li>复制 zshrc 文件：<code>cp .oh-my-zsh/templates/zshrc.zsh-template .zshrc</code><ul>
+<li>直接复制即可，不用修改内容</li>
+</ul>
+</li>
+<li>chsh<ul>
+<li>openwrt 没有 chsh 命令，需要修改/etc/passwd</li>
+<li><em>注意，如果修改错误（如直接输入 zsh 而不是 zsh 从根开始的完整路径）可能导致无法登录 openwrt</em></li>
+</ul>
+</li>
+</ul>
+<h4 id="安装-oh-my-zsh-并安装插件">安装 oh-my-zsh 并安装插件<a class="headerlink" href="#安装-oh-my-zsh-并安装插件" title="Permanent link">&para;</a></h4>
+<p>install：<a href="https://ohmyz.sh/#install">Oh My Zsh - a delightful &amp; open source framework for Zsh</a></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a> sh -c &quot;$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)&quot;
+</span></code></pre></div>
+<p>tips:</p>
+<ol>
+<li>安装 oh-my-zsh 会使用 git 克隆仓库，请提前安装 git 并设置代理</li>
+<li>如果连接不上 raw.github.com 可以尝试更换 DNS。更保险的还是给 bash 设置代理</li>
+<li>推荐直接从另一台机器上 scp</li>
+</ol>
+<h5 id="zsh-autosuggestions">zsh-autosuggestions<a class="headerlink" href="#zsh-autosuggestions" title="Permanent link">&para;</a></h5>
+<p><a href="https://github.com/zsh-users/zsh-autosuggestions">zsh-autosuggestions</a>
+作用：自动提示命令</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/zsh-users/zsh-autosuggestions<span class="w"> </span><span class="nv">$ZSH_CUSTOM</span>/plugins/zsh-autosuggestions
+</span></code></pre></div>
+<p>在.zshrc 中 plugin 行添加 zsh-autosuggestions，即</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a><span class="nv">plugins</span><span class="o">=(</span>git<span class="w"> </span>zsh-autosuggestions<span class="o">)</span>
+</span></code></pre></div>
+<h5 id="zsh-syntax-highlighting">zsh-syntax-highlighting<a class="headerlink" href="#zsh-syntax-highlighting" title="Permanent link">&para;</a></h5>
+<p><a href="https://github.com/zsh-users/zsh-syntax-highlighting">zsh-syntax-highlighting</a>
+作用：命令高亮，正确的命令显示绿色，错误的显示为红色</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/zsh-users/zsh-syntax-highlighting.git<span class="w"> </span><span class="nv">$ZSH_CUSTOM</span>/plugins/zsh-syntax-highlighting
+</span><span id="__span-29-2"><a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;source </span><span class="nv">$ZSH_CUSTOM</span><span class="s2">/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh&quot;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span><span class="si">${</span><span class="nv">ZDOTDIR</span><span class="k">:-</span><span class="nv">$HOME</span><span class="si">}</span>/.zshrc
+</span></code></pre></div>
+<h5 id="autojump">autojump<a class="headerlink" href="#autojump" title="Permanent link">&para;</a></h5>
+<p><a href="https://github.com/wting/autojump">autojump</a>
+作用：j 直接跳转到任意一个目录</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>git<span class="w"> </span>clone<span class="w"> </span>git://github.com/wting/autojump.git<span class="w"> </span><span class="nv">$ZSH_CUSTOM</span>/plugins/autojump
+</span><span id="__span-30-2"><a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a>
+</span><span id="__span-30-3"><a id="__codelineno-30-3" name="__codelineno-30-3" href="#__codelineno-30-3"></a><span class="nb">cd</span><span class="w"> </span><span class="nv">$ZSH_CUSTOM</span>/plugins/autojump
+</span><span id="__span-30-4"><a id="__codelineno-30-4" name="__codelineno-30-4" href="#__codelineno-30-4"></a>./install.py<span class="w"> </span>or<span class="w"> </span>./uninstall.py<span class="w"> </span><span class="c1">#如果系统只识别python3，可以设置软链接python指向python3。或者python3 install.py</span>
+</span><span id="__span-30-5"><a id="__codelineno-30-5" name="__codelineno-30-5" href="#__codelineno-30-5"></a>
+</span><span id="__span-30-6"><a id="__codelineno-30-6" name="__codelineno-30-6" href="#__codelineno-30-6"></a><span class="c1">#将install.py结尾输出复制到.zshrc中</span>
+</span></code></pre></div>
+<p>按照 install.py 输出提示，复制对应代码到 zshrc 中</p>
+<h3 id="fzf">fzf<a class="headerlink" href="#fzf" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>fzf is a general-purpose command-line fuzzy finder.</p>
+</blockquote>
+<p>使用 fzf 配合 ctrl-r，可以极大方便查找输入过去指令。</p>
+<p>推荐使用 git 方式，<strong>使用软件包安装的方式没有设置快捷键</strong>（在 bash, zsh 上均是如此），如 ctrl-r 搜索时调用 fzf</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+</span><span id="__span-31-2"><a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a>~/.fzf/install
+</span></code></pre></div>
+<p>当然，fzf 的功能远不止搜索历史记录，更多用法可以查看视频：<a href="https://www.youtube.com/watch?v=qgG5Jhi_Els">Vim universe. fzf - command line fuzzy finder - YouTube</a></p>
+<h4 id="手动配置">手动配置<a class="headerlink" href="#手动配置" title="Permanent link">&para;</a></h4>
+<p>其实主要需要设置三个内容</p>
+<ul>
+<li>fzf bin：<ul>
+<li>git clone <code>~/.fzf/install</code> 安装时会根据架构自动从 github 下载 bin 文件</li>
+<li>如果是非 x86,arm 的其它架构，可以用包管理器安装，或者自己想办法编译，添加到 PATH 路径中。</li>
+</ul>
+</li>
+<li>key-binding：对应 git 仓库 .fzf/shell/key-bindings.bash（apt 包内文件路径类似）</li>
+<li>autocompletion：对应 git 仓库  .fzf/shell/completion.bash</li>
+</ul>
+<p>windows git bash 配置 fzf，可以通过 git clone fzf 仓库，然后手动编写如下文件，source 到 ~/.bash_profile 中</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a># Setup fzf
+</span><span id="__span-32-2"><a id="__codelineno-32-2" name="__codelineno-32-2" href="#__codelineno-32-2"></a># ---------
+</span><span id="__span-32-3"><a id="__codelineno-32-3" name="__codelineno-32-3" href="#__codelineno-32-3"></a>if [[ ! &quot;$PATH&quot; == */c/Users/15440/.fzf/bin* ]]; then
+</span><span id="__span-32-4"><a id="__codelineno-32-4" name="__codelineno-32-4" href="#__codelineno-32-4"></a>  PATH=&quot;${PATH:+${PATH}:}/c/Users/15440/.fzf/bin&quot;
+</span><span id="__span-32-5"><a id="__codelineno-32-5" name="__codelineno-32-5" href="#__codelineno-32-5"></a>fi
+</span><span id="__span-32-6"><a id="__codelineno-32-6" name="__codelineno-32-6" href="#__codelineno-32-6"></a>
+</span><span id="__span-32-7"><a id="__codelineno-32-7" name="__codelineno-32-7" href="#__codelineno-32-7"></a># Auto-completion
+</span><span id="__span-32-8"><a id="__codelineno-32-8" name="__codelineno-32-8" href="#__codelineno-32-8"></a># ---------------
+</span><span id="__span-32-9"><a id="__codelineno-32-9" name="__codelineno-32-9" href="#__codelineno-32-9"></a>[[ $- == *i* ]] &amp;&amp; source &quot;/c/Users/15440/.fzf/shell/completion.bash&quot; 2&gt; /dev/null
+</span><span id="__span-32-10"><a id="__codelineno-32-10" name="__codelineno-32-10" href="#__codelineno-32-10"></a>
+</span><span id="__span-32-11"><a id="__codelineno-32-11" name="__codelineno-32-11" href="#__codelineno-32-11"></a># Key bindings
+</span><span id="__span-32-12"><a id="__codelineno-32-12" name="__codelineno-32-12" href="#__codelineno-32-12"></a># ------------
+</span><span id="__span-32-13"><a id="__codelineno-32-13" name="__codelineno-32-13" href="#__codelineno-32-13"></a>source &quot;/c/Users/15440/.fzf/shell/key-bindings.bash&quot;
+</span></code></pre></div>
+<p>apt 安装 fzf，可以通过 dpkg -L 查看包的包含的文件，找到 bash key-binding 和 auto completion 的文件</p>
+<ul>
+<li>/usr/share/bash-completion</li>
+<li>/usr/share/doc/fzf/examples/key-bindings.bash</li>
+</ul>
+<p>然后将其在 bashrc 中 source 即可</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-33-1"><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a>root@acsa-nfs:~# dpkg -L fzf
+</span><span id="__span-33-2"><a id="__codelineno-33-2" name="__codelineno-33-2" href="#__codelineno-33-2"></a>/.
+</span><span id="__span-33-3"><a id="__codelineno-33-3" name="__codelineno-33-3" href="#__codelineno-33-3"></a>/usr
+</span><span id="__span-33-4"><a id="__codelineno-33-4" name="__codelineno-33-4" href="#__codelineno-33-4"></a>/usr/bin
+</span><span id="__span-33-5"><a id="__codelineno-33-5" name="__codelineno-33-5" href="#__codelineno-33-5"></a>/usr/bin/fzf
+</span><span id="__span-33-6"><a id="__codelineno-33-6" name="__codelineno-33-6" href="#__codelineno-33-6"></a>/usr/bin/fzf-tmux
+</span><span id="__span-33-7"><a id="__codelineno-33-7" name="__codelineno-33-7" href="#__codelineno-33-7"></a>/usr/share
+</span><span id="__span-33-8"><a id="__codelineno-33-8" name="__codelineno-33-8" href="#__codelineno-33-8"></a>/usr/share/bash-completion
+</span><span id="__span-33-9"><a id="__codelineno-33-9" name="__codelineno-33-9" href="#__codelineno-33-9"></a>/usr/share/bash-completion/completions
+</span><span id="__span-33-10"><a id="__codelineno-33-10" name="__codelineno-33-10" href="#__codelineno-33-10"></a>/usr/share/bash-completion/completions/fzf
+</span><span id="__span-33-11"><a id="__codelineno-33-11" name="__codelineno-33-11" href="#__codelineno-33-11"></a>/usr/share/doc
+</span><span id="__span-33-12"><a id="__codelineno-33-12" name="__codelineno-33-12" href="#__codelineno-33-12"></a>/usr/share/doc/fzf
+</span><span id="__span-33-13"><a id="__codelineno-33-13" name="__codelineno-33-13" href="#__codelineno-33-13"></a>/usr/share/doc/fzf/README.Debian
+</span><span id="__span-33-14"><a id="__codelineno-33-14" name="__codelineno-33-14" href="#__codelineno-33-14"></a>/usr/share/doc/fzf/changelog.Debian.amd64.gz
+</span><span id="__span-33-15"><a id="__codelineno-33-15" name="__codelineno-33-15" href="#__codelineno-33-15"></a>/usr/share/doc/fzf/changelog.Debian.gz
+</span><span id="__span-33-16"><a id="__codelineno-33-16" name="__codelineno-33-16" href="#__codelineno-33-16"></a>/usr/share/doc/fzf/changelog.gz
+</span><span id="__span-33-17"><a id="__codelineno-33-17" name="__codelineno-33-17" href="#__codelineno-33-17"></a>/usr/share/doc/fzf/copyright
+</span><span id="__span-33-18"><a id="__codelineno-33-18" name="__codelineno-33-18" href="#__codelineno-33-18"></a>/usr/share/doc/fzf/examples
+</span><span id="__span-33-19"><a id="__codelineno-33-19" name="__codelineno-33-19" href="#__codelineno-33-19"></a>/usr/share/doc/fzf/examples/completion.zsh
+</span><span id="__span-33-20"><a id="__codelineno-33-20" name="__codelineno-33-20" href="#__codelineno-33-20"></a>/usr/share/doc/fzf/examples/fzf.vim
+</span><span id="__span-33-21"><a id="__codelineno-33-21" name="__codelineno-33-21" href="#__codelineno-33-21"></a>/usr/share/doc/fzf/examples/key-bindings.bash
+</span><span id="__span-33-22"><a id="__codelineno-33-22" name="__codelineno-33-22" href="#__codelineno-33-22"></a>/usr/share/doc/fzf/examples/key-bindings.fish
+</span><span id="__span-33-23"><a id="__codelineno-33-23" name="__codelineno-33-23" href="#__codelineno-33-23"></a>/usr/share/doc/fzf/examples/key-bindings.zsh
+</span><span id="__span-33-24"><a id="__codelineno-33-24" name="__codelineno-33-24" href="#__codelineno-33-24"></a>/usr/share/doc/fzf/examples/plugin
+</span><span id="__span-33-25"><a id="__codelineno-33-25" name="__codelineno-33-25" href="#__codelineno-33-25"></a>/usr/share/fish
+</span><span id="__span-33-26"><a id="__codelineno-33-26" name="__codelineno-33-26" href="#__codelineno-33-26"></a>/usr/share/fish/vendor_functions.d
+</span><span id="__span-33-27"><a id="__codelineno-33-27" name="__codelineno-33-27" href="#__codelineno-33-27"></a>/usr/share/fish/vendor_functions.d/fzf_key_bindings.fish
+</span><span id="__span-33-28"><a id="__codelineno-33-28" name="__codelineno-33-28" href="#__codelineno-33-28"></a>/usr/share/man
+</span><span id="__span-33-29"><a id="__codelineno-33-29" name="__codelineno-33-29" href="#__codelineno-33-29"></a>/usr/share/man/man1
+</span><span id="__span-33-30"><a id="__codelineno-33-30" name="__codelineno-33-30" href="#__codelineno-33-30"></a>/usr/share/man/man1/fzf-tmux.1.gz
+</span><span id="__span-33-31"><a id="__codelineno-33-31" name="__codelineno-33-31" href="#__codelineno-33-31"></a>/usr/share/man/man1/fzf.1.gz
+</span><span id="__span-33-32"><a id="__codelineno-33-32" name="__codelineno-33-32" href="#__codelineno-33-32"></a>/usr/share/doc/fzf/examples/plugin/fzf.vim
+</span></code></pre></div>
+<h4 id="问题">问题<a class="headerlink" href="#问题" title="Permanent link">&para;</a></h4>
+<p>如果 ctrl-r 显示<code>unknown option: --scheme=history</code>，是因为系统 apt 安装的 fzf 版本过旧导致的。</p>
+<p>使用 git 安装时，<code>~/.fzf/install</code>会下载 fzf bin 文件，之后将 git 仓库下<code>.fzf/bin</code>添加到 PATH 变量尾部。但是由于是在 PATH 尾部，因此优先级不如系统的/usr/bin 目录。解决办法为手动修改<code>.fzf.bash</code>文件使其插入到头部。</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-34-1"><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a><span class="c1"># Setup fzf</span>
+</span><span id="__span-34-2"><a id="__codelineno-34-2" name="__codelineno-34-2" href="#__codelineno-34-2"></a><span class="c1"># ---------</span>
+</span><span id="__span-34-3"><a id="__codelineno-34-3" name="__codelineno-34-3" href="#__codelineno-34-3"></a><span class="c1">#if [[ ! &quot;$PATH&quot; == */staff/fyyuan/.fzf/bin* ]]; then</span>
+</span><span id="__span-34-4"><a id="__codelineno-34-4" name="__codelineno-34-4" href="#__codelineno-34-4"></a><span class="c1">#  #PATH=&quot;${PATH:+${PATH}:}/staff/fyyuan/.fzf/bin&quot;</span>
+</span><span id="__span-34-5"><a id="__codelineno-34-5" name="__codelineno-34-5" href="#__codelineno-34-5"></a><span class="c1">#  PATH=&quot;/staff/fyyuan/.fzf/bin:$PATH&quot;</span>
+</span><span id="__span-34-6"><a id="__codelineno-34-6" name="__codelineno-34-6" href="#__codelineno-34-6"></a><span class="c1">#fi</span>
+</span><span id="__span-34-7"><a id="__codelineno-34-7" name="__codelineno-34-7" href="#__codelineno-34-7"></a><span class="nv">PATH</span><span class="o">=</span><span class="s2">&quot;/staff/fyyuan/.fzf/bin:</span><span class="nv">$PATH</span><span class="s2">&quot;</span>
+</span></code></pre></div>
+<h4 id="搜索不到时已经输入的命令白费">搜索不到时已经输入的命令白费<a class="headerlink" href="#搜索不到时已经输入的命令白费" title="Permanent link">&para;</a></h4>
+<p><a href="https://github.com/junegunn/fzf/issues/3528">Requesting special history search feature: If matching zero, upon entry don't nuke my command, emit it. · Issue #3528 · junegunn/fzf (github.com)</a></p>
+<p>我没有成功。不够我的历史记录够长了，基本不存在搜索为空的情况（更多是模糊搜索找到太多结果），因此对我也没用了。</p>
+<h3 id="tmuxtmuxoh-my-tmux">tmux(.tmux(oh-my-tmux))<a class="headerlink" href="#tmuxtmuxoh-my-tmux" title="Permanent link">&para;</a></h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-35-1"><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/gpakosz/.tmux
+</span><span id="__span-35-2"><a id="__codelineno-35-2" name="__codelineno-35-2" href="#__codelineno-35-2"></a>ln<span class="w"> </span>-s<span class="w"> </span>-f<span class="w"> </span>.tmux/.tmux.conf
+</span><span id="__span-35-3"><a id="__codelineno-35-3" name="__codelineno-35-3" href="#__codelineno-35-3"></a>cp<span class="w"> </span>.tmux/.tmux.conf.local<span class="w"> </span>.
+</span><span id="__span-35-4"><a id="__codelineno-35-4" name="__codelineno-35-4" href="#__codelineno-35-4"></a>
+</span><span id="__span-35-5"><a id="__codelineno-35-5" name="__codelineno-35-5" href="#__codelineno-35-5"></a>tmux<span class="w"> </span>source-file<span class="w"> </span>.tmux.conf
+</span></code></pre></div>
+<p>比较好用的几个功能</p>
+<p><strong>session</strong></p>
+<ul>
+<li><code>&lt;prefix&gt; f enter</code>：<strong>显示所有的会话</strong>、窗口，并提供预览。方便管理多个会话</li>
+<li><code>&lt;prefix&gt; shift-Tab(BTab)</code>：切换到上一个 session</li>
+<li><code>&lt;prefix&gt; ctrl-c</code>：创建新 session</li>
+</ul>
+<ul>
+<li><code>&lt;prefix&gt; hjkl</code>：在不同 panel 中切换，更符合 vim 习惯</li>
+<li><code>&lt;prefix&gt; b, P</code>：b 显示剪切板（buffer），P 选择粘贴</li>
+</ul>
+<h4 id="修改">修改<a class="headerlink" href="#修改" title="Permanent link">&para;</a></h4>
+<p>由于 tmux 默认的 prefix 是<code>Ctrl-b</code>不太好按，因此我会把它换成<code>ctrl-x</code></p>
+<p>窗口切换改为了<code>tab, C-h, C-l</code>，感觉有点麻烦，因此将<code>p</code>粘贴上一个 buffer 功能去掉，换回原本的<code>n, p</code></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-36-1"><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a><span class="nb">set</span><span class="w"> </span>-g<span class="w"> </span>prefix2<span class="w"> </span>C-x
+</span><span id="__span-36-2"><a id="__codelineno-36-2" name="__codelineno-36-2" href="#__codelineno-36-2"></a><span class="nb">bind</span><span class="w"> </span>C-x<span class="w"> </span>send-prefix<span class="w"> </span>-2
+</span><span id="__span-36-3"><a id="__codelineno-36-3" name="__codelineno-36-3" href="#__codelineno-36-3"></a>
+</span><span id="__span-36-4"><a id="__codelineno-36-4" name="__codelineno-36-4" href="#__codelineno-36-4"></a><span class="nb">bind</span><span class="w"> </span>-r<span class="w"> </span>n<span class="w"> </span>previous-window<span class="w"> </span><span class="c1"># select previous window</span>
+</span><span id="__span-36-5"><a id="__codelineno-36-5" name="__codelineno-36-5" href="#__codelineno-36-5"></a><span class="nb">bind</span><span class="w"> </span>-r<span class="w"> </span>p<span class="w"> </span>next-window<span class="w">     </span><span class="c1"># select next window</span>
+</span><span id="__span-36-6"><a id="__codelineno-36-6" name="__codelineno-36-6" href="#__codelineno-36-6"></a><span class="nb">bind</span><span class="w"> </span>Tab<span class="w"> </span>last-window<span class="w">      </span><span class="c1"># move to last active window</span>
+</span><span id="__span-36-7"><a id="__codelineno-36-7" name="__codelineno-36-7" href="#__codelineno-36-7"></a>
+</span><span id="__span-36-8"><a id="__codelineno-36-8" name="__codelineno-36-8" href="#__codelineno-36-8"></a><span class="c1">#bind p paste-buffer  # paste from the top paste buffer</span>
+</span></code></pre></div>
+<h3 id="zplug">zplug<a class="headerlink" href="#zplug" title="Permanent link">&para;</a></h3>
+<p><a href="https://github.com/zplug/zplug">zplug/zplug: A next-generation plugin manager for zsh (github.com)</a>
+zsh 的一个插件管理工具，类似的还有<code>Antigen</code>，优点是启动更加快速。
+相比于 oh-my-zsh 的插件管理，安装配置都更简单（如不需要手动 git clone 安装插件，有的插件还需要修改.zshrc 等）</p>
+<h4 id="使用">使用<a class="headerlink" href="#使用" title="Permanent link">&para;</a></h4>
+<p>安装</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-37-1"><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a>curl -sL --proto-redir -all,https https://raw.githubusercontent.com/zplug/installer/master/installer.zsh | zsh
+</span></code></pre></div>
+<p>配置：在<code>.zshrc</code>中添加以下节，其中<code>zplug 'endaaman/lxd-completion-zsh'</code>指定了需要使用的插件。还可以使用其它插件</p>
+<ul>
+<li>安装插件需要设置代理</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-38-1"><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a>##########
+</span><span id="__span-38-2"><a id="__codelineno-38-2" name="__codelineno-38-2" href="#__codelineno-38-2"></a>#####  zplug
+</span><span id="__span-38-3"><a id="__codelineno-38-3" name="__codelineno-38-3" href="#__codelineno-38-3"></a>##########
+</span><span id="__span-38-4"><a id="__codelineno-38-4" name="__codelineno-38-4" href="#__codelineno-38-4"></a>source ~/.zplug/init.zsh
+</span><span id="__span-38-5"><a id="__codelineno-38-5" name="__codelineno-38-5" href="#__codelineno-38-5"></a>
+</span><span id="__span-38-6"><a id="__codelineno-38-6" name="__codelineno-38-6" href="#__codelineno-38-6"></a># Zsh completion for lxc and lxd commands of LXD.
+</span><span id="__span-38-7"><a id="__codelineno-38-7" name="__codelineno-38-7" href="#__codelineno-38-7"></a>zplug &#39;endaaman/lxd-completion-zsh&#39;
+</span><span id="__span-38-8"><a id="__codelineno-38-8" name="__codelineno-38-8" href="#__codelineno-38-8"></a>
+</span><span id="__span-38-9"><a id="__codelineno-38-9" name="__codelineno-38-9" href="#__codelineno-38-9"></a># Fish-like fast/unobtrusive autosuggestions for zsh.
+</span><span id="__span-38-10"><a id="__codelineno-38-10" name="__codelineno-38-10" href="#__codelineno-38-10"></a>zplug &#39;zsh-users/zsh-autosuggestions&#39;
+</span><span id="__span-38-11"><a id="__codelineno-38-11" name="__codelineno-38-11" href="#__codelineno-38-11"></a>
+</span><span id="__span-38-12"><a id="__codelineno-38-12" name="__codelineno-38-12" href="#__codelineno-38-12"></a># Fish shell-like syntax highlighting for Zsh.
+</span><span id="__span-38-13"><a id="__codelineno-38-13" name="__codelineno-38-13" href="#__codelineno-38-13"></a>zplug &#39;zsh-users/zsh-syntax-highlighting&#39;
+</span><span id="__span-38-14"><a id="__codelineno-38-14" name="__codelineno-38-14" href="#__codelineno-38-14"></a>
+</span><span id="__span-38-15"><a id="__codelineno-38-15" name="__codelineno-38-15" href="#__codelineno-38-15"></a># Install plugins if there are plugins that have not been installed
+</span><span id="__span-38-16"><a id="__codelineno-38-16" name="__codelineno-38-16" href="#__codelineno-38-16"></a>if ! zplug check --verbose; then
+</span><span id="__span-38-17"><a id="__codelineno-38-17" name="__codelineno-38-17" href="#__codelineno-38-17"></a>    printf &quot;Install? [y/N]: &quot;
+</span><span id="__span-38-18"><a id="__codelineno-38-18" name="__codelineno-38-18" href="#__codelineno-38-18"></a>    if read -q; then
+</span><span id="__span-38-19"><a id="__codelineno-38-19" name="__codelineno-38-19" href="#__codelineno-38-19"></a>        echo; zplug install
+</span><span id="__span-38-20"><a id="__codelineno-38-20" name="__codelineno-38-20" href="#__codelineno-38-20"></a>    fi
+</span><span id="__span-38-21"><a id="__codelineno-38-21" name="__codelineno-38-21" href="#__codelineno-38-21"></a>fi
+</span><span id="__span-38-22"><a id="__codelineno-38-22" name="__codelineno-38-22" href="#__codelineno-38-22"></a>
+</span><span id="__span-38-23"><a id="__codelineno-38-23" name="__codelineno-38-23" href="#__codelineno-38-23"></a># Then, source plugins and add commands to $PATH
+</span><span id="__span-38-24"><a id="__codelineno-38-24" name="__codelineno-38-24" href="#__codelineno-38-24"></a>zplug load
+</span></code></pre></div>
+<h4 id="寻找插件">寻找插件<a class="headerlink" href="#寻找插件" title="Permanent link">&para;</a></h4>
+<ul>
+<li>zsh-user: <a href="https://github.com/zsh-users/">zsh-users (github.com)</a></li>
+</ul>
+<h3 id="自定义-prompt">自定义 prompt<a class="headerlink" href="#自定义-prompt" title="Permanent link">&para;</a></h3>
+<h4 id="bash">bash<a class="headerlink" href="#bash" title="Permanent link">&para;</a></h4>
+<p><a href="https://wiki.archlinux.org/title/Bash/Prompt_customization">Bash/Prompt customization - ArchWiki (archlinux.org)</a>
+<a href="https://man.archlinux.org/man/bash.1#PROMPTING">bash(1) — Arch manual pages (archlinux.org)</a></p>
+<h4 id="zsh_1">zsh<a class="headerlink" href="#zsh_1" title="Permanent link">&para;</a></h4>
+<p><a href="https://wiki.archlinux.org/title/zsh#Prompts">Zsh - ArchWiki (archlinux.org)</a></p>
+<p>初始化自带的 prompt theme system</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-39-1"><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a>~/.zshrc
+</span><span id="__span-39-2"><a id="__codelineno-39-2" name="__codelineno-39-2" href="#__codelineno-39-2"></a>autoload -Uz promptinit
+</span><span id="__span-39-3"><a id="__codelineno-39-3" name="__codelineno-39-3" href="#__codelineno-39-3"></a>promptinit
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-40-1"><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a>prompt -l   # 列出所有
+</span><span id="__span-40-2"><a id="__codelineno-40-2" name="__codelineno-40-2" href="#__codelineno-40-2"></a>prompt -p   # 预览所有
+</span><span id="__span-40-3"><a id="__codelineno-40-3" name="__codelineno-40-3" href="#__codelineno-40-3"></a>prompt walters  # 选择一个theme
+</span></code></pre></div>
+<p>自定义 theme</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-41-1"><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a># Load promptinit
+</span><span id="__span-41-2"><a id="__codelineno-41-2" name="__codelineno-41-2" href="#__codelineno-41-2"></a>autoload -Uz promptinit &amp;&amp; promptinit
+</span><span id="__span-41-3"><a id="__codelineno-41-3" name="__codelineno-41-3" href="#__codelineno-41-3"></a>
+</span><span id="__span-41-4"><a id="__codelineno-41-4" name="__codelineno-41-4" href="#__codelineno-41-4"></a># Define the theme
+</span><span id="__span-41-5"><a id="__codelineno-41-5" name="__codelineno-41-5" href="#__codelineno-41-5"></a>prompt_mytheme_setup() {
+</span><span id="__span-41-6"><a id="__codelineno-41-6" name="__codelineno-41-6" href="#__codelineno-41-6"></a>  PS1=&quot;%~%# &quot;
+</span><span id="__span-41-7"><a id="__codelineno-41-7" name="__codelineno-41-7" href="#__codelineno-41-7"></a>}
+</span><span id="__span-41-8"><a id="__codelineno-41-8" name="__codelineno-41-8" href="#__codelineno-41-8"></a>
+</span><span id="__span-41-9"><a id="__codelineno-41-9" name="__codelineno-41-9" href="#__codelineno-41-9"></a># Add the theme to promptsys
+</span><span id="__span-41-10"><a id="__codelineno-41-10" name="__codelineno-41-10" href="#__codelineno-41-10"></a>prompt_themes+=( mytheme )
+</span><span id="__span-41-11"><a id="__codelineno-41-11" name="__codelineno-41-11" href="#__codelineno-41-11"></a>
+</span><span id="__span-41-12"><a id="__codelineno-41-12" name="__codelineno-41-12" href="#__codelineno-41-12"></a># Load the theme
+</span><span id="__span-41-13"><a id="__codelineno-41-13" name="__codelineno-41-13" href="#__codelineno-41-13"></a>prompt mytheme
+</span></code></pre></div>
+<h5 id="customized">Customized<a class="headerlink" href="#customized" title="Permanent link">&para;</a></h5>
+<ul>
+<li>兼容 bash 的 left-sided prompt: PS1, PS2, ...，自己有别名：PROMPT, PROMPT2...</li>
+<li>另外支持 right-sided prompt：<code>RPS1</code> (<code>RPROMPT</code>)</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-42-1"><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a>print -P &#39;%B%F{red}co%F{green}lo%F{blue}rs%f%b&#39;   # 测试效果
+</span><span id="__span-42-2"><a id="__codelineno-42-2" name="__codelineno-42-2" href="#__codelineno-42-2"></a>
+</span><span id="__span-42-3"><a id="__codelineno-42-3" name="__codelineno-42-3" href="#__codelineno-42-3"></a>PROMPT=&#39;%n@%m %~ %# &#39;
+</span><span id="__span-42-4"><a id="__codelineno-42-4" name="__codelineno-42-4" href="#__codelineno-42-4"></a>
+</span><span id="__span-42-5"><a id="__codelineno-42-5" name="__codelineno-42-5" href="#__codelineno-42-5"></a>print -P &quot;%l %M %m %n %y %d&quot;
+</span><span id="__span-42-6"><a id="__codelineno-42-6" name="__codelineno-42-6" href="#__codelineno-42-6"></a>%~
+</span></code></pre></div>
+<p><a href="https://man.archlinux.org/man/zshmisc.1#EXPANSION_OF_PROMPT_SEQUENCES">zshmisc(1) — Arch manual pages (archlinux.org)</a></p>
+<h3 id="locale">locale<a class="headerlink" href="#locale" title="Permanent link">&para;</a></h3>
+<p><code>perl: warnning: locale setting failed</code></p>
+<p>是因为设置了以下变量导致的</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-43-1"><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a>LANG=en_US.utf8
+</span><span id="__span-43-2"><a id="__codelineno-43-2" name="__codelineno-43-2" href="#__codelineno-43-2"></a>LC_ALL=en_US.utf8
+</span></code></pre></div>
+<p>docker 环境中可能只有以下几种语言</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-44-1"><a id="__codelineno-44-1" name="__codelineno-44-1" href="#__codelineno-44-1"></a>locale -a
+</span><span id="__span-44-2"><a id="__codelineno-44-2" name="__codelineno-44-2" href="#__codelineno-44-2"></a>C
+</span><span id="__span-44-3"><a id="__codelineno-44-3" name="__codelineno-44-3" href="#__codelineno-44-3"></a>C.utf8
+</span><span id="__span-44-4"><a id="__codelineno-44-4" name="__codelineno-44-4" href="#__codelineno-44-4"></a>POSIX
+</span></code></pre></div>
+<p>解决办法是安装语言包</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-45-1"><a id="__codelineno-45-1" name="__codelineno-45-1" href="#__codelineno-45-1"></a>apt install language-pack-en
+</span></code></pre></div>
+<h2 id="服务">服务<a class="headerlink" href="#服务" title="Permanent link">&para;</a></h2>
+<h3 id="sshd">sshd<a class="headerlink" href="#sshd" title="Permanent link">&para;</a></h3>
+<p>参考：<a href="https://ubuntu.com/server/docs/service-openssh">Service - OpenSSH | Ubuntu</a></p>
+<p>安装 openssh-server（有可能默认安装了）</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-46-1"><a id="__codelineno-46-1" name="__codelineno-46-1" href="#__codelineno-46-1"></a>sudo apt install openssh-server
+</span></code></pre></div>
+<p>配置 sshd，如端口</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-47-1"><a id="__codelineno-47-1" name="__codelineno-47-1" href="#__codelineno-47-1"></a>sudo vim /etc/ssh/sshd_config
+</span></code></pre></div>
+<p>运行 sshd</p>
+<ul>
+<li>
+<p>ubuntu</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-48-1"><a id="__codelineno-48-1" name="__codelineno-48-1" href="#__codelineno-48-1"></a>sudo systemctl restart sshd.service
+</span></code></pre></div>
+</li>
+</ul>
+<ul>
+<li>
+<p>deepin 没有 systemd sshd.service，使用</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-49-1"><a id="__codelineno-49-1" name="__codelineno-49-1" href="#__codelineno-49-1"></a>sudo service ssh start
+</span></code></pre></div>
+</li>
+</ul>
+<h3 id="vnc">vnc<a class="headerlink" href="#vnc" title="Permanent link">&para;</a></h3>
+<p>常用的有 tigervnc，但是实际安装过程中经常遇到问题，比如黑屏、任务栏消失、xstartup 设置、无法使用 systemd 等问题。遇到问题不要慌，可能就是 vnc 本身太烂了，<strong>能不配就不配</strong>。</p>
+<p>问题</p>
+<ul>
+<li>新版的 Tigervnc（&gt;=1.10.0）不再支持 vncserver 命令启动远程桌面服务。取而代之的是通过 systemed 作为系统服务的方式来启动。</li>
+</ul>
+<p>参考：</p>
+<ul>
+<li><a href="https://page.syao.fun/2020/08/06/linux_vnc.html">VNC 的安装与使用 - SYAO</a></li>
+</ul>
+<p><strong>tigervnc&lt;1.10</strong></p>
+<p>tigervnc github 仓库<a href="https://github.com/TigerVNC/tigervnc">TigerVNC/tigervnc</a> readme 说的不是很详细，可以直接安装</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-50-1"><a id="__codelineno-50-1" name="__codelineno-50-1" href="#__codelineno-50-1"></a>sudo apt install tigervnc-standalone-server
+</span></code></pre></div>
+<p>直接 vncserver 启动，第一次运行会设置密码</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-51-1"><a id="__codelineno-51-1" name="__codelineno-51-1" href="#__codelineno-51-1"></a>vncserver -localhost no #设置为no localhost，不然只能在本计算机上访问（LAN内的都不行）。
+</span></code></pre></div>
+<p>查看 vncserver，默认为：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-52-1"><a id="__codelineno-52-1" name="__codelineno-52-1" href="#__codelineno-52-1"></a>  vncserver -list   #查看当前运行的server
+</span><span id="__span-52-2"><a id="__codelineno-52-2" name="__codelineno-52-2" href="#__codelineno-52-2"></a>  vncserver -kill :number #停止指定的server
+</span></code></pre></div>
+<p>虽然有的教程说要配置 xstartup，但是可能不配置已经可以了</p>
+<ul>
+<li>deepin 中需要配置，否则会黑屏。但是配置完后，仍然遇到了任务栏消失，浏览器打开 5-6 秒的问题。<ul>
+<li><a href="https://gist.github.com/dfc643/e3f6cedb1d7021eef59ff28d9febf1b2">TigerVNC xstartup file for Deepin Linux V20 and Unitech OS Linux V20 (UOS) (github.com)</a></li>
+</ul>
+</li>
+</ul>
+<p><strong>客户端连接</strong></p>
+<ul>
+<li>使用 realVNC 输入 ip_address:port</li>
+</ul>
+<p><strong>使用隧道建立加密连接</strong></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-53-1"><a id="__codelineno-53-1" name="__codelineno-53-1" href="#__codelineno-53-1"></a>ssh -L 59000:localhost:5901 -C -N -l server_user_name server_ip_address
+</span></code></pre></div>
+<ul>
+<li>-L 59000:localhost:5901
+  The <strong>-L</strong> argument specifies the post on your local computer (ours is <strong>59000</strong>) to the given host (<strong>localhost</strong>) and port (<strong>5901</strong>) on the destination server (<strong>server_ip_address</strong>).</li>
+<li>-C: This argument speeds up processes and minimizes resource usage.</li>
+<li>-N: This argument prevents execution of remote commands and tells SSH to only forward ports.</li>
+<li>-l server_user_name server_ip_address: This line specifies the user you will use to login to the server.</li>
+</ul>
+<h2 id="常用操作参考">常用操作参考<a class="headerlink" href="#常用操作参考" title="Permanent link">&para;</a></h2>
+<h3 id="apt-相关">apt 相关<a class="headerlink" href="#apt-相关" title="Permanent link">&para;</a></h3>
+<h4 id="apt-换源">apt 换源<a class="headerlink" href="#apt-换源" title="Permanent link">&para;</a></h4>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-54-1"><a id="__codelineno-54-1" name="__codelineno-54-1" href="#__codelineno-54-1"></a>cp<span class="w"> </span>/etc/apt/sources.list<span class="w"> </span>/etc/apt/sources.list.back<span class="w"> </span><span class="c1">#备份</span>
+</span><span id="__span-54-2"><a id="__codelineno-54-2" name="__codelineno-54-2" href="#__codelineno-54-2"></a>sed<span class="w"> </span>-i<span class="w"> </span><span class="s2">&quot;s/archive.ubuntu.com/mirrors.ustc.edu.cn/g&quot;</span><span class="w"> </span>/etc/apt/sources.list
+</span><span id="__span-54-3"><a id="__codelineno-54-3" name="__codelineno-54-3" href="#__codelineno-54-3"></a>sed<span class="w"> </span>-i<span class="w"> </span><span class="s2">&quot;s/security.ubuntu.com/mirrors.ustc.edu.cn/g&quot;</span><span class="w"> </span>/etc/apt/sources.list
+</span></code></pre></div>
+<p>在 vim 中手动替换则是%s</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-55-1"><a id="__codelineno-55-1" name="__codelineno-55-1" href="#__codelineno-55-1"></a>:%s/security.ubuntu.com/mirrors.ustc.edu.cn/g
+</span></code></pre></div>
+<p><a href="https://developer.aliyun.com/mirror/ubuntu">aliyun mirror ubuntu</a></p>
+<h4 id="apt-get-临时使用-sock-代理">apt-get 临时使用 sock 代理<a class="headerlink" href="#apt-get-临时使用-sock-代理" title="Permanent link">&para;</a></h4>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-56-1"><a id="__codelineno-56-1" name="__codelineno-56-1" href="#__codelineno-56-1"></a>sudo<span class="w"> </span>apt-get<span class="w"> </span>-o<span class="w"> </span>Acquire::http::proxy<span class="o">=</span><span class="s2">&quot;socks5://127.0.0.1:1089/&quot;</span><span class="w"> </span>install<span class="w"> </span>typora
+</span></code></pre></div>
+<h3 id="bash-设置代理">bash 设置代理<a class="headerlink" href="#bash-设置代理" title="Permanent link">&para;</a></h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-57-1"><a id="__codelineno-57-1" name="__codelineno-57-1" href="#__codelineno-57-1"></a><span class="c1">#端口对应qv2ray软件默认设置</span>
+</span><span id="__span-57-2"><a id="__codelineno-57-2" name="__codelineno-57-2" href="#__codelineno-57-2"></a><span class="nb">export</span><span class="w"> </span><span class="nv">HTTP_PROXY</span><span class="o">=</span>http://localhost:8889
+</span><span id="__span-57-3"><a id="__codelineno-57-3" name="__codelineno-57-3" href="#__codelineno-57-3"></a><span class="nb">export</span><span class="w"> </span><span class="nv">HTTPS_PROXY</span><span class="o">=</span>http://localhost:8889
+</span></code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-58-1"><a id="__codelineno-58-1" name="__codelineno-58-1" href="#__codelineno-58-1"></a><span class="nb">unset</span><span class="w"> </span>HTTP_PROXY
+</span><span id="__span-58-2"><a id="__codelineno-58-2" name="__codelineno-58-2" href="#__codelineno-58-2"></a><span class="nb">unset</span><span class="w"> </span>HTTPS_PROXY
+</span></code></pre></div>
+<h3 id="git-设置代理">git 设置代理<a class="headerlink" href="#git-设置代理" title="Permanent link">&para;</a></h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-59-1"><a id="__codelineno-59-1" name="__codelineno-59-1" href="#__codelineno-59-1"></a>git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>http.proxy<span class="w"> </span>http://127.0.0.1:1080
+</span><span id="__span-59-2"><a id="__codelineno-59-2" name="__codelineno-59-2" href="#__codelineno-59-2"></a>git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>https.proxy<span class="w"> </span>https://127.0.0.1:1080
+</span></code></pre></div>
+<p><a href="https://git-scm.com/docs/git-config#Documentation/git-config.txt-httpproxy">git doc: http.proxy</a></p>
+<p>命令行临时代理</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-60-1"><a id="__codelineno-60-1" name="__codelineno-60-1" href="#__codelineno-60-1"></a>GIT_TRACE=1 git -c &quot;http.proxy=address:port&quot; clone https://...
+</span></code></pre></div>
+<p>如果是 SSH 协议（<code>git clone git://xxx</code>）需要使用 <code>ProxyCommand</code></p>
+<p>编辑配置文件 <code>~/.ssh/config</code></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-61-1"><a id="__codelineno-61-1" name="__codelineno-61-1" href="#__codelineno-61-1"></a>Host github.com
+</span><span id="__span-61-2"><a id="__codelineno-61-2" name="__codelineno-61-2" href="#__codelineno-61-2"></a>    User git
+</span><span id="__span-61-3"><a id="__codelineno-61-3" name="__codelineno-61-3" href="#__codelineno-61-3"></a>    ProxyCommand nc -x 127.0.0.1:1080 %h %p
+</span></code></pre></div>
+<p>nc (netcat) 是一个强大的网络工具。</p>
+<blockquote>
+<p>The nc (or netcat) utility is used for just about anything under the sun involving TCP, UDP, or UNIX-domain sockets.  It can open TCP connections, send UDP packets, listen on arbitrary TCP and UDP ports, do port scanning, and deal with both IPv4 and IPv6.</p>
+</blockquote>
+<p>man nc gives</p>
+<ul>
+<li><code>-X proxy_protocol</code> Use proxy_protocol when talking to the proxy server.  Supported protocols are 4 (SOCKS v.4), 5 (SOCKS v.5) and connect (HTTPS proxy).  If the protocol is not specified, SOCKS version 5 is used</li>
+<li><code>-x proxy_address[:port]</code>: Connect to destination using a proxy at proxy_address and port.  If port is not specified, the well-known port for the proxy protocol is used (1080 for SOCKS, 3128 for HTTPS).  An IPv6 address can be specified unambiguously by enclosing proxy_address in square brackets.  A proxy cannot be used with any of the options -lsuU.</li>
+</ul>
+<h3 id="恢复默认bashrc">恢复默认.bashrc<a class="headerlink" href="#恢复默认bashrc" title="Permanent link">&para;</a></h3>
+<ul>
+<li>在 ubuntu 中，默认的 bashrc 文件存储在 <code>/etc/skel/.bashrc</code></li>
+</ul>
+<h3 id="vim-复制粘贴系统剪贴板">vim 复制粘贴（系统剪贴板）<a class="headerlink" href="#vim-复制粘贴系统剪贴板" title="Permanent link">&para;</a></h3>
+<ol>
+<li>
+<p>首先确认 vim 是否开启了 clipboard 功能</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-62-1"><a id="__codelineno-62-1" name="__codelineno-62-1" href="#__codelineno-62-1"></a>vim<span class="w"> </span>--version<span class="w"> </span><span class="p">|</span>grep<span class="w"> </span>clipboard<span class="w"> </span><span class="c1">#如果显示出-clipboard 则需要重装 vim</span>
+</span></code></pre></div>
+<p>如果没有则重装</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-63-1"><a id="__codelineno-63-1" name="__codelineno-63-1" href="#__codelineno-63-1"></a>sudo<span class="w"> </span>apt<span class="w"> </span>remove<span class="w"> </span>vim
+</span><span id="__span-63-2"><a id="__codelineno-63-2" name="__codelineno-63-2" href="#__codelineno-63-2"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>vim-gtk
+</span></code></pre></div>
+</li>
+<li>
+<p>使用鼠标选中内容，输入<code>"+y</code>命令便可将内容复制到剪贴板。</p>
+<p>使用<code>"+p</code>将剪贴板内容到当前位置。</p>
+<p>或者</p>
+<p>然后在.vim/vimrc中设置快捷键ctrl-c, ctrl-v。</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-64-1"><a id="__codelineno-64-1" name="__codelineno-64-1" href="#__codelineno-64-1"></a>&quot;clipboard
+</span><span id="__span-64-2"><a id="__codelineno-64-2" name="__codelineno-64-2" href="#__codelineno-64-2"></a>map &lt;C-c&gt; &quot;+y&lt;CR&gt;
+</span><span id="__span-64-3"><a id="__codelineno-64-3" name="__codelineno-64-3" href="#__codelineno-64-3"></a>map &lt;C-v&gt; &quot;+p&lt;CR&gt;
+</span></code></pre></div>
+<p>此时便可以在选中内容时按ctrl-c复制到系统剪切板。处于normal模式时ctrl-v粘贴了。</p>
+</li>
+</ol>
+<h4 id="解释">解释<a class="headerlink" href="#解释" title="Permanent link">&para;</a></h4>
+<p>vim 中包含许多不同功能的寄存器，用于存储在 vim 中复制的内容。可以通过:reg 命令查看 vim 中各寄存器的值</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-65-1"><a id="__codelineno-65-1" name="__codelineno-65-1" href="#__codelineno-65-1"></a>:reg #查看vim中的寄存器
+</span><span id="__span-65-2"><a id="__codelineno-65-2" name="__codelineno-65-2" href="#__codelineno-65-2"></a>
+</span><span id="__span-65-3"><a id="__codelineno-65-3" name="__codelineno-65-3" href="#__codelineno-65-3"></a>    &quot;&quot;      // 默认unnamed寄存器，最近一次&quot;d&quot;,&quot;c&quot;,&quot;s&quot;,&quot;x&quot;,&quot;y&quot;复制，删除，修改内容
+</span><span id="__span-65-4"><a id="__codelineno-65-4" name="__codelineno-65-4" href="#__codelineno-65-4"></a>    &quot;0      // 最近一次&quot;y&quot;复制内容
+</span><span id="__span-65-5"><a id="__codelineno-65-5" name="__codelineno-65-5" href="#__codelineno-65-5"></a>    &quot;1      // 最近一次&quot;d&quot;,&quot;c&quot;,&quot;s&quot;,&quot;x&quot;删除，修改内容
+</span><span id="__span-65-6"><a id="__codelineno-65-6" name="__codelineno-65-6" href="#__codelineno-65-6"></a>    &quot;2      // 上一次&quot;d&quot;,&quot;c&quot;,&quot;s&quot;,&quot;x&quot;删除，修改内容，[3-9]类推
+</span><span id="__span-65-7"><a id="__codelineno-65-7" name="__codelineno-65-7" href="#__codelineno-65-7"></a>    &quot;a      // 字母寄存器，供用户指定使用，比如&quot;ay就是复制到&quot;a寄存器，[b-z]类推
+</span><span id="__span-65-8"><a id="__codelineno-65-8" name="__codelineno-65-8" href="#__codelineno-65-8"></a>    &quot;-      // 少于一行的&quot;d&quot;,&quot;c&quot;,&quot;x&quot;删除内容
+</span><span id="__span-65-9"><a id="__codelineno-65-9" name="__codelineno-65-9" href="#__codelineno-65-9"></a>    &quot;.      // 只读寄存器
+</span><span id="__span-65-10"><a id="__codelineno-65-10" name="__codelineno-65-10" href="#__codelineno-65-10"></a>    &quot;:      // 只读寄存器
+</span><span id="__span-65-11"><a id="__codelineno-65-11" name="__codelineno-65-11" href="#__codelineno-65-11"></a>    &quot;%      // 只读寄存器
+</span><span id="__span-65-12"><a id="__codelineno-65-12" name="__codelineno-65-12" href="#__codelineno-65-12"></a>    &quot;#      // 只读寄存器
+</span><span id="__span-65-13"><a id="__codelineno-65-13" name="__codelineno-65-13" href="#__codelineno-65-13"></a>
+</span><span id="__span-65-14"><a id="__codelineno-65-14" name="__codelineno-65-14" href="#__codelineno-65-14"></a>    &quot;+      // 映射系统剪贴板 (有的默认设置不支持)
+</span><span id="__span-65-15"><a id="__codelineno-65-15" name="__codelineno-65-15" href="#__codelineno-65-15"></a>    &quot;*      // 映射系统剪贴板 (有的默认设置不支持)
+</span></code></pre></div>
+<p>vim 默认复制到的寄存器是<code>""</code>寄存器，要想复制到系统剪切板，可以通过<code>"+</code>寄存器（需要 vim 开启 clipboard 功能）</p>
+<p>在选中内容的情况下，按<code>y</code>默认将内容复制到<code>""</code>寄存器。按<code>p</code>默认将<code>""</code>寄存器内容复制到当前位置。要想复制到指定寄存器，输入寄存器名+y 即可，粘贴时同理。</p>
+<h3 id="vim-redo">vim redo<a class="headerlink" href="#vim-redo" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-66-1"><a id="__codelineno-66-1" name="__codelineno-66-1" href="#__codelineno-66-1"></a>undo: u
+</span><span id="__span-66-2"><a id="__codelineno-66-2" name="__codelineno-66-2" href="#__codelineno-66-2"></a>redo: ctrl + r
+</span></code></pre></div>
+<h3 id="退出终端后命令不退出">退出终端后命令不退出<a class="headerlink" href="#退出终端后命令不退出" title="Permanent link">&para;</a></h3>
+<p>关闭终端后，shell 给程序发送 SIGHUP 信号，导致程序退出。</p>
+<p>会话(session)，进程组，控制终端的概念。</p>
+<ul>
+<li>nohup command</li>
+<li>setsid command<ul>
+<li>将 command 放在新的 session 中执行</li>
+</ul>
+</li>
+<li><code>(cmd &amp;)</code><ul>
+<li>原理：括号产生子 shell，子 shell 执行 cmd &amp;。cmd &amp; 导致</li>
+</ul>
+</li>
+</ul>
+<p>Q: <code>(while true; do sleep 1; echo xxx; done &amp;)</code>如何杀掉</p>
+<p>进程树结构：</p>
+<ul>
+<li>zsh: 当前ssh zsh<ul>
+<li>zsh: 括号产生一个子shell<ul>
+<li>zsh: 后台执行一个shell脚本，又产生一个shell<ul>
+<li>sleep, echo: shell隔1s执行一次echo</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="ssh-的有用功能">ssh 的有用功能<a class="headerlink" href="#ssh-的有用功能" title="Permanent link">&para;</a></h3>
+<h4 id="jump">jump<a class="headerlink" href="#jump" title="Permanent link">&para;</a></h4>
+<p>跳跃连接，使用中间节点进行代理，访问另一台 ssh 服务器。</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-67-1"><a id="__codelineno-67-1" name="__codelineno-67-1" href="#__codelineno-67-1"></a>ssh -J user@middle:port user@target -p port
+</span><span id="__span-67-2"><a id="__codelineno-67-2" name="__codelineno-67-2" href="#__codelineno-67-2"></a>
+</span><span id="__span-67-3"><a id="__codelineno-67-3" name="__codelineno-67-3" href="#__codelineno-67-3"></a>ssh -J root@192.168.36.1:2202 root@192.168.36.254 -p 2202
+</span></code></pre></div>
+<h4 id="正向转发">正向转发<a class="headerlink" href="#正向转发" title="Permanent link">&para;</a></h4>
+<p>使用 ssh 可以在两台机器间建立一条加密的隧道，并且还可以将流量从一台机器转发到另一台机器。使用场景有：</p>
+<ul>
+<li>A 能访问 B，B 能访问 C，但是 A 无法直接访问 C，此时就可以使用 ssh 将 A 的流量转发到 B，然后访问 C</li>
+</ul>
+<ul>
+<li>vnc 连接时通过 ssh 建立加密隧道，更加安全</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-68-1"><a id="__codelineno-68-1" name="__codelineno-68-1" href="#__codelineno-68-1"></a>ssh -L 59000:localhost:5901 -C -N -l server_user_name server_ip_address
+</span></code></pre></div>
+<ul>
+<li>-L 59000:localhost:5901
+  The <strong>-L</strong> argument specifies the post on your local computer (ours is <strong>59000</strong>) to the given host (<strong>localhost</strong>) and port (<strong>5901</strong>) on the destination server (<strong>server_ip_address</strong>).</li>
+<li>-C: This argument speeds up processes and minimizes resource usage.</li>
+<li>-N: This argument prevents execution of remote commands and tells SSH to only forward ports.</li>
+<li>-l server_user_name server_ip_address: This line specifies the user you will use to login to the server.</li>
+</ul>
+<h4 id="远程机通过本地机代理上网反向代理">远程机通过本地机代理上网（反向代理）<a class="headerlink" href="#远程机通过本地机代理上网反向代理" title="Permanent link">&para;</a></h4>
+<p>远程机比如服务器可能处于内网环境，无法访问网络。可以通过 ssh 解决这个问题。具体过程为：</p>
+<ul>
+<li>通过 ssh，在本地机和远程机上建立一条隧道。</li>
+<li>本地机上开启一个代理服务，比如 clash。</li>
+<li>远程机上配置网络访问使用代理（地址使用 localhost）</li>
+<li>远程机访问代理的端口时，会被 ssh 转发给本地机，作为本地流量。因此该访问会发送给本地的代理服务，实现上网。</li>
+</ul>
+<p>整个过程中的核心是，服务器能访问本地机的代理服务。而这是通过 ssh 的反向转发实现的。对应的选项为：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-69-1"><a id="__codelineno-69-1" name="__codelineno-69-1" href="#__codelineno-69-1"></a>ssh -fNgR 11223:127.0.0.1:11223 server
+</span></code></pre></div>
+<ul>
+<li>f：表示后台执行</li>
+<li>N：表示 ssh 不用执行远程命令</li>
+<li>g：表示 Allows remote hosts to connect to local forwarded ports.  If used on a multiplexed connection, then this option must be specified on the master process.</li>
+<li>
+<p>其中关于 R 的解释，作用类似于-L，只不过反了过来。</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-70-1"><a id="__codelineno-70-1" name="__codelineno-70-1" href="#__codelineno-70-1"></a>-R [bind_address:]port
+</span><span id="__span-70-2"><a id="__codelineno-70-2" name="__codelineno-70-2" href="#__codelineno-70-2"></a>             Specifies that connections to the given TCP port or Unix socket on the remote (server) host are to be forwarded to the local side.
+</span><span id="__span-70-3"><a id="__codelineno-70-3" name="__codelineno-70-3" href="#__codelineno-70-3"></a>
+</span><span id="__span-70-4"><a id="__codelineno-70-4" name="__codelineno-70-4" href="#__codelineno-70-4"></a>             This works by allocating a socket to listen to either a TCP port or to a Unix socket on the remote side.  Whenever a connection is made to
+</span><span id="__span-70-5"><a id="__codelineno-70-5" name="__codelineno-70-5" href="#__codelineno-70-5"></a>             this port or Unix socket, the connection is forwarded over the secure channel, and a connection is made from the local machine to either an
+</span><span id="__span-70-6"><a id="__codelineno-70-6" name="__codelineno-70-6" href="#__codelineno-70-6"></a>             explicit destination specified by host port hostport, or local_socket, or, if no explicit destination was specified, ssh will act as a
+</span><span id="__span-70-7"><a id="__codelineno-70-7" name="__codelineno-70-7" href="#__codelineno-70-7"></a>             SOCKS 4/5 proxy and forward connections to the destinations requested by the remote SOCKS client.
+</span><span id="__span-70-8"><a id="__codelineno-70-8" name="__codelineno-70-8" href="#__codelineno-70-8"></a>
+</span><span id="__span-70-9"><a id="__codelineno-70-9" name="__codelineno-70-9" href="#__codelineno-70-9"></a>             Port forwardings can also be specified in the configuration file.  Privileged ports can be forwarded only when logging in as root on the
+</span><span id="__span-70-10"><a id="__codelineno-70-10" name="__codelineno-70-10" href="#__codelineno-70-10"></a>             remote machine.  IPv6 addresses can be specified by enclosing the address in square brackets.
+</span><span id="__span-70-11"><a id="__codelineno-70-11" name="__codelineno-70-11" href="#__codelineno-70-11"></a>
+</span><span id="__span-70-12"><a id="__codelineno-70-12" name="__codelineno-70-12" href="#__codelineno-70-12"></a>             By default, TCP listening sockets on the server will be bound to the loopback interface only.  This may be overridden by specifying a
+</span><span id="__span-70-13"><a id="__codelineno-70-13" name="__codelineno-70-13" href="#__codelineno-70-13"></a>             bind_address.  An empty bind_address, or the address ‘*’, indicates that the remote socket should listen on all interfaces.  Specifying a
+</span><span id="__span-70-14"><a id="__codelineno-70-14" name="__codelineno-70-14" href="#__codelineno-70-14"></a>             remote bind_address will only succeed if the server&#39;s GatewayPorts option is enabled (see sshd_config(5)).
+</span><span id="__span-70-15"><a id="__codelineno-70-15" name="__codelineno-70-15" href="#__codelineno-70-15"></a>
+</span><span id="__span-70-16"><a id="__codelineno-70-16" name="__codelineno-70-16" href="#__codelineno-70-16"></a>             If the port argument is ‘0’, the listen port will be dynamically allocated on the server and reported to the client at run time.  When used
+</span><span id="__span-70-17"><a id="__codelineno-70-17" name="__codelineno-70-17" href="#__codelineno-70-17"></a>             together with -O forward the allocated port will be printed to the standard output.
+</span></code></pre></div>
+</li>
+</ul>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+  
+
+
+
+      
+    </article>
+  </div>
+
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+        
+      
+      <nav class="md-footer__inner md-grid" aria-label="页脚" >
+        
+          
+          <a href="../../../../../%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/2020/10/11/2020-10-11-WSL%E8%AE%B0%E5%BD%95/" class="md-footer__link md-footer__link--prev" aria-label="上一页: WSL 记录">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                上一页
+              </span>
+              <div class="md-ellipsis">
+                WSL 记录
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../../../../../%E9%98%85%E8%AF%BB/2021/01/01/2021-01-01-linux%E5%86%85%E6%A0%B8%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%AE%9E%E7%8E%B0%E9%98%85%E8%AF%BB/" class="md-footer__link md-footer__link--next" aria-label="下一页: linux 内核设计与实现阅读">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                下一页
+              </span>
+              <div class="md-ellipsis">
+                linux 内核设计与实现阅读
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/TheRainstorm" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../../..", "features": ["navigation.instant", "navigation.instant.progress", "navigation.tracking", "navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.footer", "content.code.copy", "toc.follow", "toc.integrate"], "search": "../../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../../../../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

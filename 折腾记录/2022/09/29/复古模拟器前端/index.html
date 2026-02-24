@@ -1,0 +1,1908 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="记录一些关于数学、计算机的知识，以及一些日常。">
+      
+      
+      
+        <link rel="canonical" href="https://yfy.cqu.ai/%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/2022/09/29/%E5%A4%8D%E5%8F%A4%E6%A8%A1%E6%8B%9F%E5%99%A8%E5%89%8D%E7%AB%AF/">
+      
+      
+        <link rel="prev" href="../../../../../%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/2022/09/28/2022-09-28-python%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/">
+      
+      
+        <link rel="next" href="../../../10/03/2022-10-03-%E5%B0%9D%E8%AF%95%E9%9D%9E%E5%AE%98%E6%96%B9openwrt/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.3">
+    
+    
+      
+        <title>复古模拟器前端 - Rain 的随笔</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#retroarch" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../../../../.." title="Rain 的随笔" class="md-header__button md-logo" aria-label="Rain 的随笔" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Rain 的随笔
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              复古模拟器前端
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    
+  
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="../../../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  博客
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../about/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  关于
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../tags/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  标签
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../series/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  系列
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../tools/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  工具
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../archive/2026/" class="md-tabs__link">
+          
+  
+  
+  归档
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../category/%E4%B8%AA%E4%BA%BA/" class="md-tabs__link">
+          
+  
+  
+  分类
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" hidden>
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../../.." title="Rain 的随笔" class="md-nav__button md-logo" aria-label="Rain 的随笔" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Rain 的随笔
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+    
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      <a href="../../../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    博客
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    关于
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../tags/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    标签
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../series/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    系列
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../tools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    工具
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    归档
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    归档
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2026/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2026
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2025/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2025
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2024/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2024
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2023/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2023
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2022/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2022
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2021/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2021
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2020/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2020
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2019/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2019
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    分类
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    分类
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E4%B8%AA%E4%BA%BA/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    个人
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E5%8D%9A%E5%AE%A2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    博客
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E5%8D%9A%E5%AE%A2--%E7%BD%91%E7%BB%9C/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    博客 &amp; 网络
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    学习笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    折腾记录
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    课程笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%85%B7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    软件工具
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E9%98%85%E8%AF%BB/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    阅读
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+  <div class="md-content md-content--post" data-md-component="content">
+    <div class="md-sidebar md-sidebar--post" data-md-component="sidebar" data-md-type="navigation">
+      <div class="md-sidebar__scrollwrap">
+        <div class="md-sidebar__inner md-post">
+          <nav class="md-nav md-nav--primary">
+            <div class="md-post__back">
+              <div class="md-nav__title md-nav__container">
+                <a href="../../../../.." class="md-nav__link">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+                  <span class="md-ellipsis">
+                    回到主页
+                  </span>
+                </a>
+              </div>
+            </div>
+            
+            <ul class="md-post__meta md-nav__list">
+              <li class="md-nav__item md-nav__item--section">
+                <div class="md-post__title">
+                  <span class="md-ellipsis">
+                    元数据
+                  </span>
+                </div>
+                <nav class="md-nav">
+                  <ul class="md-nav__list">
+                    <li class="md-nav__item">
+                      <div class="md-nav__link">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 19H5V8h14m-3-7v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1V1m-1 11h-5v5h5z"/></svg>
+                        <time datetime="2022-09-29 00:56:52+00:00" class="md-ellipsis">2022年9月29日</time>
+                      </div>
+                    </li>
+                    
+                    
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 3v15h3V3zm3 2 4 13 3-1-4-13zM5 5v13h3V5zM3 19v2h18v-2z"/></svg>
+                          <span class="md-ellipsis">
+                            分类于
+                            
+                              <a href="../../../../../category/%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/">折腾记录</a></span>
+                        </div>
+                      </li>
+                    
+                    
+                      
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20a8 8 0 0 0 8-8 8 8 0 0 0-8-8 8 8 0 0 0-8 8 8 8 0 0 0 8 8m0-18a10 10 0 0 1 10 10 10 10 0 0 1-10 10C6.47 22 2 17.5 2 12A10 10 0 0 1 12 2m.5 5v5.25l4.5 2.67-.75 1.23L11 13V7z"/></svg>
+                          <span class="md-ellipsis">
+                            
+                              需要 5 分钟阅读时间
+                            
+                          </span>
+                        </div>
+                      </li>
+                    
+                  </ul>
+                </nav>
+              </li>
+            </ul>
+            
+          </nav>
+          
+            
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#参考" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        参考
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#shader" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        shader
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#retroarch-设置" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Retroarch 设置
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Retroarch 设置">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#配置文件" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        配置文件
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#设置文件目录" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        设置文件目录
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#更新-retroarch-资源核心等" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        更新 RetroArch 资源、核心等
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#调整用户界面主题" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        调整用户界面（主题）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#按钮映射-和-hotkeys" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        按钮映射 和 hotkeys
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#创建播放列表" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        创建播放列表
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#retroarch-美化" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        retroarch 美化
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="retroarch 美化">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#中文" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        中文
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#壁纸背景音乐" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        壁纸、背景音乐
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#主题图标" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        主题图标
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#遇到的问题" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        遇到的问题
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="遇到的问题">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#手柄失灵" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        手柄失灵
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#平台列表" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        平台列表
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+          
+        </div>
+      </div>
+    </div>
+    <article class="md-content__inner md-typeset">
+      
+        
+  
+
+
+  <nav class="md-tags" >
+    
+      
+      
+      
+      
+        <a href="../../../../../tags/#tag:retroarch" class="md-tag">retroarch</a>
+      
+    
+      
+      
+      
+      
+        <a href="../../../../../tags/#tag:虚拟游戏房" class="md-tag">虚拟游戏房</a>
+      
+    
+  </nav>
+
+
+
+<p><img alt="image.png" src="https://imagebed.yfycloud.site/2025/12/d9f4873e329371e004fc5073ee7e4780.png" />
+<img alt="屏幕截图(118).png" src="https://imagebed.yfycloud.site/2025/12/46b19dd7d049ce8efcfb256b1d4ab1a6.png" />.png)</p>
+<h1 id="retroarch">retroarch<a class="headerlink" href="#retroarch" title="Permanent link">&para;</a></h1>
+<p><a href="https://retrogamecorps.com/2022/02/28/retroarch-starter-guide/">RetroArch Starter Guide – Retro Game Corps</a></p>
+<p>retroarch 是一个模拟器前端，不同的模拟器以 core 的形式嵌入 retro。retroarch 相对于单独的模拟器来说好处如下</p>
+<ul>
+<li>跨平台。retroarch 支持非常多的平台。由于 core 是动态链接库的形式嵌入 retroarch 的，相当于解决了不同 core 的跨平台问题。</li>
+<li>支持全局的按键映射。不用为每个模拟器设置手柄，快捷键等等配置。</li>
+<li>shader and filters。可以实现一些特别的视觉效果，比如</li>
+</ul>
+<!-- more -->
+
+<h2 id="参考">参考<a class="headerlink" href="#参考" title="Permanent link">&para;</a></h2>
+<p><a href="https://www.jianshu.com/p/60cc555e9289">RetroArch 街机模拟教程【亲测有效】 - 简书 (jianshu.com)</a>
+<a href="https://www.emuelec.cn/85.html">EmuELEC 中文网 - EmuELEC 使用指南五之街机模拟器使用简介</a>
+<a href="https://www.emuelec.cn/35.html">EmuELEC 中文网 - EmuELEC 使用指南一之新手快速上手指南</a></p>
+<h2 id="shader">shader<a class="headerlink" href="#shader" title="Permanent link">&para;</a></h2>
+<p><a href="https://www.bilibili.com/video/BV1fd4y1M79b/?vd_source=b01257db06b1514b2fb50663dd339833">【在LCD/OLED上正确显示老游戏】第二弹——自研滤镜【半调圆点】_单机游戏热门视频 (bilibili.com)</a></p>
+<h2 id="retroarch-设置">Retroarch 设置<a class="headerlink" href="#retroarch-设置" title="Permanent link">&para;</a></h2>
+<p><a href="https://retrogamecorps.com/2022/02/28/retroarch-starter-guide/">RetroArch Starter Guide – Retro Game Corps</a></p>
+<h3 id="配置文件">配置文件<a class="headerlink" href="#配置文件" title="Permanent link">&para;</a></h3>
+<p>全局配置 retroarch.cfg，<strong>每次修改完设置后记得在菜单中手动保存</strong>：菜单-》配置文件-》保存当前配置</p>
+<p>There are three types of overrides, which follow a specific hierarchy: core overrides, content directory overrides, and game overrides.</p>
+<p>一些基本设置</p>
+<ul>
+<li>菜单</li>
+<li>设置<ul>
+<li>界面<ul>
+<li>外观</li>
+<li><strong>菜单可见性</strong>：影响除了 playlist 外能看到的页面。建议打开：收藏、历史、图片、探索</li>
+<li><strong>语言</strong></li>
+<li><strong>菜单</strong>：ozone 黑色风格的界面，xmb PS3 风格</li>
+</ul>
+</li>
+<li><strong>输入</strong></li>
+<li><strong>文件夹</strong></li>
+</ul>
+</li>
+</ul>
+<h3 id="设置文件目录">设置文件目录<a class="headerlink" href="#设置文件目录" title="Permanent link">&para;</a></h3>
+<ul>
+<li>asset（素材）：影响主题壁纸等的路径</li>
+<li><strong>thumbnails</strong> （缩略图）：游戏看到的缩略图</li>
+<li>file browser：文件浏览器，建议修改，这样下次打浏览文件会从此处打开</li>
+<li>configuration：配置文件：保存默认配置的文件夹，默认 ~/.config/retroarch/config，修改到别的地方方便修改</li>
+<li><strong>playlist</strong>：存放游戏列表</li>
+<li><strong>screenshots</strong>：截图</li>
+<li>saves：存档文件</li>
+<li>states：状态文件</li>
+</ul>
+<p>对于我们这种自己整理 playlist 的情况，只需要修改其中 <strong>thumbnails, playlist</strong> 即可保持游戏整理的效果</p>
+<h3 id="更新-retroarch-资源核心等">更新 RetroArch 资源、核心等<a class="headerlink" href="#更新-retroarch-资源核心等" title="Permanent link">&para;</a></h3>
+<p>主菜单 &gt; Online Updater</p>
+<ul>
+<li>Update Core Info Files 更新核心信息文件</li>
+<li>Update Assets 更新资产</li>
+<li>Update Controller Profiles<br />
+    更新控制器配置文件</li>
+<li>Update Cheats 更新秘籍</li>
+<li>Update Databases 更新数据库</li>
+<li>Update Shaders 更新着色器</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>Arcade (FB Alpha 2012) -- for low-end devices
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>Arcade (FinalBurn Neo) -- fighting games and beat&#39;em ups
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>Arcade (MAME 2003-Plus) -- all-around arcade emulation
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>Commodore Amiga (PUAE)
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>DOS (DosBox-Pure)
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>NEC PCE/TG-16/PCE-CD/TG-CD (Beetle PCE)
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>Nintendo GB/GBC (Gambatte)
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>Nintendo GBA (gpSP or mGBA)
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>Nintendo Virtual Boy (Beetle VB)
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>Nintendo DS (melonDS)
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>Nintendo NES (Nestopia or fceumm)
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>Nintendo SNES (Snes9x Current)
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>Nintendo 64 (ParaLLEl or Mupen64Plus)
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>Nintendo GameCube/Wii (Dolphin)
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>ScummVM -- point-and-click PC games
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>Sega Master System/Genesis/CD (Genesis Plus GX)
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>Sega 32x (PicoDrive)
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>Sega Saturn (YabaSanshiro or Beetle Saturn)
+</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>Sega Dreamcast (Flycast)
+</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>SNK Neo Geo (FinalBurn Neo)
+</span><span id="__span-0-21"><a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>Sony PlayStation (DuckStation, SwanStation, or PCSX ReARMed)
+</span><span id="__span-0-22"><a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>Sony PlayStation 2 (PCSX2)
+</span><span id="__span-0-23"><a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>Sony Playstation Portable (PPSSPP)
+</span></code></pre></div>
+<h3 id="调整用户界面主题">调整用户界面（主题）<a class="headerlink" href="#调整用户界面主题" title="Permanent link">&para;</a></h3>
+<p>Settings &gt; User Interface &gt; Menu and adjust it to one of the other menus</p>
+<p>关闭一些菜单项：</p>
+<ul>
+<li>Settings &gt; User Interface &gt; Menu Item Visibility</li>
+</ul>
+<h3 id="按钮映射-和-hotkeys">按钮映射 和 hotkeys<a class="headerlink" href="#按钮映射-和-hotkeys" title="Permanent link">&para;</a></h3>
+<p><img alt="retroarch-手柄快捷键.png" src="https://imagebed.yfycloud.site/2025/12/bb01b3e55f1d3896a708ae348b828bea.png" /></p>
+<p>Settings &gt; Input &gt; Port 1 Controls &gt; Set All Controls and follow the prompts.
+Settings &gt; Input &gt; Hotkeys</p>
+<p><img alt="" src="https://imagebed.yfycloud.site/2025/12/5aab2b65712f9cba1a38078d38a57cfd.png" /></p>
+<ul>
+<li><strong>Confirm Quit</strong>：退出时是否二次确认</li>
+<li><strong>Menu Toggle Controller Combo</strong>：暂停游戏并打开 Quick memu，独立于其它热键设置，因此总能通过这个组合键调出菜单。<strong>推荐设置成按住 start 键两秒</strong></li>
+<li><strong>Hotkey Enable</strong>：（相当于 tmux 的 Prefix）这将是您的主要热键按钮。 您在下面的选项中选择的每个热键都需要与您的热键启用按钮结合使用。为此，我通常选择 SELECT 按钮。 这意味着 SELECT + 我选择的任何其他热键都将是我激活热键快捷方式的按钮组合。</li>
+</ul>
+<p>推荐设置的快捷键</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>Hotkey Enable: SELECT button
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>Fast-Forward (Toggle): R2 button
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>Rewind: L2 button *
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>Load State: L1 button
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>Save state: R1 button
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>Show FPS (Toggle): Y button
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>Pause (Toggle): A button **
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>Reset Game: B button
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>Close Content (or Quit RetroArch): START button ***
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>Menu (Toggle): X button
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>Volume Up: Left d-pad
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>Volume Down: Right d-pad
+</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>Run-Ahead (Toggle): Up d-pad
+</span></code></pre></div>
+<p>要使倒带功能正常工作，您需要进入设置 &gt; 帧节流 &gt; 倒带 &gt; 打开。我不建议将此功能作为全局配置打开，因为某些系统（如 Saturn 或 PS1）在启用它时会非常慢，而某些系统（如 PSP）可能会直接崩溃。相反，我建议现在设置热键，然后对于您想要使用倒带的系统（例如 NES），您可以通过按 SELECT + X 进入快捷菜单，然后打开倒带并将其保存为核心覆盖。</p>
+<p><strong>请注意，您的 SELECT + START 热键应设置为“Close Content”或“Quit RetroArch”，但这取决于您的用例</strong>。如果您打算使用 RetroArch 作为前端，那么您将需要 Close Content 以返回 RetroArch 菜单。如果您使用的是其他前端，例如 EmulationStation 或 LaunchBox，则需要将其设置为 Quit RetroArch，以便在使用此热键时将您返回到前端。</p>
+<p>可选功能</p>
+<p>我喜欢为我的游戏设置的一个选项是 <strong>AUTO SAVE / AUTO LOAD。</strong>这将在您关闭游戏时创建一个保存状态，然后在您再次启动游戏时加载该保存状态。它为您的复古游戏提供了一种即玩即玩的感觉。要设置此项，请使用以下两个命令：</p>
+<ul>
+<li>Settings &gt; Saving &gt; Auto Save State &gt; ON  </li>
+<li>Settings &gt; Saving &gt; Load State Automatically &gt; ON</li>
+</ul>
+<h3 id="创建播放列表">创建播放列表<a class="headerlink" href="#创建播放列表" title="Permanent link">&para;</a></h3>
+<p>在 RetroArch 中创建播放列表有两种方法：</p>
+<p><strong>SCAN DIRECTORY</strong>：自动扫描。RetroArch 将自动识别系统类型。适合于具有不同文件类型的解压缩 ROM 的系统（如 .nes 游戏）</p>
+<p><strong>MANUAL SCAN</strong>：这是扫描目录的首选方法，因为它为您提供了更多控制权。</p>
+<ul>
+<li><strong>系统名称</strong>：选择要与播放列表关联的系统名称，可以自定义</li>
+<li><strong>Default Core</strong>：选择要与此播放列表关联的核心。之后，您可以通过选择游戏并选择“Set Core Association”来为特定游戏分配不同的核心</li>
+<li><strong>扫描档案内部</strong>：这将扫描 zip 文件中的文件，是否启用此选项将取决于您正在扫描的系统。如果扫描街机游戏，您将希望关闭此功能</li>
+</ul>
+<p>整数缩放</p>
+<ul>
+<li>Settings &gt; Video &gt; Scaling &gt; Integer Scaling</li>
+<li>RetroArch 将放大到低于设备分辨率的最大整数比例。因此，对于原始分辨率为 640×480 的 Nintendo 64 游戏，它将缩放到 2 倍或 1240×960，四边都有黑色边框。这将保持 1：1 的像素比例，只要您不介意图像周围的黑条，一切都会看起来漂亮而清晰。</li>
+<li>如果不启用整数缩放，图像将缩放以匹配设备的显示（同时保持纵横比），以尽可能多地填充屏幕，但这可能会导致像素失真，从而使某些像素在显示器上看起来失真。您可能没有注意到差异，这完全没问题。您还可以使用着色器或滤镜来重新平衡图像，如下面的部分所示。</li>
+</ul>
+<h2 id="retroarch-美化">retroarch 美化<a class="headerlink" href="#retroarch-美化" title="Permanent link">&para;</a></h2>
+<p>均位于 assets 目录</p>
+<h3 id="中文">中文<a class="headerlink" href="#中文" title="Permanent link">&para;</a></h3>
+<p>游戏的中文会乱码</p>
+<p>系统选择中文语言可以解决这个问题。</p>
+<p>发现 playlist 编码居然有可能是 GBK？扫描到的中文游戏，都会显示问号。</p>
+<h3 id="壁纸背景音乐">壁纸、背景音乐<a class="headerlink" href="#壁纸背景音乐" title="Permanent link">&para;</a></h3>
+<p><a href="https://www.youtube.com/watch?v=N5KLoqIhSyU">Retroarch☆How to Customize Retroarch Menu, Themes, and Icons #retroarch #emulator #frontend - YouTube</a></p>
+<ul>
+<li>设置<ul>
+<li>界面<ul>
+<li>外观<ul>
+<li>着色器通道：背景动画效果，可以试试</li>
+<li>背景图像</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><img alt="image.png" src="https://imagebed.yfycloud.site/2025/12/25c6a7cf0ca3e677771a6de6f59312ec.png" /></p>
+<ul>
+<li>音频<ul>
+<li>菜单声音：全部开启<ul>
+<li>播放的背景音默认是 <code>~/assets/sounds/bgm.ogg</code></li>
+<li>按键音也是对应名称的音频文件</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="主题图标">主题图标<a class="headerlink" href="#主题图标" title="Permanent link">&para;</a></h3>
+<p><a href="https://github.com/lipebello/Retroarch-XMB-Retrorama-Theme">lipebello/Retroarch-XMB-Retrorama-Theme: Retrorama Theme for Retroarch XMB UI (github.com)</a></p>
+<p>xmb 主题，下面有这么多种图标主题</p>
+<ul>
+<li>automatic</li>
+<li>daite</li>
+<li>dot-art</li>
+<li>flatui</li>
+<li>flatux</li>
+<li>monochrome</li>
+<li>pixel</li>
+<li>retrosystem</li>
+<li>systematic</li>
+</ul>
+<p>选择 FlatUI，<code>assets/xmb/flatui</code> 包含以下内容</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>flatui
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>├── font.ttf
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>├── png
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>└── README.md
+</span></code></pre></div>
+<p>png 下包含了每个游戏机的图标，和卡带的图标。命名格式示例如下（可以将 <code>设置-》列表-》从列表中移除主机厂商名字</code> 关闭，默认是打开的）</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>&#39;(1983) Nintendo - FC-content.png&#39;
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>&#39;(1983) Nintendo - FC.png&#39;
+</span></code></pre></div>
+<p><img alt="image.png" src="https://raw.githubusercontent.com/TheRainstorm/.image-bed/main/20241006210729.png" /></p>
+<h2 id="遇到的问题">遇到的问题<a class="headerlink" href="#遇到的问题" title="Permanent link">&para;</a></h2>
+<h3 id="手柄失灵">手柄失灵<a class="headerlink" href="#手柄失灵" title="Permanent link">&para;</a></h3>
+<ul>
+<li>全能手柄（RetroPad）按键绑定<ul>
+<li>端口1 控制<ul>
+<li>设备编号</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>查看设备编号，如果是奇怪的编号，则说明你之前保存了手柄配置文件。删除即可</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>rm udev/Wolf\ X-Box\ One\ \(virtual\)\ pad.cfg
+</span></code></pre></div>
+<h2 id="平台列表">平台列表<a class="headerlink" href="#平台列表" title="Permanent link">&para;</a></h2>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kc">na</span><span class="err">me_lis</span><span class="kc">t</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="p">[</span><span class="err">\</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">    </span><span class="s2">&quot;(1989) NEC - PC Engine&quot;</span><span class="p">,</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">    </span><span class="s2">&quot;(1988) Sega - MegaDrive&quot;</span><span class="p">,</span>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="w">    </span><span class="s2">&quot;(1994) Sega - Saturn&quot;</span><span class="p">,</span>
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="w">    </span><span class="s2">&quot;(1998) Sega - DreamCast&quot;</span><span class="p">,</span>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="w">    </span><span class="s2">&quot;(1989) Nintendo - GB&quot;</span><span class="p">,</span>
+</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="w">    </span><span class="s2">&quot;(1998) Nintendo - GBC&quot;</span><span class="p">,</span>
+</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="w">    </span><span class="s2">&quot;(2001) Nintendo - GBA&quot;</span><span class="p">,</span>
+</span><span id="__span-5-11"><a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="w">    </span><span class="s2">&quot;(2004) Nintendo - NDS&quot;</span><span class="p">,</span>
+</span><span id="__span-5-12"><a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a><span class="w">    </span><span class="s2">&quot;(2011) Nintendo - 3DS&quot;</span><span class="p">,</span>
+</span><span id="__span-5-13"><a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a>
+</span><span id="__span-5-14"><a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a><span class="w">    </span><span class="s2">&quot;(1983) Nintendo - FC&quot;</span><span class="p">,</span>
+</span><span id="__span-5-15"><a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a><span class="w">    </span><span class="s2">&quot;(1990) Nintendo - SFC&quot;</span><span class="p">,</span>
+</span><span id="__span-5-16"><a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a><span class="w">    </span><span class="s2">&quot;(1996) Nintendo - N64&quot;</span><span class="p">,</span>
+</span><span id="__span-5-17"><a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a><span class="w">    </span><span class="err">#(</span><span class="mi">2001</span><span class="err">)</span><span class="w"> </span><span class="s2">&quot;Nintendo - NGC&quot;</span><span class="p">,</span>
+</span><span id="__span-5-18"><a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a><span class="w">    </span><span class="s2">&quot;(2006) Nintendo - Wii&quot;</span><span class="p">,</span>
+</span><span id="__span-5-19"><a id="__codelineno-5-19" name="__codelineno-5-19" href="#__codelineno-5-19"></a><span class="w">    </span><span class="err">#</span><span class="w"> </span><span class="s2">&quot;(2012) Nintendo - WiiU&quot;</span><span class="p">,</span>
+</span><span id="__span-5-20"><a id="__codelineno-5-20" name="__codelineno-5-20" href="#__codelineno-5-20"></a>
+</span><span id="__span-5-21"><a id="__codelineno-5-21" name="__codelineno-5-21" href="#__codelineno-5-21"></a><span class="w">    </span><span class="s2">&quot;(2004) Sony - PSP&quot;</span><span class="p">,</span>
+</span><span id="__span-5-22"><a id="__codelineno-5-22" name="__codelineno-5-22" href="#__codelineno-5-22"></a><span class="w">    </span><span class="err">#</span><span class="w"> </span><span class="s2">&quot;(2011) Sony - PSV&quot;</span><span class="p">,</span>
+</span><span id="__span-5-23"><a id="__codelineno-5-23" name="__codelineno-5-23" href="#__codelineno-5-23"></a><span class="w">    </span><span class="s2">&quot;(1994) Sony - PS1&quot;</span><span class="p">,</span>
+</span><span id="__span-5-24"><a id="__codelineno-5-24" name="__codelineno-5-24" href="#__codelineno-5-24"></a><span class="w">    </span><span class="s2">&quot;(2000) Sony - PS2&quot;</span><span class="p">,</span>
+</span><span id="__span-5-25"><a id="__codelineno-5-25" name="__codelineno-5-25" href="#__codelineno-5-25"></a><span class="w">    </span><span class="err">#</span><span class="w"> </span><span class="s2">&quot;(2006) Sony - PS3&quot;</span><span class="p">,</span>
+</span><span id="__span-5-26"><a id="__codelineno-5-26" name="__codelineno-5-26" href="#__codelineno-5-26"></a><span class="w">    </span><span class="err">#</span><span class="w"> </span><span class="s2">&quot;(2013) Sony - PS4&quot;</span><span class="p">,</span>
+</span><span id="__span-5-27"><a id="__codelineno-5-27" name="__codelineno-5-27" href="#__codelineno-5-27"></a><span class="p">]</span>
+</span></code></pre></div>
+<p>世嘉<a href="https://en.wikipedia.org/wiki/List_of_Sega_video_game_consoles">List of Sega video game consoles - Wikipedia</a></p>
+<p>主机</p>
+<ul>
+<li>MD: Mega Drive, 1988</li>
+<li>SS: Sega Saturn, 1994</li>
+<li>DC: Dreamcast, 1998, 6</li>
+</ul>
+<p>索尼<a href="https://en.wikipedia.org/wiki/PlayStation">PlayStation - Wikipedia</a></p>
+<p>掌机</p>
+<ul>
+<li>PSP: 2004, 7</li>
+<li>PSV: 2011</li>
+</ul>
+<p>主机</p>
+<ul>
+<li>PS1: 1994, 5</li>
+<li>PS2: 2000, 6</li>
+<li>PS3: 2006, 7</li>
+<li>PS4: 2013, 8</li>
+</ul>
+<p>任天堂<a href="https://en.wikipedia.org/wiki/Nintendo_video_game_consoles">Nintendo video game consoles - Wikipedia</a></p>
+<p>掌机</p>
+<ul>
+<li>GB(1989), GBC(1998), GBA(2001)</li>
+<li>NDS/DS(2004)</li>
+<li>3DS(2011)</li>
+</ul>
+<p>主机</p>
+<ul>
+<li>FC/NES:1983</li>
+<li>SFC/SNES: 1990</li>
+<li>N64: 1996</li>
+<li>NGC/game cube: 2001</li>
+<li>WII 2006</li>
+<li>WIIU 2012</li>
+<li>Switch</li>
+</ul>
+<p>街机</p>
+<ul>
+<li>neogeo: snk, 拳皇，合金弹头</li>
+<li>cps1,2,3</li>
+<li>mame</li>
+</ul>
+<ul>
+<li>
+<p>oldman 资源</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>SFC  201M x
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>GBA_499 3.6G
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>NGC  15G
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>Wii  120G
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>SS  7.9G
+</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>DC  17.3G x
+</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>
+</span><span id="__span-6-10"><a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a>PS1  37.1G
+</span><span id="__span-6-11"><a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a>PS2  302G/20G
+</span><span id="__span-6-12"><a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a>PSP  319G/10.4G
+</span></code></pre></div>
+</li>
+</ul>
+<ul>
+<li>
+<p>retroarch 整合包</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>FC  66M 
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>SFC  619M
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>GB[C] 100M
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>GBA  2.26G 
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>NDS  3.91G
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>3DS  25.6G
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>N64  637M
+</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>NGC  4.53G
+</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>Wii  53.4G
+</span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a>WiiU
+</span><span id="__span-7-11"><a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a>
+</span><span id="__span-7-12"><a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a>MD  417M
+</span><span id="__span-7-13"><a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a>SS  4.73G
+</span><span id="__span-7-14"><a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a>DC  22G
+</span><span id="__span-7-15"><a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a>
+</span><span id="__span-7-16"><a id="__codelineno-7-16" name="__codelineno-7-16" href="#__codelineno-7-16"></a>PS1  18.8G
+</span><span id="__span-7-17"><a id="__codelineno-7-17" name="__codelineno-7-17" href="#__codelineno-7-17"></a>PS2  59.5G
+</span><span id="__span-7-18"><a id="__codelineno-7-18" name="__codelineno-7-18" href="#__codelineno-7-18"></a>PSP  21.5G
+</span><span id="__span-7-19"><a id="__codelineno-7-19" name="__codelineno-7-19" href="#__codelineno-7-19"></a>
+</span><span id="__span-7-20"><a id="__codelineno-7-20" name="__codelineno-7-20" href="#__codelineno-7-20"></a>PCE* 1.49G
+</span><span id="__span-7-21"><a id="__codelineno-7-21" name="__codelineno-7-21" href="#__codelineno-7-21"></a>3DO  3.56G
+</span><span id="__span-7-22"><a id="__codelineno-7-22" name="__codelineno-7-22" href="#__codelineno-7-22"></a>Aracade 4.36G
+</span></code></pre></div>
+</li>
+</ul>
+<h1 id="天马">天马<a class="headerlink" href="#天马" title="Permanent link">&para;</a></h1>
+<ul>
+<li>手机：<a href="https://www.bilibili.com/video/BV1d7411r7FE/">https://www.bilibili.com/video/BV1d7411r7FE/</a><ul>
+<li><a href="https://fullgame666.com/1750.html">手机一秒变全能游戏机-【天马前端安卓版】 - 充满游戏君 (fullgame666.com)</a></li>
+</ul>
+</li>
+<li>PC：<a href="https://www.bilibili.com/video/av84836354">https://www.bilibili.com/video/av84836354</a><ul>
+<li><a href="https://fullgame666.com/1742.html">吐血推荐一个漂亮、简单、实用的模拟器前端-【天马前端PC版】 - 充满游戏君 (fullgame666.com)</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="天马g-2tb资源">天马G 2TB资源<a class="headerlink" href="#天马g-2tb资源" title="Permanent link">&para;</a></h2>
+<ul>
+<li>跳坑者联盟B站宣传视频：<a href="https://www.bilibili.com/video/BV1eM4y197aY/">https://www.bilibili.com/video/BV1eM4y197aY/</a><ul>
+<li>rom：1.7T -&gt; 2.85T</li>
+</ul>
+</li>
+<li>百度网盘链接：pan.baidu.com/s/1P-EYhBzxyAWQRL89-ffZqA?pwd=tklm</li>
+</ul>
+<h2 id="整合包">整合包<a class="headerlink" href="#整合包" title="Permanent link">&para;</a></h2>
+<p><a href="https://www.bilibili.com/video/BV1vg4y1V7TB/?vd_source=b01257db06b1514b2fb50663dd339833">天马G PC+安卓双平台 精简Rom整合包 + 8大主题功能演示教程_哔哩哔哩bilibili</a></p>
+<p><a href="https://zhuanlan.zhihu.com/p/707930876">近3TB容量的天马G怀旧模拟器整合包，NAS不知道装些啥的可以看看 - 知乎</a></p>
+<h2 id="天马g-极速版">天马G 极速版<a class="headerlink" href="#天马g-极速版" title="Permanent link">&para;</a></h2>
+<p><strong>极速版并不是精简不完整的意思，而是指优化了启动速度。</strong></p>
+<h3 id="下载">下载<a class="headerlink" href="#下载" title="Permanent link">&para;</a></h3>
+<p>网上能找到各种各样的链接，如百度、夸克等，内容参差不齐。其实官方 B 站发布视频简介就有链接，包含完整内容。</p>
+<ul>
+<li>安卓前端<ul>
+<li><a href="https://www.bilibili.com/video/BV1wB4gzHExz">天马G 安卓端 极速版 1秒载入 正式发布_哔哩哔哩_bilibili</a><ul>
+<li>天马G 极速版前端 链接: <a href="https://pan.baidu.com/s/1IUZFkrtF3flEfWb6_WoUqA?pwd=TKLM">https://pan.baidu.com/s/1IUZFkrtF3flEfWb6_WoUqA?pwd=TKLM</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>PC 前端<ul>
+<li>20251108：<a href="https://www.bilibili.com/video/BV1y719BzEhN">天马G PC端 极速版 1秒载入 前端/主题/滤镜/模拟器更新</a><ul>
+<li>22G 还包含一部分游戏 rom</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="rom">rom<a class="headerlink" href="#rom" title="Permanent link">&para;</a></h4>
+<ol>
+<li>（2023）最早发布的完整包 2.8T
+    - 所有 rom 有加密</li>
+<li>（202511）极简包V1（174G）</li>
+<li>精简包V2（325G）</li>
+<li>街机 V3 （22G）</li>
+</ol>
+<h3 id="安卓安装">安卓安装<a class="headerlink" href="#安卓安装" title="Permanent link">&para;</a></h3>
+<p>前端</p>
+<p>1.</p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+  
+
+
+
+      
+    </article>
+  </div>
+
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+        
+      
+      <nav class="md-footer__inner md-grid" aria-label="页脚" >
+        
+          
+          <a href="../../../../../%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/2022/09/28/2022-09-28-python%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" class="md-footer__link md-footer__link--prev" aria-label="上一页: python 正则表达式">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                上一页
+              </span>
+              <div class="md-ellipsis">
+                python 正则表达式
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../../../10/03/2022-10-03-%E5%B0%9D%E8%AF%95%E9%9D%9E%E5%AE%98%E6%96%B9openwrt/" class="md-footer__link md-footer__link--next" aria-label="下一页: 尝试非官方 openwrt">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                下一页
+              </span>
+              <div class="md-ellipsis">
+                尝试非官方 openwrt
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/TheRainstorm" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../../..", "features": ["navigation.instant", "navigation.instant.progress", "navigation.tracking", "navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.footer", "content.code.copy", "toc.follow", "toc.integrate"], "search": "../../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../../../../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

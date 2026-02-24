@@ -1,0 +1,3212 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="记录一些关于数学、计算机的知识，以及一些日常。">
+      
+      
+      
+        <link rel="canonical" href="https://yfy.cqu.ai/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/2023/04/16/2023-04-16-CUDA%E6%9E%B6%E6%9E%84/">
+      
+      
+        <link rel="prev" href="../../../../../%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/2023/03/23/2023-03-23-%E8%AE%B0%E4%B8%80%E6%AC%A1linux%E7%B3%BB%E7%BB%9F%E6%97%A0%E6%B3%95%E5%90%AF%E5%8A%A8%E4%BF%AE%E5%A4%8D%E8%BF%87%E7%A8%8B/">
+      
+      
+        <link rel="next" href="../2023-04-16-CUDA%E7%BC%96%E7%A8%8B%26%E5%B7%A5%E5%85%B7/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.3">
+    
+    
+      
+        <title>CUDA 架构 - Rain 的随笔</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#疑问" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../../../../.." title="Rain 的随笔" class="md-header__button md-logo" aria-label="Rain 的随笔" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Rain 的随笔
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              CUDA 架构
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    
+  
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="../../../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  博客
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../about/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  关于
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../tags/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  标签
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../series/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  系列
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../tools/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  工具
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../archive/2026/" class="md-tabs__link">
+          
+  
+  
+  归档
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../category/%E4%B8%AA%E4%BA%BA/" class="md-tabs__link">
+          
+  
+  
+  分类
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" hidden>
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../../.." title="Rain 的随笔" class="md-nav__button md-logo" aria-label="Rain 的随笔" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Rain 的随笔
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+    
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      <a href="../../../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    博客
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    关于
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../tags/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    标签
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../series/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    系列
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../tools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    工具
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    归档
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    归档
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2026/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2026
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2025/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2025
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2024/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2024
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2023/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2023
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2022/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2022
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2021/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2021
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2020/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2020
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2019/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2019
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    分类
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    分类
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E4%B8%AA%E4%BA%BA/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    个人
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E5%8D%9A%E5%AE%A2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    博客
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E5%8D%9A%E5%AE%A2--%E7%BD%91%E7%BB%9C/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    博客 &amp; 网络
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    学习笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    折腾记录
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    课程笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%85%B7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    软件工具
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E9%98%85%E8%AF%BB/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    阅读
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+  <div class="md-content md-content--post" data-md-component="content">
+    <div class="md-sidebar md-sidebar--post" data-md-component="sidebar" data-md-type="navigation">
+      <div class="md-sidebar__scrollwrap">
+        <div class="md-sidebar__inner md-post">
+          <nav class="md-nav md-nav--primary">
+            <div class="md-post__back">
+              <div class="md-nav__title md-nav__container">
+                <a href="../../../../.." class="md-nav__link">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+                  <span class="md-ellipsis">
+                    回到主页
+                  </span>
+                </a>
+              </div>
+            </div>
+            
+            <ul class="md-post__meta md-nav__list">
+              <li class="md-nav__item md-nav__item--section">
+                <div class="md-post__title">
+                  <span class="md-ellipsis">
+                    元数据
+                  </span>
+                </div>
+                <nav class="md-nav">
+                  <ul class="md-nav__list">
+                    <li class="md-nav__item">
+                      <div class="md-nav__link">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 19H5V8h14m-3-7v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1V1m-1 11h-5v5h5z"/></svg>
+                        <time datetime="2023-04-16 16:00:00+00:00" class="md-ellipsis">2023年4月16日</time>
+                      </div>
+                    </li>
+                    
+                    
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 3v15h3V3zm3 2 4 13 3-1-4-13zM5 5v13h3V5zM3 19v2h18v-2z"/></svg>
+                          <span class="md-ellipsis">
+                            分类于
+                            
+                              <a href="../../../../../category/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a></span>
+                        </div>
+                      </li>
+                    
+                    
+                      
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20a8 8 0 0 0 8-8 8 8 0 0 0-8-8 8 8 0 0 0-8 8 8 8 0 0 0 8 8m0-18a10 10 0 0 1 10 10 10 10 0 0 1-10 10C6.47 22 2 17.5 2 12A10 10 0 0 1 12 2m.5 5v5.25l4.5 2.67-.75 1.23L11 13V7z"/></svg>
+                          <span class="md-ellipsis">
+                            
+                              需要 27 分钟阅读时间
+                            
+                          </span>
+                        </div>
+                      </li>
+                    
+                  </ul>
+                </nav>
+              </li>
+            </ul>
+            
+          </nav>
+          
+            
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#疑问" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        疑问
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cuda-guide" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CUDA guide
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#硬件单元" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        硬件单元
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="硬件单元">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tensor-core-历史" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tensor core 历史
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="tensor core 历史">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#volta-tensor-core" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        volta tensor core
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ampere-tensor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ampere tensor
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hopper" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        hopper
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nv-架构列表" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        NV 架构列表
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="NV 架构列表">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#compute-capacity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        compute capacity
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#架构" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        架构
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="架构">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#对比" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        对比
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#术语" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        术语
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fermi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fermi
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Fermi">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#gf104-的超标量" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GF104 的超标量
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#白皮书" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        白皮书
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kepler" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Kepler
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#maxwell" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Maxwell
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pascal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        pascal
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="pascal">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#unified-l1texture-cache" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Unified L1/Texture Cache
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shared-memory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        shared memory
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#volta" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        volta
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="volta">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SM
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#unified-shared-memoryl1tex-cache" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        unified shared memory/L1/Tex cache
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#turing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        turing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ampere-架构" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ampere 架构
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="ampere 架构">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#occupancy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        occupancy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#第三代-tensor-core" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        第三代 tensor core
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#unified-l1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Unified L1
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cuda-架构" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CUDA 架构
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="CUDA 架构">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#参考资料" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        参考资料
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#基础" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        基础
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#编程模型" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        编程模型
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="编程模型">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#线程层次" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        线程层次
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#编程接口" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        编程接口
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#硬件实现" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        硬件实现
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="硬件实现">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#simt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SIMT
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hardware-multithreading" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hardware Multithreading
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shared-memory-or-cache-" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Shared memory or cache ?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tensor-core" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tensor core
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#aaa" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        aaa
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="aaa">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#unified-memory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        unified memory
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#memory-space" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        memory space
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cuda-and-applications-to-task-based-programming" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CUDA and Applications to Task-based Programming
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="CUDA and Applications to Task-based Programming">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#part1-编程模型" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        part1 编程模型
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="part1 编程模型">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#有用的参考资料" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        有用的参考资料
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#运行" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        运行
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#warp-执行模型" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        warp 执行模型
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cuda-thread-execution-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CUDA thread execution model
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reduce-优化例子" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        reduce 优化例子
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stream" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        stream
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#debug" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        debug
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#part-2-hardware-实现" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        part 2 hardware 实现
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="part 2 hardware 实现">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#编译" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        编译
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#硬件设计" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        硬件设计
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#warp-实现" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        warp 实现
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#memory-层次" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        memory 层次
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="memory 层次">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#global" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        global
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#const" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        const
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tex" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tex
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shared-memory_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        shared memory
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#part-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        part 3
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="part 3">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#managed-memory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        managed memory
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#its" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ITS
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tensor-core_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tensor core
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        summary
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+          
+        </div>
+      </div>
+    </div>
+    <article class="md-content__inner md-typeset">
+      
+        
+  
+
+
+  <nav class="md-tags" >
+    
+      
+      
+      
+      
+        <a href="../../../../../tags/#tag:cuda" class="md-tag">cuda</a>
+      
+    
+  </nav>
+
+
+
+<h2 id="疑问">疑问<a class="headerlink" href="#疑问" title="Permanent link">&para;</a></h2>
+<ul>
+<li>ampere 架构 SM 中有 4 个 process block，process block 对应一个 warp？意思是可以有 4 个 warp 同时执行？<ul>
+<li>Femi 架构没有 process block，SM 就是最小单元？</li>
+</ul>
+</li>
+<li>The threads of a thread block execute concurrently on one multiprocessor, and multiple thread blocks can execute concurrently on one multiprocessor.<ul>
+<li>这样岂不是若干 thread block 抢一个 SM 上的 shared memory？</li>
+<li>不同 threadblock 的 warp 并发执行，如何隐藏延迟</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>cuda 分块大小对性能影响很大，那么如何确定分块大小呢？<ul>
+<li>穷举</li>
+<li>分析模型？</li>
+</ul>
+</li>
+</ul>
+<!-- more -->
+
+<h2 id="cuda-guide">CUDA guide<a class="headerlink" href="#cuda-guide" title="Permanent link">&para;</a></h2>
+<p><a href="https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#overall-performance-optimization-strategies">CUDA C++ Programming Guide</a></p>
+<p>At every instruction issue time, a warp scheduler selects an instruction that is ready to execute. This instruction can be another independent instruction of the same warp, exploiting instruction-level parallelism, or more commonly an instruction of another warp, exploiting thread-level parallelism</p>
+<p>he number of clock cycles it takes for a warp to be ready to execute its next instruction is called the <em>latency</em>, and full utilization is achieved when all warp schedulers always have some instruction to issue for some warp at every clock cycle during that latency period, or in other words, when latency is completely “hidden”. The number of instructions required to hide a latency of L clock cycles depends on the respective throughputs of these instructions (see <a href="https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#arithmetic-instructions">Arithmetic Instructions</a> for the throughputs of various arithmetic instructions). If we assume instructions with maximum throughput, it is equal to:</p>
+<ul>
+<li><em>4L</em> for devices of compute capability 5.x, 6.1, 6.2, 7.x and 8.x since for these devices, a multiprocessor issues one instruction per warp over one clock cycle for four warps at a time, as mentioned in <a href="https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#compute-capabilities">Compute Capabilities</a>.</li>
+<li><em>2L</em> for devices of compute capability 6.0 since for these devices, the two instructions issued every cycle are one instruction for two different warps.</li>
+</ul>
+<p>On devices of compute capability 7.x, for most arithmetic instructions, it is typically 4 clock cycles. <strong>This means that 16 active warps per multiprocessor (4 cycles, 4 warp schedulers) are required to hide arithmetic instruction latencies</strong> (assuming that warps execute instructions with maximum throughput, otherwise fewer warps are needed). If the individual warps exhibit instruction-level parallelism, i.e. have multiple independent instructions in their instruction stream, fewer warps are needed because multiple independent instructions from a single warp can be issued back to back.</p>
+<h2 id="硬件单元">硬件单元<a class="headerlink" href="#硬件单元" title="Permanent link">&para;</a></h2>
+<p>Throughput of Native Arithmetic Instructions. (Number of Results per Clock Cycle per Multiprocessor)
+<a href="https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#arithmetic-instructions">CUDA C++ Programming Guide</a></p>
+<p>2.x 后有的 Cache
+(i.e., L1 cache and L2 cache available on devices of compute capability 2.x and higher, texture cache and constant cache available on all devices).</p>
+<p>cache 的应用场景：for which global memory access patterns are data-dependent</p>
+<p>On devices of compute capability 5.x onwards, local memory accesses are always cached in L2 in the same way as global memory accesses</p>
+<h3 id="tensor-core-历史">tensor core 历史<a class="headerlink" href="#tensor-core-历史" title="Permanent link">&para;</a></h3>
+<p>tag: tensorcore, TC</p>
+<p><a href="https://deep-learning.feishu.cn/wiki/PnYmw4KcdiPBphkJBFdcqdDxnke">Nvidia TensorCore - Feishu Docs</a></p>
+<table>
+<thead>
+<tr>
+<th>序号</th>
+<th>时间</th>
+<th>架构</th>
+<th>编程 / 执行模型</th>
+<th>FP16 Shape</th>
+<th>数据类型</th>
+<th>补充说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>2017</td>
+<td>Volta<br><br>V100</td>
+<td>Warp-Level 编程模式<br><br>wmma 指令</td>
+<td>m4xn4xk4</td>
+<td>FP16</td>
+<td>第一代 TensorCore。</td>
+</tr>
+<tr>
+<td>2</td>
+<td>2018</td>
+<td>Turing</td>
+<td></td>
+<td>同 Volta</td>
+<td>+ int8, int4, int1</td>
+<td>基本没变化，不讨论。</td>
+</tr>
+<tr>
+<td>3</td>
+<td>2020</td>
+<td>Ampere</td>
+<td>软件的异步加载机制</td>
+<td>m8xn4xk8</td>
+<td>+ fp32, bf16</td>
+<td></td>
+</tr>
+<tr>
+<td>4</td>
+<td>2022</td>
+<td>Hopper</td>
+<td>硬件 TMA 异步加载数据<br><br>加了 wgmma 指令</td>
+<td>m8xn4xk16</td>
+<td>+ fp8</td>
+<td>引入了 Transformer 引擎</td>
+</tr>
+<tr>
+<td>5</td>
+<td>2024</td>
+<td>Blackwell</td>
+<td></td>
+<td></td>
+<td>+ fp4, fp6</td>
+<td>第 2 代Transformer引擎</td>
+</tr>
+</tbody>
+</table>
+<p>WMMA (warp level MMA)
+Hopper 引入了 WGMMA (WarpGroup MMA)，可以直接读取 SMEM 中的数据进行计算。不用经过 register file。</p>
+<h4 id="volta-tensor-core">volta tensor core<a class="headerlink" href="#volta-tensor-core" title="Permanent link">&para;</a></h4>
+<ul>
+<li>一个 subcore，2 个 TC</li>
+<li>每个 TC 4x4x4 per cycle</li>
+</ul>
+<p>8 个周期 1024 MAC</p>
+<h4 id="ampere-tensor">ampere tensor<a class="headerlink" href="#ampere-tensor" title="Permanent link">&para;</a></h4>
+<ul>
+<li>tensor core 单元一个 cycle 只能计算 m8n4k8(256Macs)，</li>
+<li>1 条 HMMA.16816(2048Macs) 指令执行会理论上需要 8cycle,</li>
+<li>故完成一个 m16n16k16 的矩阵运算需要 16cycle。</li>
+</ul>
+<p>8 个周期 2048MAC</p>
+<p><img alt="image.png" src="https://imagebed.yfycloud.site/2025/12/a3811671358f8f7c43073b3b1761d4ed.png" /></p>
+<p>LDGSTS(ampere)</p>
+<p><img alt="image.png" src="https://imagebed.yfycloud.site/2025/12/951015c2ee8985736e4f904435d429bf.png" /></p>
+<h4 id="hopper">hopper<a class="headerlink" href="#hopper" title="Permanent link">&para;</a></h4>
+<p>尽管 Nvidia A100 架构中引入了软件的 async_copy，但其核心运算逻辑仍基于 Warp-Level 编程模式进行
+传统的 Warp-Level 编程模式要求所有线程都参与数据搬运和计算过程，这不仅消耗了大量的资源，还限制了计算规模的可扩展性。</p>
+<p>TMA（Tensor Memory Access），用户只需要一次性配置好首地址、偏移量等Tensor描述信息
+通过硬件实现了矩阵乘法的流水线</p>
+<p><img alt="image.png" src="https://imagebed.yfycloud.site/2025/12/96b31cbe8480a216874cf894893126ae.png" /></p>
+<p>从上面4条指令可以看出，Hopper的TensorCore与之前的TensorCore有比较大的区别，更加的像一个异步的加速器，有一个TensorCore专用的queue（有点像TPU和NPU），单条指令执行的计算量更大(64x256x16), CUDA线程需要向TensorCore提交任务，然后可以完成一些别的工作，最后通过同步指令等待结果。</p>
+<div class="language-C++ highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1">// 一条Tensor core PTX指令wgmma(64n8k16)</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="n">wgmma</span><span class="p">.</span><span class="n">mma_async</span><span class="p">.</span><span class="n">sync</span><span class="p">.</span><span class="n">aligned</span><span class="p">.</span><span class="n">m64n8k16</span><span class="p">.</span><span class="n">f16</span><span class="p">.</span><span class="n">f16</span><span class="p">.</span><span class="n">f16</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="c1">// 对应三条SASS指令</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="n">WARPGROUP</span><span class="p">.</span><span class="n">ARRIVE</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="n">HGMMA</span><span class="mf">.64</span><span class="n">x8x16</span><span class="p">.</span><span class="n">F16</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="n">WARPGROUP</span><span class="p">.</span><span class="n">DEPBAR</span><span class="p">.</span><span class="n">LE</span>
+</span></code></pre></div>
+<h1 id="nv-架构列表">NV 架构列表<a class="headerlink" href="#nv-架构列表" title="Permanent link">&para;</a></h1>
+<h2 id="compute-capacity">compute capacity<a class="headerlink" href="#compute-capacity" title="Permanent link">&para;</a></h2>
+<p><a href="https://arnon.dk/matching-sm-architectures-arch-and-gencode-for-various-nvidia-cards/">Matching CUDA arch and CUDA gencode for various NVIDIA architectures - Arnon Shimoni</a></p>
+<ul>
+<li>Pascal<ul>
+<li>SM61: 1080</li>
+</ul>
+</li>
+<li>volta<ul>
+<li>SM70: Tesla V100, Titan V</li>
+</ul>
+</li>
+<li>Ampere<ul>
+<li>SM80: NVIDIA A100 (the name “Tesla” has been dropped – GA100))
+<img alt="" src="https://imagebed.yfycloud.site/2025/12/bcce2565ad2cd60034296625546fb2a7.png" /></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>Tesla(2008)</li>
+<li>Fermi(2010)</li>
+<li>Kepler(2012)：<strong>K80</strong></li>
+<li>Maxwell(2014)： M10/M40</li>
+<li>Pascal(2016)： Tesla <strong>P40</strong>、<strong>P100</strong>、GTX <strong>1080Ti</strong>  Titan XP、Quadro GP100/P6000/P5000，10系</li>
+<li>Volta(2017)： Tesla <strong>V100</strong>、GeForce <strong>Titan V</strong>、Quadro GV100 专业卡</li>
+<li>Turing(2018)：1 个 SM 8 个 Tensor core，1 个 RT core，16，20 系</li>
+<li>Ampere(2020)： <strong>A100</strong>，30 系</li>
+<li>Hopper(2022)：H100</li>
+</ul>
+<p>1080: 20x128
+1080ti: 28x128, gp104
+p40: 30x128, gp102
+p100: 28x128, HBM2(4096bit)</p>
+<p><a href="https://en.wikipedia.org/wiki/Ampere_(microarchitecture)">Ampere (microarchitecture) - Wikipedia</a></p>
+<p><img alt="" src="https://imagebed.yfycloud.site/2025/12/981716b716866d04aff615662f3e252b.png" /></p>
+<h2 id="架构">架构<a class="headerlink" href="#架构" title="Permanent link">&para;</a></h2>
+<p><a href="https://zhuanlan.zhihu.com/p/394352476">NVIDIA GPU 架构梳理 - 知乎 (zhihu.com)</a>
+<a href="https://jcf94.com/2020/05/24/2020-05-24-nvidia-arch/">NVIDIA GPU 架构演进 | Chenfan Blog</a></p>
+<h3 id="对比">对比<a class="headerlink" href="#对比" title="Permanent link">&para;</a></h3>
+<ul>
+<li>来自 GCoM 论文，其中 volta cacheline 为 32 B，应该是写错了。
+<img alt="image.png" src="https://imagebed.yfycloud.site/2025/12/0f1ebc983e6941f1f13c2387d522100f.png" /></li>
+</ul>
+<ul>
+<li>Fermi：每个 GPC 包含 4 个 SM，每个 SM 包含 32 个 CUDA，2 个 warp scheduler(x1 dispatch)</li>
+<li>Kepler：SMX，一个 SMX 4 个 WS(x2 Dispatch)，192 CUDA</li>
+<li>Maxwell: SMM，4 个 Process block（类似于 Fermi 的 SM），每个 process block 1 个 WS(x2 Dispatch)</li>
+</ul>
+<p>寄存器数，基本都是一个 SM，65536（可以分成 4 个 16384，或者两个 32768）</p>
+<ul>
+<li>pascal，L1 $D 和 shared memory 都是分开的，turing 开始合并</li>
+<li>turing 去掉了对 FP64 的支持</li>
+</ul>
+<h3 id="术语">术语<a class="headerlink" href="#术语" title="Permanent link">&para;</a></h3>
+<ul>
+<li>GPC：费米为例，整个 GPU 有多个 GPC(图形处理集群)，单个GPC包含一个光栅引擎(Raster Engine)，四个 SM（流式多处理器），GPC 可以被认为是一个独立的 GPU。所有从 Fermi 开始的 NVIDIA GPU，都有 GPC。</li>
+<li><strong>核心</strong>是一个完整的GPU模组，如 GP100，GP102</li>
+</ul>
+<h3 id="fermi">Fermi<a class="headerlink" href="#fermi" title="Permanent link">&para;</a></h3>
+<ul>
+<li>橙色部分：2 个 Warp Scheduler/Dispatch Unit</li>
+<li>绿色部分：32 个 CUDA 内核，分在两条 lane 上，每条分别是 16 个</li>
+</ul>
+<p><a href="https://stackoverflow.com/a/10467342">https://stackoverflow.com/a/10467342</a></p>
+<blockquote>
+<p>The programmer divides work into threads, threads into thread blocks, and thread blocks into grids. The compute work distributor allocates thread blocks to Streaming Multiprocessors (SMs). <strong>Once a thread block is distributed to a SM the resources for the thread block are allocated</strong> (warps and shared memory) and threads are divided into groups of 32 threads called warps. Once a warp is allocated it is called an active warp. <strong>The two warp schedulers pick two active warps per cycle</strong> and dispatch warps to execution units. For more details on execution units and instruction dispatch see <a href="http://www.nvidia.com/content/PDF/fermi_white_papers/NVIDIA_Fermi_Compute_Architecture_Whitepaper.pdf">1</a> p.7-10 and <a href="http://www.anandtech.com/show/3809/nvidias-geforce-gtx-460-the-200-king/2">2</a>.</p>
+</blockquote>
+<p>Fermi，一个 SM 有两个 warp 保证每周期有指令可以发射</p>
+<blockquote>
+<p>A stalled warp is ineligible to be selected by the warp scheduler. On Fermi it is useful to have at least 2 eligible warps per cycle so that the warp scheduler can issue an instruction.</p>
+</blockquote>
+<p>GeForce 560Ti，8SM，每个 48CUDA</p>
+<blockquote>
+<p>If you launch kernel&lt;&lt;&lt;8, 48&gt;&gt;&gt; you will get 8 blocks each with 2 warps of 32 and 16 threads. There is no guarantee that these 8 blocks will be assigned to different SMs.</p>
+</blockquote>
+<ul>
+<li>每个 SM 可以有很多线程块</li>
+</ul>
+<blockquote>
+<p>A GTX560 can have 8 SM *8 blocks = 64 blocks at a time or 8 SM* 48 warps = 512 warps if the kernel does not max out registers or shared memory. At any given time on a portion of the work will be active on SMs. Each SM has multiple execution units (more than CUDA cores). Which resources are in use at any given time is dependent on the warp schedulers and instruction mix of the application. If you don't do TEX operations then the TEX units will be idle. If you don't do a special floating point operation the SUFU units will idle.</p>
+</blockquote>
+<p><img alt="" src="https://imagebed.yfycloud.site/2025/12/0862c879c191cf055e697a941ce15a21.webp" /></p>
+<h4 id="gf104-的超标量">GF104 的超标量<a class="headerlink" href="#gf104-的超标量" title="Permanent link">&para;</a></h4>
+<p><a href="https://www.anandtech.com/show/3809/nvidias-geforce-gtx-460-the-200-king/2">GF104: NVIDIA Goes Superscalar - NVIDIA’s GeForce GTX 460: The $200 King</a>
+有三组 cuda block，但是只有两个 warp 调度器
+<img alt="image.png" src="https://imagebed.yfycloud.site/2025/12/9578fd5a450cf34aec7a071d1be7ac11.png" /></p>
+<p>GF100 是 32 个 CUDA 每 SM</p>
+<h4 id="白皮书">白皮书<a class="headerlink" href="#白皮书" title="Permanent link">&para;</a></h4>
+<p><a href="https://www.nvidia.com/content/PDF/fermi_white_papers/NVIDIA_Fermi_Compute_Architecture_Whitepaper.pdf">Microsoft Word - NVIDIA Fermi Architecture Whitepaper.docx</a></p>
+<p>双发射
+<img alt="" src="https://imagebed.yfycloud.site/2025/12/16db1b859cd4a2797fd39b81f9d35a91.png" /></p>
+<blockquote>
+<p>Fermi’s dual warp scheduler selects two warps, and issues one instruction from each warp to a group of sixteen cores, sixteen load/store units, or four SFUs. Because warps execute independently, Fermi’s scheduler does not need to check for dependencies from within the instruction stream. Using this elegant model of dual-issue, Fermi achieves near peak hardware performance.
+Most instructions can be dual issued; two integer instructions, two floating instructions, or a mix of integer, floating point, load, store, and SFU instructions can be issued concurrently. Double precision instructions do not support dual dispatch with any other operation.</p>
+</blockquote>
+<p>可配置的 shared memory 和 L1 cache</p>
+<blockquote>
+<p>G80 and GT200 have 16 KB of shared memory per SM. In the Fermi architecture, each SM has 64 KB of on-chip memory that can be configured as 48 KB of Shared memory with 16 KB of L1 cache or as 16 KB of Shared memory with 48 KB of L1 cache.</p>
+</blockquote>
+<h3 id="kepler">Kepler<a class="headerlink" href="#kepler" title="Permanent link">&para;</a></h3>
+<ul>
+<li>一个 SMX 192 个 CUDA
+<img alt="" src="https://imagebed.yfycloud.site/2025/12/9fa2eae96be9c90a0ed88c98c70abab0.webp" /></li>
+</ul>
+<h3 id="maxwell">Maxwell<a class="headerlink" href="#maxwell" title="Permanent link">&para;</a></h3>
+<ul>
+<li>SMM：四个处理块 (processing block)，每个有专用的 warp 调度器，包含 32 个 core
+<img alt="" src="https://imagebed.yfycloud.site/2025/12/26f1e37582898d7b6752070af25a505f.webp" /></li>
+</ul>
+<h3 id="pascal">pascal<a class="headerlink" href="#pascal" title="Permanent link">&para;</a></h3>
+<p><a href="https://www.techpowerup.com/gpu-specs/geforce-gtx-1080-ti.c2877">NVIDIA GeForce GTX 1080 Ti Specs | TechPowerUp GPU Database</a>
+<a href="https://www.es.ele.tue.nl/~heco/courses/ECA/GPU-papers/GeForce_GTX_1080_Whitepaper_FINAL.pdf">GeForce GTX 1080 Whitepaper</a></p>
+<p>Compute Capability: 6.0（P100）, 6.1（GTX 10x、P40、P6、P4）, 6.2</p>
+<p>Pascal GPUs are composed of different configurations of Graphics Processing Clusters (GPCs), Streaming Multiprocessors (SMs), and memory controllers.
+The combination of one SM plus one Polymorph Engine is referred to as a <strong>TPC</strong>.</p>
+<p>我找到的 GP104 的图 (6.1)
+<img alt="image.png" src="https://imagebed.yfycloud.site/2025/12/155fee1583169d82022ba3982c57e787.png" /></p>
+<p>GP100 是这样的 (6.0)
+<a href="https://images.nvidia.com/content/pdf/tesla/whitepaper/pascal-architecture-whitepaper.pdf">GP100 Pascal Whitepaper</a>
+<img alt="image.png" src="https://imagebed.yfycloud.site/2025/12/a01f9cae99aa9a2a10fff400253ead43.png" /></p>
+<p><a href="https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#compute-capability-6-x">CUDA C++ Programming Guide</a></p>
+<ul>
+<li>64 (compute capability 6.0) or 128 (6.1 and 6.2) CUDA cores for arithmetic operations,</li>
+<li>16 (6.0) or 32 (6.1 and 6.2) special function units for single-precision floating-point transcendental functions,</li>
+<li>2 (6.0) or 4 (6.1 and 6.2) warp schedulers.</li>
+</ul>
+<p>While Fermi and Kepler GPUs featured a 64 KB configurable shared memory and L1 cache that could split the allocation of memory between L1 and shared memory functions depending on workload, beginning with Maxwell, the cache hierarchy was changed. The GP100 SM has its own dedicated pool of shared memory (<strong>64 KB/SM</strong>) and an <strong>L1 cache that can also serve as a texture cache</strong> depending on workload. The unified L1/texture cache acts as a coalescing buffer for memory accesses, gathering up the data requested by the threads of a warp prior to delivery of that data to the warp</p>
+<p><a href="https://docs.nvidia.com/cuda/pascal-tuning-guide/index.html">Pascal Tuning Guide</a></p>
+<blockquote>
+<p>Pascal architecture comprises two major variants: GP100 and GP104.<a href="https://docs.nvidia.com/cuda/pascal-tuning-guide/index.html#fn2">2</a> A detailed overview of the major improvements in GP100 and GP104 over earlier NVIDIA architectures are described in a pair of white papers entitled <a href="http://images.nvidia.com/content/pdf/tesla/whitepaper/pascal-architecture-whitepaper.pdf">NVIDIA Tesla P100: The Most Advanced Datacenter Accelerator Ever Built</a> for GP100 and <a href="http://international.download.nvidia.com/geforce-com/international/pdfs/GeForce_GTX_1080_Whitepaper_FINAL.pdf">NVIDIA GeForce GTX 1080: Gaming Perfected</a> for GP104.</p>
+</blockquote>
+<p>Pascal provides improved FP16 support for applications, like deep learning, that are tolerant of low floating-point precision.</p>
+<blockquote>
+<p>GP100 and GP104 provide different FP16 throughputs. GP100, designed with training deep neural networks in mind, provides FP16 throughput up to 2x that of FP32 arithmetic. On GP104, FP16 throughput is lower, 1/64th that of FP32. However, compensating for reduced FP16 throughput, GP104 provides additional high-throughput INT8 support not available in GP100.</p>
+</blockquote>
+<h4 id="unified-l1texture-cache">Unified L1/Texture Cache<a class="headerlink" href="#unified-l1texture-cache" title="Permanent link">&para;</a></h4>
+<p>Like Maxwell, Pascal combines the functionality of the L1 and texture caches into a unified L1/Texture cache which acts as a coalescing buffer for memory accesses</p>
+<p>GP104 默认 global load 不使用 cache。</p>
+<blockquote>
+<p>By default, GP100 caches global loads in the L1/Texture cache. In contrast, GP104 follows Maxwell in caching global loads in L2 only, unless using the <em>LDG</em> read-only data cache mechanism. As with previous architectures, GP104 allows the developer to opt-in to caching all global loads in the unified L1/Texture cache by passing the <code>-Xptxas -dlcm=ca</code> flag to <code>nvcc</code> at compile time.</p>
+</blockquote>
+<p>L1 cacheline 使用 32B ？之前 Maxwell bypass L1 的原因是粒度为 128B，没有 sector cache。</p>
+<blockquote>
+<p>Kepler serviced loads at a granularity of 128B when L1 caching of global loads was enabled and 32B otherwise. On Pascal the data access unit is 32B regardless of whether global loads are cached in L1. <strong>So it is no longer necessary to turn off L1 caching</strong> in order to reduce wasted global memory transactions associated with uncoalesced accesses.</p>
+</blockquote>
+<p>L1/Texture cache which acts as a coalescing buffer for memory accesses, gathering up the data requested by the threads of a warp prior to delivery of that data to the warp.</p>
+<h4 id="shared-memory">shared memory<a class="headerlink" href="#shared-memory" title="Permanent link">&para;</a></h4>
+<p>Kepler 和 L1 公用，Maxwell 和 Pascal 使用单独的空间。</p>
+<ul>
+<li>GP100 64KB</li>
+<li>GP104 96KB</li>
+</ul>
+<p>For Kepler, shared memory and the L1 cache shared the same on-chip storage. Maxwell and Pascal, by contrast, provide dedicated space to the shared memory of each SM, since the functionality of the L1 and texture caches have been merged. This increases the shared memory space available per SM as compared to Kepler: GP100 offers 64 KB shared memory per SM, and GP104 provides 96 KB per SM.</p>
+<ul>
+<li>Algorithms with significant shared memory capacity requirements (e.g., radix sort) see an automatic 33% to 100% boost in capacity per SM on top of the aggregate boost from higher SM count.</li>
+<li>Applications no longer need to select a preference of the L1/shared split for optimal performance</li>
+</ul>
+<p>单个线程块最大为 48KB</p>
+<blockquote>
+<p>Thread-blocks remain limited to 48 KB of shared memory. For maximum flexibility, NVIDIA recommends that applications use at most 32 KB of shared memory in any one thread block. This would, for example, allow at least two thread blocks to fit per GP100 SM, or 3 thread blocks per GP104 SM.
+</p>
+</blockquote>
+<h3 id="volta">volta<a class="headerlink" href="#volta" title="Permanent link">&para;</a></h3>
+<p>Compute Capability: 7.0（TITAN V、V100）, 7.2（Xavier）</p>
+<ul>
+<li>SM：4 个 block</li>
+<li>将一个 CUDA 拆分成 FP32 和 INT32，每个周期可以同时执行浮点和整数。</li>
+<li>添加 tensor core
+<img alt="" src="https://imagebed.yfycloud.site/2025/12/998c0aa10c98d780aa3bf02f6942ef2b.webp" /></li>
+</ul>
+<p><a href="https://docs.nvidia.com/cuda/volta-tuning-guide/index.html">Volta Tuning Guide</a></p>
+<h4 id="sm">SM<a class="headerlink" href="#sm" title="Permanent link">&para;</a></h4>
+<p>Each Volta SM includes 4 warp-scheduler units. Each scheduler handles a static set of warps and issues to a dedicated set of arithmetic instruction units.</p>
+<p>Instructions are performed over <strong>two cycles</strong>,  and the schedulers can issue independent instructions every cycle.</p>
+<p>Dependent instruction issue latency for core FMA math operations are <strong>reduced to four clock cycles,</strong> compared to <strong>six</strong> cycles on Pascal.  As a result, execution latencies of core math operations can be hidden by as few as 4 warps per SM, , assuming 4-way instruction-level parallelism <em>ILP</em> per warp, or by 16 warps per SM without any instuction-level parallelism.</p>
+<p>Similar to GP100, the GV100 SM provides <strong>64 FP32 cores and 32 FP64 cores</strong>. The GV100 SM additionally includes 64 INT32 cores and 8 mixed-precision Tensor Cores. GV100 provides up to 84 SMs.</p>
+<p>dedicated FP32 and INT32 cores. This enables simultaneous execution of FP32 and INT32 operations.</p>
+<p>HBM 带宽增大了，SM 数量因此也增加了，来保证 有大量的 reads-in-flight
+his is accomplished by the large complement of SMs in GV100, which typically boost the number of concurrent threads, and thus the reads-in-flight, compared to previous architectures. Resource-constrained kernels that are limited to low occupancy may benefit from increasing the number of concurrent memory accesses per thread.</p>
+<h4 id="unified-shared-memoryl1tex-cache">unified shared memory/L1/Tex cache<a class="headerlink" href="#unified-shared-memoryl1tex-cache" title="Permanent link">&para;</a></h4>
+<p><em>carveout</em> 选择</p>
+<p>In Volta the L1 cache, texture cache, and shared memory are backed by a combined 128 KB data cache. As in previous architectures, the portion of the cache dedicated to shared memory (known as the <em>carveout</em>) can be selected at runtime using <code>cudaFuncSetAttribute()</code> with the attribute <code>cudaFuncAttributePreferredSharedMemoryCarveout</code>. Volta supports shared memory capacities of 0, 8, 16, 32, 64, or 96 KB per SM.</p>
+<h3 id="turing">turing<a class="headerlink" href="#turing" title="Permanent link">&para;</a></h3>
+<p>Compute Capability: 7.5（RTX 20x、T4）</p>
+<p><a href="https://old.hotchips.org/hc31/HC31_2.12_NVIDIA_final.pdf">Slide 1</a></p>
+<p><img alt="image.png" src="https://imagebed.yfycloud.site/2025/12/5282383c8e8992d9dacf85a3bc3778f8.png" />
+<img alt="image.png" src="https://imagebed.yfycloud.site/2025/12/1566568fb75a4ecd0eafa91717257804.png" /></p>
+<p>Tensor core 支持整数矩阵乘
+Turing adds acceleration for integer matrix multiply operations.</p>
+<p>Any binary compiled for Volta will run on Turing, but Volta binaries using Tensor Cores will only be able to reach half of Turing’s Tensor Core peak performance. <strong>Recompiling</strong> the binary specifically for Turing would allow it to reach the peak performance.</p>
+<h3 id="ampere-架构">ampere 架构<a class="headerlink" href="#ampere-架构" title="Permanent link">&para;</a></h3>
+<p>Compute Capability: 8.0（A100、A30）, 8.6（RTX 30x、A40、A16、A10、A2）, 8.7（Orin）</p>
+<p><img alt="" src="https://imagebed.yfycloud.site/2025/12/37e5351f0225bda276e976a85da24526.webp" /></p>
+<p><a href="https://www.nvidia.com/content/PDF/nvidia-ampere-ga-102-gpu-architecture-whitepaper-v2.pdf">nvidia-ampere-ga-102-gpu-architecture-whitepaper-v2.pdf</a>
+In the Turing generation, each of the four SM processing blocks (also called partitions) had two primary datapaths, but only one of the two could process FP32 operations. The other datapath was limited to integer operations. GA10x includes FP32 processing on both datapaths, doubling the peak processing rate for FP32 operations</p>
+<p><a href="https://docs.nvidia.com/cuda/ampere-tuning-guide/index.html">NVIDIA Ampere GPU Architecture Tuning Guide</a></p>
+<h4 id="occupancy">occupancy<a class="headerlink" href="#occupancy" title="Permanent link">&para;</a></h4>
+<ul>
+<li>For devices of compute capability 8.0 (i.e., A100 GPUs) shared memory capacity per SM is 164 KB, a 71% increase compared to V100’s capacity of 96 KB. For GPUs with compute capability 8.6, shared memory capacity per SM is 100 KB.</li>
+</ul>
+<p>async data copy from global memory to shared memory</p>
+<ul>
+<li>avoid using extra registers</li>
+<li>bypass the L1 cache.</li>
+</ul>
+<h4 id="第三代-tensor-core">第三代 tensor core<a class="headerlink" href="#第三代-tensor-core" title="Permanent link">&para;</a></h4>
+<ul>
+<li>Support for FP64 Tensor Core, using new DMMA instructions.</li>
+</ul>
+<ul>
+<li>Support for Bfloat16 Tensor Core, through HMMA instructions. BFloat16 format is especially effective for DL training scenarios. Bfloat16 provides 8-bit exponent i.e., same range as FP32, 7-bit mantissa and 1 sign-bit.</li>
+</ul>
+<ul>
+<li>Support for TF32 Tensor Core, through HMMA instructions. TF32 is a new 19-bit Tensor Core format that can be easily integrated into programs for more accurate DL training than 16-bit HMMA formats. TF32 provides 8-bit exponent, 10-bit mantissa and 1 sign-bit.</li>
+</ul>
+<ul>
+<li>Support for bitwise <code>AND</code> along with bitwise <code>XOR</code> which was introduced in Turing, through BMMA instructions.</li>
+</ul>
+<h4 id="unified-l1">Unified L1<a class="headerlink" href="#unified-l1" title="Permanent link">&para;</a></h4>
+<p>The NVIDIA A100 GPU based on compute capability 8.0 increases the maximum capacity of the combined L1 cache, texture cache and shared memory to 192 KB, 50% larger than the L1 cache in NVIDIA V100 GPU. The combined L1 cache capacity for GPUs with compute capability 8.6 is 128 KB.</p>
+<p>L2 提升 7 倍
+ 40 MB in Tesla A100, which is 7x larger than Tesla V100.</p>
+<p><code>0, 8, 16, 32, 64, 100, 132 or 164</code></p>
+<h1 id="cuda-架构">CUDA 架构<a class="headerlink" href="#cuda-架构" title="Permanent link">&para;</a></h1>
+<h2 id="参考资料">参考资料<a class="headerlink" href="#参考资料" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="https://docs.nvidia.com/cuda/cuda-c-programming-guide/">CUDA C++ Programming Guide (nvidia.com)</a></li>
+</ul>
+<h2 id="基础">基础<a class="headerlink" href="#基础" title="Permanent link">&para;</a></h2>
+<p>In CUDA programming, both CPUs and GPUs are used for computing. Typically, we refer to CPU and GPU system as <em>host</em> and <em>device</em>, respectively. CPUs and GPUs are separated platforms with their own memory space. Typically, we run serial workload on CPU and offload parallel computation to GPUs.</p>
+<ul>
+<li>三个关键抽象：<ul>
+<li>层次化的线程组</li>
+<li>共享内存</li>
+<li>同步</li>
+</ul>
+</li>
+</ul>
+<p>高度可扩展性：
+<img alt="" src="https://imagebed.yfycloud.site/2025/12/c7d3b1e897f58f7d14bfb39ad51b32c3.png" /></p>
+<h2 id="编程模型">编程模型<a class="headerlink" href="#编程模型" title="Permanent link">&para;</a></h2>
+<h3 id="线程层次">线程层次<a class="headerlink" href="#线程层次" title="Permanent link">&para;</a></h3>
+<p>kernel</p>
+<ul>
+<li>C++ 函数，被调用时，会被每个 CUDA 线程并行执行。</li>
+<li>使用__global__声明 kernel 函数</li>
+<li>使用<code>&lt;&lt;&lt;...&gt;&gt;&gt;</code><em>execution configuration</em> syntax，指定使用多少线程执行该 kernel</li>
+</ul>
+<p>线程层次</p>
+<ul>
+<li>block：多个线程组成一个线程块。可以是 1,2,3 维的<ul>
+<li>通过<code>threadIdx</code>索引。如二维 <em>(x, y)</em> 的线程 id 是 <em>(x + y Dx)</em>;</li>
+<li>一个块内的线程数是有限制的（当前的 GPU 一般为 1024 个）。因为一个块内的线程会被调度到一个 SM(streaming multiprocessor core) 中，共享该 SM 的片上存储（shared memory）</li>
+<li>一个块是独立的，可以以任意顺序调度，从而保证了 GPU 的可扩展性（SM 是基本单元，堆 SM）</li>
+<li>shared memory 延迟很低，类似于 L1 cache</li>
+</ul>
+</li>
+<li>grid：多个线程块组成一个 grid。可以是 1,2,3 维的<ul>
+<li>通过<code>blockIdx</code>索引</li>
+</ul>
+</li>
+</ul>
+<p>以下代码声明了 1 个线程块，大小为 NxN。用于将两个 NxN 的矩阵相加。</p>
+<div class="language-c highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1">// Kernel definition</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="n">__global__</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="n">MatAdd</span><span class="p">(</span><span class="kt">float</span><span class="w"> </span><span class="n">A</span><span class="p">[</span><span class="n">N</span><span class="p">][</span><span class="n">N</span><span class="p">],</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">B</span><span class="p">[</span><span class="n">N</span><span class="p">][</span><span class="n">N</span><span class="p">],</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">                       </span><span class="kt">float</span><span class="w"> </span><span class="n">C</span><span class="p">[</span><span class="n">N</span><span class="p">][</span><span class="n">N</span><span class="p">])</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="p">{</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">threadIdx</span><span class="p">.</span><span class="n">x</span><span class="p">;</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">threadIdx</span><span class="p">.</span><span class="n">y</span><span class="p">;</span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="w">    </span><span class="n">C</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">B</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">];</span>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="p">}</span>
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="kt">int</span><span class="w"> </span><span class="n">main</span><span class="p">()</span>
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="p">{</span>
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="w">    </span><span class="p">...</span>
+</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="w">    </span><span class="c1">// Kernel invocation with one block of N * N * 1 threads</span>
+</span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">numBlocks</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+</span><span id="__span-1-15"><a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a><span class="w">    </span><span class="n">dim3</span><span class="w"> </span><span class="nf">threadsPerBlock</span><span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="w"> </span><span class="n">N</span><span class="p">);</span>
+</span><span id="__span-1-16"><a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a><span class="w">    </span><span class="n">MatAdd</span><span class="o">&lt;&lt;&lt;</span><span class="n">numBlocks</span><span class="p">,</span><span class="w"> </span><span class="n">threadsPerBlock</span><span class="o">&gt;&gt;&gt;</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="n">B</span><span class="p">,</span><span class="w"> </span><span class="n">C</span><span class="p">);</span>
+</span><span id="__span-1-17"><a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a><span class="w">    </span><span class="p">...</span>
+</span><span id="__span-1-18"><a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a><span class="p">}</span>
+</span></code></pre></div>
+<p>以下代码声明了 N/16 x N/16 个线程块，每个大小为 16x16。用于将两个 NxN 的矩阵相加。</p>
+<div class="language-c highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1">// Kernel definition</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="n">__global__</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="n">MatAdd</span><span class="p">(</span><span class="kt">float</span><span class="w"> </span><span class="n">A</span><span class="p">[</span><span class="n">N</span><span class="p">][</span><span class="n">N</span><span class="p">],</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">B</span><span class="p">[</span><span class="n">N</span><span class="p">][</span><span class="n">N</span><span class="p">],</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="kt">float</span><span class="w"> </span><span class="n">C</span><span class="p">[</span><span class="n">N</span><span class="p">][</span><span class="n">N</span><span class="p">])</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="p">{</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">blockIdx</span><span class="p">.</span><span class="n">x</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">blockDim</span><span class="p">.</span><span class="n">x</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">threadIdx</span><span class="p">.</span><span class="n">x</span><span class="p">;</span>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">blockIdx</span><span class="p">.</span><span class="n">y</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">blockDim</span><span class="p">.</span><span class="n">y</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">threadIdx</span><span class="p">.</span><span class="n">y</span><span class="p">;</span>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">N</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">N</span><span class="p">)</span>
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="w">        </span><span class="n">C</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">B</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">];</span>
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="p">}</span>
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>
+</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="kt">int</span><span class="w"> </span><span class="n">main</span><span class="p">()</span>
+</span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="p">{</span>
+</span><span id="__span-2-13"><a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a><span class="w">    </span><span class="p">...</span>
+</span><span id="__span-2-14"><a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a><span class="w">    </span><span class="c1">// Kernel invocation</span>
+</span><span id="__span-2-15"><a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a><span class="w">    </span><span class="n">dim3</span><span class="w"> </span><span class="n">threadsPerBlock</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span><span class="w"> </span><span class="mi">16</span><span class="p">);</span>
+</span><span id="__span-2-16"><a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a><span class="w">    </span><span class="n">dim3</span><span class="w"> </span><span class="nf">numBlocks</span><span class="p">(</span><span class="n">N</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">threadsPerBlock</span><span class="p">.</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">N</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">threadsPerBlock</span><span class="p">.</span><span class="n">y</span><span class="p">);</span>
+</span><span id="__span-2-17"><a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a><span class="w">    </span><span class="n">MatAdd</span><span class="o">&lt;&lt;&lt;</span><span class="n">numBlocks</span><span class="p">,</span><span class="w"> </span><span class="n">threadsPerBlock</span><span class="o">&gt;&gt;&gt;</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="n">B</span><span class="p">,</span><span class="w"> </span><span class="n">C</span><span class="p">);</span>
+</span><span id="__span-2-18"><a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a><span class="w">    </span><span class="p">...</span>
+</span><span id="__span-2-19"><a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><img alt="" src="https://imagebed.yfycloud.site/2025/12/7095796a3222b7b2d2df29e8b8f890a4.png" /></p>
+<ul>
+<li>在线程块内，线程通过 shared memory 来共享数据。并且通过同步操作来协调内存访问<ul>
+<li><code>__syncthreads()</code>用于路障同步</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>线程块蔟：<ul>
+<li>CUDA 9.0 中引入的一个可选层次</li>
+<li>类似于线程块内线程保证在同一个 SM。一个 cluster 内的线程块被调度到同一个 GPU Processing Cluster (GPC)</li>
+<li>大小一般最大 8 个块</li>
+<li>支持硬件支持的同步 api。cluster.sync()
+<img alt="" src="https://imagebed.yfycloud.site/2025/12/6b7c7271a7d04d106b0b625e91135c9f.png" /></li>
+</ul>
+</li>
+</ul>
+<p>Threads within a CTA execute in SIMT (single-instruction, multiple-thread) fashion in groups called <em>warps</em>.</p>
+<p>SIMD 和 SIMT 的区别：SIMT 编程时可以控制单个线程。</p>
+<blockquote>
+<p>A key difference is that SIMD vector organizations expose the SIMD width to the software, whereas SIMT instructions specify the execution and branching behavior of a single thread. In contrast with SIMD vector machines, SIMT enables programmers to write thread-level parallel code for independent, scalar threads, as well as data-parallel code for coordinated threads.</p>
+</blockquote>
+<p>SM 能一次能执行多少 block，和每线程 register 数和 block 使用的 shared memory 有关。因为 SM 的寄存器和 shared memory 是给 batch block 所有线程间分配的。如果一个块都执行不了，则 kernel 无法启动。</p>
+<h3 id="编程接口">编程接口<a class="headerlink" href="#编程接口" title="Permanent link">&para;</a></h3>
+<ul>
+<li>包含对 C++ 的少量扩展和 rutime 库</li>
+</ul>
+<p>C++ 扩展</p>
+<ul>
+<li>定义 kernel</li>
+<li>指定线程数</li>
+</ul>
+<p>CUDA runtime</p>
+<ul>
+<li>执行在 host 上</li>
+<li>分配回收 device 内存</li>
+<li>在 host 和 device 间传输数据</li>
+<li>管理多个 device</li>
+</ul>
+<p>编译</p>
+<ul>
+<li>将 device 代码编译成 ptx 或 cubin</li>
+<li>将 host 代码编译，和 runtime 链接<ul>
+<li>runtime 基于底层另一层抽象层，该抽象层再基于 driver API。</li>
+</ul>
+</li>
+</ul>
+<p>兼容性</p>
+<ul>
+<li>cubin 只能在小版本里后向兼容。<em>cubin</em> object generated for compute capability <em>X.y</em> will only execute on devices of compute capability <em>X.z</em> where <em>z≥y</em>.</li>
+<li>PTX 可以后向兼容，但是无法利用新硬件特性。a binary targeting devices of compute capability 7.0 (Volta) compiled from PTX generated for compute capability 6.0 (Pascal) will not make use of Tensor Core instructions, since these were not available on Pascal.</li>
+<li>后向兼容 (backward)：旧编译的可以在新平台上运行</li>
+</ul>
+<p><img alt="" src="https://imagebed.yfycloud.site/2025/12/dbd9d34b0419d642bd0af619bdffc821.png" /></p>
+<h2 id="硬件实现">硬件实现<a class="headerlink" href="#硬件实现" title="Permanent link">&para;</a></h2>
+<p><a href="https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#hardware-implementation">https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#hardware-implementation</a></p>
+<blockquote>
+<p>The NVIDIA GPU architecture is built around a scalable array of multithreaded <em>Streaming Multiprocessors</em> (<em>SMs</em>). When a CUDA program on the host CPU invokes a kernel grid, the blocks of the grid are enumerated and distributed to multiprocessors with available execution capacity. The threads of a thread block execute concurrently on one multiprocessor, and multiple thread blocks can execute concurrently on one multiprocessor. As thread blocks terminate, new blocks are launched on the vacated multiprocessors.</p>
+</blockquote>
+<ul>
+<li>英伟达 GPU 架构由 SM 数组组成，具有可扩展性。</li>
+<li>当 host 上的一个 CUDA 程序调用一个 kernel grid 时，grid 中的线程块被分发到有计算能力的 SM 上执行。</li>
+<li>一个线程块内的线程在一个 multiprocessor 内并发执行，并且多个线程块也可以并发调度到一个 SM 上（当一个线程块终止时，新的块补上） <em>p.s 这里说的是并发，可能需要和并行区分</em></li>
+</ul>
+<ul>
+<li>SM 被设计来并发执行上百个线程，采用了 SIMT 架构（<em>Single-Instruction, Multiple-Thread</em>）<ul>
+<li>单线程内利用流水线实现 ILP</li>
+<li>通过同时多线程（simultaneous hardware multithreading）实现<strong>线程级并行</strong><ul>
+<li>和 CPU 的 SMT 不同。Unlike CPU cores, they are issued in order and there is no branch prediction or speculative execution.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="simt">SIMT<a class="headerlink" href="#simt" title="Permanent link">&para;</a></h3>
+<p>自己的理解：CPU 一个核可以并发执行两个线程（超线程技术），而 GPU 一个 SM 可以并发运行成百上千的线程。为了做到这点，采用了 SIMT 技术</p>
+<ul>
+<li>warp</li>
+<li>warp 内的线程执行</li>
+</ul>
+<ul>
+<li>SM 以一个 warp 32 个线程为单位，进行调度。The multiprocessor creates, manages, schedules, and executes threads in groups of 32 parallel threads called <em>warps</em>.</li>
+<li>每个 warp 的线程从相同的 PC 开始执行。但是它们<strong>内部有自己的 PC 可以单独跳转</strong>。Individual threads composing a warp start together at the same program address, but they have their own instruction address counter and register state and are therefore free to branch and execute independently.</li>
+<li><strong>SM 将线程块划分为 warp 进行调度</strong>。When a multiprocessor is given one or more thread blocks to execute, it partitions them into warps and each warp gets scheduled by a <em>warp scheduler</em> for execution</li>
+<li>线程块的划分很简单，连续的线程被划分在一起。The way a block is partitioned into warps is always the same; each warp contains threads of consecutive, increasing thread IDs with the first warp containing thread 0.</li>
+<li>warp 中的线程从相同地址开始执行，如果线程因为数据相关的分支造成分叉，<strong>warp 执行每一条代码路径</strong>，同时禁止非该代码路径上的线程。A warp executes one common instruction at a time. ... If threads of a warp diverge via a data-dependent conditional branch, the warp executes each branch path taken, disabling threads that are not on that path.</li>
+<li><strong>分叉只发生在 warp 内</strong>，不同 warp 是独立的。Branch divergence occurs only within a warp; different warps execute independently regardless of whether they are executing common or disjoint code paths.</li>
+</ul>
+<ul>
+<li><strong>GPU 的 SIMT 和 SIMD 有点类似，都是单条指令处理多个数据</strong>。The SIMT architecture is akin to SIMD (Single Instruction, Multiple Data) vector organizations in that a single instruction controls multiple processing elements.<ul>
+<li>关键的不同在于，SIMT 既可以实现线程级并行（对于独立的标量线程），又可以实现数据级并行（对于合作线程）。SIMT enables programmers to write thread-level parallel code for independent, scalar threads, as well as data-parallel code for coordinated threads.</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>volta 之前的架构，warp 内 32 个线程公用相同的 PC。导致分叉路径上的线程无法相互通信。Prior to NVIDIA Volta, warps used a single program counter shared amongst all 32 threads in the warp together with an active mask specifying the active threads of the warp. As a result, threads from the same warp in divergent regions or different states of execution cannot signal each other or exchange data, and algorithms requiring fine-grained sharing of data guarded by locks or mutexes can easily lead to deadlock, depending on which warp the contending threads come from.</li>
+</ul>
+<h3 id="hardware-multithreading">Hardware Multithreading<a class="headerlink" href="#hardware-multithreading" title="Permanent link">&para;</a></h3>
+<ul>
+<li>执行上下文包含 PC，寄存器。warp 上下文被保存在片上（而不是软件保存），因此 warp 切换没有损失。The execution context (program counters, registers, and so on) for each warp processed by a multiprocessor is maintained on-chip during the entire lifetime of the warp. Therefore, switching from one execution context to another has no cost,</li>
+</ul>
+<h2 id="shared-memory-or-cache-">Shared memory or cache ?<a class="headerlink" href="#shared-memory-or-cache-" title="Permanent link">&para;</a></h2>
+<p><a href="https://forums.developer.nvidia.com/t/is-it-possible-to-use-l1-cache-instead-of-shared-memory-when-implementing-blocked-matmuls-in-cuda/256985/3">Is it possible to use L1 cache instead of shared memory when implementing blocked matmuls in CUDA - CUDA / CUDA Programming and Performance - NVIDIA Developer Forums</a></p>
+<p>起初没有 L1/L2 --&gt; 引入 scratch pad --&gt; cache 越来越大</p>
+<blockquote>
+<p>I think it is fair to say that the importance of shared memory in CUDA programming has decreased with the advent of L1/L2 caches of competitive size in GPUs. For use cases requiring peak performance, shared memory can still be important due to the programmer control it provides.</p>
+</blockquote>
+<h2 id="tensor-core">tensor core<a class="headerlink" href="#tensor-core" title="Permanent link">&para;</a></h2>
+<p>v100 whitepaper</p>
+<blockquote>
+<p>The Volta tensor cores are accessible and exposed as Warp-Level Matrix Operations in the CUDA 9 C++ API. The API exposes specialized matrix load, matrix multiply and accumulate, and matrix store operations to efficiently use Tensor Cores from a CUDA-C++ program. At the CUDA level, the warp-level interface assumes 16x16 size matrices spanning all 32 threads of the warp. In addition to CUDA-C++ interfaces to program Tensor Cores directly, cuBLAS and cuDNN libraries have been updated to provide new library interfaces to make use of Tensor Cores for deep learning applications and frameworks. NVIDIA has worked with many popular deep learning frameworks such as Caffe2 and MXNet to enable use of Tensor Cores for deep learning research on Volta GPU based systems. NVIDIA is working to add support for Tensor Cores in other frameworks as well.</p>
+</blockquote>
+<h1 id="aaa">aaa<a class="headerlink" href="#aaa" title="Permanent link">&para;</a></h1>
+<h2 id="unified-memory">unified memory<a class="headerlink" href="#unified-memory" title="Permanent link">&para;</a></h2>
+<p><a href="https://developer.nvidia.com/blog/beyond-gpu-memory-limits-unified-memory-pascal/">Beyond GPU Memory Limits with Unified Memory on Pascal | NVIDIA Technical Blog</a></p>
+<p>背景</p>
+<ul>
+<li>两个 memory space</li>
+<li>应用不能 oversubscribing GPU 内存，开发者必须手动管理 active working set</li>
+<li>双、四和八 GPU 系统在工作站和大型超级计算机中变得越来越普遍，在 CPU 和 GPU 之间手动管理数据很困难</li>
+<li>某些应用程序基本无法手动管理：光线追踪引擎发射的光线可以根据材料表面向任何方向反弹。如果场景不适合 GPU 内存，光线可能很容易击中不可用的表面，必须从 CPU 内存中获取。在这种情况下，如果没有真正的 GPU 页面故障功能，几乎不可能计算出哪些页面应该在什么时间迁移到 GPU 内存。</li>
+</ul>
+<p>特点</p>
+<ul>
+<li>统一内存于 2014 年随 CUDA 6 和 Kepler 架构一起推出。这种相对较新的编程模型允许 GPU 应用程序在 CPU 函数和 GPU 内核中使用单个指针，从而大大简化了内存管理。</li>
+<li>CUDA 8 和 Pascal 架构通过添加 49 位虚拟寻址和按需页面迁移 (<strong>on-demand page migration</strong>)，显著改进了统一内存功能。<ul>
+<li>简单来说就是实现了 page fault。The Page Migration engine allows GPU threads to fault on non-resident memory accesses so the system can migrate pages from anywhere in the system to the GPUs memory on-demand for efficient processing.</li>
+</ul>
+</li>
+<li>CUDA 8 还添加了通过向运行时提供提示来优化数据局部性的新方法，因此仍然可以完全控制数据迁移。</li>
+</ul>
+<h2 id="memory-space">memory space<a class="headerlink" href="#memory-space" title="Permanent link">&para;</a></h2>
+<p>local
+global
+co</p>
+<h1 id="cuda-and-applications-to-task-based-programming">CUDA and Applications to Task-based Programming<a class="headerlink" href="#cuda-and-applications-to-task-based-programming" title="Permanent link">&para;</a></h1>
+<p><a href="https://cuda-tutorial.github.io/">CUDA and Applications to Task-based Programming (cuda-tutorial.github.io)</a></p>
+<h2 id="part1-编程模型">part1 编程模型<a class="headerlink" href="#part1-编程模型" title="Permanent link">&para;</a></h2>
+<ul>
+<li>CPU latency-oritened<ul>
+<li>large L1</li>
+<li>ILP</li>
+</ul>
+</li>
+<li>GPU througput-oriented<ul>
+<li>vast number of parallel processors</li>
+<li>over-subscribe, latency hiding</li>
+</ul>
+</li>
+<li>CUDA: Compute Unified Device Architecture<ul>
+<li>driver API: cu</li>
+<li>runtime API: cuda</li>
+<li>device runtime API</li>
+<li>driver API is superset of runtime API, provide a few additional advanced features.</li>
+</ul>
+</li>
+</ul>
+<h3 id="有用的参考资料">有用的参考资料<a class="headerlink" href="#有用的参考资料" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Essential reading<ul>
+<li>CUDA Programming Guide</li>
+<li>CUDA API Reference Manual</li>
+<li>PTX Instruction Set Architecture</li>
+</ul>
+</li>
+<li>Building executables<ul>
+<li>CUDA Compiler Driver NVCC</li>
+</ul>
+</li>
+<li>Debugging &amp; profiling<ul>
+<li>CUDA-MEMCHECK</li>
+<li>Nsight Documentatio</li>
+</ul>
+</li>
+</ul>
+<p><code>__global__</code>: be invoked straight from the host and must not have a return value other than void.</p>
+<ul>
+<li>Launch configuration, parameters (built-in types, structs, pointers)
+<code>__device__</code>: be called from functions already running on the device, such as kernels or other device functions.
+<code>__host__</code>: 修饰运行在 CPU 上的函数</li>
+<li>同时指定 device 和 host，可以用于实现一些架构无关的函数</li>
+</ul>
+<p>同步</p>
+<ul>
+<li>kernel call 对于 host 是异步的，然而 kernel call 之间默认不是异步的，因此 cuda 默认假设连续的 kernel calls or copy instructions are dependent on previous events, and order them accordingly。</li>
+<li>同步命令<ul>
+<li>cudaDeviceSynchronize() to synchronize CPU and GPU</li>
+<li>cudaEventSynchronize() to synchronize up to certain event</li>
+</ul>
+</li>
+</ul>
+<h3 id="运行">运行<a class="headerlink" href="#运行" title="Permanent link">&para;</a></h3>
+<p>使用 warp 的原因，为了利用 SIMD 单元
+For the sake of exploiting SIMD hardware units, threads will always execute in groups of 32, regardless of the block size being used.</p>
+<p>volta 改进了 warp（单独 PC）
+Before Volta: not understanding warps may crash your application
+After Volta: not caring about warps may make your application slower</p>
+<p>SM</p>
+<ul>
+<li><strong>cuda core</strong>: synonym for the units that perform <strong>integer or floating-point arithmetic</strong></li>
+<li>LD/ST</li>
+<li>SFU</li>
+<li>tensor core</li>
+</ul>
+<h3 id="warp-执行模型">warp 执行模型<a class="headerlink" href="#warp-执行模型" title="Permanent link">&para;</a></h3>
+<p><strong>block queue</strong></p>
+<ul>
+<li>the blocks that make up a grid are committed to the GPU in a block queue.</li>
+<li>GPU will then proceed to process the blocks in parallel. The degree of parallelisms depends on the hardware being used but is transparent to the developer:
+block 被完全分配给一个 SM
+<strong>一个 SM 可以运行多个 block</strong></li>
+<li><strong>如何考虑 shared memory 的共享？</strong>
+SM 选择 ready 的 warp 执行，</li>
+<li>SM 的 warp 越多，并行效率越高？The more warps an SM has to choose from, the higher the chances are that it can hide latency by switching to different warps.</li>
+</ul>
+<p>warp 作为一个整体执行，warp 中的线程同时执行下一条指令</p>
+<ul>
+<li>线程可以分叉（diverged）</li>
+</ul>
+<p><img alt="" src="https://imagebed.yfycloud.site/2025/12/c063e80429e70ad98dcf39dc43e71d57.png" /></p>
+<p>SIMT 正式解释：既可以看作单独的线程，又可以像 SIMD 一样高效（只要不分叉）</p>
+<ul>
+<li>每个线程有一个 active flag 控制是否参与 warp 内的计算
+This architecture design, which enables threads to behave like individual entities, while still enabling the exploitation of efficient SIMD operations when threads are not diverged is described by the term “same-instruction-multiple-threads”, or SIMT for short.</li>
+</ul>
+<h3 id="cuda-thread-execution-model">CUDA thread execution model<a class="headerlink" href="#cuda-thread-execution-model" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Legacy Thread Scheduling</li>
+<li>Independent Thread Scheduling (ITS)</li>
+</ul>
+<p>legacy(“lockstep”)</p>
+<ul>
+<li><strong>warp 只有一个 PC 值</strong><ul>
+<li>warp 中的所有线程在每个时钟周期都执行相同的指令</li>
+</ul>
+</li>
+<li>inactive will not execute current instruction</li>
+<li>diverges 时，先执行一部分，再执行另一部分</li>
+<li>在 warp 切换前，会尝试达到合并点。Diverged threads will try to reach convergence point before switching</li>
+<li>位于分叉的两部分的线程，不能实现一些同步算法，容易造成死锁
+<img alt="" src="https://imagebed.yfycloud.site/2025/12/6a8ed439ac50c9aade00bfb7b15d5b13.png" /></li>
+</ul>
+<p>ITS(Independent Thread Scheduling)</p>
+<ul>
+<li>Two registers reserved, each thread gets its own program counter</li>
+<li>线程的执行仍然发生在 warp，It is not possible for threads in a warp to perform different instructions in the same cycle<ul>
+<li><strong>也就是说仍然无法一起执行 A 和 B</strong></li>
+</ul>
+</li>
+<li>ITS provides a “progress guarantee”: eventually, over a number of cycles, all individual program counters that the threads in a warp maintain will be visited</li>
+<li>they are free to stay diverged until the program finishes. The GPU will try to make threads reconverge at opportune times,</li>
+<li>通过显示的同步指令保证所有线程执行相同的指令。synchronization command</li>
+</ul>
+<p><img alt="" src="https://imagebed.yfycloud.site/2025/12/96b780296382fe28c63216aa5f7a3189.png" /></p>
+<p><code>__syncwarp</code></p>
+<ul>
+<li>只对 volta 之后的架构有意义（支持 ITS）</li>
+<li>可以通过 mask 只同步一个子集线程。32bit integer, where each bit indicates whether or not a thread with the corresponding ID should participate in the synchronization.</li>
+</ul>
+<p><code>__syncthreads()</code></p>
+<ul>
+<li>All active threads must reach the same instruction in the program</li>
+</ul>
+<p><code>this_grid().sync()</code> can busy-wait to synchronize entire kernel</p>
+<p>正常来说，CUDA 编程范式（programming paradigm）包含 grid-block-thread 三层。但是由于线程是按照 warp 调度的，因此正确利用 warp 的性质可以极大提高性能。</p>
+<p><strong>Warp-level primitives</strong> are instructions where threads in one warp exploit the fact that they run together to quickly share information</p>
+<p><img alt="" src="https://imagebed.yfycloud.site/2025/12/afc7e54f35a311784208afd7ff10ddaf.png" /></p>
+<h3 id="reduce-优化例子">reduce 优化例子<a class="headerlink" href="#reduce-优化例子" title="Permanent link">&para;</a></h3>
+<p>1 reduce global</p>
+<ul>
+<li>N 次 read, store global memory</li>
+<li>read 会经过 cache，那么其它 sm 读取的时候会反复出现 invalid cache 的情况吗？
+<img alt="" src="https://imagebed.yfycloud.site/2025/12/531c85dc61bc8919e5ce6e3c942865d7.png" /></li>
+</ul>
+<p>2 reduce shared</p>
+<ul>
+<li>使用 shared 快速的内存累加</li>
+<li>将操作 global memory 降低为 N/256
+<img alt="" src="https://imagebed.yfycloud.site/2025/12/6cc3eac20f24b0f2faf0bb7ef7d9c613.png" /></li>
+</ul>
+<p>前面的均是顺序规约，可以使用 subliner 的算法
+3
+<img alt="" src="https://imagebed.yfycloud.site/2025/12/f272b4feb834f6740691a4d833f78076.png" /></p>
+<p>4</p>
+<ul>
+<li>使用寄存器做最后 32 个数据的规约<ul>
+<li>In the first iteration, each thread in the warp will try to read the value of the thread with an ID that is 16 higher than its own.
+<img alt="" src="https://imagebed.yfycloud.site/2025/12/bb2f1e4ea2fc896805fe44646155c45d.png" /></li>
+</ul>
+</li>
+</ul>
+<p><img alt="" src="https://imagebed.yfycloud.site/2025/12/c92f006043376a5a9afcde91874df954.png" /></p>
+<h3 id="stream">stream<a class="headerlink" href="#stream" title="Permanent link">&para;</a></h3>
+<p>CUDA will assume that kernels depend on each other unless indicated otherwise.</p>
+<p>stream</p>
+<ul>
+<li>stream 之间没有依赖</li>
+<li>launch 时通过第 4 个参数指定 stream，默认为“null”stream<ul>
+<li>调用 CUDA runtime API 时，传递 stream 参数。如 cudaMemcpyAsync</li>
+</ul>
+</li>
+</ul>
+<p><img alt="" src="https://imagebed.yfycloud.site/2025/12/a5f99771538de2cb3dbe4a9f693f4610.png" /></p>
+<h3 id="debug">debug<a class="headerlink" href="#debug" title="Permanent link">&para;</a></h3>
+<p>nsight vscode plugin: Nsight Visual Studio Code Edition</p>
+<ul>
+<li>Overview reveals warps, active and valid masks of individual threads</li>
+</ul>
+<p>cuda-memcheck suit
+<code>cuda-memcheck –-tool &lt;tool&gt; &lt;application&gt;</code>
+• memcheck: memory errors (access violations, leaks, API errors)
+• synccheck: misuse of synchronization (invalid masks, conditions)
+• racecheck: data races (read-after-write, write-after-read hazards)
+• initcheck: evaluation of uninitialized values (global memory only</p>
+<ul>
+<li>CUB/Thrust: additional primitives and functions similar to standard library<ul>
+<li>Algorithms: e.g., prefix sum, scan, sort
+  • Data structures and containers: e.g., vectors</li>
+</ul>
+</li>
+<li>cuBLAS: basic linear algebra subprograms (BLAS) on top of CUDA</li>
+<li>cuFFT: efficient implementation of discrete fourier transform on the GPU</li>
+<li>cuSparse: algorithms and optimizations for working with sparse matrices</li>
+<li>TensorRT: interface to learning and inference capabilities with tensor cores</li>
+<li>CUTLASS: provides a range of templates for tensor core matrix computations</li>
+</ul>
+<p><a href="https://godbolt.org/">Compiler Explorer (godbolt.org)</a></p>
+<ul>
+<li>支持 cuda c++</li>
+<li>支持 PTX 和 SASS</li>
+</ul>
+<h2 id="part-2-hardware-实现">part 2 hardware 实现<a class="headerlink" href="#part-2-hardware-实现" title="Permanent link">&para;</a></h2>
+<h3 id="编译">编译<a class="headerlink" href="#编译" title="Permanent link">&para;</a></h3>
+<p>host 和 device 部分分开编译</p>
+<p>host code</p>
+<ul>
+<li>takes care of loading matching GPU binary stored in .exe</li>
+<li>translate kernel<code>&lt;&lt;&lt;…&gt;&gt;&gt;(…)</code> syntax into API call</li>
+</ul>
+<p>“Fat Binary” can contain both</p>
+<ul>
+<li>PTX for various compute capabilities<ul>
+<li>allows the binary to target unknown architecture</li>
+</ul>
+</li>
+<li>precompiled machine code for specific GPU architectures<ul>
+<li>optimal performance on certain known devices</li>
+</ul>
+</li>
+</ul>
+<p>PTX</p>
+<ul>
+<li>生成机器码<ul>
+<li>ptxas</li>
+<li>driver at runtime(JIT)</li>
+</ul>
+</li>
+</ul>
+<p>SASS(Shader Assembly?)</p>
+<ul>
+<li>nvdisasm.exe</li>
+<li>没有文档</li>
+</ul>
+<h3 id="硬件设计">硬件设计<a class="headerlink" href="#硬件设计" title="Permanent link">&para;</a></h3>
+<ul>
+<li>GPU 设计成最大化吞吐量</li>
+<li>不等待长延迟操作，而是切换到其它任务</li>
+</ul>
+<p>设计对比
+<img alt="" src="https://imagebed.yfycloud.site/2025/12/c4543202a62e213ecaaa06d3d44be6b5.png" /></p>
+<p>CPU：优化 single flow 速度</p>
+<ul>
+<li>larget cache</li>
+<li>complex control logic for out-of-order execution</li>
+</ul>
+<p>GPU</p>
+<ul>
+<li>simple control</li>
+<li>many core</li>
+<li>large register<ul>
+<li>keep context resident on chip, enable rapidly switch</li>
+</ul>
+</li>
+<li>rely on SIMD<ul>
+<li>Each control logic is associated with multiple arithmetic logic units (ALUs), allowing for the parallel execution of multiple control flows</li>
+</ul>
+</li>
+</ul>
+<p>two-level hierarchy that consists of <strong>groups of groups of SIMD cores</strong>.</p>
+<ul>
+<li>GPU<ul>
+<li>SM<ul>
+<li>warp scheduler<ul>
+<li>register file</li>
+<li>a set of ALU: INT32, FP32, FP64, Tensor Core, LD/ST unit, SFU</li>
+</ul>
+</li>
+<li>shared memory</li>
+<li>L1 cache</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>each warp scheduler is assigned a set of warps to execute</p>
+<ul>
+<li>The execution context of all threads that are part of each warp is kept locally in the register file associated with the warp scheduler responsible for the warp</li>
+</ul>
+<p>Whenever it could issue a new instruction (e.g., <strong>each clock cycle</strong> unless all of the necessary resources are occupied), the warp scheduler will <strong>pick the next instruction</strong> from one of its warps that are ready to run (i.e., not waiting on the result of a previous operation) <strong>and schedule it to the appropriate hardware unit.</strong></p>
+<ul>
+<li>单发射？</li>
+<li>看来时 SIMD 形式发射</li>
+</ul>
+<p>warp 切换隐藏延迟，warp scheduler 从 reay 的 warp 中选择一个执行其指令（假设 SIMD），遇到访存指令，如果下一条指令依赖访存指令数据，则将 warp 置于 suspend queue。然后切换到另一个 ready warp。因此只要一直能切换 warp，访存延迟就可以被隐藏。</p>
+<p>So far, we have simply assumed that all threads within a warp always need to run the same instruction next, allowing us to execute all threads of a warp in parallel in SIMD fashion</p>
+<h3 id="warp-实现">warp 实现<a class="headerlink" href="#warp-实现" title="Permanent link">&para;</a></h3>
+<p>对于 diverge 的处理，属于猜测</p>
+<p><strong>predication</strong></p>
+<ul>
+<li>指令通过 1bit prediction，来决定是否执行</li>
+<li>程序一直执行下一条指令，有一些分支的 EXIT 指令在 pred 的作用下生效，避免执行其它分支的代码</li>
+<li>缺点：<ul>
+<li>However, control flow is forced to pass over all instructions on both sides of every branch<ul>
+<li>有些 branch，没有线程执行。仍然要遍历所有 path，导致 significant overhead especially as branches are nested more and more deeply</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>对于更复杂的控制，比如函数调用，无法实现</li>
+</ul>
+<p>先执行一部分，再执行另一部分，最后合并。</p>
+<ul>
+<li>如何决定执行顺序呢？<ul>
+<li>顺序执行，保证能遍历到所有分支</li>
+</ul>
+</li>
+<li>更复杂的情况？<ul>
+<li>嵌套循环</li>
+<li>必须遍历完所有分支（即使没有线程执行）</li>
+<li><strong>使用 CSR 栈</strong></li>
+</ul>
+</li>
+</ul>
+<p><img alt="" src="https://imagebed.yfycloud.site/2025/12/0520f7d185c98e67fde38bf10c7c7590.png" /></p>
+<p><strong>CSR</strong>(Call, Return, Synchronization)</p>
+<ul>
+<li>warp 调度器维护一个栈：mask(32bit)，合并点</li>
+<li>遇到分支指令时，将一个分支的 mask 和合并点 push 到 stack，然后执行另一个分支 (~mask)，结束时 sync，从 stack 中 pop 恢复</li>
+</ul>
+<p><a href="https://www.youtube.com/watch?v=6kT7vVHCZIc">CUDA and Application to Task-Based Programming (part 1) | Eurographics'2021 Tutorial (youtube.com)</a></p>
+<ul>
+<li>2:17:30，解释 CSR</li>
+</ul>
+<p>ITS</p>
+<ul>
+<li>Instead of just scheduling warps as a whole, the warp scheduler can switch between active branches of warps. <strong>While execution of divergent branches still has to be serialized, it can be interleaved</strong><ul>
+<li>调度的单位从 warp 变为了 branch</li>
+</ul>
+</li>
+<li>消除了 intra-warp synchronization 的限制</li>
+<li>延迟隐藏：larger set of potential work to choose from</li>
+</ul>
+<p><img alt="" src="https://imagebed.yfycloud.site/2025/12/49ff3a089e59d624f1730e2cc80ebcfd.png" /></p>
+<p><img alt="" src="https://imagebed.yfycloud.site/2025/12/455e774a155c7bdede8bc326d2c9922f.png" /></p>
+<h3 id="memory-层次">memory 层次<a class="headerlink" href="#memory-层次" title="Permanent link">&para;</a></h3>
+<p><img alt="" src="https://imagebed.yfycloud.site/2025/12/43d18e64fc4196e49a67a6626c7a4261.png" /></p>
+<p>In CUDA, these hardware resources are exposed in the form of a number of memory spaces, each with different properties designed for different kinds of access patterns.</p>
+<h4 id="global">global<a class="headerlink" href="#global" title="Permanent link">&para;</a></h4>
+<ul>
+<li>一般的数据存储</li>
+<li>很慢：bandwidth: ≈ 300–700 GiB/s (GDDR5/6 vs HMB2)
+    • non-cached coalesced access: 375 cycles
+    • L2 cached access: 190 cycles
+    • L1 caches access: 30 cycles</li>
+<li>cache 设计：<ul>
+<li>不是为了利用时间复用，而是 smooth-out access patterns<ul>
+<li>64 B L1$, 37 B L2$ per thread</li>
+</ul>
+</li>
+<li>不要像 CPU 一样分块，而是使用 shared memory</li>
+<li>L1 写直达，L2 写回</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>try to get coalescing per warp
+<img alt="" src="https://imagebed.yfycloud.site/2025/12/67af08088e01b62affd1b2b05d2e94d0.png" /></li>
+</ul>
+<p>粒度实验</p>
+<ul>
+<li>性能随着访问的 cacheline 数目增长而线性降低
+<img alt="" src="https://imagebed.yfycloud.site/2025/12/99b3e61c4f2170084a6d7a01da1cf995.png" /></li>
+</ul>
+<p><strong>vector load/store</strong></p>
+<ul>
+<li>计算地址没办法延迟隐藏，因为访存操作对其结果有依赖</li>
+</ul>
+<p><code>__restrict</code>：This instructs the compiler to assume that the input and output will never point to overlapping memory regions.</p>
+<ul>
+<li>As a result, the compiler can potentially, e.g., fetch input data through faster <strong>non-coherent caches</strong>.</li>
+</ul>
+<p>128bit 宽（16B）</p>
+<h4 id="const">const<a class="headerlink" href="#const" title="Permanent link">&para;</a></h4>
+<p><img alt="" src="https://imagebed.yfycloud.site/2025/12/2200b25b6fbd7b0da571a84929d625cf.png" /></p>
+<ul>
+<li>cached<ul>
+<li>const cache，过去叫 texture cache</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>read only, uniform<ul>
+<li>e.g.: coefficients, used to pass kernel parameters</li>
+</ul>
+</li>
+<li>broadcasting<ul>
+<li>all thread read same value</li>
+<li>otherwise diverged, slowdown</li>
+</ul>
+</li>
+<li>limited to 64 KiB</li>
+</ul>
+<ul>
+<li>As long as access happens uniformly, constant memory can provide very low access latencies.</li>
+<li>For divergent access patterns, <strong>normal global memory</strong> can typically provide better access latencies due to its different cache design (as long as the access hits the cache).</li>
+</ul>
+<h4 id="tex">tex<a class="headerlink" href="#tex" title="Permanent link">&para;</a></h4>
+<p>optimized for 2D spatial access.</p>
+<ul>
+<li>optimal for neither row-wise nor column-wise access, it can handle both with similar efficiency.</li>
+</ul>
+<p>prior to Volta
+• Textures tend to perform at least as good, sometimes better
+• put less stress on L2 cache
+• L1 cache free for other tasks</p>
+<p>now
+• advanced Unified Cache (L1 + Tex)
+• Textures still perform best for spatially local access pattern
+• but can also be slower if access pattern and cache hits favor linear memory</p>
+<h4 id="shared-memory_1">shared memory<a class="headerlink" href="#shared-memory_1" title="Permanent link">&para;</a></h4>
+<p>crossbar</p>
+<ul>
+<li>32bit bank</li>
+<li>simultaneous to distinct bank
+<img alt="" src="https://imagebed.yfycloud.site/2025/12/56fb877c5d0058f4b1394bd4820282ab.png" /></li>
+</ul>
+<p>shared memory</p>
+<ul>
+<li>32 bank, consecutive 4-byte elements map to one bank</li>
+<li>Each memory bank can serve <strong>4-byte loads and stores</strong> from and to the addresses it’s responsible for.</li>
+<li>同一时间不能有多个 thread 访问同一个 bank<ul>
+<li>N-way bank conflict</li>
+<li>特殊情况，访问相同地址，可以广播
+<img alt="" src="https://imagebed.yfycloud.site/2025/12/0b7f37062c23aecc8ab52b2436c7ce9b.png" /></li>
+</ul>
+</li>
+</ul>
+<p>32x32 的 matrix，对行列分别求和，使用 32 个线程并行</p>
+<ul>
+<li>每列元素位于相同 bank，因此行求和时，每个线程刚好访问相同 bank，导致冲突
+<img alt="" src="https://imagebed.yfycloud.site/2025/12/1379f3ec6caf1e999ea00b3e3ee20ead.png" /></li>
+</ul>
+<p>trick</p>
+<ul>
+<li>添加一个 dummy colum 后，每行每列元素均位于不同 bank
+<img alt="" src="https://imagebed.yfycloud.site/2025/12/1ab0b9e874ecad67a08612622b4f12aa.png" /></li>
+</ul>
+<p>作用</p>
+<ul>
+<li>inter-thread communication：block 内的一个共享变量</li>
+<li><strong>reduce global memory access -&gt; manual cache</strong><ul>
+<li>先把数据从 global load 到 shared memory 再处理</li>
+</ul>
+</li>
+<li>adjust global memory access pattern</li>
+<li>indexed access<ul>
+<li>普通变量数组，会 spill 到 local memory 中</li>
+</ul>
+</li>
+<li>combine costly operations</li>
+</ul>
+<p><img alt="" src="https://imagebed.yfycloud.site/2025/12/913838cbf7bba923751b5ef397bf9cc0.png" /></p>
+<h2 id="part-3">part 3<a class="headerlink" href="#part-3" title="Permanent link">&para;</a></h2>
+<h3 id="managed-memory">managed memory<a class="headerlink" href="#managed-memory" title="Permanent link">&para;</a></h3>
+<p>static 分配：<code>device</code>
+dynamic 分配 (cpu 代码执行分配)：cudaMalloc</p>
+<p>movement</p>
+<ul>
+<li>cudaMemcpy, cudaMemcpyToSymbol, cudaMemcpyFromSymbol</li>
+</ul>
+<p>managed mem</p>
+<ul>
+<li>static: <code>__managed__</code></li>
+<li>dynamic: <code>cudaMallocManaged</code></li>
+</ul>
+<p>在 CC(compute capac)6.0 之前，data migration 是粗粒度的，不支持 CPU 和 GPU concurrent access。
+6.0 之后，引入细粒度的 page fault system，页为粒度，性能大幅提高</p>
+<ul>
+<li>concurrent access 仍然不能保证。</li>
+</ul>
+<h3 id="its">ITS<a class="headerlink" href="#its" title="Permanent link">&para;</a></h3>
+<p>legacy</p>
+<ul>
+<li>所有线程位于同一个 PC。需要执行完一个分支后再执行另一个（因为只有一个 PC，线程无法单独记录自己的位置）</li>
+<li>执行一个分支时，将另一个分支压入栈中即可（dfs？）该分支执行结束时通过 sync 语句弹栈，回到合并点。</li>
+</ul>
+<p>its</p>
+<ul>
+<li>可以用于实现锁</li>
+<li>只保证 resident warp 是可以执行完的<ul>
+<li>thread will wait forever if their progress depends on non-redident warp</li>
+<li>一个 SM 能同时执行的 warp 是有限的，如果 warp 太多，会放在 buffer 里，仍有可能导致死锁？</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>需要显示同步 warp
+<img alt="" src="https://imagebed.yfycloud.site/2025/12/7fc3f96ff4c1aa7ca026a1e13e8409cc.png" /></li>
+</ul>
+<p>later warp primitve
+<img alt="" src="https://imagebed.yfycloud.site/2025/12/5d860cf172289ef48a54134f7b0f806b.png" />
+reduce(&gt;8.0)
+<img alt="" src="https://imagebed.yfycloud.site/2025/12/8c3b7c9c8eee97748dc839bb982cf08b.png" /></p>
+<h3 id="tensor-core_1">tensor core<a class="headerlink" href="#tensor-core_1" title="Permanent link">&para;</a></h3>
+<ul>
+<li>cublas 以后默认会尽可能使用 tensor core，除非定义 CUDA_PREDANTIC_MATH</li>
+<li>baseline 是使用 tiling, shared memroy，可以看到 cublas 非常重要。<ul>
+<li>但是分析模型如何分析闭源的 SASS 可执行文件呢？
+<img alt="" src="https://imagebed.yfycloud.site/2025/12/9c6a4759bf1d0dae78ef4755cb9474ad.png" /></li>
+</ul>
+</li>
+</ul>
+<h2 id="summary">summary<a class="headerlink" href="#summary" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="https://www.olcf.ornl.gov/wp-content/uploads/2019/12/03-CUDA-Fundamental-Optimization-Part-1.pdf">03-CUDA-Fundamental-Optimization-Part-1.pdf (ornl.gov)</a></li>
+</ul>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+  
+
+
+
+      
+    </article>
+  </div>
+
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+        
+      
+      <nav class="md-footer__inner md-grid" aria-label="页脚" >
+        
+          
+          <a href="../../../../../%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/2023/03/23/2023-03-23-%E8%AE%B0%E4%B8%80%E6%AC%A1linux%E7%B3%BB%E7%BB%9F%E6%97%A0%E6%B3%95%E5%90%AF%E5%8A%A8%E4%BF%AE%E5%A4%8D%E8%BF%87%E7%A8%8B/" class="md-footer__link md-footer__link--prev" aria-label="上一页: 记一次 linux 系统无法启动修复过程">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                上一页
+              </span>
+              <div class="md-ellipsis">
+                记一次 linux 系统无法启动修复过程
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../2023-04-16-CUDA%E7%BC%96%E7%A8%8B%26%E5%B7%A5%E5%85%B7/" class="md-footer__link md-footer__link--next" aria-label="下一页: CUDA 编程&amp;工具">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                下一页
+              </span>
+              <div class="md-ellipsis">
+                CUDA 编程&工具
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/TheRainstorm" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../../..", "features": ["navigation.instant", "navigation.instant.progress", "navigation.tracking", "navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.footer", "content.code.copy", "toc.follow", "toc.integrate"], "search": "../../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../../../../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

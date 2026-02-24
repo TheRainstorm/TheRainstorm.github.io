@@ -1,0 +1,2432 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="记录一些关于数学、计算机的知识，以及一些日常。">
+      
+      
+      
+        <link rel="canonical" href="https://yfy.cqu.ai/%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/2022/07/16/2022-07-16-Linux%E5%AE%89%E8%A3%85windows%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%B9%B6%E6%98%BE%E5%8D%A1%E7%9B%B4%E9%80%9A/">
+      
+      
+        <link rel="prev" href="../../11/2022-07-11-%E5%8F%B0%E5%BC%8F%E6%9C%BA%E6%94%B9%E9%80%A0%E8%AE%A1%E5%88%92/">
+      
+      
+        <link rel="next" href="../../../../../%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%85%B7/2022/07/19/2022-07-19-vnc%E5%92%8Crdp%E8%BF%9C%E7%A8%8B/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.3">
+    
+    
+      
+        <title>Linux 安装 windows 虚拟机并显卡直通 - Rain 的随笔</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#说明" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../../../../.." title="Rain 的随笔" class="md-header__button md-logo" aria-label="Rain 的随笔" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Rain 的随笔
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Linux 安装 windows 虚拟机并显卡直通
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    
+  
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="../../../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  博客
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../about/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  关于
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../tags/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  标签
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../series/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  系列
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../tools/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  工具
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../archive/2026/" class="md-tabs__link">
+          
+  
+  
+  归档
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../category/%E4%B8%AA%E4%BA%BA/" class="md-tabs__link">
+          
+  
+  
+  分类
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" hidden>
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../../.." title="Rain 的随笔" class="md-nav__button md-logo" aria-label="Rain 的随笔" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Rain 的随笔
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+    
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      <a href="../../../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    博客
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    关于
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../tags/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    标签
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../series/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    系列
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../tools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    工具
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    归档
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    归档
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2026/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2026
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2025/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2025
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2024/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2024
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2023/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2023
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2022/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2022
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2021/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2021
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2020/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2020
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../archive/2019/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2019
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    分类
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    分类
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E4%B8%AA%E4%BA%BA/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    个人
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E5%8D%9A%E5%AE%A2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    博客
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E5%8D%9A%E5%AE%A2--%E7%BD%91%E7%BB%9C/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    博客 &amp; 网络
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    学习笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    折腾记录
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    课程笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%85%B7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    软件工具
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../category/%E9%98%85%E8%AF%BB/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    阅读
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+  <div class="md-content md-content--post" data-md-component="content">
+    <div class="md-sidebar md-sidebar--post" data-md-component="sidebar" data-md-type="navigation">
+      <div class="md-sidebar__scrollwrap">
+        <div class="md-sidebar__inner md-post">
+          <nav class="md-nav md-nav--primary">
+            <div class="md-post__back">
+              <div class="md-nav__title md-nav__container">
+                <a href="../../../../.." class="md-nav__link">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+                  <span class="md-ellipsis">
+                    回到主页
+                  </span>
+                </a>
+              </div>
+            </div>
+            
+            <ul class="md-post__meta md-nav__list">
+              <li class="md-nav__item md-nav__item--section">
+                <div class="md-post__title">
+                  <span class="md-ellipsis">
+                    元数据
+                  </span>
+                </div>
+                <nav class="md-nav">
+                  <ul class="md-nav__list">
+                    <li class="md-nav__item">
+                      <div class="md-nav__link">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 19H5V8h14m-3-7v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1V1m-1 11h-5v5h5z"/></svg>
+                        <time datetime="2022-07-16 00:42:11+00:00" class="md-ellipsis">2022年7月16日</time>
+                      </div>
+                    </li>
+                    
+                    
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 3v15h3V3zm3 2 4 13 3-1-4-13zM5 5v13h3V5zM3 19v2h18v-2z"/></svg>
+                          <span class="md-ellipsis">
+                            分类于
+                            
+                              <a href="../../../../../category/%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/">折腾记录</a></span>
+                        </div>
+                      </li>
+                    
+                    
+                      
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20a8 8 0 0 0 8-8 8 8 0 0 0-8-8 8 8 0 0 0-8 8 8 8 0 0 0 8 8m0-18a10 10 0 0 1 10 10 10 10 0 0 1-10 10C6.47 22 2 17.5 2 12A10 10 0 0 1 12 2m.5 5v5.25l4.5 2.67-.75 1.23L11 13V7z"/></svg>
+                          <span class="md-ellipsis">
+                            
+                              需要 18 分钟阅读时间
+                            
+                          </span>
+                        </div>
+                      </li>
+                    
+                  </ul>
+                </nav>
+              </li>
+            </ul>
+            
+          </nav>
+          
+            
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#说明" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        说明
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#硬件信息" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        硬件信息
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="硬件信息">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#华硕-b550m-主板" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        华硕 B550m 主板
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#基本-windows-虚拟机" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        基本 windows 虚拟机
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="基本 windows 虚拟机">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#通过-virt-manger-创建虚拟机" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        通过 virt-manger 创建虚拟机
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="通过 virt-manger 创建虚拟机">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#添加磁盘不同方式" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        添加磁盘不同方式
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#安装-qxl-驱动" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        安装 QXL 驱动
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#修改为桥接网络" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        修改为桥接网络
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="修改为桥接网络">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#netplannetworkd创建bridge" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        netplan/networkd创建bridge
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#networkmanger不推荐" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        NetworkManger(不推荐)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#virt-manger-添加网络" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        virt-manger 添加网络
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#显卡直通" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        显卡直通
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="显卡直通">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#参考资料" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        参考资料
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#步骤总结" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        步骤总结
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#什么是-iommu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        什么是 IOMMU
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#查看主板-iommu-组分布" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        查看主板 iommu 组分布
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#一个-group-里有多个设备怎么办" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        一个 group 里有多个设备怎么办
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#直通-slot1-或-slot2-的权衡" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        直通 slot1 或 slot2 的权衡
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#直通-boot-gpu的问题" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        直通 boot gpu的问题
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="直通 boot gpu的问题">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#参考资料_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        参考资料
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#问题可能导致的现象" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        问题可能导致的现象
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#问题原因" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        问题原因
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#方法-0关闭显示器启动" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        方法 0：关闭显示器启动
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#方法一csm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        方法一：CSM
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#方法二efifboff成功" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        方法二：efifb:off(成功)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#方法三qemu-设置-vbios" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        方法三：qemu 设置 vBIOS
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#单-gpu-直通" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        单 gpu 直通？
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#遇到的问题" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        遇到的问题
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="遇到的问题">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rdp-很卡" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        RDP 很卡
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="RDP 很卡">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#vnc-与-rdp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        VNC 与 RDP
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#parsec-连接玩游戏很糊" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        parsec 连接玩游戏很糊
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#steam-link-连接时-windows-用户登录弹窗" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        steam link 连接时 windows 用户登录弹窗
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#windows-虚拟机内-obs-录屏" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Windows 虚拟机内 OBS 录屏
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#linux-启动时黑屏" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Linux 启动时黑屏
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#windows-启动时循环蓝屏" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Windows 启动时循环蓝屏
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Windows 启动时循环蓝屏">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#进一步发现" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        进一步发现
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#解决" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        解决
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#host-安装-nvidia-驱动后启动会反复-load-nvidia-驱动" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        host 安装 nvidia 驱动后启动会反复 load nvidia 驱动
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#性能优化" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        性能优化
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#其它" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        其它
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="其它">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#using-looking-glass-to-stream-guest-screen-to-the-host" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Using Looking Glass to stream guest screen to the host
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#acs-patch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ACS patch
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+          
+        </div>
+      </div>
+    </div>
+    <article class="md-content__inner md-typeset">
+      
+        
+  
+
+
+  <nav class="md-tags" >
+    
+      
+      
+      
+      
+        <a href="../../../../../tags/#tag:gcc" class="md-tag">gcc</a>
+      
+    
+      
+      
+      
+      
+        <a href="../../../../../tags/#tag:mpi" class="md-tag">mpi</a>
+      
+    
+  </nav>
+
+
+
+  <h1>Linux 安装 windows 虚拟机并显卡直通</h1>
+
+<h2 id="说明">说明<a class="headerlink" href="#说明" title="Permanent link">&para;</a></h2>
+<p>在 linux 上使用 KVM 安装 windows 虚拟机。然后将显卡直通 (pci passthrough) 进虚拟机，从而可以在 Windows 虚拟机上打游戏。</p>
+<p>达到一台机器同时运行两个系统，充分利用硬件。</p>
+<!-- more -->
+
+<h2 id="硬件信息">硬件信息<a class="headerlink" href="#硬件信息" title="Permanent link">&para;</a></h2>
+<ul>
+<li>CPU: AMD Ryzen™ 7 5800X</li>
+<li>主板：ASUS TUF GAMING B550M-PLUS (WI-FI)</li>
+<li>RAM: Gloway DDR4 2666MHz 16GBx2</li>
+<li>GPU slot1: Zotac GTX 1060 3g</li>
+<li>GPU slot2: Yeston RX550 2g</li>
+<li>M.2 slot1: Samsung PM9A1 1TB</li>
+<li>M.2 slot2: KIOXIA RC10 500GB</li>
+<li>SATA: 西数紫盘 2TB</li>
+</ul>
+<h3 id="华硕-b550m-主板">华硕 B550m 主板<a class="headerlink" href="#华硕-b550m-主板" title="Permanent link">&para;</a></h3>
+<p>官方参数：<a href="https://www.asus.com/Motherboards-Components/Motherboards/TUF-Gaming/TUF-GAMING-B550M-PLUS-WI-FI/techspec/">TUF GAMING B550M-PLUS (WI-FI) - Tech Specs｜Motherboards｜ASUS Global</a>
+manual: <a href="https://dlcdnets.asus.com.cn/pub/ASUS/mb/SocketAM4/TUF_GAMING_B550M-PLUS_(WI-FI)/C16520_TUF_GAMING_B550M-PLUS_WI-FI_UM_12P_WEB.pdf?model=TUF%20GAMING%20B550M-PLUS%20(WI-FI)">C16520_TUF_GAMING_B550M-PLUS_WI-FI_UM_12P_WEB.pdf (asus.com.cn)</a></p>
+<ul>
+<li>PCIe slots<ul>
+<li>来自 ryzen 5000 CPU（非 G，否则为 PCIE 3.0）<ul>
+<li>1 x PCIe x16 slot (4.0 x 16 mode)
+  PCIEX16_1支持pcie拆分，用于安装m.2扩展卡，可以拆分成4个4.0x4。需要在BIOS中将PCIEx16_1设置成 PCIe RAID Mode。</li>
+</ul>
+</li>
+<li>来自 B550 chipset<ul>
+<li>1 x PCIe x16 (3.0x4 mode)</li>
+<li>1 x PCIe x1
+  *1 PCIEX16_2 will run x2 mode when PCIEX1 is used.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Storage<ul>
+<li>2 M.2：CPU(PCIE4.0 x4), PCH(PCIE3.0 x4)</li>
+<li>4 SATA 6Gb/s：PCH</li>
+</ul>
+</li>
+</ul>
+<h2 id="基本-windows-虚拟机">基本 windows 虚拟机<a class="headerlink" href="#基本-windows-虚拟机" title="Permanent link">&para;</a></h2>
+<p>本部分创建一个可用的 windows 虚拟机，虽然没有显卡，但是也能完成很多事情，比如挂机录屏。</p>
+<h3 id="通过-virt-manger-创建虚拟机">通过 virt-manger 创建虚拟机<a class="headerlink" href="#通过-virt-manger-创建虚拟机" title="Permanent link">&para;</a></h3>
+<p><strong>libvirt</strong>是一个开源的虚拟机管理 API，可以管理 KVM, Xen, VMvare, QEMU 等虚拟化工具的虚拟机。包含库 (libvirt)、命令行工具 (virsh)、和 virt-manger 等 GUI 工具。参考：<a href="https://wiki.libvirt.org/page/FAQ">https://wiki.libvirt.org/page/FAQ</a></p>
+<p>使用 virt-manger 创建 win10 虚拟机，详细步骤参考：<a href="https://getlabsdone.com/install-windows-10-on-ubuntu-kvm/">How To Install Windows 10 on Ubuntu KVM? – Getlabsdone.com</a>。这里就不再详细介绍了，只提一些注意点。</p>
+<h4 id="添加磁盘不同方式">添加磁盘不同方式<a class="headerlink" href="#添加磁盘不同方式" title="Permanent link">&para;</a></h4>
+<p>添加磁盘有多种方式，不同方式的性能对比：<a href="https://www.youtube.com/watch?v=oSpGggczD2Y">(89) Adding VirtIO and passthrough storage in Virtual Machine Manager - YouTube</a></p>
+<ul>
+<li>创建 qcow2 文件<ul>
+<li>可以选择 virtio, SATA 等总线协议。virtio 性能最好，但是安装 windows 时需要额外安装驱动。</li>
+</ul>
+</li>
+<li>利用已有磁盘分区，同样可以选择 virtio, SATA 等总线协议。</li>
+<li>pci 直通磁盘</li>
+</ul>
+<h4 id="安装-qxl-驱动">安装 QXL 驱动<a class="headerlink" href="#安装-qxl-驱动" title="Permanent link">&para;</a></h4>
+<ul>
+<li>在安装好 windows 虚拟机后，运行 virtio drivers iso 中的<code>virtio-win-guest-tools.exe</code>，该程序会安装其余驱动程序。比较重要的是 QXL 显示适配器驱动，该驱动会使得显示更加流畅</li>
+</ul>
+<p>此时 windows 虚拟机已经可以使用了。但是创建虚拟机时，默认会使用默认的网桥<code>virbr0</code>，而它是 NAT 的，有自己的地址段。因此 host 可以访问虚拟机，但是从 host 外无法访问虚拟机。</p>
+<p>为了让其它设备也能自由访问虚拟机，需要设置下面要介绍的虚拟网桥</p>
+<h3 id="修改为桥接网络">修改为桥接网络<a class="headerlink" href="#修改为桥接网络" title="Permanent link">&para;</a></h3>
+<p>使用 docker、lxc、libvirt 时，都会创建默认的 bridge 设备，如 virbr0 便是 libvirt 创建的。</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>➜<span class="w">  </span>~<span class="w"> </span>brctl<span class="w"> </span>show
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>bridge<span class="w"> </span>name<span class="w">     </span>bridge<span class="w"> </span>id<span class="w">               </span>STP<span class="w"> </span>enabled<span class="w">     </span>interfaces
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>br-d1cfd67efd10<span class="w">         </span><span class="m">8000</span>.0242abdcc8f5<span class="w">       </span>no<span class="w">              </span>veth461ccef
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>br0<span class="w">             </span><span class="m">8000</span>.be316828842b<span class="w">       </span>yes<span class="w">             </span>enp7s0
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">                                                        </span>vnet1
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>docker0<span class="w">         </span><span class="m">8000</span>.0242ff18344e<span class="w">       </span>no<span class="w">              </span>veth2305c74
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">                                                        </span>veth69f27d6
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>lxdbr0<span class="w">          </span><span class="m">8000</span>.00163ecbf2fc<span class="w">       </span>no
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>virbr0<span class="w">          </span><span class="m">8000</span>.525400bf6a2c<span class="w">       </span>yes<span class="w">             </span>vnet0
+</span></code></pre></div>
+<p>libvirt 创建不同类型网络参考：<a href="https://wiki.libvirt.org/page/Networking">Networking - Libvirt Wiki</a></p>
+<ul>
+<li>nat：虚拟机位于一个虚拟的网段，通过 nat 到宿主机上网。libvirt 默认提供一个叫做<code>default</code>的网络</li>
+<li>bridge：虚拟机和物理机共享网络。</li>
+</ul>
+<p>虚拟机想要使用 bridge 模式，分为两步</p>
+<ul>
+<li>在 linux 中创建 bridge 设备</li>
+<li>virt-manger 中创建网络，使用该 bridge 设备</li>
+</ul>
+<h4 id="netplannetworkd创建bridge">netplan/networkd创建bridge<a class="headerlink" href="#netplannetworkd创建bridge" title="Permanent link">&para;</a></h4>
+<p>ubuntu20.04 起使用 netplan 管理网络，桌面版的 render 使用 NetworkManger，服务器版则使用 networkd。</p>
+<ul>
+<li>NetworkManger 用于图形化界面管理网络</li>
+<li>networkd 使用配置文件管理
+对于复杂的网络来说，还是 networkd 更合适。</li>
+</ul>
+<p><em>ps. 还有其它方式，如使用 iproute2/ip, bridge-utils/brctl创建bridge，参考：<a href="https://wiki.archlinux.org/title/network_bridge">Network bridge - ArchWiki (archlinux.org)</a></em></p>
+<ul>
+<li>关闭 NetworkManger，启动 networkd</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>sudo systemctl stop NetworkManager
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>sudo systemctl disable NetworkManager
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>sudo systemctl enable systemd-networkd
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>sudo systemctl start systemd-networkd
+</span></code></pre></div>
+<ul>
+<li>编辑配置文件<ul>
+<li>eth0 改为实际网卡名字，pcie 网卡前缀一般为 enp</li>
+<li>其中 eth0 dchp4 false 表示该接口上不会尝试去 dhcp 请求 ip 地址。要想访问 host，需要通过 br0 的 ip 地址</li>
+</ul>
+</li>
+</ul>
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nb">cd</span><span class="w"> </span>/etc/netplan/
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="c1"># 备份原本的配置</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>mv<span class="w"> </span><span class="m">01</span>-xxx.yaml<span class="w"> </span><span class="m">01</span>-xxx.yaml.bak
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="c1"># 新建配置</span>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>vim<span class="w"> </span><span class="m">10</span>-yyy.yaml
+</span></code></pre></div>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># 10-yyy.yaml</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="nt">network</span><span class="p">:</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">  </span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">  </span><span class="nt">renderer</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">networkd</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">  </span><span class="nt">ethernets</span><span class="p">:</span>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="w">    </span><span class="nt">eth0</span><span class="p">:</span>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="w">      </span><span class="nt">dhcp4</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="w">      </span><span class="nt">dhcp6</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="w">  </span><span class="nt">bridges</span><span class="p">:</span>
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="w">    </span><span class="nt">br0</span><span class="p">:</span>
+</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="w">      </span><span class="nt">dhcp4</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+</span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a><span class="w">      </span><span class="nt">dhcp6</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+</span><span id="__span-3-13"><a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a><span class="w">      </span><span class="nt">interfaces</span><span class="p">:</span>
+</span><span id="__span-3-14"><a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a><span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">eth0</span>
+</span></code></pre></div>
+<ul>
+<li>应用`netplan apply</li>
+</ul>
+<h4 id="networkmanger不推荐">NetworkManger(不推荐)<a class="headerlink" href="#networkmanger不推荐" title="Permanent link">&para;</a></h4>
+<p>ubuntu20.04 使用 netplan 管理网络，其中桌面版 render 使用 NetworkManger，一些教程使用/etc/network/interfaces 创建 bridge 设备已经不适用了。</p>
+<p>使用 NetworkManger 创建 bridge 参考：<a href="https://www.cyberciti.biz/faq/how-to-add-network-bridge-with-nmcli-networkmanager-on-linux/">How to add network bridge with nmcli (NetworkManager) on Linux - nixCraft (cyberciti.biz)</a></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>nmcli<span class="w"> </span>con<span class="w"> </span>add<span class="w"> </span>ifname<span class="w"> </span>br0<span class="w"> </span><span class="nb">type</span><span class="w"> </span>bridge<span class="w"> </span>con-name<span class="w"> </span>br0
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>nmcli<span class="w"> </span>con<span class="w"> </span>add<span class="w"> </span><span class="nb">type</span><span class="w"> </span>bridge-slave<span class="w"> </span>ifname<span class="w"> </span>enp7s0<span class="w"> </span>master<span class="w"> </span>br0
+</span></code></pre></div>
+<p><strong>注意点</strong></p>
+<ul>
+<li>
+<p>启用了 bridge 设备时，需要关闭原有以太网设备。之后访问机器得通过 br0。</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>sudo<span class="w"> </span>nmcli<span class="w"> </span>con<span class="w"> </span>down<span class="w"> </span><span class="s2">&quot;Wired connection 1&quot;</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>sudo<span class="w"> </span>nmcli<span class="w"> </span>con<span class="w"> </span>up<span class="w"> </span>br0
+</span></code></pre></div>
+<ul>
+<li>ssh 连接时会导致连接断开，因此需要用脚本执行上面两条命令。</li>
+<li>新启用的 br0 会拥有 LAN 的 ip 地址，但是地址相较于原本地址会发生改变。可以在路由器中看到新的 ip 地址，然后 ssh 连接<ul>
+<li>或者使用 wifi 维持另一个网络连接</li>
+</ul>
+</li>
+<li>无法在 wifi 设备上创建 bridge，只能是有线以太网。</li>
+</ul>
+</li>
+</ul>
+<h4 id="virt-manger-添加网络">virt-manger 添加网络<a class="headerlink" href="#virt-manger-添加网络" title="Permanent link">&para;</a></h4>
+<p>virt-manger 中，在编辑-&gt;连接详情-&gt;虚拟网络添加一个网络</p>
+<div class="language-xml highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="nt">&lt;network&gt;</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">  </span><span class="nt">&lt;name&gt;</span>br0<span class="nt">&lt;/name&gt;</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">  </span><span class="nt">&lt;forward</span><span class="w"> </span><span class="na">mode=</span><span class="s">&quot;bridge&quot;</span><span class="nt">/&gt;</span>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">  </span><span class="nt">&lt;bridge</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;br0&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="nt">&lt;/network&gt;</span>
+</span></code></pre></div>
+<h2 id="显卡直通">显卡直通<a class="headerlink" href="#显卡直通" title="Permanent link">&para;</a></h2>
+<h3 id="参考资料">参考资料<a class="headerlink" href="#参考资料" title="Permanent link">&para;</a></h3>
+<ul>
+<li>最完整的 Arch wiki：<a href="https://wiki.archlinux.org/title/PCI_passthrough_via_OVMF">PCI passthrough via OVMF - ArchWiki (archlinux.org)</a></li>
+<li>KVM 创建虚拟机并显卡直通详细博客：<a href="https://www.heiko-sieger.info/creating-a-windows-10-vm-on-the-amd-ryzen-9-3900x-using-qemu-4-0-and-vga-passthrough/">Creating a Windows 10 kvm VM on the AMD Ryzen 9 3900X using VGA Passthrough - Heiko's Blog % Virtualization (heiko-sieger.info)</a></li>
+<li>帮助我解决了 windows 蓝屏问题的博客：<a href="https://blog.twenska.de/blog/GPU_passthrough/">GPU passthrough - my switch to Linux</a></li>
+<li>比较好的 github page：<a href="https://clayfreeman.github.io/gpu-passthrough/">GPU Passthrough on GNU/Linux | gpu-passthrough (clayfreeman.github.io)</a></li>
+</ul>
+<p>PVE 资料</p>
+<ul>
+<li><a href="https://pve.proxmox.com/wiki/PCI_Passthrough">https://pve.proxmox.com/wiki/PCI_Passthrough</a></li>
+<li><a href="https://www.spice-space.org/download.html#windows-binaries">Download (spice-space.org)</a></li>
+<li>AMD 5000XT, 6000XT, reset bug: <a href="https://github.com/gnif/vendor-reset">gnif/vendor-reset: Linux kernel vendor specific hardware reset module for sequences that are too complex/complicated to land in pci_quirks.c (github.com)</a></li>
+</ul>
+<h3 id="步骤总结">步骤总结<a class="headerlink" href="#步骤总结" title="Permanent link">&para;</a></h3>
+<p>对于可热插拔的设备，在 virt-manger 中添加需要直通的 host pci 设备即可（可热插拔的设备，虚拟机启动时 vfio_pci 接管设备驱动，关闭虚拟机时，host 可重新访问），但是对于显卡这种无法热插拔的设备，则较为复杂：</p>
+<ul>
+<li>需要通过 lspci 命令，查看 pci 设备的总线地址，设备 id，以及所处的 IOMMU group</li>
+<li>如果显卡单独位于一个 IOMMU group，则可以直通，可以进行之后步骤<ul>
+<li>否则，尝试移动显卡位置（另一个 pciex16 的槽），看是否为单独 group</li>
+<li>不行的话需要尝试 ACS patch（见后），可能导致不稳定</li>
+</ul>
+</li>
+</ul>
+<p>确定可以直通后步骤：</p>
+<ul>
+<li>bios 开启<strong>虚拟化</strong>(intel: vt-x, AMD: SVM) 和<strong>iommu</strong>(intel: vt-d, AMD: AMD-Vi) 支持<ul>
+<li>以我的 AMD 平台为例，需要开启 SVM，IOMMU，ACS（位于 AMD CBS 中，BIOS 中搜索关键词即可）</li>
+</ul>
+</li>
+<li>virt-manger 中添加 pci 设备，选择显卡 group 下的所有设备（通常另一个为声卡）</li>
+<li>
+<p>grub 修改内核启动参数（grub2 通过编辑/etc/default/grub，然后 sudo update-grub）</p>
+<ul>
+<li>开启 iommu</li>
+<li>在启动时将显卡绑定到 vifo_pci 驱动上（还有相同 group 下的声卡）</li>
+<li>最终我的启动参数示例</li>
+</ul>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="nv">GRUB_CMDLINE_LINUX_DEFAULT</span><span class="o">=</span><span class="s2">&quot;quiet splash amd_iommu=on vfio_pci.ids=10de:1d01,10de:0fb8 kvm.ignore_msrs=1&quot;</span>
+</span></code></pre></div>
+</li>
+</ul>
+<ul>
+<li>
+<p>显卡处于虚拟化环境中会拒绝工作，需要在 virt-manger XML 中添加额外参数。参考<a href="https://wiki.archlinux.org/title/PCI_passthrough_via_OVMF#Video_card_driver_virtualisation_detection">archiwiki</a></p>
+<ul>
+<li>vendor_id：对于 Nvidia 的显卡，会报 43 错误。在早期的驱动需要下面的 vendor_id，<em>但是最新的显卡驱动已经不需要了</em>。在 windows 内更新显卡驱动便会正常工作。</li>
+<li>hidden：让显卡不知道位于虚拟机中（windows 还是知道的）</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>&lt;features&gt;
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>  ...
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>  &lt;hyperv&gt;
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>    ...
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>    &lt;vendor_id state=&#39;on&#39; value=&#39;randomid&#39;/&gt;
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>    ...
+</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>  &lt;/hyperv&gt;
+</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a>  &lt;kvm&gt;
+</span><span id="__span-8-9"><a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a>    &lt;hidden state=&#39;on&#39;/&gt;
+</span><span id="__span-8-10"><a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a>  &lt;/kvm&gt;
+</span><span id="__span-8-11"><a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a>  ...
+</span><span id="__span-8-12"><a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a>&lt;/features&gt;
+</span></code></pre></div>
+</li>
+</ul>
+<h3 id="什么是-iommu">什么是 IOMMU<a class="headerlink" href="#什么是-iommu" title="Permanent link">&para;</a></h3>
+<p>关于 IOMMU 和 ACS：<a href="https://vfio.blogspot.com/2014/08/iommu-groups-inside-and-out.html"></a></p>
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/MMU_and_IOMMU.svg/564px-MMU_and_IOMMU.svg.png" alt="img" style="zoom:50%;" /></p>
+<ul>
+<li>PCIE 支持 requst id，因此可以识别不同设备，每个设备可以使用自己的虚拟地址空间 (I/O virtual address, IOVA)，IOMMU 负责转换</li>
+<li>然后设备之间还可以通过 DMA 直接 peer to peer 通信，这些通信不经过 IOMMU，因此可能导致问题，比如网卡的 DMA 请求发送到了磁盘。PCIe Access Control Services (ACS) 便用于解决这个问题。它使我们能够知道设备间是否能够直接通信以及是否能够关闭。</li>
+<li>对于不支持 ACS 的设备，IOMMU 将其归为一个 group。</li>
+<li>PCI 直通必须直通一个 IOMMU group 的所有设备（除掉特殊的 PCI root 设备）</li>
+</ul>
+<p>PCIe 连接的通道由 CPU 或者主板芯片组（以前的南北桥）提供。是否支持 ACS 和 CPU 有关</p>
+<blockquote>
+<p>On a typical Intel chipset, PCIe root ports are provided via both the processor and the PCH (Platform Controller Hub).  The capabilities of these root ports can be very different.  On the latest Linux kernels we have support for exposing the isolation of the PCH root ports, even though many of them do not have native PCIe ACS support.
+On Xeon class processors (<a href="http://www.intel.com/content/dam/www/public/us/en/documents/specification-updates/xeon-e3-1200v3-spec-update.pdf">except E3-1200 series</a>), the processor-based PCIe root ports typically support ACS.  Client processors, such as the i5/i7 Core processor do not support ACS, but we can hope future products from Intel will update this support.</p>
+<p>You cannot change the IOMMU groups. It is determined by the motherboard and the BIOS. You can put it in different slots and see if that helps. You can try different BIOS versions, or buy a X570 motherboard. And you can use the pcie_acs_override if you don't care about the device isolation, which means that the device passed through to the VM can still talk to the host and/or devices in other VMs.</p>
+</blockquote>
+<h3 id="查看主板-iommu-组分布">查看主板 iommu 组分布<a class="headerlink" href="#查看主板-iommu-组分布" title="Permanent link">&para;</a></h3>
+<p>使用下面脚本，得到主板上 iommu 组的信息</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="ch">#!/bin/bash</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="nb">shopt</span><span class="w"> </span>-s<span class="w"> </span>nullglob
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="k">for</span><span class="w"> </span>g<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="k">$(</span>find<span class="w"> </span>/sys/kernel/iommu_groups/*<span class="w"> </span>-maxdepth<span class="w"> </span><span class="m">0</span><span class="w"> </span>-type<span class="w"> </span>d<span class="w"> </span><span class="p">|</span><span class="w"> </span>sort<span class="w"> </span>-V<span class="k">)</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;IOMMU Group </span><span class="si">${</span><span class="nv">g</span><span class="p">##*/</span><span class="si">}</span><span class="s2">:&quot;</span>
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span>d<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="nv">$g</span>/devices/*<span class="p">;</span><span class="w"> </span><span class="k">do</span>
+</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="w">        </span><span class="nb">echo</span><span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;\t</span><span class="k">$(</span>lspci<span class="w"> </span>-nns<span class="w"> </span><span class="si">${</span><span class="nv">d</span><span class="p">##*/</span><span class="si">}</span><span class="k">)</span><span class="s2">&quot;</span>
+</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="w">    </span><span class="k">done</span><span class="p">;</span>
+</span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a><span class="k">done</span><span class="p">;</span>
+</span></code></pre></div>
+<p><strong>我的 IOMMU 分布</strong>
+可知：</p>
+<ul>
+<li>靠近 CPU 一侧的 nvme 插槽（PCIE 4.0 x 4）位于单独的 14 号组（CPU 通道）</li>
+<li>位于靠近 CPU 的一侧的显卡插槽（PCIE 4.0 x16）位于单独的 16 号组（CPU 通道）</li>
+<li>其余：显卡插槽 2（PCIE 3.0 x4）、nvme 插槽（PCIE 3.0 x 4）、以太网卡、wifi6 无线网卡和 SATA 控制器、USB 控制器均位于 15 号组（主板通道）</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>Please be patient. This may take a couple seconds.
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>Group:  0   0000:00:01.0 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Starship/Matisse PCIe Dummy Host Bridge [1022:1482]
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>Group:  1   0000:00:01.1 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] Starship/Matisse GPP Bridge [1022:1483]   Driver: pcieport
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>Group:  2   0000:00:01.2 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] Starship/Matisse GPP Bridge [1022:1483]   Driver: pcieport
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>Group:  3   0000:00:02.0 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Starship/Matisse PCIe Dummy Host Bridge [1022:1482]
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>Group:  4   0000:00:03.0 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Starship/Matisse PCIe Dummy Host Bridge [1022:1482]
+</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a>Group:  5   0000:00:03.1 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] Starship/Matisse GPP Bridge [1022:1483]   Driver: pcieport
+</span><span id="__span-10-8"><a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a>Group:  6   0000:00:04.0 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Starship/Matisse PCIe Dummy Host Bridge [1022:1482]
+</span><span id="__span-10-9"><a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a>Group:  7   0000:00:05.0 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Starship/Matisse PCIe Dummy Host Bridge [1022:1482]
+</span><span id="__span-10-10"><a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a>Group:  8   0000:00:07.0 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Starship/Matisse PCIe Dummy Host Bridge [1022:1482]
+</span><span id="__span-10-11"><a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a>Group:  9   0000:00:07.1 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] Starship/Matisse Internal PCIe GPP Bridge 0 to bus[E:B] [1022:1484]   Driver: pcieport
+</span><span id="__span-10-12"><a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a>Group:  10  0000:00:08.0 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Starship/Matisse PCIe Dummy Host Bridge [1022:1482]
+</span><span id="__span-10-13"><a id="__codelineno-10-13" name="__codelineno-10-13" href="#__codelineno-10-13"></a>Group:  11  0000:00:08.1 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] Starship/Matisse Internal PCIe GPP Bridge 0 to bus[E:B] [1022:1484]   Driver: pcieport
+</span><span id="__span-10-14"><a id="__codelineno-10-14" name="__codelineno-10-14" href="#__codelineno-10-14"></a>Group:  12  0000:00:14.0 SMBus [0c05]: Advanced Micro Devices, Inc. [AMD] FCH SMBus Controller [1022:790b] (rev 61)   Driver: piix4_smbus
+</span><span id="__span-10-15"><a id="__codelineno-10-15" name="__codelineno-10-15" href="#__codelineno-10-15"></a>Group:  12  0000:00:14.3 ISA bridge [0601]: Advanced Micro Devices, Inc. [AMD] FCH LPC Bridge [1022:790e] (rev 51)
+</span><span id="__span-10-16"><a id="__codelineno-10-16" name="__codelineno-10-16" href="#__codelineno-10-16"></a>Group:  13  0000:00:18.0 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Matisse/Vermeer Data Fabric: Device 18h; Function 0 [1022:1440]
+</span><span id="__span-10-17"><a id="__codelineno-10-17" name="__codelineno-10-17" href="#__codelineno-10-17"></a>Group:  13  0000:00:18.1 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Matisse/Vermeer Data Fabric: Device 18h; Function 1 [1022:1441]
+</span><span id="__span-10-18"><a id="__codelineno-10-18" name="__codelineno-10-18" href="#__codelineno-10-18"></a>Group:  13  0000:00:18.2 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Matisse/Vermeer Data Fabric: Device 18h; Function 2 [1022:1442]
+</span><span id="__span-10-19"><a id="__codelineno-10-19" name="__codelineno-10-19" href="#__codelineno-10-19"></a>Group:  13  0000:00:18.3 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Matisse/Vermeer Data Fabric: Device 18h; Function 3 [1022:1443]   Driver: k10temp
+</span><span id="__span-10-20"><a id="__codelineno-10-20" name="__codelineno-10-20" href="#__codelineno-10-20"></a>Group:  13  0000:00:18.4 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Matisse/Vermeer Data Fabric: Device 18h; Function 4 [1022:1444]
+</span><span id="__span-10-21"><a id="__codelineno-10-21" name="__codelineno-10-21" href="#__codelineno-10-21"></a>Group:  13  0000:00:18.5 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Matisse/Vermeer Data Fabric: Device 18h; Function 5 [1022:1445]
+</span><span id="__span-10-22"><a id="__codelineno-10-22" name="__codelineno-10-22" href="#__codelineno-10-22"></a>Group:  13  0000:00:18.6 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Matisse/Vermeer Data Fabric: Device 18h; Function 6 [1022:1446]
+</span><span id="__span-10-23"><a id="__codelineno-10-23" name="__codelineno-10-23" href="#__codelineno-10-23"></a>Group:  13  0000:00:18.7 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Matisse/Vermeer Data Fabric: Device 18h; Function 7 [1022:1447]
+</span><span id="__span-10-24"><a id="__codelineno-10-24" name="__codelineno-10-24" href="#__codelineno-10-24"></a>Group:  14  0000:01:00.0 Non-Volatile memory controller [0108]: Samsung Electronics Co Ltd NVMe SSD Controller PM9A1/PM9A3/980PRO [144d:a80a]   Driver: nvme
+</span><span id="__span-10-25"><a id="__codelineno-10-25" name="__codelineno-10-25" href="#__codelineno-10-25"></a>Group:  15  0000:02:00.0 USB controller [0c03]: Advanced Micro Devices, Inc. [AMD] Device [1022:43ee]   Driver: xhci_hcd
+</span><span id="__span-10-26"><a id="__codelineno-10-26" name="__codelineno-10-26" href="#__codelineno-10-26"></a>Group:  15  0000:02:00.1 SATA controller [0106]: Advanced Micro Devices, Inc. [AMD] Device [1022:43eb]   Driver: ahci
+</span><span id="__span-10-27"><a id="__codelineno-10-27" name="__codelineno-10-27" href="#__codelineno-10-27"></a>Group:  15  0000:02:00.2 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] Device [1022:43e9]   Driver: pcieport
+</span><span id="__span-10-28"><a id="__codelineno-10-28" name="__codelineno-10-28" href="#__codelineno-10-28"></a>Group:  15  0000:03:00.0 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] Device [1022:43ea]   Driver: pcieport
+</span><span id="__span-10-29"><a id="__codelineno-10-29" name="__codelineno-10-29" href="#__codelineno-10-29"></a>Group:  15  0000:03:04.0 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] Device [1022:43ea]   Driver: pcieport
+</span><span id="__span-10-30"><a id="__codelineno-10-30" name="__codelineno-10-30" href="#__codelineno-10-30"></a>Group:  15  0000:03:08.0 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] Device [1022:43ea]   Driver: pcieport
+</span><span id="__span-10-31"><a id="__codelineno-10-31" name="__codelineno-10-31" href="#__codelineno-10-31"></a>Group:  15  0000:03:09.0 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] Device [1022:43ea]   Driver: pcieport
+</span><span id="__span-10-32"><a id="__codelineno-10-32" name="__codelineno-10-32" href="#__codelineno-10-32"></a>Group:  15  0000:04:00.0 VGA compatible controller [0300]: Advanced Micro Devices, Inc. [AMD/ATI] Baffin [Radeon RX 550 640SP / RX 560/560X] [1002:67ff] (rev ff)   Driver: amdgpu
+</span><span id="__span-10-33"><a id="__codelineno-10-33" name="__codelineno-10-33" href="#__codelineno-10-33"></a>Group:  15  0000:04:00.1 Audio device [0403]: Advanced Micro Devices, Inc. [AMD/ATI] Baffin HDMI/DP Audio [Radeon RX 550 640SP / RX 560/560X] [1002:aae0]   Driver: snd_hda_intel
+</span><span id="__span-10-34"><a id="__codelineno-10-34" name="__codelineno-10-34" href="#__codelineno-10-34"></a>Group:  15  0000:05:00.0 Non-Volatile memory controller [0108]: KIOXIA Corporation NVMe SSD [1e0f:0009] (rev 01)   Driver: nvme
+</span><span id="__span-10-35"><a id="__codelineno-10-35" name="__codelineno-10-35" href="#__codelineno-10-35"></a>Group:  15  0000:06:00.0 Network controller [0280]: Intel Corporation Wi-Fi 6 AX200 [8086:2723] (rev 1a)   Driver: iwlwifi
+</span><span id="__span-10-36"><a id="__codelineno-10-36" name="__codelineno-10-36" href="#__codelineno-10-36"></a>Group:  15  0000:07:00.0 Ethernet controller [0200]: Realtek Semiconductor Co., Ltd. RTL8125 2.5GbE Controller [10ec:8125] (rev 05)   Driver: r8169
+</span><span id="__span-10-37"><a id="__codelineno-10-37" name="__codelineno-10-37" href="#__codelineno-10-37"></a>Group:  16  0000:08:00.0 VGA compatible controller [0300]: NVIDIA Corporation GP106 [GeForce GTX 1060 3GB] [10de:1c02] (rev a1)   Driver: vfio-pci
+</span><span id="__span-10-38"><a id="__codelineno-10-38" name="__codelineno-10-38" href="#__codelineno-10-38"></a>Group:  16  0000:08:00.1 Audio device [0403]: NVIDIA Corporation GP106 High Definition Audio Controller [10de:10f1] (rev a1)   Driver: vfio-pci
+</span><span id="__span-10-39"><a id="__codelineno-10-39" name="__codelineno-10-39" href="#__codelineno-10-39"></a>Group:  17  0000:09:00.0 Non-Essential Instrumentation [1300]: Advanced Micro Devices, Inc. [AMD] Starship/Matisse PCIe Dummy Function [1022:148a]
+</span><span id="__span-10-40"><a id="__codelineno-10-40" name="__codelineno-10-40" href="#__codelineno-10-40"></a>Group:  18  0000:0a:00.0 Non-Essential Instrumentation [1300]: Advanced Micro Devices, Inc. [AMD] Starship/Matisse Reserved SPP [1022:1485]
+</span><span id="__span-10-41"><a id="__codelineno-10-41" name="__codelineno-10-41" href="#__codelineno-10-41"></a>Group:  19  0000:0a:00.1 Encryption controller [1080]: Advanced Micro Devices, Inc. [AMD] Starship/Matisse Cryptographic Coprocessor PSPCPP [1022:1486]   Driver: ccp
+</span><span id="__span-10-42"><a id="__codelineno-10-42" name="__codelineno-10-42" href="#__codelineno-10-42"></a>Group:  20  0000:0a:00.3 USB controller [0c03]: Advanced Micro Devices, Inc. [AMD] Matisse USB 3.0 Host Controller [1022:149c]   Driver: xhci_hcd
+</span><span id="__span-10-43"><a id="__codelineno-10-43" name="__codelineno-10-43" href="#__codelineno-10-43"></a>Group:  21  0000:0a:00.4 Audio device [0403]: Advanced Micro Devices, Inc. [AMD] Starship/Matisse HD Audio Controller [1022:1487]   Driver: snd_hda_intel
+</span></code></pre></div>
+<h3 id="一个-group-里有多个设备怎么办">一个 group 里有多个设备怎么办<a class="headerlink" href="#一个-group-里有多个设备怎么办" title="Permanent link">&para;</a></h3>
+<p>主板上的不同 PCIe slot 可以连接到 CPU 上或者 PCH(主板芯片组) 上。我的主板貌似将所有设备都放入了一个 group。因此我的显卡 2 和 nvme 固态盘等设备都无法直通。</p>
+<p>对于一个组里有很多设备有一些解决方法：<a href="https://www.heiko-sieger.info/iommu-groups-what-you-need-to-consider/">IOMMU Groups - What You Need to Consider - Heiko's Blog - VFIO (heiko-sieger.info)</a></p>
+<ul>
+<li>更新内核版本，新的内核版本可能对主板支持的更好，IOMMU group 会改变</li>
+<li>移动设备位置</li>
+<li>安装 kernel patch：<a href="https://wiki.archlinux.org/title/PCI_passthrough_via_OVMF#Bypassing_the_IOMMU_groups_(ACS_override_patch)">https://wiki.archlinux.org/title/PCI_passthrough_via_OVMF#Bypassing_the_IOMMU_groups_(ACS_override_patch)</a></li>
+</ul>
+<p>但是我目前就选择直通 slot 1 显卡算了。</p>
+<h3 id="直通-slot1-或-slot2-的权衡">直通 slot1 或 slot2 的权衡<a class="headerlink" href="#直通-slot1-或-slot2-的权衡" title="Permanent link">&para;</a></h3>
+<p>直通 slot1</p>
+<ul>
+<li>slot1 显卡的风扇会被 slot2 显卡的 PCB 版挡住，散热不太好<ul>
+<li>解决方法：使用 PCIE 显卡延长线（但是 x16 的太贵了，90RMB）</li>
+</ul>
+</li>
+<li>boot gpu 默认为 slot 1 的问题。BIOS 无法设置 primary display，导致 windows 虚拟机会蓝屏 (<a href="https://wiki.archlinux.org/title/PCI_passthrough_via_OVMF#Passing_the_boot_GPU_to_the_guest">PCI passthrough via OVMF - Passing_the_boot_GPU_to_the_guest</a><ul>
+<li>该问题已解决</li>
+</ul>
+</li>
+</ul>
+<p>直通 slot2</p>
+<ul>
+<li>slot2 和主板上的其它设备位于一组，无法直通 slot2<ul>
+<li>使用 ACS patch</li>
+</ul>
+</li>
+<li>我 B550 的主板，slot2 的虽然是 x16 长度的，但是只有 x4 PCIE 3.0 的带宽，显卡一般最少需要 x8 PCIE 3.0，否则会对性能有影响，甚至无法工作<ul>
+<li>一般来说双显卡时，两个槽应该都是工作在 x8 的模式下的吧。为何我的主板不支持将 slot1 的 lane 分给 slot2 呢？(因为slot1 pcie通道来自CPU，slot2来自主板)</li>
+</ul>
+</li>
+</ul>
+<h3 id="直通-boot-gpu的问题">直通 boot gpu的问题<a class="headerlink" href="#直通-boot-gpu的问题" title="Permanent link">&para;</a></h3>
+<p>直通 boot gpu 存在一些问题，这里是对该问题的进一步总结</p>
+<h4 id="参考资料_1">参考资料<a class="headerlink" href="#参考资料_1" title="Permanent link">&para;</a></h4>
+<ul>
+<li>问题相关讨论：<a href="https://forum.level1techs.com/t/gpu-assistance-select-boot-gpu/151745/6">GPU Assistance - Select boot GPU - Software &amp; Operating Systems / VFIO - Level1Techs Forums</a><ul>
+<li>要么 bios 支持选择 primary gpu</li>
+<li>要么 swap gpu slot</li>
+</ul>
+</li>
+<li>解释问题原理，以及解决：<a href="https://passthroughpo.st/explaining-csm-efifboff-setting-boot-gpu-manually/">Explaining CSM, efifb=off, and Setting the Boot GPU Manually - The Passthrough POST</a></li>
+<li>是否需要 dump vbios：<a href="https://www.reddit.com/r/VFIO/comments/uyyb15/when_is_a_gpu_rom_required_and_how_does_it_get/">(8) When is a GPU ROM required and how does it get used? : VFIO (reddit.com)</a></li>
+</ul>
+<h4 id="问题可能导致的现象">问题可能导致的现象<a class="headerlink" href="#问题可能导致的现象" title="Permanent link">&para;</a></h4>
+<ul>
+<li>windows循环蓝屏。自己直通1063遇到的，解决办法可以不插显示器启动，或者使用命令reset显卡</li>
+<li>报43错误，驱动安装不上。1060换成AMD 6500xt时遇到的，解决办法就是不插显示器启动。（后面给czw在PVE里直通amd 6500xt时又遇到一样问题，但是解决办法不一样。</li>
+</ul>
+<h4 id="问题原因">问题原因<a class="headerlink" href="#问题原因" title="Permanent link">&para;</a></h4>
+<ul>
+<li>uefi 是电脑启动后 cpu 最早运行的代码</li>
+<li>uefi 需要初始化 primary gpu，因为需要设置菜单。This is because UEFI setup menus, along with boot splash screens, must work in a generic way, as UEFI cannot possibly include a driver for every possible GPU.</li>
+<li>UEFI 初始化后，暴露给 linux 的是修改后的 vBIOS (shadow copy)。If the host UEFI already initialized the device, the host UEFI makes a“shadow”copy of the GPU’s vBIOS on startup, and that is what Linux exposes as the device’s vBIOS.</li>
+<li>guest 也有自己的 UEFI（开源的 OVMF），也需要初始化设备。而 host 暴露给 guest 的是 shadow copy，故冲突。OVMF usually hangs at this stage.</li>
+</ul>
+<h4 id="方法-0关闭显示器启动">方法 0：关闭显示器启动<a class="headerlink" href="#方法-0关闭显示器启动" title="Permanent link">&para;</a></h4>
+<p>关闭 primary gpu 的显示器，second gpu 插上 hdmi 欺骗器（不插的话相当于没有显示器，启动时自检，显卡亮白灯，但是对于linux还是可以进入系统）</p>
+<p><strong>可以使用脚本避免重启电脑</strong>，参考遇到的问题里的[Windows 启动时循环蓝屏]。</p>
+<h4 id="方法一csm">方法一：CSM<a class="headerlink" href="#方法一csm" title="Permanent link">&para;</a></h4>
+<p>UEFI 开启 CSM。让 UEFI 初始化另一个 GPU。<a href="https://zhuanlan.zhihu.com/p/36530184">关于 CSM 和 UEFI 你要知道的一些事 - 知乎 (zhihu.com)</a></p>
+<p>试过后对我没有作用</p>
+<p><a href="https://www.reddit.com/r/VFIO/comments/hwro4x/passing_through_custom_rom_file_doesnt_change/">(8) Passing through custom ROM file doesn't change anything : VFIO (reddit.com)</a></p>
+<blockquote>
+<p>If you're using an MSI x370 Pro like I was, there isn't actually a setting for this. The solution is to install linux in UEFI mode and enable Windows 10 WHOQL Support (even though you're booting to Linux). This is a hackish solution that causes the board to use a second GPU instead of the GPU in the primary slot.</p>
+</blockquote>
+<p>类似于下面要说的 efifb:off</p>
+<blockquote>
+<p>I've got 2 graphics cards, a 2070 and a 1080. The 2070 I'm using as pass-through, the 1080 is the one I'm using for basic Linux stuff.
+On boot, the 2070 is initialised as the primary display by the MB and since <strong>I've blacklisted it from grub it basically only displays the Linux kernel version and nothing else.</strong> Then, rest of the startup is (effectively) silent, until Linux starts X, which then uses the 1080 as it's display since that's what I've configured it to use.</p>
+</blockquote>
+<h4 id="方法二efifboff成功">方法二：efifb:off(成功)<a class="headerlink" href="#方法二efifboff成功" title="Permanent link">&para;</a></h4>
+<p>保证 boot 时，不使用 primary GPU。</p>
+<ul>
+<li>linux 启动时会显示启动日志和 tty login 到终端中 (console)。在 linux 桌面发行版中，console 被输出到 framebuffer 中。</li>
+<li>显卡驱动和 EFI/BIOS 能够提供这个 framebuffer</li>
+<li>在 linux 启动的早期（还没有加载显卡驱动之前），使用 EFI/VESA 提供的 framebuffer。而这便会使用 firmware 指定的 primary gpu。</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>video=efifb:off
+</span></code></pre></div>
+<p>相当于禁用了 tty？</p>
+<p>重新测试
+两张显卡都连接显示器，主显卡直通。</p>
+<ul>
+<li>默认情况下，boot logo 显示在 primary 上，画面没有问题。启动完成后主显示器显示 login shell。启动 vm，黑屏，远程连接显示 43 错误。</li>
+<li>主显卡不连接显示器，boot logo 显示在 second 上，画面颜色不对，ubuntu logo 缺少东西。启动 vm 没问题</li>
+<li>开启 efifb:off，刚开始主显示器上显示选择是否进 bios 画面，接着主显示器熄灭。副显示器只显示了 logo，F2 黑屏（没有 log 输出）。最后进入了系统（没有 login shell）。启动 vm 没有问题。</li>
+</ul>
+<h4 id="方法三qemu-设置-vbios">方法三：qemu 设置 vBIOS<a class="headerlink" href="#方法三qemu-设置-vbios" title="Permanent link">&para;</a></h4>
+<p>QEMU can expose the vBIOS from a ROM file supplied to it by libvirt.
+获得 vBIOS 方法</p>
+<ul>
+<li>
+<p>dump：<a href="https://github.com/SpaceinvaderOne/Dump_GPU_vBIOS/blob/master/dump_vbios.sh">Dump_GPU_vBIOS/dump_vbios.sh at master · SpaceinvaderOne/Dump_GPU_vBIOS (github.com)</a>
+  <a href="https://www.reddit.com/r/VFIO/comments/ma0s7j/how_to_dump_gpu_vbios_on_linux/">(8) How to dump GPU VBIOS on linux? : VFIO (reddit.com)</a></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>cd /sys/bus/pci/devices/0000:0a:00.0
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>echo 1 &gt; rom
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>cat rom &gt; /tmp/vbios
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>echo 0 &gt; rom
+</span></code></pre></div>
+</li>
+</ul>
+<ul>
+<li>从网络上下载（TechPowerup）</li>
+</ul>
+<p>使用vbios</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>&lt;hostdev mode=&#39;subsystem&#39; type=&#39;pci&#39; managed=&#39;yes&#39;&gt;
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a> &lt;source&gt;
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a> &lt;address domain=&#39;0x0000&#39; bus=&#39;0x01&#39; slot=&#39;0x00&#39; function=&#39;0x0&#39;/&gt;
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a> &lt;/source&gt;
+</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a> &lt;rom file=&#39;/path/to/vbios.rom&#39;/&gt;
+</span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a> &lt;address type=&#39;pci&#39; domain=&#39;0x0000&#39; bus=&#39;0x00&#39; slot=&#39;0x04&#39; function=&#39;0x0&#39;/&gt;
+</span><span id="__span-13-7"><a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a>&lt;/hostdev&gt;
+</span></code></pre></div>
+<p>试过后报错</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>➜  ~ sudo virsh start win10
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>error: Failed to start domain &#39;win10&#39;
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>error: internal error: qemu unexpectedly closed the monitor: 2023-05-25T06:28:54.441761Z qemu-system-x86_64: warning: This family of AMD CPU doesn&#39;t support hyperthreading(2)
+</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>Please configure -smp options properly or try enabling topoext feature.
+</span><span id="__span-14-5"><a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a>2023-05-25T06:28:55.270270Z qemu-system-x86_64: -device vfio-pci,host=0000:0a:00.0,id=hostdev3,bus=pci.5,addr=0x0,romfile=/home/yfy/scripts/data/vbios-amd-6500xt.bin: vfio_listener_region_add received unaligned region
+</span><span id="__span-14-6"><a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a>2023-05-25T06:29:00.830154Z qemu-system-x86_64: -device vfio-pci,host=0000:0a:00.0,id=hostdev3,bus=pci.5,addr=0x0,romfile=/home/yfy/scripts/data/vbios-amd-6500xt.bin: Failed to mmap 0000:0a:00.0 BAR 0. Performance may be slow
+</span><span id="__span-14-7"><a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a>2023-05-25T06:29:00.875494Z qemu-system-x86_64: -device vfio-pci,host=0000:0a:00.0,id=hostdev3,bus=pci.5,addr=0x0,romfile=/home/yfy/scripts/data/vbios-amd-6500xt.bin: failed to find romfile &quot;/home/yfy/scripts/data/vbios-amd-6500xt.bin&quot;
+</span></code></pre></div>
+<p>发现</p>
+<ul>
+<li>只有开启 vm 后，才可以 dump bios，否者会报 output error</li>
+<li>关闭屏幕下开机，vm 显卡正常。但是 dump 的 vbios 通不过检验。反而是打开屏幕下开机，vm 显卡不正常的可以通过检验。</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>Valid ROM signature found @0h, PCIR offset 370h
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>        PCIR: type 0 (x86 PC-AT), vendor: 1002, device: 743f, class: 030000
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>        PCIR: revision 0, vendor revision: 1404
+</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a>Error, ran off the end
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>Valid ROM signature found @0h, PCIR offset 370h
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>        PCIR: type 0 (x86 PC-AT), vendor: 1002, device: 743f, class: 030000
+</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>        PCIR: revision 0, vendor revision: 1404
+</span><span id="__span-16-4"><a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a>Valid ROM signature found @ae00h, PCIR offset 1ch
+</span><span id="__span-16-5"><a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a>        PCIR: type 3 (EFI), vendor: 1002, device: 743f, class: 030000
+</span><span id="__span-16-6"><a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a>        PCIR: revision 0, vendor revision: 0
+</span><span id="__span-16-7"><a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a>                EFI: Signature Valid, Subsystem: Boot, Machine: X64
+</span><span id="__span-16-8"><a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a>Valid ROM signature found @14400h, PCIR offset 1ch
+</span><span id="__span-16-9"><a id="__codelineno-16-9" name="__codelineno-16-9" href="#__codelineno-16-9"></a>        PCIR: type 3 (EFI), vendor: 1002, device: 743f, class: 000000
+</span><span id="__span-16-10"><a id="__codelineno-16-10" name="__codelineno-16-10" href="#__codelineno-16-10"></a>        PCIR: revision 0, vendor revision: 0
+</span><span id="__span-16-11"><a id="__codelineno-16-11" name="__codelineno-16-11" href="#__codelineno-16-11"></a>                EFI: Signature Valid, Subsystem: Boot, Machine: ARM 64-bit
+</span><span id="__span-16-12"><a id="__codelineno-16-12" name="__codelineno-16-12" href="#__codelineno-16-12"></a>        Last image
+</span></code></pre></div>
+<p><a href="https://www.reddit.com/r/VFIO/comments/t35oji/comment/hyqus40/">(8) Do you need or not need a vbios file? : VFIO (reddit.com)</a>
+使用错误的 vbios 不会对显卡造成损坏
+OR, you can use vbios dumps from other people on the Internet. It's less wise, but in some intentional personal testing I was unable to kill my nvidia GPU's by initializing them on my VM with intentionally bad/truncated/wrong-version romfile=xxx roms. In fact some of those worked for my single GPU passthrough scenarios on GTX780's and a 2080Ti despite being vastly different versions than my GPU's actual current vbios version. Minor differences I presume.</p>
+<p>和实际 flash gpu rom 是不同的
+I personally wouldn't advise actually flashing your GPU's bios unless required. From what I can see, that is not the same thing as the vbios romfile= qemu option where you're asking your guest to execute a fake rom as a one-off from your host instead of the broken (or valid if correctly isolated) boot rom data on your GPU as it were already initialized by the host earlier in the boot.</p>
+<p>nv 的有 rom 只能运行一次的问题，amd 没有
+Furthermore, it seems only NVIDIA cards have this problem and even then only some. They can be initialized once per boot. That's it. AMD cards don't seem to have this problem AFAIK and present their rom the same all the time, so the VM has no trouble initializing them again and again and again once given one.</p>
+<p>什么时候需要指定 bios
+This means that if your motherboard draws to the GPU on boot with system information, a logo and what not on the GPU you want to pass through then you're already too late and would need a vbios file if you cannot stop this behavior in your host's bios settings.</p>
+<p>主板不支持指定核显独显，或者多显卡下不支持指定某一块显卡
+If your motherboard doesn't have an option to strictly pick which GPU to use (integrated vs dedicated, or an option of <em>which</em> of multiple dedicated to use) it may initialize it too and you will need a vbios file for a guest all the same.</p>
+<p>Single GPU hosts don't get any choice and have to draw their POST information ...somewhere... So you will almost always need a vbios file outside very special motherboard configurations (Usually Server boards handle this nicely, even if they only have a shitty onboard 8MB vga plug for basic terminal display only)</p>
+<blockquote>
+<p>Basically if the host uses the card at all, it's initialized and the rom is borked for the boot. A vbios file will be needed for a guest to reinitialize it and works around this nicely.</p>
+</blockquote>
+<p>可以动态直通显卡？
+I personally don't think about it too much. I've written my <a href="https://github.com/ipaqmaster/vfio">own vfio script</a> compatible with my single GPU host and use a vbios file and use my linux desktop for as long as I like until I want to pass the gpu to the guest, it dynamically unbinds the nvidia driver and stops lightdm before starting the guest with the vbios romfile included to reinitialize the card.</p>
+<p>不关机重置 gpu？
+This makes me imagine that putting a PC to sleep then waking it as you start your qemu VM may be another way to 'reboot' the GPU and restore its vbios rom ready for the guest without a true host reboot (With a low enough sleep state), but who wants to do that. Maybe something for me to experiment with though. It could also help make the GPU more stable when returning to a host in some circumstances.</p>
+<h3 id="单-gpu-直通">单 gpu 直通？<a class="headerlink" href="#单-gpu-直通" title="Permanent link">&para;</a></h3>
+<p><a href="https://www.reddit.com/r/VFIO/comments/mrlhva/single_nvidia_passthrough_endless_kernel_nvrm_logs/">(8) Single Nvidia passthrough: endless kernel NVRM logs : VFIO (reddit.com)</a></p>
+<h2 id="遇到的问题">遇到的问题<a class="headerlink" href="#遇到的问题" title="Permanent link">&para;</a></h2>
+<h3 id="rdp-很卡">RDP 很卡<a class="headerlink" href="#rdp-很卡" title="Permanent link">&para;</a></h3>
+<p>发现设备管理器中显示的是 Microsoft 基本显示适配器，在显示适配器上手动安装 QXL 驱动后解决（位于 virtio 光盘的 qxlod 目录下）</p>
+<h4 id="vnc-与-rdp">VNC 与 RDP<a class="headerlink" href="#vnc-与-rdp" title="Permanent link">&para;</a></h4>
+<ul>
+<li>远程桌面 RDP 使用自己的 remote display 显示适配器，和一个通用非即插即用设备 (uPnP)</li>
+</ul>
+<ul>
+<li>
+<p>tightvnc 则会使用 QXL controller + PnP</p>
+<p><img alt="image-20220718124846271" src="https://imagebed.yfycloud.site/2025/12/fd227c9ea80753a2c035f8b6c7238cc8.png" /></p>
+</li>
+</ul>
+<ul>
+<li>后面发现貌似 tightvnc 和 parsec 远程连接（使用虚拟显示适配器）和 VNC（使用显卡或者 QXL）都会使用，优先 VNC。</li>
+</ul>
+<h4 id="parsec-连接玩游戏很糊">parsec 连接玩游戏很糊<a class="headerlink" href="#parsec-连接玩游戏很糊" title="Permanent link">&para;</a></h4>
+<p>发现是显示器选择了 125% 的缩放导致的</p>
+<h3 id="steam-link-连接时-windows-用户登录弹窗">steam link 连接时 windows 用户登录弹窗<a class="headerlink" href="#steam-link-连接时-windows-用户登录弹窗" title="Permanent link">&para;</a></h3>
+<p>参考：<a href="https://steamcommunity.com/groups/homestream/discussions/0/1696049513769785227/">Can't get past Steam Input Dialog Box :: Steam Remote Play (steamcommunity.com)</a></p>
+<p>问题为使用 steam link 连接时，windows 需要登录。但是会弹出一个窗口，说：Would you like to accept secure desktop input from Steam? steam link 远程登陆时无法点击系统弹窗，导致无法进入。弹窗也说需要坐在电脑前点击确认</p>
+<p>解决：如果 windows 没有锁屏，那么 steam link 登录就不需要输入密码登录 windows。可以在 windows 上安装 tightvnc，通过 vnc 连接后，steam link 连接时就不会输密码了（而且 vnc 连接也不会掉）</p>
+<h3 id="windows-虚拟机内-obs-录屏">Windows 虚拟机内 OBS 录屏<a class="headerlink" href="#windows-虚拟机内-obs-录屏" title="Permanent link">&para;</a></h3>
+<p>通过 rdp 远程连接 windows 时使用 OBS 录屏，会发现断开 rdp 连接后，录到的是黑屏。原因是 rdp 连接时，使用的是虚拟的显示适配器（无法调节分辨率），虚拟的声卡。当断开连接时，这些都会消失，故无法录屏。</p>
+<p>解决办法为使用 vnc，vnc 连接后开启录屏，断开连接后，仍然在录屏。</p>
+<h3 id="linux-启动时黑屏">Linux 启动时黑屏<a class="headerlink" href="#linux-启动时黑屏" title="Permanent link">&para;</a></h3>
+<p>由于 host gpu 处于第二个槽，导致 X 启动失败</p>
+<p><a href="https://wiki.archlinux.org/title/PCI_passthrough_via_OVMF#X_does_not_start_after_enabling_vfio_pci">https://wiki.archlinux.org/title/PCI_passthrough_via_OVMF#X_does_not_start_after_enabling_vfio_pci</a></p>
+<p>这里也提到了</p>
+<p><a href="https://wiki.archlinux.org/title/PCI_passthrough_via_OVMF#Host_unable_to_boot_and_stuck_in_black_screen_after_enabling_vfio">https://wiki.archlinux.org/title/PCI_passthrough_via_OVMF#Host_unable_to_boot_and_stuck_in_black_screen_after_enabling_vfio</a></p>
+<p>解决</p>
+<ul>
+<li>
+<p>kernel cmd</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>video_vifib=off
+</span></code></pre></div>
+</li>
+</ul>
+<ul>
+<li>
+<p>xorg</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>#/etc/X11/xorg.conf.d/second_gpu.conf
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>Section &quot;Device&quot;
+</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>      Identifier &quot;AMD GPU&quot;
+</span><span id="__span-18-4"><a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a>      Driver &quot;amdgpu&quot;  #填lspci看到的驱动
+</span><span id="__span-18-5"><a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a>      BusID  &quot;PCI:4:0:0&quot; #bus id, device id, function id
+</span><span id="__span-18-6"><a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a>EndSection
+</span></code></pre></div>
+</li>
+</ul>
+<h3 id="windows-启动时循环蓝屏">Windows 启动时循环蓝屏<a class="headerlink" href="#windows-启动时循环蓝屏" title="Permanent link">&para;</a></h3>
+<p>windows 启动时蓝屏，蓝屏两次后进入恢复界面，选择关机后再次启动依然蓝屏。</p>
+<h4 id="进一步发现">进一步发现<a class="headerlink" href="#进一步发现" title="Permanent link">&para;</a></h4>
+<p>重启 linux 时，如果直通的显卡上连着显示器，那么 windows 启动就会循环蓝屏。解决办法为先拔掉显示器，linux 启动后再插上，之后启动 VM-windows 就不会蓝屏。</p>
+<p>蓝屏时代码为</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>终止代码: VIDEO TDR FAILURE
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>失败的操作：nvlddmkm.sys
+</span></code></pre></div>
+<h4 id="解决">解决<a class="headerlink" href="#解决" title="Permanent link">&para;</a></h4>
+<p>发现问题可能是由于将 boot GPU 直通导致的<a href="https://wiki.archlinux.org/title/PCI_passthrough_via_OVMF#Passing_the_boot_GPU_to_the_guest">PCI passthrough via OVMF - ArchWiki (archlinux.org)</a></p>
+<blockquote>
+<p>The GPU marked as <code>boot_vga</code> is a special case when it comes to doing PCI passthroughs, since the BIOS needs to use it in order to display things like boot messages or the BIOS configuration menu. To do that, it makes <a href="https://www.redhat.com/archives/vfio-users/2016-May/msg00224.html">a copy of the VGA boot ROM which can then be freely modified</a>.</p>
+</blockquote>
+<p>但是我的主板没办法调节使用哪个 GPU 作为启动 GPU
+在 <a href="https://blog.twenska.de/blog/GPU_passthrough/中看到类似问题，并提到解决方法">https://blog.twenska.de/blog/GPU_passthrough/中看到类似问题，并提到解决方法</a></p>
+<p>查看<code>/var/log/libvirt/qemu/win10.log.0</code>会发现大量的以下错误：</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="m">2022</span>-07-21T06:50:56.222055Z<span class="w"> </span>qemu-system-x86_64:<span class="w"> </span>vfio_region_write<span class="o">(</span><span class="m">0000</span>:08:00.0:region1+0x345990,<span class="w"> </span>0x13801,8<span class="o">)</span><span class="w"> </span>failed:<span class="w"> </span>Device<span class="w"> </span>or<span class="w"> </span>resource<span class="w"> </span>busy
+</span></code></pre></div>
+<p>然后启动虚拟机前运行以下脚本即可</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="ch">#!/bin/bash</span>
+</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a><span class="nb">echo</span><span class="w"> </span><span class="m">1</span><span class="w"> </span>&gt;<span class="w"> </span>/sys/bus/pci/devices/0000<span class="se">\:</span><span class="m">08</span><span class="se">\:</span><span class="m">00</span>.0/remove<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="m">1</span><span class="w"> </span>&gt;<span class="w"> </span>/sys/bus/pci/rescan
+</span><span id="__span-21-3"><a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>virsh<span class="w"> </span>start<span class="w"> </span>win10
+</span></code></pre></div>
+<p>发现 Arch wiki 提到相同的解决方法<a href="https://wiki.archlinux.org/title/PCI_passthrough_via_OVMF#%22BAR_3:_cannot_reserve_[mem]%22_error_in_dmesg_after_starting_virtual_machine">BAR_3:_cannot_reserve[mem]</a></p>
+<h3 id="host-安装-nvidia-驱动后启动会反复-load-nvidia-驱动">host 安装 nvidia 驱动后启动会反复 load nvidia 驱动<a class="headerlink" href="#host-安装-nvidia-驱动后启动会反复-load-nvidia-驱动" title="Permanent link">&para;</a></h3>
+<p>相当于 bind vifo 不起作用？</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>NVRM: The NVIDIA probe routine was not called for 1 device(s)
+</span></code></pre></div>
+<p>解决办法为blacklist掉nvidia驱动</p>
+<p><a href="https://askubuntu.com/questions/1298461/how-to-temporarily-blacklist-nvidia-driver-at-boot-time">grub2 - How to temporarily blacklist nvidia driver at boot time - Ask Ubuntu</a></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>module_blacklist=nvidia
+</span></code></pre></div>
+<p><a href="https://www.reddit.com/r/VFIO/comments/90tg4h/after_loading_vfiopci_instead_of_nvidia_my_dmesg/">(8) After loading vfio-pci instead of nvidia, my dmesg has dozens of errors : VFIO (reddit.com)</a></p>
+<p>理论上是不需要 blacklist driver 的，不然如果是两张 nv 的显卡，则另一张岂不是无法使用 nvidia 驱动？</p>
+<blockquote>
+<p>I have a setup with two nVidia cards (GTX 970 for passthrough and GT 1030 for Linux host) and I'm not blacklisting anything.</p>
+</blockquote>
+<p><a href="https://www.reddit.com/r/VFIO/comments/90tg4h/after_loading_vfiopci_instead_of_nvidia_my_dmesg/">(8) After loading vfio-pci instead of nvidia, my dmesg has dozens of errors : VFIO (reddit.com)</a>
+/etc/modprobe.d/nvidia.conf: (You probably will have to create this file.)</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>softdep nvidia pre: vfio-pci
+</span></code></pre></div>
+<h2 id="性能优化">性能优化<a class="headerlink" href="#性能优化" title="Permanent link">&para;</a></h2>
+<p><a href="https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html-single/virtualization_tuning_and_optimization_guide/index">https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html-single/virtualization_tuning_and_optimization_guide/index</a></p>
+<h2 id="其它">其它<a class="headerlink" href="#其它" title="Permanent link">&para;</a></h2>
+<h3 id="using-looking-glass-to-stream-guest-screen-to-the-host">Using Looking Glass to stream guest screen to the host<a class="headerlink" href="#using-looking-glass-to-stream-guest-screen-to-the-host" title="Permanent link">&para;</a></h3>
+<p><a href="https://github.com/gnif/LookingGlass">gnif/LookingGlass: An extremely low latency KVMFR (KVM FrameRelay) implementation for guests with VGA PCI Passthrough. (github.com)</a></p>
+<h2 id="acs-patch">ACS patch<a class="headerlink" href="#acs-patch" title="Permanent link">&para;</a></h2>
+<p>最早的 patch：<a href="https://lkml.org/lkml/2013/5/30/513">LKML: Alex Williamson: [PATCH] pci: Enable overrides for missing ACS capabilities</a></p>
+<p><a href="https://vfio.blogspot.com/2014/08/iommu-groups-inside-and-out.html">VFIO tips and tricks: IOMMU Groups, inside and out</a>
+<a href="http://vfio.blogspot.com/2014/08/vfiovga-faq.html">VFIO tips and tricks: VFIO+VGA FAQ</a></p>
+<p>自动编译内核
+<a href="https://github.com/mdPlusPlus/VFIO">mdPlusPlus/VFIO: This repository contains all my work in the VFIO space (github.com)</a></p>
+<p>acs_patch id 用法：<a href="https://forum.proxmox.com/threads/help-with-pci-express-passthrough-acs-iommu-issue-kernel-bugfix.37151/">Help with PCI Express passthrough (ACS - IOMMU issue) + kernel bugfix | Proxmox Support Forum</a></p>
+<p>其它：
+这个 vendor-reset 是干嘛用的：
+<a href="https://github.com/gnif/vendor-reset">gnif/vendor-reset: Linux kernel vendor specific hardware reset module for sequences that are too complex/complicated to land in pci_quirks.c (github.com)</a>
+提到安全：<a href="https://www.reddit.com/r/VFIO/comments/ybda5c/is_acs_override_really_that_unsafe/">(4) Is ACS override really that unsafe? : VFIO (reddit.com)</a></p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+  
+
+
+
+      
+    </article>
+  </div>
+
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+        
+      
+      <nav class="md-footer__inner md-grid" aria-label="页脚" >
+        
+          
+          <a href="../../11/2022-07-11-%E5%8F%B0%E5%BC%8F%E6%9C%BA%E6%94%B9%E9%80%A0%E8%AE%A1%E5%88%92/" class="md-footer__link md-footer__link--prev" aria-label="上一页: 台式机改造计划">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                上一页
+              </span>
+              <div class="md-ellipsis">
+                台式机改造计划
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../../../../../%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%85%B7/2022/07/19/2022-07-19-vnc%E5%92%8Crdp%E8%BF%9C%E7%A8%8B/" class="md-footer__link md-footer__link--next" aria-label="下一页: vnc 和 rdp 远程">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                下一页
+              </span>
+              <div class="md-ellipsis">
+                vnc 和 rdp 远程
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/TheRainstorm" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../../..", "features": ["navigation.instant", "navigation.instant.progress", "navigation.tracking", "navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.footer", "content.code.copy", "toc.follow", "toc.integrate"], "search": "../../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../../../../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
